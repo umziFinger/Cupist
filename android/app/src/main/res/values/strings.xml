@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">볼리미</string>
+
+    <string name="kakao_app_key">611039b2820d80c03473242c18b5a594</string>
+<!--    <string name="facebook_app_id">1214105572437428</string>-->
+
+<!--    production codepush-->
+<!--    <string moduleConfig="true" name="CodePushDeploymentKey">uQws_GnDqsc6uNRinJJegMiLw8hUqZfwZk3hp</string>-->
+<!--    staging codepush-->
+    <string moduleConfig="true" name="CodePushDeploymentKey">uQws_GnDqsc6uNRinJJegMiLw8hUqZfwZk3hp</string>
+
+</resources>

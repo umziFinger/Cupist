@@ -1,0 +1,90 @@
+{
+  "plugins": ["react", "react-native", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    },
+    "sourceType": "module",
+    "useJSXTextNode": false,
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "react-native/react-native": true
+  },
+  "ignorePatterns": ["node_modules/"],
+  "extends": [
+    "airbnb", "airbnb/hooks", "plugin:react/recommended", "plugin:react-native/all", "plugin:prettier/recommended", "plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint","prettier", "prettier/react"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "babel-module": {}
+    }
+  },
+  "rules": {
+    "react-native/no-raw-text": 0, // Avoid false positive, wait for fix
+    "react-native/no-inline-styles": 0,
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "react-native/no-color-literals": 0,
+    "react/prop-types": "off",
+    "react-native/sort-styles": 1,
+    "spaced-comment":1,
+    "global-require": 0,
+    "no-console": "off",
+    //    "prefer-const": "off",
+    "radix": "off",
+    "react/jsx-indent" : ["error", 2],
+    "react/jsx-indent-props": "off",
+    "prefer-destructuring": "off",
+    "import/prefer-default-export": "off",
+    "dot-notation": "off",
+    "no-unused-vars": "off",
+    "no-use-before-define": "off",
+    "one-var": "off",
+    "react/jsx-curly-brace-presence": "off",
+    "react/destructuring-assignment": "off",
+    "no-return-await": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "no-underscore-dangle": "off", // _언더스코어 식별자 사용 관련 룰 비활성화
+    "no-alert": "off", // alert 자주 사용하므로 비활성화
+    "@typescript-eslint/naming-convention": "off", // snake_case, camelCase 혼용해서 사용중이므로 비활성화
+    "prettier/prettier": "error", // eslint-plugin-prettier의 룰을 활성화
+    "arrow-body-style": "off", // eslint-plugin-prettier와 충돌하는 ESLint 코어 룰을 비활성화
+    "prefer-arrow-callback": "off", // eslint-plugin-prettier와 충돌하는 ESLint 코어 룰을 비활성화
+    "import/no-unresolved": "off", // src 폴더 밑에 있는 이미지 file을 임포트하는 과정에서 에러로 표기되는 이슈 방지
+    "jsx-a11y/anchor-is-valid": "warn", // a tag에 href 사용하도록 경고하는 룰
+    "jsx-a11y/click-events-have-key-events": "off", // 마우스가 아닌 키보드로 컴퓨터를 이용하는 사람들을 위한 접근성 옵션 꺼둠. 추후 적용하고자 하면 제거할 것
+    "jsx-a11y/no-static-element-interactions": "off", // semantic 의미를 갖고 있지 않은 태그 사용을 지양하도록 하는 옵션 꺼둠
+    "react/jsx-props-no-spreading": "off", // jsx에 넘겨주는 props 에 spread 연산자를 사용할 수 있게끔 셋팅
+    "react/no-children-prop": "off", // children 으로 Prop 넘겨줄 수 있도록 설정
+    "no-nested-ternary": "off", // 중첩 삼항식 사용 가능하도록 설정
+    "@typescript-eslint/no-explicit-any": "off",  // typescript any 허용
+    "react-hooks/exhaustive-deps": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "no-param-reassign": ["error", {
+      "props": true,
+      "ignorePropertyModificationsFor": ["draft"]
+    }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "camelcase": "off"
+  }
+}

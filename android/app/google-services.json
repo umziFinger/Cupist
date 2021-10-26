@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "812978165702",
+    "project_id": "bolimi",
+    "storage_bucket": "bolimi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812978165702:android:9226d9f82046921f78c4c7",
+        "android_client_info": {
+          "package_name": "kr.bolimi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812978165702-i0kouh631omi4go6cbinuipoh3o77i23.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqz0MJG__MySWzg9k7N_EJ_grzx_Xct1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812978165702-i0kouh631omi4go6cbinuipoh3o77i23.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
