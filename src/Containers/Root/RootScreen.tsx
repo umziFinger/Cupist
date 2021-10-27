@@ -97,7 +97,6 @@ const RootScreen = () => {
     <>
       <RootNavigator />
       {isLoading && <Loading />}
-      {/* {!isConnected && <StatusBar barStyle="dark-content" backgroundColor="red" />} */}
       {/** 공통 얼러트 컴포넌트 * */}
       {alertDialog && (
         <Dialog

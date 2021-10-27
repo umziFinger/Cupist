@@ -1,5 +1,7 @@
 import React from 'react';
 import BackHeader from '@/Components/Header/BackHeader';
+import HomeHeader from '@/Components/Header/HomeHeader';
+import CloseHeader from './CloseHeader';
 
 export enum MODE {
   DARK = 'dark',
@@ -28,6 +30,10 @@ const Header = (props: HeaderProps) => {
   switch (type) {
     case 'back':
       return <BackHeader type={type} text={text} mode={mode} />;
+    case 'home':
+      return <HomeHeader />;
+    case 'close':
+      return <CloseHeader />;
     default:
       return null;
   }

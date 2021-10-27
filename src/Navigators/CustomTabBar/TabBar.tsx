@@ -18,12 +18,9 @@ interface TabBarProps {
   navigation: any;
 }
 
-const height = Platform.select({ android: 80, ios: isIphoneX() ? getBottomSpace() + 48 : 80 });
-
 const TabBar = (props: TabBarProps) => {
-  const { state, descriptors, navigation } = props;
-
   const dispatch = useDispatch();
+  const { state, descriptors, navigation } = props;
   const { userIdx } = useSelector((authState: AuthState) => authState.auth);
   const [backHandlerClickCount, setBackHandlerClickCount] = useState(0);
 
@@ -71,33 +68,45 @@ const TabBar = (props: TabBarProps) => {
     switch (type) {
       case 'HomeScreen':
         return state.index === 0
-          ? require('@/Assets/Images/BottomTabBar/icHomeOn.png')
-          : require('@/Assets/Images/BottomTabBar/icHomeOff.png');
+          ? require('@/Assets/Images/BottomTabBar/icBtHomeOn.png')
+          : require('@/Assets/Images/BottomTabBar/icBtHomeOff.png');
       case 'MyScreen':
         return state.index === 1
-          ? require('@/Assets/Images/BottomTabBar/icMyOn.png')
-          : require('@/Assets/Images/BottomTabBar/icMyOff.png');
+          ? require('@/Assets/Images/BottomTabBar/icBtMyOn.png')
+          : require('@/Assets/Images/BottomTabBar/icBtMyOff.png');
+      case 'MyAroundScreen':
+        return state.index === 2
+          ? require('@/Assets/Images/BottomTabBar/icBtLocaOn.png')
+          : require('@/Assets/Images/BottomTabBar/icBtLocaOff.png');
+      case 'DibsScreen':
+        return state.index === 3
+          ? require('@/Assets/Images/BottomTabBar/icBtHeartOn.png')
+          : require('@/Assets/Images/BottomTabBar/icBtHeartOff.png');
+      case 'MoreScreen':
+        return state.index === 4
+          ? require('@/Assets/Images/BottomTabBar/icPlusOff.png')
+          : require('@/Assets/Images/BottomTabBar/icPlusOff.png');
 
       default:
         return state.index === 0
-          ? require('@/Assets/Images/BottomTabBar/icHomeOff.png')
-          : require('@/Assets/Images/BottomTabBar/icHomeOn.png');
+          ? require('@/Assets/Images/BottomTabBar/icBtHomeOff.png')
+          : require('@/Assets/Images/BottomTabBar/icBtHomeOn.png');
     }
   };
   const renderTextColor = <T extends React.ReactNode>(type: T) => {
     switch (type) {
       case 'HomeScreen':
-        return state.index === 0 ? Color.Primary1000 : Color.Gray800;
-      case 'RepairScreen':
-        return state.index === 1 ? Color.Primary1000 : Color.Gray800;
-      case 'RepairBridge':
-        return state.index === 2 ? Color.Primary1000 : Color.Gray800;
-      case 'RentScreen':
-        return state.index === 3 ? Color.Primary1000 : Color.Gray800;
+        return state.index === 0 ? Color.Black1000 : Color.Gray400;
       case 'MyScreen':
-        return state.index === 4 ? Color.Primary1000 : Color.Gray800;
+        return state.index === 1 ? Color.Black1000 : Color.Gray400;
+      case 'MyAroundScreen':
+        return state.index === 2 ? Color.Black1000 : Color.Gray400;
+      case 'DibsScreen':
+        return state.index === 3 ? Color.Black1000 : Color.Gray400;
+      case 'MoreScreen':
+        return state.index === 4 ? Color.Black1000 : Color.Gray400;
       default:
-        return state.index === 0 ? Color.Primary1000 : Color.Gray800;
+        return state.index === 0 ? Color.Black1000 : Color.Gray400;
     }
   };
 
@@ -112,45 +121,40 @@ const TabBar = (props: TabBarProps) => {
   return (
     <View
       style={{
-        backgroundColor: '#ffffff',
-        // paddingTop: 13,
+        backgroundColor: Color.White,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'flex-start',
         width: '100%',
-        height,
-        // borderColor: '#c2c2c2',
+        paddingBottom: Platform.select({ android: 0, ios: isIphoneX() ? getBottomSpace() : 0 }),
       }}
     >
       <View
         style={{
           width: '100%',
-          height: 16,
           position: 'absolute',
-          backgroundColor: '#ffffff',
-          top: -16,
-          borderTopLeftRadius: 24,
-          borderTopRightRadius: 24,
-          borderColor: '#c2c2c2',
+          backgroundColor: Color.White,
+          borderColor: Color.Gray300,
           borderTopWidth: 1,
-          borderLeftWidth: 1,
-          borderRightWidth: 1,
+          top: -1,
+          bottom: 0,
+          left: 0,
+          right: 0,
         }}
       />
       {state.routes.map((route: any, index: number) => {
-        // const { options } = descriptors[route.key];
         return (
           <CustomButton
             key={index.toString()}
             style={{
               flexGrow: 1,
               justifyContent: 'center',
-              borderRadius: 24,
               backgroundColor: Color.White,
+              paddingVertical: 6,
             }}
             onPress={() => onPressMenu(route.name)}
           >
-            <View key={route.name} style={{ alignItems: 'center' }}>
+            <View key={route.name} style={{ alignItems: 'center', justifyContent: 'center' }}>
               <View style={{ width: 24, height: 24 }}>
                 <FastImage
                   source={renderIcon(route.name)}
@@ -161,10 +165,8 @@ const TabBar = (props: TabBarProps) => {
                   resizeMode={FastImage.resizeMode.cover}
                 />
               </View>
-              <View style={{ marginTop: 8 }}>
-                <CustomText
-                  style={{ fontSize: 11, fontWeight: '500', letterSpacing: -0.28, color: renderTextColor(route.name) }}
-                >
+              <View style={{ marginTop: 2 }}>
+                <CustomText style={{ fontSize: 10, letterSpacing: -0.1, color: renderTextColor(route.name) }}>
                   {DATA_MENUS[index].text}
                 </CustomText>
               </View>

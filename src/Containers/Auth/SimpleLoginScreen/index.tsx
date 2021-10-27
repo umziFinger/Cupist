@@ -15,13 +15,14 @@ import Naver from '@/Components/Login/SocialLogin/Naver';
 import Kakao from '@/Components/Login/SocialLogin/Kakao';
 import Apple from '@/Components/Login/SocialLogin/Apple';
 import { fetchAuthSocialLogin } from '@/Sagas/AuthSaga';
+import { navigate } from '@/Services/NavigationService';
+import Header from '@/Components/Header';
 
 const { width, height } = Dimensions.get('window');
 
 const SimpleLoginScreen = () => {
   const dispatch = useDispatch();
   const { heightInfo, isOpenSimpleLoginRBS } = useSelector((state: CommonState) => state.common);
-  const RBSheetRef = useRef<any>();
 
   let osCheck: any;
   if (Platform.OS === 'android') {
@@ -29,18 +30,38 @@ const SimpleLoginScreen = () => {
       {
         idx: 0,
         key: 'kakao',
-        img: require('@/Assets/Images/Button/icKakao.png'),
-        backgroundColor: Color.kakaoYellow,
+        img: require('@/Assets/Images/Button/icSignKakao.png'),
+        backgroundColor: 'rgb(249, 224, 0)',
         color: Color.Black1000,
-        content: '카카오톡으로 계속하기',
+        content: '카카오톡으로 로그인',
       },
       {
         idx: 1,
         key: 'naver',
-        img: require('@/Assets/Images/Button/icNaver.png'),
-        backgroundColor: Color.naverGreen,
+        img: require('@/Assets/Images/Button/icSignNaver.png'),
+        backgroundColor: 'rgb(45, 189, 19)',
         color: Color.White,
-        content: '네이버로 계속하기',
+        content: '네이버로 로그인',
+      },
+      {
+        idx: 2,
+        key: 'google',
+        img: require('@/Assets/Images/Button/icSignGg.png'),
+        backgroundColor: Color.White,
+        color: Color.Black1000,
+        borderWidth: 1,
+        borderColor: Color.Gray300,
+        content: '구글로 로그인',
+      },
+      {
+        idx: 3,
+        key: 'email',
+        img: require('@/Assets/Images/Button/icSignEmail.png'),
+        backgroundColor: Color.White,
+        color: Color.Primary1000,
+        borderWidth: 1,
+        borderColor: Color.Gray300,
+        content: '이메일로 로그인',
       },
     ];
   } else {
@@ -48,26 +69,46 @@ const SimpleLoginScreen = () => {
       {
         idx: 0,
         key: 'apple',
-        img: require('@/Assets/Images/Button/icApple.png'),
+        img: require('@/Assets/Images/Button/icSignApple.png'),
         backgroundColor: Color.Black1000,
         color: Color.White,
-        content: 'Apple로 계속하기',
+        content: 'Apple로 로그인',
       },
       {
         idx: 1,
         key: 'kakao',
-        img: require('@/Assets/Images/Button/icKakao.png'),
-        backgroundColor: Color.kakaoYellow,
+        img: require('@/Assets/Images/Button/icSignKakao.png'),
+        backgroundColor: 'rgb(249, 224, 0)',
         color: Color.Black1000,
-        content: '카카오톡으로 계속하기',
+        content: '카카오톡으로 로그인',
       },
       {
         idx: 2,
         key: 'naver',
-        img: require('@/Assets/Images/Button/icNaver.png'),
-        backgroundColor: Color.naverGreen,
+        img: require('@/Assets/Images/Button/icSignNaver.png'),
+        backgroundColor: 'rgb(45, 189, 19)',
         color: Color.White,
-        content: '네이버로 계속하기',
+        content: '네이버로 로그인',
+      },
+      {
+        idx: 3,
+        key: 'google',
+        img: require('@/Assets/Images/Button/icSignGg.png'),
+        backgroundColor: Color.White,
+        color: Color.Black1000,
+        borderWidth: 1,
+        borderColor: Color.Gray300,
+        content: '구글로 로그인',
+      },
+      {
+        idx: 4,
+        key: 'email',
+        img: require('@/Assets/Images/Button/icSignEmail.png'),
+        backgroundColor: Color.White,
+        color: Color.Primary1000,
+        borderWidth: 1,
+        borderColor: Color.Primary1000,
+        content: '이메일로 로그인',
       },
     ];
   }
@@ -77,12 +118,6 @@ const SimpleLoginScreen = () => {
       dispatch(HomeActions.fetchHomeReducer({ type: 'loginCheckYN', data: { loginCheckYN: 'Y' } }));
     };
   }, []);
-
-  useEffect(() => {
-    if (isOpenSimpleLoginRBS) {
-      RBSheetRef?.current.open();
-    }
-  }, [isOpenSimpleLoginRBS]);
 
   const onPressSocialLogin = async (key: string) => {
     let params: any = {
@@ -108,8 +143,7 @@ const SimpleLoginScreen = () => {
           const naverToken = await Naver({ initials });
           params = { ...params, token: naverToken };
           console.log('accessToken : ', naverToken);
-          // if (naverToken) dispatch(AuthActions.fetchAuthSocialLogin(params));
-          if (naverToken) dispatch(AuthActions.fetchUserLogin(params));
+          // if (naverToken) dispatch(AuthActions.fetchUserLogin(params));
         } catch (err) {
           console.log('naver e', err);
         }
@@ -119,7 +153,6 @@ const SimpleLoginScreen = () => {
           const kakaoToken = await Kakao();
           params = { ...params, token: kakaoToken };
           console.log('accessToken : ', kakaoToken);
-          // if (kakaoToken) dispatch(AuthActions.fetchAuthSocialLogin(params));
           if (kakaoToken) dispatch(AuthActions.fetchUserLogin(params));
         } catch (e) {
           console.log('kakao e', e);
@@ -133,18 +166,20 @@ const SimpleLoginScreen = () => {
 
           console.log('accessToken : ', appleTokenInfo.identityToken);
           console.log('params', params);
-          // if (appleToken) dispatch(AuthActions.fetchAuthSocialLogin(params));
-          if (appleTokenInfo.identityToken) dispatch(AuthActions.fetchUserLogin(params));
+          // if (appleTokenInfo.identityToken) dispatch(AuthActions.fetchUserLogin(params));
         } catch (e) {
           console.log('apple e', e);
         }
+        break;
+      case 'email':
+        navigate('LoginScreen');
         break;
       default:
         break;
     }
   };
 
-  const onPressAnotherLogin = () => {
+  const onPressJoin = () => {
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: false }));
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenLoginRBS', data: true }));
     // navigate('SetSmsScreen');
@@ -158,119 +193,120 @@ const SimpleLoginScreen = () => {
     //   pw: 'ghost323#',
     // };
     const params = {
-      id: '01089121110',
-      pw: 'dldlstjd79!!',
+      email: 'koi@gmail.com',
+      password: 'seoha123!',
     };
 
     dispatch(AuthActions.fetchUserLogin(params));
-    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: false }));
   };
 
   return (
-    <RBSheet
-      ref={RBSheetRef}
-      height={height * 0.5}
-      openDuration={500}
-      customStyles={{
-        container: {
-          borderTopRightRadius: 24,
-          borderTopLeftRadius: 24,
-        },
-      }}
-      onClose={() => dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: false }))}
-    >
-      <View style={{ width: '100%', height: height * 0.5 }}>
-        <FlatList
-          data={[0]}
-          renderItem={() => (
-            <View style={{ width: '100%', height: '100%', paddingHorizontal: 35 }}>
-              <View style={{ paddingTop: 36 }}>
-                <CustomText style={{ color: Color.Black1000, fontSize: 23, fontWeight: 'bold', letterSpacing: -0.58 }}>
-                  회원가입/로그인
-                </CustomText>
-              </View>
-              <FlatList
-                data={osCheck}
-                renderItem={({ item, index }) => (
-                  <CustomButton
-                    onPress={() => onPressSocialLogin(item.key)}
-                    style={{
-                      alignItems: 'center',
-                      backgroundColor: item.backgroundColor,
-                      borderRadius: 24,
-                      paddingVertical: 12,
-                      marginTop: index === 0 ? 36 : 16,
-                    }}
-                  >
-                    <View style={{ flexDirection: 'row', paddingLeft: 32 }}>
-                      <View style={{ width: 24, height: 24 }}>
-                        <FastImage
-                          style={{ width: '100%', height: '100%' }}
-                          source={item.img}
-                          resizeMode={FastImage.resizeMode.contain}
-                        />
-                      </View>
-                      <View
-                        style={{
-                          flex: 1,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <CustomText
-                          style={{ color: item.color, fontSize: 17, letterSpacing: -0.42, fontWeight: 'bold' }}
-                        >
-                          {item.content}
-                        </CustomText>
-                      </View>
-                    </View>
-                  </CustomButton>
-                )}
-                keyExtractor={(item, index) => index.toString()}
-                initialNumToRender={5}
-                maxToRenderPerBatch={8}
-                windowSize={2}
-                showsVerticalScrollIndicator={false}
-              />
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <CustomButton
-                  onPress={() => onPressAnotherLogin()}
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <View
-                    style={{
-                      borderBottomWidth: 1,
-                      borderBottomColor: Color.grayDefault,
-                    }}
-                  >
-                    <CustomText
-                      style={{
-                        color: Color.black70,
-                        fontSize: 15,
-                        letterSpacing: -0.38,
-                        paddingBottom: 2.5,
-                      }}
-                    >
-                      다른 방법으로 계속하기
-                    </CustomText>
-                  </View>
-                </CustomButton>
+    <View style={{ flex: 1, backgroundColor: Color.White }}>
+      <Header type={'close'} />
+      <FlatList
+        data={[0]}
+        renderItem={() => (
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              paddingHorizontal: 28,
+            }}
+          >
+            <View style={{ flex: 1, alignItems: 'center', marginTop: 76 }}>
+              <View style={{ width: 190, height: 87 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={require('@/Assets/Images/Common/logoSign.png')}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
               </View>
             </View>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          initialNumToRender={3}
-          maxToRenderPerBatch={6}
-          windowSize={2}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1 }}
-          renderToHardwareTextureAndroid
-        />
-      </View>
-    </RBSheet>
+            {/* Todo: 테스트 코드이므로 삭제 해야됩니다. */}
+            <CustomButton onPress={() => onPressTestLogin()} hitSlop={20}>
+              <View style={{ alignItems: 'center' }}>
+                <CustomText
+                  style={{
+                    color: Color.Gray700,
+                    fontSize: 15,
+                    letterSpacing: -0.2,
+                  }}
+                >
+                  테스트 로그인
+                </CustomText>
+              </View>
+            </CustomButton>
+            <FlatList
+              data={osCheck}
+              renderItem={({ item, index }) => (
+                <CustomButton
+                  onPress={() => onPressSocialLogin(item.key)}
+                  style={{
+                    alignItems: 'center',
+                    backgroundColor: item.backgroundColor,
+                    borderRadius: 5,
+                    borderWidth: item.borderWidth || 0,
+                    borderColor: item.borderColor || 'transparent',
+                    paddingVertical: 12,
+                    marginTop: index === 0 ? 50 : 16,
+                  }}
+                >
+                  <View style={{ flexDirection: 'row' }}>
+                    <View style={{ width: 24, height: 24, marginRight: 2 }}>
+                      <FastImage
+                        style={{ width: '100%', height: '100%' }}
+                        source={item.img}
+                        resizeMode={FastImage.resizeMode.contain}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <CustomText style={{ color: item.color, fontSize: 14, fontWeight: 'bold' }}>
+                        {item.content}
+                      </CustomText>
+                    </View>
+                  </View>
+                </CustomButton>
+              )}
+              keyExtractor={(item, index) => index.toString()}
+              initialNumToRender={5}
+              maxToRenderPerBatch={8}
+              windowSize={2}
+              showsVerticalScrollIndicator={false}
+            />
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View>
+                <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>아직 볼리미 회원이 아니신가요?</CustomText>
+              </View>
+              <CustomButton onPress={() => onPressJoin()}>
+                <View style={{ marginTop: 8 }}>
+                  <CustomText
+                    style={{
+                      color: Color.Black1000,
+                      fontSize: 15,
+                      letterSpacing: -0.2,
+                    }}
+                  >
+                    이메일로 가입
+                  </CustomText>
+                </View>
+              </CustomButton>
+            </View>
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        initialNumToRender={3}
+        maxToRenderPerBatch={6}
+        windowSize={2}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
+        renderToHardwareTextureAndroid
+      />
+    </View>
   );
 };
 export default SimpleLoginScreen;

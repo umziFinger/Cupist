@@ -13,7 +13,7 @@ import { navigate, navigateGoBack } from '@/Services/NavigationService';
 
 export function* fetchUserLogin(data: any): any {
   try {
-    yield put(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
 
     AsyncStorage.setItem('userIdx', '');
@@ -22,9 +22,9 @@ export function* fetchUserLogin(data: any): any {
     console.log('login data : ', data.params);
 
     const type = data.params.type;
-    let url = Config.AUTH_SIGN_IN_URL;
+    let url = Config.AUTH_LOGIN_URL;
     if (type) {
-      url = Config.AUTH_SIGN_SNS_URL;
+      url = Config.AUTH_LOGIN_SOCIAL_URL;
     }
     const payload = {
       ...data,
@@ -34,14 +34,14 @@ export function* fetchUserLogin(data: any): any {
     const response = yield call(Axios.POST, payload);
 
     if (response.result === true && response.code === null) {
-      const { access_token, refresh_token, idx } = response.data;
-      console.log('Login token : ', access_token);
-      console.log('Login refresh token : ', refresh_token);
+      const { accessToken, refreshToken, idx } = response.data;
+      console.log('Login token : ', accessToken);
+      console.log('Login refresh token : ', refreshToken);
       console.log('Login user idx : ', idx);
 
       AsyncStorage.setItem('userIdx', idx.toString());
-      AsyncStorage.setItem('accessToken', access_token.toString());
-      AsyncStorage.setItem('refreshToken', refresh_token.toString());
+      AsyncStorage.setItem('accessToken', accessToken.toString());
+      AsyncStorage.setItem('refreshToken', refreshToken.toString());
 
       yield put(AuthActions.fetchAuthReducer({ type: 'login', data: { userIdx: idx } }));
       FirebaseTokenUpdate();
@@ -50,110 +50,25 @@ export function* fetchUserLogin(data: any): any {
         AuthActions.fetchAuthReducer({
           type: 'tokenInfo',
           data: {
-            tokenInfo: {
-              accessToken: access_token,
-              refreshToken: refresh_token,
-            },
+            tokenInfo: { accessToken, refreshToken },
           },
         }),
       );
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      // navigate('HomeScreen', { expired: false });
+      navigate('HomeScreen', { expired: false });
 
       yield put(
         CommonActions.fetchCommonReducer({
           type: 'alertToast',
           data: {
             alertToast: true,
-            alertToastPosition: 'top',
+            alertToastPosition: 'bottom',
             alertToastMessage: '로그인이 완료되었습니다.',
           },
         }),
       );
     } else {
-      yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    console.log('occurred Error...fetchUserLogin : ', e);
-  }
-}
-
-export function* fetchAuthSocialLogin(data: any): any {
-  try {
-    yield put(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
-
-    AsyncStorage.setItem('userIdx', '');
-    AsyncStorage.setItem('accessToken', '');
-    AsyncStorage.setItem('refreshToken', '');
-    console.log('login data : ', data.params);
-
-    const url = Config.AUTH_SIGN_SNS_URL;
-    const payload = {
-      ...data,
-      url,
-    };
-
-    const response = yield call(Axios.POST, payload);
-
-    if (response.result === true && response.code === null) {
-      const { access_token, refresh_token, idx, profileState } = response.data;
-      console.log('Login token : ', access_token);
-      console.log('Login refresh token : ', refresh_token);
-      console.log('Login user idx : ', idx);
-
-      if (profileState === 'Y') {
-        AsyncStorage.setItem('userIdx', idx.toString());
-        AsyncStorage.setItem('accessToken', access_token.toString());
-        AsyncStorage.setItem('refreshToken', refresh_token.toString());
-        FirebaseTokenUpdate();
-
-        yield put(AuthActions.fetchAuthReducer({ type: 'login', data: { userIdx: idx } }));
-        yield put(AuthActions.fetchUserInfo());
-        yield put(
-          AuthActions.fetchAuthReducer({
-            type: 'tokenInfo',
-            data: {
-              tokenInfo: {
-                accessToken: access_token,
-                refreshToken: refresh_token,
-              },
-            },
-          }),
-        );
-        yield put(
-          CommonActions.fetchCommonReducer({
-            type: 'alertToast',
-            data: {
-              alertToast: true,
-              alertToastPosition: 'top',
-              alertToastMessage: '로그인이 완료되었습니다.',
-            },
-          }),
-        );
-      } else {
-        AsyncStorage.setItem('accessToken', access_token.toString());
-        AsyncStorage.setItem('refreshToken', refresh_token.toString());
-        yield put(
-          AuthActions.fetchAuthReducer({
-            type: 'tokenInfo',
-            data: {
-              tokenInfo: {
-                accessToken: access_token,
-                refreshToken: refresh_token,
-              },
-            },
-          }),
-        );
-        yield put(AuthActions.fetchAuthReducer({ type: 'profileState', data: profileState }));
-        navigate('SetSmsScreen');
-      }
-
-      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      // navigate('HomeScreen', { expired: false });
-    } else {
+      // yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
@@ -348,16 +263,13 @@ export function* fetchUserInfo(data: any): any {
     console.log('call saga fetchUserInfo data : ', data);
     const payload = {
       ...data,
-      url: Config.MY_USER_URL,
+      url: Config.MY_URL,
     };
 
     const response = yield call(Axios.GET, payload);
 
     if (response.result === true && response.code === null) {
       yield put(AuthActions.fetchAuthReducer({ type: 'userInfo', data: response.data }));
-      yield put(AuthActions.fetchAuthReducer({ type: 'myAddress', data: response.data.address }));
-      yield put(AuthActions.fetchAuthReducer({ type: 'myAddressDetail', data: response.data.addressDetail }));
-      yield put(AuthActions.fetchAuthReducer({ type: 'myAddressPost', data: response.data.addressPost }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }

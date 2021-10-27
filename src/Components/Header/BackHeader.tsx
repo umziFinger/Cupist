@@ -13,33 +13,25 @@ const BackHeader = (props: HeaderProps) => {
   const { text, mode } = props;
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
 
-  let bgColor = Color.White;
-  if (mode === MODE.DARK) {
-    bgColor = Color.Black1000;
-  } else if (mode === MODE.LIGHT) {
-    bgColor = Color.White;
-  } else if (mode === MODE.GRAY) {
-    bgColor = Color.Gray800;
-  } else if (mode === MODE.DARK2) {
-    bgColor = Color.Black1000;
-  }
+  const bgColor = Color.White;
+
   return (
     <View
       style={{
-        height: Platform.OS === 'android' ? 68 : 68 + statusHeight,
         flexDirection: 'row',
-        paddingHorizontal: 24,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: bgColor,
+        height: Platform.OS === 'android' ? 44 : 44 + statusHeight,
         paddingTop: Platform.OS === 'android' ? 0 : statusHeight,
+        paddingHorizontal: 16,
+        backgroundColor: bgColor,
       }}
     >
       <CustomButton onPress={() => navigateGoBack()} hitSlop={20}>
         <View style={{ width: 24, height: 24 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/Arrow/icArrowLeftGray.png')}
+            source={require('@/Assets/Images/Arrow/icBack.png')}
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>

@@ -10,8 +10,8 @@ const dev = {
   CS_EMAIL: 'nallcorp.luxury@gmail.com',
   CS_PRIVACY: '이인성',
 
-  // API_URL: 'https://luxurynall2.split.co.kr/api/v1/',
-  API_URL: 'https://customer.luxurynall.com/api/v1/',
+  // API_URL: 'http://192.168.1.21:5000/',
+  API_URL: 'https://api.bolimi.kr/',
 
   // 이미지 url
   IMAGE_URL: 'https://www.luxurynall.com/',
@@ -30,20 +30,20 @@ const dev = {
   NAVER_APP_URL_SCHEME: 'com.luxurynall', // only for iOS
 
   // home
-  HOME_URL: 'main/home',
+  HOME_URL: 'home',
 
   // auth
-  AUTH_SIGN_UP_URL: 'auth/signup',
-  AUTH_SIGN_SNS_URL: 'auth/signsns',
-  AUTH_SIGN_IN_URL: 'auth/signin',
-  AUTH_SIGN_OUT_URL: 'auth/signout',
-  AUTH_RENEW_TOKEN_URL: 'auth/renewtoken',
-  AUTH_TERMS_URL: 'auth/terms',
-  AUTH_CERT_GET_URL: 'auth/cert/get',
-  AUTH_CERT_CHECK_URL: 'auth/cert/check',
-  AUTH_FIND_ID_URL: 'auth/findid',
-  AUTH_FIND_PW_URL: 'auth/findpw',
-  AUTH_SIGN_INFO: 'auth/signsnsinfo',
+  AUTH_LOGIN_URL: 'auth/login',
+  AUTH_LOGIN_SOCIAL_URL: 'auth/login/social',
+  AUTH_REFRESH_URL: 'auth/refresh',
+
+  // my
+  MY_URL: 'my',
+  MY_PUSH_YN_URL: 'my/pushYN',
+  MY_REVIEW: 'my/reviews',
+  MY_MILEAGES: 'my/mileages',
+  MY_PROMOTION_URL: 'my/promotion',
+  MY_CERT_GET_URL: 'my/cert/get',
 
   // rental
   RENTAL_LIST: 'rental/main',
@@ -57,14 +57,6 @@ const dev = {
   RENTAL_PAYMENT: 'rental/payment',
   RENTAL_PAYMENT_RESULT_URL: 'rental/payment-result',
   RENTAL_HISTORY: 'my/rental',
-
-  // my
-  MY_USER_URL: 'my/user',
-  MY_PUSH_YN_URL: 'my/pushYN',
-  MY_REVIEW: 'my/reviews',
-  MY_MILEAGES: 'my/mileages',
-  MY_PROMOTION_URL: 'my/promotion',
-  MY_CERT_GET_URL: 'my/cert/get',
 
   // review
   REVIEW: 'reviews',

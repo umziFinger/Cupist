@@ -8,7 +8,6 @@ const { Types, Creators } = createActions({
   fetchUserJoin: ['params'],
   fetchAuthSocialJoin: ['params'],
   fetchUserLogin: ['params'],
-  fetchAuthSocialLogin: ['params'],
   fetchUserInfo: ['params'],
   fetchFindId: ['params'],
   fetchFindPassword: ['params'],

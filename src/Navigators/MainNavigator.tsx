@@ -7,48 +7,36 @@ import TabBar from '@/Navigators/CustomTabBar/TabBar';
 import MyScreen from '@/Containers/My/MyScreen';
 import SearchScreen from '@/Containers/Search/SearchScreen';
 import TotalImageScreen from '@/Containers/Common/TotalImageScreen';
-// import SetEmailScreen from '@/Containers/Auth/SetEmailScreen';
-// import SetPasswordScreen from '@/Containers/Auth/SetPasswordScreen';
-// import SetCharacterScreen from '@/Containers/Auth/SetCharacterScreen';
-// import SetBrandScreen from '@/Containers/Auth/SetBrandScreen';
-// import AgreeScreen from '@/Containers/Auth/AgreeScreen';
-// import SetSmsScreen from '@/Containers/Auth/SetSmsScreen';
-// import MyCouponScreen from '@/Containers/My/MyCouponScreen';
-// import MyPointScreen from '@/Containers/My/MyPointScreen';
-// import MyInfoModifyScreen from '@/Containers/My/MyInfoModifyScreen';
-// import NotificationScreen from '@/Containers/Notification/NotificationScreen';
-// import RepairPaymentScreen from '@/Containers/Payment/RepairPaymentScreen';
-// import RepairPaymentResultScreen from '@/Containers/Payment/RepairPaymentResultScreen';
-// import RentPaymentScreen from '@/Containers/Payment/RentPaymentScreen';
-// import RentPaymentResultScreen from '@/Containers/Payment/RentPaymentResultScreen';
-// import FindLoginInfoScreen from '@/Containers/Auth/FindLoginInfoScreen';
-// import AgreeDetailScreen from '@/Containers/Auth/AgreeDetailScreen';
-// import MyEditMobileScreen from '@/Containers/My/MyEditMobileScreen';
-// import MyEditPasswordScreen from '@/Containers/My/MyEditPasswordScreen';
-// import MyCheckMobileScreen from '@/Containers/My/MyCheckMobileScreen';
+import MyAroundScreen from '@/Containers/MyAround/MyAroundScreen';
+import DibsScreen from '@/Containers/Dibs/DibsScreen';
+import MoreScreen from '@/Containers/More/MoreScreen';
+import SimpleLoginScreen from '@/Containers/Auth/SimpleLoginScreen';
+import LoginScreen from '@/Containers/Auth/LoginScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
+  SearchScreen: undefined;
   HomeScreen: { expired: boolean };
   MyScreen: undefined;
-  SearchScreen: undefined;
+  MyAroundScreen: undefined;
+  DibsScreen: undefined;
+  MoreScreen: undefined;
   TotalImageScreen: { startIdx: number };
+  SimpleLoginScreen: undefined;
+  LoginScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
 const MainStack = createStackNavigator<MainStackParamList>();
 
-const RepairBridge = () => {
-  return null;
-};
 const BottomNavigator = () => (
   <View style={{ flex: 1, backgroundColor: 'transparent' }}>
     <Tab.Navigator backBehavior="none" tabBar={(props: BottomTabBarProps) => <TabBar {...props} />}>
       <Tab.Screen name="HomeScreen" component={HomeScreen} initialParams={{}} />
       <Tab.Screen name="MyScreen" component={MyScreen} initialParams={{}} />
-      {/*<Tab.Screen name="MyPositionScreen" component={MyPositionScreen} initialParams={{}} />*/}
-      {/*<Tab.Screen name="DibsScreen" component={DibsScreen} initialParams={{}} />*/}
-      {/*<Tab.Screen name="MoreScreen" component={MoreScreen} initialParams={{}} />*/}
+      <Tab.Screen name="MyAroundScreen" component={MyAroundScreen} initialParams={{}} />
+      <Tab.Screen name="DibsScreen" component={DibsScreen} initialParams={{}} />
+      <Tab.Screen name="MoreScreen" component={MoreScreen} initialParams={{}} />
     </Tab.Navigator>
   </View>
 );
@@ -59,7 +47,8 @@ const MainNavigator = () => {
       <MainStack.Screen name="Bottom" component={BottomNavigator} />
       <MainStack.Screen name="SearchScreen" component={SearchScreen} />
       <MainStack.Screen name="TotalImageScreen" component={TotalImageScreen} />
-
+      <MainStack.Screen name="SimpleLoginScreen" component={SimpleLoginScreen} />
+      <MainStack.Screen name="LoginScreen" component={LoginScreen} />
     </MainStack.Navigator>
   );
 };

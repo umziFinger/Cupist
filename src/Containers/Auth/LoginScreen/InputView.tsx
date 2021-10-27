@@ -112,7 +112,7 @@ function InputView() {
       <View
         style={{
           // borderBottomColor: getValidColor('email').borderColor,
-          borderBottomColor: Color.grayLine,
+          borderBottomColor: Color.Gray400,
           borderBottomWidth: 1,
           marginTop: 44,
         }}
@@ -122,7 +122,7 @@ function InputView() {
             <TextInput
               autoCompleteType="off"
               placeholder="휴대폰 번호 또는 이메일 주소를 입력해주세요"
-              placeholderTextColor={Color.grayDefault}
+              placeholderTextColor={Color.Gray800}
               style={{
                 color: Color.Black1000,
                 fontSize: 15,
@@ -143,7 +143,7 @@ function InputView() {
       <View
         style={{
           // borderBottomColor: getValidColor('password').borderColor,
-          borderBottomColor: Color.grayLine,
+          borderBottomColor: Color.Gray300,
           borderBottomWidth: 1,
           marginTop: 22,
         }}
@@ -153,7 +153,7 @@ function InputView() {
             <TextInput
               autoCompleteType="off"
               placeholder="비밀번호를 입력해주세요"
-              placeholderTextColor={Color.grayDefault}
+              placeholderTextColor={Color.Gray800}
               style={{
                 color: Color.Black1000,
                 fontSize: 15,
@@ -182,7 +182,7 @@ function InputView() {
               alignItems: 'center',
               paddingVertical: 21,
               borderRadius: 5,
-              backgroundColor: idValid && passwordValid ? Color.Primary1000 : Color.grayLine,
+              backgroundColor: idValid && passwordValid ? Color.Primary1000 : Color.Gray300,
             }}
           >
             <CustomText
