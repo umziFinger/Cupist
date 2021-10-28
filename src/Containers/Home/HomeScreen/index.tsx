@@ -24,6 +24,10 @@ import SearchActions from '@/Stores/Search/Actions';
 import CommonActions from '@/Stores/Common/Actions';
 import LocationMyPosition from '@/Components/Permission/Location/LocationMyPosition';
 import HelloArea from '@/Containers/Home/HomeScreen/HelloArea';
+import QuickPriceArea from '@/Containers/Home/HomeScreen/QuickPriceArea';
+import PrepaymentPriceArea from '@/Containers/Home/HomeScreen/PrepaymentPriceArea';
+import HotArea from '@/Containers/Home/HomeScreen/HotArea';
+import EventArea from '@/Containers/Home/HomeScreen/EventArea';
 
 // import CopyRightView from '@/Containers/Home/HomeScreen/CopyRightView';
 
@@ -107,6 +111,38 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 3: {
         return (
           <View style={{ flex: 1 }}>
+            <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <QuickPriceArea list={homeList['special'] || []} selectedDate={selectedDate} />
+          </View>
+        );
+      }
+      case 4: {
+        return (
+          <View style={{ flex: 1 }}>
+            <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <PrepaymentPriceArea list={homeList['early'] || []} />
+          </View>
+        );
+      }
+      case 5: {
+        return (
+          <View style={{ flex: 1 }}>
+            <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <HotArea list={homeList['hotPlace'] || []} />
+          </View>
+        );
+      }
+      case 6: {
+        return (
+          <View style={{ flex: 1 }}>
+            <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <EventArea list={homeList['event'] || []} />
+          </View>
+        );
+      }
+      case 7: {
+        return (
+          <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <CustomButton onPress={() => onPressTestLogin()}>
               <View
@@ -137,7 +173,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="home" />
       <FlatList
-        data={[0, 1, 2, 3]}
+        data={[0, 1, 2, 3, 4, 5, 6, 7]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}
