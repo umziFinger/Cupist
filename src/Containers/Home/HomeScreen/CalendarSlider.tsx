@@ -1,18 +1,19 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import moment from 'moment';
 import { View } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
+import FastImage from 'react-native-fast-image';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
 
 interface PropTypes {
-  setHeaderDate: Function;
   setSelectedDate: Function;
 }
 
 const CalendarSlider = (props: PropTypes) => {
-  const { setHeaderDate, setSelectedDate } = props;
+  const { setSelectedDate } = props;
+  const [headerDate, setHeaderDate] = useState<string>(moment().format('MM월 YYYY').toString());
 
   // 선택 불가 날짜
   const datesBlacklistFunc = (date: any) => {
@@ -85,7 +86,7 @@ const CalendarSlider = (props: PropTypes) => {
     () => () => {
       return (
         <CalendarStrip
-          style={{ flex: 1 }}
+          style={{ flex: 1, marginTop: 10 }}
           scrollable
           numDaysInWeek={8}
           selectedDate={new Date()}
@@ -103,7 +104,24 @@ const CalendarSlider = (props: PropTypes) => {
     },
     [],
   );
-  return renderCalendar();
+  return (
+    <View style={{ flex: 1 }}>
+      {/* 캘린더 헤더 영역 */}
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <CustomText style={{ color: Color.Black1000, fontSize: 15, fontWeight: '500' }}>{headerDate}</CustomText>
+        <View style={{ width: 24, height: 24 }}>
+          <FastImage
+            style={{ width: '100%', height: '100%' }}
+            source={require('@/Assets/Images/Arrow/icArrowDw.png')}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </View>
+      </View>
+
+      {/* 캘린더 영역 */}
+      {renderCalendar()}
+    </View>
+  );
 };
 
 export default CalendarSlider;
