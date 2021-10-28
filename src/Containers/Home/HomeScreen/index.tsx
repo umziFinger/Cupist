@@ -36,7 +36,6 @@ const HomeScreen = ({ route }: HomeProps) => {
   const { myLongitude, myLatitude } = useSelector((state: CommonState) => state.common);
   const { homeList } = useSelector((state: HomeState) => state.home);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const [headerDate, setHeaderDate] = useState<string>(moment().format('MM월 YYYY').toString());
   const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY.MM.DD(dd)'));
 
   useEffect(() => {
@@ -92,26 +91,12 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 1: {
         return (
-          <View style={{ flex: 1, marginTop: 30, paddingLeft: 20, flexDirection: 'row', alignItems: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 15, fontWeight: '500' }}>{headerDate}</CustomText>
-            <View style={{ width: 24, height: 24 }}>
-              <FastImage
-                style={{ width: '100%', height: '100%' }}
-                source={require('@/Assets/Images/Arrow/icArrowDw.png')}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            </View>
+          <View style={{ flex: 1, paddingLeft: 20, marginTop: 30 }}>
+            <CalendarSlider setSelectedDate={setSelectedDate} />
           </View>
         );
       }
       case 2: {
-        return (
-          <View style={{ flex: 1, paddingLeft: 20, marginTop: 10 }}>
-            <CalendarSlider setHeaderDate={setHeaderDate} setSelectedDate={setSelectedDate} />
-          </View>
-        );
-      }
-      case 3: {
         return (
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
@@ -119,7 +104,7 @@ const HomeScreen = ({ route }: HomeProps) => {
           </View>
         );
       }
-      case 4: {
+      case 3: {
         return (
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
@@ -152,7 +137,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="home" />
       <FlatList
-        data={[0, 1, 2, 3, 4]}
+        data={[0, 1, 2, 3]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}

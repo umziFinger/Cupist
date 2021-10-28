@@ -98,7 +98,7 @@ const DirectReservationArea = (props: PropTypes) => {
                       borderRadius: 16.5,
                       paddingLeft: 10,
                       paddingRight: 14,
-                      paddingVertical: 8,
+                      paddingVertical: 7.5,
                       backgroundColor: selectedIdx === item.index ? Color.Grayyellow1000 : item.backgroundColor,
                     }}
                   >
