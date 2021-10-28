@@ -18,6 +18,17 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'closeAllRBS': {
+        draft.isOpenAgreeDetailRBS = false;
+        break;
+      }
+
+      case 'openCurrentRBS': {
+        draft.isOpenAgreeDetailRBS = state.currentRBS === 'agreeDetail';
+
+        break;
+      }
+
       case 'alertDialog': {
         draft.alertDialog = data.alertDialog;
         draft.alertDialogType = data.alertDialogType;
@@ -148,6 +159,12 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'totalSelectImageIndex': {
         draft.totalSelectImageIndex = data;
+        break;
+      }
+
+      case 'isOpenAgreeDetailRBS': {
+        draft.isOpenAgreeDetailRBS = data;
+        draft.currentRBS = data ? 'agreeDetail' : state.currentRBS;
         break;
       }
 

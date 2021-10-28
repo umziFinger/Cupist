@@ -48,6 +48,21 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         draft.agreeInfo.checkedArr = data.checkedArr;
         break;
       }
+      case 'agreeInfoWithDeleteAll': {
+        try {
+          const deleteAll = state.agreeInfo.checkedArr.filter((v) => v !== 'all');
+          draft.agreeInfo.checkedArr = deleteAll.filter((v) => v !== data);
+        } catch (e) {
+          console.log(e);
+        }
+        break;
+      }
+
+      case 'selectedAgreeIdx': {
+        draft.agreeInfo.selectedAgreeIdx = data.selectedAgreeIdx;
+        break;
+      }
+
       case 'agreeInfoInit': {
         draft.agreeInfo = INITIAL_STATE.agreeInfo;
         break;

@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import { View, useWindowDimensions, FlatList } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, FlatList } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
@@ -15,7 +14,6 @@ import { Color } from '@/Assets/Color';
 import { DATA_PERMISSIONS } from './data';
 
 const AgreeScreen = () => {
-  const { height } = useWindowDimensions();
   const dispatch = useDispatch();
 
   const { heightInfo } = useSelector((state: CommonState) => state.common);
@@ -23,7 +21,8 @@ const AgreeScreen = () => {
   const { checkedArr } = agreeInfo;
 
   useEffect(() => {
-    if (checkedArr?.length === 3) {
+    // 선택 옵션 미선택시
+    if (checkedArr?.length === 4) {
       const idx = checkedArr?.findIndex((item) => item === 4);
       if (idx === -1) {
         dispatch(
@@ -36,8 +35,22 @@ const AgreeScreen = () => {
         );
       }
     }
+    // 모두 체크 되었을때
+    if (checkedArr?.length === 5) {
+      const idx = checkedArr?.findIndex((item) => item === 'all');
+      if (idx === -1) {
+        dispatch(
+          AuthActions.fetchAuthReducer({
+            type: 'agreeInfo',
+            data: {
+              checkedArr: [0, 1, 2, 3, 4, 'all'],
+            },
+          }),
+        );
+      }
+    }
   }, [checkedArr]);
-
+  // console.log(checkedArr);
   const onCheck = (index: string | number) => {
     if (index === 'all') {
       if (checkedArr?.includes(index)) {
@@ -61,24 +74,23 @@ const AgreeScreen = () => {
       }
     } else if (checkedArr?.includes(index)) {
       const idx = checkedArr?.findIndex((item) => item === 'all');
-      if (idx > -1) {
+      if (idx > -1 && index !== 4) {
+        dispatch(
+          AuthActions.fetchAuthReducer({
+            type: 'agreeInfoWithDeleteAll',
+            data: index,
+          }),
+        );
+      } else {
         dispatch(
           AuthActions.fetchAuthReducer({
             type: 'agreeInfo',
             data: {
-              checkedArr: checkedArr?.splice(idx, 1),
+              checkedArr: checkedArr?.filter((v) => v !== index),
             },
           }),
         );
       }
-      dispatch(
-        AuthActions.fetchAuthReducer({
-          type: 'agreeInfo',
-          data: {
-            checkedArr: checkedArr?.filter((v) => v !== index),
-          },
-        }),
-      );
     } else {
       dispatch(
         AuthActions.fetchAuthReducer({
@@ -88,7 +100,7 @@ const AgreeScreen = () => {
           },
         }),
       );
-      if (checkedArr?.length === 4) {
+      if (checkedArr?.length === 5) {
         dispatch(
           AuthActions.fetchAuthReducer({
             type: 'agreeInfo',
@@ -100,18 +112,14 @@ const AgreeScreen = () => {
       }
     }
   };
-
   const onAgreeDetail = (value: number) => {
-    dispatch(AuthActions.fetchAuthReducer({ type: 'agreeInfo', data: { selectedAgreeIdx: value } }));
-    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeRBS', data: false }));
+    dispatch(AuthActions.fetchAuthReducer({ type: 'selectedAgreeIdx', data: { selectedAgreeIdx: value } }));
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeDetailRBS', data: true }));
   };
 
   const onPressNext = () => {
     if (checkedArr?.includes('all')) {
-      dispatch(CommonActions.fetchCommonReducer({ type: 'agreeYN', data: 'Y' }));
-      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeRBS', data: false }));
-      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSmsRBS', data: true }));
+      console.log('다음페이지');
     }
   };
 

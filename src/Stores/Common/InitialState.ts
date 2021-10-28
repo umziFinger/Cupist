@@ -37,6 +37,8 @@ export const INITIAL_STATE = {
   totalImageType: '',
   totalImageList: [],
   totalSelectImageIndex: 0,
+  isOpenAgreeDetailRBS: false,
+  currentRBS: '',
 };
 
 export interface CommonState {
@@ -73,6 +75,8 @@ export interface CommonState {
     totalImageType: string;
     totalImageList: any[];
     totalSelectImageIndex: number;
+    isOpenAgreeDetailRBS: boolean | false;
+    currentRBS: string | null;
   };
 }
 

@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { LogBox, View } from 'react-native';
+import { LogBox } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CommonActions from '@/Stores/Common/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 import RootNavigator from '@/Navigators/RootNavigator';
 import Dialog from '@/Components/Dialog';
-import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
+// import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 import Toast from '@/Components/Toast';
 import Loading from '@/Components/Loading';
 import AgreeDetailScreen from '../Auth/AgreeDetailScreen';
-import LoginScreen from '../Auth/LoginScreen';
+
 import GoogleLoginInitial from '@/Components/Login/SocialLogin/GoogleLoginInitial';
-import RootCheckAppVersion from './RootCheckAppVersion';
-import RootDynamicLink from './RootDynamicLink';
+// import RootCheckAppVersion from './RootCheckAppVersion';
+// import RootDynamicLink from './RootDynamicLink';
 import RootCodePush from './RootCodePush';
-import RootFcm from '@/Containers/Root/RootFcm';
-import SimpleLoginScreen from '../Auth/SimpleLoginScreen';
-import RepairNotificationScreen from '@/Containers/Repair/RepairNotificationScreen';
-import MyAddressRBS from '@/Containers/My/MyInfoModifyScreen/MyAddressRBS';
+// import RootFcm from '@/Containers/Root/RootFcm';
+
 import { NotificationRequest } from '@/Components/Permission/Notification';
 
 LogBox.ignoreLogs([
@@ -42,6 +40,7 @@ const RootScreen = () => {
     alertToast,
     alertToastPosition,
     alertToastMessage,
+    isOpenAgreeDetailRBS,
     // isOpenSimpleLoginRBS,
     // isOpenLoginRBS,
     // isOpenRepairNotificationRBS,
@@ -111,7 +110,7 @@ const RootScreen = () => {
       {alertToast && <Toast position={alertToastPosition} message={alertToastMessage} />}
       {/* <RootFcm /> */}
       {checkSplash && <RootCodePush />}
-
+      {isOpenAgreeDetailRBS && <AgreeDetailScreen />}
       {/** 앱버전체크(realDB) 리스너 컴포넌트 * */}
       {/* <RootCheckAppVersion /> */}
       {/* <RootDynamicLink /> */}

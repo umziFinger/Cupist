@@ -35,23 +35,22 @@ function AgreeItem(props: AgreeItem) {
           <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Gray800 }}>{item.content}</CustomText>
         </View>
       </View>
-      <View style={{}}>
-        <CustomButton onPress={() => onAgreeDetail(index)}>
-          <View>
-            <CustomText
-              style={{
-                fontSize: 11,
-                letterSpacing: -0.2,
-                color: Color.Gray400,
-                textDecorationLine: 'underline',
-                textDecorationColor: Color.Gray400,
-              }}
-            >
-              보기
-            </CustomText>
-          </View>
-        </CustomButton>
-      </View>
+
+      <CustomButton onPress={() => onAgreeDetail(index)}>
+        <View>
+          <CustomText
+            style={{
+              fontSize: 11,
+              letterSpacing: -0.2,
+              color: Color.Gray400,
+              textDecorationLine: 'underline',
+              textDecorationColor: Color.Gray400,
+            }}
+          >
+            보기
+          </CustomText>
+        </View>
+      </CustomButton>
     </View>
   );
 }
