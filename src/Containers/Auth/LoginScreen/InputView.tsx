@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, TextInput, View } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
@@ -108,44 +108,6 @@ function InputView() {
         />
       </View>
 
-      {/* <View style={{}}> */}
-      {/*  <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow500 }}>비밀번호</CustomText> */}
-      {/* </View> */}
-
-      {/* <View */}
-      {/*  style={{ */}
-      {/*    paddingVertical: Platform.OS === 'ios' ? 15 : 7.5, */}
-      {/*    paddingLeft: 12, */}
-      {/*    borderRadius: 3, */}
-      {/*    borderColor: Color.Gray300, */}
-      {/*    borderWidth: 1, */}
-      {/*    marginTop: 8, */}
-      {/*  }} */}
-      {/* > */}
-      {/*  <TextInput */}
-      {/*    autoCompleteType="off" */}
-      {/*    placeholder="비밀번호 영어, 숫자, 특수문자 8-12자" */}
-      {/*    placeholderTextColor={Color.Gray400} */}
-      {/*    style={{ */}
-      {/*      color: Color.Black1000, */}
-      {/*      fontSize: 14, */}
-      {/*      padding: 0, */}
-      {/*      letterSpacing: -0.25, */}
-      {/*      includeFontPadding: false, */}
-      {/*    }} */}
-      {/*    onFocus={() => setCurrentFocus('password')} */}
-      {/*    onBlur={() => setCurrentFocus('')} */}
-      {/*    autoFocus={false} */}
-      {/*    keyboardType={'default'} */}
-      {/*    secureTextEntry */}
-      {/*    onChangeText={onChangePassword} */}
-      {/*    textContentType={'newPassword'} */}
-      {/*    autoCapitalize={'none'} */}
-      {/*    autoCorrect={false} */}
-      {/*    value={password} */}
-      {/*    maxLength={12} */}
-      {/*  /> */}
-      {/* </View> */}
       <View>
         <CustomButton onPress={() => onPressLogin()}>
           <View
