@@ -12,6 +12,8 @@ import DibsScreen from '@/Containers/Dibs/DibsScreen';
 import MoreScreen from '@/Containers/More/MoreScreen';
 import SimpleLoginScreen from '@/Containers/Auth/SimpleLoginScreen';
 import LoginScreen from '@/Containers/Auth/LoginScreen';
+import FindPasswordScreen from '@/Containers/Auth/FindPasswordScreen';
+import AgreeScreen from '@/Containers/Auth/AgreeScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -24,6 +26,8 @@ export type MainStackParamList = {
   TotalImageScreen: { startIdx: number };
   SimpleLoginScreen: undefined;
   LoginScreen: undefined;
+  FindPasswordScreen: undefined;
+  AgreeScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -47,8 +51,11 @@ const MainNavigator = () => {
       <MainStack.Screen name="Bottom" component={BottomNavigator} />
       <MainStack.Screen name="SearchScreen" component={SearchScreen} />
       <MainStack.Screen name="TotalImageScreen" component={TotalImageScreen} />
+      {/* Auth */}
       <MainStack.Screen name="SimpleLoginScreen" component={SimpleLoginScreen} />
       <MainStack.Screen name="LoginScreen" component={LoginScreen} />
+      <MainStack.Screen name="FindPasswordScreen" component={FindPasswordScreen} />
+      <MainStack.Screen name="AgreeScreen" component={AgreeScreen} />
     </MainStack.Navigator>
   );
 };

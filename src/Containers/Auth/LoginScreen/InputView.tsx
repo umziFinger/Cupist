@@ -1,6 +1,5 @@
-import FastImage from 'react-native-fast-image';
 import React, { useState } from 'react';
-import { TextInput, View } from 'react-native';
+import { Platform, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
@@ -10,32 +9,13 @@ import AuthActions from '@/Stores/Auth/Actions';
 
 function InputView() {
   const dispatch = useDispatch();
-  const { id, password } = useSelector((state: AuthState) => state.auth);
+  const { email, password } = useSelector((state: AuthState) => state.auth);
 
   const [currentFocus, setCurrentFocus] = useState<string>('email');
   const [idValid, setIdValid] = useState<boolean>(false);
   const [idValidText, setIdValidText] = useState<string>('');
   const [passwordValid, setPasswordValid] = useState<boolean>(false);
   const [passwordValidText, setPasswordValidText] = useState<string>('');
-
-  // const onChangeEmail = (value: string) => {
-  //   if (value) {
-  //     const emailRegExp = /^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/;
-  //     if (value.match(emailRegExp)) {
-  //       dispatch(AuthActions.fetchAuthReducer({ type: 'email', data: { email: value } }));
-  //       setIdValidText('');
-  //       setIdValid(true);
-  //     } else {
-  //       setIdValidText('올바른 메일형식이 아닙니다.');
-  //       dispatch(AuthActions.fetchAuthReducer({ type: 'email', data: { email: value } }));
-  //       setIdValid(false);
-  //     }
-  //   } else {
-  //     dispatch(AuthActions.fetchAuthReducer({ type: 'email', data: { email: null } }));
-  //     setIdValidText('');
-  //     setIdValid(false);
-  //   }
-  // };
 
   const renderMobileRegEx = (value: string) => {
     return value
@@ -98,9 +78,9 @@ function InputView() {
   };
 
   const onPressLogin = () => {
-    if (id && password) {
+    if (email && password) {
       const params = {
-        id,
+        email,
         pw: password,
       };
       dispatch(AuthActions.fetchUserLogin(params));
@@ -109,91 +89,99 @@ function InputView() {
 
   return (
     <View style={{}}>
+      <View style={{ marginTop: 48 }}>
+        <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow500 }}>이메일</CustomText>
+      </View>
+
       <View
         style={{
-          // borderBottomColor: getValidColor('email').borderColor,
-          borderBottomColor: Color.Gray400,
-          borderBottomWidth: 1,
-          marginTop: 44,
+          paddingVertical: Platform.OS === 'ios' ? 15 : 7.5,
+          paddingLeft: 12,
+          borderRadius: 3,
+          borderColor: Color.Gray300,
+          borderWidth: 1,
+          marginTop: 8,
         }}
       >
-        <View style={{ flexDirection: 'row', marginBottom: 13 }}>
-          <View style={{ flex: 1 }}>
-            <TextInput
-              autoCompleteType="off"
-              placeholder="휴대폰 번호 또는 이메일 주소를 입력해주세요"
-              placeholderTextColor={Color.Gray800}
-              style={{
-                color: Color.Black1000,
-                fontSize: 15,
-                padding: 0,
-                letterSpacing: -0.38,
-              }}
-              onFocus={() => setCurrentFocus('id')}
-              onBlur={() => setCurrentFocus('')}
-              autoFocus={false}
-              keyboardType={'default'}
-              onChangeText={onChangeId}
-              autoCorrect={false}
-              value={id}
-            />
-          </View>
-        </View>
+        <TextInput
+          autoCompleteType="off"
+          placeholder="이메일주소를 입력해주세요."
+          placeholderTextColor={Color.Gray400}
+          style={{
+            color: Color.Black1000,
+            fontSize: 14,
+            padding: 0,
+            letterSpacing: -0.25,
+            includeFontPadding: false,
+          }}
+          onFocus={() => setCurrentFocus('email')}
+          onBlur={() => setCurrentFocus('')}
+          autoFocus={false}
+          keyboardType={'default'}
+          onChangeText={onChangeId}
+          autoCorrect={false}
+          value={email}
+          allowFontScaling={false}
+        />
       </View>
+
+      <View style={{ marginTop: 32 }}>
+        <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow500 }}>비밀번호</CustomText>
+      </View>
+
       <View
         style={{
-          // borderBottomColor: getValidColor('password').borderColor,
-          borderBottomColor: Color.Gray300,
-          borderBottomWidth: 1,
-          marginTop: 22,
+          paddingVertical: Platform.OS === 'ios' ? 15 : 7.5,
+          paddingLeft: 12,
+          borderRadius: 3,
+          borderColor: Color.Gray300,
+          borderWidth: 1,
+          marginTop: 8,
         }}
       >
-        <View style={{ flexDirection: 'row', marginBottom: 13 }}>
-          <View style={{ flex: 1 }}>
-            <TextInput
-              autoCompleteType="off"
-              placeholder="비밀번호를 입력해주세요"
-              placeholderTextColor={Color.Gray800}
-              style={{
-                color: Color.Black1000,
-                fontSize: 15,
-                padding: 0,
-                letterSpacing: -0.38,
-              }}
-              onFocus={() => setCurrentFocus('password')}
-              onBlur={() => setCurrentFocus('')}
-              autoFocus={false}
-              keyboardType={'default'}
-              secureTextEntry
-              onChangeText={onChangePassword}
-              textContentType={'newPassword'}
-              autoCapitalize={'none'}
-              autoCorrect={false}
-              value={password}
-              maxLength={12}
-            />
-          </View>
-        </View>
+        <TextInput
+          autoCompleteType="off"
+          placeholder="비밀번호 영어, 숫자, 특수문자 8-12자"
+          placeholderTextColor={Color.Gray400}
+          style={{
+            color: Color.Black1000,
+            fontSize: 14,
+            padding: 0,
+            letterSpacing: -0.25,
+            includeFontPadding: false,
+          }}
+          onFocus={() => setCurrentFocus('password')}
+          onBlur={() => setCurrentFocus('')}
+          autoFocus={false}
+          keyboardType={'default'}
+          secureTextEntry
+          onChangeText={onChangePassword}
+          textContentType={'newPassword'}
+          autoCapitalize={'none'}
+          autoCorrect={false}
+          value={password}
+          maxLength={12}
+        />
       </View>
-      <View style={{ width: '100%', marginTop: 26 }}>
+      <View style={{ marginTop: 36 }}>
         <CustomButton onPress={() => onPressLogin()}>
           <View
             style={{
               alignItems: 'center',
-              paddingVertical: 21,
-              borderRadius: 5,
-              backgroundColor: idValid && passwordValid ? Color.Primary1000 : Color.Gray300,
+              paddingVertical: 15,
+              borderRadius: 3,
+              backgroundColor: idValid && passwordValid ? Color.Primary1000 : Color.Grayyellow200,
             }}
           >
             <CustomText
               style={{
-                color: Color.White,
-                fontSize: 17,
+                fontSize: 14,
                 fontWeight: 'bold',
-                letterSpacing: -0.42,
+                letterSpacing: -0.25,
+                color: Color.White,
               }}
             >
-              로그인
+              시작하기
             </CustomText>
           </View>
         </CustomButton>

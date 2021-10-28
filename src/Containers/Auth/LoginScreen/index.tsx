@@ -1,28 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, FlatList, Platform } from 'react-native';
-import FastImage, { Source } from 'react-native-fast-image';
+import React, { useEffect } from 'react';
+import { View, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
-import Config from '@/Config';
 import { Color } from '@/Assets/Color';
-import Naver from '@/Components/Login/SocialLogin/Naver';
-import Kakao from '@/Components/Login/SocialLogin/Kakao';
 import InputView from './InputView';
-import Google from '@/Components/Login/SocialLogin/Google';
-import Apple from '@/Components/Login/SocialLogin/Apple';
 import { navigate } from '@/Services/NavigationService';
-import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
-
-const { width, height } = Dimensions.get('window');
+import Header from '@/Components/Header';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
-  const { heightInfo, isOpenLoginRBS } = useSelector((state: CommonState) => state.common);
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
 
   useEffect(() => {
     return () => {
@@ -40,76 +31,98 @@ const LoginScreen = () => {
   //   }
   // }, [isFocusInput]);
 
-  const onPressJoinMobile = () => {
-    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenLoginRBS', data: false }));
-    dispatch(AuthActions.fetchAuthReducer({ type: 'profileState', data: null }));
-    navigate('SetSmsScreen');
+  const onPressJoin = () => {
+    navigate('AgreeScreen');
   };
 
-  const onPressFind = () => {
-    console.log('onPressFind');
-    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenLoginRBS', data: false }));
-    navigate('FindLoginInfoScreen');
+  const onPressFindPassword = () => {
+    console.log('onPressFindPassword');
+    navigate('FindPasswordScreen');
   };
 
   return (
     <>
-      <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 35 }}>
-        <View style={{ flex: 1 }}>
-          <FlatList
-            data={[0]}
-            renderItem={() => (
-              <View style={{ width: '100%', height: '100%' }}>
-                <View style={{ marginLeft: 11 }}>
+      <Header type={'back'} />
+      <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
+        <FlatList
+          data={[0]}
+          renderItem={() => (
+            <View
+              style={{
+                flex: 1,
+              }}
+            >
+              <View style={{ paddingTop: 44, flex: 1 }}>
+                <View style={{}}>
                   <CustomText
-                    style={{ color: Color.Black1000, fontSize: 23, fontWeight: 'bold', letterSpacing: -0.58 }}
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 'bold',
+                      letterSpacing: -0.4,
+                      color: Color.Black1000,
+                    }}
                   >
-                    회원가입/로그인
+                    이메일로 시작하기
                   </CustomText>
                 </View>
+
+                {/* 이메일 & 비밀번호 입력 */}
                 <InputView />
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 26,
-                  }}
-                >
-                  <CustomButton onPress={() => onPressJoinMobile()} hitSlop={{ left: 7, right: 7, bottom: 7, top: 7 }}>
-                    <View>
-                      <CustomText style={{ color: Color.Black1000, fontSize: 13, letterSpacing: -0.33 }}>
-                        휴대폰 번호로 회원가입
-                      </CustomText>
-                    </View>
-                  </CustomButton>
-                  <View
-                    style={{
-                      width: 1,
-                      height: 14,
-                      backgroundColor: Color.Gray400,
-                      marginHorizontal: 20,
-                    }}
-                  />
-                  <CustomButton onPress={() => onPressFind()} hitSlop={{ left: 7, right: 7, bottom: 7, top: 7 }}>
-                    <CustomText style={{ color: Color.Black1000, fontSize: 13, letterSpacing: -0.33 }}>
-                      아이디 / 비밀번호 찾기
+
+                <CustomButton onPress={() => onPressFindPassword()}>
+                  <View style={{ alignItems: 'center', marginTop: 16 }}>
+                    <CustomText
+                      style={{
+                        fontSize: 12,
+                        letterSpacing: 0,
+                        color: Color.Gray400,
+                        textDecorationLine: 'underline',
+                        textDecorationColor: Color.Gray400,
+                      }}
+                    >
+                      비밀번호를 잊으셨나요?
                     </CustomText>
-                  </CustomButton>
-                </View>
+                  </View>
+                </CustomButton>
               </View>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            initialNumToRender={3}
-            maxToRenderPerBatch={6}
-            windowSize={2}
-            showsVerticalScrollIndicator={false}
-            renderToHardwareTextureAndroid
-            ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
-          />
+            </View>
+          )}
+          // contentContainerStyle={{ backgroundColor: 'red', flex: 1 }}
+          keyExtractor={(item, index) => index.toString()}
+          initialNumToRender={3}
+          maxToRenderPerBatch={6}
+          windowSize={7}
+          showsVerticalScrollIndicator={false}
+          renderToHardwareTextureAndroid
+          ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
+        />
+
+        <View
+          style={{
+            alignItems: 'center',
+            paddingBottom: heightInfo.fixBottomHeight + 16,
+          }}
+        >
+          <CustomButton onPress={() => onPressJoin()} hitSlop={{ left: 7, right: 7, bottom: 7, top: 7 }}>
+            <View style={{ alignItems: 'center' }}>
+              <CustomText
+                style={{
+                  fontSize: 12,
+                  letterSpacing: 0,
+                  color: Color.Gray700,
+                }}
+              >
+                아직 볼리미 회원이 아니신가요?
+              </CustomText>
+              <View style={{ marginTop: 8 }}>
+                <CustomText style={{ fontSize: 15, fontWeight: '500', letterSpacing: -0.2, color: Color.Black1000 }}>
+                  이메일로 가입
+                </CustomText>
+              </View>
+            </View>
+          </CustomButton>
         </View>
       </View>
-      <View style={{ position: 'absolute', top: 0, height: 500, backgroundColor: 'red', zIndex: 9999 }} />
     </>
   );
 };

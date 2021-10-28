@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, FlatList, Platform } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, useWindowDimensions, FlatList } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
-import produce from 'immer';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
@@ -12,34 +12,18 @@ import AuthActions from '@/Stores/Auth/Actions';
 import AgreeItem from '@/Containers/Auth/AgreeScreen/AgreeItem';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { Color } from '@/Assets/Color';
-import AuthRightSideItem from '@/Components/Header/AuthRightSideItem';
-import { navigate } from '@/Services/NavigationService';
+import { DATA_PERMISSIONS } from './data';
 
 const AgreeScreen = () => {
+  const { height } = useWindowDimensions();
   const dispatch = useDispatch();
+
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { profileState } = useSelector((state: AuthState) => state.auth);
-  const { terms, agreeInfo, phoneNumber, password, userName, userGender, userBirth, userBrand } = useSelector(
-    (state: AuthState) => state.auth,
-  );
+  const { agreeInfo } = useSelector((state: AuthState) => state.auth);
   const { checkedArr } = agreeInfo;
 
   useEffect(() => {
-    dispatch(AuthActions.fetchAuthTerms());
-    return () => {
-      dispatch(
-        AuthActions.fetchAuthReducer({
-          type: 'agreeInfo',
-          data: {
-            checkedArr: null,
-          },
-        }),
-      );
-    };
-  }, []);
-
-  useEffect(() => {
-    if (checkedArr?.length === 4) {
+    if (checkedArr?.length === 3) {
       const idx = checkedArr?.findIndex((item) => item === 4);
       if (idx === -1) {
         dispatch(
@@ -70,22 +54,19 @@ const AgreeScreen = () => {
           AuthActions.fetchAuthReducer({
             type: 'agreeInfo',
             data: {
-              checkedArr: [0, 1, 2, 3, 'all'],
+              checkedArr: [0, 1, 2, 3, 4, 'all'],
             },
           }),
         );
       }
     } else if (checkedArr?.includes(index)) {
       const idx = checkedArr?.findIndex((item) => item === 'all');
-      const tempArr = produce(checkedArr, (draft) => {
-        draft.splice(idx, 1);
-      });
       if (idx > -1) {
         dispatch(
           AuthActions.fetchAuthReducer({
             type: 'agreeInfo',
             data: {
-              checkedArr: [...tempArr],
+              checkedArr: checkedArr?.splice(idx, 1),
             },
           }),
         );
@@ -94,7 +75,7 @@ const AgreeScreen = () => {
         AuthActions.fetchAuthReducer({
           type: 'agreeInfo',
           data: {
-            checkedArr: tempArr?.filter((v) => v !== index),
+            checkedArr: checkedArr?.filter((v) => v !== index),
           },
         }),
       );
@@ -112,7 +93,7 @@ const AgreeScreen = () => {
           AuthActions.fetchAuthReducer({
             type: 'agreeInfo',
             data: {
-              checkedArr: [0, 1, 2, 3, 'all'],
+              checkedArr: [0, 1, 2, 3, 4, 'all'],
             },
           }),
         );
@@ -120,107 +101,85 @@ const AgreeScreen = () => {
     }
   };
 
-  const onAgreeDetail = (value: any) => {
-    navigate('AgreeDetailScreen', { item: value });
+  const onAgreeDetail = (value: number) => {
+    dispatch(AuthActions.fetchAuthReducer({ type: 'agreeInfo', data: { selectedAgreeIdx: value } }));
+    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeRBS', data: false }));
+    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeDetailRBS', data: true }));
   };
 
   const onPressNext = () => {
-    if (
-      checkedArr?.includes('all') ||
-      (checkedArr?.includes(0) && checkedArr?.includes(1) && checkedArr?.includes(2))
-    ) {
+    if (checkedArr?.includes('all')) {
       dispatch(CommonActions.fetchCommonReducer({ type: 'agreeYN', data: 'Y' }));
-      const tempArr = checkedArr
-        .filter((item) => item !== 'all')
-        .map((i) => {
-          return Number(i) + 1;
-        });
-
-      const params = {
-        mobile: phoneNumber.replace(/-/g, ''),
-        password: profileState === 'N' ? '' : password,
-        userName,
-        userGender,
-        userBirth,
-        userBrand,
-        userAgree: tempArr,
-      };
-
-      navigate('HomeScreen');
-
-      if (profileState === 'N') {
-        dispatch(AuthActions.fetchAuthSocialJoin(params));
-      } else {
-        dispatch(AuthActions.fetchUserJoin(params));
-      }
+      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeRBS', data: false }));
+      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSmsRBS', data: true }));
     }
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: Color.White }}>
+    <>
       <Header type="back" />
-      <FlatList
-        data={[0]}
-        renderItem={() => (
-          <View
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            <View style={{ flex: 1, paddingHorizontal: 24 }}>
+      <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
+        <FlatList
+          data={[0]}
+          renderItem={() => (
+            <View style={{ flex: 1, paddingTop: 44 }}>
               <View>
-                <CustomText
-                  style={{
-                    color: Color.Black1000,
-                    fontSize: 21,
-                    fontWeight: 'bold',
-                    letterSpacing: -0.52,
-                  }}
-                >
-                  {'서비스 이용을 위해\n약관에 동의해 주세요'}
+                <CustomText style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}>
+                  환영해요 🤗
+                </CustomText>
+              </View>
+              <View style={{ marginTop: 16 }}>
+                <CustomText style={{ fontSize: 13, fontWeight: '500', letterSpacing: -0.2, color: Color.Gray800 }}>
+                  약관에 동의하시면
+                </CustomText>
+              </View>
+              <View style={{ marginTop: 4 }}>
+                <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Gray800 }}>
+                  특별한 혜택으로 볼링장을 만나보실 수 있어요.
                 </CustomText>
               </View>
               <View
                 style={{
                   flexDirection: 'row',
-                  marginTop: 42,
+                  marginTop: 48,
+                  paddingHorizontal: 12,
+                  paddingVertical: 18,
+                  borderWidth: 1,
+                  borderColor: Color.Gray300,
+                  borderRadius: 3,
                 }}
               >
-                <CustomButton
-                  onPress={() => onCheck('all')}
-                  hitSlop={{ left: 15, right: 15 }}
-                  style={{ marginRight: 12, paddingVertical: 1 }}
-                >
-                  <View style={{ width: 20, height: 20 }}>
+                <CustomButton onPress={() => onCheck('all')} hitSlop={{ left: 15, right: 15 }}>
+                  <View style={{ width: 24, height: 24 }}>
                     <FastImage
                       style={{ width: '100%', height: '100%' }}
                       source={
                         checkedArr?.includes('all')
-                          ? require('@/Assets/Images/Button/icCheckCirclePressed20Pt.png')
-                          : require('@/Assets/Images/Button/icCheckCircleNormal.png')
+                          ? require('@/Assets/Images/Button/icCheck.png')
+                          : require('@/Assets/Images/Button/icCheckOff.png')
                       }
                       resizeMode={FastImage.resizeMode.cover}
                     />
                   </View>
                 </CustomButton>
-                <View style={{ flex: 1, justifyContent: 'center' }}>
+
+                <View style={{ flex: 1, justifyContent: 'center', marginLeft: 12 }}>
                   <CustomText
-                    style={{ fontSize: 15, letterSpacing: -0.38, color: Color.Black1000, fontWeight: 'bold' }}
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                      letterSpacing: -0.2,
+                      color: Color.Black1000,
+                    }}
                   >
-                    모두 동의합니다.
+                    모두 확인, 동의합니다
                   </CustomText>
                 </View>
               </View>
-              <View style={{ borderWidth: 1, width: '100%', marginTop: 13 }} />
-              <View
-                style={{
-                  flex: 1,
-                }}
-              >
+
+              <View style={{ paddingHorizontal: 12 }}>
                 <FlatList
-                  data={terms}
-                  keyExtractor={(item, index) => index.toString()}
+                  data={DATA_PERMISSIONS}
                   renderItem={({ item, index }) => {
                     return (
                       <AgreeItem
@@ -232,97 +191,49 @@ const AgreeScreen = () => {
                       />
                     );
                   }}
-                  initialNumToRender={terms?.length}
-                  maxToRenderPerBatch={terms?.length + 3}
+                  keyExtractor={(item, index) => index.toString()}
+                  initialNumToRender={DATA_PERMISSIONS.length}
+                  maxToRenderPerBatch={DATA_PERMISSIONS.length + 3}
                   showsVerticalScrollIndicator={false}
                   windowSize={7}
                   scrollEnabled={false}
                 />
-                <View style={{ marginTop: 36, backgroundColor: Color.Primary1000, borderRadius: 15 }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ flex: 1 }}>
-                      <View style={{ paddingVertical: 24, paddingLeft: 32 }}>
-                        <CustomText
-                          style={{
-                            color: Color.Black1000,
-                            fontSize: 15,
-                            fontWeight: '500',
-                            letterSpacing: -0.38,
-                          }}
-                        >
-                          {'마케팅 수신에 동의하시면\n현금처럼 사용가능한\n10,000P를 드립니다.'}
-                        </CustomText>
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        width: 102.8,
-                        height: 72,
-                        marginRight: 22,
-                      }}
-                    >
-                      <FastImage
-                        style={{ width: '100%', height: '100%' }}
-                        source={require('@/Assets/Images/Common/imgIllustCoupon.png')}
-                        resizeMode={FastImage.resizeMode.cover}
-                      />
-                    </View>
-                  </View>
-                </View>
               </View>
             </View>
-            <CustomButton style={{ alignItems: 'center' }} onPress={() => onPressNext()}>
-              <View
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          initialNumToRender={1}
+          maxToRenderPerBatch={2}
+          windowSize={7}
+          scrollEnabled={false}
+          showsVerticalScrollIndicator={false}
+        />
+        <View style={{ paddingBottom: heightInfo.fixBottomHeight + 16 }}>
+          <CustomButton onPress={() => onPressNext()}>
+            <View
+              style={{
+                alignItems: 'center',
+                paddingVertical: 15,
+                borderRadius: 5,
+                backgroundColor: checkedArr?.includes('all') ? Color.Primary1000 : Color.Grayyellow200,
+              }}
+            >
+              <CustomText
                 style={{
-                  width: '100%',
-                  paddingTop: 22,
-                  paddingBottom: Platform.OS === 'android' ? 22 : 53,
-                  backgroundColor:
-                    checkedArr?.includes('all') ||
-                    (checkedArr?.includes(0) && checkedArr?.includes(1) && checkedArr?.includes(2))
-                      ? Color.Primary1000
-                      : Color.greyBtn,
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  letterSpacing: -0.25,
+                  textAlign: 'center',
+                  color: Color.White,
                 }}
               >
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                  <View style={{ marginRight: 10 }}>
-                    <CustomText
-                      style={{
-                        color: Color.White,
-                        fontSize: 17,
-                        fontWeight: 'bold',
-                        letterSpacing: -0.42,
-                      }}
-                    >
-                      완료
-                    </CustomText>
-                  </View>
-                </View>
-              </View>
-            </CustomButton>
-          </View>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={1}
-        maxToRenderPerBatch={1}
-        windowSize={7}
-        contentContainerStyle={{
-          flexGrow: 1,
-          marginTop: 40,
-        }}
-        scrollEnabled
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps={'handled'}
-        ListFooterComponent={<View style={{ marginBottom: heightInfo.fixBottomHeight }} />}
-      />
-      {/* {isModal && ( */}
-      {/*  <AgreeDetailModal */}
-      {/*    selectedTerm={selectedTerm} */}
-      {/*    onClose={onCloseModal} */}
-      {/*    onPressAgreeBtn={() => onPressAgreeBtn()} */}
-      {/*  /> */}
-      {/* )} */}
-    </View>
+                다음
+              </CustomText>
+            </View>
+          </CustomButton>
+        </View>
+      </View>
+    </>
   );
 };
 export default AgreeScreen;

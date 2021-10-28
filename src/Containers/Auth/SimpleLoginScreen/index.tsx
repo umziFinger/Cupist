@@ -180,9 +180,7 @@ const SimpleLoginScreen = () => {
   };
 
   const onPressJoin = () => {
-    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: false }));
-    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenLoginRBS', data: true }));
-    // navigate('SetSmsScreen');
+    navigate('AgreeScreen');
   };
 
   // Todo: 테스트 코드이므로 삭제 해야됩니다.
