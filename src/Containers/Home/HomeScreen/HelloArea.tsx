@@ -15,7 +15,7 @@ const HelloArea = () => {
         return (
           <>
             <View style={{ justifyContent: 'center' }}>
-              <CustomText style={{ color: Color.Black1000, fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4 }}>
+              <CustomText style={{ color: Color.Black1000, fontSize: 22, fontWeight: '500', letterSpacing: -0.4 }}>
                 첫 예약
               </CustomText>
             </View>
@@ -30,7 +30,7 @@ const HelloArea = () => {
       // 예약 건수가 있을때
       return (
         <View style={{ justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Black1000, fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4 }}>
+          <CustomText style={{ color: Color.Black1000, fontSize: 22, fontWeight: '500', letterSpacing: -0.4 }}>
             새로운 볼링장을 예약해보세요.
           </CustomText>
         </View>
@@ -39,7 +39,7 @@ const HelloArea = () => {
     // 로그인 전
     return (
       <View style={{ justifyContent: 'center' }}>
-        <CustomText style={{ color: Color.Black1000, fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4 }}>
+        <CustomText style={{ color: Color.Black1000, fontSize: 22, fontWeight: '500', letterSpacing: -0.4 }}>
           로그인을 하여 예약을 진행해보세요.
         </CustomText>
       </View>
