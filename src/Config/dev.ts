@@ -45,25 +45,8 @@ const dev = {
   MY_PROMOTION_URL: 'my/promotion',
   MY_CERT_GET_URL: 'my/cert/get',
 
-  // rental
-  RENTAL_LIST: 'rental/main',
-  RENTAL_POPULAR_LIST: 'rental/popular',
-  RENTAL_RECOMMEND_LIST: 'rental/recommend',
-  RENTAL_BRAND_LIST: 'rental/brand',
-  RENTAL_DIBS_URL: 'rental/dibs',
-  RENTAL_DETAIL: 'rental/detail',
-  RENTAL_SEARCH_LIST: 'rental/search',
-  RENTAL_CART_URL: 'rental/cart',
-  RENTAL_PAYMENT: 'rental/payment',
-  RENTAL_PAYMENT_RESULT_URL: 'rental/payment-result',
-  RENTAL_HISTORY: 'my/rental',
-
-  // review
-  REVIEW: 'reviews',
-
   // search
-  SEARCH_URL: 'search',
-  SEARCH_QUERY_URL: 'search/searchQuery',
+  SEARCH_AREA_URL: 'search/area',
 
   // user
   USER_URL: 'user',

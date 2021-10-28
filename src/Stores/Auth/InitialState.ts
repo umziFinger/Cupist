@@ -17,6 +17,7 @@ export const INITIAL_STATE = {
     nickname: null,
     profile: null,
     username: null,
+    reservationCnt: null,
   },
   tokenInfo: {
     token: null,
@@ -63,6 +64,7 @@ interface userInfo {
   nickname: string | null;
   profile: string | null;
   username: string | null;
+  reservationCnt: number | null;
 }
 
 interface tokenInfo {

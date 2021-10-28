@@ -7,13 +7,7 @@ import { NotificationTypes } from '@/Stores/Notification/Actions';
 import { MyTypes } from '@/Stores/My/Actions';
 
 // search
-import {
-  fetchDeleteAllSearchQuery,
-  fetchDeleteSearchQuery,
-  fetchRecentSearchList,
-  fetchSearchList,
-  fetchUpdateRecentSearchList,
-} from '@/Sagas/SearchSaga';
+import { fetchSearchAreaList } from '@/Sagas/SearchSaga';
 
 // common
 import {
@@ -77,11 +71,7 @@ export default function* root() {
     takeLatest(AuthTypes.FETCH_AUTH_FIND_PASSWORD, fetchAuthFindPassword),
 
     // search
-    takeLatest(SearchTypes.FETCH_SEARCH_LIST, fetchSearchList),
-    takeLatest(SearchTypes.FETCH_DELETE_ALL_SEARCH_QUERY, fetchDeleteAllSearchQuery),
-    takeLatest(SearchTypes.FETCH_DELETE_SEARCH_QUERY, fetchDeleteSearchQuery),
-    takeLatest(SearchTypes.FETCH_RECENT_SEARCH_LIST, fetchRecentSearchList),
-    takeLatest(SearchTypes.FETCH_UPDATE_RECENT_SEARCH_LIST, fetchUpdateRecentSearchList),
+    takeLatest(SearchTypes.FETCH_SEARCH_AREA_LIST, fetchSearchAreaList),
 
     // notification
     takeLatest(NotificationTypes.FETCH_NOTIFICATION_LIST, fetchNotificationList),
