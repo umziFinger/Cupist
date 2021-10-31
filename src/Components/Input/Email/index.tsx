@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 
-interface InputEmailProps {
+type InputEmailProps = {
   emailValidText: string;
-  onChangeText: (value: string) => void;
+  onChangeText: (e: string) => void;
   onFocus: () => void;
   onBlur: () => void;
   value: string;
-}
+};
 
 function InputEmail({ emailValidText, onChangeText, onFocus, onBlur, value }: InputEmailProps) {
   return (

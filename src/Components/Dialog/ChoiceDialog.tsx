@@ -8,6 +8,13 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { onAppUpdate } from '@/Components/Function';
+import {
+  navigate,
+  navigateAndReset,
+  navigateAndSimpleReset,
+  navigateGoBack,
+  navigateReplace,
+} from '@/Services/NavigationService';
 
 interface ChoiceDialogProps {
   item: {
@@ -21,6 +28,7 @@ interface ChoiceDialogProps {
 const ChoiceDialog = (props: ChoiceDialogProps) => {
   const { item } = props;
   const { dataType, text } = item;
+
   const dispatch = useDispatch();
   const { alertDialogParams, versionInfo } = useSelector((state: CommonState) => state.common);
 
@@ -43,7 +51,7 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
     return null;
   };
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
     switch (dataType) {
       case 'startTask': {
         break;
@@ -64,6 +72,12 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
 
       case 'goToStore': {
         onAppUpdate(versionInfo.currentVersion);
+        break;
+      }
+
+      case 'cancelJoin': {
+        dispatch(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
+        // navigateReplace('SimpleLoginScreen');
         break;
       }
 
@@ -123,10 +137,10 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
                 marginRight: 28,
               }}
             >
-              <CustomText style={{ color: Color.gray900, fontSize: 15, fontWeight: 'bold' }}>취소</CustomText>
+              <CustomText style={{ color: Color.Gray800, fontSize: 15, fontWeight: 'bold' }}>취소</CustomText>
             </View>
           </CustomButton>
-          <CustomButton onPress={onConfirm} hitSlop={{ left: 7, right: 7, bottom: 7, top: 7 }}>
+          <CustomButton onPress={() => onConfirm()} hitSlop={{ left: 7, right: 7, bottom: 7, top: 7 }}>
             <View
               style={
                 {

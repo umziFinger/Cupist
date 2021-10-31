@@ -2,6 +2,7 @@ import { createReducer } from 'reduxsauce';
 import produce from 'immer';
 import { INITIAL_STATE } from '@/Stores/Auth/InitialState';
 import { AuthTypes } from './Actions';
+import { navigateGoBack } from '@/Services/NavigationService';
 
 export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
   return produce(state, (draft) => {
@@ -36,6 +37,7 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         d.passwordValid = false;
         d.userNameValid = false;
         d.inputAuthNum = null;
+
         break;
       }
       case 'smsInfoInit': {
@@ -131,6 +133,10 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
       }
       case 'terms': {
         draft.terms = data.terms;
+        break;
+      }
+      case 'email': {
+        draft.email = data.email;
         break;
       }
       default:

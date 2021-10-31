@@ -17,7 +17,8 @@ export function navigateReplace(name: string, params?: any) {
 }
 
 export function navigateGoBack() {
-  navigationRef.current?.goBack();
+  // console.log('뒤로가기');
+  navigationRef.current.goBack();
 }
 
 export function navigateAndReset(name: string, index = 0) {

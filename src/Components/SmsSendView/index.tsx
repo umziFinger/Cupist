@@ -14,7 +14,7 @@ import MyActions from '@/Stores/My/Actions';
 
 interface SmsSendViewProps {
   onPressNextAction: Function;
-  bottomComponent: Function;
+  bottomComponent?: Function;
   type: string | '';
 }
 

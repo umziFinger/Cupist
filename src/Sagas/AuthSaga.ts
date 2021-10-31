@@ -282,7 +282,7 @@ export function* fetchAuthSmsSend(data: any): any {
   try {
     const payload = {
       ...data,
-      url: Config.AUTH_CERT_GET_URL,
+      url: Config.AUTH_SMS_SEND_URL,
     };
 
     const response = yield call(Axios.POST, payload);

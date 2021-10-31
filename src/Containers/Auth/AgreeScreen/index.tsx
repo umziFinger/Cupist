@@ -12,6 +12,7 @@ import AgreeItem from '@/Containers/Auth/AgreeScreen/AgreeItem';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { Color } from '@/Assets/Color';
 import { DATA_PERMISSIONS } from './data';
+import { navigate } from '@/Services/NavigationService';
 
 const AgreeScreen = () => {
   const dispatch = useDispatch();
@@ -119,7 +120,7 @@ const AgreeScreen = () => {
 
   const onPressNext = () => {
     if (checkedArr?.includes('all')) {
-      console.log('다음페이지');
+      navigate('JoinScreen');
     }
   };
 

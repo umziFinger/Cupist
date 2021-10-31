@@ -14,6 +14,7 @@ import SimpleLoginScreen from '@/Containers/Auth/SimpleLoginScreen';
 import LoginScreen from '@/Containers/Auth/LoginScreen';
 import FindPasswordScreen from '@/Containers/Auth/FindPasswordScreen';
 import AgreeScreen from '@/Containers/Auth/AgreeScreen';
+import JoinScreen from '@/Containers/Auth/JoinScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -28,6 +29,7 @@ export type MainStackParamList = {
   LoginScreen: undefined;
   FindPasswordScreen: undefined;
   AgreeScreen: undefined;
+  JoinScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -56,6 +58,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="LoginScreen" component={LoginScreen} />
       <MainStack.Screen name="FindPasswordScreen" component={FindPasswordScreen} />
       <MainStack.Screen name="AgreeScreen" component={AgreeScreen} />
+      <MainStack.Screen name="JoinScreen" component={JoinScreen} />
     </MainStack.Navigator>
   );
 };

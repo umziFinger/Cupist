@@ -3,15 +3,15 @@ import { Platform, TextInput, View } from 'react-native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 
-interface InputPasswordProps {
-  passwordValidText: string;
+type InputPasswordProps = {
+  passwordValidText?: string | '';
   onChangeText: (value: string) => void;
   onFocus: () => void;
   onBlur: () => void;
   value: string;
-}
+};
 
-function InputPassword({ passwordValidText, onChangeText, onFocus, onBlur, value }: InputPasswordProps) {
+function InputPassword({ passwordValidText = '', onChangeText, onFocus, onBlur, value }: InputPasswordProps) {
   return (
     <>
       <View style={{}}>

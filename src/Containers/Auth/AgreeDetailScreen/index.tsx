@@ -41,14 +41,14 @@ function AgreeDetailScreen() {
       }}
     >
       <View style={{ flex: 1 }}>
-        <Header type="auth" text={DATA_PERMISSION_DETAILS[selectedAgreeIdx].title} action={RBSheetRef} showBackBtn />
+        <Header type="auth" text={DATA_PERMISSION_DETAILS[selectedAgreeIdx]?.title} action={RBSheetRef} showBackBtn />
         <View style={{ flex: 1 }}>
           <WebView
             style={{ flex: 1 }}
             onError={(event) => {
               console.log('웹뷰 에러', event);
             }}
-            source={{ uri: DATA_PERMISSION_DETAILS[selectedAgreeIdx].uri }}
+            source={{ uri: DATA_PERMISSION_DETAILS[selectedAgreeIdx]?.uri }}
             useWebKit
           />
         </View>
