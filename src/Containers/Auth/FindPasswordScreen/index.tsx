@@ -8,7 +8,6 @@ import Header from '@/Components/Header';
 import InputView from '@/Containers/Auth/FindPasswordScreen/InputView';
 
 const FindPasswordScreen = () => {
-  const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
 
   return (

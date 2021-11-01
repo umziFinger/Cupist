@@ -12,17 +12,24 @@ import useInputPassword from '@/Hooks/useInputPassword';
 
 function InputView() {
   const dispatch = useDispatch();
-  const { email, onChangeEmail, emailValidText } = useInputEmail();
-  const { password, onChangePassword, passwordValidText } = useInputPassword();
+  const { email, onChangeEmail, emailValidText, isEmailValid } = useInputEmail();
+  const { password, passwordValidText, isPasswordValid } = useInputPassword();
 
   const [currentFocus, setCurrentFocus] = useState<string>('email');
-  const [idValid, setIdValid] = useState<boolean>(false);
+
+  const onChangePassword = (value: string) => {
+    if (value) {
+      dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: value } }));
+    } else {
+      dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: null } }));
+    }
+  };
 
   const onPressLogin = () => {
-    if (email && password) {
+    if (isEmailValid) {
       const params = {
         email,
-        pw: password,
+        password,
       };
       dispatch(AuthActions.fetchUserLogin(params));
     }
@@ -57,7 +64,7 @@ function InputView() {
               alignItems: 'center',
               paddingVertical: 15,
               borderRadius: 3,
-              backgroundColor: idValid ? Color.Primary1000 : Color.Grayyellow200,
+              backgroundColor: isEmailValid ? Color.Primary1000 : Color.Grayyellow200,
             }}
           >
             <CustomText

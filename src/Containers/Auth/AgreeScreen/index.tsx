@@ -51,6 +51,17 @@ const AgreeScreen = () => {
       }
     }
   }, [checkedArr]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(
+        AuthActions.fetchAuthReducer({
+          type: 'agreeInfoInit',
+        }),
+      );
+    };
+  }, []);
+
   // console.log(checkedArr);
   const onCheck = (index: string | number) => {
     if (index === 'all') {
@@ -120,7 +131,7 @@ const AgreeScreen = () => {
 
   const onPressNext = () => {
     if (checkedArr?.includes('all')) {
-      navigate('JoinScreen');
+      navigate('JoinStepOneScreen');
     }
   };
 
@@ -217,7 +228,7 @@ const AgreeScreen = () => {
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
         />
-        <View style={{ paddingBottom: heightInfo.fixBottomHeight + 16 }}>
+        <View style={{ paddingBottom: heightInfo.fixBottomHeight }}>
           <CustomButton onPress={() => onPressNext()}>
             <View
               style={{

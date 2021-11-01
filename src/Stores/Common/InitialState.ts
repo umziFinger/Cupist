@@ -39,6 +39,7 @@ export const INITIAL_STATE = {
   totalSelectImageIndex: 0,
   isOpenAgreeDetailRBS: false,
   currentRBS: '',
+  isOpenKeyboard: false,
 };
 
 export interface CommonState {
@@ -77,6 +78,7 @@ export interface CommonState {
     totalSelectImageIndex: number;
     isOpenAgreeDetailRBS: boolean | false;
     currentRBS: string | null;
+    isOpenKeyboard: boolean | false;
   };
 }
 

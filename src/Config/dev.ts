@@ -37,6 +37,10 @@ const dev = {
   AUTH_LOGIN_SOCIAL_URL: 'auth/login/social',
   AUTH_REFRESH_URL: 'auth/refresh',
   AUTH_SMS_SEND_URL: 'auth/sms-send',
+  AUTH_SMS_AUTH_URL: 'auth/sms-auth',
+  AUTH_JOIN_URL: 'auth/join',
+  AUTH_FIND_PASSWORD_URL: 'auth/find-password',
+
   // my
   MY_URL: 'my',
   MY_PUSH_YN_URL: 'my/pushYN',

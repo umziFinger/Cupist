@@ -31,6 +31,8 @@ export const INITIAL_STATE = {
   passwordValid: false,
   userName: null,
   userNameValid: false,
+  nickName: null,
+  nickNameValid: false,
   terms: [],
 };
 
@@ -38,7 +40,7 @@ export interface AuthState {
   auth: {
     userIdx: number | null;
     phoneNumber: string | '';
-    log_cert: string | '';
+    log_cert: any;
     isReceived: boolean | false;
     smsValueValid: boolean | false;
     smsValidText: string | '';
@@ -52,6 +54,8 @@ export interface AuthState {
     passwordValid: boolean | false;
     userName: string | '';
     userNameValid: boolean | false;
+    nickName: string | '';
+    nickNameValid: boolean | false;
     terms: Array<any> | [];
   };
 }

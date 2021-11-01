@@ -37,6 +37,8 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         d.passwordValid = false;
         d.userNameValid = false;
         d.inputAuthNum = null;
+        d.isReceived = false;
+        d.nickName = null;
 
         break;
       }
@@ -76,7 +78,7 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
       }
       case 'log_cert': {
         console.log('call reducer log_cert : ', data);
-        draft.log_cert = data.log_cert;
+        draft.log_cert = data;
         break;
       }
       case 'isReceived': {
@@ -100,7 +102,7 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
       case 'smsValidText': {
-        draft.smsValidText = data.message;
+        draft.smsValidText = data.smsValidText;
         break;
       }
       // case 'pushYN': {
@@ -139,6 +141,11 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         draft.email = data.email;
         break;
       }
+      case 'nickName': {
+        draft.nickName = data;
+        break;
+      }
+
       default:
         return draft;
     }

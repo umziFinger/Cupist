@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
@@ -20,8 +20,36 @@ type InputAuthPhoneProps = {
 };
 
 function InputAuthPhone({ onChangeText, value, onPressAuth, isPhoneValid }: InputAuthPhoneProps) {
-  console.log('asdfljasdljkffs: ', isPhoneValid);
   const { isReceived } = useSelector((state: AuthState) => state.auth);
+
+  const getValidColor = () => {
+    let backgroundColor = Color.Grayyellow200;
+    let textColor = Color.White;
+    let borderColor;
+
+    if (isPhoneValid && !isReceived) {
+      // 핸드폰 번호 정규식 통과
+      backgroundColor = Color.Primary1000;
+      textColor = Color.White;
+      borderColor = undefined;
+    } else if (isPhoneValid && isReceived) {
+      // 인증번호 호출
+      backgroundColor = Color.White;
+      textColor = Color.Primary1000;
+      borderColor = Color.Primary1000;
+    } else {
+      // 초기값
+      backgroundColor = Color.Grayyellow200;
+      textColor = Color.White;
+      borderColor = undefined;
+    }
+
+    return {
+      backgroundColor,
+      textColor,
+      borderColor,
+    };
+  };
 
   return (
     <>
@@ -53,7 +81,7 @@ function InputAuthPhone({ onChangeText, value, onPressAuth, isPhoneValid }: Inpu
               letterSpacing: -0.38,
               padding: 0,
             }}
-            autoFocus={false}
+            autoFocus
             keyboardType="number-pad"
             autoCorrect={false}
             maxLength={13}
@@ -65,7 +93,9 @@ function InputAuthPhone({ onChangeText, value, onPressAuth, isPhoneValid }: Inpu
         <CustomButton onPress={() => onPressAuth()}>
           <View
             style={{
-              backgroundColor: isPhoneValid ? Color.Primary1000 : Color.Grayyellow200,
+              backgroundColor: getValidColor().backgroundColor,
+              borderColor: getValidColor().borderColor,
+              borderWidth: getValidColor().borderColor ? 1 : undefined,
               paddingVertical: 16,
               borderRadius: 5,
               paddingLeft: 25,
@@ -78,7 +108,7 @@ function InputAuthPhone({ onChangeText, value, onPressAuth, isPhoneValid }: Inpu
                 fontSize: 14,
                 fontWeight: 'bold',
                 letterSpacing: -0.25,
-                color: Color.White,
+                color: getValidColor().textColor,
               }}
             >
               {isReceived ? '다시 받기' : '인증하기'}

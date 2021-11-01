@@ -7,36 +7,21 @@ import { Color } from '@/Assets/Color';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthActions from '@/Stores/Auth/Actions';
 import InputEmail from '@/Components/Input/Email';
+import useInputEmail from '@/Hooks/useInputEmail';
 
 function InputView() {
   const dispatch = useDispatch();
-  const { email } = useSelector((state: AuthState) => state.auth);
 
+  const { email, onChangeEmail, emailValidText, isEmailValid } = useInputEmail();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentFocus, setCurrentFocus] = useState<string>('email');
-  const [emailValid, setEmailValid] = useState<boolean>(false);
-  const [emailValidText, setEmailValidText] = useState<string>('');
-
-  const onChangeEmail = (value: string) => {
-    if (value) {
-      const emailRegExp = /^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/;
-      if (value.match(emailRegExp)) {
-        dispatch(AuthActions.fetchAuthReducer({ type: 'email', data: { email: value } }));
-        setEmailValid(true);
-      } else {
-        setEmailValidText('이메일 형식이 올바르지 않습니다.');
-        dispatch(AuthActions.fetchAuthReducer({ type: 'email', data: { email: value } }));
-        setEmailValid(false);
-      }
-    } else {
-      dispatch(AuthActions.fetchAuthReducer({ type: 'email', data: { email: null } }));
-      setEmailValidText('');
-      setEmailValid(false);
-    }
-  };
 
   const onPressFindPassword = () => {
     console.log('비밀번호 찾기 버튼 클릭');
+    const params = {
+      email,
+    };
+    dispatch(AuthActions.fetchAuthFindPassword(params));
   };
 
   return (
@@ -59,7 +44,7 @@ function InputView() {
               alignItems: 'center',
               paddingVertical: 15,
               borderRadius: 3,
-              backgroundColor: emailValid ? Color.Primary1000 : Color.Grayyellow200,
+              backgroundColor: isEmailValid ? Color.Primary1000 : Color.Grayyellow200,
             }}
           >
             <CustomText

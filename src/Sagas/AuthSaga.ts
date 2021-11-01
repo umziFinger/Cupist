@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import BadgeAndroid from 'react-native-android-badge';
+import DeviceInfo from 'react-native-device-info';
 import { Axios } from '@/Services/Axios';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
@@ -10,6 +11,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import MyAcions from '@/Stores/My/Actions';
 import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 export function* fetchUserLogin(data: any): any {
   try {
@@ -32,7 +34,7 @@ export function* fetchUserLogin(data: any): any {
     };
 
     const response = yield call(Axios.POST, payload);
-
+    console.log('로그인 반응: ', response.data);
     if (response.result === true && response.code === null) {
       const { accessToken, refreshToken, idx } = response.data;
       console.log('Login token : ', accessToken);
@@ -152,7 +154,7 @@ export function* fetchUserJoin(data: any): any {
 
     const payload = {
       ...data,
-      url: Config.AUTH_SIGN_UP_URL,
+      url: Config.AUTH_JOIN_URL,
     };
     const response = yield call(Axios.POST, payload);
 
@@ -165,7 +167,7 @@ export function* fetchUserJoin(data: any): any {
       AsyncStorage.setItem('refreshToken', refresh_token.toString());
 
       // 로그인 처리
-      yield put(AuthActions.fetchAuthReducer({ type: 'login', data: { userIdx: idx } }));
+      yield put(AuthActions.fetchAuthReducer({ type: 'login', data: response.data }));
 
       yield put(
         AuthActions.fetchAuthReducer({
@@ -191,6 +193,7 @@ export function* fetchUserJoin(data: any): any {
           },
         }),
       );
+      navigate('JoinStepThreeScreen');
     } else {
       yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
       yield put(CommonActions.fetchErrorHandler(response));
@@ -288,10 +291,8 @@ export function* fetchAuthSmsSend(data: any): any {
     const response = yield call(Axios.POST, payload);
 
     if (response.result === true && response.code === null) {
-      console.log('call saga log_cert');
-
       yield put(AuthActions.fetchAuthReducer({ type: 'isReceived', data: true }));
-      yield put(AuthActions.fetchAuthReducer({ type: 'log_cert', data: response.data.data }));
+      yield put(AuthActions.fetchAuthReducer({ type: 'log_cert', data: response.data }));
     } else {
       // 인증정보 초기화
       yield put(AuthActions.fetchAuthReducer({ type: 'phoneNumber', data: { phoneNumber: null } }));
@@ -305,36 +306,44 @@ export function* fetchAuthSmsSend(data: any): any {
 
 export function* fetchSmsAuth(data: any): any {
   try {
+    console.log('인증번호 통과: ');
     const payload = {
       ...data,
-      url: Config.AUTH_CERT_CHECK_URL,
+      url: Config.AUTH_SMS_AUTH_URL,
     };
 
     const response = yield call(Axios.POST, payload);
+    console.log('인증번호 통과: ', response.data);
 
     if (response.result === true && response.code === null) {
-      const { log_cert, profileState } = yield select((state) => state.auth);
-      if (log_cert.toString() === data.params.cert) {
+      const { log_cert, phoneNumber, email, password, userName, nickName } = yield select(
+        (state: AuthState) => state.auth,
+      );
+      if (log_cert.authNum === data.params.authNum) {
         yield put(AuthActions.fetchAuthReducer({ type: 'smsValueValid', data: true }));
-        yield put(AuthActions.fetchAuthReducer({ type: 'isReceived', data: false }));
 
-        if (data.params.providerScreen === 'SetSmsScreen') {
-          if (profileState === 'N') {
-            navigate('SetCharacterScreen');
-            return;
-          }
-          navigate('SetPasswordScreen');
-        } else if (data.params.providerScreen === 'MyEditMobileScreen') {
-          const { phoneNumber } = yield select((state) => state.auth);
-          yield put(MyAcions.fetchMyUserInfoPatch({ user_cel: phoneNumber }));
-          navigateGoBack();
-        } else if (data.params.providerScreen === 'MyEditPasswordScreen') {
-          navigate('MyEditPasswordScreen');
-        } else if (data.params.providerScreen === 'MyEditAddressScreen') {
-          navigate('MyInfoModifyScreen');
-          yield put(CommonActions.fetchCommonReducer({ type: 'isOpenMyAddressRBS', data: true }));
+        if (data.params.screen === 'JoinStepTwoScreen') {
+          const params = {
+            mobile: phoneNumber.replace(/-/g, ''),
+            email,
+            password,
+            nickname: nickName,
+            sex: 'M',
+            uniqueId: DeviceInfo.getUniqueId(),
+            providerType: 'email',
+            authIdx: log_cert.authIdx,
+            name: userName,
+          };
+          yield put(AuthActions.fetchUserJoin(params));
         }
       } else {
+        yield put(
+          AuthActions.fetchAuthReducer({
+            type: 'smsValidText',
+            data: { smsValidText: '인증번호가 일치하지 않습니다.' },
+          }),
+        );
+
         yield put(
           CommonActions.fetchCommonReducer({
             type: 'alertToast',
@@ -400,13 +409,13 @@ export function* fetchAuthFindPassword(data: any): any {
   try {
     const payload = {
       ...data,
-      url: Config.AUTH_FIND_PW_URL,
+      url: Config.AUTH_FIND_PASSWORD_URL,
     };
 
     const response = yield call(Axios.POST, payload);
 
     if (response.result === true && response.code === null) {
-      console.log('fetchAuthFindsPassword response : ', response.data.tmp_pw);
+      console.log('fetchAuthFindsPassword response : ', response.data);
       yield put(
         CommonActions.fetchCommonReducer({
           type: 'alertToast',
@@ -417,7 +426,8 @@ export function* fetchAuthFindPassword(data: any): any {
           },
         }),
       );
-      yield put(AuthActions.fetchAuthReducer({ type: 'foundPw', data: response.data.tmp_pw }));
+      // yield put(AuthActions.fetchAuthReducer({ type: 'foundPw', data: response.data.tmp_pw }));
+      navigate('LoginScreen');
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }

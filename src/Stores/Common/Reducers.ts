@@ -167,6 +167,10 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.currentRBS = data ? 'agreeDetail' : state.currentRBS;
         break;
       }
+      case 'isOpenKeyboard': {
+        draft.isOpenKeyboard = data;
+        break;
+      }
 
       default:
         return draft;
