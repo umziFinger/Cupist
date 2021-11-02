@@ -1,12 +1,7 @@
 import React from 'react';
-import { Text, Platform, TextProps, TextStyle } from 'react-native';
+import { Text, Platform, TextProps } from 'react-native';
 
-interface PropTypes {
-  children: any;
-  style: TextStyle;
-}
-
-const CustomText = (props: PropTypes) => {
+const CustomText: React.SFC<TextProps> = (props) => {
   const { children, style } = props;
 
   const defaultStyle = Platform.select({
@@ -31,7 +26,7 @@ const CustomText = (props: PropTypes) => {
         style={[
           defaultStyle,
           style,
-          { fontFamily: 'SpoqaHanSansNeo-Bold', fontWeight: Platform.OS === 'ios' ? style.fontWeight : 'normal' },
+          { fontFamily: 'SpoqaHanSansNeo-Bold', fontWeight: Platform.OS === 'ios' ? style?.fontWeight : 'normal' },
         ]}
         allowFontScaling={false}
       >
