@@ -159,12 +159,12 @@ export function* fetchUserJoin(data: any): any {
     const response = yield call(Axios.POST, payload);
 
     if (response.result === true && response.code === null) {
-      const { access_token, refresh_token, idx } = response.data;
+      const { accessToken, refreshToken, idx } = response.data;
       console.log('회원가입 response.data : ', response.data);
 
       AsyncStorage.setItem('userIdx', idx.toString());
-      AsyncStorage.setItem('accessToken', access_token.toString());
-      AsyncStorage.setItem('refreshToken', refresh_token.toString());
+      AsyncStorage.setItem('accessToken', accessToken.toString());
+      AsyncStorage.setItem('refreshToken', refreshToken.toString());
 
       // 로그인 처리
       yield put(AuthActions.fetchAuthReducer({ type: 'login', data: response.data }));
@@ -174,8 +174,8 @@ export function* fetchUserJoin(data: any): any {
           type: 'tokenInfo',
           data: {
             tokenInfo: {
-              accessToken: access_token,
-              refreshToken: refresh_token,
+              accessToken,
+              refreshToken,
             },
           },
         }),

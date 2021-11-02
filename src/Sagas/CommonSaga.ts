@@ -62,6 +62,13 @@ export function* fetchInitialHandler() {
       data: 'init',
     }),
   );
+
+  // 회원 가입 form 초기화
+  yield put(
+    AuthActions.fetchAuthReducer({
+      type: 'joinInfoInit',
+    }),
+  );
 }
 
 export function* fetchErrorHandler(data: any) {

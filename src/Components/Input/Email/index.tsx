@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { forwardRef } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
@@ -6,12 +6,23 @@ import { Color } from '@/Assets/Color';
 type InputEmailProps = {
   emailValidText: string;
   onChangeText: (e: string) => void;
-  onFocus: () => void;
-  onBlur: () => void;
   value: string;
+  autoFocus?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onSubmitEditing?: () => void;
 };
 
-function InputEmail({ emailValidText, onChangeText, onFocus, onBlur, value }: InputEmailProps) {
+const InputEmail = forwardRef<TextInput, InputEmailProps>((props: InputEmailProps, ref) => {
+  const {
+    emailValidText,
+    onChangeText,
+    onFocus,
+    onBlur,
+    value,
+    autoFocus = false,
+    onSubmitEditing = undefined,
+  } = props;
   return (
     <>
       <View>
@@ -29,6 +40,7 @@ function InputEmail({ emailValidText, onChangeText, onFocus, onBlur, value }: In
         }}
       >
         <TextInput
+          ref={ref}
           autoCompleteType="off"
           placeholder="이메일주소를 입력해주세요."
           placeholderTextColor={Color.Gray400}
@@ -41,12 +53,13 @@ function InputEmail({ emailValidText, onChangeText, onFocus, onBlur, value }: In
           }}
           onFocus={onFocus}
           onBlur={onBlur}
-          autoFocus={false}
+          autoFocus={autoFocus}
           keyboardType={'default'}
           onChangeText={onChangeText}
           autoCorrect={false}
           value={value}
           allowFontScaling={false}
+          onSubmitEditing={onSubmitEditing}
         />
       </View>
       <View style={{ marginTop: 4 }}>
@@ -54,6 +67,7 @@ function InputEmail({ emailValidText, onChangeText, onFocus, onBlur, value }: In
       </View>
     </>
   );
-}
+});
 
+InputEmail.displayName = 'InputEmail';
 export default InputEmail;

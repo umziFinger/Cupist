@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, FlatList, Platform } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, FlatList, Platform, TextInput } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
@@ -22,7 +22,10 @@ import useInputNickname from '@/Hooks/useInputNickname';
 
 const JoinStepTwoScreen = () => {
   const dispatch = useDispatch();
-
+  const ref_input: Array<React.RefObject<TextInput>> = [];
+  ref_input[0] = useRef(null);
+  ref_input[1] = useRef(null);
+  ref_input[2] = useRef(null);
   const { isReceived, log_cert } = useSelector((state: AuthState) => state.auth);
   const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
 
@@ -67,7 +70,6 @@ const JoinStepTwoScreen = () => {
 
   const onPressJoin = () => {
     if (isNameValid && isNicknameValid && isPhoneValid && smsValueValid) {
-      console.log('snffj');
       const params = {
         mobile: phoneNumber.replace(/-/g, ''),
         authNum: smsAuthNumber.toString(),
@@ -76,6 +78,13 @@ const JoinStepTwoScreen = () => {
       };
 
       dispatch(AuthActions.fetchSmsAuth(params));
+    }
+  };
+
+  const onFocusNext = (currentFocusIndex: number) => {
+    if (ref_input[currentFocusIndex] && ref_input[currentFocusIndex + 1]) {
+      ref_input[currentFocusIndex].current?.blur();
+      ref_input[currentFocusIndex + 1].current?.focus();
     }
   };
 
@@ -149,26 +158,35 @@ const JoinStepTwoScreen = () => {
 
                 <View style={{ marginTop: 48, paddingBottom: 32 - 18 }}>
                   <InputName
+                    ref={ref_input[0]}
                     nameValidText={nameValidText}
                     onChangeText={onChangeName}
                     onFocus={() => setCurrentFocus('userName')}
                     onBlur={() => setCurrentFocus('')}
                     value={userName}
+                    onSubmitEditing={() => {
+                      onFocusNext(0);
+                    }}
                   />
                 </View>
 
                 <View style={{ paddingBottom: 32 - 18 }}>
                   <InputNickname
+                    ref={ref_input[1]}
                     nicknameValidText={nicknameValidText}
                     onChangeText={onChangeNickname}
                     onFocus={() => setCurrentFocus('nickName')}
                     onBlur={() => setCurrentFocus('')}
                     value={nickName}
+                    onSubmitEditing={() => {
+                      onFocusNext(1);
+                    }}
                   />
                 </View>
 
                 <View style={{ paddingBottom: 32 }}>
                   <InputAuthPhone
+                    ref={ref_input[2]}
                     onChangeText={onChangePhoneNumber}
                     onFocus={() => setCurrentFocus('phone')}
                     onBlur={() => setCurrentFocus('')}

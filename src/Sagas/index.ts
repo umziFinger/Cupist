@@ -45,7 +45,10 @@ import {
   fetchMyUserInfoPatch,
   fetchMyPointList,
   fetchMySmsSend,
+  fetchMyProfilePatch,
 } from '@/Sagas/MySaga';
+import { fetchPlaceAroundList } from '@/Sagas/PlaceSaga';
+import { PlaceTypes } from '@/Stores/Place/Actions';
 
 export default function* root() {
   yield all([
@@ -85,5 +88,9 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_USER_INFO_PATCH, fetchMyUserInfoPatch),
     takeLatest(MyTypes.FETCH_MY_POINT_LIST, fetchMyPointList),
     takeLatest(MyTypes.FETCH_MY_SMS_SEND, fetchMySmsSend),
+    takeLatest(MyTypes.FETCH_MY_PROFILE_PATCH, fetchMyProfilePatch),
+
+    // place
+    takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),
   ]);
 }

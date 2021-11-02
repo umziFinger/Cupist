@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
@@ -11,7 +11,8 @@ type InputPasswordProps = {
   value: string;
 };
 
-function InputPassword({ passwordValidText = '', onChangeText, onFocus, onBlur, value }: InputPasswordProps) {
+const InputPassword = forwardRef<TextInput, InputPasswordProps>((props: InputPasswordProps, ref) => {
+  const { passwordValidText = '', onChangeText, onFocus, onBlur, value } = props;
   return (
     <>
       <View style={{}}>
@@ -29,6 +30,7 @@ function InputPassword({ passwordValidText = '', onChangeText, onFocus, onBlur, 
         }}
       >
         <TextInput
+          ref={ref}
           autoCompleteType="off"
           placeholder="비밀번호 영어, 숫자, 특수문자 8-12자"
           placeholderTextColor={Color.Gray400}
@@ -50,6 +52,7 @@ function InputPassword({ passwordValidText = '', onChangeText, onFocus, onBlur, 
           autoCapitalize={'none'}
           value={value}
           maxLength={12}
+          allowFontScaling={false}
         />
       </View>
       <View style={{ marginTop: 4 }}>
@@ -57,6 +60,8 @@ function InputPassword({ passwordValidText = '', onChangeText, onFocus, onBlur, 
       </View>
     </>
   );
-}
+});
+
+InputPassword.displayName = 'InputPassword';
 
 export default InputPassword;

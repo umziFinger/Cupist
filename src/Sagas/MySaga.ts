@@ -183,3 +183,38 @@ export function* fetchMySmsSend(data: any): any {
     console.log('occurred Error...fetchMySmsSend : ', e);
   }
 }
+
+export function* fetchMyProfilePatch(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.MY_URL,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('프로필 수정: ', response.data);
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: '상주 볼링장 설정이 완료 되었습니다.',
+          },
+        }),
+      );
+      navigate('HomeScreen');
+      // yield put(AuthActions.fetchAuthReducer({ type: 'residentPlace', data: true }));
+      // yield put(AuthActions.fetchAuthReducer({ type: 'log_cert', data: response.data.data }));
+    } else {
+      // 인증정보 초기화
+      // yield put(AuthActions.fetchAuthReducer({ type: 'phoneNumber', data: { phoneNumber: null } }));
+
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchMyProfilePatch : ', e);
+  }
+}

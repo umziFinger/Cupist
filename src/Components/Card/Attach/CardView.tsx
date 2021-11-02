@@ -15,7 +15,7 @@ const CardView = (props: any) => {
           <View style={{ width: width - 32, height: 343 }}>
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+              source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
               resizeMode={FastImage.resizeMode.cover}
             />
           </View>
@@ -26,14 +26,14 @@ const CardView = (props: any) => {
             <View style={{ width: '49.5%' }}>
               <FastImage
                 style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+                source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
                 resizeMode={FastImage.resizeMode.cover}
               />
             </View>
             <View style={{ width: '49.5%', marginLeft: 5 }}>
               <FastImage
                 style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                source={images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+                source={images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
                 resizeMode={FastImage.resizeMode.cover}
               />
             </View>
@@ -45,7 +45,7 @@ const CardView = (props: any) => {
             <View style={{ width: '70%', height: '100%' }}>
               <FastImage
                 style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+                source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
                 resizeMode={FastImage.resizeMode.cover}
               />
             </View>
@@ -54,7 +54,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -63,7 +63,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[2].url ? { uri: images[2].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[2].url ? { uri: images[2].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -77,7 +77,7 @@ const CardView = (props: any) => {
             <View style={{ width: '80%', height: '100%' }}>
               <FastImage
                 style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+                source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
                 resizeMode={FastImage.resizeMode.cover}
               />
             </View>
@@ -86,7 +86,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -95,7 +95,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[2].url ? { uri: images[2].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[2].url ? { uri: images[2].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -104,7 +104,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[3].url ? { uri: images[3].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[3].url ? { uri: images[3].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -120,7 +120,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -129,7 +129,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -140,7 +140,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[2].url ? { uri: images[2].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[2].url ? { uri: images[2].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -149,7 +149,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[3].url ? { uri: images[3].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[3].url ? { uri: images[3].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -158,7 +158,7 @@ const CardView = (props: any) => {
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 5 }}
                   source={
-                    images[4].url ? { uri: images[4].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')
+                    images[4].url ? { uri: images[4].url || '' } : require('@/Assets/Images/Common/icNoImage.png')
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
@@ -179,14 +179,14 @@ const CardView = (props: any) => {
           <View style={{ width: '50%', height: '100%' }}>
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+              source={images[0].url ? { uri: images[0].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
               resizeMode={FastImage.resizeMode.cover}
             />
           </View>
           <View style={{ width: '50%', height: '100%', marginLeft: 5 }}>
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              source={images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+              source={images[1].url ? { uri: images[1].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
               resizeMode={FastImage.resizeMode.cover}
             />
           </View>
@@ -195,21 +195,21 @@ const CardView = (props: any) => {
           <View style={{ width: '33%', height: '100%' }}>
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              source={images[2].url ? { uri: images[2].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+              source={images[2].url ? { uri: images[2].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
               resizeMode={FastImage.resizeMode.cover}
             />
           </View>
           <View style={{ width: '33%', height: '100%', marginLeft: 5 }}>
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              source={images[3].url ? { uri: images[3].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+              source={images[3].url ? { uri: images[3].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
               resizeMode={FastImage.resizeMode.cover}
             />
           </View>
           <View style={{ width: '33%', height: '100%', marginLeft: 5 }}>
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              source={images[4].url ? { uri: images[4].url || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+              source={images[4].url ? { uri: images[4].url || '' } : require('@/Assets/Images/Common/icNoImage.png')}
               resizeMode={FastImage.resizeMode.cover}
             />
             <View

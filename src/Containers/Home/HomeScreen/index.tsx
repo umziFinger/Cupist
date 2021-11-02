@@ -159,6 +159,28 @@ const HomeScreen = ({ route }: HomeProps) => {
           </View>
         );
       }
+
+      case 8: {
+        return (
+          <View style={{ flex: 1 }}>
+            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <CustomButton onPress={() => navigate('JoinStepThreeScreen')}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingVertical: 20,
+                  backgroundColor: Color.Gray300,
+                }}
+              >
+                <CustomText style={{ color: '#333', fontSize: 14 }}>
+                  {selectedDate} 테스트 상주 볼링장 바로가기
+                </CustomText>
+              </View>
+            </CustomButton>
+          </View>
+        );
+      }
       default:
         return null;
     }
@@ -173,7 +195,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="home" />
       <FlatList
-        data={[0, 1, 2, 3, 4, 5, 6, 7]}
+        data={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}
