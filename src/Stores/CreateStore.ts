@@ -15,8 +15,8 @@ const ConfigureStore = (rootReducer: any, rootSaga: any) => {
   middleware.push(sagaMiddleware);
 
   if (__DEV__ && !process.env.JEST_WORKER_ID) {
-    const createDebugger = require('redux-middleware-flipper').default;
-    middleware.push(createDebugger({ resolveCyclic: true }, [], [], 500));
+    const createDebugger = require('redux-flipper').default;
+    middleware.push(createDebugger());
   }
   enhancers.push(applyMiddleware(...middleware));
 
