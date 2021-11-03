@@ -17,6 +17,7 @@ interface PropTypes {
 }
 const DirectReservationArea = (props: PropTypes) => {
   // const {areaList};
+
   const { list } = props;
   const { areaList } = useSelector((state: SearchState) => state.search);
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
@@ -36,19 +37,21 @@ const DirectReservationArea = (props: PropTypes) => {
       backgroundColor: 'transparent',
     },
   ];
-
+  // console.log(areaList);
   const areaFilter = useMemo(
     () => () =>
       produce(areaTag, (draft) => {
-        areaList?.map((item, index) => {
-          return draft.push({
-            index: index + 2,
-            key: item.idx,
-            value: item.area,
-            color: Color.Grayyellow1000,
-            backgroundColor: 'transparent',
+        if (areaList?.length > 0) {
+          areaList?.map((item, index) => {
+            return draft.push({
+              index: index + 2,
+              key: item.idx,
+              value: item.area,
+              color: Color.Grayyellow1000,
+              backgroundColor: 'transparent',
+            });
           });
-        });
+        }
       }),
     [areaList],
   );

@@ -1,42 +1,23 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { View, Platform, TextInput } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch, useSelector } from 'react-redux';
-import _ from 'lodash';
+import { useSelector } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
-import SearchActions from '@/Stores/Search/Actions';
 import { SearchState } from '@/Stores/Search/InitialState';
 
-const InputResidentSearch = () => {
-  const dispatch = useDispatch();
+interface Props {
+  onChangeText: (value: string) => void;
+  onClear: () => void;
+}
+
+const InputLocationSearch = ({ onChangeText, onClear }: Props) => {
   const { searchQuery } = useSelector((state: SearchState) => state.search);
-
-  const debounceFunc = useRef(
-    _.debounce((text: any) => {
-      const params = {
-        query: text,
-        perPage: 10,
-        page: 1,
-      };
-      if (text !== '') dispatch(SearchActions.fetchSearchBowlingClubList(params));
-    }, 500),
-  );
-
-  // console.log(selectMenu);
-  const onChangeText = (text: string) => {
-    dispatch(SearchActions.fetchSearchReducer({ type: 'searchQuery', data: text }));
-    debounceFunc.current(text);
-  };
-
-  const onClearKeyword = () => {
-    dispatch(SearchActions.fetchSearchReducer({ type: 'searchQuery', data: '' }));
-  };
 
   let clearBox = null;
   if (searchQuery !== '') {
     clearBox = (
-      <CustomButton onPress={() => onClearKeyword()} hitSlop={7} style={{ backgroundColor: 'red ' }}>
+      <CustomButton onPress={() => onClear()} hitSlop={7} style={{ backgroundColor: 'red ' }}>
         <View style={{ width: 16, height: 16 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
@@ -105,4 +86,4 @@ const InputResidentSearch = () => {
   );
 };
 
-export default InputResidentSearch;
+export default InputLocationSearch;

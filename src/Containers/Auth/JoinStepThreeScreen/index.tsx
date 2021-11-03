@@ -37,7 +37,7 @@ const JoinStepThreeScreen = () => {
     const params = {
       lat: myLatitude.toString(),
       lng: myLongitude.toString(),
-      perPage: 9,
+      perPage: 10,
       page: aroundListPage,
     };
 
@@ -48,7 +48,7 @@ const JoinStepThreeScreen = () => {
     const params = {
       lat: myLatitude.toString(),
       lng: myLongitude.toString(),
-      perPage: 9,
+      perPage: 10,
       page: 1,
     };
     dispatch(PlaceActions.fetchPlaceAroundList(params));
@@ -139,13 +139,13 @@ const JoinStepThreeScreen = () => {
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
-          initialNumToRender={8}
-          maxToRenderPerBatch={11}
+          initialNumToRender={3}
+          maxToRenderPerBatch={7}
           windowSize={7}
           scrollEnabled
           showsVerticalScrollIndicator={false}
           onEndReached={() => onMore()}
-          onEndReachedThreshold={0.5}
+          onEndReachedThreshold={0.8}
           refreshing={false}
           onRefresh={() => onRefresh()}
           ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}

@@ -44,10 +44,10 @@ const BackHeader = (props: HeaderProps) => {
       >
         <CustomText
           style={{
-            fontSize: 17,
-            fontWeight: 'bold',
-            color: mode === MODE.DARK || mode === MODE.DARK2 ? Color.White : Color.Black1000,
-            letterSpacing: -0.43,
+            fontSize: 15,
+            fontWeight: '500',
+            letterSpacing: -0.2,
+            color: Color.Black1000,
           }}
         >
           {text}

@@ -5,6 +5,8 @@ export const INITIAL_STATE = {
     placeCount: 0,
   },
   bowlingListPage: 1,
+  areaList: [],
+  searchedAreaList: [],
 };
 export interface SearchState {
   search: {
@@ -14,5 +16,7 @@ export interface SearchState {
     };
     searchQuery: string | '';
     bowlingListPage: number | 0;
+    areaList: Array<any>;
+    searchedAreaList: Array<any>;
   };
 }

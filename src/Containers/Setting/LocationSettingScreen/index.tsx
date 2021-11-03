@@ -8,26 +8,23 @@ import { SearchState } from '@/Stores/Search/InitialState';
 import SearchActions from '@/Stores/Search/Actions';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
-import PlaceXSmallCard, { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 import { navigate } from '@/Services/NavigationService';
 import InputLocationSearch from '@/Components/Input/LocationSerach';
 
-const ResidentSearchScreen = () => {
+const LocationSettingScreen = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { searchQuery, bowlingList, bowlingListPage } = useSelector((state: SearchState) => state.search);
+  const { searchQuery, searchedAreaList } = useSelector((state: SearchState) => state.search);
 
   const debounceFunc = useRef(
     _.debounce((text: any) => {
       const params = {
         query: text,
-        perPage: 10,
-        page: 1,
       };
-      if (text !== '') dispatch(SearchActions.fetchSearchBowlingClubList(params));
+      if (text !== '') dispatch(SearchActions.fetchSearchAreaList(params));
     }, 500),
   );
 
@@ -44,28 +41,11 @@ const ResidentSearchScreen = () => {
     }
   }, [searchQuery]);
 
-  const onMore = () => {
-    const params = {
-      query: searchQuery,
-      perPage: 10,
-      page: bowlingListPage,
-    };
-    if (bowlingListPage > 1) dispatch(SearchActions.fetchSearchBowlingClubList(params));
-  };
-
-  const onRefresh = () => {
-    const params = {
-      query: searchQuery,
-      perPage: 10,
-      page: 1,
-    };
-    dispatch(SearchActions.fetchSearchBowlingClubList(params));
-  };
-
   const onCancel = () => {
     navigate('HomeScreen');
   };
 
+  // console.log(selectMenu);
   const onChangeText = (text: string) => {
     dispatch(SearchActions.fetchSearchReducer({ type: 'searchQuery', data: text }));
     debounceFunc.current(text);
@@ -85,7 +65,7 @@ const ResidentSearchScreen = () => {
           alignItems: 'center',
         }}
       >
-        <View style={{ width: 60, height: 60, marginTop: 141 }}>
+        <View style={{ width: 60, height: 60, marginTop: 128 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
             source={require('@/Assets/Images/Search/emptySearch.png')}
@@ -102,7 +82,7 @@ const ResidentSearchScreen = () => {
               color: Color.Gray400,
             }}
           >
-            {`검색 결과가 없습니다.\n검색어를 변경해서 다시 검색해보세요.`}
+            {`검색 결과가 없습니다.\n지역 이름을 다시 확인해주세요.`}
           </CustomText>
         </View>
       </View>
@@ -112,26 +92,45 @@ const ResidentSearchScreen = () => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <KeyboardSpacerProvider>
         <View style={{ flex: 1, backgroundColor: Color.White }}>
-          <Header type={'close'} text={'상주볼링장'} />
+          <Header type={'back'} text={'위치설정'} />
+
+          <View style={{ paddingTop: 4, paddingBottom: 8, borderBottomColor: Color.Gray200, borderBottomWidth: 1 }}>
+            <View style={{ paddingHorizontal: 20 }}>
+              <InputLocationSearch onChangeText={onChangeText} onClear={onClearKeyword} />
+            </View>
+          </View>
 
           <View style={{ flex: 1, paddingHorizontal: 20 }}>
-            {/* <InputResidentSearch /> */}
-            <InputLocationSearch onChangeText={onChangeText} onClear={onClearKeyword} />
             {searchQuery !== '' && (
-              <View style={{ backgroundColor: Color.White, paddingVertical: 20 }}>
+              <View style={{ backgroundColor: Color.White, paddingTop: 24, paddingBottom: 12 }}>
                 <CustomText
                   style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow1000 }}
                 >
-                  {`‘${searchQuery}’`} 검색결과 {bowlingList?.placeCount || 0}건
+                  {`‘${searchQuery}’`} 검색결과 {searchedAreaList?.length || 0}건
                 </CustomText>
               </View>
             )}
 
             <FlatList
-              data={bowlingList?.place}
+              data={searchedAreaList}
               renderItem={({ item }) => (
-                <View style={{ backgroundColor: Color.White }}>
-                  <PlaceXSmallCard item={item} type={SCREEN_TYPE.JOIN} />
+                <View
+                  style={{
+                    backgroundColor: Color.White,
+                    paddingVertical: 16,
+                    borderBottomColor: Color.Gray200,
+                    borderBottomWidth: 1,
+                  }}
+                >
+                  <CustomText
+                    style={{
+                      fontSize: 14,
+                      letterSpacing: -0.25,
+                      color: Color.Black1000,
+                    }}
+                  >
+                    {item?.areaName}
+                  </CustomText>
                 </View>
               )}
               keyExtractor={(item, index) => index.toString()}
@@ -140,10 +139,6 @@ const ResidentSearchScreen = () => {
               windowSize={7}
               scrollEnabled
               showsVerticalScrollIndicator={false}
-              onEndReached={() => onMore()}
-              onEndReachedThreshold={0.8}
-              refreshing={false}
-              onRefresh={() => onRefresh()}
               keyboardDismissMode={'interactive'}
               ListFooterComponent={() => (
                 <>
@@ -167,16 +162,22 @@ const ResidentSearchScreen = () => {
                   style={{
                     backgroundColor: Color.Primary1000,
                     flexDirection: 'row',
-                    paddingRight: 46,
-                    paddingLeft: 45,
-                    paddingVertical: 13,
+                    paddingHorizontal: 34,
+                    paddingVertical: 14,
                     alignItems: 'center',
                     borderRadius: 24,
                   }}
                 >
-                  <View>
+                  <View style={{ width: 16, height: 16 }}>
+                    <FastImage
+                      style={{ width: '100%', height: '100%' }}
+                      source={require('@/Assets/Images/Search/icLocaNow.png')}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </View>
+                  <View style={{ marginLeft: 4 }}>
                     <CustomText style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25, color: Color.White }}>
-                      다음에 할게요
+                      현 위치로 설정
                     </CustomText>
                   </View>
                 </View>
@@ -190,4 +191,4 @@ const ResidentSearchScreen = () => {
   );
 };
 
-export default ResidentSearchScreen;
+export default LocationSettingScreen;

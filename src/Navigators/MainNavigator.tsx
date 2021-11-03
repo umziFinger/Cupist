@@ -21,6 +21,7 @@ import JoinStepThreeScreen from '@/Containers/Auth/JoinStepThreeScreen';
 import ResidentSearchScreen from '@/Containers/Search/ResidentSearchScreen';
 
 import PlaceDetailScreen from '@/Containers/Place/PlaceDetailScreen';
+import LocationSettingScreen from '@/Containers/Setting/LocationSettingScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -40,6 +41,7 @@ export type MainStackParamList = {
   JoinStepThreeScreen: undefined;
   ResidentSearchScreen: undefined;
   PlaceDetailScreen: { idx: number };
+  LocationSettingScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -76,6 +78,9 @@ const MainNavigator = () => {
       <MainStack.Screen name="SearchScreen" component={SearchScreen} />
       {/* placeDetail */}
       <MainStack.Screen name="PlaceDetailScreen" component={PlaceDetailScreen} />
+
+      {/*  Setting */}
+      <MainStack.Screen name="LocationSettingScreen" component={LocationSettingScreen} />
     </MainStack.Navigator>
   );
 };

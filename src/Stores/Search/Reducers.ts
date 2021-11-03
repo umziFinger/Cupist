@@ -25,13 +25,23 @@ export const fetchSearchReducer = (state = INITIAL_STATE, actions: any) => {
 
         break;
       }
+      case 'bowlingListPage': {
+        draft.bowlingListPage = data;
+        break;
+      }
 
       case 'searchQuery': {
         draft.searchQuery = data;
         break;
       }
-      case 'bowlingListPage': {
-        draft.bowlingListPage = data;
+
+      case 'areaList': {
+        draft.areaList = data;
+        break;
+      }
+
+      case 'searchedAreaList': {
+        draft.searchedAreaList = data;
         break;
       }
 
