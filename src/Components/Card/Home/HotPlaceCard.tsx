@@ -10,16 +10,44 @@ interface PropTypes {
   item: any;
   width: number;
 }
-const HotPlaceCard = ({ item, showRate = false, width }: PropTypes) => {
+const HotPlaceCard = ({ item, width }: PropTypes) => {
+  const onPressDibs = () => {
+    console.log('onPressDibs');
+  };
   return (
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
-      <View style={{ borderRadius: 2, borderWidth: 1, borderColor: Color.Gray200, backgroundColor: Color.White }}>
-        <View style={{ width, height: 93 }}>
+      <View style={{ borderRadius: 5, borderWidth: 1, borderColor: Color.Gray200, backgroundColor: Color.White }}>
+        <View style={{ width, height: 145 }}>
           <FastImage
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', borderTopLeftRadius: 5, borderTopRightRadius: 5 }}
             source={{ uri: item?.placePhotoArr[0] }}
             resizeMode={FastImage.resizeMode.cover}
           />
+          <CustomButton
+            onPress={() => onPressDibs()}
+            style={{
+              width: 24,
+              height: 24,
+              position: 'absolute',
+              top: 5,
+              right: 5,
+              alignItems: 'flex-end',
+              zIndex: 100,
+            }}
+            hitSlop={10}
+          >
+            <View style={{ width: 24, height: 24 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={
+                  item.isPlaceDibs
+                    ? require('@/Assets/Images/Button/icHeartOn.png')
+                    : require('@/Assets/Images/Button/icHeartOffWt.png')
+                }
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
+          </CustomButton>
         </View>
         <View style={{ paddingHorizontal: 9, paddingTop: 16, paddingBottom: 21 }}>
           <View style={{ justifyContent: 'center' }}>
