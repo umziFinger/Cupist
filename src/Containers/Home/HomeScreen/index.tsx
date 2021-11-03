@@ -110,7 +110,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 3: {
         return (
           <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <QuickPriceArea list={homeList['special'] || []} selectedDate={selectedDate} />
           </View>
         );
@@ -118,7 +118,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 4: {
         return (
           <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <PrepaymentPriceArea list={homeList['early'] || []} />
           </View>
         );
@@ -126,7 +126,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 5: {
         return (
           <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <HotArea list={homeList['hotPlace'] || []} />
           </View>
         );
@@ -134,7 +134,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 6: {
         return (
           <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <EventArea list={homeList['event'] || []} />
           </View>
         );

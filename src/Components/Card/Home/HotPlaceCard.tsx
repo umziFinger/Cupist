@@ -52,7 +52,7 @@ const HotPlaceCard = ({ item, width }: PropTypes) => {
         <View style={{ paddingHorizontal: 9, paddingTop: 16, paddingBottom: 21 }}>
           <View style={{ justifyContent: 'center' }}>
             <CustomText
-              style={{ color: Color.Black1000, fontSize: 15, fontWeight: '500', letterSpacing: -0.2 }}
+              style={{ color: Color.Black1000, fontSize: 16, fontWeight: '500', letterSpacing: -0.15 }}
               numberOfLines={1}
             >
               {item.name}
@@ -76,7 +76,9 @@ const HotPlaceCard = ({ item, width }: PropTypes) => {
               style={{ width: 3, height: 3, borderRadius: 1.5, backgroundColor: Color.Gray400, marginHorizontal: 4 }}
             />
             <View>
-              <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>{item.area || '지역정보없음'}</CustomText>
+              <CustomText style={{ color: Color.Gray700, fontSize: 12 }} numberOfLines={1}>
+                {item.area || '지역정보없음'}
+              </CustomText>
             </View>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>

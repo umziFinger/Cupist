@@ -67,7 +67,7 @@ const HotArea = (props: PropTypes) => {
           </View>
         </View>
       </View>
-      <View style={{ flex: 1, marginTop: 25 }}>
+      <View style={{ flex: 1 }}>
         <FlatList
           data={list}
           renderItem={({ item, index }) => (
@@ -92,10 +92,8 @@ const HotArea = (props: PropTypes) => {
           }}
           contentContainerStyle={{
             paddingLeft: 20,
-            marginTop: 18,
+            marginTop: 25,
           }}
-          // ListFooterComponent={item.length === 0 ? <RepairUploadCard /> : renderFooterCard()}
-          // ListFooterComponentStyle={{ paddingRight: 24 }}
         />
       </View>
     </View>
