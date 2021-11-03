@@ -6,6 +6,8 @@ import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
 import { navigate } from '@/Services/NavigationService';
 import MyActions from '@/Stores/My/Actions';
+import { AuthState } from '@/Stores/Auth/InitialState';
+import AuthAction from '@/Stores/Auth/Actions';
 
 export function* fetchMyPushYN(data: any): any {
   try {
@@ -194,7 +196,6 @@ export function* fetchMyProfilePatch(data: any): any {
     const response = yield call(Axios.PATCH, payload);
 
     if (response.result === true && response.code === null) {
-      console.log('프로필 수정: ', response.data);
       yield put(
         CommonActions.fetchCommonReducer({
           type: 'alertToast',
@@ -205,13 +206,12 @@ export function* fetchMyProfilePatch(data: any): any {
           },
         }),
       );
-      navigate('HomeScreen');
-      // yield put(AuthActions.fetchAuthReducer({ type: 'residentPlace', data: true }));
-      // yield put(AuthActions.fetchAuthReducer({ type: 'log_cert', data: response.data.data }));
+      if (data.params.type === 'join') navigate('HomeScreen');
+      const { userIdx } = yield select((state: AuthState) => state.auth);
+      yield put(AuthAction.fetchUserInfo({ idx: userIdx }));
     } else {
       // 인증정보 초기화
       // yield put(AuthActions.fetchAuthReducer({ type: 'phoneNumber', data: { phoneNumber: null } }));
-
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {

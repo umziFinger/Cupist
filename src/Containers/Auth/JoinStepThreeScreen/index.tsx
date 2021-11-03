@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, FlatList, Platform } from 'react-native';
+import { FlatList, Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
@@ -7,19 +7,15 @@ import CustomText from '@/Components/CustomText';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
-import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 import PlaceActions from '@/Stores/Place/Actions';
-import AuthAction from '@/Stores/Auth/Actions';
 
 import { PlaceState } from '@/Stores/Place/InitialState';
-import PlaceXSmallCard from '@/Components/Card/Common/PlaceXSmallCard';
+import PlaceXSmallCard, { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 import { navigate } from '@/Services/NavigationService';
-import { AuthState } from '@/Stores/Auth/InitialState';
 
 const JoinStepThreeScreen = () => {
   const { heightInfo, myLongitude, myLatitude } = useSelector((state: CommonState) => state.common);
   const { aroundListPage = 1, aroundList } = useSelector((state: PlaceState) => state.place);
-  const { userIdx, userInfo } = useSelector((state: AuthState) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -31,13 +27,37 @@ const JoinStepThreeScreen = () => {
       perPage: 10,
     };
     dispatch(PlaceActions.fetchPlaceAroundList(params));
-    dispatch(AuthAction.fetchUserInfo({ idx: userIdx }));
   }, []);
 
-  console.log('사용자 정보: ', userInfo);
   const onCancel = () => {
     navigate('HomeScreen');
   };
+
+  const onMore = () => {
+    const params = {
+      lat: myLatitude.toString(),
+      lng: myLongitude.toString(),
+      perPage: 9,
+      page: aroundListPage,
+    };
+
+    if (aroundListPage > 1) dispatch(PlaceActions.fetchPlaceAroundList(params));
+  };
+
+  const onRefresh = () => {
+    const params = {
+      lat: myLatitude.toString(),
+      lng: myLongitude.toString(),
+      perPage: 9,
+      page: 1,
+    };
+    dispatch(PlaceActions.fetchPlaceAroundList(params));
+  };
+
+  const onPlaceSearch = () => {
+    navigate('ResidentSearchScreen');
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <View
@@ -65,7 +85,7 @@ const JoinStepThreeScreen = () => {
           </CustomText>
         </View>
 
-        <CustomButton>
+        <CustomButton onPress={() => onPlaceSearch()}>
           <View
             style={{
               marginTop: 24,
@@ -115,7 +135,7 @@ const JoinStepThreeScreen = () => {
           )}
           renderItem={({ item }) => (
             <View style={{ backgroundColor: Color.White }}>
-              <PlaceXSmallCard item={item} />
+              <PlaceXSmallCard item={item} type={SCREEN_TYPE.JOIN} />
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -124,6 +144,10 @@ const JoinStepThreeScreen = () => {
           windowSize={7}
           scrollEnabled
           showsVerticalScrollIndicator={false}
+          onEndReached={() => onMore()}
+          onEndReachedThreshold={0.5}
+          refreshing={false}
+          onRefresh={() => onRefresh()}
           ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
           stickyHeaderIndices={[0]}
         />

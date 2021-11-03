@@ -20,12 +20,10 @@ export interface HeaderProps {
   screenType?: string;
   rightItem?: React.ReactNode;
   mode?: MODE;
-  style?: any;
-  setStep?: any;
 }
 
 const Header = (props: HeaderProps) => {
-  const { type, text, rightItem, mode, style, setStep } = props;
+  const { type, text, mode } = props;
 
   switch (type) {
     case 'back':
@@ -33,7 +31,7 @@ const Header = (props: HeaderProps) => {
     case 'home':
       return <HomeHeader />;
     case 'close':
-      return <CloseHeader />;
+      return <CloseHeader text={text} />;
     default:
       return null;
   }

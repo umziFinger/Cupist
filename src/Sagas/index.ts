@@ -7,7 +7,7 @@ import { NotificationTypes } from '@/Stores/Notification/Actions';
 import { MyTypes } from '@/Stores/My/Actions';
 
 // search
-import { fetchSearchAreaList } from '@/Sagas/SearchSaga';
+import { fetchSearchAreaList, fetchSearchBowlingClubList } from '@/Sagas/SearchSaga';
 
 // common
 import {
@@ -75,6 +75,7 @@ export default function* root() {
 
     // search
     takeLatest(SearchTypes.FETCH_SEARCH_AREA_LIST, fetchSearchAreaList),
+    takeLatest(SearchTypes.FETCH_SEARCH_BOWLING_CLUB_LIST, fetchSearchBowlingClubList),
 
     // notification
     takeLatest(NotificationTypes.FETCH_NOTIFICATION_LIST, fetchNotificationList),

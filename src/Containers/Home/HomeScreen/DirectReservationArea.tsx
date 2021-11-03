@@ -40,7 +40,7 @@ const DirectReservationArea = (props: PropTypes) => {
   const areaFilter = useMemo(
     () => () =>
       produce(areaTag, (draft) => {
-        areaList.map((item, index) => {
+        areaList?.map((item, index) => {
           return draft.push({
             index: index + 2,
             key: item.idx,

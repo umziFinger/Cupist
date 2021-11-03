@@ -12,9 +12,9 @@ const refreshAuthLogic = async (failedRequest: any) => {
       .then((tokenRefreshResponse) => {
         console.log('\n\n\n\n만료로 인한 리프레시 로직 start tokenRefreshResponse', tokenRefreshResponse.data);
         console.log('\n\n\n');
-        const { access_token, refresh_token } = tokenRefreshResponse.data.data;
-        AsyncStorage.setItem('accessToken', access_token);
-        AsyncStorage.setItem('refreshToken', refresh_token);
+        const { accessToken, refreshToken } = tokenRefreshResponse.data.data;
+        AsyncStorage.setItem('accessToken', accessToken);
+        AsyncStorage.setItem('refreshToken', refreshToken);
       })
       .catch((e) => {
         console.log('error:', e);

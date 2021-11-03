@@ -1,8 +1,18 @@
 export const INITIAL_STATE = {
-  areaList: [],
+  searchQuery: '',
+  bowlingList: {
+    place: [],
+    placeCount: 0,
+  },
+  bowlingListPage: 1,
 };
 export interface SearchState {
   search: {
-    areaList: Array<any>;
+    bowlingList: {
+      place: Array<any>;
+      placeCount: number | 0;
+    };
+    searchQuery: string | '';
+    bowlingListPage: number | 0;
   };
 }

@@ -1,7 +1,9 @@
-import { put, call } from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 import PlaceActions from '@/Stores/Place/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
+import AuthAction from '@/Stores/Auth/Actions';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 export function* fetchPlaceAroundList(data: any): any {
   try {
