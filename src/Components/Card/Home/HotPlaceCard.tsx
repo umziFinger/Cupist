@@ -8,10 +8,9 @@ import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
-  showRate?: boolean;
   width: number;
 }
-const PlaceSmallCard = ({ item, showRate = false, width }: PropTypes) => {
+const HotPlaceCard = ({ item, showRate = false, width }: PropTypes) => {
   return (
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
       <View style={{ borderRadius: 2, borderWidth: 1, borderColor: Color.Gray200, backgroundColor: Color.White }}>
@@ -53,13 +52,6 @@ const PlaceSmallCard = ({ item, showRate = false, width }: PropTypes) => {
             </View>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-            {showRate && (
-              <View style={{ marginRight: 4 }}>
-                <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>
-                  {item.rate}%
-                </CustomText>
-              </View>
-            )}
             <View style={{ flexDirection: 'row' }}>
               <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold' }}>
                 {item.minPrice}
@@ -73,4 +65,4 @@ const PlaceSmallCard = ({ item, showRate = false, width }: PropTypes) => {
   );
 };
 
-export default PlaceSmallCard;
+export default HotPlaceCard;

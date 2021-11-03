@@ -1,13 +1,15 @@
 import React from 'react';
-import { FlatList, Platform, View } from 'react-native';
+import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
+import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
 
 interface PropTypes {
   list: Array<any>;
 }
 const PrepaymentPriceArea = (props: PropTypes) => {
+  const { width, height } = useWindowDimensions();
   const { list } = props;
   return (
     <View style={{ flex: 1, marginTop: 40 }}>
@@ -47,20 +49,22 @@ const PrepaymentPriceArea = (props: PropTypes) => {
             </View>
           </View>
         </View>
+        <View style={{ flex: 1, marginTop: 20 }}>
+          <FlatList
+            data={list}
+            renderItem={({ item, index }) => (
+              <View style={{ marginRight: 11, marginBottom: index < 2 ? 13 : 0 }}>
+                <PlaceSmallCard item={item} width={(width - 42 - 11) / 2} showRate />
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            initialNumToRender={4}
+            maxToRenderPerBatch={7}
+            windowSize={7}
+            numColumns={2}
+          />
+        </View>
       </View>
-      <FlatList
-        data={[0]}
-        renderItem={({ item, index }) => (
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: '#333', fontSize: 14 }}>hello</CustomText>
-          </View>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={4}
-        maxToRenderPerBatch={7}
-        windowSize={7}
-        contentContainerStyle={{ marginTop: 24 }}
-      />
     </View>
   );
 };

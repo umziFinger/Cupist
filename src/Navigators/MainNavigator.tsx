@@ -17,6 +17,7 @@ import AgreeScreen from '@/Containers/Auth/AgreeScreen';
 import JoinStepOneScreen from '@/Containers/Auth/JoinStepOneScreen';
 import JoinStepTwoScreen from '@/Containers/Auth/JoinStepTwoScreen';
 import JoinStepThreeScreen from '@/Containers/Auth/JoinStepThreeScreen';
+import PlaceDetailScreen from '@/Containers/Place/PlaceDetailScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -34,6 +35,7 @@ export type MainStackParamList = {
   JoinStepOneScreen: undefined;
   JoinStepTwoScreen: undefined;
   JoinStepThreeScreen: undefined;
+  PlaceDetailScreen: { idx: number };
 };
 
 const Tab = createBottomTabNavigator();
@@ -65,6 +67,8 @@ const MainNavigator = () => {
       <MainStack.Screen name="JoinStepOneScreen" component={JoinStepOneScreen} />
       <MainStack.Screen name="JoinStepTwoScreen" component={JoinStepTwoScreen} />
       <MainStack.Screen name="JoinStepThreeScreen" component={JoinStepThreeScreen} />
+      {/* placeDetail */}
+      <MainStack.Screen name="PlaceDetailScreen" component={PlaceDetailScreen} />
     </MainStack.Navigator>
   );
 };
