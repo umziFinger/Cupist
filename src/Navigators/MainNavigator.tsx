@@ -17,7 +17,10 @@ import AgreeScreen from '@/Containers/Auth/AgreeScreen';
 import JoinStepOneScreen from '@/Containers/Auth/JoinStepOneScreen';
 import JoinStepTwoScreen from '@/Containers/Auth/JoinStepTwoScreen';
 import JoinStepThreeScreen from '@/Containers/Auth/JoinStepThreeScreen';
+
 import ResidentSearchScreen from '@/Containers/Search/ResidentSearchScreen';
+
+import PlaceDetailScreen from '@/Containers/Place/PlaceDetailScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -36,6 +39,7 @@ export type MainStackParamList = {
   JoinStepTwoScreen: undefined;
   JoinStepThreeScreen: undefined;
   ResidentSearchScreen: undefined;
+  PlaceDetailScreen: { idx: number };
 };
 
 const Tab = createBottomTabNavigator();
@@ -70,6 +74,8 @@ const MainNavigator = () => {
       {/* Search */}
       <MainStack.Screen name="ResidentSearchScreen" component={ResidentSearchScreen} />
       <MainStack.Screen name="SearchScreen" component={SearchScreen} />
+      {/* placeDetail */}
+      <MainStack.Screen name="PlaceDetailScreen" component={PlaceDetailScreen} />
     </MainStack.Navigator>
   );
 };

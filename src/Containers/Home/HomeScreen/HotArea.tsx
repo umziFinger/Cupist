@@ -1,14 +1,33 @@
-import React from 'react';
-import { Platform, View } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
+import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
+import HotPlaceCard from '@/Components/Card/Home/HotPlaceCard';
 
 interface PropTypes {
   list: Array<any>;
 }
 const HotArea = (props: PropTypes) => {
+  const { width, height } = useWindowDimensions();
   const { list } = props;
+  const [viewableIndex, setViewableIndex] = useState<number | null>(0);
+
+  const onViewableItemsChanged = React.useRef(
+    (info: { viewableItems: Array<ViewToken>; changed: Array<ViewToken> }) => {
+      if (info.viewableItems) {
+        const tempViewableIndex = info.viewableItems[0]?.key;
+
+        let changeViewableIndex = 0;
+        if (tempViewableIndex !== undefined) {
+          changeViewableIndex = parseInt(tempViewableIndex);
+        }
+        setViewableIndex(changeViewableIndex);
+      }
+    },
+  );
+
   return (
     <View style={{ flex: 1, marginTop: 40 }}>
       <View style={{ paddingHorizontal: 20 }}>
@@ -47,6 +66,35 @@ const HotArea = (props: PropTypes) => {
             </View>
           </View>
         </View>
+      </View>
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={list}
+          renderItem={({ item, index }) => (
+            <View style={{ marginRight: index === list.length - 1 ? 20 : 9 }}>
+              <HotPlaceCard item={item} width={(width - 40) * 0.7} />
+            </View>
+          )}
+          pagingEnabled
+          horizontal
+          disableIntervalMomentum
+          decelerationRate="fast"
+          snapToInterval={(width - 40 + 18) * 0.7}
+          snapToAlignment={'start'}
+          keyExtractor={(item, index) => index.toString()}
+          initialNumToRender={2}
+          maxToRenderPerBatch={5}
+          windowSize={7}
+          showsHorizontalScrollIndicator={false}
+          onViewableItemsChanged={onViewableItemsChanged?.current}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50,
+          }}
+          contentContainerStyle={{
+            paddingLeft: 20,
+            marginTop: 25,
+          }}
+        />
       </View>
     </View>
   );
