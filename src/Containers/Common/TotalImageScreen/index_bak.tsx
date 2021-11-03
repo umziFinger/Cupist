@@ -174,7 +174,7 @@ const TotalImageScreen = () => {
                   >
                     <FastImage
                       style={{ width: '100%', height: '100%' }}
-                      // source={imageUrl ? { uri: imageUrl || '' } : require('@/Assets/Images/Common/imgDramaN.png')}
+                      // source={imageUrl ? { uri: imageUrl || '' } : require('@/Assets/Images/Common/icNoImage.png')}
                       source={imageUrl ? { uri: imageUrl || '' } : { uri: '' }}
                       resizeMode={FastImage.resizeMode.stretch}
                     />

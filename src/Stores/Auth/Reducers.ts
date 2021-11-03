@@ -117,6 +117,7 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         draft.userInfo.mobile = data.mobile;
         break;
       }
+
       case 'emailValid': {
         draft.emailValid = data;
         break;

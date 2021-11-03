@@ -80,6 +80,9 @@ const dev = {
   UTIL_CATEGORY_URL: 'category',
   UTIL_BRAND_LIST_URL: 'brand',
   UTIL_BRAND_FAV_URL: 'brand/fav',
+
+  // place
+  PLACE_AROUND_LIST_URL: 'place/around',
 };
 
 export default dev;

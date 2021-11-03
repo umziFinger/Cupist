@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, FlatList, Platform } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, FlatList, Platform, TextInput } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
@@ -26,7 +26,9 @@ const JoinStepOneScreen = () => {
 
   const [currentFocus, setCurrentFocus] = useState<string>('email');
 
-  // const [isCertificationNumber, setIsCertificationNumber] = useState(false);
+  const ref_input: Array<React.RefObject<TextInput>> = [];
+  ref_input[0] = useRef(null);
+  ref_input[1] = useRef(null);
 
   useEffect(() => {
     return () => {
@@ -37,6 +39,13 @@ const JoinStepOneScreen = () => {
   const onPressNext = () => {
     if (isEmailValid && isPasswordValid) {
       navigate('JoinStepTwoScreen');
+    }
+  };
+
+  const onFocusNext = (index: number) => {
+    if (ref_input[index] && index < ref_input.length) {
+      ref_input[0].current?.blur();
+      ref_input[index].current?.focus();
     }
   };
 
@@ -110,16 +119,22 @@ const JoinStepOneScreen = () => {
                 <View style={{}}>
                   <View style={{ marginTop: 48, paddingBottom: 32 - 18 }}>
                     <InputEmail
+                      ref={ref_input[0]}
                       emailValidText={emailValidText}
                       onChangeText={onChangeEmail}
                       onFocus={() => setCurrentFocus('email')}
                       onBlur={() => setCurrentFocus('')}
                       value={email}
+                      autoFocus
+                      onSubmitEditing={() => {
+                        onFocusNext(1);
+                      }}
                     />
                   </View>
 
                   <View style={{ paddingBottom: 32 - 18 }}>
                     <InputPassword
+                      ref={ref_input[1]}
                       passwordValidText={passwordValidText}
                       onChangeText={onChangePassword}
                       onFocus={() => setCurrentFocus('password')}
