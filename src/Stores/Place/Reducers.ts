@@ -36,6 +36,23 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         draft.myAroundListPage = data;
         break;
       }
+      case 'location': {
+        draft.location = data;
+        break;
+      }
+
+      case 'locationInit': {
+        draft.location.areaCode = INITIAL_STATE.location.areaCode;
+        draft.location.lat = INITIAL_STATE.location.lat;
+        draft.location.lng = INITIAL_STATE.location.lng;
+        break;
+      }
+
+      case 'myAroundSort': {
+        draft.myAroundSort = data;
+        break;
+      }
+
       default:
         return data;
     }

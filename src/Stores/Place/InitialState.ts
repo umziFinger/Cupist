@@ -3,6 +3,12 @@ export const INITIAL_STATE = {
   aroundListPage: 1,
   myAroundList: [],
   myAroundListPage: 1,
+  myAroundSort: { index: 0, key: 'distance', value: '거리순' },
+  location: {
+    areaCode: '',
+    lat: '',
+    lng: '',
+  },
 };
 export interface PlaceState {
   place: {
@@ -10,5 +16,11 @@ export interface PlaceState {
     aroundListPage: number | 1;
     myAroundList: Array<any>;
     myAroundListPage: number | 1;
+    myAroundSort: { index: number; key: string; value: string };
+    location: {
+      areaCode: string;
+      lat: string;
+      lng: string;
+    };
   };
 }

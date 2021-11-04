@@ -42,7 +42,7 @@ const DirectReservationArea = (props: PropTypes) => {
     () => () =>
       produce(areaTag, (draft) => {
         if (areaList?.length > 0) {
-          areaList?.map((item, index) => {
+          areaList?.map((item: any, index: number) => {
             return draft.push({
               index: index + 2,
               key: item.idx,

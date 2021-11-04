@@ -190,14 +190,14 @@ const SimpleLoginScreen = () => {
     //   id: '01012341234',
     //   pw: 'ghost323#',
     // };
-    // const params = {
-    //   email: 'koi@gmail.com',
-    //   password: 'seoha123!',
-    // };
     const params = {
-      email: 'a8@a.aa',
-      password: 'qwer1234@',
+      email: 'koi@gmail.com',
+      password: 'seoha123!',
     };
+    // const params = {
+    //   email: 'a8@a.aa',
+    //   password: 'qwer1234@',
+    // };
     dispatch(AuthActions.fetchUserLogin(params));
   };
 
