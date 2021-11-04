@@ -23,3 +23,20 @@ export function* fetchHomeList(data: any): any {
     console.log('occurred Error...fetchHomeList : ', e);
   }
 }
+
+export function* fetchHomeDirectReservationList(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.HOME_PLACE_URL,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      yield put(HomeActions.fetchHomeReducer({ type: 'directReservationList', data: response.data }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchHomeDirectReservationList : ', e);
+  }
+}

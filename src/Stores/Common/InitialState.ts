@@ -1,4 +1,6 @@
 export const INITIAL_STATE = {
+  isOpenTimeFilter: false,
+  isOpenDirectReservationRBS: false,
   isLoading: false,
   isSkeleton: null,
   alertDialog: false,
@@ -44,6 +46,8 @@ export const INITIAL_STATE = {
 
 export interface CommonState {
   common: {
+    isOpenTimeFilterRBS: boolean | false;
+    isOpenDirectReservationRBS: boolean | false;
     isLoading: boolean | false;
     isSkeleton: boolean | false;
     alertDialog: AlertInfo;

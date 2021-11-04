@@ -2,7 +2,9 @@ import React from 'react';
 import BackHeader from '@/Components/Header/BackHeader';
 import HomeHeader from '@/Components/Header/HomeHeader';
 import CloseHeader from './CloseHeader';
+
 import MyAroundHeader from '@/Components/Header/MyAroundHeader';
+import PlaceDetailHeader from './PlaceDetailHeader';
 
 export interface HeaderProps {
   type?: string;
@@ -26,8 +28,13 @@ const Header = (props: HeaderProps) => {
       return <HomeHeader />;
     case 'close':
       return <CloseHeader text={text} />;
+
     case 'myAround':
       return <MyAroundHeader text={text} isScroll={isScroll} />;
+
+    case 'placeDetail':
+      return <PlaceDetailHeader />;
+
     default:
       return null;
   }

@@ -2,21 +2,28 @@ import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 interface PropTypes {
   item: any;
-  selectedDate: string;
 }
 const QuickPriceCard = (props: PropTypes) => {
   const { width, height } = useWindowDimensions();
-  const { item, selectedDate } = props;
+  const { userIdx } = useSelector((state: AuthState) => state.auth);
+  const { item } = props;
+
   const onPressDibs = () => {
-    console.log('onPressDibs');
+    if (!userIdx) {
+      return navigate('SimpleLoginScreen');
+    }
+    return console.log('onPressDibs');
   };
+
   return (
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
       <View style={{ borderRadius: 5, borderWidth: 1, borderColor: Color.Grayyellow200, backgroundColor: Color.White }}>

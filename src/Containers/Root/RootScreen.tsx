@@ -18,6 +18,7 @@ import RootCodePush from './RootCodePush';
 // import RootFcm from '@/Containers/Root/RootFcm';
 
 import { NotificationRequest } from '@/Components/Permission/Notification';
+import TimeFilterRBS from '@/Components/RBS/Home/TimeFilterRBS';
 
 LogBox.ignoreLogs([
   'interpolate() was renamed to interpolateNode()',
@@ -41,12 +42,8 @@ const RootScreen = () => {
     alertToastPosition,
     alertToastMessage,
     isOpenAgreeDetailRBS,
-    // isOpenSimpleLoginRBS,
-    // isOpenLoginRBS,
-    // isOpenRepairNotificationRBS,
-    // isOpenMyAddressRBS,
-    // isOpenSearchAddressRBS,
-    // isOpenRepairShippingRBS,
+    isOpenTimeFilterRBS,
+    isOpenDirectReservationRBS,
     splashStart,
   } = useSelector((state: CommonState) => state.common);
   const [checkSplash, setCheckSplash] = useState(false);
@@ -67,24 +64,9 @@ const RootScreen = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   console.log(
-  //     'RBSheet Flag State : ',
-  //     isOpenSimpleLoginRBS,
-  //     isOpenLoginRBS,
-  //     isOpenRepairNotificationRBS,
-  //     isOpenMyAddressRBS,
-  //     isOpenSearchAddressRBS,
-  //     isOpenRepairShippingRBS,
-  //   );
-  // }, [
-  //   isOpenSimpleLoginRBS,
-  //   isOpenLoginRBS,
-  //   isOpenRepairNotificationRBS,
-  //   isOpenMyAddressRBS,
-  //   isOpenSearchAddressRBS,
-  //   isOpenRepairShippingRBS,
-  // ]);
+  useEffect(() => {
+    console.log('RBSheet Flag State : ', isOpenTimeFilterRBS, isOpenDirectReservationRBS);
+  }, [isOpenTimeFilterRBS, isOpenDirectReservationRBS]);
 
   useEffect(() => {
     if (splashStart === 'end') {
@@ -115,7 +97,7 @@ const RootScreen = () => {
       {/* <RootCheckAppVersion /> */}
       {/* <RootDynamicLink /> */}
 
-      {/* {isOpenSimpleLoginRBS && <SimpleLoginScreen />} */}
+      {isOpenTimeFilterRBS && <TimeFilterRBS />}
       {/* {isOpenLoginRBS && <LoginScreen />} */}
       {/* {isOpenRepairNotificationRBS && <RepairNotificationScreen item={restorationInfo} />} */}
       {/* {isOpenMyAddressRBS && <MyAddressRBS />} */}

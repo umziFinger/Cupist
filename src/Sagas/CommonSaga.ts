@@ -1,4 +1,5 @@
 import { put } from 'redux-saga/effects';
+import moment from 'moment';
 import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import { Axios } from '@/Services/Axios';
@@ -6,6 +7,7 @@ import { navigate, navigateGoBack, navigateReplace } from '@/Services/Navigation
 import HomeActions from '@/Stores/Home/Actions';
 import SearchActions from '@/Stores/Search/Actions';
 import Config from '@/Config';
+import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 
 // --------------------------------------------------------------------------------------------------
 // 최초 진입시 초기화 함수 입니다 맨 밑에 유지 새로운 saga 생성시 !!주의!!
@@ -69,6 +71,25 @@ export function* fetchInitialHandler() {
       type: 'joinInfoInit',
     }),
   );
+
+  // 홈 로드 완료 초기화
+  yield put(
+    HomeActions.fetchHomeReducer({
+      type: 'isHomeLoaded',
+      data: false,
+    }),
+  );
+
+  // 홈 캘린더 날짜 초기화
+  yield put(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() }));
+
+  // 홈 바로예약 필터 초기화
+  yield put(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: 1 }));
+  yield put(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: 0 }));
+
+  // RBSheet 초기화
+  yield put(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
+  yield put(CommonActions.fetchCommonReducer({ type: 'currentRBS', data: null }));
 }
 
 export function* fetchErrorHandler(data: any) {

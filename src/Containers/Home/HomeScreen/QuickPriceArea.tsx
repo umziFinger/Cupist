@@ -7,11 +7,10 @@ import QuickPriceCard from '@/Components/Card/Home/QuickPriceCard';
 
 interface PropTypes {
   list: Array<any>;
-  selectedDate: string;
 }
 const QuickPriceArea = (props: PropTypes) => {
   const { width, height } = useWindowDimensions();
-  const { list, selectedDate } = props;
+  const { list } = props;
   const animatedFlatRef = useRef<any>();
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
 
@@ -73,7 +72,7 @@ const QuickPriceArea = (props: PropTypes) => {
         renderItem={({ item, index }) => {
           return (
             <View style={{ marginHorizontal: 4 }}>
-              <QuickPriceCard item={item} selectedDate={selectedDate} />
+              <QuickPriceCard item={item} />
             </View>
           );
         }}

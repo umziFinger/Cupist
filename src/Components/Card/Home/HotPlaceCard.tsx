@@ -1,19 +1,26 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 interface PropTypes {
   item: any;
   width: number;
 }
 const HotPlaceCard = ({ item, width }: PropTypes) => {
+  const { userIdx } = useSelector((state: AuthState) => state.auth);
   const onPressDibs = () => {
-    console.log('onPressDibs');
+    if (!userIdx) {
+      return navigate('SimpleLoginScreen');
+    }
+    return console.log('onPressDibs');
   };
+
   return (
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
       <View style={{ borderRadius: 5, borderWidth: 1, borderColor: Color.Gray200, backgroundColor: Color.White }}>

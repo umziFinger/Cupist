@@ -4,6 +4,7 @@ const { Types, Creators } = createActions({
   fetchHomeReducer: ['params'],
   fetchCheckLoginYN: ['params'],
   fetchHomeList: ['params'],
+  fetchHomeDirectReservationList: ['params'],
 });
 
 export const HomeTypes = Types;

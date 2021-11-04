@@ -3,22 +3,25 @@ import moment from 'moment';
 import { View } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
 import FastImage from 'react-native-fast-image';
+import { useDispatch, useSelector } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
+import CommonActions from '@/Stores/Common/Actions';
+import HomeActions from '@/Stores/Home/Actions';
+import { HomeState } from '@/Stores/Home/InitialState';
 
-interface PropTypes {
-  setSelectedDate: Function;
-}
-
-const CalendarSlider = (props: PropTypes) => {
-  const { setSelectedDate } = props;
+const CalendarSlider = () => {
+  const dispatch = useDispatch();
+  const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerDate, setHeaderDate] = useState<string>(moment().format('MM월 YYYY').toString());
 
   // 선택 불가 날짜
-  const datesBlacklistFunc = (date: any) => {
-    return date.isoWeekday() === 6; // disable Saturdays
-  };
+  // const datesBlacklistFunc = (date: any) => {
+  //   const current = moment().format('YYYYMMDD');
+  //   console.log(date.format('YYYYMMDD') < current);
+  //   return date.format('YYYYMMDD') < current; // disable Saturdays
+  // };
 
   // 선택 가능 날짜 범위
   const datesWhitelist = [
@@ -31,7 +34,7 @@ const CalendarSlider = (props: PropTypes) => {
 
   const onPressDate = (date: any) => {
     setHeaderDate(date.format('MM월 YYYY'));
-    setSelectedDate(moment(date).toString());
+    dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(date).toString() }));
   };
 
   const renderDayComponent = (value: any) => {
@@ -48,7 +51,23 @@ const CalendarSlider = (props: PropTypes) => {
     if (day === '일') fontColor = Color.Calendar_Red;
 
     return (
-      <CustomButton onPress={() => onDateSelected(current)}>
+      <CustomButton
+        onPress={() => {
+          if (current.format('YYYYMMDD') < moment().format('YYYYMMDD')) {
+            return dispatch(
+              CommonActions.fetchCommonReducer({
+                type: 'alertToast',
+                data: {
+                  alertToast: true,
+                  alertToastPosition: 'top',
+                  alertToastMessage: '다른 날짜를 선택해주세요.',
+                },
+              }),
+            );
+          }
+          return onDateSelected(current);
+        }}
+      >
         <View
           style={{
             width: 34,
@@ -89,7 +108,7 @@ const CalendarSlider = (props: PropTypes) => {
           style={{ flex: 1, marginTop: 10 }}
           scrollable
           numDaysInWeek={8}
-          selectedDate={new Date()}
+          selectedDate={moment(calendarDate)}
           datesWhitelist={datesWhitelist}
           leftSelector={[]}
           rightSelector={[]}
@@ -97,12 +116,14 @@ const CalendarSlider = (props: PropTypes) => {
           maxDate={moment().add(2, 'month')}
           calendarHeaderContainerStyle={{ display: 'none' }}
           dayComponentHeight={56}
-          onDateSelected={(e) => onPressDate(moment(e))}
+          onDateSelected={(e) => {
+            onPressDate(moment(e));
+          }}
           dayComponent={(e) => renderDayComponent(e)}
         />
       );
     },
-    [],
+    [calendarDate],
   );
   return (
     <View style={{ flex: 1 }}>

@@ -18,7 +18,7 @@ import {
 } from './CommonSaga';
 
 // home
-import { fetchHomeList } from './HomeSaga';
+import { fetchHomeList, fetchHomeDirectReservationList } from './HomeSaga';
 
 // auth
 import {
@@ -47,7 +47,7 @@ import {
   fetchMySmsSend,
   fetchMyProfilePatch,
 } from '@/Sagas/MySaga';
-import { fetchPlaceAroundList, fetchPlaceSearchList } from '@/Sagas/PlaceSaga';
+import { fetchPlaceAroundList, fetchPlaceDetail, fetchPlaceSearchList } from '@/Sagas/PlaceSaga';
 import { PlaceTypes } from '@/Stores/Place/Actions';
 
 export default function* root() {
@@ -60,6 +60,7 @@ export default function* root() {
 
     // home
     takeLatest(HomeTypes.FETCH_HOME_LIST, fetchHomeList),
+    takeLatest(HomeTypes.FETCH_HOME_DIRECT_RESERVATION_LIST, fetchHomeDirectReservationList),
 
     // auth
     takeLatest(AuthTypes.FETCH_AUTH_SMS_SEND, fetchAuthSmsSend),
@@ -94,5 +95,6 @@ export default function* root() {
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),
     takeLatest(PlaceTypes.FETCH_PLACE_SEARCH_LIST, fetchPlaceSearchList),
+    takeLatest(PlaceTypes.FETCH_PLACE_DETAIL, fetchPlaceDetail),
   ]);
 }

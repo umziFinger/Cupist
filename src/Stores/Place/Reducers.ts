@@ -32,10 +32,12 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         }
         break;
       }
+
       case 'myAroundListPage': {
         draft.myAroundListPage = data;
         break;
       }
+
       case 'location': {
         draft.location = data;
         break;
@@ -50,6 +52,26 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'myAroundSort': {
         draft.myAroundSort = data;
+      }
+
+      case 'placeDetail': {
+        console.log('call reducer placeDetail : ', data.place);
+        draft.placeDetail.place = data.place;
+        draft.placeDetail.latestReview = data.latestReview;
+        draft.placeDetail.starReview = data.starReview;
+        draft.placeDetail.together = data.together;
+        break;
+      }
+
+      case 'placeDetailIdx': {
+        draft.placeDetailIdx = data;
+        break;
+      }
+
+      case 'placeDetailInit': {
+        console.log('call reducer placeDetailInit');
+        draft.placeDetail = INITIAL_STATE.placeDetail;
+        draft.placeDetailIdx = INITIAL_STATE.placeDetailIdx;
         break;
       }
 

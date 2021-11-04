@@ -31,6 +31,7 @@ const dev = {
 
   // home
   HOME_URL: 'home',
+  HOME_PLACE_URL: 'home/place',
 
   // auth
   AUTH_LOGIN_URL: 'auth/login',
@@ -82,6 +83,7 @@ const dev = {
   UTIL_BRAND_FAV_URL: 'brand/fav',
 
   // place
+  PLACE_URL: 'place', // 내주변/지역별 예약 가능한 볼링장 찾기
   PLACE_AROUND_LIST_URL: 'place/around',
   PLACE_SEARCH_LIST_URL: 'place/search', // 내주변/지역별 예약 가능한 볼링장 찾기
 };
