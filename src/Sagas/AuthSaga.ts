@@ -263,14 +263,13 @@ export function* fetchAuthSocialJoin(data: any): any {
 
 export function* fetchUserInfo(data: any): any {
   try {
-    console.log('call saga fetchUserInfo data : ', data);
     const payload = {
       ...data,
       url: Config.MY_URL,
     };
 
     const response = yield call(Axios.GET, payload);
-
+    console.log('call saga fetchUserInfo data : ', response.data);
     if (response.result === true && response.code === null) {
       yield put(AuthActions.fetchAuthReducer({ type: 'userInfo', data: response.data }));
     } else {

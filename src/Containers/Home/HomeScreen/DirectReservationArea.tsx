@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import produce from 'immer';
-import CalendarStrip from 'react-native-calendar-strip';
-import moment from 'moment';
 import CustomText from '@/Components/CustomText';
 import DirectReservationCard from '@/Components/Card/Home/DirectReservationCard';
 import { SearchState } from '@/Stores/Search/InitialState';
@@ -17,6 +15,7 @@ interface PropTypes {
 }
 const DirectReservationArea = (props: PropTypes) => {
   // const {areaList};
+
   const { list } = props;
   const { areaList } = useSelector((state: SearchState) => state.search);
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
@@ -36,19 +35,21 @@ const DirectReservationArea = (props: PropTypes) => {
       backgroundColor: 'transparent',
     },
   ];
-
+  // console.log(areaList);
   const areaFilter = useMemo(
     () => () =>
       produce(areaTag, (draft) => {
-        areaList.map((item, index) => {
-          return draft.push({
-            index: index + 2,
-            key: item.code,
-            value: item.area,
-            color: Color.Grayyellow1000,
-            backgroundColor: 'transparent',
+        if (areaList?.length > 0) {
+          areaList.map((item, index) => {
+            return draft.push({
+              index: index + 2,
+              key: item.code,
+              value: item.area,
+              color: Color.Grayyellow1000,
+              backgroundColor: 'transparent',
+            });
           });
-        });
+        }
       }),
     [areaList],
   );

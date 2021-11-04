@@ -7,7 +7,7 @@ import { NotificationTypes } from '@/Stores/Notification/Actions';
 import { MyTypes } from '@/Stores/My/Actions';
 
 // search
-import { fetchSearchAreaList } from '@/Sagas/SearchSaga';
+import { fetchSearchAreaList, fetchSearchBowlingClubList } from '@/Sagas/SearchSaga';
 
 // common
 import {
@@ -47,7 +47,7 @@ import {
   fetchMySmsSend,
   fetchMyProfilePatch,
 } from '@/Sagas/MySaga';
-import { fetchPlaceAroundList } from '@/Sagas/PlaceSaga';
+import { fetchPlaceAroundList, fetchPlaceSearchList } from '@/Sagas/PlaceSaga';
 import { PlaceTypes } from '@/Stores/Place/Actions';
 
 export default function* root() {
@@ -75,6 +75,7 @@ export default function* root() {
 
     // search
     takeLatest(SearchTypes.FETCH_SEARCH_AREA_LIST, fetchSearchAreaList),
+    takeLatest(SearchTypes.FETCH_SEARCH_BOWLING_CLUB_LIST, fetchSearchBowlingClubList),
 
     // notification
     takeLatest(NotificationTypes.FETCH_NOTIFICATION_LIST, fetchNotificationList),
@@ -92,5 +93,6 @@ export default function* root() {
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),
+    takeLatest(PlaceTypes.FETCH_PLACE_SEARCH_LIST, fetchPlaceSearchList),
   ]);
 }

@@ -40,7 +40,7 @@ const dev = {
   AUTH_SMS_AUTH_URL: 'auth/sms-auth',
   AUTH_JOIN_URL: 'auth/join',
   AUTH_FIND_PASSWORD_URL: 'auth/find-password',
-
+  AUTH_RENEW_TOKEN_URL: 'auth/refresh',
   // my
   MY_URL: 'my',
   MY_PUSH_YN_URL: 'my/pushYN',
@@ -51,7 +51,7 @@ const dev = {
 
   // search
   SEARCH_AREA_URL: 'search/area',
-
+  SEARCH_URL: 'search',
   // user
   USER_URL: 'user',
 
@@ -83,6 +83,7 @@ const dev = {
 
   // place
   PLACE_AROUND_LIST_URL: 'place/around',
+  PLACE_SEARCH_LIST_URL: 'place/search', // 내주변/지역별 예약 가능한 볼링장 찾기
 };
 
 export default dev;

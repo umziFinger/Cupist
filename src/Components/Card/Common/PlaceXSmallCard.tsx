@@ -1,28 +1,41 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import MyActions from '@/Stores/My/Actions';
-import { AuthState } from '@/Stores/Auth/InitialState';
+
+export enum SCREEN_TYPE {
+  JOIN = 'join',
+  MODIFY = 'modify',
+}
 
 interface PlaceCardXSmallProps {
   item: any;
+  type: SCREEN_TYPE;
 }
 const PlaceXSmallCard = (props: PlaceCardXSmallProps) => {
   const dispatch = useDispatch();
-  const { userInfo, log_cert } = useSelector((state: AuthState) => state.auth);
   const [isError, setIsError] = useState(false);
-  const { item } = props;
+  const { item, type } = props;
   // console.log(log_cert);
 
   const onSelectPlace = () => {
-    const params = {
-      placeIdx: item.idx,
-    };
-    dispatch(MyActions.fetchMyProfilePatch(params));
+    if (type === SCREEN_TYPE.JOIN) {
+      const params = {
+        placeIdx: item.idx,
+        type: SCREEN_TYPE.JOIN,
+      };
+      dispatch(MyActions.fetchMyProfilePatch(params));
+    } else {
+      const params = {
+        placeIdx: item.idx,
+        type: SCREEN_TYPE.MODIFY,
+      };
+      dispatch(MyActions.fetchMyProfilePatch(params));
+    }
   };
 
   return (
@@ -48,7 +61,6 @@ const PlaceXSmallCard = (props: PlaceCardXSmallProps) => {
             resizeMode={FastImage.resizeMode.cover}
             onError={() => {
               setIsError(true);
-              // console.log('에러: ');
             }}
           />
         </View>

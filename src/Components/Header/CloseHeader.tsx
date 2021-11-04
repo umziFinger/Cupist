@@ -7,8 +7,9 @@ import { navigateGoBack } from '@/Services/NavigationService';
 import { HeaderProps } from '@/Components/Header/index';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
+import CustomText from '@/Components/CustomText';
 
-const BackHeader = (props: HeaderProps) => {
+const BackHeader = ({ text }: HeaderProps) => {
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
 
   return (
@@ -32,7 +33,24 @@ const BackHeader = (props: HeaderProps) => {
           />
         </View>
       </CustomButton>
-      <View style={{ flex: 1 }} />
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+        }}
+      >
+        <CustomText
+          style={{
+            fontSize: 15,
+            fontWeight: '500',
+            color: Color.Black1000,
+            letterSpacing: -0.2,
+          }}
+        >
+          {text}
+        </CustomText>
+      </View>
+      <View style={{ width: 24 }} />
     </View>
   );
 };

@@ -15,10 +15,10 @@ export default () => {
     common: CommonReducer,
     auth: AuthReducer,
     home: HomeReducer,
-    search: SearchReducer,
     notification: NotificationReducer,
     my: MyReducer,
     place: PlaceReducer,
+    search: SearchReducer,
   });
   return ConfigureStore(rootReducer, rootSaga);
 };

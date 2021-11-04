@@ -1,8 +1,10 @@
 import { createActions } from 'reduxsauce';
+import { fetchSearchAreaList, fetchSearchBowlingClubList } from '@/Sagas/SearchSaga';
 
 const { Types, Creators } = createActions({
   fetchSearchReducer: ['params'],
-  fetchSearchAreaList: [],
+  fetchSearchAreaList: ['params'],
+  fetchSearchBowlingClubList: ['params'],
 });
 
 export const SearchTypes = Types;
