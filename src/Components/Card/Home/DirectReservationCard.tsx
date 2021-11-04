@@ -1,10 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 interface PropTypes {
   item: any;
@@ -12,13 +14,17 @@ interface PropTypes {
 
 const DirectReservationCard = (props: PropTypes) => {
   const { item } = props;
+  const { userIdx } = useSelector((state: AuthState) => state.auth);
 
   const onPressReservation = () => {
     console.log('onPressReservation');
   };
 
   const onPressDibs = () => {
-    console.log('onPressDibs');
+    if (!userIdx) {
+      return navigate('SimpleLoginScreen');
+    }
+    return console.log('onPressDibs');
   };
 
   return (

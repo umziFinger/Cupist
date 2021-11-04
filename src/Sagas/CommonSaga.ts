@@ -1,4 +1,5 @@
 import { put } from 'redux-saga/effects';
+import moment from 'moment';
 import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import { Axios } from '@/Services/Axios';
@@ -69,6 +70,21 @@ export function* fetchInitialHandler() {
       type: 'joinInfoInit',
     }),
   );
+
+  // 홈 로드 완료 초기화
+  yield put(
+    HomeActions.fetchHomeReducer({
+      type: 'isHomeLoaded',
+      data: false,
+    }),
+  );
+
+  // 홈 캘린더 날짜 초기화
+  yield put(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() }));
+
+  // RBSheet 초기화
+  yield put(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
+  yield put(CommonActions.fetchCommonReducer({ type: 'currentRBS', data: null }));
 }
 
 export function* fetchErrorHandler(data: any) {

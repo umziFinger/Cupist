@@ -1,41 +1,79 @@
-import React, { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import produce from 'immer';
+import moment from 'moment';
 import CustomText from '@/Components/CustomText';
 import DirectReservationCard from '@/Components/Card/Home/DirectReservationCard';
 import { SearchState } from '@/Stores/Search/InitialState';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import { CommonState } from '@/Stores/Common/InitialState';
+import HomeActions from '@/Stores/Home/Actions';
+import { HomeState } from '@/Stores/Home/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
+import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 
 interface PropTypes {
   list: Array<any>;
 }
 const DirectReservationArea = (props: PropTypes) => {
-  // const {areaList};
-
+  const dispatch = useDispatch();
   const { list } = props;
+  const { myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
+  const { calendarDate, areaFilterIdx, timeFilterIdx } = useSelector((state: HomeState) => state.home);
   const { areaList } = useSelector((state: SearchState) => state.search);
-  const [selectedIdx, setSelectedIdx] = useState<number>(0);
+
+  useEffect(() => {
+    const date = moment(calendarDate).format('YYYY/MM/DD');
+    const areaCode = areaFilter()[areaFilterIdx].key;
+    const startTime = DATA_TIME_FILTER[timeFilterIdx].startTime;
+    const endTime = DATA_TIME_FILTER[timeFilterIdx].endTime;
+
+    let params = {};
+    if (areaFilterIdx === 1) {
+      params = {
+        perPage: 3,
+        page: 1,
+        date,
+        lat: myLatitude,
+        lng: myLongitude,
+        startTime,
+        endTime,
+      };
+    } else {
+      params = {
+        perPage: 3,
+        page: 1,
+        date,
+        areaCode,
+        startTime,
+        endTime,
+      };
+    }
+
+    dispatch(HomeActions.fetchHomeDirectReservationList(params));
+  }, [calendarDate, timeFilterIdx]);
+
   const areaTag = [
     {
       index: 0,
       key: 'all',
-      value: '전체',
+      value: DATA_TIME_FILTER[timeFilterIdx]?.content || 0,
       color: Color.Grayyellow1000,
       backgroundColor: Color.Gray200,
     },
     {
       index: 1,
-      key: 'nearby',
+      key: 'around',
       value: '가까운',
       color: Color.Grayyellow1000,
       backgroundColor: 'transparent',
     },
   ];
-  // console.log(areaList);
+
   const areaFilter = useMemo(
     () => () =>
       produce(areaTag, (draft) => {
@@ -51,16 +89,51 @@ const DirectReservationArea = (props: PropTypes) => {
           });
         }
       }),
-    [areaList],
+    [areaList, timeFilterIdx],
   );
 
   const onPressFilter = (value: number) => {
     console.log('onPressFilter : ', value);
-    // produce(areaTag, (draft) => {
-    //   draft[value].isSelected = true;
-    // });
-    console.log('areaList : ', areaFilter()[7]);
-    setSelectedIdx(value);
+    const date = moment(calendarDate).format('YYYY/MM/DD');
+    const areaCode = areaFilter()[value].key;
+    const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
+    const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
+    let params = {};
+    if (value === 0) {
+      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenTimeFilterRBS', data: true }));
+      return;
+    }
+    if (value === 1) {
+      params = {
+        perPage: 3,
+        page: 1,
+        date,
+        lat: myLatitude,
+        lng: myLongitude,
+        startTime,
+        endTime,
+      };
+    } else {
+      params = {
+        perPage: 3,
+        page: 1,
+        date,
+        areaCode,
+        startTime,
+        endTime,
+      };
+    }
+
+    dispatch(HomeActions.fetchHomeDirectReservationList(params));
+    dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
+    // setSelectedIdx(value);
+  };
+
+  const onPressNextDay = () => {
+    console.log('onPressNextDay');
+    dispatch(
+      HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(calendarDate).add(1, 'day').toString() }),
+    );
   };
 
   return (
@@ -101,14 +174,17 @@ const DirectReservationArea = (props: PropTypes) => {
                       paddingLeft: 10,
                       paddingRight: 14,
                       paddingVertical: 7.5,
-                      backgroundColor: selectedIdx === item.index ? Color.Grayyellow1000 : item.backgroundColor,
+                      backgroundColor:
+                        areaFilterIdx !== 0 && areaFilterIdx === item.index
+                          ? Color.Grayyellow1000
+                          : item.backgroundColor,
                     }}
                   >
                     <View style={{ width: 20, height: 20, marginRight: 2 }}>
                       <FastImage
                         style={{ width: '100%', height: '100%' }}
                         source={
-                          selectedIdx === item.index
+                          areaFilterIdx !== 0 && areaFilterIdx === item.index
                             ? require('@/Assets/Images/Common/icTimeWhite.png')
                             : require('@/Assets/Images/Common/icTime.png')
                         }
@@ -117,7 +193,7 @@ const DirectReservationArea = (props: PropTypes) => {
                     </View>
                     <CustomText
                       style={{
-                        color: selectedIdx === item.index ? Color.White : item.color,
+                        color: areaFilterIdx !== 0 && areaFilterIdx === item.index ? Color.White : item.color,
                         fontSize: 13,
                         fontWeight: '500',
                         letterSpacing: -0.2,
@@ -133,13 +209,13 @@ const DirectReservationArea = (props: PropTypes) => {
                       paddingHorizontal: 12,
                       paddingVertical: 8,
                       borderWidth: 1,
-                      borderColor: selectedIdx === item.index ? Color.Grayyellow1000 : Color.Gray300,
-                      backgroundColor: selectedIdx === item.index ? Color.Grayyellow1000 : item.backgroundColor,
+                      borderColor: areaFilterIdx === item.index ? Color.Grayyellow1000 : Color.Gray300,
+                      backgroundColor: areaFilterIdx === item.index ? Color.Grayyellow1000 : item.backgroundColor,
                     }}
                   >
                     <CustomText
                       style={{
-                        color: selectedIdx === item.index ? Color.White : item.color,
+                        color: areaFilterIdx === item.index ? Color.White : item.color,
                         fontSize: 13,
                         fontWeight: '500',
                         letterSpacing: -0.2,
@@ -174,30 +250,73 @@ const DirectReservationArea = (props: PropTypes) => {
         initialNumToRender={3}
         maxToRenderPerBatch={6}
         windowSize={7}
-        ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
-        ListFooterComponent={
-          <CustomButton onPress={() => navigate('SimpleLoginScreen')}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingVertical: 12,
-                borderWidth: 1,
-                borderRadius: 3,
-                borderColor: Color.Grayyellow200,
-              }}
-            >
-              <View style={{ justifyContent: 'center' }}>
-                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2 }}>
-                  바로예약 볼링장 모두보기
+        ListEmptyComponent={
+          <View style={{ paddingHorizontal: 20, marginTop: 80, marginBottom: 50, alignItems: 'center' }}>
+            <View style={{ width: 60, height: 60 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Home/emptyList.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
+            <View style={{ marginTop: 16, alignItems: 'center' }}>
+              <View style={{ flexDirection: 'row' }}>
+                <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold', letterSpacing: -0.29 }}>
+                  다른 날짜
+                </CustomText>
+                <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>에</CustomText>
+              </View>
+              <View>
+                <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>
+                  바로 예약 볼링장이 있어요!
                 </CustomText>
               </View>
+
+              <CustomButton onPress={() => onPressNextDay()}>
+                <View style={{ marginTop: 30 }}>
+                  <View
+                    style={{
+                      borderRadius: 24,
+                      borderWidth: 1.5,
+                      borderColor: Color.Primary1000,
+                      paddingVertical: 15,
+                      paddingHorizontal: 24,
+                    }}
+                  >
+                    <CustomText
+                      style={{ color: Color.Primary1000, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}
+                    >
+                      {moment(calendarDate).add(1, 'day').format('MM월 D일').toString()}로 날짜변경하기
+                    </CustomText>
+                  </View>
+                </View>
+              </CustomButton>
             </View>
-          </CustomButton>
+          </View>
         }
       />
+      {list.length > 0 && (
+        <CustomButton onPress={() => navigate('SimpleLoginScreen')} style={{ paddingHorizontal: 20, marginTop: 20 }}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingVertical: 12,
+              borderWidth: 1,
+              borderRadius: 3,
+              borderColor: Color.Grayyellow200,
+            }}
+          >
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2 }}>
+                바로예약 볼링장 모두보기
+              </CustomText>
+            </View>
+          </View>
+        </CustomButton>
+      )}
     </View>
   );
 };

@@ -3,19 +3,19 @@ import moment from 'moment';
 import { View } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
 import FastImage from 'react-native-fast-image';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
 import CommonActions from '@/Stores/Common/Actions';
+import HomeActions from '@/Stores/Home/Actions';
+import { HomeState } from '@/Stores/Home/InitialState';
 
-interface PropTypes {
-  setSelectedDate: Function;
-}
+interface PropTypes {}
 
 const CalendarSlider = (props: PropTypes) => {
   const dispatch = useDispatch();
-  const { setSelectedDate } = props;
+  const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerDate, setHeaderDate] = useState<string>(moment().format('MM월 YYYY').toString());
 
   // 선택 불가 날짜
@@ -36,7 +36,7 @@ const CalendarSlider = (props: PropTypes) => {
 
   const onPressDate = (date: any) => {
     setHeaderDate(date.format('MM월 YYYY'));
-    setSelectedDate(moment(date).toString());
+    dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(date).toString() }));
   };
 
   const renderDayComponent = (value: any) => {
@@ -110,7 +110,7 @@ const CalendarSlider = (props: PropTypes) => {
           style={{ flex: 1, marginTop: 10 }}
           scrollable
           numDaysInWeek={8}
-          selectedDate={new Date()}
+          selectedDate={moment(calendarDate)}
           datesWhitelist={datesWhitelist}
           leftSelector={[]}
           rightSelector={[]}
@@ -125,7 +125,7 @@ const CalendarSlider = (props: PropTypes) => {
         />
       );
     },
-    [],
+    [calendarDate],
   );
   return (
     <View style={{ flex: 1 }}>

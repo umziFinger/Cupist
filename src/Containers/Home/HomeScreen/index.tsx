@@ -27,6 +27,8 @@ import QuickPriceArea from '@/Containers/Home/HomeScreen/QuickPriceArea';
 import PrepaymentPriceArea from '@/Containers/Home/HomeScreen/PrepaymentPriceArea';
 import HotArea from '@/Containers/Home/HomeScreen/HotArea';
 import EventArea from '@/Containers/Home/HomeScreen/EventArea';
+import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
+import { fetchHomeDirectReservationList } from '@/Sagas/HomeSaga';
 
 // import CopyRightView from '@/Containers/Home/HomeScreen/CopyRightView';
 
@@ -37,9 +39,9 @@ interface HomeProps {
 const HomeScreen = ({ route }: HomeProps) => {
   const dispatch = useDispatch();
   const { myLongitude, myLatitude } = useSelector((state: CommonState) => state.common);
-  const { homeList } = useSelector((state: HomeState) => state.home);
+  const { homeList, calendarDate } = useSelector((state: HomeState) => state.home);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY.MM.DD(dd)'));
+  // const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY.MM.DD(dd)'));
 
   useEffect(() => {
     // 첫 홈 화면 현재 위치값 갱신
@@ -48,6 +50,9 @@ const HomeScreen = ({ route }: HomeProps) => {
 
     // 바로예약 지역 필터 조회
     dispatch(SearchActions.fetchSearchAreaList());
+
+    dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: 1 }));
+    dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: DATA_TIME_FILTER[0].idx }));
   }, []);
 
   useEffect(() => {
@@ -56,26 +61,26 @@ const HomeScreen = ({ route }: HomeProps) => {
       AsyncStorage.setItem('userIdx', '');
       dispatch(AuthActions.fetchAuthReducer({ type: 'logout' }));
       dispatch(HomeActions.fetchHomeList());
+      dispatch(HomeActions.fetchHomeDirectReservationList());
       console.log('userIdx expired', userIdx);
     }
   }, [route]);
 
-  // 스케쥴 날짜 선택 시 홈 갱신
+  // 캘린더 날짜 선택 시 홈 갱신
   useEffect(() => {
-    console.log('DIDUPDATE : ', moment(selectedDate).format('YYYY/MM/DD'));
     const params = {
-      date: moment(selectedDate).format('YYYY/MM/DD'),
+      date: moment(calendarDate).format('YYYY/MM/DD'),
       lat: parseFloat(myLatitude?.toString()) || 37.56561,
       lng: parseFloat(myLongitude?.toString()) || 126.97804,
     };
     dispatch(HomeActions.fetchHomeList(params));
-  }, [selectedDate]);
+  }, [calendarDate]);
 
   const positionUpdate = async () => {
     const myPosition = await LocationMyPosition();
     console.log('myPosition is ', myPosition);
     const params = {
-      date: moment(selectedDate).format('YYYY/MM/DD'),
+      date: moment(calendarDate).format('YYYY/MM/DD'),
       lat: parseFloat(myPosition?.myLatitude?.toString()) || 37.56561,
       lng: parseFloat(myPosition?.myLongitude?.toString()) || 126.97804,
     };
@@ -95,7 +100,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 1: {
         return (
           <View style={{ flex: 1, paddingLeft: 20, marginTop: 30 }}>
-            <CalendarSlider setSelectedDate={setSelectedDate} />
+            <CalendarSlider />
           </View>
         );
       }
@@ -109,10 +114,12 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 3: {
         return (
-          <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <QuickPriceArea list={homeList['special'] || []} selectedDate={selectedDate} />
-          </View>
+          homeList['special']?.length > 0 && (
+            <View style={{ flex: 1 }}>
+              <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+              <QuickPriceArea list={homeList['special'] || []} />
+            </View>
+          )
         );
       }
       case 4: {
@@ -152,7 +159,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                   backgroundColor: Color.Gray300,
                 }}
               >
-                <CustomText style={{ color: '#333', fontSize: 14 }}>{selectedDate} 테스트 로그인</CustomText>
+                <CustomText style={{ color: '#333', fontSize: 14 }}>{calendarDate} 테스트 로그인</CustomText>
               </View>
             </CustomButton>
           </View>
@@ -173,7 +180,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                 }}
               >
                 <CustomText style={{ color: '#333', fontSize: 14 }}>
-                  {selectedDate} 테스트 상주 볼링장 바로가기
+                  {calendarDate} 테스트 상주 볼링장 바로가기
                 </CustomText>
               </View>
             </CustomButton>

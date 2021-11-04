@@ -18,7 +18,7 @@ import {
 } from './CommonSaga';
 
 // home
-import { fetchHomeList } from './HomeSaga';
+import { fetchHomeList, fetchHomeDirectReservationList } from './HomeSaga';
 
 // auth
 import {
@@ -60,6 +60,7 @@ export default function* root() {
 
     // home
     takeLatest(HomeTypes.FETCH_HOME_LIST, fetchHomeList),
+    takeLatest(HomeTypes.FETCH_HOME_DIRECT_RESERVATION_LIST, fetchHomeDirectReservationList),
 
     // auth
     takeLatest(AuthTypes.FETCH_AUTH_SMS_SEND, fetchAuthSmsSend),

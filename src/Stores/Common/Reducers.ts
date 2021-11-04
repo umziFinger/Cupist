@@ -8,6 +8,36 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
   const { type, data } = actions.params;
   return produce(state, (draft: any) => {
     switch (type) {
+      // RBS 추가 시 모두 추가해주세요.
+      case 'openCurrentRBS': {
+        draft.isOpenTimeFilterRBS = state.currentRBS === 'timeFilter';
+        draft.isOpenDirectReservationRBS = state.currentRBS === 'directReservation';
+        draft.isOpenAgreeDetailRBS = state.currentRBS === 'agreeDetail';
+        break;
+      }
+      // RBS 추가 시 모두 추가해주세요.
+      case 'closeAllRBS': {
+        draft.isOpenTimeFilterRBS = false;
+        draft.isOpenDirectReservationRBS = false;
+        draft.isOpenAgreeDetailRBS = false;
+        break;
+      }
+      case 'isOpenTimeFilterRBS': {
+        draft.isOpenTimeFilterRBS = data;
+        draft.currentRBS = data ? 'timeFilter' : state.currentRBS;
+        break;
+      }
+      case 'isOpenDirectReservationRBS': {
+        draft.isOpenDirectReservationRBS = data;
+        draft.currentRBS = data ? 'directReservation' : state.currentRBS;
+        break;
+      }
+      case 'isOpenAgreeDetailRBS': {
+        draft.isOpenAgreeDetailRBS = data;
+        draft.currentRBS = data ? 'agreeDetail' : state.currentRBS;
+        break;
+      }
+
       case 'isLoading': {
         draft.isLoading = data;
         break;
@@ -15,17 +45,6 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
       case 'isSkeleton': {
         AsyncStorage.getItem('currentScreen').then((page) => console.log('isSkeleton page', page, data));
         draft.isSkeleton = data;
-        break;
-      }
-
-      case 'closeAllRBS': {
-        draft.isOpenAgreeDetailRBS = false;
-        break;
-      }
-
-      case 'openCurrentRBS': {
-        draft.isOpenAgreeDetailRBS = state.currentRBS === 'agreeDetail';
-
         break;
       }
 
@@ -159,12 +178,6 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'totalSelectImageIndex': {
         draft.totalSelectImageIndex = data;
-        break;
-      }
-
-      case 'isOpenAgreeDetailRBS': {
-        draft.isOpenAgreeDetailRBS = data;
-        draft.currentRBS = data ? 'agreeDetail' : state.currentRBS;
         break;
       }
       case 'isOpenKeyboard': {
