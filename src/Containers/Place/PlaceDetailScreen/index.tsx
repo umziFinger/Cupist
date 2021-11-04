@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import CustomText from '@/Components/CustomText';
@@ -9,7 +9,10 @@ interface PropTypes {
 }
 const PlaceDetailScreen = ({ route }: PropTypes) => {
   const { idx } = route.params;
-  console.log('PlaceDetailScreen Idx : ', idx);
+  useEffect(() => {
+    console.log('PlaceDetailScreen Idx : ', idx);
+  }, []);
+
   return (
     <View style={{ justifyContent: 'center' }}>
       <CustomText style={{ color: '#333', fontSize: 14 }}>PlaceDetailScreen</CustomText>

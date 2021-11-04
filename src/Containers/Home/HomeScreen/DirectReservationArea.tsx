@@ -6,15 +6,15 @@ import produce from 'immer';
 import moment from 'moment';
 import CustomText from '@/Components/CustomText';
 import DirectReservationCard from '@/Components/Card/Home/DirectReservationCard';
-import { SearchState } from '@/Stores/Search/InitialState';
-import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import { SearchState } from '@/Stores/Search/InitialState';
+import { Color } from '@/Assets/Color';
 import { CommonState } from '@/Stores/Common/InitialState';
-import HomeActions from '@/Stores/Home/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
-import CommonActions from '@/Stores/Common/Actions';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
+import HomeActions from '@/Stores/Home/Actions';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   list: Array<any>;
@@ -26,14 +26,14 @@ const DirectReservationArea = (props: PropTypes) => {
   const { calendarDate, areaFilterIdx, timeFilterIdx } = useSelector((state: HomeState) => state.home);
   const { areaList } = useSelector((state: SearchState) => state.search);
 
-  useEffect(() => {
+  const getDirectReservationList = (value: number) => {
     const date = moment(calendarDate).format('YYYY/MM/DD');
-    const areaCode = areaFilter()[areaFilterIdx].key;
-    const startTime = DATA_TIME_FILTER[timeFilterIdx].startTime;
-    const endTime = DATA_TIME_FILTER[timeFilterIdx].endTime;
+    const areaCode = areaFilter()[value].key;
+    const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
+    const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
 
     let params = {};
-    if (areaFilterIdx === 1) {
+    if (value === 1) {
       params = {
         perPage: 3,
         page: 1,
@@ -43,7 +43,8 @@ const DirectReservationArea = (props: PropTypes) => {
         startTime,
         endTime,
       };
-    } else {
+    }
+    if (value > 1) {
       params = {
         perPage: 3,
         page: 1,
@@ -53,9 +54,28 @@ const DirectReservationArea = (props: PropTypes) => {
         endTime,
       };
     }
-
     dispatch(HomeActions.fetchHomeDirectReservationList(params));
+  };
+
+  useEffect(() => {
+    getDirectReservationList(areaFilterIdx);
   }, [calendarDate, timeFilterIdx]);
+
+  const onPressFilter = (value: number) => {
+    if (value === 0) {
+      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenTimeFilterRBS', data: true }));
+      return;
+    }
+    dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
+    getDirectReservationList(value);
+  };
+
+  const onPressNextDay = () => {
+    console.log('onPressNextDay');
+    dispatch(
+      HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(calendarDate).add(1, 'day').toString() }),
+    );
+  };
 
   const areaTag = [
     {
@@ -74,6 +94,7 @@ const DirectReservationArea = (props: PropTypes) => {
     },
   ];
 
+  // 필터 데이터 커스터마이징
   const areaFilter = useMemo(
     () => () =>
       produce(areaTag, (draft) => {
@@ -91,50 +112,6 @@ const DirectReservationArea = (props: PropTypes) => {
       }),
     [areaList, timeFilterIdx],
   );
-
-  const onPressFilter = (value: number) => {
-    console.log('onPressFilter : ', value);
-    const date = moment(calendarDate).format('YYYY/MM/DD');
-    const areaCode = areaFilter()[value].key;
-    const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
-    const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
-    let params = {};
-    if (value === 0) {
-      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenTimeFilterRBS', data: true }));
-      return;
-    }
-    if (value === 1) {
-      params = {
-        perPage: 3,
-        page: 1,
-        date,
-        lat: myLatitude,
-        lng: myLongitude,
-        startTime,
-        endTime,
-      };
-    } else {
-      params = {
-        perPage: 3,
-        page: 1,
-        date,
-        areaCode,
-        startTime,
-        endTime,
-      };
-    }
-
-    dispatch(HomeActions.fetchHomeDirectReservationList(params));
-    dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
-    // setSelectedIdx(value);
-  };
-
-  const onPressNextDay = () => {
-    console.log('onPressNextDay');
-    dispatch(
-      HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(calendarDate).add(1, 'day').toString() }),
-    );
-  };
 
   return (
     <View style={{ flex: 1, marginTop: 40 }}>

@@ -27,7 +27,6 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'calendarDate': {
-        console.log('call reducer calendarDate : ', data);
         draft.calendarDate = data;
         break;
       }
@@ -38,13 +37,11 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'areaFilterIdx': {
-        console.log('call reducer areaFilterIdx : ', data);
         draft.areaFilterIdx = data;
         break;
       }
 
       case 'timeFilterIdx': {
-        console.log('call reducer timeFilterIdx : ', data);
         draft.timeFilterIdx = data;
         break;
       }

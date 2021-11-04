@@ -18,6 +18,7 @@ const DirectReservationCard = (props: PropTypes) => {
 
   const onPressReservation = () => {
     console.log('onPressReservation');
+    console.log('rv item : ', item);
   };
 
   const onPressDibs = () => {

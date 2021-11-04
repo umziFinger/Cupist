@@ -4,6 +4,7 @@ const { Types, Creators } = createActions({
   fetchPlaceReducer: ['params'],
   fetchPlaceAroundList: ['params'],
   fetchPlaceSearchList: ['params'],
+  fetchPlaceDetail: ['params'],
 });
 
 export const PlaceTypes = Types;

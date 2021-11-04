@@ -28,9 +28,6 @@ import PrepaymentPriceArea from '@/Containers/Home/HomeScreen/PrepaymentPriceAre
 import HotArea from '@/Containers/Home/HomeScreen/HotArea';
 import EventArea from '@/Containers/Home/HomeScreen/EventArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
-import { fetchHomeDirectReservationList } from '@/Sagas/HomeSaga';
-
-// import CopyRightView from '@/Containers/Home/HomeScreen/CopyRightView';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -39,7 +36,7 @@ interface HomeProps {
 const HomeScreen = ({ route }: HomeProps) => {
   const dispatch = useDispatch();
   const { myLongitude, myLatitude } = useSelector((state: CommonState) => state.common);
-  const { homeList, calendarDate } = useSelector((state: HomeState) => state.home);
+  const { homeList, calendarDate, timeFilterIdx } = useSelector((state: HomeState) => state.home);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   // const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY.MM.DD(dd)'));
 
@@ -73,18 +70,37 @@ const HomeScreen = ({ route }: HomeProps) => {
       lat: parseFloat(myLatitude?.toString()) || 37.56561,
       lng: parseFloat(myLongitude?.toString()) || 126.97804,
     };
+
+    // 홈 리스트 호출
     dispatch(HomeActions.fetchHomeList(params));
   }, [calendarDate]);
 
   const positionUpdate = async () => {
     const myPosition = await LocationMyPosition();
     console.log('myPosition is ', myPosition);
+
     const params = {
       date: moment(calendarDate).format('YYYY/MM/DD'),
       lat: parseFloat(myPosition?.myLatitude?.toString()) || 37.56561,
       lng: parseFloat(myPosition?.myLongitude?.toString()) || 126.97804,
     };
+
+    // 홈 리스트 호출
     dispatch(HomeActions.fetchHomeList(params));
+
+    // 홈 바로 예약 호출
+    const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
+    const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
+    dispatch(
+      HomeActions.fetchHomeDirectReservationList({
+        ...params,
+        perPage: 3,
+        page: 1,
+        startTime,
+        endTime,
+      }),
+    );
+
     dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
   };
 

@@ -97,7 +97,7 @@ const PrepaymentPriceArea = (props: PropTypes) => {
                   </View>
                   <View>
                     <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>
-                      바로 예약 볼링장이 있어요!
+                      선결제 특가 볼링장이 있어요!
                     </CustomText>
                   </View>
 

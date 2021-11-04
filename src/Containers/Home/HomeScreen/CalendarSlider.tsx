@@ -11,19 +11,17 @@ import CommonActions from '@/Stores/Common/Actions';
 import HomeActions from '@/Stores/Home/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
 
-interface PropTypes {}
-
-const CalendarSlider = (props: PropTypes) => {
+const CalendarSlider = () => {
   const dispatch = useDispatch();
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerDate, setHeaderDate] = useState<string>(moment().format('MM월 YYYY').toString());
 
   // 선택 불가 날짜
-  const datesBlacklistFunc = (date: any) => {
-    const current = moment().format('YYYYMMDD');
-    console.log(date.format('YYYYMMDD') < current);
-    return date.format('YYYYMMDD') < current; // disable Saturdays
-  };
+  // const datesBlacklistFunc = (date: any) => {
+  //   const current = moment().format('YYYYMMDD');
+  //   console.log(date.format('YYYYMMDD') < current);
+  //   return date.format('YYYYMMDD') < current; // disable Saturdays
+  // };
 
   // 선택 가능 날짜 범위
   const datesWhitelist = [

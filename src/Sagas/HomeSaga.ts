@@ -5,7 +5,6 @@ import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
 
 export function* fetchHomeList(data: any): any {
-  console.log('call SAGA fetchHomeList : ', data.params);
   try {
     // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
     const payload = {
@@ -26,14 +25,12 @@ export function* fetchHomeList(data: any): any {
 }
 
 export function* fetchHomeDirectReservationList(data: any): any {
-  console.log('call SAGA fetchHomeDirectReservationList : ', data.params);
   try {
     const payload = {
       ...data,
       url: Config.HOME_PLACE_URL,
     };
     const response = yield call(Axios.GET, payload);
-    console.log('call saga fetchHomeDirectReservationList : ', response);
     if (response.result === true && response.code === null) {
       yield put(HomeActions.fetchHomeReducer({ type: 'directReservationList', data: response.data }));
     } else {
