@@ -43,7 +43,7 @@ const DirectReservationArea = (props: PropTypes) => {
         areaList.map((item, index) => {
           return draft.push({
             index: index + 2,
-            key: item.idx,
+            key: item.code,
             value: item.area,
             color: Color.Grayyellow1000,
             backgroundColor: 'transparent',
@@ -58,6 +58,7 @@ const DirectReservationArea = (props: PropTypes) => {
     // produce(areaTag, (draft) => {
     //   draft[value].isSelected = true;
     // });
+    console.log('areaList : ', areaFilter()[7]);
     setSelectedIdx(value);
   };
 
