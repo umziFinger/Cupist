@@ -24,7 +24,7 @@ export interface HomeState {
   };
 }
 
-export interface HomeList {
+interface HomeList {
   place: Array<any>;
   special: Array<any>;
   early: Array<any>;

@@ -47,7 +47,7 @@ import {
   fetchMySmsSend,
   fetchMyProfilePatch,
 } from '@/Sagas/MySaga';
-import { fetchPlaceAroundList, fetchPlaceSearchList } from '@/Sagas/PlaceSaga';
+import { fetchPlaceAroundList, fetchPlaceDetail, fetchPlaceSearchList } from '@/Sagas/PlaceSaga';
 import { PlaceTypes } from '@/Stores/Place/Actions';
 
 export default function* root() {
@@ -95,5 +95,6 @@ export default function* root() {
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),
     takeLatest(PlaceTypes.FETCH_PLACE_SEARCH_LIST, fetchPlaceSearchList),
+    takeLatest(PlaceTypes.FETCH_PLACE_DETAIL, fetchPlaceDetail),
   ]);
 }

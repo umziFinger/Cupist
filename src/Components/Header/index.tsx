@@ -2,6 +2,7 @@ import React from 'react';
 import BackHeader from '@/Components/Header/BackHeader';
 import HomeHeader from '@/Components/Header/HomeHeader';
 import CloseHeader from './CloseHeader';
+import PlaceDetailHeader from './PlaceDetailHeader';
 
 export enum MODE {
   DARK = 'dark',
@@ -32,6 +33,8 @@ const Header = (props: HeaderProps) => {
       return <HomeHeader />;
     case 'close':
       return <CloseHeader text={text} />;
+    case 'placeDetail':
+      return <PlaceDetailHeader />;
     default:
       return null;
   }
