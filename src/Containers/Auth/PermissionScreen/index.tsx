@@ -75,21 +75,27 @@ const PermissionScreen = () => {
         <FlatList
           data={DATA_PERMISSIONS}
           renderItem={({ item, index }) => (
-            <View style={{ flexDirection: 'row', marginTop: index === 0 ? 28 : 19 }}>
-              <View style={{ width: 24, height: 24 }}>
-                <FastImage
-                  source={item.image}
-                  style={{ width: '100%', height: '100%' }}
-                  resizeMode={FastImage.resizeMode.contain}
-                />
+            <View style={{ marginTop: index === 0 ? 28 : 16 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ width: 24, height: 24 }}>
+                  <FastImage
+                    source={item.image}
+                    style={{ width: '100%', height: '100%' }}
+                    resizeMode={FastImage.resizeMode.contain}
+                  />
+                </View>
+                <View style={{ marginLeft: 4 }}>
+                  <CustomText
+                    style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.23, color: Color.Grayyellow1000 }}
+                  >
+                    {item.titleText}
+                  </CustomText>
+                </View>
               </View>
-              <View style={{ marginLeft: 4 }}>
-                <CustomText
-                  style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.23, color: Color.Grayyellow1000 }}
-                >
-                  {item.titleText}
-                </CustomText>
-                <View style={{ marginTop: 4 }}>
+
+              <View style={{ flexDirection: 'row' }}>
+                <View style={{ width: 24, height: 24 }} />
+                <View style={{ flex: 1, marginLeft: 4 }}>
                   <CustomText style={{ fontSize: 12, letterSpacing: -0.21, color: Color.Gray600 }}>
                     {item.content}
                   </CustomText>
