@@ -34,7 +34,7 @@ interface HomeProps {
 
 const HomeScreen = ({ route }: HomeProps) => {
   const dispatch = useDispatch();
-  const { myLongitude, myLatitude } = useSelector((state: CommonState) => state.common);
+  const { myLongitude, myLatitude, homeTabRefreshYN } = useSelector((state: CommonState) => state.common);
   const { homeList, calendarDate, timeFilterIdx } = useSelector((state: HomeState) => state.home);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   // const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY.MM.DD(dd)'));
@@ -62,6 +62,12 @@ const HomeScreen = ({ route }: HomeProps) => {
     }
   }, [route]);
 
+  useEffect(() => {
+    if (homeTabRefreshYN === 'N') {
+      onRefresh();
+    }
+  }, [homeTabRefreshYN]);
+
   // 캘린더 날짜 선택 시 홈 갱신
   useEffect(() => {
     const params = {
@@ -73,6 +79,13 @@ const HomeScreen = ({ route }: HomeProps) => {
     // 홈 리스트 호출
     dispatch(HomeActions.fetchHomeList(params));
   }, [calendarDate]);
+
+  const onRefresh = () => {
+    console.log('새로고침');
+    dispatch(HomeActions.fetchHomeList());
+    dispatch(HomeActions.fetchHomeDirectReservationList());
+    dispatch(CommonActions.fetchCommonReducer({ type: 'homeTabRefreshYN', data: 'Y' }));
+  };
 
   const positionUpdate = async () => {
     const myPosition = await LocationMyPosition();

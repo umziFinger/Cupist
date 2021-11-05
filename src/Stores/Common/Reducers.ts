@@ -184,6 +184,10 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.isOpenKeyboard = data;
         break;
       }
+      case 'homeTabRefreshYN': {
+        draft.homeTabRefreshYN = data;
+        break;
+      }
 
       default:
         return draft;

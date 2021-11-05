@@ -1,14 +1,21 @@
-import { put } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import moment from 'moment';
 import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import { Axios } from '@/Services/Axios';
-import { navigate, navigateGoBack, navigateReplace } from '@/Services/NavigationService';
+import { navigate, navigateReplace } from '@/Services/NavigationService';
 import HomeActions from '@/Stores/Home/Actions';
-import SearchActions from '@/Stores/Search/Actions';
+import PlaceActions from '@/Stores/Place/Actions';
 import Config from '@/Config';
-import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 
+export type placeDibsType = 'myAround' | 'home';
+export type dibsStatusType = 'dibs' | 'unDibs';
+
+export type placeDibsDataType = {
+  placeIdx: number;
+  type: placeDibsType;
+  status: dibsStatusType;
+};
 // --------------------------------------------------------------------------------------------------
 // 최초 진입시 초기화 함수 입니다 맨 밑에 유지 새로운 saga 생성시 !!주의!!
 // --------------------------------------------------------------------------------------------------
@@ -210,5 +217,76 @@ export function* fetchSkeletonNavigateReplace(data: any): any {
     navigateReplace(routeName, data.params.state);
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
+  }
+}
+
+function* handlerPlaceDibs(type: placeDibsType, status: dibsStatusType, placeIdx: any) {
+  try {
+    if (status === 'dibs') {
+      switch (type) {
+        case 'myAround': {
+          yield put(PlaceActions.fetchPlaceReducer({ type: 'placeMyAroundDibs', data: { placeIdx } }));
+          break;
+        }
+
+        default:
+          return false;
+      }
+    }
+    if (status === 'unDibs') {
+      switch (type) {
+        case 'myAround': {
+          yield put(PlaceActions.fetchPlaceReducer({ type: 'placeMyAroundUnDibs', data: { placeIdx } }));
+          break;
+        }
+        default:
+          return false;
+      }
+    }
+  } catch (e) {
+    console.log('occurred Error...handlerPlaceDibs : ', e);
+  }
+  return false;
+}
+
+function* handlerRefreshFlag(type: placeDibsType) {
+  try {
+    switch (type) {
+      case 'myAround': {
+        yield put(CommonActions.fetchCommonReducer({ type: 'homeTabRefreshYN', data: 'N' }));
+        break;
+      }
+      default:
+        return false;
+    }
+  } catch (e) {
+    console.log('occurred Error...handlerPlaceDibs : ', e);
+  }
+  return false;
+}
+
+export function* fetchCommonPlaceDibsHandler(data: any): any {
+  try {
+    const { placeIdx, type, status }: placeDibsDataType = data.params;
+    yield handlerPlaceDibs(type, status, placeIdx);
+    const payload = {
+      ...data,
+      url: `${Config.PLACE_URL}/${placeIdx}/dibs`,
+    };
+
+    const response = status === 'dibs' ? yield call(Axios.POST, payload) : yield call(Axios.DELETE, payload);
+
+    if (response.result === true && response.code === null) {
+      yield handlerRefreshFlag(type);
+    } else if (response.data.message === '이미 찜 되어있는 볼링장입니다.') {
+      yield handlerPlaceDibs(type, status, placeIdx);
+    } else if (response.data.message === '찜이 존재하지 않습니다.') {
+      yield handlerPlaceDibs(type, status, placeIdx);
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      console.log('볼링장 찜하기 실패 !!!: ', response);
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchCommonPlaceDibsHandler : ', e);
   }
 }

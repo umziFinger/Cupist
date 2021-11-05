@@ -65,11 +65,13 @@ const LocationSettingScreen = () => {
     setSelectedCity({ code: item.code, idx: item.idx });
   };
   const onSelectedDistrict = (item: any) => {
+    // console.log('시선택: ', areaList[selectedCity.idx - 1]);
     // console.log('구선택: ', item);
+    const areaName = `${areaList[selectedCity.idx - 1].areaDisplay} ${item.area}`;
     dispatch(
       PlaceActions.fetchPlaceReducer({
         type: 'location',
-        data: { areaCode: item.code, lat: item.lat, lng: item.lng },
+        data: { areaCode: item.code, lat: item.lat, lng: item.lng, areaName },
       }),
     );
     navigateGoBack();

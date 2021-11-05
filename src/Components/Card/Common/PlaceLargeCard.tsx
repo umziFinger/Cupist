@@ -1,22 +1,48 @@
 import React, { useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { useDispatch } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
+import { placeDibsDataType } from '@/Sagas/CommonSaga';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   item: any;
 }
+
 const PlaceLargeCard = (props: PropTypes) => {
   const { item } = props;
   const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
 
-  const handlerLikePlace = () => {
-    console.log('하트 클릭');
+  const handlerPlaceDibs = (place: any) => {
+    if (place.isPlaceDibs) {
+      onPlaceUnDibs(place.idx);
+    } else {
+      onPlaceDibs(place.idx);
+    }
   };
 
+  const onPlaceDibs = (placeIdx: number) => {
+    const params: placeDibsDataType = {
+      placeIdx,
+      type: 'myAround',
+      status: 'dibs',
+    };
+    dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
+  };
+
+  const onPlaceUnDibs = (placeIdx: number) => {
+    const params: placeDibsDataType = {
+      placeIdx,
+      type: 'myAround',
+      status: 'unDibs',
+    };
+    dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
+  };
   return (
     <View
       style={{
@@ -43,10 +69,14 @@ const PlaceLargeCard = (props: PropTypes) => {
       </View>
 
       <View style={{ width: 24, height: 24, position: 'absolute', right: 4, top: 4 }}>
-        <CustomButton onPress={() => handlerLikePlace()}>
+        <CustomButton onPress={() => handlerPlaceDibs(item)}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/Button/icHeartOffWt.png')}
+            source={
+              item?.isPlaceDibs
+                ? require('@/Assets/Images/Button/icHeartOn.png')
+                : require('@/Assets/Images/Button/icHeartOffWt.png')
+            }
             resizeMode={FastImage.resizeMode.cover}
             onError={() => {
               setIsError(true);

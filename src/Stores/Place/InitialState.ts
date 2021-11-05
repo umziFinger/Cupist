@@ -1,4 +1,4 @@
-export const INITIAL_STATE = {
+export const INITIAL_STATE: PlaceState['place'] = {
   aroundList: [],
   aroundListPage: 1,
   myAroundList: [],
@@ -9,6 +9,7 @@ export const INITIAL_STATE = {
     areaCode: '',
     lat: '',
     lng: '',
+    areaName: '',
   },
 
   placeDetail: {
@@ -31,6 +32,7 @@ export interface PlaceState {
       areaCode: string;
       lat: string;
       lng: string;
+      areaName: string;
     };
     placeDetail: PlaceDetail;
     placeDetailIdx: number | -1;

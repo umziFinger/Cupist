@@ -21,7 +21,7 @@ const MyAroundScreen = () => {
     myAroundSort = { index: 0, key: 'distance', value: '거리순' },
     myAroundList,
     myAroundListPage = 1,
-    location = { areaCode: '', lat: '', lng: '' },
+    location = { areaCode: '', lat: '', lng: '', areaName: '' },
   } = useSelector((state: PlaceState) => state.place);
 
   useEffect(() => {
@@ -64,7 +64,8 @@ const MyAroundScreen = () => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header
         type={'myAround'}
-        text={myAroundList?.length > 0 ? myAroundList[0]?.area : '내주변'}
+        // text={myAroundList?.length > 0 ? myAroundList[0]?.area : '내주변'}
+        text={location?.areaName === '' ? '내주변' : location.areaName}
         isScroll={isScroll}
       />
       <View style={{ flex: 1, backgroundColor: Color.White, paddingHorizontal: 20 }}>
