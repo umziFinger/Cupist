@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
+import RNBootSplash from 'react-native-bootsplash';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { Color } from '@/Assets/Color';
@@ -198,6 +199,7 @@ const HomeScreen = ({ route }: HomeProps) => {
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <CustomButton onPress={() => navigate('JoinStepThreeScreen')}>
+              {/* <CustomButton onPress={() => RNBootSplash.show({ fade: true })}> */}
               <View
                 style={{
                   justifyContent: 'center',
