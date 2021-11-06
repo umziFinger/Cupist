@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BootSplash from 'react-native-bootsplash';
 import MainNavigator from '@/Navigators/MainNavigator';
 import { CommonState } from '@/Stores/Common/InitialState';
-import CommonActions from '@/Stores/Common/Actions';
 import OptimizationScreen from '@/Containers/Common/OptimizationScreen';
 import PermissionScreen from '@/Containers/Auth/PermissionScreen';
 
@@ -23,20 +21,14 @@ const PermissionStack = createStackNavigator();
  *
  ***************** */
 const SwitchNavigator = () => {
-  const dispatch = useDispatch();
-
   const { permissionYN = 'Y' } = useSelector((state: CommonState) => state.common);
   const { codePushStatus } = useSelector((state: CommonState) => state.common);
-  const [loading, setLoading] = useState('start');
+
   useEffect(() => {
     const getStorage = async () => {
       setTimeout(() => {
         // 초기에 앱에서 체크용 storage
         AsyncStorage.setItem('splashStatus', 'end').then(() => console.log('splashStatus end'));
-        // 코드푸시에서 체크용 리듀서
-        dispatch(CommonActions.fetchCommonReducer({ type: 'splashStart', data: 'end' }));
-        // root navigator에서 체크용 state
-        setLoading('end');
       }, 3000);
     };
 
@@ -49,10 +41,14 @@ const SwitchNavigator = () => {
 
   useEffect(() => {
     if (codePushStatus === 'ing') {
-      splashHide();
+      splashHide().then(() => {
+        console.log('코드 푸시 시작');
+      });
     }
     if (codePushStatus === 'end') {
-      splashHide();
+      splashHide().then(() => {
+        console.log('코드 푸시 끝');
+      });
     }
   }, [codePushStatus]);
 
@@ -70,32 +66,30 @@ const SwitchNavigator = () => {
     );
   }
 
-  if (codePushStatus === 'end') {
-    if (permissionYN === 'Y') {
-      return (
-        <MainStack.Navigator headerMode={'none'}>
-          <MainStack.Screen
-            name="Main"
-            component={MainNavigator}
-            options={{
-              animationEnabled: false,
-            }}
-          />
-        </MainStack.Navigator>
-      );
-    }
+  if (permissionYN === 'Y') {
     return (
-      <PermissionStack.Navigator headerMode={'none'}>
-        <PermissionStack.Screen
-          name="PermissionScreen"
-          component={PermissionScreen}
+      <MainStack.Navigator headerMode={'none'}>
+        <MainStack.Screen
+          name="Main"
+          component={MainNavigator}
           options={{
             animationEnabled: false,
           }}
         />
-      </PermissionStack.Navigator>
+      </MainStack.Navigator>
     );
   }
+  return (
+    <PermissionStack.Navigator headerMode={'none'}>
+      <PermissionStack.Screen
+        name="PermissionScreen"
+        component={PermissionScreen}
+        options={{
+          animationEnabled: false,
+        }}
+      />
+    </PermissionStack.Navigator>
+  );
 };
 
 export default SwitchNavigator;

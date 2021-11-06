@@ -74,10 +74,6 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.heightInfo = data.info;
         break;
       }
-      case 'splashStart': {
-        draft.splashStart = data;
-        break;
-      }
 
       case 'versionInfo': {
         draft.versionInfo = data.versionInfo;

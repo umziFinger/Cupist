@@ -9,7 +9,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import { LocationCheck, LocationRequest } from '@/Components/Permission/Location';
 
 import CustomButton from '@/Components/CustomButton';
-import { Color, Opacity } from '@/Assets/Color';
+import { Color } from '@/Assets/Color';
 import LocationMyPosition from '@/Components/Permission/Location/LocationMyPosition';
 import { NotificationRequest } from '@/Components/Permission/Notification/index';
 

@@ -22,7 +22,6 @@ export const INITIAL_STATE = {
   },
   codePushPercent: null,
   codePushSyncMessage: null,
-  splashStart: null,
   versionInfo: null,
   currentLocationStatus: null,
   permissionYN: null,
@@ -61,7 +60,6 @@ export interface CommonState {
     codePushSyncMessage: CodePushInfo;
     codePushStatus: string | null;
     heightInfo: HeightInfo;
-    splashStart: string | null;
     versionInfo: VersionInfo;
     permissionYN: string | 'N';
     myLatitude: LocationInfo;

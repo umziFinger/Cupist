@@ -23,7 +23,6 @@ const SplashScreen = () => {
   //   console.log('codePushStatus', codePushStatus);
   //   const getStorage = async () => {
   //     setTimeout(() => {
-  //       dispatch(CommonActions.fetchCommonReducer({ type: 'splashStart', data: true }));
   //     }, 5000);
   //   };
   //

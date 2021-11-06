@@ -57,14 +57,6 @@ export function* fetchInitialHandler() {
     }),
   );
 
-  // 앱 버전 체크 YN 초기화
-  yield put(
-    CommonActions.fetchCommonReducer({
-      type: 'splashStart',
-      data: 'start',
-    }),
-  );
-
   yield put(
     CommonActions.fetchCommonReducer({
       type: 'codePushStatus',
