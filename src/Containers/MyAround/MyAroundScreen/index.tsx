@@ -42,7 +42,7 @@ const MyAroundScreen = () => {
       areaCode: Config.APP_MODE === 'dev' ? location.areaCode || '1019' : location.areaCode,
       lat: location.lat || myLatitude || '37',
       lng: location.lng || myLongitude || '126',
-      sort: myAroundSort,
+      sort: myAroundSort.key,
       perPage: 10,
       page: myAroundListPage,
     };
@@ -75,6 +75,10 @@ const MyAroundScreen = () => {
           renderItem={({ item }) => (
             <>
               <PlaceLargeCard item={item} />
+              {/* <PlaceLargeCard item={item} /> */}
+              {/* <PlaceLargeCard item={item} /> */}
+              {/* <PlaceLargeCard item={item} /> */}
+
               {/* <PlaceLargeCard item={item} /> */}
               {/* <PlaceLargeCard item={item} /> */}
               {/* <View style={{ height: 300, width: '100%', backgroundColor: Color.Gray300, marginBottom: 8 }} /> */}

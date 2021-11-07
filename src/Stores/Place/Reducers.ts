@@ -52,6 +52,7 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'myAroundSort': {
         draft.myAroundSort = data;
+        break;
       }
 
       case 'placeDetail': {
