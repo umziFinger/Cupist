@@ -24,9 +24,9 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
   const { idx } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
+
   const { placeDetail, placeTicketList } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  // const { place, latestReview, starReview, together } = placeDetail;
   const place = placeDetail?.place || {};
   const latestReview = placeDetail?.latestReview || [];
   const starReview = placeDetail?.starReview || [];
@@ -119,6 +119,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'placeDetail'} />
+
       <FlatList
         data={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
         renderItem={renderItem}

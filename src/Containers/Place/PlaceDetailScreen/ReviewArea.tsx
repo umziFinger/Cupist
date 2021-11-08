@@ -61,7 +61,7 @@ const ReviewArea = (props: PropTypes) => {
   const renderEmptyArea = () => {
     return (
       <View style={{ flex: 1, paddingHorizontal: 20 }}>
-        <View style={{ marginRight: 12, justifyContent: 'center' }}>
+        <View style={{ justifyContent: 'center' }}>
           <CustomText style={{ color: Color.Black1000, fontSize: 18, fontWeight: 'bold', letterSpacing: -0.2 }}>
             방문자리뷰
           </CustomText>
@@ -95,7 +95,7 @@ const ReviewArea = (props: PropTypes) => {
     <View style={{ flex: 1 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-          <View style={{ marginRight: 12, justifyContent: 'center' }}>
+          <View style={{ marginRight: 2, justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 18, fontWeight: 'bold', letterSpacing: -0.2 }}>
               방문자리뷰
             </CustomText>
