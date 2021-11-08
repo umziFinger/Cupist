@@ -9,6 +9,7 @@ const { Types, Creators } = createActions({
   fetchMyPointList: ['params'], // 내 마일리지 현황
   fetchMySmsSend: ['params'],
   fetchMyProfilePatch: ['params'],
+  fetchMyProfileImagePatch: ['params'],
 });
 
 export const MyTypes = Types;

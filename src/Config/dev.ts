@@ -49,7 +49,7 @@ const dev = {
   MY_MILEAGES: 'my/mileages',
   MY_PROMOTION_URL: 'my/promotion',
   MY_CERT_GET_URL: 'my/cert/get',
-
+  MY_PROFILE_URL: 'my/profile',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

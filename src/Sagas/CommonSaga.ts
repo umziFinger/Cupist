@@ -6,6 +6,7 @@ import { Axios } from '@/Services/Axios';
 import { navigate, navigateReplace } from '@/Services/NavigationService';
 import HomeActions from '@/Stores/Home/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
+import MyActions from '@/Stores/My/Actions';
 import Config from '@/Config';
 
 export type placeDibsType = 'myAround' | 'home';
@@ -89,6 +90,12 @@ export function* fetchInitialHandler() {
   // RBSheet 초기화
   yield put(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
   yield put(CommonActions.fetchCommonReducer({ type: 'currentRBS', data: null }));
+
+  // More screen render Item 초기화
+  yield put(MyActions.fetchMyReducer({ type: 'moreScreenRenderItem' }));
+
+  // attachFile 초기화
+  yield put(CommonActions.fetchCommonReducer({ type: 'attachFileInit' }));
 }
 
 export function* fetchErrorHandler(data: any) {

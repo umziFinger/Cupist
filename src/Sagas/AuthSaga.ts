@@ -269,7 +269,7 @@ export function* fetchUserInfo(data: any): any {
     };
 
     const response = yield call(Axios.GET, payload);
-    console.log('call saga fetchUserInfo data : ', response.data);
+    // console.log('call saga fetchUserInfo data : ', response.data);
     if (response.result === true && response.code === null) {
       yield put(AuthActions.fetchAuthReducer({ type: 'userInfo', data: response.data }));
     } else {

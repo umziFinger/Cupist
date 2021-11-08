@@ -99,7 +99,7 @@ export function* fetchMyReviewList(data: any): any {
     yield put(MyActions.fetchMyReducer({ type: 'myReviewPage', data: data.params.page + 1 }));
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    console.log('occurred Error...fetchModifyProfileImage : ', e);
+    console.log('occurred Error...fetchMyReviewList : ', e);
   }
 }
 
@@ -216,5 +216,46 @@ export function* fetchMyProfilePatch(data: any): any {
     }
   } catch (e) {
     console.log('occurred Error...fetchMyProfilePatch : ', e);
+  }
+}
+
+export function* fetchMyProfileImagePatch(data: any): any {
+  try {
+    const { image } = data.params;
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const url = `${Config.MY_PROFILE_URL}`;
+    const formData = new FormData();
+
+    const attachFileInfoArr: any = [];
+    if (image) {
+      image.map((v: any) => {
+        if (v.idx) {
+          // 수정된 s3 이미지 리스트
+          return attachFileInfoArr.push(v.idx);
+        }
+        // 새로 추가된 이미지
+        return formData.append('image', v);
+      });
+    }
+    formData.append('attachFileInfo', JSON.stringify(attachFileInfoArr));
+
+    const payload = {
+      url,
+      formData,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+
+    if (response.result === true && response.code === null) {
+      const { userIdx } = yield select((state) => state.auth);
+      yield put(AuthActions.fetchUserInfo({ idx: userIdx }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyProfileImagePatch : ', e.message);
   }
 }

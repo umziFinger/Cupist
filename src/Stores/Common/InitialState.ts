@@ -1,4 +1,4 @@
-export const INITIAL_STATE = {
+export const INITIAL_STATE: CommonState['common'] = {
   isOpenTimeFilter: false,
   isOpenDirectReservationRBS: false,
   isLoading: false,

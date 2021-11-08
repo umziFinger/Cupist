@@ -61,6 +61,11 @@ export const fetchMyReducer = produce((draft, actions: any) => {
       break;
     }
 
+    case 'moreScreenRenderItem': {
+      draft.moreScreenRenderItem = INITIAL_STATE.moreScreenRenderItem;
+      break;
+    }
+
     default:
       return draft;
   }

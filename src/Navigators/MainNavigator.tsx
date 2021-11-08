@@ -23,6 +23,7 @@ import ResidentSearchScreen from '@/Containers/Search/ResidentSearchScreen';
 import PlaceDetailScreen from '@/Containers/Place/PlaceDetailScreen';
 import LocationSettingScreen from '@/Containers/Setting/LocationSettingScreen';
 import PermissionScreen from '@/Containers/Auth/PermissionScreen';
+import ProfileSettingScreen from '@/Containers/More/ProfileSettingScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -44,6 +45,7 @@ export type MainStackParamList = {
   PlaceDetailScreen: { idx: number };
   LocationSettingScreen: undefined;
   PermissionScreen: undefined;
+  ProfileSettingScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -84,6 +86,9 @@ const MainNavigator = () => {
 
       {/*  Setting */}
       <MainStack.Screen name="LocationSettingScreen" component={LocationSettingScreen} />
+
+      {/*  More */}
+      <MainStack.Screen name="ProfileSettingScreen" component={ProfileSettingScreen} />
     </MainStack.Navigator>
   );
 };
