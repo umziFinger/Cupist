@@ -135,7 +135,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 2: {
         return (
           <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 30, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <DirectReservationArea list={homeList['place'] || []} />
           </View>
         );

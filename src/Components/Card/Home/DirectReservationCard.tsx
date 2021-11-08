@@ -107,7 +107,7 @@ const DirectReservationCard = (props: PropTypes) => {
           <CustomButton onPress={() => onPressReservation()} hitSlop={10}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ marginRight: 6 }}>
-                <CustomText style={{ color: Color.Primary1000, fontSize: 14, fontWeight: 'bold' }}>바로예약</CustomText>
+                <CustomText style={{ color: Color.Primary1000, fontSize: 12, fontWeight: 'bold' }}>바로예약</CustomText>
               </View>
               <View style={{ width: 15, height: 15 }}>
                 <FastImage

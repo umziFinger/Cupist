@@ -72,3 +72,21 @@ export function* fetchPlaceDetail(data: any): any {
     console.log('occurred Error...fetchPlaceDetail : ', e);
   }
 }
+
+export function* fetchPlaceTicketList(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: `${Config.PLACE_URL}/${data.params.idx}/ticketInfo`,
+    };
+
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      yield put(PlaceActions.fetchPlaceReducer({ type: 'placeTicketList', data: response.data }));
+    } else {
+      yield put(PlaceActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchPlaceTicketInfo : ', e);
+  }
+}
