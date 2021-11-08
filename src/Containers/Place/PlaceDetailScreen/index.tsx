@@ -2,30 +2,20 @@ import React, { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import FastImage from 'react-native-fast-image';
 import moment from 'moment';
-import CustomText from '@/Components/CustomText';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
-import PlaceActions from '@/Stores/Place/Actions';
-import CommonActions from '@/Stores/Common/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
-import Header from '@/Components/Header';
-import { navigate } from '@/Services/NavigationService';
-import HelloArea from '@/Containers/Home/HomeScreen/HelloArea';
-import CalendarSlider from '@/Containers/Home/HomeScreen/CalendarSlider';
 import { Color } from '@/Assets/Color';
-import DirectReservationArea from '@/Containers/Home/HomeScreen/DirectReservationArea';
-import QuickPriceArea from '@/Containers/Home/HomeScreen/QuickPriceArea';
-import PrepaymentPriceArea from '@/Containers/Home/HomeScreen/PrepaymentPriceArea';
-import HotArea from '@/Containers/Home/HomeScreen/HotArea';
-import EventArea from '@/Containers/Home/HomeScreen/EventArea';
-import CustomButton from '@/Components/CustomButton';
+import Header from '@/Components/Header';
+import CalendarSlider from '@/Containers/Home/HomeScreen/CalendarSlider';
+import TicketSlider from '@/Components/Card/Common/TicketSlider';
 import ImageArea from '@/Containers/Place/PlaceDetailScreen/ImageArea';
 import TitleArea from '@/Containers/Place/PlaceDetailScreen/TitleArea';
-import TicketSlider from '@/Components/Card/Common/TicketSlider';
-import { HomeState } from '@/Stores/Home/InitialState';
 import MapArea from '@/Containers/Place/PlaceDetailScreen/MapArea';
+import ReviewArea from '@/Containers/Place/PlaceDetailScreen/ReviewArea';
+import { HomeState } from '@/Stores/Home/InitialState';
+import PlaceActions from '@/Stores/Place/Actions';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
@@ -38,6 +28,8 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   // const { place, latestReview, starReview, together } = placeDetail;
   const place = placeDetail?.place || {};
+  const latestReview = placeDetail?.latestReview || [];
+  const starReview = placeDetail?.starReview || [];
 
   useEffect(() => {
     console.log('PlaceDetailScreen Idx : ', calendarDate);
@@ -92,22 +84,33 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         return (
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-            <View style={{ paddingHorizontal: 24, marginTop: 28 }}>
+            <View style={{ paddingHorizontal: 20, marginTop: 28 }}>
               <MapArea item={place} />
             </View>
           </View>
         );
       }
-      // case 5: {
-      //   return (
-      //     <View style={{ flex: 1, marginTop: 28 }}>
-      //       <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-      //       <View style={{ paddingHorizontal: 24, marginTop: 28 }}>
-      //         <MapArea item={place} />
-      //       </View>
-      //     </View>
-      //   );
-      // }
+      case 5: {
+        return (
+          <View style={{ flex: 1, marginTop: 28 }}>
+            <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
+            <View style={{ marginTop: 28 }}>
+              <ReviewArea item={place} latestReview={latestReview} starReview={starReview} />
+            </View>
+          </View>
+        );
+      }
+      case 6: {
+        // 다른 유저들이 함께 본 볼링장
+        return (
+          <View style={{ flex: 1, marginTop: 16 }}>
+            <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
+            {/* <View style={{ marginTop: 28 }}> */}
+            {/*  <ReviewArea item={place} latestReview={latestReview} starReview={starReview} /> */}
+            {/* </View> */}
+          </View>
+        );
+      }
       default:
         return null;
     }

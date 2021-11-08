@@ -99,9 +99,9 @@ const TitleArea = (props: PropTypes) => {
               </CustomText>
             </View>
           </View>
-          {item?.eventArr.map((text: string) => {
+          {item?.eventArr.map((text: string, index: number) => {
             return (
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
+              <View key={index.toString()} style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
                 <View
                   style={{
                     borderRadius: 50,

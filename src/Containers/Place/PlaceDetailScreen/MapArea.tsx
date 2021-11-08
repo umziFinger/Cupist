@@ -270,7 +270,7 @@ const MapArea = (props: PropTypes) => {
       {item?.facility ? (
         <View>
           <View style={{ height: 1, backgroundColor: Color.Gray200, marginTop: 24 }} />
-          <View style={{ marginTop: 24 }}>
+          <View style={{ marginTop: 24, paddingLeft: 4 }}>
             <View style={{ justifyContent: 'center' }}>
               <CustomText style={{ color: Color.Black1000, fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2 }}>
                 편의시설
