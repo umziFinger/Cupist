@@ -387,3 +387,35 @@ export const renderEdge = (rotate: string, style: any) => {
     </View>
   );
 };
+
+export const renderFacilityIcon = (type: string) => {
+  if (type === '주차') {
+    return require('@/Assets/Images/Common/icAmenParking.png');
+  }
+  if (type === '스낵바') {
+    return require('@/Assets/Images/Common/icAmenSnack.png');
+  }
+  if (type === '흡연실') {
+    return require('@/Assets/Images/Common/icAmneSmoking.png');
+  }
+  if (type === '인터넷') {
+    return require('@/Assets/Images/Common/icAmenWifi.png');
+  }
+  if (type === '프로샵') {
+    return require('@/Assets/Images/Common/icAmenShopping.png');
+  }
+  if (type === '액션캠') {
+    return require('@/Assets/Images/Common/icAmenCam.png');
+  }
+  if (type === '프라이빗') {
+    return require('@/Assets/Images/Common/icAmenPrivate.png');
+  }
+  if (type === '유료정비') {
+    return require('@/Assets/Images/Common/icAmenRepair.png');
+  }
+  if (type === '락커룸') {
+    return require('@/Assets/Images/Common/icAmenLocker.png');
+  }
+
+  return '';
+};

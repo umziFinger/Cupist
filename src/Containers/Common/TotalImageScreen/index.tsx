@@ -39,7 +39,7 @@ const TotalImageScreen = ({ route }: TotalImageProps) => {
     if (totalImageList) {
       const items = totalImageList?.map((attach, i) => ({
         idx: i,
-        url: attach.image_url,
+        url: attach,
         width,
         height: width,
       }));
@@ -48,12 +48,6 @@ const TotalImageScreen = ({ route }: TotalImageProps) => {
           index={startIdx}
           imageUrls={items}
           renderIndicator={(currentIndex, allSize) => {
-            console.log('currentIndex', currentIndex);
-            let imageTypeText = '수선 전';
-            // @ts-ignore
-            if (totalImageList[currentIndex - 1]?.image_type === 'IMRS') {
-              imageTypeText = '수선 후';
-            }
             return (
               <View
                 style={{
@@ -74,13 +68,7 @@ const TotalImageScreen = ({ route }: TotalImageProps) => {
                   }}
                 >
                   <CustomButton onPress={() => navigateGoBack()}>
-                    <View style={{ width: 24, height: 24 }}>
-                      {/* <FastImage */}
-                      {/*  style={{ width: '100%', height: '100%' }} */}
-                      {/*  source={require('@/Assets/Images/Arrow/icArrowLeftWhite.png')} */}
-                      {/*  resizeMode={FastImage.resizeMode.cover} */}
-                      {/* /> */}
-                    </View>
+                    <View style={{ width: 24, height: 24 }}></View>
                   </CustomButton>
 
                   <View style={{}}>
@@ -100,15 +88,6 @@ const TotalImageScreen = ({ route }: TotalImageProps) => {
                         }}
                       >
                         {` / ${allSize}`}
-                      </CustomText>
-                      <CustomText
-                        style={{
-                          fontSize: 17,
-                          letterSpacing: -0.3,
-                          color: Color.White,
-                        }}
-                      >
-                        {` (${imageTypeText})`}
                       </CustomText>
                     </CustomText>
                   </View>

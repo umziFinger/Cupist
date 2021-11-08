@@ -105,7 +105,7 @@ const CalendarSlider = () => {
     () => () => {
       return (
         <CalendarStrip
-          style={{ flex: 1, marginTop: 10 }}
+          style={{ flex: 1, marginTop: 5, marginBottom: -7 }}
           scrollable
           numDaysInWeek={8}
           selectedDate={moment(calendarDate)}

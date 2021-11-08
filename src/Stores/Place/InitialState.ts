@@ -10,6 +10,11 @@ export const INITIAL_STATE = {
     together: [],
   },
   placeDetailIdx: -1,
+  placeTicketList: {
+    morning: [],
+    afternoon: [],
+    night: [],
+  },
 };
 
 export interface PlaceState {
@@ -20,6 +25,7 @@ export interface PlaceState {
     myAroundListPage: number | 1;
     placeDetail: PlaceDetail;
     placeDetailIdx: number | -1;
+    placeTicketList: PlaceTicketList;
   };
 }
 
@@ -28,4 +34,10 @@ interface PlaceDetail {
   latestReview: Array<any> | [];
   starReview: Array<any> | [];
   together: Array<any> | [];
+}
+
+interface PlaceTicketList {
+  morning: Array<any> | [];
+  afternoon: Array<any> | [];
+  night: Array<any> | [];
 }

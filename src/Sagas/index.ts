@@ -5,6 +5,7 @@ import { HomeTypes } from '@/Stores/Home/Actions';
 import { SearchTypes } from '@/Stores/Search/Actions';
 import { NotificationTypes } from '@/Stores/Notification/Actions';
 import { MyTypes } from '@/Stores/My/Actions';
+import { PlaceTypes } from '@/Stores/Place/Actions';
 
 // search
 import { fetchSearchAreaList, fetchSearchBowlingClubList } from '@/Sagas/SearchSaga';
@@ -47,8 +48,8 @@ import {
   fetchMySmsSend,
   fetchMyProfilePatch,
 } from '@/Sagas/MySaga';
-import { fetchPlaceAroundList, fetchPlaceDetail, fetchPlaceSearchList } from '@/Sagas/PlaceSaga';
-import { PlaceTypes } from '@/Stores/Place/Actions';
+
+import { fetchPlaceAroundList, fetchPlaceDetail, fetchPlaceSearchList, fetchPlaceTicketList } from '@/Sagas/PlaceSaga';
 
 export default function* root() {
   yield all([
@@ -96,5 +97,6 @@ export default function* root() {
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),
     takeLatest(PlaceTypes.FETCH_PLACE_SEARCH_LIST, fetchPlaceSearchList),
     takeLatest(PlaceTypes.FETCH_PLACE_DETAIL, fetchPlaceDetail),
+    takeLatest(PlaceTypes.FETCH_PLACE_TICKET_LIST, fetchPlaceTicketList),
   ]);
 }

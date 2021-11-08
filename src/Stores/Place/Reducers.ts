@@ -39,7 +39,6 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'placeDetail': {
-        console.log('call reducer placeDetail : ', data.place);
         draft.placeDetail.place = data.place;
         draft.placeDetail.latestReview = data.latestReview;
         draft.placeDetail.starReview = data.starReview;
@@ -56,6 +55,14 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         console.log('call reducer placeDetailInit');
         draft.placeDetail = INITIAL_STATE.placeDetail;
         draft.placeDetailIdx = INITIAL_STATE.placeDetailIdx;
+        draft.placeTicketList = INITIAL_STATE.placeTicketList;
+        break;
+      }
+
+      case 'placeTicketList': {
+        draft.placeTicketList.morning = data.morning;
+        draft.placeTicketList.afternoon = data.afternoon;
+        draft.placeTicketList.night = data.night;
         break;
       }
 
