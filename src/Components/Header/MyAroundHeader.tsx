@@ -33,6 +33,7 @@ const SORT_TAG = [
 const MyAroundHeader = (props: HeaderProps) => {
   const { text, isScroll } = props;
   const dispatch = useDispatch();
+
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
   const { myAroundSort = { index: 0, key: 'distance', value: '거리순' } } = useSelector(
     (state: PlaceState) => state.place,
@@ -255,11 +256,12 @@ const MyAroundHeader = (props: HeaderProps) => {
               borderBottomLeftRadius: 5,
               borderBottomRightRadius: 5,
               marginTop: -1,
+              backgroundColor: Color.White,
             }}
             rowStyle={{ backgroundColor: Color.White, borderBottomColor: Color.Gray300 }}
             renderCustomizedRowChild={(item) => {
               return (
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: Color.White }}>
                   <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Black1000 }}>
                     {item.value}
                   </CustomText>

@@ -7,6 +7,7 @@ import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { placeDibsDataType } from '@/Sagas/CommonSaga';
 import CommonActions from '@/Stores/Common/Actions';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
@@ -43,113 +44,120 @@ const PlaceLargeCard = (props: PropTypes) => {
     };
     dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
   };
-  return (
-    <View
-      style={{
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: Color.Gray350,
-        backgroundColor: Color.White,
-        marginBottom: 17,
-      }}
-    >
-      <View style={{ width: width - 40, height: 145 }}>
-        <FastImage
-          style={{ width: '100%', height: '100%' }}
-          source={
-            !item?.placePhotoArr[0] || isError
-              ? require('@/Assets/Images/Common/icNoImage.png')
-              : { uri: item?.placePhotoArr[0] }
-          }
-          resizeMode={FastImage.resizeMode.cover}
-          onError={() => {
-            setIsError(true);
-          }}
-        />
-      </View>
 
-      <View style={{ width: 24, height: 24, position: 'absolute', right: 4, top: 4 }}>
-        <CustomButton onPress={() => handlerPlaceDibs(item)}>
+  const onPlaceDetail = (place: any) => {
+    navigate('PlaceDetailScreen', { idx: place.idx });
+  };
+
+  return (
+    <CustomButton onPress={() => onPlaceDetail(item)}>
+      <View
+        style={{
+          borderRadius: 5,
+          borderWidth: 1,
+          borderColor: Color.Gray350,
+          backgroundColor: Color.White,
+          marginBottom: 17,
+        }}
+      >
+        <View style={{ width: width - 40, height: 145 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
             source={
-              item?.isPlaceDibs
-                ? require('@/Assets/Images/Button/icHeartOn.png')
-                : require('@/Assets/Images/Button/icHeartOffWt.png')
+              !item?.placePhotoArr[0] || isError
+                ? require('@/Assets/Images/Common/icNoImage.png')
+                : { uri: item?.placePhotoArr[0] }
             }
             resizeMode={FastImage.resizeMode.cover}
             onError={() => {
               setIsError(true);
             }}
           />
-        </CustomButton>
-      </View>
+        </View>
 
-      <View style={{ paddingTop: 12, paddingBottom: 12, paddingHorizontal: 16 }}>
-        <CustomText style={{ fontSize: 16, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}>
-          {item?.name || ''}
-        </CustomText>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
-          <View style={{ width: 14.2, height: 14.2 }}>
+        <View style={{ width: 24, height: 24, position: 'absolute', right: 4, top: 4 }}>
+          <CustomButton onPress={() => handlerPlaceDibs(item)}>
             <FastImage
               style={{ width: '100%', height: '100%' }}
-              source={require('@/Assets/Images/Common/icStar.png')}
+              source={
+                item?.isPlaceDibs
+                  ? require('@/Assets/Images/Button/icHeartOn.png')
+                  : require('@/Assets/Images/Button/icHeartOffWt.png')
+              }
               resizeMode={FastImage.resizeMode.cover}
               onError={() => {
                 setIsError(true);
               }}
             />
-          </View>
-          <View style={{ marginLeft: 1.8 }}>
-            <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.Grayyellow1000 }}>
-              {item?.averageStar || '0'}
-            </CustomText>
-          </View>
-          <View style={{ width: 1, height: 10, backgroundColor: Color.Gray400, marginHorizontal: 6 }} />
-          <View>
-            <CustomText style={{ fontSize: 12, letterSpacing: 0, color: Color.Gray700 }}>
-              {item?.area || ''} {'\u2022'} {item?.distance}
-            </CustomText>
-          </View>
+          </CustomButton>
         </View>
 
-        <View style={{ marginTop: 8, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ marginRight: 4 }}>
-            <CustomText style={{ fontSize: 13, letterSpacing: 0, color: Color.Grayyellow1000 }}>
-              {item?.type || ''}
-            </CustomText>
-          </View>
-          <CustomText style={{ fontSize: 16, fontWeight: 'bold', letterSpacing: 0, color: Color.Black1000 }}>
-            {item?.minPrice}
+        <View style={{ paddingTop: 12, paddingBottom: 12, paddingHorizontal: 16 }}>
+          <CustomText style={{ fontSize: 16, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}>
+            {item?.name || ''}
           </CustomText>
-          <CustomText style={{ fontSize: 15, letterSpacing: 0, color: Color.Black1000 }}>원~</CustomText>
-        </View>
-      </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+            <View style={{ width: 14.2, height: 14.2 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Common/icStar.png')}
+                resizeMode={FastImage.resizeMode.cover}
+                onError={() => {
+                  setIsError(true);
+                }}
+              />
+            </View>
+            <View style={{ marginLeft: 1.8 }}>
+              <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.Grayyellow1000 }}>
+                {item?.averageStar || '0'}
+              </CustomText>
+            </View>
+            <View style={{ width: 1, height: 10, backgroundColor: Color.Gray400, marginHorizontal: 6 }} />
+            <View>
+              <CustomText style={{ fontSize: 12, letterSpacing: 0, color: Color.Gray700 }}>
+                {item?.area || ''} {'\u2022'} {item?.distance}
+              </CustomText>
+            </View>
+          </View>
 
-      {item?.event !== '' && (
-        <View
-          style={{
-            backgroundColor: Color.Gray100,
-            paddingVertical: 10,
-            borderRadius: 5,
-            paddingLeft: 15,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <View style={{ marginRight: 8 }}>
-            <CustomText style={{ fontSize: 12, fontWeight: 'bold', letterSpacing: 0, color: Color.Grayyellow500 }}>
-              EVENT
+          <View style={{ marginTop: 8, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ marginRight: 4 }}>
+              <CustomText style={{ fontSize: 13, letterSpacing: 0, color: Color.Grayyellow1000 }}>
+                {item?.type || ''}
+              </CustomText>
+            </View>
+            <CustomText style={{ fontSize: 16, fontWeight: 'bold', letterSpacing: 0, color: Color.Black1000 }}>
+              {item?.minPrice}
             </CustomText>
-          </View>
-          <View>
-            <CustomText style={{ fontSize: 12, letterSpacing: 0, color: Color.Grayyellow500 }}>
-              {item?.event || ''}
-            </CustomText>
+            <CustomText style={{ fontSize: 15, letterSpacing: 0, color: Color.Black1000 }}>원~</CustomText>
           </View>
         </View>
-      )}
-    </View>
+
+        {item?.event !== '' && (
+          <View
+            style={{
+              backgroundColor: Color.Gray100,
+              paddingVertical: 10,
+              borderRadius: 5,
+              paddingLeft: 15,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <View style={{ marginRight: 8 }}>
+              <CustomText style={{ fontSize: 12, fontWeight: 'bold', letterSpacing: 0, color: Color.Grayyellow500 }}>
+                EVENT
+              </CustomText>
+            </View>
+            <View>
+              <CustomText style={{ fontSize: 12, letterSpacing: 0, color: Color.Grayyellow500 }}>
+                {item?.event || ''}
+              </CustomText>
+            </View>
+          </View>
+        )}
+      </View>
+    </CustomButton>
   );
 };
 

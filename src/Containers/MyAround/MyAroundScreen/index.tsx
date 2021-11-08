@@ -75,9 +75,9 @@ const MyAroundScreen = () => {
           renderItem={({ item }) => (
             <>
               <PlaceLargeCard item={item} />
-              {/* <PlaceLargeCard item={item} /> */}
-              {/* <PlaceLargeCard item={item} /> */}
-              {/* <PlaceLargeCard item={item} /> */}
+              <PlaceLargeCard item={item} />
+              <PlaceLargeCard item={item} />
+              <PlaceLargeCard item={item} />
 
               {/* <PlaceLargeCard item={item} /> */}
               {/* <PlaceLargeCard item={item} /> */}

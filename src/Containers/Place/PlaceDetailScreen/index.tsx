@@ -17,8 +17,10 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const { idx } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { placeDetail } = useSelector((state: PlaceState) => state.place);
-  const { place, latestReview, starReview, together } = placeDetail;
-
+  const place = placeDetail?.place;
+  const latestReview = placeDetail?.latestReview;
+  const starReview = placeDetail?.starReview;
+  const together = placeDetail?.together;
   useEffect(() => {
     console.log('PlaceDetailScreen Idx : ', idx);
     dispatch(PlaceActions.fetchPlaceDetail({ idx }));
@@ -32,7 +34,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       <Header type={'placeDetail'} />
       <View style={{ justifyContent: 'center' }}>
         <CustomText style={{ color: '#333', fontSize: 14 }}>PlaceDetailScreen1</CustomText>
-        <CustomText style={{ color: '#333', fontSize: 14 }}>{place.name}</CustomText>
+        <CustomText style={{ color: '#333', fontSize: 14 }}>{place?.name || ''}</CustomText>
       </View>
     </View>
   );
