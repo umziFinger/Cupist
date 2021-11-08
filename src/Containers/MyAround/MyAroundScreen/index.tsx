@@ -75,15 +75,6 @@ const MyAroundScreen = () => {
           renderItem={({ item }) => (
             <>
               <PlaceLargeCard item={item} />
-              <PlaceLargeCard item={item} />
-              <PlaceLargeCard item={item} />
-              <PlaceLargeCard item={item} />
-
-              {/* <PlaceLargeCard item={item} /> */}
-              {/* <PlaceLargeCard item={item} /> */}
-              {/* <View style={{ height: 300, width: '100%', backgroundColor: Color.Gray300, marginBottom: 8 }} /> */}
-              {/* <View style={{ height: 300, width: '100%', backgroundColor: Color.Gray300, marginBottom: 8 }} /> */}
-              {/* <View style={{ height: 300, width: '100%', backgroundColor: Color.Gray300, marginBottom: 8 }} /> */}
             </>
           )}
           maxToRenderPerBatch={6}
