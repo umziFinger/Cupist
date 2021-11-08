@@ -33,7 +33,7 @@ const CustomShowMore = (props: PropTypes) => {
       <CustomText
         onTextLayout={onTextLayout}
         numberOfLines={textShown ? undefined : props.targetLines || 1}
-        style={{ flex: 1, fontSize: 13, color: props.textColor, lineHeight: 21, letterSpacing: -0.32 }}
+        style={{ flex: 1, fontSize: 14, color: props.textColor, letterSpacing: -0.25, paddingVertical: 1 }}
       >
         {props.text}
         {lengthMore && textShown ? (
@@ -42,34 +42,19 @@ const CustomShowMore = (props: PropTypes) => {
             style={{
               flexDirection: 'row',
               backgroundColor: props.backgroundColor,
-              // backgroundColor: 'red',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
             hitSlop={10}
           >
-            <View>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <CustomText
                 style={{
                   color: props.buttonColor,
-                  fontSize: 13,
-                  letterSpacing: -0.32,
-                  // lineHeight: Platform.OS === 'ios' ? 0 : 10,
+                  fontSize: 14,
+                  letterSpacing: -0.25,
                 }}
               >
                 {' 접기'}
               </CustomText>
-            </View>
-            <View style={{ width: 16, height: 16 }}>
-              <FastImage
-                style={{ width: '100%', height: '100%' }}
-                source={
-                  textShown
-                    ? require('@/Assets/Images/Repair/icArrowUpSmallBrand.png')
-                    : require('@/Assets/Images/Repair/icArrowDownSmallBrand.png')
-                }
-                resizeMode={FastImage.resizeMode.cover}
-              />
             </View>
           </CustomButton>
         ) : null}
@@ -98,17 +83,6 @@ const CustomShowMore = (props: PropTypes) => {
               >
                 {' 더보기'}
               </CustomText>
-            </View>
-            <View style={{ width: 16, height: 16, paddingBottom: Platform.OS === 'ios' ? 2 : 0 }}>
-              <FastImage
-                style={{ width: '100%', height: '100%' }}
-                source={
-                  textShown
-                    ? require('@/Assets/Images/Repair/icArrowUpSmallBrand.png')
-                    : require('@/Assets/Images/Repair/icArrowDownSmallBrand.png')
-                }
-                resizeMode={FastImage.resizeMode.cover}
-              />
             </View>
           </View>
         </CustomButton>

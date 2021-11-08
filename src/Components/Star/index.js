@@ -238,9 +238,9 @@ Star.propTypes = {
 };
 
 Star.defaultProps = {
-  fullStar: require('@/Assets/Images/Common/icStarOn.png'),
-  halfStar: require('@/Assets/Images/Common/icStarOff.png'),
-  emptyStar: require('@/Assets/Images/Common/icStarOn.png'),
+  fullStar: require('@/Assets/Images/Common/icStarOnBig.png'),
+  halfStar: require('@/Assets/Images/Common/icStarOffBig.png'),
+  emptyStar: require('@/Assets/Images/Common/icStarOffBig.png'),
   disabled: false,
   display: null,
   count: 5,
