@@ -14,12 +14,12 @@ export function* fetchSearchAreaList(data: any): any {
 
     const response = yield call(Axios.GET, payload);
     // console.log('성공: ', response.data);
+
     if (response.result === true && response.code === null) {
+      // console.log('여기야 여기: ', data.params);
       if (data.params) {
-        console.log('2');
         yield put(SearchActions.fetchSearchReducer({ type: 'searchedAreaList', data: response.data.area }));
       } else {
-        console.log('1');
         yield put(SearchActions.fetchSearchReducer({ type: 'areaList', data: response.data.area }));
       }
     } else {

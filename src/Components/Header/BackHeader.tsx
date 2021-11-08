@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { navigateGoBack } from '@/Services/NavigationService';
 import CustomText from '@/Components/CustomText';
-import { HeaderProps, MODE } from '@/Components/Header/index';
+import { HeaderProps } from '@/Components/Header/index';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 
 const BackHeader = (props: HeaderProps) => {
-  const { text, mode } = props;
+  const { text } = props;
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
 
   const bgColor = Color.White;

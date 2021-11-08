@@ -1,8 +1,17 @@
-export const INITIAL_STATE = {
+export const INITIAL_STATE: PlaceState['place'] = {
   aroundList: [],
   aroundListPage: 1,
   myAroundList: [],
   myAroundListPage: 1,
+
+  myAroundSort: { index: 0, key: 'distance', value: '거리순' },
+  location: {
+    areaCode: '',
+    lat: '',
+    lng: '',
+    areaName: '',
+  },
+
   placeDetail: {
     place: {},
     latestReview: [],
@@ -23,6 +32,13 @@ export interface PlaceState {
     aroundListPage: number | 1;
     myAroundList: Array<any>;
     myAroundListPage: number | 1;
+    myAroundSort: { index: number; key: string; value: string };
+    location: {
+      areaCode: string;
+      lat: string;
+      lng: string;
+      areaName: string;
+    };
     placeDetail: PlaceDetail;
     placeDetailIdx: number | -1;
     placeTicketList: PlaceTicketList;

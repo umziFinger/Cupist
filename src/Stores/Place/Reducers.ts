@@ -38,6 +38,23 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'location': {
+        draft.location = data;
+        break;
+      }
+
+      case 'locationInit': {
+        draft.location.areaCode = INITIAL_STATE.location.areaCode;
+        draft.location.lat = INITIAL_STATE.location.lat;
+        draft.location.lng = INITIAL_STATE.location.lng;
+        break;
+      }
+
+      case 'myAroundSort': {
+        draft.myAroundSort = data;
+        break;
+      }
+
       case 'placeDetail': {
         draft.placeDetail.place = data.place;
         draft.placeDetail.latestReview = data.latestReview;
@@ -63,6 +80,36 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         draft.placeTicketList.morning = data.morning;
         draft.placeTicketList.afternoon = data.afternoon;
         draft.placeTicketList.night = data.night;
+        break;
+      }
+
+      case 'placeMyAroundDibs': {
+        try {
+          const copyMyAroundList: any = state.myAroundList;
+
+          const FIND_IDX = copyMyAroundList.findIndex((v: any) => v.idx === data.placeIdx);
+
+          if (FIND_IDX !== -1) {
+            draft.myAroundList[FIND_IDX].isPlaceDibs = true;
+          }
+        } catch (e) {
+          console.log('내주변 리스트 볼링장 찜하기 에러: ', e);
+        }
+        break;
+      }
+
+      case 'placeMyAroundUnDibs': {
+        try {
+          const copyMyAroundList: any = state.myAroundList;
+
+          const FIND_IDX = copyMyAroundList.findIndex((v: any) => v.idx === data.placeIdx);
+
+          if (FIND_IDX !== -1) {
+            draft.myAroundList[FIND_IDX].isPlaceDibs = false;
+          }
+        } catch (e) {
+          console.log('내주변 리스트 볼링장 찜하기 해제 에러: ', e);
+        }
         break;
       }
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* bolimiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* bolimiTests.m */; };
 		0856240ADF3E03DC38DD31AD /* libPods-bolimi-bolimiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E79971A8B6DB1E18DD433F /* libPods-bolimi-bolimiTests.a */; };
+		11F0374827351F9200DD2904 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11F0374727351F9200DD2904 /* BootSplash.storyboard */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -74,6 +75,7 @@
 		00E356F21AD99517003FC87E /* bolimiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bolimiTests.m; sourceTree = "<group>"; };
 		03E79971A8B6DB1E18DD433F /* libPods-bolimi-bolimiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bolimi-bolimiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		10ACE8560183868AA4F826E4 /* Pods-bolimi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bolimi.debug.xcconfig"; path = "Target Support Files/Pods-bolimi/Pods-bolimi.debug.xcconfig"; sourceTree = "<group>"; };
+		11F0374727351F9200DD2904 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = bolimi/BootSplash.storyboard; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* bolimi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bolimi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = bolimi/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = bolimi/AppDelegate.m; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				11F0374727351F9200DD2904 /* BootSplash.storyboard */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -439,6 +442,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				8DE8CDD8272690B900A36663 /* InfoPlist.strings in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				11F0374827351F9200DD2904 /* BootSplash.storyboard in Resources */,
 				F5E125E2D87847F48999B545 /* SpoqaHanSansNeo-Bold.otf in Resources */,
 				145382BEF4734527BC57F561 /* SpoqaHanSansNeo-Medium.otf in Resources */,
 				748BC43BE7284F648A35CC6C /* SpoqaHanSansNeo-Regular.otf in Resources */,

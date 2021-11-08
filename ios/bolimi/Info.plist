@@ -64,20 +64,20 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-  <string>$(CURRENT_PROJECT_VERSION)</string>
-  <key>CodePushDeploymentKey</key>
-  <string>JX_NZgJrJpV5DGbJsw3k0Q8IhEh4pNzf3_WRz</string>
-  <key>KAKAO_APP_KEY</key>
-  <string>611039b2820d80c03473242c18b5a594</string>
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>kakao611039b2820d80c03473242c18b5a594</string>
-    <string>kakaokompassauth</string>
-    <string>storykompassauth</string>
-    <string>kakaolink</string>
-    <string>naversearchapp</string>
-    <string>naversearchthirdlogin</string>
-  </array>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CodePushDeploymentKey</key>
+	<string>JX_NZgJrJpV5DGbJsw3k0Q8IhEh4pNzf3_WRz</string>
+	<key>KAKAO_APP_KEY</key>
+	<string>611039b2820d80c03473242c18b5a594</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakao611039b2820d80c03473242c18b5a594</string>
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+		<string>kakaolink</string>
+		<string>naversearchapp</string>
+		<string>naversearchthirdlogin</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -108,7 +108,7 @@
 		<string>SpoqaHanSansNeo-Regular.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>BootSplash</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

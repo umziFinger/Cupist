@@ -16,7 +16,7 @@ export interface SearchState {
     };
     searchQuery: string | '';
     bowlingListPage: number | 0;
-    areaList: Array<any>;
+    areaList: any;
     searchedAreaList: Array<any>;
   };
 }

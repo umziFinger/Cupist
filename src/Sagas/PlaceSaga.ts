@@ -35,12 +35,13 @@ export function* fetchPlaceSearchList(data: any): any {
     };
 
     const response = yield call(Axios.GET, payload);
-    // console.log(response.data.placeResult);
+    //
     if (response.result === true && response.code === null) {
+      // console.log('fetchPlaceSearchList:', response.data);
       yield put(
         PlaceActions.fetchPlaceReducer({
           type: 'myAroundList',
-          data: response.data.placeResult,
+          data: response.data.place,
           page: data.params.page,
         }),
       );

@@ -32,15 +32,15 @@ const ResidentSearchScreen = () => {
   );
 
   useEffect(() => {
-    dispatch(SearchActions.fetchSearchReducer({ type: 'init' }));
+    dispatch(SearchActions.fetchSearchReducer({ type: 'residentInit' }));
     return () => {
-      dispatch(SearchActions.fetchSearchReducer({ type: 'init' }));
+      dispatch(SearchActions.fetchSearchReducer({ type: 'residentInit' }));
     };
   }, []);
 
   useEffect(() => {
     if (searchQuery === '') {
-      dispatch(SearchActions.fetchSearchReducer({ type: 'init' }));
+      dispatch(SearchActions.fetchSearchReducer({ type: 'residentInit' }));
     }
   }, [searchQuery]);
 

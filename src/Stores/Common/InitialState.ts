@@ -2,7 +2,7 @@ export const INITIAL_STATE = {
   isOpenTimeFilter: false,
   isOpenDirectReservationRBS: false,
   isLoading: false,
-  isSkeleton: null,
+  isSkeleton: false,
   alertDialog: false,
   alertDialogType: null,
   alertDialogDataType: null,
@@ -22,7 +22,6 @@ export const INITIAL_STATE = {
   },
   codePushPercent: null,
   codePushSyncMessage: null,
-  splashStart: null,
   versionInfo: null,
   currentLocationStatus: null,
   permissionYN: null,
@@ -42,8 +41,9 @@ export const INITIAL_STATE = {
   isOpenAgreeDetailRBS: false,
   currentRBS: '',
   isOpenKeyboard: false,
+  homeTabRefreshYN: 'Y',
 };
-
+type typeYN = 'Y' | 'N';
 export interface CommonState {
   common: {
     isOpenTimeFilterRBS: boolean | false;
@@ -60,7 +60,6 @@ export interface CommonState {
     codePushSyncMessage: CodePushInfo;
     codePushStatus: string | null;
     heightInfo: HeightInfo;
-    splashStart: string | null;
     versionInfo: VersionInfo;
     permissionYN: string | 'N';
     myLatitude: LocationInfo;
@@ -83,6 +82,7 @@ export interface CommonState {
     isOpenAgreeDetailRBS: boolean | false;
     currentRBS: string | null;
     isOpenKeyboard: boolean | false;
+    homeTabRefreshYN: typeYN;
   };
 }
 

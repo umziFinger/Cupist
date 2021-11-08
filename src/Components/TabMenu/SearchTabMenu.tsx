@@ -37,7 +37,7 @@ const SearchTabMenu = (props: any) => {
       style={{
         marginTop: 10,
         backgroundColor: Color.White,
-        borderBottomColor: Color.grayLine,
+        borderBottomColor: Color.Gray600,
         borderBottomWidth: 1,
         paddingHorizontal: 16,
       }}
@@ -45,7 +45,7 @@ const SearchTabMenu = (props: any) => {
       <FlatList
         data={data}
         renderItem={({ item }) => {
-          let textColor = Color.gray1000;
+          let textColor = Color.Gray600;
           let bottomWidth = 0;
           if (selectMenu === item.selectKey) {
             textColor = Color.Primary1000;

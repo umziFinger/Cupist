@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { LogBox } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -44,9 +44,7 @@ const RootScreen = () => {
     isOpenAgreeDetailRBS,
     isOpenTimeFilterRBS,
     isOpenDirectReservationRBS,
-    splashStart,
   } = useSelector((state: CommonState) => state.common);
-  const [checkSplash, setCheckSplash] = useState(false);
 
   useEffect(() => {
     // dispatch(CommonActions.fetchCommonReducer({ type: 'permissionYN', data: 'N' }));
@@ -68,12 +66,6 @@ const RootScreen = () => {
     console.log('RBSheet Flag State : ', isOpenTimeFilterRBS, isOpenDirectReservationRBS);
   }, [isOpenTimeFilterRBS, isOpenDirectReservationRBS]);
 
-  useEffect(() => {
-    if (splashStart === 'end') {
-      setCheckSplash(true);
-    }
-  }, [splashStart]);
-
   return (
     <>
       <RootNavigator />
@@ -91,7 +83,8 @@ const RootScreen = () => {
       )}
       {alertToast && <Toast position={alertToastPosition} message={alertToastMessage} />}
       {/* <RootFcm /> */}
-      {checkSplash && <RootCodePush />}
+      <RootCodePush />
+      {/* {checkSplash && <RootCodePush />} */}
       {isOpenAgreeDetailRBS && <AgreeDetailScreen />}
       {/** 앱버전체크(realDB) 리스너 컴포넌트 * */}
       {/* <RootCheckAppVersion /> */}

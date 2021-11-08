@@ -16,13 +16,37 @@
         android:name="kr.bolimi.MainActivity"
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
-        android:launchMode="singleTask"
-        android:windowSoftInputMode="adjustResize">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+        android:windowSoftInputMode="adjustResize"
+        android:exported="true"
+        android:launchMode="singleTask">
+        <!--bootSplash 추가를 위해 주석 처리-->
+        <!--<intent-filter>
+          <action android:name="android.intent.action.MAIN" />
+          <category android:name="android.intent.category.LAUNCHER" />
+       </intent-filter>-->
       </activity>
+
+        <!--bootSplash 추가-->
+        <activity
+                android:name="com.zoontek.rnbootsplash.RNBootSplashActivity"
+                android:theme="@style/BootTheme"
+                android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- add your deep linking instructions inside the RNBootSplashActivity declaration -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="YOUR APP SCHEME" /> <!-- replace this with your custom scheme -->
+            </intent-filter>
+
+        </activity>
+
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="1mxyv52k1z" />

@@ -16,6 +16,7 @@ import {
   fetchErrorHandler,
   fetchSkeletonNavigate,
   fetchSkeletonNavigateReplace,
+  fetchCommonPlaceDibsHandler,
 } from './CommonSaga';
 
 // home
@@ -58,6 +59,7 @@ export default function* root() {
     takeLatest(CommonTypes.FETCH_ERROR_HANDLER, fetchErrorHandler),
     takeLatest(CommonTypes.FETCH_SKELETON_NAVIGATE, fetchSkeletonNavigate),
     takeLatest(CommonTypes.FETCH_SKELETON_NAVIGATE_REPLACE, fetchSkeletonNavigateReplace),
+    takeLatest(CommonTypes.FETCH_COMMON_PLACE_DIBS_HANDLER, fetchCommonPlaceDibsHandler),
 
     // home
     takeLatest(HomeTypes.FETCH_HOME_LIST, fetchHomeList),

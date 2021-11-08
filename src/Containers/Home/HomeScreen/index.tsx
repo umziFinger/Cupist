@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
+import RNBootSplash from 'react-native-bootsplash';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { Color } from '@/Assets/Color';
 import { HomeState } from '@/Stores/Home/InitialState';
-import HomeSkeleton from '@/Containers/Home/HomeScreen/HomeSkeleton';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import CustomText from '@/Components/CustomText';
@@ -35,7 +35,7 @@ interface HomeProps {
 
 const HomeScreen = ({ route }: HomeProps) => {
   const dispatch = useDispatch();
-  const { myLongitude, myLatitude } = useSelector((state: CommonState) => state.common);
+  const { myLongitude, myLatitude, homeTabRefreshYN } = useSelector((state: CommonState) => state.common);
   const { homeList, calendarDate, timeFilterIdx } = useSelector((state: HomeState) => state.home);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   // const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY.MM.DD(dd)'));
@@ -63,6 +63,12 @@ const HomeScreen = ({ route }: HomeProps) => {
     }
   }, [route]);
 
+  useEffect(() => {
+    if (homeTabRefreshYN === 'N') {
+      onRefresh();
+    }
+  }, [homeTabRefreshYN]);
+
   // 캘린더 날짜 선택 시 홈 갱신
   useEffect(() => {
     const params = {
@@ -75,10 +81,16 @@ const HomeScreen = ({ route }: HomeProps) => {
     dispatch(HomeActions.fetchHomeList(params));
   }, [calendarDate]);
 
+  const onRefresh = () => {
+    console.log('새로고침');
+    dispatch(HomeActions.fetchHomeList());
+    dispatch(HomeActions.fetchHomeDirectReservationList());
+    dispatch(CommonActions.fetchCommonReducer({ type: 'homeTabRefreshYN', data: 'Y' }));
+  };
+
   const positionUpdate = async () => {
     const myPosition = await LocationMyPosition();
     console.log('myPosition is ', myPosition);
-
     const params = {
       date: moment(calendarDate).format('YYYY/MM/DD'),
       lat: parseFloat(myPosition?.myLatitude?.toString()) || 37.56561,
@@ -104,7 +116,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
   };
 
-  const renderItem = ({ item, index }: { item: any; index: number }) => {
+  const renderItem = ({ item }: { item: any; index: number }) => {
     switch (item) {
       case 0: {
         return (
@@ -187,6 +199,7 @@ const HomeScreen = ({ route }: HomeProps) => {
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <CustomButton onPress={() => navigate('JoinStepThreeScreen')}>
+              {/* <CustomButton onPress={() => RNBootSplash.show({ fade: true })}> */}
               <View
                 style={{
                   justifyContent: 'center',

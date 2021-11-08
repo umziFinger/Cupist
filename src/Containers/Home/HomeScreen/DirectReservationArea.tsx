@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -99,7 +99,7 @@ const DirectReservationArea = (props: PropTypes) => {
     () => () =>
       produce(areaTag, (draft) => {
         if (areaList?.length > 0) {
-          areaList.map((item, index) => {
+          areaList?.map((item: any, index: number) => {
             return draft.push({
               index: index + 2,
               key: item.code,
