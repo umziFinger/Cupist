@@ -19,6 +19,16 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         }
         break;
       }
+
+      case 'recentList': {
+        if (actions.params.page === 1) {
+          draft.recentList = data;
+        } else {
+          draft.recentList = data?.length > 0 ? draft.recentList.concat(data) : draft.recentList;
+        }
+        break;
+      }
+
       case 'aroundListPage': {
         draft.aroundListPage = data;
         break;
@@ -114,7 +124,7 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       default:
-        return data;
+        return draft;
     }
     return draft;
   });

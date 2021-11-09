@@ -31,7 +31,6 @@ const SwitchNavigator = () => {
         AsyncStorage.setItem('splashStatus', 'end').then(() => console.log('splashStatus end'));
       }, 3000);
     };
-
     getStorage();
   }, []);
 

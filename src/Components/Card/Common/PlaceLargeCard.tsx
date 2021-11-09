@@ -15,6 +15,7 @@ interface PropTypes {
 
 const PlaceLargeCard = (props: PropTypes) => {
   const { item } = props;
+
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);

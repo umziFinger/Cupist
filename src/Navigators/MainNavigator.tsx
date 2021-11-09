@@ -28,6 +28,7 @@ import NameEditScreen from '@/Containers/More/NameEditScreen';
 import NickNameEditScreen from '@/Containers/More/NickNameEditScreen';
 import PhoneNumberEditScreen from '@/Containers/More/PhoneNumberEditScreen';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
+import RecentPlaceScreen from '@/Containers/Place/RecentPlaceScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -53,6 +54,7 @@ export type MainStackParamList = {
   NickNameEditScreen: undefined;
   NameEditScreen: undefined;
   PhoneNumberEditScreen: undefined;
+  RecentPlaceScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -88,8 +90,9 @@ const MainNavigator = () => {
       {/* Search */}
       <MainStack.Screen name="ResidentSearchScreen" component={ResidentSearchScreen} />
       <MainStack.Screen name="SearchScreen" component={SearchScreen} />
-      {/* placeDetail */}
+      {/* place */}
       <MainStack.Screen name="PlaceDetailScreen" component={PlaceDetailScreen} />
+      <MainStack.Screen name="RecentPlaceScreen" component={RecentPlaceScreen} />
 
       {/*  Setting */}
       <MainStack.Screen name="LocationSettingScreen" component={LocationSettingScreen} />

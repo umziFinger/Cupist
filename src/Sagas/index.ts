@@ -53,7 +53,13 @@ import {
   fetchMyProfilePatch,
 } from '@/Sagas/MySaga';
 
-import { fetchPlaceAroundList, fetchPlaceDetail, fetchPlaceSearchList, fetchPlaceTicketList } from '@/Sagas/PlaceSaga';
+import {
+  fetchPlaceAroundList,
+  fetchPlaceDetail,
+  fetchPlaceRecentList,
+  fetchPlaceSearchList,
+  fetchPlaceTicketList,
+} from '@/Sagas/PlaceSaga';
 
 export default function* root() {
   yield all([
@@ -105,5 +111,6 @@ export default function* root() {
     takeLatest(PlaceTypes.FETCH_PLACE_SEARCH_LIST, fetchPlaceSearchList),
     takeLatest(PlaceTypes.FETCH_PLACE_DETAIL, fetchPlaceDetail),
     takeLatest(PlaceTypes.FETCH_PLACE_TICKET_LIST, fetchPlaceTicketList),
+    takeLatest(PlaceTypes.FETCH_PLACE_RECENT_LIST, fetchPlaceRecentList),
   ]);
 }
