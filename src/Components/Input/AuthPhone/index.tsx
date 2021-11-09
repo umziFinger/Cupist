@@ -13,8 +13,8 @@ export enum AuthPhoneEnum {
 }
 type InputAuthPhoneProps = {
   onChangeText: (value: string) => void;
-  onFocus: () => void;
-  onBlur: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   onPressAuth: () => void;
   value: string;
   isPhoneValid: boolean;

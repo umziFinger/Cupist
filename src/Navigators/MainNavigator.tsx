@@ -24,6 +24,10 @@ import PlaceDetailScreen from '@/Containers/Place/PlaceDetailScreen';
 import LocationSettingScreen from '@/Containers/Setting/LocationSettingScreen';
 import PermissionScreen from '@/Containers/Auth/PermissionScreen';
 import ProfileSettingScreen from '@/Containers/More/ProfileSettingScreen';
+import NameEditScreen from '@/Containers/More/NameEditScreen';
+import NickNameEditScreen from '@/Containers/More/NickNameEditScreen';
+import PhoneNumberEditScreen from '@/Containers/More/PhoneNumberEditScreen';
+import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -41,11 +45,14 @@ export type MainStackParamList = {
   JoinStepOneScreen: undefined;
   JoinStepTwoScreen: undefined;
   JoinStepThreeScreen: undefined;
-  ResidentSearchScreen: undefined;
+  ResidentSearchScreen: { type: SCREEN_TYPE };
   PlaceDetailScreen: { idx: number };
   LocationSettingScreen: undefined;
   PermissionScreen: undefined;
   ProfileSettingScreen: undefined;
+  NickNameEditScreen: undefined;
+  NameEditScreen: undefined;
+  PhoneNumberEditScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -89,6 +96,9 @@ const MainNavigator = () => {
 
       {/*  More */}
       <MainStack.Screen name="ProfileSettingScreen" component={ProfileSettingScreen} />
+      <MainStack.Screen name="NameEditScreen" component={NameEditScreen} />
+      <MainStack.Screen name="NickNameEditScreen" component={NickNameEditScreen} />
+      <MainStack.Screen name="PhoneNumberEditScreen" component={PhoneNumberEditScreen} />
     </MainStack.Navigator>
   );
 };

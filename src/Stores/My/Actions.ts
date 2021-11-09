@@ -8,6 +8,7 @@ const { Types, Creators } = createActions({
   fetchMyUserInfoPatch: ['params'],
   fetchMyPointList: ['params'], // 내 마일리지 현황
   fetchMySmsSend: ['params'],
+  fetchMyPlacePatch: ['params'],
   fetchMyProfilePatch: ['params'],
   fetchMyProfileImagePatch: ['params'],
 });

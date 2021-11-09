@@ -1,19 +1,25 @@
 import React, { forwardRef } from 'react';
 import { Platform, TextInput, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
+import CustomButton from '@/Components/CustomButton';
 
 type InputNicknameProps = {
   nicknameValidText: string;
   onChangeText: (e: string) => void;
-  onFocus: () => void;
-  onBlur: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   value: string;
   onSubmitEditing?: () => void;
+  onTextClear: () => void;
 };
 
 const InputNickname = forwardRef<TextInput, InputNicknameProps>(
-  ({ nicknameValidText, onChangeText, onFocus, onBlur, value, onSubmitEditing }: InputNicknameProps, ref) => {
+  (
+    { nicknameValidText, onChangeText, onFocus, onBlur, value, onSubmitEditing, onTextClear }: InputNicknameProps,
+    ref,
+  ) => {
     return (
       <>
         <View>
@@ -28,6 +34,9 @@ const InputNickname = forwardRef<TextInput, InputNicknameProps>(
             borderColor: nicknameValidText === '' ? Color.Gray300 : Color.Error,
             borderWidth: 1,
             marginTop: 8,
+            flexDirection: 'row',
+            paddingHorizontal: 12,
+            alignItems: 'center',
           }}
         >
           <TextInput
@@ -41,6 +50,7 @@ const InputNickname = forwardRef<TextInput, InputNicknameProps>(
               padding: 0,
               letterSpacing: -0.25,
               includeFontPadding: false,
+              flex: 1,
             }}
             onFocus={onFocus}
             onBlur={onBlur}
@@ -52,6 +62,17 @@ const InputNickname = forwardRef<TextInput, InputNicknameProps>(
             allowFontScaling={false}
             onSubmitEditing={onSubmitEditing}
           />
+          {value?.length > 0 && (
+            <CustomButton onPress={onTextClear}>
+              <View style={{ width: 16, height: 16 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={require('@/Assets/Images/Search/icTxtDel.png')}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </View>
+            </CustomButton>
+          )}
         </View>
         <View style={{ marginTop: 4 }}>
           <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Error }}>{nicknameValidText}</CustomText>

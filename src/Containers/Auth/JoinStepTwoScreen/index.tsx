@@ -29,8 +29,8 @@ const JoinStepTwoScreen = () => {
   const { isReceived, log_cert } = useSelector((state: AuthState) => state.auth);
   const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
 
-  const { userName, onChangeName, nameValidText, isNameValid } = useInputName();
-  const { nickName, onChangeNickname, nicknameValidText, isNicknameValid } = useInputNickname();
+  const { userName, onChangeName, nameValidText, isNameValid, onClearName } = useInputName();
+  const { nickName, onChangeNickname, nicknameValidText, isNicknameValid, onClearNickName } = useInputNickname();
   const { phoneNumber, onChangePhoneNumber, isPhoneValid } = useInputPhoneNumber();
   const {
     smsAuthNumber,
@@ -75,6 +75,8 @@ const JoinStepTwoScreen = () => {
         authNum: smsAuthNumber.toString(),
         authIdx: log_cert.authIdx,
         screen: 'JoinStepTwoScreen',
+        userName,
+        nickName,
       };
 
       dispatch(AuthActions.fetchSmsAuth(params));
@@ -167,6 +169,7 @@ const JoinStepTwoScreen = () => {
                     onSubmitEditing={() => {
                       onFocusNext(0);
                     }}
+                    onTextClear={onClearName}
                   />
                 </View>
 
@@ -178,6 +181,7 @@ const JoinStepTwoScreen = () => {
                     onFocus={() => setCurrentFocus('nickName')}
                     onBlur={() => setCurrentFocus('')}
                     value={nickName}
+                    onTextClear={onClearNickName}
                     onSubmitEditing={() => {
                       onFocusNext(1);
                     }}

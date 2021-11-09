@@ -47,9 +47,10 @@ import {
   fetchMyUserInfoPatch,
   fetchMyPointList,
   fetchMySmsSend,
-  fetchMyProfilePatch,
+  fetchMyPlacePatch,
   fetchMyModifyProfileImage,
   fetchMyProfileImagePatch,
+  fetchMyProfilePatch,
 } from '@/Sagas/MySaga';
 
 import { fetchPlaceAroundList, fetchPlaceDetail, fetchPlaceSearchList, fetchPlaceTicketList } from '@/Sagas/PlaceSaga';
@@ -95,8 +96,9 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_USER_INFO_PATCH, fetchMyUserInfoPatch),
     takeLatest(MyTypes.FETCH_MY_POINT_LIST, fetchMyPointList),
     takeLatest(MyTypes.FETCH_MY_SMS_SEND, fetchMySmsSend),
-    takeLatest(MyTypes.FETCH_MY_PROFILE_PATCH, fetchMyProfilePatch),
+    takeLatest(MyTypes.FETCH_MY_PLACE_PATCH, fetchMyPlacePatch),
     takeLatest(MyTypes.FETCH_MY_PROFILE_IMAGE_PATCH, fetchMyProfileImagePatch),
+    takeLatest(MyTypes.FETCH_MY_PROFILE_PATCH, fetchMyProfilePatch),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

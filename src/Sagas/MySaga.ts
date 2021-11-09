@@ -4,10 +4,11 @@ import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
-import { navigate } from '@/Services/NavigationService';
+import { navigate, navigateGoBack } from '@/Services/NavigationService';
 import MyActions from '@/Stores/My/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthAction from '@/Stores/Auth/Actions';
+import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 
 export function* fetchMyPushYN(data: any): any {
   try {
@@ -186,7 +187,7 @@ export function* fetchMySmsSend(data: any): any {
   }
 }
 
-export function* fetchMyProfilePatch(data: any): any {
+export function* fetchMyPlacePatch(data: any): any {
   try {
     const payload = {
       ...data,
@@ -206,16 +207,21 @@ export function* fetchMyProfilePatch(data: any): any {
           },
         }),
       );
-      if (data.params.type === 'join') navigate('HomeScreen');
+
       const { userIdx } = yield select((state: AuthState) => state.auth);
       yield put(AuthAction.fetchUserInfo({ idx: userIdx }));
+      if (data.params.type === SCREEN_TYPE.JOIN) {
+        navigate('HomeScreen');
+      } else {
+        navigateGoBack();
+      }
     } else {
       // 인증정보 초기화
       // yield put(AuthActions.fetchAuthReducer({ type: 'phoneNumber', data: { phoneNumber: null } }));
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
-    console.log('occurred Error...fetchMyProfilePatch : ', e);
+    console.log('occurred Error...fetchMyPlacePatch : ', e);
   }
 }
 
@@ -234,7 +240,7 @@ export function* fetchMyProfileImagePatch(data: any): any {
           return attachFileInfoArr.push(v.idx);
         }
         // 새로 추가된 이미지
-        return formData.append('image', v);
+        return formData.append('file', v);
       });
     }
     formData.append('attachFileInfo', JSON.stringify(attachFileInfoArr));
@@ -257,5 +263,36 @@ export function* fetchMyProfileImagePatch(data: any): any {
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchMyProfileImagePatch : ', e.message);
+  }
+}
+
+export function* fetchMyProfilePatch(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.MY_URL,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+
+    if (response.result === true && response.code === null) {
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: response.data.message,
+          },
+        }),
+      );
+      const { userIdx } = yield select((state: AuthState) => state.auth);
+      yield put(AuthAction.fetchUserInfo({ idx: userIdx }));
+      navigateGoBack();
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchMyProfilePatch : ', e);
   }
 }

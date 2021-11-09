@@ -8,7 +8,7 @@ import { Axios } from '@/Services/Axios';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
 import CommonActions from '@/Stores/Common/Actions';
-import MyAcions from '@/Stores/My/Actions';
+import MyActions from '@/Stores/My/Actions';
 import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 import { navigate, navigateGoBack } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
@@ -305,7 +305,6 @@ export function* fetchAuthSmsSend(data: any): any {
 
 export function* fetchSmsAuth(data: any): any {
   try {
-    console.log('인증번호 통과: ');
     const payload = {
       ...data,
       url: Config.AUTH_SMS_AUTH_URL,
@@ -315,9 +314,7 @@ export function* fetchSmsAuth(data: any): any {
     console.log('인증번호 통과: ', response.data);
 
     if (response.result === true && response.code === null) {
-      const { log_cert, phoneNumber, email, password, userName, nickName } = yield select(
-        (state: AuthState) => state.auth,
-      );
+      const { log_cert, phoneNumber, email, password } = yield select((state: AuthState) => state.auth);
       if (log_cert.authNum === data.params.authNum) {
         yield put(AuthActions.fetchAuthReducer({ type: 'smsValueValid', data: true }));
 
@@ -326,14 +323,21 @@ export function* fetchSmsAuth(data: any): any {
             mobile: phoneNumber.replace(/-/g, ''),
             email,
             password,
-            nickname: nickName,
+            nickname: data.params.nickName,
             sex: 'M',
             uniqueId: DeviceInfo.getUniqueId(),
             providerType: 'email',
             authIdx: log_cert.authIdx,
-            name: userName,
+            name: data.params.userName,
           };
           yield put(AuthActions.fetchUserJoin(params));
+        }
+
+        if (data.params.screen === 'PhoneNumberEditScreen') {
+          const params = {
+            mobile: phoneNumber.replace(/-/g, ''),
+          };
+          yield put(MyActions.fetchMyProfilePatch(params));
         }
       } else {
         yield put(

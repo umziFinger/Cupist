@@ -29,7 +29,6 @@ const MoreScreen = () => {
 
   const onMove = (screen: string) => {
     navigate(screen);
-    // console.log('아이템 클릭: ', screen);
   };
   const renderItem = (item: { title: string; icon?: any; screen: string }, index: number) => {
     return (

@@ -55,7 +55,7 @@ const JoinStepThreeScreen = () => {
   };
 
   const onPlaceSearch = () => {
-    navigate('ResidentSearchScreen');
+    navigate('ResidentSearchScreen', { type: SCREEN_TYPE.JOIN });
   };
 
   return (
