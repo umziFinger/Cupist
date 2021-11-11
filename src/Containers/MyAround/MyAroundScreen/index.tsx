@@ -69,7 +69,7 @@ const MyAroundScreen = () => {
           // data={[0, 1, 2, 3, 4, 5]}
           renderItem={({ item }) => (
             <>
-              <PlaceLargeCard item={item} />
+              <PlaceLargeCard item={item} type={'myAround'} />
             </>
           )}
           maxToRenderPerBatch={6}
