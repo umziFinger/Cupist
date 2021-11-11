@@ -111,10 +111,10 @@ const TabBar = (props: TabBarProps) => {
   };
 
   const onPressMenu = (value: string) => {
-    // if (value === 'MyScreen' && !userIdx) {
-    //   dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: true }));
-    //   return;
-    // }
+    if (value === 'MoreScreen' && !userIdx) {
+      navigate('SimpleLoginScreen');
+      return;
+    }
     navigate(value);
   };
 

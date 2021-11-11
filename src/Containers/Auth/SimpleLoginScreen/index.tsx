@@ -1,28 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, FlatList, Platform, ViewToken, TouchableWithoutFeedback } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, FlatList, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch, useSelector } from 'react-redux';
-import RBSheet from 'react-native-raw-bottom-sheet';
+import { useDispatch } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
-import { CommonState } from '@/Stores/Common/InitialState';
 import HomeActions from '@/Stores/Home/Actions';
-import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
 import { Color } from '@/Assets/Color';
 import Naver from '@/Components/Login/SocialLogin/Naver';
 import Kakao from '@/Components/Login/SocialLogin/Kakao';
 import Apple from '@/Components/Login/SocialLogin/Apple';
-import { fetchAuthSocialLogin } from '@/Sagas/AuthSaga';
 import { navigate } from '@/Services/NavigationService';
 import Header from '@/Components/Header';
 
-const { width, height } = Dimensions.get('window');
-
 const SimpleLoginScreen = () => {
   const dispatch = useDispatch();
-  const { heightInfo, isOpenSimpleLoginRBS } = useSelector((state: CommonState) => state.common);
 
   let osCheck: any;
   if (Platform.OS === 'android') {
@@ -160,7 +153,7 @@ const SimpleLoginScreen = () => {
         break;
       case 'apple':
         try {
-          const appleTokenInfo = await Apple();
+          const appleTokenInfo: any = await Apple();
           const username = appleTokenInfo.fullName.familyName + appleTokenInfo.fullName.givenName;
           params = { ...params, token: appleTokenInfo.identityToken, username };
 

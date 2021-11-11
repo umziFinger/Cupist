@@ -71,6 +71,7 @@ const JoinStepTwoScreen = () => {
   const onPressJoin = () => {
     if (isNameValid && isNicknameValid && isPhoneValid && smsValueValid) {
       const params = {
+        type: 'join',
         mobile: phoneNumber.replace(/-/g, ''),
         authNum: smsAuthNumber.toString(),
         authIdx: log_cert.authIdx,

@@ -15,6 +15,7 @@ import { inputMobileNumber } from '@/Components/Function';
 import { fetchMyProfileImagePatch } from '@/Sagas/MySaga';
 import { navigate } from '@/Services/NavigationService';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
+import AuthActions from '@/Stores/Auth/Actions';
 
 const ProfileSettingScreen = () => {
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ const ProfileSettingScreen = () => {
   };
 
   const onLogout = () => {
-    console.log('로그아웃');
+    dispatch(AuthActions.fetchUserLogout());
   };
 
   // console.log(attachFile[0]);

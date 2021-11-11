@@ -67,6 +67,7 @@ const PhoneNumberEditScreen = () => {
   const onPressSave = () => {
     if (isPhoneValid && smsValueValid) {
       const params = {
+        type: 'updateMobile',
         mobile: phoneNumber.replace(/-/g, ''),
         screen: 'PhoneNumberEditScreen',
         authNum: smsAuthNumber.toString(),

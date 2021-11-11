@@ -109,7 +109,7 @@ async function PATCH(data: AxiosProps) {
         // console.log('call Axios put Finally');
       });
   } catch (error) {
-    console.log(error);
+    console.log('패치 API 에러: ', error);
   }
 }
 

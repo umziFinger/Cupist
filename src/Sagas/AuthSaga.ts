@@ -10,7 +10,7 @@ import Config from '@/Config';
 import CommonActions from '@/Stores/Common/Actions';
 import MyActions from '@/Stores/My/Actions';
 import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
-import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 
 export function* fetchUserLogin(data: any): any {
@@ -83,7 +83,7 @@ export function* fetchUserLogout(): any {
   try {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
-      url: Config.AUTH_SIGN_OUT_URL,
+      url: Config.AUTH_LOGOUT_URL,
     };
     const response = yield call(Axios.POST, payload);
     if (response.result === true && response.code === null) {
@@ -109,13 +109,6 @@ export function* fetchUserLogout(): any {
       AsyncStorage.setItem('userIdx', '');
       AsyncStorage.setItem('accessToken', '');
       AsyncStorage.setItem('refreshToken', '');
-
-      // yield put(
-      //   AuthActions.fetchAuthReducer({
-      //     type: 'userInfo',
-      //     data: { userInfo: null },
-      //   }),
-      // );
 
       yield put(
         AuthActions.fetchAuthReducer({
@@ -336,6 +329,7 @@ export function* fetchSmsAuth(data: any): any {
         if (data.params.screen === 'PhoneNumberEditScreen') {
           const params = {
             mobile: phoneNumber.replace(/-/g, ''),
+            authIdx: log_cert.authIdx,
           };
           yield put(MyActions.fetchMyProfilePatch(params));
         }

@@ -1,6 +1,7 @@
 import { createReducer } from 'reduxsauce';
 import produce from 'immer';
 import { INITIAL_STATE } from '@/Stores/Place/InitialState';
+
 import { PlaceTypes } from './Actions';
 
 export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
@@ -21,11 +22,18 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'recentList': {
-        if (actions.params.page === 1) {
-          draft.recentList = data;
-        } else {
-          draft.recentList = data?.length > 0 ? draft.recentList.concat(data) : draft.recentList;
+        try {
+          if (actions.params.page === 1) {
+            console.log('asdjfklsajfl: ', data);
+            draft.recentList = data;
+          } else {
+            draft.recentList = data?.length > 0 ? draft.recentList.concat(data) : draft.recentList;
+          }
+          // console.log(current(draft));
+        } catch (e) {
+          console.log(e);
         }
+
         break;
       }
 

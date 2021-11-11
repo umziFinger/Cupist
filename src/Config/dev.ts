@@ -36,6 +36,7 @@ const dev = {
   // auth
   AUTH_LOGIN_URL: 'auth/login',
   AUTH_LOGIN_SOCIAL_URL: 'auth/login/social',
+  AUTH_LOGOUT_URL: 'auth/logout',
   AUTH_REFRESH_URL: 'auth/refresh',
   AUTH_SMS_SEND_URL: 'auth/sms-send',
   AUTH_SMS_AUTH_URL: 'auth/sms-auth',
