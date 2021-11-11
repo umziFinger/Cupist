@@ -52,6 +52,7 @@ const dev = {
   MY_CERT_GET_URL: 'my/cert/get',
   MY_PROFILE_URL: 'my/profile',
   MY_VIEW_URL: 'my/view',
+  MY_NOTIFICATION_URL: 'my/notification',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

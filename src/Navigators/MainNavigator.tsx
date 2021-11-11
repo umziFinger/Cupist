@@ -29,6 +29,7 @@ import NickNameEditScreen from '@/Containers/More/NickNameEditScreen';
 import PhoneNumberEditScreen from '@/Containers/More/PhoneNumberEditScreen';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 import RecentPlaceScreen from '@/Containers/Place/RecentPlaceScreen';
+import NotificationScreen from '@/Containers/Notification/NotificationScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -55,6 +56,7 @@ export type MainStackParamList = {
   NameEditScreen: undefined;
   PhoneNumberEditScreen: undefined;
   RecentPlaceScreen: undefined;
+  NotificationScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -102,6 +104,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="NameEditScreen" component={NameEditScreen} />
       <MainStack.Screen name="NickNameEditScreen" component={NickNameEditScreen} />
       <MainStack.Screen name="PhoneNumberEditScreen" component={PhoneNumberEditScreen} />
+      <MainStack.Screen name="NotificationScreen" component={NotificationScreen} />
     </MainStack.Navigator>
   );
 };

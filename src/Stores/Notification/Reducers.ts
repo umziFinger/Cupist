@@ -8,17 +8,14 @@ export const fetchNotificationReducer = (state = INITIAL_STATE, actions: any) =>
   return produce(state, (draft) => {
     switch (type) {
       case 'notificationList': {
+        draft.notificationList.unread = data.notification.unread ? data.notification.unread : [];
         if (actions.params.page === 1) {
-          if (data.notification.data?.length > 0) {
-            draft.notificationList = data.notification.data;
-          } else {
-            draft.notificationList = '';
-          }
+          draft.notificationList.read = data.notification.read;
         } else {
-          draft.notificationList =
-            data.notification.data.length > 0
-              ? draft.notificationList.concat(data.notification.data)
-              : draft.notificationList;
+          draft.notificationList.read =
+            data.notification.read.length > 0
+              ? draft.notificationList.read.concat(data.notification.read)
+              : draft.notificationList.read;
         }
         break;
       }
@@ -27,7 +24,7 @@ export const fetchNotificationReducer = (state = INITIAL_STATE, actions: any) =>
         break;
       }
       case 'notificationListInit': {
-        draft.notificationList = '';
+        draft.notificationList = INITIAL_STATE.notificationList;
         draft.notificationListPage = 1;
         break;
       }
