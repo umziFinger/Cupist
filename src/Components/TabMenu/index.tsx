@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchTabMenu from '@/Components/TabMenu/SearchTabMenu';
+import NotificationTabMenu from '@/Components/TabMenu/NotificationTabMenu';
 
 interface TabMenuProps {
   type: string;
@@ -11,6 +12,9 @@ const TabMenu = (props: TabMenuProps) => {
   switch (type) {
     case 'search':
       return <SearchTabMenu type={type} data={data} />;
+    case 'notification':
+      return <NotificationTabMenu type={type} data={data} />;
+
     default:
       return null;
   }

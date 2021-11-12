@@ -1,10 +1,10 @@
 export const INITIAL_STATE: MyState['my'] = {
-  myReviewPage: 0,
+  myReviewPage: 1,
   myReviewList: [],
   myCouponPage: 1,
   myCouponList: [],
   myPointList: [],
-  myPointListPage: 0,
+  myPointListPage: 1,
   total_mileage: 0,
   moreScreenRenderItem: [
     {
@@ -14,11 +14,13 @@ export const INITIAL_STATE: MyState['my'] = {
     },
     { title: '내 알림', screen: 'NotificationScreen' },
     { title: '최근 본 볼링장', screen: 'RecentPlaceScreen' },
-    { title: '공지사항', icon: require('@/Assets/Images/More/icPlusNotice.png'), screen: 'MyProfileScreen' },
+    { title: '공지사항', icon: require('@/Assets/Images/More/icPlusNotice.png'), screen: 'NoticeScreen' },
     { title: '이벤트', icon: require('@/Assets/Images/More/icPlusEvent.png'), screen: 'MyProfileScreen' },
     { title: '고객센터', icon: require('@/Assets/Images/More/icPlusCustomer.png'), screen: 'MyProfileScreen' },
     { title: '서비스설정', icon: require('@/Assets/Images/More/icPlusSetup.png'), screen: 'MyProfileScreen' },
   ],
+  myNoticeList: [],
+  myNoticeListPage: 1,
 };
 export interface MyState {
   my: {
@@ -30,5 +32,7 @@ export interface MyState {
     myPointListPage: number;
     total_mileage: number;
     moreScreenRenderItem: Array<{ title: string; icon?: any; screen: string }>;
+    myNoticeList: any[];
+    myNoticeListPage: number;
   };
 }

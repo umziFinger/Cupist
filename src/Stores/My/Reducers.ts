@@ -66,6 +66,19 @@ export const fetchMyReducer = produce((draft, actions: any) => {
       break;
     }
 
+    case 'myNoticeList': {
+      if (actions.params.page === 1) {
+        draft.myNoticeList = data;
+      } else {
+        draft.myNoticeList = data.length > 0 ? draft.myNoticeList.concat(data) : draft.myNoticeList;
+      }
+      break;
+    }
+
+    case 'myNoticeListPage': {
+      draft.myNoticeListPage = data;
+      break;
+    }
     default:
       return draft;
   }
