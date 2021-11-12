@@ -4,10 +4,11 @@ import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
-import { navigate } from '@/Services/NavigationService';
+import { navigate, navigateGoBack } from '@/Services/NavigationService';
 import MyActions from '@/Stores/My/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthAction from '@/Stores/Auth/Actions';
+import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 
 export function* fetchMyPushYN(data: any): any {
   try {
@@ -99,7 +100,7 @@ export function* fetchMyReviewList(data: any): any {
     yield put(MyActions.fetchMyReducer({ type: 'myReviewPage', data: data.params.page + 1 }));
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    console.log('occurred Error...fetchModifyProfileImage : ', e);
+    console.log('occurred Error...fetchMyReviewList : ', e);
   }
 }
 
@@ -186,7 +187,7 @@ export function* fetchMySmsSend(data: any): any {
   }
 }
 
-export function* fetchMyProfilePatch(data: any): any {
+export function* fetchMyPlacePatch(data: any): any {
   try {
     const payload = {
       ...data,
@@ -206,12 +207,89 @@ export function* fetchMyProfilePatch(data: any): any {
           },
         }),
       );
-      if (data.params.type === 'join') navigate('HomeScreen');
+
       const { userIdx } = yield select((state: AuthState) => state.auth);
       yield put(AuthAction.fetchUserInfo({ idx: userIdx }));
+      if (data.params.type === SCREEN_TYPE.JOIN) {
+        navigate('HomeScreen');
+      } else {
+        navigateGoBack();
+      }
     } else {
       // 인증정보 초기화
       // yield put(AuthActions.fetchAuthReducer({ type: 'phoneNumber', data: { phoneNumber: null } }));
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchMyPlacePatch : ', e);
+  }
+}
+
+export function* fetchMyProfileImagePatch(data: any): any {
+  try {
+    const { image } = data.params;
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const url = `${Config.MY_PROFILE_URL}`;
+    const formData = new FormData();
+
+    const attachFileInfoArr: any = [];
+    if (image) {
+      image.map((v: any) => {
+        if (v.idx) {
+          // 수정된 s3 이미지 리스트
+          return attachFileInfoArr.push(v.idx);
+        }
+        // 새로 추가된 이미지
+        return formData.append('file', v);
+      });
+    }
+    formData.append('attachFileInfo', JSON.stringify(attachFileInfoArr));
+
+    const payload = {
+      url,
+      formData,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+
+    if (response.result === true && response.code === null) {
+      const { userIdx } = yield select((state) => state.auth);
+      yield put(AuthActions.fetchUserInfo({ idx: userIdx }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyProfileImagePatch : ', e.message);
+  }
+}
+
+export function* fetchMyProfilePatch(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.MY_URL,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+
+    if (response.result === true && response.code === null) {
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: response.data.message,
+          },
+        }),
+      );
+      const { userIdx } = yield select((state: AuthState) => state.auth);
+      yield put(AuthAction.fetchUserInfo({ idx: userIdx }));
+      navigateGoBack();
+    } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {

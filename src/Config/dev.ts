@@ -36,6 +36,7 @@ const dev = {
   // auth
   AUTH_LOGIN_URL: 'auth/login',
   AUTH_LOGIN_SOCIAL_URL: 'auth/login/social',
+  AUTH_LOGOUT_URL: 'auth/logout',
   AUTH_REFRESH_URL: 'auth/refresh',
   AUTH_SMS_SEND_URL: 'auth/sms-send',
   AUTH_SMS_AUTH_URL: 'auth/sms-auth',
@@ -49,7 +50,9 @@ const dev = {
   MY_MILEAGES: 'my/mileages',
   MY_PROMOTION_URL: 'my/promotion',
   MY_CERT_GET_URL: 'my/cert/get',
-
+  MY_PROFILE_URL: 'my/profile',
+  MY_VIEW_URL: 'my/view',
+  MY_NOTIFICATION_URL: 'my/notification',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

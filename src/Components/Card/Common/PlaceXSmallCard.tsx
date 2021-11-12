@@ -28,13 +28,13 @@ const PlaceXSmallCard = (props: PlaceCardXSmallProps) => {
         placeIdx: item.idx,
         type: SCREEN_TYPE.JOIN,
       };
-      dispatch(MyActions.fetchMyProfilePatch(params));
+      dispatch(MyActions.fetchMyPlacePatch(params));
     } else {
       const params = {
         placeIdx: item.idx,
         type: SCREEN_TYPE.MODIFY,
       };
-      dispatch(MyActions.fetchMyProfilePatch(params));
+      dispatch(MyActions.fetchMyPlacePatch(params));
     }
   };
 

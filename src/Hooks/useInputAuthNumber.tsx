@@ -19,7 +19,7 @@ function useInputAuthNumber(): ResultUseInputAuth {
   const dispatch = useDispatch();
   const { isReceived, smsValueValid, smsValidText } = useSelector((state: AuthState) => state.auth);
   const [smsAuthNumber, setSmsAuthNumber] = useState('');
-  const [smsAuthTime, setSmsAuthTime] = useState(180);
+  const [smsAuthTime, setSmsAuthTime] = useState(300);
 
   let timer: NodeJS.Timeout | null = null;
   useEffect(() => {

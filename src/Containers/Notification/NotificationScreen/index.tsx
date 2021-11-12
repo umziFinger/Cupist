@@ -16,12 +16,17 @@ const NotificationScreen = () => {
   const dispatch = useDispatch();
 
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { notificationListPage, notificationList } = useSelector((state: NotificationState) => state.notification);
+  const {
+    notificationListPage,
+    notificationList,
+    notificationCategory: category = 'all',
+  } = useSelector((state: NotificationState) => state.notification);
 
   useEffect(() => {
     const params = {
       per_page: 10,
       page: 1,
+      category,
     };
     dispatch(NotificationActions.fetchNotificationList(params));
     return () => {
@@ -57,105 +62,109 @@ const NotificationScreen = () => {
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="back" />
+      <View style={{ marginTop: 16, paddingLeft: 24 }}>
+        <CustomText style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}>
+          내 알림
+        </CustomText>
+      </View>
+      {/* <FlatList */}
+      {/*  data={notificationList} */}
+      {/*  renderItem={({ item, index }) => ( */}
+      {/*    <CustomButton onPress={() => onNotificationClickHandler(item)}> */}
+      {/*      <View style={{ backgroundColor: Color.White, borderRadius: 24, marginBottom: 16 }}> */}
+      {/*        {item.flag_read === 'N' && ( */}
+      {/*          <View */}
+      {/*            style={{ */}
+      {/*              position: 'absolute', */}
+      {/*              top: 16, */}
+      {/*              left: 16, */}
+      {/*              width: 8, */}
+      {/*              height: 8, */}
+      {/*              borderRadius: 4, */}
+      {/*              backgroundColor: Color.grayBg, */}
+      {/*            }} */}
+      {/*          /> */}
+      {/*        )} */}
+      {/*        <View */}
+      {/*          style={{ */}
+      {/*            flexDirection: 'row', */}
+      {/*            alignItems: 'center', */}
+      {/*            padding: 24, */}
+      {/*            paddingLeft: 39, */}
+      {/*            // borderBottomColor: Color.gray50, */}
+      {/*            // borderBottomWidth: 1, */}
+      {/*          }} */}
+      {/*        > */}
+      {/*          <View style={{ width: 32, height: 42, alignSelf: 'flex-start' }}> */}
+      {/*            <FastImage */}
+      {/*              style={{ width: '100%', height: '100%' }} */}
+      {/*              source={require('@/Assets/Images/Common/icParcel.png')} */}
+      {/*              resizeMode={FastImage.resizeMode.contain} */}
+      {/*            /> */}
+      {/*          </View> */}
+      {/*          <View style={{ marginLeft: 19, flex: 1 }}> */}
+      {/*            <View style={{ flexDirection: 'row', alignItems: 'center' }}> */}
+      {/*              <View style={{ flex: 1 }}> */}
+      {/*                <CustomText */}
+      {/*                  style={{ fontSize: 15, letterSpacing: -0.25, lineHeight: 21, color: Color.Black1000 }} */}
+      {/*                > */}
+      {/*                  {item?.noti_content || ''} */}
+      {/*                </CustomText> */}
+      {/*              </View> */}
+      {/*              {item.noti_type === 'restorationDetail' && ( */}
+      {/*                <View style={{ width: 24, height: 24 }}> */}
+      {/*                  <FastImage */}
+      {/*                    style={{ width: '100%', height: '100%' }} */}
+      {/*                    source={require('@/Assets/Images/Arrow/icArrowRightGray.png')} */}
+      {/*                    resizeMode={FastImage.resizeMode.contain} */}
+      {/*                  /> */}
+      {/*                </View> */}
+      {/*              )} */}
+      {/*            </View> */}
 
-      <FlatList
-        data={notificationList}
-        renderItem={({ item, index }) => (
-          <CustomButton onPress={() => onNotificationClickHandler(item)}>
-            <View style={{ backgroundColor: Color.White, borderRadius: 24, marginBottom: 16 }}>
-              {item.flag_read === 'N' && (
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 16,
-                    left: 16,
-                    width: 8,
-                    height: 8,
-                    borderRadius: 4,
-                    backgroundColor: Color.grayBg,
-                  }}
-                />
-              )}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  padding: 24,
-                  paddingLeft: 39,
-                  // borderBottomColor: Color.gray50,
-                  // borderBottomWidth: 1,
-                }}
-              >
-                <View style={{ width: 32, height: 42, alignSelf: 'flex-start' }}>
-                  <FastImage
-                    style={{ width: '100%', height: '100%' }}
-                    source={require('@/Assets/Images/Common/icParcel.png')}
-                    resizeMode={FastImage.resizeMode.contain}
-                  />
-                </View>
-                <View style={{ marginLeft: 19, flex: 1 }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ flex: 1 }}>
-                      <CustomText
-                        style={{ fontSize: 15, letterSpacing: -0.25, lineHeight: 21, color: Color.Black1000 }}
-                      >
-                        {item?.noti_content || ''}
-                      </CustomText>
-                    </View>
-                    {item.noti_type === 'restorationDetail' && (
-                      <View style={{ width: 24, height: 24 }}>
-                        <FastImage
-                          style={{ width: '100%', height: '100%' }}
-                          source={require('@/Assets/Images/Arrow/icArrowRightGray.png')}
-                          resizeMode={FastImage.resizeMode.contain}
-                        />
-                      </View>
-                    )}
-                  </View>
-
-                  <View style={{ marginTop: 12 }}>
-                    <CustomText style={{ fontSize: 11, color: Color.grayDefault }}>
-                      {item.register_time || ''}
-                    </CustomText>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </CustomButton>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={6}
-        maxToRenderPerBatch={9}
-        windowSize={7}
-        refreshing={false}
-        onRefresh={onRefresh}
-        showsVerticalScrollIndicator={false}
-        onEndReachedThreshold={1}
-        onEndReached={() => onMore()}
-        ListFooterComponent={<View style={{ marginBottom: heightInfo.statusHeight }} />}
-        contentContainerStyle={{ backgroundColor: Color.grayBg, padding: 24, flexGrow: 1 }}
-        ListEmptyComponent={
-          <View
-            style={{
-              alignItems: 'center',
-              marginTop: 110,
-            }}
-          >
-            <View style={{ width: 36, height: 36 }}>
-              <FastImage
-                style={{ width: '100%', height: '100%' }}
-                source={require('@/Assets/Images/Common/icNotiOff.png')}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            </View>
-            <View style={{ justifyContent: 'center', marginTop: 20 }}>
-              <CustomText style={{ color: Color.gray, fontSize: 17, fontWeight: '500', letterSpacing: -0.42 }}>
-                알림 내역이 없습니다
-              </CustomText>
-            </View>
-          </View>
-        }
-      />
+      {/*            <View style={{ marginTop: 12 }}> */}
+      {/*              <CustomText style={{ fontSize: 11, color: Color.grayDefault }}> */}
+      {/*                {item.register_time || ''} */}
+      {/*              </CustomText> */}
+      {/*            </View> */}
+      {/*          </View> */}
+      {/*        </View> */}
+      {/*      </View> */}
+      {/*    </CustomButton> */}
+      {/*  )} */}
+      {/*  keyExtractor={(item, index) => index.toString()} */}
+      {/*  initialNumToRender={6} */}
+      {/*  maxToRenderPerBatch={9} */}
+      {/*  windowSize={7} */}
+      {/*  refreshing={false} */}
+      {/*  onRefresh={onRefresh} */}
+      {/*  showsVerticalScrollIndicator={false} */}
+      {/*  onEndReachedThreshold={1} */}
+      {/*  onEndReached={() => onMore()} */}
+      {/*  ListFooterComponent={<View style={{ marginBottom: heightInfo.statusHeight }} />} */}
+      {/*  contentContainerStyle={{ backgroundColor: Color.grayBg, padding: 24, flexGrow: 1 }} */}
+      {/*  ListEmptyComponent={ */}
+      {/*    <View */}
+      {/*      style={{ */}
+      {/*        alignItems: 'center', */}
+      {/*        marginTop: 110, */}
+      {/*      }} */}
+      {/*    > */}
+      {/*      <View style={{ width: 36, height: 36 }}> */}
+      {/*        <FastImage */}
+      {/*          style={{ width: '100%', height: '100%' }} */}
+      {/*          source={require('@/Assets/Images/Common/icNotiOff.png')} */}
+      {/*          resizeMode={FastImage.resizeMode.cover} */}
+      {/*        /> */}
+      {/*      </View> */}
+      {/*      <View style={{ justifyContent: 'center', marginTop: 20 }}> */}
+      {/*        <CustomText style={{ color: Color.gray, fontSize: 17, fontWeight: '500', letterSpacing: -0.42 }}> */}
+      {/*          알림 내역이 없습니다 */}
+      {/*        </CustomText> */}
+      {/*      </View> */}
+      {/*    </View> */}
+      {/*  } */}
+      {/* /> */}
     </View>
   );
 };

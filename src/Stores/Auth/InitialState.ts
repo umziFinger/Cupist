@@ -21,6 +21,8 @@ export const INITIAL_STATE = {
     email: null,
     providerType: null,
     residentPlace: null,
+    notificationCnt: null,
+    placeViewCnt: null,
   },
   tokenInfo: {
     token: null,
@@ -74,7 +76,9 @@ interface userInfo {
   reservationCnt: number | null;
   email: string | null;
   providerType: string | null;
-  residentPlace: object | null;
+  residentPlace: { placeIdx: number; name: string; newAddress: string; oldAddress: string; mainPhoto: string } | null;
+  notificationCnt: number | null;
+  placeViewCnt: number | null;
 }
 
 interface tokenInfo {

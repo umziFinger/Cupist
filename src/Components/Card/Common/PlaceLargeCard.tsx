@@ -11,10 +11,12 @@ import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
+  type: 'myAround' | 'recentPlace';
 }
 
 const PlaceLargeCard = (props: PropTypes) => {
-  const { item } = props;
+  const { item, type } = props;
+
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
@@ -30,7 +32,7 @@ const PlaceLargeCard = (props: PropTypes) => {
   const onPlaceDibs = (placeIdx: number) => {
     const params: placeDibsDataType = {
       placeIdx,
-      type: 'myAround',
+      type,
       status: 'dibs',
     };
     dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
@@ -39,7 +41,7 @@ const PlaceLargeCard = (props: PropTypes) => {
   const onPlaceUnDibs = (placeIdx: number) => {
     const params: placeDibsDataType = {
       placeIdx,
-      type: 'myAround',
+      type,
       status: 'unDibs',
     };
     dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
@@ -60,7 +62,7 @@ const PlaceLargeCard = (props: PropTypes) => {
           marginBottom: 17,
         }}
       >
-        <View style={{ width: width - 40, height: 145 }}>
+        <View style={{ width, height: 145 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
             source={

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import CustomText from '@/Components/CustomText';
@@ -14,6 +14,8 @@ const RBSheetAttachFile = (props: any) => {
   // console.log('attatchidxxxx', attachFileIdx);
   const { heightInfo, attachFile } = useSelector((state: CommonState) => state.common);
   const dispatch = useDispatch();
+  const { height } = useWindowDimensions();
+
   const RBSheetRef = useRef<any>();
 
   useEffect(() => {
@@ -58,74 +60,95 @@ const RBSheetAttachFile = (props: any) => {
   return (
     <RBSheet
       ref={RBSheetRef}
-      height={250}
+      height={height * 0.39}
       openDuration={500}
       closeDuration={100}
       customStyles={{
         container: {
-          borderTopRightRadius: 10,
-          borderTopLeftRadius: 10,
+          borderTopRightRadius: 24,
+          borderTopLeftRadius: 24,
           paddingBottom: heightInfo.fixBottomHeight,
+          // flex: 1,
         },
       }}
       onClose={() => setCallAttachFile(false)}
     >
-      <View style={{ flex: 1, backgroundColor: Color.White, padding: 20 }}>
-        <View style={{ justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: 'bold' }}>사진 첨부</CustomText>
-        </View>
-        <CustomButton onPress={() => onPicture('camera')}>
-          <View style={{ flexDirection: 'row', paddingVertical: 18, marginTop: 16 }}>
-            <View style={{ justifyContent: 'center', flex: 1 }}>
-              <CustomText
-                style={{
-                  color: Color.Black1000,
-                  fontSize: 15,
-                  letterSpacing: -0.2,
-                }}
-              >
-                카메라
-              </CustomText>
-            </View>
+      <View style={{ flex: 1, backgroundColor: Color.White, paddingHorizontal: 24, paddingTop: 28 }}>
+        <View style={{ flex: 1 }}>
+          <View style={{ justifyContent: 'center' }}>
+            <CustomText style={{ fontSize: 17, fontWeight: 'bold', letterSpacing: -0.3, color: Color.Black1000 }}>
+              사진
+            </CustomText>
           </View>
-        </CustomButton>
-        <CustomButton onPress={() => onPicture('album')}>
-          <View style={{ flexDirection: 'row', paddingVertical: 18 }}>
-            <View style={{ justifyContent: 'center', flex: 1 }}>
-              <CustomText
-                style={{
-                  color: Color.Black1000,
-                  fontSize: 15,
-                  letterSpacing: -0.2,
-                }}
-              >
-                앨범에서 선택하기
-              </CustomText>
-            </View>
-          </View>
-        </CustomButton>
-        <View
-          style={{
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-          }}
-        >
-          <CustomButton onPress={() => RBSheetRef.current.close()}>
+          <CustomButton onPress={() => onPicture('camera')}>
             <View
               style={{
-                paddingVertical: 13,
-                paddingHorizontal: 20,
-                borderWidth: 1,
-                borderColor: Color.Gray800,
-                borderRadius: 5,
+                flexDirection: 'row',
+                paddingVertical: 16,
+                marginTop: 12,
+                borderBottomColor: Color.Gray200,
+                borderBottomWidth: 1,
               }}
             >
-              <CustomText style={{ color: Color.Gray800, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.2 }}>
-                닫기
-              </CustomText>
+              <View style={{ justifyContent: 'center', flex: 1 }}>
+                <CustomText
+                  style={{
+                    fontSize: 14,
+                    letterSpacing: -0.25,
+                    color: Color.Grayyellow1000,
+                  }}
+                >
+                  카메라
+                </CustomText>
+              </View>
+            </View>
+          </CustomButton>
+          <CustomButton onPress={() => onPicture('album')}>
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingVertical: 16,
+                borderBottomColor: Color.Gray200,
+                borderBottomWidth: 1,
+              }}
+            >
+              <View style={{ justifyContent: 'center', flex: 1 }}>
+                <CustomText
+                  style={{
+                    fontSize: 14,
+                    letterSpacing: -0.25,
+                    color: Color.Grayyellow1000,
+                  }}
+                >
+                  앨범에서 선택하기
+                </CustomText>
+              </View>
             </View>
           </CustomButton>
         </View>
+
+        <CustomButton onPress={() => RBSheetRef.current.close()}>
+          <View
+            style={{
+              paddingVertical: 15,
+              borderRadius: 3,
+              alignItems: 'center',
+              backgroundColor: Color.Primary1000,
+            }}
+          >
+            <CustomText
+              style={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                letterSpacing: -0.25,
+                textAlign: 'center',
+                color: Color.White,
+              }}
+            >
+              닫기
+            </CustomText>
+          </View>
+        </CustomButton>
       </View>
     </RBSheet>
   );

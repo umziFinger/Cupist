@@ -24,6 +24,8 @@ export const INITIAL_STATE: PlaceState['place'] = {
     afternoon: [],
     night: [],
   },
+  recentList: [],
+  recentListPage: 1,
 };
 
 export interface PlaceState {
@@ -42,6 +44,8 @@ export interface PlaceState {
     placeDetail: PlaceDetail;
     placeDetailIdx: number | -1;
     placeTicketList: PlaceTicketList;
+    recentList: Array<any>;
+    recentListPage: number | 1;
   };
 }
 

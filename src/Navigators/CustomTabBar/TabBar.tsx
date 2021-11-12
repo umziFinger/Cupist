@@ -84,7 +84,7 @@ const TabBar = (props: TabBarProps) => {
           : require('@/Assets/Images/BottomTabBar/icBtHeartOff.png');
       case 'MoreScreen':
         return state.index === 4
-          ? require('@/Assets/Images/BottomTabBar/icPlusOff.png')
+          ? require('@/Assets/Images/BottomTabBar/icPlusOn.png')
           : require('@/Assets/Images/BottomTabBar/icPlusOff.png');
 
       default:
@@ -111,10 +111,10 @@ const TabBar = (props: TabBarProps) => {
   };
 
   const onPressMenu = (value: string) => {
-    // if (value === 'MyScreen' && !userIdx) {
-    //   dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: true }));
-    //   return;
-    // }
+    if (value === 'MoreScreen' && !userIdx) {
+      navigate('SimpleLoginScreen');
+      return;
+    }
     navigate(value);
   };
 

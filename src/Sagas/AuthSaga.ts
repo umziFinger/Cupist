@@ -8,9 +8,9 @@ import { Axios } from '@/Services/Axios';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
 import CommonActions from '@/Stores/Common/Actions';
-import MyAcions from '@/Stores/My/Actions';
+import MyActions from '@/Stores/My/Actions';
 import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
-import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 
 export function* fetchUserLogin(data: any): any {
@@ -83,7 +83,7 @@ export function* fetchUserLogout(): any {
   try {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
-      url: Config.AUTH_SIGN_OUT_URL,
+      url: Config.AUTH_LOGOUT_URL,
     };
     const response = yield call(Axios.POST, payload);
     if (response.result === true && response.code === null) {
@@ -109,13 +109,6 @@ export function* fetchUserLogout(): any {
       AsyncStorage.setItem('userIdx', '');
       AsyncStorage.setItem('accessToken', '');
       AsyncStorage.setItem('refreshToken', '');
-
-      // yield put(
-      //   AuthActions.fetchAuthReducer({
-      //     type: 'userInfo',
-      //     data: { userInfo: null },
-      //   }),
-      // );
 
       yield put(
         AuthActions.fetchAuthReducer({
@@ -269,7 +262,7 @@ export function* fetchUserInfo(data: any): any {
     };
 
     const response = yield call(Axios.GET, payload);
-    console.log('call saga fetchUserInfo data : ', response.data);
+    // console.log('call saga fetchUserInfo data : ', response.data);
     if (response.result === true && response.code === null) {
       yield put(AuthActions.fetchAuthReducer({ type: 'userInfo', data: response.data }));
     } else {
@@ -305,7 +298,6 @@ export function* fetchAuthSmsSend(data: any): any {
 
 export function* fetchSmsAuth(data: any): any {
   try {
-    console.log('인증번호 통과: ');
     const payload = {
       ...data,
       url: Config.AUTH_SMS_AUTH_URL,
@@ -315,9 +307,7 @@ export function* fetchSmsAuth(data: any): any {
     console.log('인증번호 통과: ', response.data);
 
     if (response.result === true && response.code === null) {
-      const { log_cert, phoneNumber, email, password, userName, nickName } = yield select(
-        (state: AuthState) => state.auth,
-      );
+      const { log_cert, phoneNumber, email, password } = yield select((state: AuthState) => state.auth);
       if (log_cert.authNum === data.params.authNum) {
         yield put(AuthActions.fetchAuthReducer({ type: 'smsValueValid', data: true }));
 
@@ -326,14 +316,22 @@ export function* fetchSmsAuth(data: any): any {
             mobile: phoneNumber.replace(/-/g, ''),
             email,
             password,
-            nickname: nickName,
+            nickname: data.params.nickName,
             sex: 'M',
             uniqueId: DeviceInfo.getUniqueId(),
             providerType: 'email',
             authIdx: log_cert.authIdx,
-            name: userName,
+            name: data.params.userName,
           };
           yield put(AuthActions.fetchUserJoin(params));
+        }
+
+        if (data.params.screen === 'PhoneNumberEditScreen') {
+          const params = {
+            mobile: phoneNumber.replace(/-/g, ''),
+            authIdx: log_cert.authIdx,
+          };
+          yield put(MyActions.fetchMyProfilePatch(params));
         }
       } else {
         yield put(

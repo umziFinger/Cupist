@@ -90,3 +90,25 @@ export function* fetchPlaceTicketList(data: any): any {
     console.log('occurred Error...fetchPlaceTicketInfo : ', e);
   }
 }
+
+export function* fetchPlaceRecentList(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.MY_VIEW_URL,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      yield put(
+        PlaceActions.fetchPlaceReducer({ type: 'recentList', data: response.data.view, page: data.params.page }),
+      );
+      yield put(PlaceActions.fetchPlaceReducer({ type: 'recentListPage', data: data.params.page + 1 }));
+    } else {
+      yield put(PlaceActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchPlaceRecentList : ', e);
+  }
+}

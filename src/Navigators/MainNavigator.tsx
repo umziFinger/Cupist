@@ -23,6 +23,13 @@ import ResidentSearchScreen from '@/Containers/Search/ResidentSearchScreen';
 import PlaceDetailScreen from '@/Containers/Place/PlaceDetailScreen';
 import LocationSettingScreen from '@/Containers/Setting/LocationSettingScreen';
 import PermissionScreen from '@/Containers/Auth/PermissionScreen';
+import ProfileSettingScreen from '@/Containers/More/ProfileSettingScreen';
+import NameEditScreen from '@/Containers/More/NameEditScreen';
+import NickNameEditScreen from '@/Containers/More/NickNameEditScreen';
+import PhoneNumberEditScreen from '@/Containers/More/PhoneNumberEditScreen';
+import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
+import RecentPlaceScreen from '@/Containers/Place/RecentPlaceScreen';
+import NotificationScreen from '@/Containers/Notification/NotificationScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -40,10 +47,16 @@ export type MainStackParamList = {
   JoinStepOneScreen: undefined;
   JoinStepTwoScreen: undefined;
   JoinStepThreeScreen: undefined;
-  ResidentSearchScreen: undefined;
+  ResidentSearchScreen: { type: SCREEN_TYPE };
   PlaceDetailScreen: { idx: number };
   LocationSettingScreen: undefined;
   PermissionScreen: undefined;
+  ProfileSettingScreen: undefined;
+  NickNameEditScreen: undefined;
+  NameEditScreen: undefined;
+  PhoneNumberEditScreen: undefined;
+  RecentPlaceScreen: undefined;
+  NotificationScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -79,11 +92,19 @@ const MainNavigator = () => {
       {/* Search */}
       <MainStack.Screen name="ResidentSearchScreen" component={ResidentSearchScreen} />
       <MainStack.Screen name="SearchScreen" component={SearchScreen} />
-      {/* placeDetail */}
+      {/* place */}
       <MainStack.Screen name="PlaceDetailScreen" component={PlaceDetailScreen} />
+      <MainStack.Screen name="RecentPlaceScreen" component={RecentPlaceScreen} />
 
       {/*  Setting */}
       <MainStack.Screen name="LocationSettingScreen" component={LocationSettingScreen} />
+
+      {/*  More */}
+      <MainStack.Screen name="ProfileSettingScreen" component={ProfileSettingScreen} />
+      <MainStack.Screen name="NameEditScreen" component={NameEditScreen} />
+      <MainStack.Screen name="NickNameEditScreen" component={NickNameEditScreen} />
+      <MainStack.Screen name="PhoneNumberEditScreen" component={PhoneNumberEditScreen} />
+      <MainStack.Screen name="NotificationScreen" component={NotificationScreen} />
     </MainStack.Navigator>
   );
 };

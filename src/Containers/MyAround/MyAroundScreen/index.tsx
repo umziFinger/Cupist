@@ -62,19 +62,14 @@ const MyAroundScreen = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <Header
-        type={'myAround'}
-        // text={myAroundList?.length > 0 ? myAroundList[0]?.area : '내주변'}
-        text={location?.areaName === '' ? '내주변' : location.areaName}
-        isScroll={isScroll}
-      />
+      <Header type={'myAround'} text={location?.areaName === '' ? '내주변' : location.areaName} isScroll={isScroll} />
       <View style={{ flex: 1, backgroundColor: Color.White, paddingHorizontal: 20 }}>
         <FlatList
           data={myAroundList}
           // data={[0, 1, 2, 3, 4, 5]}
           renderItem={({ item }) => (
             <>
-              <PlaceLargeCard item={item} />
+              <PlaceLargeCard item={item} type={'myAround'} />
             </>
           )}
           maxToRenderPerBatch={6}

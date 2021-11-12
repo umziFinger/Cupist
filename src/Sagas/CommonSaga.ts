@@ -6,9 +6,10 @@ import { Axios } from '@/Services/Axios';
 import { navigate, navigateReplace } from '@/Services/NavigationService';
 import HomeActions from '@/Stores/Home/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
+import MyActions from '@/Stores/My/Actions';
 import Config from '@/Config';
 
-export type placeDibsType = 'myAround' | 'home';
+export type placeDibsType = 'myAround' | 'home' | 'recentPlace';
 export type dibsStatusType = 'dibs' | 'unDibs';
 
 export type placeDibsDataType = {
@@ -89,6 +90,12 @@ export function* fetchInitialHandler() {
   // RBSheet 초기화
   yield put(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
   yield put(CommonActions.fetchCommonReducer({ type: 'currentRBS', data: null }));
+
+  // More screen render Item 초기화
+  yield put(MyActions.fetchMyReducer({ type: 'moreScreenRenderItem' }));
+
+  // attachFile 초기화
+  yield put(CommonActions.fetchCommonReducer({ type: 'attachFileInit' }));
 }
 
 export function* fetchErrorHandler(data: any) {
@@ -214,27 +221,8 @@ export function* fetchSkeletonNavigateReplace(data: any): any {
 
 function* handlerPlaceDibs(type: placeDibsType, status: dibsStatusType, placeIdx: any) {
   try {
-    if (status === 'dibs') {
-      switch (type) {
-        case 'myAround': {
-          yield put(PlaceActions.fetchPlaceReducer({ type: 'placeMyAroundDibs', data: { placeIdx } }));
-          break;
-        }
-
-        default:
-          return false;
-      }
-    }
-    if (status === 'unDibs') {
-      switch (type) {
-        case 'myAround': {
-          yield put(PlaceActions.fetchPlaceReducer({ type: 'placeMyAroundUnDibs', data: { placeIdx } }));
-          break;
-        }
-        default:
-          return false;
-      }
-    }
+    yield put(PlaceActions.fetchPlaceReducer({ type: 'placeMyAroundDibsHandler', data: { placeIdx, status } }));
+    yield put(PlaceActions.fetchPlaceReducer({ type: 'recentPlaceDibsHandler', data: { placeIdx, status } }));
   } catch (e) {
     console.log('occurred Error...handlerPlaceDibs : ', e);
   }
@@ -269,10 +257,13 @@ export function* fetchCommonPlaceDibsHandler(data: any): any {
     const response = status === 'dibs' ? yield call(Axios.POST, payload) : yield call(Axios.DELETE, payload);
 
     if (response.result === true && response.code === null) {
-      yield handlerRefreshFlag(type);
+      // yield handlerRefreshFlag(type);
+      handlerPlaceDibs(type, status, placeIdx);
     } else if (response.data.message === '이미 찜 되어있는 볼링장입니다.') {
+      console.log('이미 찜 되어있는 볼링장입니다.');
       yield handlerPlaceDibs(type, status, placeIdx);
     } else if (response.data.message === '찜이 존재하지 않습니다.') {
+      console.log('찜이 존재하지 않습니다.');
       yield handlerPlaceDibs(type, status, placeIdx);
     } else {
       yield put(CommonActions.fetchErrorHandler(response));

@@ -107,7 +107,7 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'attachFile': {
         if (state.attachFile) {
-          draft.attachFile.push(data);
+          draft.attachFile.concat(data);
         } else {
           draft.attachFile = data;
         }

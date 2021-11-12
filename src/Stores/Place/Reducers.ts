@@ -1,6 +1,7 @@
 import { createReducer } from 'reduxsauce';
 import produce from 'immer';
 import { INITIAL_STATE } from '@/Stores/Place/InitialState';
+
 import { PlaceTypes } from './Actions';
 
 export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
@@ -19,6 +20,23 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         }
         break;
       }
+
+      case 'recentList': {
+        try {
+          if (actions.params.page === 1) {
+            console.log('asdjfklsajfl: ', data);
+            draft.recentList = data;
+          } else {
+            draft.recentList = data?.length > 0 ? draft.recentList.concat(data) : draft.recentList;
+          }
+          // console.log(current(draft));
+        } catch (e) {
+          console.log(e);
+        }
+
+        break;
+      }
+
       case 'aroundListPage': {
         draft.aroundListPage = data;
         break;
@@ -83,38 +101,48 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
-      case 'placeMyAroundDibs': {
+      case 'placeMyAroundDibsHandler': {
         try {
           const copyMyAroundList: any = state.myAroundList;
-
-          const FIND_IDX = copyMyAroundList.findIndex((v: any) => v.idx === data.placeIdx);
-
-          if (FIND_IDX !== -1) {
-            draft.myAroundList[FIND_IDX].isPlaceDibs = true;
+          if (data.status === 'dibs') {
+            const FIND_IDX = copyMyAroundList?.findIndex((v: any) => v.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.myAroundList[FIND_IDX].isPlaceDibs = true;
+            }
+          } else if (data.status === 'unDibs') {
+            const FIND_IDX = copyMyAroundList?.findIndex((v: any) => v.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.myAroundList[FIND_IDX].isPlaceDibs = false;
+            }
           }
         } catch (e) {
-          console.log('내주변 리스트 볼링장 찜하기 에러: ', e);
+          console.log('내주변 리스트 볼링장 찜하기 핸들러 에러: ', e);
         }
         break;
       }
 
-      case 'placeMyAroundUnDibs': {
+      case 'recentPlaceDibsHandler': {
         try {
-          const copyMyAroundList: any = state.myAroundList;
-
-          const FIND_IDX = copyMyAroundList.findIndex((v: any) => v.idx === data.placeIdx);
-
-          if (FIND_IDX !== -1) {
-            draft.myAroundList[FIND_IDX].isPlaceDibs = false;
+          const copyRecentList: any = state.recentList;
+          if (data.status === 'dibs') {
+            const FIND_IDX = copyRecentList?.findIndex((v: any) => v.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.recentList[FIND_IDX].isPlaceDibs = true;
+            }
+          } else if (data.status === 'unDibs') {
+            const FIND_IDX = copyRecentList?.findIndex((v: any) => v.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.recentList[FIND_IDX].isPlaceDibs = false;
+            }
           }
         } catch (e) {
-          console.log('내주변 리스트 볼링장 찜하기 해제 에러: ', e);
+          console.log('최근 본 볼링장 찜하기 핸들러 에러: ', e);
         }
         break;
       }
 
       default:
-        return data;
+        return draft;
     }
     return draft;
   });

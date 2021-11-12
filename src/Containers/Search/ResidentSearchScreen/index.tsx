@@ -3,6 +3,7 @@ import { FlatList, Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import _ from 'lodash';
+import { RouteProp } from '@react-navigation/native';
 import { Color } from '@/Assets/Color';
 import { SearchState } from '@/Stores/Search/InitialState';
 import SearchActions from '@/Stores/Search/Actions';
@@ -14,9 +15,15 @@ import CustomButton from '@/Components/CustomButton';
 import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 import { navigate } from '@/Services/NavigationService';
 import InputLocationSearch from '@/Components/Input/LocationSerach';
+import { MainStackParamList } from '@/Navigators/MainNavigator';
 
-const ResidentSearchScreen = () => {
+interface PropTypes {
+  route: RouteProp<MainStackParamList, 'ResidentSearchScreen'>;
+}
+
+const ResidentSearchScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
+  const type = route?.params?.type;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { searchQuery, bowlingList, bowlingListPage } = useSelector((state: SearchState) => state.search);
 
@@ -131,7 +138,7 @@ const ResidentSearchScreen = () => {
               data={bowlingList?.place}
               renderItem={({ item }) => (
                 <View style={{ backgroundColor: Color.White }}>
-                  <PlaceXSmallCard item={item} type={SCREEN_TYPE.JOIN} />
+                  <PlaceXSmallCard item={item} type={type} />
                 </View>
               )}
               keyExtractor={(item, index) => index.toString()}
