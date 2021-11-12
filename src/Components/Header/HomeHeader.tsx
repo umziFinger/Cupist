@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
+import { Layout } from '@react-navigation/stack/lib/typescript/src/types';
 import CustomText from '@/Components/CustomText';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { Color } from '@/Assets/Color';
@@ -17,11 +18,13 @@ import TopDateSelector from '@/Components/Calendar/TopDateSelector';
 
 const HomeHeader = (props: HeaderProps) => {
   const dispatch = useDispatch();
-  const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { isShow } = props;
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
+  const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { notificationConfirm } = useSelector((state: NotificationState) => state.notification);
+  const [headerHeight, setHeaderHeight] = useState<number>(0);
+
   const onNotificationScreen = () => {
     // if (!userIdx) {
     //   dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: true }));
@@ -31,12 +34,22 @@ const HomeHeader = (props: HeaderProps) => {
     // }
   };
 
+  useEffect(() => {
+    console.log('headerHeight : ', headerHeight);
+  }, [headerHeight]);
+
   console.log('isShow : ', isShow);
   console.log('calendarDate : ', calendarDate);
+
+  const onLayout = (e: Layout) => {
+    console.log('onLayout : ', e.height);
+    setHeaderHeight(e.height);
+  };
 
   return (
     <>
       <View
+        onLayout={(event) => onLayout(event.nativeEvent.layout)}
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -72,7 +85,7 @@ const HomeHeader = (props: HeaderProps) => {
           />
         </View>
       </View>
-      {isShow && <TopDateSelector calendarDate={calendarDate} />}
+      {isShow && <TopDateSelector calendarDate={calendarDate} headerHeight={headerHeight} />}
     </>
   );
 };

@@ -141,6 +141,12 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'selectedTicket': {
+        console.log('call reducer : ', data);
+        draft.selectedTicket = data;
+        break;
+      }
+
       default:
         return draft;
     }

@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import { FlatList, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, FlatList, Platform, useWindowDimensions, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import _ from 'lodash';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
@@ -16,26 +17,43 @@ import MapArea from '@/Containers/Place/PlaceDetailScreen/MapArea';
 import ReviewArea from '@/Containers/Place/PlaceDetailScreen/ReviewArea';
 import { HomeState } from '@/Stores/Home/InitialState';
 import PlaceActions from '@/Stores/Place/Actions';
+import { numberFormat, scrollCalendarHandler, useDebouncedFunction } from '@/Components/Function';
+import CustomText from '@/Components/CustomText';
+import CustomButton from '@/Components/CustomButton';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
 }
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
 const PlaceDetailScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
+  const { width, height } = useWindowDimensions();
   const { idx } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-
-  const { placeDetail, placeTicketList } = useSelector((state: PlaceState) => state.place);
+  const { placeDetail, placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
+
+  const animatedFlatRef = useRef<any>();
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const [isShowTopCalendar, setIsShowTopCalendar] = useState<boolean>(false);
+  const [isShowReservation, setIsShowReservation] = useState<boolean>(false);
+  const [offsetY, setOffsetY] = useState<number>(0);
+
   const place = placeDetail?.place || {};
   const latestReview = placeDetail?.latestReview || [];
   const starReview = placeDetail?.starReview || [];
+
+  // debounce
+  useDebouncedFunction(() => setIsShowReservation(true), offsetY, 300);
 
   useEffect(() => {
     console.log('PlaceDetailScreen Idx : ', calendarDate);
     dispatch(PlaceActions.fetchPlaceDetail({ idx }));
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeDetailInit' }));
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
     };
   }, []);
 
@@ -43,6 +61,28 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     console.log('didUpdate detail');
     dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
   }, [calendarDate]);
+
+  useEffect(() => {
+    console.log('selectedTicket : ', selectedTicket);
+  }, [selectedTicket]);
+
+  const handleScroll = (event: any) => {
+    setIsShowReservation(false);
+    setOffsetY(event.nativeEvent.contentOffset.y);
+
+    const result = scrollCalendarHandler(event, 540);
+    setIsShowTopCalendar(result.isShow);
+  };
+
+  const onPressReservation = () => {
+    console.log('onPressReservation');
+    // animatedFlatRef.current.scrollToOffset({ animated: true, offset: 0 });
+    animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
+  };
+
+  const onPressCancel = () => {
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
+  };
 
   const renderItem = ({ item, index }: { item: any; index: number }) => {
     switch (item) {
@@ -75,7 +115,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
           <View style={{ flex: 1, marginTop: 20 }}>
             <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
             <View style={{ paddingLeft: 24 }}>
-              <TicketSlider allowedTimeArr={[0, 1, 2]} item={placeTicketList || {}} />
+              <TicketSlider allowedTimeArr={[0, 1, 2]} item={placeTicketList || {}} onPressCancel={onPressCancel} />
             </View>
           </View>
         );
@@ -103,11 +143,14 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       case 6: {
         // 다른 유저들이 함께 본 볼링장
         return (
-          <View style={{ flex: 1, marginTop: 16 }}>
+          <View style={{ flex: 1, marginTop: 80 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-            {/* <View style={{ marginTop: 28 }}> */}
-            {/*  <ReviewArea item={place} latestReview={latestReview} starReview={starReview} /> */}
-            {/* </View> */}
+            <View style={{ marginTop: 28 }}>
+              <View style={{ justifyContent: 'center' }}>
+                <CustomText style={{ color: '#333', fontSize: 14 }}>다른 유저들이 함께 본 볼링장</CustomText>
+              </View>
+              {/*  <ReviewArea item={place} latestReview={latestReview} starReview={starReview} /> */}
+            </View>
           </View>
         );
       }
@@ -118,10 +161,10 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <Header type={'placeDetail'} />
-
-      <FlatList
+      <Header type={'placeDetail'} isShow={isShowTopCalendar} />
+      <AnimatedFlatList
         data={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
+        ref={animatedFlatRef}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}
@@ -129,8 +172,91 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         windowSize={7}
         showsVerticalScrollIndicator={false}
         refreshing={false}
-        contentContainerStyle={{ backgroundColor: Color.White, paddingBottom: heightInfo.statusHeight }}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+          listener: (event) => handleScroll(event),
+          useNativeDriver: true,
+        })}
+        contentContainerStyle={{ backgroundColor: Color.White, paddingBottom: 40 }}
       />
+      <View
+        style={{
+          paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,
+        }}
+      >
+        <View
+          style={{
+            height: 1,
+            backgroundColor: Color.Gray300,
+            shadowOffset: {
+              width: 0,
+              height: -2,
+            },
+            shadowColor: 'rgba(107, 107, 107, 0.1)',
+            shadowOpacity: 1,
+            shadowRadius: 4,
+            elevation: 1,
+          }}
+        />
+        {selectedTicket && (
+          <View style={{ paddingHorizontal: 24, paddingTop: 18, paddingBottom: 9 }}>
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>{selectedTicket?.ticketName}</CustomText>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
+                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
+                  {moment(selectedTicket?.startDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
+                  {selectedTicket?.endTime.substr(0, 5)}
+                </CustomText>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ justifyContent: 'center' }}>
+                  <CustomText style={{ color: Color.Black1000, fontSize: 17, fontWeight: 'bold' }}>
+                    {numberFormat(selectedTicket?.salePrice)}
+                  </CustomText>
+                </View>
+                <View style={{ justifyContent: 'center' }}>
+                  <CustomText style={{ color: Color.Black1000, fontSize: 17 }}>원</CustomText>
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+        <View style={{ paddingHorizontal: 24, flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
+          {selectedTicket && (
+            <CustomButton onPress={() => onPressCancel()}>
+              <View
+                style={{
+                  borderRadius: 3,
+                  borderWidth: 1,
+                  borderColor: Color.Gray300,
+                  paddingVertical: 15,
+                  paddingHorizontal: 22,
+                  marginRight: 8,
+                }}
+              >
+                <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
+                  취소
+                </CustomText>
+              </View>
+            </CustomButton>
+          )}
+          <CustomButton
+            onPress={() => onPressReservation()}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              borderRadius: 3,
+              paddingVertical: 15,
+              backgroundColor: Color.Primary1000,
+            }}
+          >
+            <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
+              예약하기
+            </CustomText>
+          </CustomButton>
+        </View>
+      </View>
     </View>
   );
 };

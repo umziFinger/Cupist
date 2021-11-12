@@ -34,7 +34,7 @@ const Header = (props: HeaderProps) => {
       return <MyAroundHeader text={text} isScroll={isScroll} />;
 
     case 'placeDetail':
-      return <PlaceDetailHeader />;
+      return <PlaceDetailHeader isShow={isShow} />;
 
     default:
       return null;

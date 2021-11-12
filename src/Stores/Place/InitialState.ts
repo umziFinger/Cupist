@@ -26,6 +26,7 @@ export const INITIAL_STATE: PlaceState['place'] = {
   },
   recentList: [],
   recentListPage: 1,
+  selectedTicket: null,
 };
 
 export interface PlaceState {
@@ -46,6 +47,7 @@ export interface PlaceState {
     placeTicketList: PlaceTicketList;
     recentList: Array<any>;
     recentListPage: number | 1;
+    selectedTicket: any | null;
   };
 }
 
