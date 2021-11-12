@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { FlatList, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -28,16 +28,21 @@ import PrepaymentPriceArea from '@/Containers/Home/HomeScreen/PrepaymentPriceAre
 import HotArea from '@/Containers/Home/HomeScreen/HotArea';
 import EventArea from '@/Containers/Home/HomeScreen/EventArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
+import { scrollCalendarHandler, scrollHandler } from '@/Components/Function';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
 }
 
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
 const HomeScreen = ({ route }: HomeProps) => {
   const dispatch = useDispatch();
+  const scrollY = useRef(new Animated.Value(0)).current;
   const { myLongitude, myLatitude, homeTabRefreshYN } = useSelector((state: CommonState) => state.common);
   const { homeList, calendarDate, timeFilterIdx } = useSelector((state: HomeState) => state.home);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
+  const [isShow, setIsShow] = useState<boolean>(false);
   // const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY.MM.DD(dd)'));
 
   useEffect(() => {
@@ -114,6 +119,13 @@ const HomeScreen = ({ route }: HomeProps) => {
     );
 
     dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
+  };
+
+  const handleScroll = (event: any) => {
+    console.log('event : ', event.nativeEvent.contentOffset.y);
+    const result = scrollCalendarHandler(event);
+    // console.log('event : ', result.isShow);
+    setIsShow(result.isShow);
   };
 
   const renderItem = ({ item }: { item: any; index: number }) => {
@@ -228,8 +240,8 @@ const HomeScreen = ({ route }: HomeProps) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <Header type="home" />
-      <FlatList
+      <Header type="home" isShow={isShow} />
+      <AnimatedFlatList
         data={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
@@ -240,6 +252,10 @@ const HomeScreen = ({ route }: HomeProps) => {
         refreshing={false}
         // onRefresh={refreshHandler}
         // ListFooterComponent={<CopyRightView />}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+          listener: (event) => handleScroll(event),
+          useNativeDriver: true,
+        })}
       />
     </View>
   );

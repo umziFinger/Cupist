@@ -16,16 +16,17 @@ export interface HeaderProps {
   screenType?: string;
   rightItem?: React.ReactNode;
   isScroll?: boolean;
+  isShow?: boolean;
 }
 
 const Header = (props: HeaderProps) => {
-  const { type, text, isScroll } = props;
+  const { type, text, isScroll, isShow } = props;
 
   switch (type) {
     case 'back':
       return <BackHeader type={type} text={text} />;
     case 'home':
-      return <HomeHeader />;
+      return <HomeHeader isShow={isShow} />;
     case 'close':
       return <CloseHeader text={text} />;
 
