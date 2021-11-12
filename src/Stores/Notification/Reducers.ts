@@ -9,6 +9,9 @@ export const fetchNotificationReducer = (state = INITIAL_STATE, actions: any) =>
     switch (type) {
       case 'notificationList': {
         draft.notificationList.unread = data.notification.unread ? data.notification.unread : [];
+        draft.notificationList.new = data.notification.new;
+        draft.notificationList.readCnt = data.notification.readCnt;
+        draft.notificationList.unreadCnt = data.notification.unreadCnt;
         if (actions.params.page === 1) {
           draft.notificationList.read = data.notification.read;
         } else {
@@ -26,16 +29,22 @@ export const fetchNotificationReducer = (state = INITIAL_STATE, actions: any) =>
       case 'notificationListInit': {
         draft.notificationList = INITIAL_STATE.notificationList;
         draft.notificationListPage = 1;
+        draft.notificationCategory = INITIAL_STATE.notificationCategory;
         break;
       }
       case 'notificationConfirm': {
-        console.log('call reducer notificationConfirm : ', data);
         draft.notificationConfirm = data;
         break;
       }
+      case 'notificationCategory': {
+        draft.notificationCategory = data;
+        break;
+      }
+
       default:
         return draft;
     }
+
     return draft;
   });
 };

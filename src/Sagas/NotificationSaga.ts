@@ -9,14 +9,15 @@ import { Axios } from '@/Services/Axios';
 
 export function* fetchNotificationList(data: any): any {
   try {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
     const payload = {
       ...data,
       url: Config.MY_NOTIFICATION_URL,
     };
 
     const response = yield call(Axios.GET, payload);
-    // console.log('sadfjlkasdfljk: ', response);
+
     if (response.result === true && response.code === null) {
       yield put(
         NotificationActions.fetchNotificationReducer({

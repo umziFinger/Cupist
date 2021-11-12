@@ -11,6 +11,7 @@ const { Types, Creators } = createActions({
   fetchMyPlacePatch: ['params'],
   fetchMyProfilePatch: ['params'],
   fetchMyProfileImagePatch: ['params'],
+  fetchMyNoticeList: ['params'],
 });
 
 export const MyTypes = Types;
