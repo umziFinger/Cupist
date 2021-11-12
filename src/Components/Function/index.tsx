@@ -419,3 +419,13 @@ export const renderFacilityIcon = (type: string) => {
 
   return '';
 };
+
+export const scrollCalendarHandler = (event: any) => {
+  let result;
+  if (Platform.OS === 'ios' ? event.nativeEvent.contentOffset.y >= 230 : event.nativeEvent.contentOffset.y >= 230) {
+    result = { isShow: true };
+  } else {
+    result = { isShow: false };
+  }
+  return result;
+};

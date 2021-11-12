@@ -11,13 +11,17 @@ import { AuthState } from '@/Stores/Auth/InitialState';
 import { NotificationState } from '@/Stores/Notification/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 import NotificationActions from '@/Stores/Notification/Actions';
+import { HeaderProps } from '@/Components/Header/index';
+import { HomeState } from '@/Stores/Home/InitialState';
+import TopDateSelector from '@/Components/Calendar/TopDateSelector';
 
-const HomeHeader = () => {
+const HomeHeader = (props: HeaderProps) => {
   const dispatch = useDispatch();
+  const { calendarDate } = useSelector((state: HomeState) => state.home);
+  const { isShow } = props;
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
   const { notificationConfirm } = useSelector((state: NotificationState) => state.notification);
-
   const onNotificationScreen = () => {
     // if (!userIdx) {
     //   dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: true }));
@@ -27,43 +31,49 @@ const HomeHeader = () => {
     // }
   };
 
+  console.log('isShow : ', isShow);
+  console.log('calendarDate : ', calendarDate);
+
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: Platform.OS === 'android' ? 53 : 53 + statusHeight,
-        paddingTop: Platform.OS === 'android' ? 0 : statusHeight,
-        paddingHorizontal: 20,
-        backgroundColor: Color.White,
-      }}
-    >
-      <CustomButton onPress={() => navigateGoBack()} hitSlop={20}>
-        <View style={{ width: 84, height: 29 }}>
+    <>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: Platform.OS === 'android' ? 53 : 53 + statusHeight,
+          paddingTop: Platform.OS === 'android' ? 0 : statusHeight,
+          paddingHorizontal: 20,
+          backgroundColor: Color.White,
+        }}
+      >
+        <CustomButton onPress={() => navigateGoBack()} hitSlop={20}>
+          <View style={{ width: 84, height: 29 }}>
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={require('@/Assets/Images/Common/logoHome.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </View>
+        </CustomButton>
+        <View style={{ flex: 1 }} />
+        <View style={{ width: 24, height: 24, marginRight: 12 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/Common/logoHome.png')}
+            source={require('@/Assets/Images/Common/icSearch.png')}
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>
-      </CustomButton>
-      <View style={{ flex: 1 }} />
-      <View style={{ width: 24, height: 24, marginRight: 12 }}>
-        <FastImage
-          style={{ width: '100%', height: '100%' }}
-          source={require('@/Assets/Images/Common/icSearch.png')}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+        <View style={{ width: 24, height: 24 }}>
+          <FastImage
+            style={{ width: '100%', height: '100%' }}
+            source={require('@/Assets/Images/Common/icNotify.png')}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </View>
       </View>
-      <View style={{ width: 24, height: 24 }}>
-        <FastImage
-          style={{ width: '100%', height: '100%' }}
-          source={require('@/Assets/Images/Common/icNotify.png')}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </View>
-    </View>
+      {isShow && <TopDateSelector calendarDate={calendarDate} />}
+    </>
   );
 };
 
