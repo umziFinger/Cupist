@@ -54,6 +54,8 @@ const dev = {
   MY_VIEW_URL: 'my/view',
   MY_NOTIFICATION_URL: 'my/notification',
   MY_NOTICE_URL: 'my/notice',
+  MY_EVENT_URL: 'my/event',
+
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

@@ -330,3 +330,97 @@ export function* fetchMyNoticeList(data: any): any {
     console.log('occurred Error...fetchMyNoticeList : ', e);
   }
 }
+
+export function* fetchMyNoticeDetailInfo(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    navigate('NoticeDetailScreen');
+    const payload = {
+      ...data,
+      url: `${Config.MY_NOTICE_URL}/${data.params.noticeIdx}`,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      console.log('공지사항 상세: ', response.data);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'myNoticeDetail',
+          data: response.data.notice,
+        }),
+      );
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyNoticeDetailInfo : ', e);
+  }
+}
+
+export function* fetchMyEventList(data: any): any {
+  try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const payload = {
+      ...data,
+      url: Config.MY_EVENT_URL,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('이벤트: ', response.data);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'myEventList',
+          data: [...response.data.ingEvent, ...response.data.endEvent],
+          page: data.params.page,
+        }),
+      );
+      yield put(MyActions.fetchMyReducer({ type: 'myEventListPage', data: data.params.page + 1 }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyEventList : ', e);
+  }
+}
+
+export function* fetchMyEventDetailInfo(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    navigate('EventDetailScreen');
+    const payload = {
+      ...data,
+      url: `${Config.MY_EVENT_URL}/${data.params.eventIdx}`,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('이벤트 상세: ', response.data.event);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'myEventDetail',
+          data: response.data.event,
+          page: data.params.page,
+        }),
+      );
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyEventDetailInfo : ', e);
+  }
+}

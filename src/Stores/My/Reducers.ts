@@ -86,6 +86,36 @@ export const fetchMyReducer = produce((draft, actions: any) => {
       break;
     }
 
+    case 'myNoticeDetail': {
+      draft.myNoticeDetail = data;
+      break;
+    }
+
+    case 'myEventList': {
+      if (actions.params.page === 1) {
+        draft.myEventList = data;
+      } else {
+        draft.myEventList = data.length > 0 ? draft.myEventList.concat(data) : draft.myEventList;
+      }
+      break;
+    }
+
+    case 'myEventListPage': {
+      draft.myEventListPage = data;
+      break;
+    }
+
+    case 'eventListInit': {
+      draft.myEventList = INITIAL_STATE.myEventList;
+      draft.myEventListPage = INITIAL_STATE.myEventListPage;
+      break;
+    }
+
+    case 'myEventDetail': {
+      draft.myEventDetail = data;
+      break;
+    }
+
     default:
       return draft;
   }

@@ -15,12 +15,16 @@ export const INITIAL_STATE: MyState['my'] = {
     { title: '내 알림', screen: 'NotificationScreen' },
     { title: '최근 본 볼링장', screen: 'RecentPlaceScreen' },
     { title: '공지사항', icon: require('@/Assets/Images/More/icPlusNotice.png'), screen: 'NoticeScreen' },
-    { title: '이벤트', icon: require('@/Assets/Images/More/icPlusEvent.png'), screen: 'MyProfileScreen' },
+    { title: '이벤트', icon: require('@/Assets/Images/More/icPlusEvent.png'), screen: 'EventScreen' },
     { title: '고객센터', icon: require('@/Assets/Images/More/icPlusCustomer.png'), screen: 'MyProfileScreen' },
     { title: '서비스설정', icon: require('@/Assets/Images/More/icPlusSetup.png'), screen: 'MyProfileScreen' },
   ],
   myNoticeList: [],
   myNoticeListPage: 1,
+  myNoticeDetail: null,
+  myEventList: [],
+  myEventListPage: 1,
+  myEventDetail: null,
 };
 export interface MyState {
   my: {
@@ -34,5 +38,9 @@ export interface MyState {
     moreScreenRenderItem: Array<{ title: string; icon?: any; screen: string }>;
     myNoticeList: any[];
     myNoticeListPage: number;
+    myNoticeDetail: any;
+    myEventList: any[];
+    myEventListPage: number;
+    myEventDetail: any;
   };
 }

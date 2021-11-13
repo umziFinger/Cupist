@@ -144,8 +144,6 @@ const JoinStepThreeScreen = () => {
           windowSize={7}
           scrollEnabled
           showsVerticalScrollIndicator={false}
-          onEndReached={() => onMore()}
-          onEndReachedThreshold={0.8}
           refreshing={false}
           onRefresh={() => onRefresh()}
           ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}

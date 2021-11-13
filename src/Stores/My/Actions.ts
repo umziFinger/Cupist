@@ -1,4 +1,5 @@
 import { createActions } from 'reduxsauce';
+import { fetchMyNoticeDetailInfo } from '@/Sagas/MySaga';
 
 const { Types, Creators } = createActions({
   fetchMyReducer: ['params'],
@@ -12,6 +13,9 @@ const { Types, Creators } = createActions({
   fetchMyProfilePatch: ['params'],
   fetchMyProfileImagePatch: ['params'],
   fetchMyNoticeList: ['params'],
+  fetchMyNoticeDetailInfo: ['params'],
+  fetchMyEventList: ['params'],
+  fetchMyEventDetailInfo: ['params'],
 });
 
 export const MyTypes = Types;

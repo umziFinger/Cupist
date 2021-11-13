@@ -52,6 +52,9 @@ import {
   fetchMyProfileImagePatch,
   fetchMyProfilePatch,
   fetchMyNoticeList,
+  fetchMyNoticeDetailInfo,
+  fetchMyEventList,
+  fetchMyEventDetailInfo,
 } from '@/Sagas/MySaga';
 
 import {
@@ -107,6 +110,9 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_PROFILE_IMAGE_PATCH, fetchMyProfileImagePatch),
     takeLatest(MyTypes.FETCH_MY_PROFILE_PATCH, fetchMyProfilePatch),
     takeLatest(MyTypes.FETCH_MY_NOTICE_LIST, fetchMyNoticeList),
+    takeLatest(MyTypes.FETCH_MY_NOTICE_DETAIL_INFO, fetchMyNoticeDetailInfo),
+    takeLatest(MyTypes.FETCH_MY_EVENT_LIST, fetchMyEventList),
+    takeLatest(MyTypes.FETCH_MY_EVENT_DETAIL_INFO, fetchMyEventDetailInfo),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

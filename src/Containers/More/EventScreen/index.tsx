@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import { Color } from '@/Assets/Color';
@@ -9,21 +9,22 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import MyActions from '@/Stores/My/Actions';
 import { MyState } from '@/Stores/My/InitialState';
 import CustomButton from '@/Components/CustomButton';
+import { fetchMyEventDetailInfo } from '@/Sagas/MySaga';
 
-const NoticeScreen = () => {
+const EventScreen = () => {
   const dispatch = useDispatch();
-
+  const { width } = useWindowDimensions();
   const { isLoading } = useSelector((state: CommonState) => state.common);
-  const { myNoticeList, myNoticeListPage } = useSelector((state: MyState) => state.my);
-
+  const { myEventList, myEventListPage } = useSelector((state: MyState) => state.my);
+  // console.log(myEventList);
   useEffect(() => {
     const params = {
       per_page: 10,
       page: 1,
     };
-    dispatch(MyActions.fetchMyNoticeList(params));
+    dispatch(MyActions.fetchMyEventList(params));
     return () => {
-      dispatch(MyActions.fetchMyReducer({ type: 'noticeListInit' }));
+      dispatch(MyActions.fetchMyReducer({ type: 'eventListInit' }));
     };
   }, []);
 
@@ -32,23 +33,22 @@ const NoticeScreen = () => {
       per_page: 10,
       page: 1,
     };
-    dispatch(MyActions.fetchMyNoticeList(params));
+    dispatch(MyActions.fetchMyEventList(params));
   };
 
   const onMore = () => {
     const params = {
       per_page: 10,
-      page: myNoticeListPage || 1,
+      page: myEventListPage || 1,
     };
-    if (myNoticeListPage > 1) dispatch(MyActions.fetchMyNoticeList(params));
+    if (myEventListPage > 1) dispatch(MyActions.fetchMyEventList(params));
   };
 
-  const onDetail = (noticeIdx: any) => {
-    // console.log(noticeIdx);
+  const onDetail = (eventIdx: any) => {
     const params = {
-      noticeIdx,
+      eventIdx,
     };
-    dispatch(MyActions.fetchMyNoticeDetailInfo(params));
+    dispatch(MyActions.fetchMyEventDetailInfo(params));
   };
 
   return (
@@ -56,13 +56,12 @@ const NoticeScreen = () => {
       <Header type="back" />
       <View style={{ marginTop: 16, paddingLeft: 24, paddingBottom: 30 }}>
         <CustomText style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}>
-          공지사항
+          이벤트
         </CustomText>
       </View>
-      <View style={{ flex: 1, backgroundColor: myNoticeList?.length > 0 ? Color.Gray200 : Color.White }}>
+      <View style={{ flex: 1, backgroundColor: myEventList?.length > 0 ? Color.Gray200 : Color.White }}>
         <FlatList
-          // data={[]}
-          data={myNoticeList}
+          data={myEventList}
           contentContainerStyle={{ backgroundColor: Color.White, paddingHorizontal: 24 }}
           refreshControl={
             <RefreshControl refreshing={false} onRefresh={() => onRefresh()} style={{ backgroundColor: Color.White }} />
@@ -81,13 +80,33 @@ const NoticeScreen = () => {
               >
                 <View style={{ marginBottom: 10 }}>
                   <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
-                    {item?.regDateView || ''}
+                    {item?.regDate || ''}
                   </CustomText>
                 </View>
-                <View style={{ marginBottom: 16 }}>
+                <View style={{ marginBottom: 12 }}>
                   <CustomText style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}>
                     {item?.title || ''}
                   </CustomText>
+                </View>
+                <View style={{ width: width - 48, height: 126, borderRadius: 5 }}>
+                  <FastImage
+                    style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                    source={{ uri: item.bannerFile }}
+                    resizeMode={FastImage.resizeMode.stretch}
+                  />
+                </View>
+                <View style={{ marginTop: 8, flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
+                  <View>
+                    <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.Gray600 }}>
+                      {'진행중'}
+                    </CustomText>
+                  </View>
+                  <View style={{ width: 1, height: 10, backgroundColor: Color.Gray300, marginHorizontal: 6 }} />
+                  <View>
+                    <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.Gray600 }}>
+                      {item?.regDate || ''}
+                    </CustomText>
+                  </View>
                 </View>
               </View>
             </CustomButton>
@@ -99,13 +118,13 @@ const NoticeScreen = () => {
                   <View style={{ width: 60, height: 60 }}>
                     <FastImage
                       style={{ width: '100%', height: '100%' }}
-                      source={require('@/Assets/Images/More/emptyNotice.png')}
+                      source={require('@/Assets/Images/Common/emptyEvent.png')}
                       resizeMode={FastImage.resizeMode.cover}
                     />
                   </View>
                   <View style={{ justifyContent: 'center', marginTop: 8 }}>
                     <CustomText style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Gray400 }}>
-                      공지사항이 없습니다.
+                      진행중인 이벤트가 없습니다.
                     </CustomText>
                   </View>
                 </View>
@@ -118,4 +137,4 @@ const NoticeScreen = () => {
   );
 };
 
-export default NoticeScreen;
+export default EventScreen;

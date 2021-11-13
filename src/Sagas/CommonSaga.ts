@@ -232,22 +232,6 @@ function* handlerPlaceDibs(type: placeDibsType, status: dibsStatusType, placeIdx
   return false;
 }
 
-function* handlerRefreshFlag(type: placeDibsType) {
-  try {
-    switch (type) {
-      case 'myAround': {
-        yield put(CommonActions.fetchCommonReducer({ type: 'homeTabRefreshYN', data: 'N' }));
-        break;
-      }
-      default:
-        return false;
-    }
-  } catch (e) {
-    console.log('occurred Error...handlerPlaceDibs : ', e);
-  }
-  return false;
-}
-
 export function* fetchCommonPlaceDibsHandler(data: any): any {
   try {
     const { placeIdx, type, status }: placeDibsDataType = data.params;

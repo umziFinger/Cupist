@@ -38,8 +38,8 @@ const HomeHeader = (props: HeaderProps) => {
     console.log('headerHeight : ', headerHeight);
   }, [headerHeight]);
 
-  console.log('isShow : ', isShow);
-  console.log('calendarDate : ', calendarDate);
+  // console.log('isShow : ', isShow);
+  // console.log('calendarDate : ', calendarDate);
 
   const onLayout = (e: Layout) => {
     console.log('onLayout : ', e.height);
