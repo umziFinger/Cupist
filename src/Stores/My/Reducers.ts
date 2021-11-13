@@ -79,6 +79,13 @@ export const fetchMyReducer = produce((draft, actions: any) => {
       draft.myNoticeListPage = data;
       break;
     }
+
+    case 'noticeListInit': {
+      draft.myNoticeList = INITIAL_STATE.myNoticeList;
+      draft.myNoticeListPage = INITIAL_STATE.myNoticeListPage;
+      break;
+    }
+
     default:
       return draft;
   }

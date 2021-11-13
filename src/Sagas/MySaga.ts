@@ -9,6 +9,7 @@ import MyActions from '@/Stores/My/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthAction from '@/Stores/Auth/Actions';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
+import NotificationActions from '@/Stores/Notification/Actions';
 
 export function* fetchMyPushYN(data: any): any {
   try {
@@ -294,5 +295,38 @@ export function* fetchMyProfilePatch(data: any): any {
     }
   } catch (e) {
     console.log('occurred Error...fetchMyProfilePatch : ', e);
+  }
+}
+
+export function* fetchMyNoticeList(data: any): any {
+  try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const payload = {
+      ...data,
+      url: Config.MY_NOTICE_URL,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('공지사항: ', response.data.notice);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'myNoticeList',
+          data: response.data.notice,
+          page: data.params.page,
+        }),
+      );
+      yield put(MyActions.fetchMyReducer({ type: 'myNoticeListPage', data: data.params.page + 1 }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyNoticeList : ', e);
   }
 }

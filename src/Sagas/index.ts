@@ -51,6 +51,7 @@ import {
   fetchMyModifyProfileImage,
   fetchMyProfileImagePatch,
   fetchMyProfilePatch,
+  fetchMyNoticeList,
 } from '@/Sagas/MySaga';
 
 import {
@@ -105,6 +106,7 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_PLACE_PATCH, fetchMyPlacePatch),
     takeLatest(MyTypes.FETCH_MY_PROFILE_IMAGE_PATCH, fetchMyProfileImagePatch),
     takeLatest(MyTypes.FETCH_MY_PROFILE_PATCH, fetchMyProfilePatch),
+    takeLatest(MyTypes.FETCH_MY_NOTICE_LIST, fetchMyNoticeList),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

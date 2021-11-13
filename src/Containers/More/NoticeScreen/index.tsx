@@ -1,36 +1,29 @@
 import React, { useEffect } from 'react';
-import { FlatList, View } from 'react-native';
-
-import FastImage from 'react-native-fast-image';
+import { FlatList, RefreshControl, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import FastImage from 'react-native-fast-image';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
 import { CommonState } from '@/Stores/Common/InitialState';
-import NotificationActions from '@/Stores/Notification/Actions';
-import { NotificationState } from '@/Stores/Notification/InitialState';
-import CustomButton from '@/Components/CustomButton';
+import MyActions from '@/Stores/My/Actions';
 import { navigate } from '@/Services/NavigationService';
+import { MyState } from '@/Stores/My/InitialState';
 
 const NoticeScreen = () => {
   const dispatch = useDispatch();
 
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const {
-    notificationListPage,
-    notificationList,
-    notificationCategory: category = 'all',
-  } = useSelector((state: NotificationState) => state.notification);
+  const { myNoticeList, myNoticeListPage } = useSelector((state: MyState) => state.my);
 
   useEffect(() => {
     const params = {
       per_page: 10,
       page: 1,
-      category,
     };
-    dispatch(NotificationActions.fetchNotificationList(params));
+    dispatch(MyActions.fetchMyNoticeList(params));
     return () => {
-      dispatch(NotificationActions.fetchNotificationReducer({ type: 'notificationListInit' }));
+      dispatch(MyActions.fetchMyNoticeList({ type: 'noticeListInit' }));
     };
   }, []);
 
@@ -39,132 +32,72 @@ const NoticeScreen = () => {
       per_page: 10,
       page: 1,
     };
-    dispatch(NotificationActions.fetchNotificationList(params));
+    dispatch(MyActions.fetchMyNoticeList(params));
   };
 
   const onMore = () => {
     const params = {
       per_page: 10,
-      page: notificationListPage || 1,
+      page: myNoticeListPage || 1,
     };
-    if (notificationListPage > 1) dispatch(NotificationActions.fetchNotificationList(params));
-  };
-
-  const onNotificationClickHandler = (item: any) => {
-    console.log('click noti type : ', item.noti_type);
-    const params = { idx: item.noti_no };
-    dispatch(NotificationActions.fetchNotificationRead(params));
-    if (item.noti_type === 'restoration') {
-      navigate('RepairHistoryDetailScreen', { rstr_no: item.rstr_no });
-    }
+    if (myNoticeListPage > 1) dispatch(MyActions.fetchMyNoticeList(params));
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="back" />
-      <View style={{ marginTop: 16, paddingLeft: 24 }}>
+      <View style={{ marginTop: 16, paddingLeft: 24, paddingBottom: 30 }}>
         <CustomText style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}>
           공지사항
         </CustomText>
       </View>
-      {/* <FlatList */}
-      {/*  data={notificationList} */}
-      {/*  renderItem={({ item, index }) => ( */}
-      {/*    <CustomButton onPress={() => onNotificationClickHandler(item)}> */}
-      {/*      <View style={{ backgroundColor: Color.White, borderRadius: 24, marginBottom: 16 }}> */}
-      {/*        {item.flag_read === 'N' && ( */}
-      {/*          <View */}
-      {/*            style={{ */}
-      {/*              position: 'absolute', */}
-      {/*              top: 16, */}
-      {/*              left: 16, */}
-      {/*              width: 8, */}
-      {/*              height: 8, */}
-      {/*              borderRadius: 4, */}
-      {/*              backgroundColor: Color.grayBg, */}
-      {/*            }} */}
-      {/*          /> */}
-      {/*        )} */}
-      {/*        <View */}
-      {/*          style={{ */}
-      {/*            flexDirection: 'row', */}
-      {/*            alignItems: 'center', */}
-      {/*            padding: 24, */}
-      {/*            paddingLeft: 39, */}
-      {/*            // borderBottomColor: Color.gray50, */}
-      {/*            // borderBottomWidth: 1, */}
-      {/*          }} */}
-      {/*        > */}
-      {/*          <View style={{ width: 32, height: 42, alignSelf: 'flex-start' }}> */}
-      {/*            <FastImage */}
-      {/*              style={{ width: '100%', height: '100%' }} */}
-      {/*              source={require('@/Assets/Images/Common/icParcel.png')} */}
-      {/*              resizeMode={FastImage.resizeMode.contain} */}
-      {/*            /> */}
-      {/*          </View> */}
-      {/*          <View style={{ marginLeft: 19, flex: 1 }}> */}
-      {/*            <View style={{ flexDirection: 'row', alignItems: 'center' }}> */}
-      {/*              <View style={{ flex: 1 }}> */}
-      {/*                <CustomText */}
-      {/*                  style={{ fontSize: 15, letterSpacing: -0.25, lineHeight: 21, color: Color.Black1000 }} */}
-      {/*                > */}
-      {/*                  {item?.noti_content || ''} */}
-      {/*                </CustomText> */}
-      {/*              </View> */}
-      {/*              {item.noti_type === 'restorationDetail' && ( */}
-      {/*                <View style={{ width: 24, height: 24 }}> */}
-      {/*                  <FastImage */}
-      {/*                    style={{ width: '100%', height: '100%' }} */}
-      {/*                    source={require('@/Assets/Images/Arrow/icArrowRightGray.png')} */}
-      {/*                    resizeMode={FastImage.resizeMode.contain} */}
-      {/*                  /> */}
-      {/*                </View> */}
-      {/*              )} */}
-      {/*            </View> */}
-
-      {/*            <View style={{ marginTop: 12 }}> */}
-      {/*              <CustomText style={{ fontSize: 11, color: Color.grayDefault }}> */}
-      {/*                {item.register_time || ''} */}
-      {/*              </CustomText> */}
-      {/*            </View> */}
-      {/*          </View> */}
-      {/*        </View> */}
-      {/*      </View> */}
-      {/*    </CustomButton> */}
-      {/*  )} */}
-      {/*  keyExtractor={(item, index) => index.toString()} */}
-      {/*  initialNumToRender={6} */}
-      {/*  maxToRenderPerBatch={9} */}
-      {/*  windowSize={7} */}
-      {/*  refreshing={false} */}
-      {/*  onRefresh={onRefresh} */}
-      {/*  showsVerticalScrollIndicator={false} */}
-      {/*  onEndReachedThreshold={1} */}
-      {/*  onEndReached={() => onMore()} */}
-      {/*  ListFooterComponent={<View style={{ marginBottom: heightInfo.statusHeight }} />} */}
-      {/*  contentContainerStyle={{ backgroundColor: Color.grayBg, padding: 24, flexGrow: 1 }} */}
-      {/*  ListEmptyComponent={ */}
-      {/*    <View */}
-      {/*      style={{ */}
-      {/*        alignItems: 'center', */}
-      {/*        marginTop: 110, */}
-      {/*      }} */}
-      {/*    > */}
-      {/*      <View style={{ width: 36, height: 36 }}> */}
-      {/*        <FastImage */}
-      {/*          style={{ width: '100%', height: '100%' }} */}
-      {/*          source={require('@/Assets/Images/Common/icNotiOff.png')} */}
-      {/*          resizeMode={FastImage.resizeMode.cover} */}
-      {/*        /> */}
-      {/*      </View> */}
-      {/*      <View style={{ justifyContent: 'center', marginTop: 20 }}> */}
-      {/*        <CustomText style={{ color: Color.gray, fontSize: 17, fontWeight: '500', letterSpacing: -0.42 }}> */}
-      {/*          알림 내역이 없습니다 */}
-      {/*        </CustomText> */}
-      {/*      </View> */}
-      {/*    </View> */}
-      {/*  } */}
-      {/* /> */}
+      <View style={{ flex: 1, backgroundColor: myNoticeList?.length > 0 ? Color.Gray200 : Color.White }}>
+        <FlatList
+          // data={[]}
+          data={myNoticeList}
+          contentContainerStyle={{ backgroundColor: Color.White, paddingHorizontal: 24 }}
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={() => onRefresh()} style={{ backgroundColor: Color.White }} />
+          }
+          renderItem={({ item, index }) => (
+            <View
+              style={{
+                // marginTop: index === 0 ? 0 : 16,
+                paddingTop: index === 0 ? 0 : 16,
+                borderTopColor: index === 0 ? undefined : Color.Gray200,
+                borderTopWidth: index === 0 ? 0 : 1,
+              }}
+            >
+              <View style={{ marginBottom: 10 }}>
+                <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
+                  {item?.regDateView || ''}
+                </CustomText>
+              </View>
+              <View style={{ marginBottom: 16 }}>
+                <CustomText style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}>
+                  {item?.title || ''}
+                </CustomText>
+              </View>
+            </View>
+          )}
+          ListEmptyComponent={() => (
+            <View style={{ alignItems: 'center', paddingTop: 200, backgroundColor: Color.White, flex: 1 }}>
+              <View style={{ width: 60, height: 60 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={require('@/Assets/Images/More/emptyNotice.png')}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </View>
+              <View style={{ justifyContent: 'center', marginTop: 8 }}>
+                <CustomText style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Gray400 }}>
+                  공지사항이 없습니다.
+                </CustomText>
+              </View>
+            </View>
+          )}
+        />
+      </View>
     </View>
   );
 };
