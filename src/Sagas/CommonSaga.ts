@@ -96,6 +96,9 @@ export function* fetchInitialHandler() {
 
   // attachFile 초기화
   yield put(CommonActions.fetchCommonReducer({ type: 'attachFileInit' }));
+
+  // 선택한 티켓 정보 초기화
+  yield put(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
 }
 
 export function* fetchErrorHandler(data: any) {

@@ -122,9 +122,7 @@ const HomeScreen = ({ route }: HomeProps) => {
   };
 
   const handleScroll = (event: any) => {
-    console.log('event : ', event.nativeEvent.contentOffset.y);
-    const result = scrollCalendarHandler(event);
-    // console.log('event : ', result.isShow);
+    const result = scrollCalendarHandler(event, 230);
     setIsShow(result.isShow);
   };
 

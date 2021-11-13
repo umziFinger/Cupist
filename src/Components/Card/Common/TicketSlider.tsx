@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { useDispatch } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { DATA_TICKET_TIME } from '@/Components/Data/DATA_TICKET_TIME';
 import { numberFormat } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
+import PlaceActions from '@/Stores/Place/Actions';
 
 interface PropTypes {
   allowedTimeArr: Array<any>;
   item: any;
 }
 const TicketSlider = (props: PropTypes) => {
+  const dispatch = useDispatch();
   const { allowedTimeArr, item } = props;
   const morning = item?.morning || [];
   const afternoon = item?.afternoon || [];
   const night = item?.night || [];
   const [selectedTicketIdx, setSelectedTicketIdx] = useState<number>(-1);
+
+  useEffect(() => {
+    return () => {
+      console.log('UNMOUNT@@@@@@@');
+    };
+  }, []);
 
   const isShowFunc = (value: number) => {
     if (value === 0 && morning.length > 0) {
@@ -31,9 +40,15 @@ const TicketSlider = (props: PropTypes) => {
     return false;
   };
 
-  const onPressTicket = (value: number) => {
-    console.log('onPressTicket : ', value);
-    setSelectedTicketIdx(value);
+  const onPressTicket = (value: any) => {
+    if (selectedTicketIdx === value.idx) {
+      setSelectedTicketIdx(-1);
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
+      return;
+    }
+
+    setSelectedTicketIdx(value.idx);
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: value }));
   };
 
   return (
@@ -63,7 +78,7 @@ const TicketSlider = (props: PropTypes) => {
             <FlatList
               data={allowedTime === 0 ? morning : allowedTime === 1 ? afternoon : night}
               renderItem={({ item, index }) => (
-                <CustomButton onPress={() => onPressTicket(item.idx)}>
+                <CustomButton onPress={() => onPressTicket(item)}>
                   <View
                     style={{
                       marginTop: 13,

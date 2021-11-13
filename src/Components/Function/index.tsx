@@ -5,7 +5,7 @@ import moment from 'moment';
 import Config from '@/Config';
 import 'moment/locale/ko';
 import { Path, Svg } from 'react-native-svg';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export const distanceCalc = (start: any, end: any) => {
   const distance = getDistance(start, end);
@@ -420,12 +420,25 @@ export const renderFacilityIcon = (type: string) => {
   return '';
 };
 
-export const scrollCalendarHandler = (event: any) => {
+export const scrollCalendarHandler = (event: any, offsetY: number) => {
   let result;
-  if (Platform.OS === 'ios' ? event.nativeEvent.contentOffset.y >= 230 : event.nativeEvent.contentOffset.y >= 230) {
+  if (
+    Platform.OS === 'ios' ? event.nativeEvent.contentOffset.y >= offsetY : event.nativeEvent.contentOffset.y >= offsetY
+  ) {
     result = { isShow: true };
   } else {
     result = { isShow: false };
   }
   return result;
 };
+
+export function useDebouncedFunction(handler: Function, watchedValue: any, delay: number) {
+  useEffect(() => {
+    const timeoutHandler = setTimeout(() => {
+      handler();
+    }, delay);
+    return () => {
+      clearTimeout(timeoutHandler);
+    };
+  }, [watchedValue, delay]);
+}
