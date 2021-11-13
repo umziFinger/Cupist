@@ -1,3 +1,8 @@
+enum enumYN {
+  Y = 'Y',
+  N = 'N',
+}
+
 export const INITIAL_STATE = {
   userIdx: null,
   phoneNumber: null,
@@ -23,6 +28,9 @@ export const INITIAL_STATE = {
     residentPlace: null,
     notificationCnt: null,
     placeViewCnt: null,
+    notificationYN: enumYN.Y,
+    marketingYN: enumYN.Y,
+    eventYN: enumYN.Y,
   },
   tokenInfo: {
     token: null,
@@ -79,6 +87,9 @@ interface userInfo {
   residentPlace: { placeIdx: number; name: string; newAddress: string; oldAddress: string; mainPhoto: string } | null;
   notificationCnt: number | null;
   placeViewCnt: number | null;
+  notificationYN: enumYN;
+  marketingYN: enumYN;
+  eventYN: enumYN;
 }
 
 interface tokenInfo {

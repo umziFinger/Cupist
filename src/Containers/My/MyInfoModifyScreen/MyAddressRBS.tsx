@@ -43,7 +43,6 @@ const MyAddressRBS = () => {
         address_detail: myAddressDetail,
         address_post: myAddressPost,
       };
-      dispatch(MyActions.fetchMyUserInfoPatch(params));
       dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenMyAddressRBS', data: false }));
     }
   };

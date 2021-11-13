@@ -5,7 +5,6 @@ const { Types, Creators } = createActions({
   fetchMyReviewList: ['params'],
   fetchMyCouponList: ['params'],
   fetchMyPushYN: ['params'],
-  fetchMyUserInfoPatch: ['params'],
   fetchMyPointList: ['params'], // 내 마일리지 현황
   fetchMySmsSend: ['params'],
   fetchMyPlacePatch: ['params'],
@@ -18,6 +17,10 @@ const { Types, Creators } = createActions({
   fetchMyQnaList: ['params'],
   fetchMyQnaWrite: ['params'],
   fetchMyQnaDetailInfo: ['params'],
+  fetchMyNotificationPushYN: ['params'],
+  fetchMyMarketingPushYN: ['params'],
+  fetchMyEventPushYN: ['params'],
+  fetchMyWithdraw: ['params'],
 });
 
 export const MyTypes = Types;

@@ -8,7 +8,6 @@ import { Color } from '@/Assets/Color';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthActions from '@/Stores/Auth/Actions';
 import MyActions from '@/Stores/My/Actions';
-import { fetchMyUserInfoPatch } from '@/Sagas/MySaga';
 
 function InputView() {
   const dispatch = useDispatch();
@@ -75,7 +74,6 @@ function InputView() {
         user_pw: password,
       };
       console.log('번호변경 : ', params);
-      dispatch(MyActions.fetchMyUserInfoPatch(params));
     }
   };
 

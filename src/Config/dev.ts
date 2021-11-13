@@ -56,6 +56,10 @@ const dev = {
   MY_NOTICE_URL: 'my/notice',
   MY_EVENT_URL: 'my/event',
   MY_QNA_URL: 'my/qna',
+  MY_NOTIFICATION_YN_URL: 'my/notification-push',
+  MY_MARKETING_YN_URL: 'my/marketing-push',
+  MY_EVENT_YN_URL: 'my/event-push',
+  MY_WITHDRAW_URL: 'my/withdraw',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

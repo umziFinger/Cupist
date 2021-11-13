@@ -1,5 +1,6 @@
 import { put, call, select } from 'redux-saga/effects';
 import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
@@ -54,37 +55,6 @@ export function* fetchMyPushYN(data: any): any {
     }
   } catch (e) {
     console.log('occurred Error...fetchMyPushYN : ', e);
-  }
-}
-
-export function* fetchMyUserInfoPatch(data: any): any {
-  try {
-    const payload = {
-      ...data,
-      url: Config.MY_USER_URL,
-    };
-
-    const response = yield call(Axios.PATCH, payload);
-
-    if (response.result === true && response.code === null) {
-      yield put(AuthActions.fetchAuthReducer({ type: 'userInfo', data: response.data.user }));
-      yield put(
-        CommonActions.fetchCommonReducer({
-          type: 'alertToast',
-          data: {
-            alertToast: true,
-            alertToastPosition: 'bottom',
-            alertToastMessage: '회원정보를 저장하였습니다.',
-          },
-        }),
-      );
-
-      navigate('MyInfoModifyScreen');
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchMyUserInfoPatch : ', e);
   }
 }
 
@@ -526,5 +496,98 @@ export function* fetchMyQnaDetailInfo(data: any): any {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
 
     console.log('occurred Error...fetchMyQnaDetailInfo : ', e);
+  }
+}
+
+export function* fetchMyNotificationPushYN(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.MY_NOTIFICATION_YN_URL,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+    if (response.result === true && response.code === null) {
+      yield put(AuthActions.fetchAuthReducer({ type: 'notificationYN', data: data.params.pushYN }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchMyNotificationPushYN : ', e);
+  }
+}
+
+export function* fetchMyMarketingPushYN(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.MY_MARKETING_YN_URL,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+    if (response.result === true && response.code === null) {
+      yield put(AuthActions.fetchAuthReducer({ type: 'marketingYN', data: data.params.pushYN }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchMyMarketingPushYN : ', e);
+  }
+}
+
+export function* fetchMyEventPushYN(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.MY_EVENT_YN_URL,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+    if (response.result === true && response.code === null) {
+      yield put(AuthActions.fetchAuthReducer({ type: 'eventYN', data: data.params.pushYN }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchMyEventPushYN : ', e);
+  }
+}
+
+export function* fetchMyWithdraw(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const url = `${Config.MY_WITHDRAW_URL}`;
+    const payload = {
+      ...data,
+      url,
+    };
+    const response = yield call(Axios.PATCH, payload);
+    console.log('회원탈퇴: ', response.data);
+    if (response.result === true && response.code === null) {
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: '회원탈퇴가 완료되었습니다.',
+          },
+        }),
+      );
+
+      AsyncStorage.setItem('userIdx', '');
+      AsyncStorage.setItem('accessToken', '');
+      AsyncStorage.setItem('refreshToken', '');
+
+      yield put(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: true } }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyWithdraw : ', e);
   }
 }

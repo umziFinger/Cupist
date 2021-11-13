@@ -105,10 +105,7 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         draft.smsValidText = data.smsValidText;
         break;
       }
-      // case 'pushYN': {
-      //   draft.userInfo.pushYN = data;
-      //   break;
-      // }
+
       case 'inputAuthNum': {
         draft.inputAuthNum = data.inputAuthNum;
         break;
@@ -147,6 +144,20 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'notificationYN': {
+        draft.userInfo.notificationYN = data;
+        break;
+      }
+
+      case 'marketingYN': {
+        draft.userInfo.marketingYN = data;
+        break;
+      }
+
+      case 'eventYN': {
+        draft.userInfo.eventYN = data;
+        break;
+      }
       default:
         return draft;
     }

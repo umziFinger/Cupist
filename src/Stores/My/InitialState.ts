@@ -17,7 +17,7 @@ export const INITIAL_STATE: MyState['my'] = {
     { title: '공지사항', icon: require('@/Assets/Images/More/icPlusNotice.png'), screen: 'NoticeScreen' },
     { title: '이벤트', icon: require('@/Assets/Images/More/icPlusEvent.png'), screen: 'EventScreen' },
     { title: '고객센터', icon: require('@/Assets/Images/More/icPlusCustomer.png'), screen: 'QnaScreen' },
-    { title: '서비스설정', icon: require('@/Assets/Images/More/icPlusSetup.png'), screen: 'MyProfileScreen' },
+    { title: '서비스설정', icon: require('@/Assets/Images/More/icPlusSetup.png'), screen: 'ServiceSettingScreen' },
   ],
   myNoticeList: [],
   myNoticeListPage: 1,

@@ -44,11 +44,9 @@ import {
   fetchMyCouponList,
   fetchMyReviewList,
   fetchMyPushYN,
-  fetchMyUserInfoPatch,
   fetchMyPointList,
   fetchMySmsSend,
   fetchMyPlacePatch,
-  fetchMyModifyProfileImage,
   fetchMyProfileImagePatch,
   fetchMyProfilePatch,
   fetchMyNoticeList,
@@ -58,6 +56,10 @@ import {
   fetchMyQnaList,
   fetchMyQnaWrite,
   fetchMyQnaDetailInfo,
+  fetchMyNotificationPushYN,
+  fetchMyMarketingPushYN,
+  fetchMyEventPushYN,
+  fetchMyWithdraw,
 } from '@/Sagas/MySaga';
 
 import {
@@ -106,7 +108,6 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_REVIEW_LIST, fetchMyReviewList),
     takeLatest(MyTypes.FETCH_MY_COUPON_LIST, fetchMyCouponList),
     takeLatest(MyTypes.FETCH_MY_PUSH_YN, fetchMyPushYN),
-    takeLatest(MyTypes.FETCH_MY_USER_INFO_PATCH, fetchMyUserInfoPatch),
     takeLatest(MyTypes.FETCH_MY_POINT_LIST, fetchMyPointList),
     takeLatest(MyTypes.FETCH_MY_SMS_SEND, fetchMySmsSend),
     takeLatest(MyTypes.FETCH_MY_PLACE_PATCH, fetchMyPlacePatch),
@@ -119,6 +120,10 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_QNA_LIST, fetchMyQnaList),
     takeLatest(MyTypes.FETCH_MY_QNA_WRITE, fetchMyQnaWrite),
     takeLatest(MyTypes.FETCH_MY_QNA_DETAIL_INFO, fetchMyQnaDetailInfo),
+    takeLatest(MyTypes.FETCH_MY_NOTIFICATION_PUSH_YN, fetchMyNotificationPushYN),
+    takeLatest(MyTypes.FETCH_MY_MARKETING_PUSH_YN, fetchMyMarketingPushYN),
+    takeLatest(MyTypes.FETCH_MY_EVENT_PUSH_YN, fetchMyEventPushYN),
+    takeLatest(MyTypes.FETCH_MY_WITHDRAW, fetchMyWithdraw),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),
