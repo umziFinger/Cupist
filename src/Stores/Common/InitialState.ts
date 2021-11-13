@@ -42,10 +42,12 @@ export const INITIAL_STATE: CommonState['common'] = {
   currentRBS: '',
   isOpenKeyboard: false,
   homeTabRefreshYN: 'Y',
+  isOpenQnaTypeRBS: false,
 };
 type typeYN = 'Y' | 'N';
 export interface CommonState {
   common: {
+    isOpenQnaTypeRBS: boolean | false;
     isOpenTimeFilterRBS: boolean | false;
     isOpenDirectReservationRBS: boolean | false;
     isLoading: boolean | false;

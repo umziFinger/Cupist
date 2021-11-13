@@ -34,6 +34,9 @@ import NoticeScreen from '@/Containers/More/NoticeScreen';
 import NoticeDetailScreen from '@/Containers/More/NoticeDetailScreen';
 import EventScreen from '@/Containers/More/EventScreen';
 import EventDetailScreen from '@/Containers/More/EventDetailScreen';
+import QnaScreen from '@/Containers/More/QnaScreen';
+import QnaWriteScreen from '@/Containers/More/QnaWriteScreen';
+import QnaDetailScreen from '@/Containers/More/QnaDetailScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -65,6 +68,9 @@ export type MainStackParamList = {
   NoticeDetailScreen: undefined;
   EventScreen: undefined;
   EventDetailScreen: undefined;
+  QnaScreen: undefined;
+  QnaWriteScreen: undefined;
+  QnaDetailScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -117,6 +123,9 @@ const MainNavigator = () => {
       <MainStack.Screen name="NoticeDetailScreen" component={NoticeDetailScreen} />
       <MainStack.Screen name="EventScreen" component={EventScreen} />
       <MainStack.Screen name="EventDetailScreen" component={EventDetailScreen} />
+      <MainStack.Screen name="QnaScreen" component={QnaScreen} />
+      <MainStack.Screen name="QnaWriteScreen" component={QnaWriteScreen} />
+      <MainStack.Screen name="QnaDetailScreen" component={QnaDetailScreen} />
     </MainStack.Navigator>
   );
 };

@@ -55,6 +55,9 @@ import {
   fetchMyNoticeDetailInfo,
   fetchMyEventList,
   fetchMyEventDetailInfo,
+  fetchMyQnaList,
+  fetchMyQnaWrite,
+  fetchMyQnaDetailInfo,
 } from '@/Sagas/MySaga';
 
 import {
@@ -113,6 +116,9 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_NOTICE_DETAIL_INFO, fetchMyNoticeDetailInfo),
     takeLatest(MyTypes.FETCH_MY_EVENT_LIST, fetchMyEventList),
     takeLatest(MyTypes.FETCH_MY_EVENT_DETAIL_INFO, fetchMyEventDetailInfo),
+    takeLatest(MyTypes.FETCH_MY_QNA_LIST, fetchMyQnaList),
+    takeLatest(MyTypes.FETCH_MY_QNA_WRITE, fetchMyQnaWrite),
+    takeLatest(MyTypes.FETCH_MY_QNA_DETAIL_INFO, fetchMyQnaDetailInfo),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

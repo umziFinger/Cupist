@@ -30,7 +30,7 @@ const RBSheetAttachFile = (props: any) => {
         attachCnt = attachFile.length;
       }
       const maxCntCheck = attachCnt + newAttach.length;
-      if (maxCntCheck > 10) {
+      if (maxCntCheck > 5) {
         setCallAttachFile(false);
         RBSheetRef.current.close();
         dispatch(
@@ -40,7 +40,7 @@ const RBSheetAttachFile = (props: any) => {
               alertDialog: true,
               alertDialogType: 'confirm',
               alertDialogDataType: 'maxAttachFileCheck',
-              alertDialogTitle: '사진 첨부는 최대 10장까지 가능합니다',
+              alertDialogTitle: '사진 첨부는 최대 5장까지 가능합니다',
             },
           }),
         );

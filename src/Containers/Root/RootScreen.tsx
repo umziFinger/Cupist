@@ -19,6 +19,7 @@ import RootCodePush from './RootCodePush';
 
 import { NotificationRequest } from '@/Components/Permission/Notification';
 import TimeFilterRBS from '@/Components/RBS/Home/TimeFilterRBS';
+import QnaTypeRBS from '@/Components/RBS/Qna/QnaTypeRBS';
 
 LogBox.ignoreLogs([
   'interpolate() was renamed to interpolateNode()',
@@ -44,6 +45,7 @@ const RootScreen = () => {
     isOpenAgreeDetailRBS,
     isOpenTimeFilterRBS,
     isOpenDirectReservationRBS,
+    isOpenQnaTypeRBS,
   } = useSelector((state: CommonState) => state.common);
 
   useEffect(() => {
@@ -91,6 +93,7 @@ const RootScreen = () => {
       {/* <RootDynamicLink /> */}
 
       {isOpenTimeFilterRBS && <TimeFilterRBS />}
+      {isOpenQnaTypeRBS && <QnaTypeRBS />}
       {/* {isOpenLoginRBS && <LoginScreen />} */}
       {/* {isOpenRepairNotificationRBS && <RepairNotificationScreen item={restorationInfo} />} */}
       {/* {isOpenMyAddressRBS && <MyAddressRBS />} */}

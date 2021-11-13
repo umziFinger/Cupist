@@ -165,6 +165,7 @@ const LocationSettingScreen = () => {
                   initialNumToRender={16}
                   maxToRenderPerBatch={19}
                   ListFooterComponent={() => <View style={{ paddingBottom: heightInfo.subBottomHeight }} />}
+                  keyboardDismissMode={'interactive'}
                 />
               </View>
 
@@ -200,6 +201,7 @@ const LocationSettingScreen = () => {
                   maxToRenderPerBatch={19}
                   keyboardShouldPersistTaps={'handled'}
                   ListFooterComponent={() => <View style={{ paddingBottom: heightInfo.subBottomHeight }} />}
+                  keyboardDismissMode={'interactive'}
                 />
               </View>
             </View>
@@ -246,7 +248,7 @@ const LocationSettingScreen = () => {
               windowSize={7}
               scrollEnabled
               showsVerticalScrollIndicator={false}
-              // keyboardDismissMode={'interactive'}
+              keyboardDismissMode={'interactive'}
               ListFooterComponent={() => (
                 <>
                   <View style={{ paddingBottom: heightInfo.subBottomHeight }} />

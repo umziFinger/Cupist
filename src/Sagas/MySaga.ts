@@ -424,3 +424,107 @@ export function* fetchMyEventDetailInfo(data: any): any {
     console.log('occurred Error...fetchMyEventDetailInfo : ', e);
   }
 }
+
+export function* fetchMyQnaList(data: any): any {
+  try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const payload = {
+      ...data,
+      url: Config.MY_QNA_URL,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('문의하기: ', response.data);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'myQnaList',
+          data: response.data.qna,
+          page: data.params.page,
+        }),
+      );
+      yield put(MyActions.fetchMyReducer({ type: 'myQnaListPage', data: data.params.page + 1 }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyQnaList : ', e);
+  }
+}
+
+export function* fetchMyQnaWrite(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const url = Config.MY_QNA_URL;
+    const formData = new FormData();
+    // 이미지 첨부
+    if (data.params.files) {
+      data.params.files.map((v: any) => {
+        return formData.append('files', v);
+      });
+    }
+    formData.append('content', data.params.content);
+    formData.append('qnaType', data.params.qnaType);
+    const payload = {
+      formData,
+      url,
+    };
+
+    const response = yield call(Axios.FILE, payload);
+
+    if (response.result === true && response.code === null) {
+      const params = {
+        perPage: 10,
+        page: 1,
+      };
+      yield put(MyActions.fetchMyQnaList(params));
+      navigateGoBack();
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchMyQnaWrite : ', e);
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+  }
+}
+
+export function* fetchMyQnaDetailInfo(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    navigate('QnaDetailScreen');
+    const payload = {
+      ...data,
+      url: `${Config.MY_QNA_URL}/${data.params.qnaIdx}`,
+    };
+
+    // const response = yield call(Axios.GET, payload);
+    //
+    // if (response.result === true && response.code === null) {
+    //   console.log('문의하기 상세: ', response.data);
+    //   yield put(
+    //     MyActions.fetchMyReducer({
+    //       type: 'myQnaDetail',
+    //       data: response.data,
+    //       page: data.params.page,
+    //     }),
+    //   );
+    //   yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    // } else {
+    //   yield put(CommonActions.fetchErrorHandler(response));
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    // }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyQnaDetailInfo : ', e);
+  }
+}

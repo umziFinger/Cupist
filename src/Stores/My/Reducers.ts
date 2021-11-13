@@ -116,6 +116,49 @@ export const fetchMyReducer = produce((draft, actions: any) => {
       break;
     }
 
+    case 'qnaSelectedTab': {
+      draft.qnaSelectedTab = data;
+      break;
+    }
+
+    case 'myQnaList': {
+      if (actions.params.page === 1) {
+        draft.myQnaList = data;
+      } else {
+        draft.myQnaList = data.length > 0 ? draft.myQnaList.concat(data) : draft.myQnaList;
+      }
+      break;
+    }
+
+    case 'myQnaListPage': {
+      draft.myQnaListPage = data;
+      break;
+    }
+
+    case 'myQnaListInit': {
+      draft.myQnaList = INITIAL_STATE.myEventList;
+      draft.myQnaListPage = INITIAL_STATE.myEventListPage;
+      draft.qnaSelectedTab = INITIAL_STATE.qnaSelectedTab;
+      break;
+    }
+
+    case 'myQnaDetail': {
+      draft.myQnaDetail = data;
+      break;
+    }
+    case 'writeQnaContent': {
+      draft.writeQnaContent = data;
+      break;
+    }
+    case 'writeQnaValid': {
+      draft.writeQnaValid = data;
+      break;
+    }
+    case 'qnaType': {
+      draft.qnaType = data;
+      break;
+    }
+
     default:
       return draft;
   }

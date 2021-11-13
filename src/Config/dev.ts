@@ -55,7 +55,7 @@ const dev = {
   MY_NOTIFICATION_URL: 'my/notification',
   MY_NOTICE_URL: 'my/notice',
   MY_EVENT_URL: 'my/event',
-
+  MY_QNA_URL: 'my/qna',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

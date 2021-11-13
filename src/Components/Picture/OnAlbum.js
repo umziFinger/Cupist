@@ -18,7 +18,7 @@ const File = () => {
       cropping: false,
       includeExif: true,
       mediaType: 'photo',
-      maxFiles: 4,
+      maxFiles: 5,
     })
       .then((files) => resolve(files))
       .catch((e) => {

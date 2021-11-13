@@ -1,5 +1,4 @@
 import { createActions } from 'reduxsauce';
-import { fetchMyNoticeDetailInfo } from '@/Sagas/MySaga';
 
 const { Types, Creators } = createActions({
   fetchMyReducer: ['params'],
@@ -16,6 +15,9 @@ const { Types, Creators } = createActions({
   fetchMyNoticeDetailInfo: ['params'],
   fetchMyEventList: ['params'],
   fetchMyEventDetailInfo: ['params'],
+  fetchMyQnaList: ['params'],
+  fetchMyQnaWrite: ['params'],
+  fetchMyQnaDetailInfo: ['params'],
 });
 
 export const MyTypes = Types;
