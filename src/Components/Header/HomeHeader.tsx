@@ -42,7 +42,7 @@ const HomeHeader = (props: HeaderProps) => {
   // console.log('calendarDate : ', calendarDate);
 
   const onLayout = (e: Layout) => {
-    console.log('onLayout : ', e.height);
+    // console.log('onLayout : ', e.height);
     setHeaderHeight(e.height);
   };
 

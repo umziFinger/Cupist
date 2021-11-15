@@ -21,6 +21,8 @@ const { Types, Creators } = createActions({
   fetchMyMarketingPushYN: ['params'],
   fetchMyEventPushYN: ['params'],
   fetchMyWithdraw: ['params'],
+  fetchMyReservationList: ['params'],
+  fetchMyReservationDetailInfo: ['params'],
 });
 
 export const MyTypes = Types;

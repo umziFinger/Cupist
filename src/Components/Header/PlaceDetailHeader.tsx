@@ -38,7 +38,7 @@ const PlaceDetailHeader = (props: HeaderProps) => {
   };
 
   useEffect(() => {
-    console.log('headerHeight : ', headerHeight);
+    // console.log('headerHeight : ', headerHeight);
   }, [headerHeight]);
 
   const onLayout = (e: Layout) => {

@@ -32,6 +32,11 @@ export const INITIAL_STATE: MyState['my'] = {
   writeQnaContent: '',
   writeQnaValid: false,
   qnaType: { key: '앱 사용 문의', content: '앱 사용 문의' },
+  mySelectedTab: { title: '예약', selectKey: 'reservation' },
+  reservationList: { before: [], after: [], cancel: [] },
+  reservationListPage: { before: 1, after: 1, cancel: 1 },
+  reservationSelectedTab: { title: '진행중', key: 'before' },
+  reservationDetail: null,
 };
 export interface MyState {
   my: {
@@ -56,6 +61,15 @@ export interface MyState {
     writeQnaContent: string;
     writeQnaValid: boolean;
     qnaType: qnaType;
+    mySelectedTab: myTabType;
+    reservationList: {
+      before: any[];
+      after: any[];
+      cancel: any[];
+    };
+    reservationListPage: reservationPageType;
+    reservationSelectedTab: reservationTabType;
+    reservationDetail: any;
   };
 }
 export type qnaType =
@@ -66,3 +80,9 @@ export type qnaType =
   | { key: '기타 문의'; content: '기타 문의' };
 
 export type qnaTabType = { name: '문의내역'; key: 'list' } | { name: '문의하기'; key: 'write' };
+export type myTabType = { title: '예약'; selectKey: 'reservation' } | { title: '리뷰'; selectKey: 'review' };
+export type reservationTabType =
+  | { title: '진행중'; key: 'before' }
+  | { title: '지난'; key: 'after' }
+  | { title: '취소'; key: 'cancel' };
+export type reservationPageType = { before: 1; after: 1; cancel: 1 };

@@ -8,8 +8,9 @@ import TabMenu from '@/Components/TabMenu';
 import { MY_TAB_MENU } from '@/Containers/My/MyScreen/data';
 import { MyState } from '@/Stores/My/InitialState';
 import ReservationList from '@/Containers/My/MyScreen/ReservationList';
+import Header from '@/Components/Header';
 
-const MyScreen = () => {
+const ReservationDetailScreen = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const {
@@ -17,26 +18,12 @@ const MyScreen = () => {
     mySelectedTab = { title: '예약', selectKey: 'reservation' },
     reservationListPage = { before: 1, after: 1, cancel: 1 },
   } = useSelector((state: MyState) => state.my);
-  const paddingTop = Platform.OS === 'android' ? 0 : heightInfo.statusHeight;
-
-  useEffect(() => {
-    if (mySelectedTab.selectKey === 'reservation') {
-      const params = {
-        perPage: 10,
-        page: reservationListPage[reservationSelectedTab.key],
-        state: reservationSelectedTab.key,
-      };
-      dispatch(MyActions.fetchMyReservationList(params));
-    }
-  }, [mySelectedTab.selectKey, reservationSelectedTab.key]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: Color.White, paddingTop: paddingTop + 29 }}>
-      <TabMenu type={'my'} data={MY_TAB_MENU} />
-
-      {mySelectedTab.selectKey === 'reservation' && <ReservationList />}
+    <View style={{ flex: 1, backgroundColor: Color.White, paddingTop: 28 }}>
+      <Header type={'back'} />
     </View>
   );
 };
 
-export default MyScreen;
+export default ReservationDetailScreen;

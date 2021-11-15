@@ -60,6 +60,8 @@ import {
   fetchMyMarketingPushYN,
   fetchMyEventPushYN,
   fetchMyWithdraw,
+  fetchMyReservationList,
+  fetchMyReservationDetailInfo,
 } from '@/Sagas/MySaga';
 
 import {
@@ -124,6 +126,8 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_MARKETING_PUSH_YN, fetchMyMarketingPushYN),
     takeLatest(MyTypes.FETCH_MY_EVENT_PUSH_YN, fetchMyEventPushYN),
     takeLatest(MyTypes.FETCH_MY_WITHDRAW, fetchMyWithdraw),
+    takeLatest(MyTypes.FETCH_MY_RESERVATION_LIST, fetchMyReservationList),
+    takeLatest(MyTypes.FETCH_MY_RESERVATION_DETAIL_INFO, fetchMyReservationDetailInfo),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

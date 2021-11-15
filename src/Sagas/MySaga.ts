@@ -591,3 +591,76 @@ export function* fetchMyWithdraw(data: any): any {
     console.log('occurred Error...fetchMyWithdraw : ', e);
   }
 }
+
+export function* fetchMyReservationList(data: any): any {
+  try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const payload = {
+      ...data,
+      url: Config.MY_RESERVATION_URL,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      // console.log('마이 예약 리스트: ', response.data);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'reservationList',
+          data: response.data?.reservation,
+          state: data.params.state,
+          page: data.params.page,
+        }),
+      );
+
+      if (response.data.reservation?.length > 0) {
+        yield put(
+          MyActions.fetchMyReducer({
+            type: 'reservationListPage',
+            data: data.params.page + 1,
+            state: data.params.state,
+          }),
+        );
+      }
+
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyReservationList : ', e);
+  }
+}
+
+export function* fetchMyReservationDetailInfo(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    navigate('ReservationDetailScreen');
+    const payload = {
+      ...data,
+      url: `${Config.MY_RESERVATION_URL}/${data.params.reservationIdx}`,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      console.log('예약 상세: ', response.data);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'reservationDetail',
+          data: response.data.notice,
+        }),
+      );
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyReservationDetailInfo : ', e);
+  }
+}

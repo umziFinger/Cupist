@@ -60,6 +60,7 @@ const dev = {
   MY_MARKETING_YN_URL: 'my/marketing-push',
   MY_EVENT_YN_URL: 'my/event-push',
   MY_WITHDRAW_URL: 'my/withdraw',
+  MY_RESERVATION_URL: 'my/reservation',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

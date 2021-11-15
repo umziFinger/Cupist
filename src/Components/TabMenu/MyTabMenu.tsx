@@ -8,30 +8,24 @@ import { MyState } from '@/Stores/My/InitialState';
 import MyActions from '@/Stores/My/Actions';
 import { navigate } from '@/Services/NavigationService';
 
-const QnaTabMenu = (props: any) => {
+const MyTabMenu = (props: any) => {
   const { data } = props;
 
   const dispatch = useDispatch();
-  const { qnaSelectedTab = { name: '문의내역', key: 'list' } } = useSelector((state: MyState) => state.my);
+  const { mySelectedTab = { title: '예약', selectKey: 'reservation' } } = useSelector((state: MyState) => state.my);
 
   const onSelectMenu = (item: any): void => {
-    if (item.key === 'write') {
-      navigate('QnaWriteScreen');
-    } else if (item.key === 'list') {
-      dispatch(MyActions.fetchMyReducer({ type: 'qnaSelectedTab', data: item }));
-    }
+    dispatch(MyActions.fetchMyReducer({ type: 'mySelectedTab', data: item }));
   };
 
   return (
     <View
       style={{
-        marginTop: 10,
         backgroundColor: Color.White,
+        // backgroundColor: Color.Primary1000,
         borderBottomColor: Color.Gray200,
         borderBottomWidth: 1,
         paddingHorizontal: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
       }}
     >
       <FlatList
@@ -39,7 +33,7 @@ const QnaTabMenu = (props: any) => {
         renderItem={({ item, index }) => {
           let textColor = Color.Gray400;
           let bottomWidth = 0;
-          if (qnaSelectedTab.key === item.key) {
+          if (mySelectedTab.selectKey === item.selectKey) {
             textColor = Color.Black1000;
             bottomWidth = 2;
           }
@@ -47,22 +41,27 @@ const QnaTabMenu = (props: any) => {
             <CustomButton onPress={() => onSelectMenu(item)}>
               <View
                 style={{
-                  marginRight: index === 0 ? 42 : 0,
-                  paddingBottom: 8,
-                  borderBottomColor: textColor,
-                  borderBottomWidth: bottomWidth,
+                  marginRight: index === 0 ? 40 : 0,
                 }}
               >
-                <View style={{ justifyContent: 'center' }}>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    paddingVertical: 15,
+                    borderBottomColor: mySelectedTab.selectKey === item.selectKey ? Color.Primary1000 : undefined,
+                    borderBottomWidth: bottomWidth,
+                    paddingHorizontal: 34,
+                  }}
+                >
                   <CustomText
                     style={{
                       color: textColor,
-                      fontSize: 15,
-                      letterSpacing: -0.2,
-                      fontWeight: qnaSelectedTab.key === item.key ? 'bold' : 'normal',
+                      fontSize: 17,
+                      fontWeight: '500',
+                      letterSpacing: -0.3,
                     }}
                   >
-                    {item.name}
+                    {item.title}
                   </CustomText>
                 </View>
               </View>
@@ -75,9 +74,9 @@ const QnaTabMenu = (props: any) => {
         windowSize={7}
         horizontal
         scrollEnabled={false}
-        contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
       />
     </View>
   );
 };
-export default QnaTabMenu;
+export default MyTabMenu;
