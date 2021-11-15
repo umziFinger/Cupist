@@ -7,6 +7,7 @@ import { reducer as SearchReducer } from '@/Stores/Search/Reducers';
 import { reducer as NotificationReducer } from '@/Stores/Notification/Reducers';
 import { reducer as MyReducer } from '@/Stores/My/Reducers';
 import { reducer as PlaceReducer } from '@/Stores/Place/Reducers';
+import { reducer as ReservationReducer } from '@/Stores/Reservation/Reducers';
 
 import ConfigureStore from '@/Stores/CreateStore';
 
@@ -19,6 +20,7 @@ export default () => {
     my: MyReducer,
     place: PlaceReducer,
     search: SearchReducer,
+    reservation: ReservationReducer,
   });
   return ConfigureStore(rootReducer, rootSaga);
 };

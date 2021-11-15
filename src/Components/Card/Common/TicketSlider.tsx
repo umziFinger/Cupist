@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { DATA_TICKET_TIME } from '@/Components/Data/DATA_TICKET_TIME';
 import { numberFormat } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
 import PlaceActions from '@/Stores/Place/Actions';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 interface PropTypes {
   allowedTimeArr: Array<any>;
@@ -15,17 +16,16 @@ interface PropTypes {
 }
 const TicketSlider = (props: PropTypes) => {
   const dispatch = useDispatch();
+  const { selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { allowedTimeArr, item } = props;
   const morning = item?.morning || [];
   const afternoon = item?.afternoon || [];
   const night = item?.night || [];
-  const [selectedTicketIdx, setSelectedTicketIdx] = useState<number>(-1);
+  // const [selectedTicketIdx, setSelectedTicketIdx] = useState<number>(-1);
 
   useEffect(() => {
-    return () => {
-      console.log('UNMOUNT@@@@@@@');
-    };
-  }, []);
+    console.log('@@@ selectedTicket : ', selectedTicket);
+  }, [selectedTicket]);
 
   const isShowFunc = (value: number) => {
     if (value === 0 && morning.length > 0) {
@@ -41,13 +41,13 @@ const TicketSlider = (props: PropTypes) => {
   };
 
   const onPressTicket = (value: any) => {
-    if (selectedTicketIdx === value.idx) {
-      setSelectedTicketIdx(-1);
+    if (selectedTicket?.idx === value.idx) {
+      // setSelectedTicketIdx(-1);
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
     }
 
-    setSelectedTicketIdx(value.idx);
+    // setSelectedTicketIdx(value.idx);
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: value }));
   };
 
@@ -87,8 +87,9 @@ const TicketSlider = (props: PropTypes) => {
                       paddingRight: 21,
                       borderRadius: 5,
                       borderWidth: 1,
-                      borderColor: selectedTicketIdx === item.idx ? Color.Primary1000 : Color.Gray300,
-                      backgroundColor: selectedTicketIdx === item.idx ? 'rgba(255, 185, 10, 0.05)' : Color.Grayyellow50,
+                      borderColor: selectedTicket?.idx === item.idx ? Color.Primary1000 : Color.Gray300,
+                      backgroundColor:
+                        selectedTicket?.idx === item.idx ? 'rgba(255, 185, 10, 0.05)' : Color.Grayyellow50,
                       marginRight: 8,
                     }}
                   >
