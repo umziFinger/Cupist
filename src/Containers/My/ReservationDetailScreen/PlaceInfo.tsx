@@ -1,16 +1,32 @@
 import React from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { INFO_ITEM } from '@/Containers/My/ReservationDetailScreen/data';
 import { MyState } from '@/Stores/My/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
 
 const PlaceInfo = () => {
   const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
   const { reservationDetail } = useSelector((state: MyState) => state.my);
+
+  const onCancel = () => {
+    dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'alertDialog',
+        data: {
+          alertDialog: true,
+          alertDialogType: 'choice',
+          alertDialogDataType: 'maxAttachFileCheck',
+          alertDialogTitle: '사진 첨부는 최대 5장까지 가능합니다',
+        },
+      }),
+    );
+  };
   return (
     <View>
       <View
@@ -24,23 +40,25 @@ const PlaceInfo = () => {
       >
         <View style={{ flex: 1 }}>
           <CustomText style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}>
-            이용전
+            {reservationDetail?.stateText}
           </CustomText>
         </View>
-        <CustomButton>
-          <View style={{ paddingVertical: 5, paddingHorizontal: 8, borderRadius: 3, backgroundColor: Color.Gray300 }}>
-            <CustomText
-              style={{
-                fontSize: 13,
-                fontWeight: '500',
-                letterSpacing: -0.2,
-                color: Color.Gray600,
-              }}
-            >
-              취소하기
-            </CustomText>
-          </View>
-        </CustomButton>
+        {reservationDetail?.stateText === '이용완료' && ( // TODO: 이용완료 -> 이용전으로 변경
+          <CustomButton onPress={() => onCancel()}>
+            <View style={{ paddingVertical: 5, paddingHorizontal: 8, borderRadius: 3, backgroundColor: Color.Gray300 }}>
+              <CustomText
+                style={{
+                  fontSize: 13,
+                  fontWeight: '500',
+                  letterSpacing: -0.2,
+                  color: Color.Gray600,
+                }}
+              >
+                취소하기
+              </CustomText>
+            </View>
+          </CustomButton>
+        )}
       </View>
       <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
         <View style={{ flex: 1 }}>
