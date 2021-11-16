@@ -1,5 +1,9 @@
-export const INITIAL_STATE = {};
+export const INITIAL_STATE = {
+  reservationInfo: null,
+};
 
-export interface HomeState {
-  reservation: {};
+export interface ReservationState {
+  reservation: {
+    reservationInfo: any;
+  };
 }

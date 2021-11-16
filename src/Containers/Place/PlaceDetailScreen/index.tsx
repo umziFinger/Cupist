@@ -20,6 +20,8 @@ import PlaceActions from '@/Stores/Place/Actions';
 import { numberFormat, scrollCalendarHandler, useDebouncedFunction } from '@/Components/Function';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
@@ -32,6 +34,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const { width, height } = useWindowDimensions();
   const { idx } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
+  const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { placeDetail, placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
 
@@ -62,10 +65,6 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
   }, [calendarDate]);
 
-  useEffect(() => {
-    console.log('selectedTicket : ', selectedTicket);
-  }, [selectedTicket]);
-
   const handleScroll = (event: any) => {
     setIsShowReservation(false);
     setOffsetY(event.nativeEvent.contentOffset.y);
@@ -75,9 +74,18 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   };
 
   const onPressReservation = () => {
-    console.log('onPressReservation');
-    // animatedFlatRef.current.scrollToOffset({ animated: true, offset: 0 });
-    animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
+    if (selectedTicket) {
+      console.log('place idx: ', idx);
+      console.log('selectedTicket idx: ', selectedTicket.idx);
+      if (!userIdx) {
+        return navigate('SimpleLoginScreen');
+      }
+
+      if (selectedTicket?.idx) {
+        return navigate('ReservationScreen', { placeIdx: idx, ticketInfoIdx: selectedTicket?.idx });
+      }
+    }
+    return animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
   };
 
   const onPressCancel = () => {
