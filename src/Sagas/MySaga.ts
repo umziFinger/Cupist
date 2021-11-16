@@ -58,23 +58,6 @@ export function* fetchMyPushYN(data: any): any {
   }
 }
 
-export function* fetchMyReviewList(data: any): any {
-  try {
-    console.log('마이 리뷰 데이터: ', data);
-    yield put(
-      MyActions.fetchMyReducer({
-        type: 'myReviewList',
-        data: [0, 1, 2, 4, 5],
-        page: data.params.page,
-      }),
-    );
-    yield put(MyActions.fetchMyReducer({ type: 'myReviewPage', data: data.params.page + 1 }));
-  } catch (e) {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    console.log('occurred Error...fetchMyReviewList : ', e);
-  }
-}
-
 export function* fetchMyCouponList(data: any): any {
   try {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
@@ -592,6 +575,34 @@ export function* fetchMyWithdraw(data: any): any {
   }
 }
 
+export function* fetchMyReviewList(data: any): any {
+  try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: Config.MY_REVIEW,
+    };
+    const response = yield call(Axios.GET, payload);
+    // console.log('마이 리뷰 데이터: ', response.data);
+    if (response.result === true && response.code === null) {
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'myReviewList',
+          data: response.data,
+          page: data.params.page,
+        }),
+      );
+      yield put(MyActions.fetchMyReducer({ type: 'myReviewListPage', data: data.params.page + 1 }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyReviewList : ', e);
+  }
+}
+
 export function* fetchMyReservationList(data: any): any {
   try {
     if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
@@ -690,5 +701,46 @@ export function* fetchMyReservationCancelDetailInfo(data: any): any {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
 
     console.log('occurred Error...fetchMyReservationCancelDetailInfo : ', e);
+  }
+}
+
+export function* fetchMyReviewWrite(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const url = Config.MY_REVIEW;
+    const formData = new FormData();
+    // 이미지 첨부
+    if (data.params.files) {
+      data.params.files.map((v: any) => {
+        return formData.append('files', v);
+      });
+    }
+    formData.append('content', data.params.content);
+    formData.append('paymentIdx', data.params.paymentIdx);
+    formData.append('star', data.params.star);
+    const payload = {
+      formData,
+      url,
+    };
+
+    const response = yield call(Axios.FILE, payload);
+
+    if (response.result === true && response.code === null) {
+      const params = {
+        perPage: 10,
+        page: 1,
+      };
+      yield put(MyActions.fetchMyReviewList(params));
+      navigate('MyScreen');
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyReviewWrite : ', e);
   }
 }

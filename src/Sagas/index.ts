@@ -63,6 +63,7 @@ import {
   fetchMyReservationList,
   fetchMyReservationDetailInfo,
   fetchMyReservationCancelDetailInfo,
+  fetchMyReviewWrite,
 } from '@/Sagas/MySaga';
 
 import {
@@ -132,6 +133,7 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_RESERVATION_LIST, fetchMyReservationList),
     takeLatest(MyTypes.FETCH_MY_RESERVATION_DETAIL_INFO, fetchMyReservationDetailInfo),
     takeLatest(MyTypes.FETCH_MY_RESERVATION_CANCEL_DETAIL_INFO, fetchMyReservationCancelDetailInfo),
+    takeLatest(MyTypes.FETCH_MY_REVIEW_WRITE, fetchMyReviewWrite),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

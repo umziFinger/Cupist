@@ -70,6 +70,8 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                     backgroundColor: Color.White,
                     borderTopLeftRadius: 3,
                     borderTopRightRadius: 3,
+                    paddingTop: 57,
+                    paddingBottom: 40,
                   }}
                 >
                   <View style={{ alignItems: 'center' }}>

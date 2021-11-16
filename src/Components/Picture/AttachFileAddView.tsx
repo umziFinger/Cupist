@@ -96,7 +96,7 @@ const AttachFileAddView = (props: any) => {
               <View style={{ width: 16, height: 16 }}>
                 <FastImage
                   style={{ width: '100%', height: '100%' }}
-                  source={require('@/Assets/Images/Button/icClose.png')}
+                  source={require('@/Assets/Images/Button/icCloseWhite.png')}
                   resizeMode={FastImage.resizeMode.cover}
                 />
               </View>
