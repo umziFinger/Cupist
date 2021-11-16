@@ -37,3 +37,20 @@ export function* fetchReservation(data: any): any {
     console.log('occurred Error...fetchReservation : ', e);
   }
 }
+
+export function* fetchReservationCardList(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.RESERVATION_CARD_URL,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      yield put(ReservationActions.fetchReservationReducer({ type: 'myCardList', data: response.data }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchReservationCardList : ', e);
+  }
+}

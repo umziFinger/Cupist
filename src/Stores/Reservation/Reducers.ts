@@ -8,7 +8,7 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
   return produce(state, (draft) => {
     switch (type) {
       case 'reservationInfo': {
-        console.log('call reducer reservationInfo : ', data.paymentInfo);
+        console.log('call reducer reservationInfo');
         draft.reservationInfo = data.paymentInfo;
         break;
       }
@@ -16,6 +16,37 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
       case 'reservationInfoInit': {
         console.log('call reducer reservationInfoInit');
         draft.reservationInfo = null;
+        break;
+      }
+
+      case 'totalPrice': {
+        draft.totalPrice = data;
+        break;
+      }
+
+      case 'myCardList': {
+        console.log('call reducer myCardList : ', data.cardList);
+        draft.myCardList = data.cardList;
+        break;
+      }
+
+      // 간편결제 | 다른 결제수단
+      case 'paymentType': {
+        console.log('call reducer paymentType : ', data);
+        draft.paymentType = data;
+        break;
+      }
+
+      case 'selcetedCardIdx': {
+        console.log('call reducer selcetedCardIdx : ', data);
+        draft.selcetedCardIdx = data;
+        break;
+      }
+
+      // 다른 결제수단 중 선택 된 수단
+      case 'paymentMethod': {
+        console.log('call reducer paymentMethod : ', data);
+        draft.paymentMethod = data;
         break;
       }
 

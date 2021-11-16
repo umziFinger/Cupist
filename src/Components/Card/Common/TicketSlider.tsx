@@ -21,11 +21,6 @@ const TicketSlider = (props: PropTypes) => {
   const morning = item?.morning || [];
   const afternoon = item?.afternoon || [];
   const night = item?.night || [];
-  // const [selectedTicketIdx, setSelectedTicketIdx] = useState<number>(-1);
-
-  useEffect(() => {
-    console.log('@@@ selectedTicket : ', selectedTicket);
-  }, [selectedTicket]);
 
   const isShowFunc = (value: number) => {
     if (value === 0 && morning.length > 0) {
@@ -42,12 +37,10 @@ const TicketSlider = (props: PropTypes) => {
 
   const onPressTicket = (value: any) => {
     if (selectedTicket?.idx === value.idx) {
-      // setSelectedTicketIdx(-1);
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
     }
 
-    // setSelectedTicketIdx(value.idx);
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: value }));
   };
 

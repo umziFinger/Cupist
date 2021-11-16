@@ -72,7 +72,7 @@ import {
   fetchPlaceTicketList,
 } from '@/Sagas/PlaceSaga';
 import { ReservationTypes } from '@/Stores/Reservation/Actions';
-import { fetchReservation, fetchReservationInfo } from '@/Sagas/ReservationSaga';
+import { fetchReservation, fetchReservationCardList, fetchReservationInfo } from '@/Sagas/ReservationSaga';
 
 export default function* root() {
   yield all([
@@ -141,5 +141,6 @@ export default function* root() {
     // reservation
     takeLatest(ReservationTypes.FETCH_RESERVATION_INFO, fetchReservationInfo),
     takeLatest(ReservationTypes.FETCH_RESERVATION, fetchReservation),
+    takeLatest(ReservationTypes.FETCH_RESERVATION_CARD_LIST, fetchReservationCardList),
   ]);
 }
