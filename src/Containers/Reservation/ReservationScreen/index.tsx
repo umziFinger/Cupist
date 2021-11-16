@@ -13,6 +13,8 @@ import DefaultInfoArea from '@/Containers/Reservation/ReservationScreen/DefaultI
 import { ReservationState } from '@/Stores/Reservation/InitialState';
 import BookerArea from '@/Containers/Reservation/ReservationScreen/BookerArea';
 import PriceArea from '@/Containers/Reservation/ReservationScreen/PriceArea';
+import PaymentMethodArea from '@/Containers/Reservation/ReservationScreen/PaymentMethodArea';
+import { CommonState } from '@/Stores/Common/InitialState';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'ReservationScreen'>;
@@ -21,20 +23,24 @@ interface PropTypes {
 const ReservationScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
   const { placeIdx, ticketInfoIdx } = route.params;
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const { reservationInfo } = useSelector((state: ReservationState) => state.reservation);
+  const { myCardList } = useSelector((state: ReservationState) => state.reservation);
+  const reservationInfo = useSelector((state: ReservationState) => state.reservation.reservationInfo);
 
   useEffect(() => {
     if (!userIdx) {
       return navigate('SimpleLoginScreen');
     }
     dispatch(ReservationActions.fetchReservationInfo({ placeIdx, ticketInfoIdx }));
+    dispatch(ReservationActions.fetchReservationCardList());
+
     return () => {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'reservationInfoInit' }));
     };
   }, []);
 
-  const renderItem = ({ item }: { item: any; index: number }) => {
+  const renderItem = ({ item }: { item: any }) => {
     switch (item) {
       case 0: {
         return (
@@ -63,6 +69,16 @@ const ReservationScreen = ({ route }: PropTypes) => {
           </View>
         );
       }
+      case 3: {
+        return (
+          <View style={{ flex: 1, marginTop: 28 }}>
+            <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
+            <View style={{ marginTop: 28 }}>
+              <PaymentMethodArea list={myCardList} />
+            </View>
+          </View>
+        );
+      }
 
       default:
         return null;
@@ -73,12 +89,14 @@ const ReservationScreen = ({ route }: PropTypes) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'back'} />
       <FlatList
-        data={[0, 1, 2]}
+        data={[0, 1, 2, 3]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={2}
         maxToRenderPerBatch={1}
         windowSize={7}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: heightInfo.fixBottomHeight }}
       />
     </View>
   );

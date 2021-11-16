@@ -123,7 +123,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
           <View style={{ flex: 1, marginTop: 20 }}>
             <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
             <View style={{ paddingLeft: 24 }}>
-              <TicketSlider allowedTimeArr={[0, 1, 2]} item={placeTicketList || {}} onPressCancel={onPressCancel} />
+              <TicketSlider allowedTimeArr={[0, 1, 2]} item={placeTicketList || {}} />
             </View>
           </View>
         );

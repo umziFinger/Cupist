@@ -18,10 +18,6 @@ const BookerArea = (props: PropTypes) => {
   const { placeDetail, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const place: any = placeDetail?.place || {};
 
-  console.log('default item : ', item);
-  console.log('place item : ', place);
-  console.log('selectedTicket item : ', selectedTicket);
-
   const onPressEdit = () => {
     console.log('onPressEdit');
   };
