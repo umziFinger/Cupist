@@ -13,6 +13,7 @@ import { MyState, reservationTabType } from '@/Stores/My/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { fetchMyReservationDetailInfo } from '@/Sagas/MySaga';
+import CommonActions from '@/Stores/Common/Actions';
 
 const ReservationList = () => {
   const dispatch = useDispatch();
@@ -77,6 +78,60 @@ const ReservationList = () => {
     dispatch(MyActions.fetchMyReservationDetailInfo(params));
   };
 
+  const onPlaceDetail = (item: any) => {
+    navigate('PlaceDetailScreen', { idx: item.placeIdx });
+  };
+
+  const onCancel = (item: any) => {
+    dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'alertDialog',
+        data: {
+          alertDialog: true,
+          alertDialogType: 'choice',
+          alertDialogDataType: 'reservationCancel',
+          alertDialogMessage() {
+            return (
+              <>
+                {item?.cancelType === '당일취소' ? (
+                  <CustomText
+                    style={{
+                      fontSize: 15,
+                      letterSpacing: -0.38,
+                      textAlign: 'center',
+                      color: Color.Black1000,
+                    }}
+                  >
+                    이용일 당일 취소로 환불규정에 따라
+                    <CustomText
+                      style={{
+                        color: Color.Error,
+                      }}
+                    >
+                      예약금액의 90%만 환불이 진행됩니다.
+                    </CustomText>
+                    예약을 취소하시겠습니까?
+                  </CustomText>
+                ) : (
+                  <CustomText
+                    style={{
+                      fontSize: 15,
+                      letterSpacing: -0.38,
+                      textAlign: 'center',
+                      color: Color.Black1000,
+                    }}
+                  >
+                    예약을 취소하시겠습니까?
+                  </CustomText>
+                )}
+              </>
+            );
+          },
+        },
+      }),
+    );
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ paddingVertical: 28 }}>
@@ -124,7 +179,7 @@ const ReservationList = () => {
                 </View>
                 <View style={{ marginLeft: 12 }}>
                   <CustomText style={{ fontSize: 17, fontWeight: '500', letterSpacing: -0.3, color: Color.Black1000 }}>
-                    롤리볼리볼링장
+                    {item?.placeName || ''}
                   </CustomText>
                 </View>
               </View>
@@ -132,7 +187,7 @@ const ReservationList = () => {
               <View style={{ marginTop: 16 }}>
                 <View>
                   <CustomText style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Point1000 }}>
-                    {item?.useYN === 'N' ? '이용전' : '이용완료'}
+                    {item?.stateText || ''}
                   </CustomText>
                 </View>
                 <View style={{ marginTop: 6 }}>
@@ -150,8 +205,8 @@ const ReservationList = () => {
               </View>
 
               <View style={{ marginTop: 16 }}>
-                {reservationSelectedTab.key === 'before' && (
-                  <CustomButton>
+                {reservationSelectedTab.key === 'before' && item?.cancelType !== '취소불가' && (
+                  <CustomButton onPress={() => onCancel(item)}>
                     <View
                       style={{ paddingTop: 12, paddingBottom: 11, backgroundColor: Color.Gray200, borderRadius: 5 }}
                     >
@@ -172,7 +227,7 @@ const ReservationList = () => {
 
                 {reservationSelectedTab.key === 'after' && (
                   <View style={{ flexDirection: 'row' }}>
-                    <CustomButton style={{ flex: 1 }}>
+                    <CustomButton style={{ flex: 1 }} onPress={() => onPlaceDetail(item)}>
                       <View
                         style={{
                           paddingTop: 12,
@@ -226,7 +281,7 @@ const ReservationList = () => {
                 )}
 
                 {reservationSelectedTab.key === 'cancel' && (
-                  <CustomButton>
+                  <CustomButton onPress={() => onPlaceDetail(item)}>
                     <View
                       style={{
                         paddingTop: 12,

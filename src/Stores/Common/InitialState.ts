@@ -113,7 +113,7 @@ interface AlertInfo {
   alertDialogType: string | null;
   alertDialogDataType: string | null;
   alertDialogTitle: string | null;
-  alertDialogMessage: string | null;
+  alertDialogMessage: string | Function | null;
   alertDialogParams: any;
 }
 

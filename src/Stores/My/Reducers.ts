@@ -198,6 +198,14 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         draft.reservationSelectedTab = data;
         break;
       }
+      case 'reservationDetail': {
+        draft.reservationDetail = data;
+        break;
+      }
+      case 'reservationCancelDetail': {
+        draft.reservationCancelDetail = data;
+        break;
+      }
 
       default:
         return draft;

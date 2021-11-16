@@ -6,6 +6,7 @@ import { SearchTypes } from '@/Stores/Search/Actions';
 import { NotificationTypes } from '@/Stores/Notification/Actions';
 import { MyTypes } from '@/Stores/My/Actions';
 import { PlaceTypes } from '@/Stores/Place/Actions';
+import { ReservationTypes } from '@/Stores/Reservation/Actions';
 
 // search
 import { fetchSearchAreaList, fetchSearchBowlingClubList } from '@/Sagas/SearchSaga';
@@ -62,6 +63,7 @@ import {
   fetchMyWithdraw,
   fetchMyReservationList,
   fetchMyReservationDetailInfo,
+  fetchMyReservationCancelDetailInfo,
 } from '@/Sagas/MySaga';
 
 import {
@@ -71,8 +73,13 @@ import {
   fetchPlaceSearchList,
   fetchPlaceTicketList,
 } from '@/Sagas/PlaceSaga';
-import { ReservationTypes } from '@/Stores/Reservation/Actions';
-import { fetchReservation, fetchReservationCardList, fetchReservationInfo } from '@/Sagas/ReservationSaga';
+
+import {
+  fetchReservation,
+  fetchReservationCardList,
+  fetchReservationInfo,
+  fetchReservationCancel,
+} from '@/Sagas/ReservationSaga';
 
 export default function* root() {
   yield all([
@@ -130,6 +137,7 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_WITHDRAW, fetchMyWithdraw),
     takeLatest(MyTypes.FETCH_MY_RESERVATION_LIST, fetchMyReservationList),
     takeLatest(MyTypes.FETCH_MY_RESERVATION_DETAIL_INFO, fetchMyReservationDetailInfo),
+    takeLatest(MyTypes.FETCH_MY_RESERVATION_CANCEL_DETAIL_INFO, fetchMyReservationCancelDetailInfo),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),
@@ -142,5 +150,6 @@ export default function* root() {
     takeLatest(ReservationTypes.FETCH_RESERVATION_INFO, fetchReservationInfo),
     takeLatest(ReservationTypes.FETCH_RESERVATION, fetchReservation),
     takeLatest(ReservationTypes.FETCH_RESERVATION_CARD_LIST, fetchReservationCardList),
+    takeLatest(ReservationTypes.FETCH_RESERVATION_CANCEL, fetchReservationCancel),
   ]);
 }

@@ -22,7 +22,7 @@ const PlaceDetailHeader = (props: HeaderProps) => {
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
 
-  console.log('isShow : ', isShow);
+  // console.log('isShow : ', isShow);
 
   const bgColor = Color.White;
 
