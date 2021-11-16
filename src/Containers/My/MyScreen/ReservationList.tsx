@@ -132,7 +132,7 @@ const ReservationList = () => {
               <View style={{ marginTop: 16 }}>
                 <View>
                   <CustomText style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Point1000 }}>
-                    {item?.useYN === 'N' ? '이용전' : '이용완료'}
+                    {item?.stateText || ''}
                   </CustomText>
                 </View>
                 <View style={{ marginTop: 6 }}>

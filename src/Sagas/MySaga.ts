@@ -650,7 +650,7 @@ export function* fetchMyReservationDetailInfo(data: any): any {
       yield put(
         MyActions.fetchMyReducer({
           type: 'reservationDetail',
-          data: response.data.notice,
+          data: response.data.payment,
         }),
       );
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));

@@ -1,47 +1,58 @@
-import React, { useEffect } from 'react';
-import { FlatList, Platform, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { FlatList, RefreshControl, View } from 'react-native';
 import { Color } from '@/Assets/Color';
-import { CommonState } from '@/Stores/Common/InitialState';
-import MyActions from '@/Stores/My/Actions';
-import TabMenu from '@/Components/TabMenu';
-import { MY_TAB_MENU } from '@/Containers/My/MyScreen/data';
-import { MyState } from '@/Stores/My/InitialState';
-import ReservationList from '@/Containers/My/MyScreen/ReservationList';
+
 import Header from '@/Components/Header';
-import CustomText from '@/Components/CustomText';
-import CustomButton from '@/Components/CustomButton';
-import InfoItem from '@/Containers/My/ReservationDetailScreen/InfoItem';
+
+import PlaceInfo from '@/Containers/My/ReservationDetailScreen/PlaceInfo';
+import ReservationInfo from '@/Containers/My/ReservationDetailScreen/ReservationInfo';
+import PaymentInfo from '@/Containers/My/ReservationDetailScreen/PaymentInfo';
 
 const ReservationDetailScreen = () => {
-  const dispatch = useDispatch();
-  const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const {
-    reservationSelectedTab = { title: '진행중', key: 'before' },
-    mySelectedTab = { title: '예약', selectKey: 'reservation' },
-    reservationListPage = { before: 1, after: 1, cancel: 1 },
-  } = useSelector((state: MyState) => state.my);
-
   const renderItem = (index: number) => {
     switch (index) {
       case 0: {
-        return <InfoItem />;
+        return (
+          <>
+            <View style={{ paddingTop: 28, paddingHorizontal: 24, backgroundColor: Color.White }}>
+              <PlaceInfo />
+            </View>
+            <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
+          </>
+        );
+      }
+      case 1: {
+        return (
+          <>
+            <View style={{ paddingHorizontal: 24, backgroundColor: Color.White }}>
+              <ReservationInfo />
+            </View>
+            <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
+          </>
+        );
+      }
+      case 2: {
+        return (
+          <View style={{ paddingHorizontal: 24, backgroundColor: Color.White }}>
+            <PaymentInfo />
+          </View>
+        );
       }
       default:
         return null;
     }
   };
   return (
-    <View style={{ flex: 1, backgroundColor: Color.Gray200 }}>
+    <View style={{ flex: 1 }}>
       <Header type={'back'} />
-      <View style={{ paddingTop: 28, backgroundColor: Color.White }}>
+      <View style={{ backgroundColor: Color.White, flex: 1 }}>
         <FlatList
           data={[0, 1, 2]}
           renderItem={({ index }) => renderItem(index)}
           initialNumToRender={3}
           maxToRenderPerBatch={7}
           windowSize={7}
-          contentContainerStyle={{ backgroundColor: Color.White, paddingHorizontal: 24 }}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </View>
