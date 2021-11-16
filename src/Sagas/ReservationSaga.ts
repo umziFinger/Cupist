@@ -1,42 +1,39 @@
 import { put, call } from 'redux-saga/effects';
 import CommonActions from '@/Stores/Common/Actions';
-import HomeActions from '@/Stores/Home/Actions';
+import ReservationActions from '@/Stores/Reservation/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
 
-export function* fetchHomeList(data: any): any {
+export function* fetchReservationInfo(data: any): any {
   try {
-    // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
     const payload = {
       ...data,
-      url: Config.HOME_URL,
+      url: `${Config.RESERVATION_URL}/${data.params.placeIdx}/ticket/${data.params.ticketInfoIdx}`,
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
-      yield put(HomeActions.fetchHomeReducer({ type: 'homeList', data: response.data }));
-      // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
+      yield put(ReservationActions.fetchReservationReducer({ type: 'reservationInfo', data: response.data }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
-    // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
-    console.log('occurred Error...fetchHomeList : ', e);
+    console.log('occurred Error...fetchReservationInfo : ', e);
   }
 }
 
-export function* fetchHomeDirectReservationList(data: any): any {
+export function* fetchReservation(data: any): any {
   try {
     const payload = {
       ...data,
-      url: Config.HOME_PLACE_URL,
+      url: `${Config.RESERVATION_URL}/${data.params.placeIdx}/ticket/${data.params.ticketInfoIdx}`,
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
-      yield put(HomeActions.fetchHomeReducer({ type: 'directReservationList', data: response.data }));
+      yield put(ReservationActions.fetchReservationReducer({ type: 'reservationInfo', data: response.data }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
-    console.log('occurred Error...fetchHomeDirectReservationList : ', e);
+    console.log('occurred Error...fetchReservation : ', e);
   }
 }

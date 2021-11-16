@@ -272,7 +272,7 @@ const DirectReservationArea = (props: PropTypes) => {
           </View>
         }
       />
-      {list.length > 0 && (
+      {list?.length > 0 && (
         <CustomButton onPress={() => navigate('SimpleLoginScreen')} style={{ paddingHorizontal: 20, marginTop: 20 }}>
           <View
             style={{

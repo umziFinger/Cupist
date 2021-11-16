@@ -40,6 +40,7 @@ import QnaDetailScreen from '@/Containers/More/QnaDetailScreen';
 import ServiceSettingScreen from '@/Containers/More/ServiceSettingScreen';
 import WithdrawScreen from '@/Containers/More/WithdrawScreen';
 import ReservationDetailScreen from '@/Containers/My/ReservationDetailScreen';
+import ReservationScreen from '@/Containers/Reservation/ReservationScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -77,6 +78,7 @@ export type MainStackParamList = {
   ServiceSettingScreen: undefined;
   WithdrawScreen: undefined;
   ReservationDetailScreen: undefined;
+  ReservationScreen: { placeIdx: number; ticketInfoIdx: number };
 };
 
 const Tab = createBottomTabNavigator();
@@ -137,6 +139,9 @@ const MainNavigator = () => {
 
       {/*  My */}
       <MainStack.Screen name="ReservationDetailScreen" component={ReservationDetailScreen} />
+
+      {/* Reservation */}
+      <MainStack.Screen name="ReservationScreen" component={ReservationScreen} />
     </MainStack.Navigator>
   );
 };

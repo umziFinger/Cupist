@@ -7,7 +7,15 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
   const { type, data } = actions.params;
   return produce(state, (draft) => {
     switch (type) {
-      case 'loginCheckYN': {
+      case 'reservationInfo': {
+        console.log('call reducer reservationInfo : ', data.paymentInfo);
+        draft.reservationInfo = data.paymentInfo;
+        break;
+      }
+
+      case 'reservationInfoInit': {
+        console.log('call reducer reservationInfoInit');
+        draft.reservationInfo = null;
         break;
       }
 
