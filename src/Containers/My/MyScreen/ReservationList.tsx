@@ -17,9 +17,11 @@ import { fetchMyReservationDetailInfo } from '@/Sagas/MySaga';
 const ReservationList = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { reservationSelectedTab = { title: '진행중', key: 'before' }, reservationList } = useSelector(
-    (state: MyState) => state.my,
-  );
+  const {
+    reservationSelectedTab = { title: '진행중', key: 'before' },
+    reservationList,
+    reservationListPage,
+  } = useSelector((state: MyState) => state.my);
 
   const emptyText = (key: reservationTabType['key']) => {
     switch (key) {
@@ -55,6 +57,16 @@ const ReservationList = () => {
         state: reservationSelectedTab.key,
       }),
     );
+  };
+
+  const onMore = () => {
+    const params = {
+      perPage: 10,
+      page: reservationListPage[reservationSelectedTab.key],
+      state: reservationSelectedTab.key,
+    };
+
+    if (reservationListPage[reservationSelectedTab.key] > 0) dispatch(MyActions.fetchMyReservationList(params));
   };
 
   const onReservationDetail = (item: any) => {
@@ -252,6 +264,8 @@ const ReservationList = () => {
         refreshing={false}
         onRefresh={() => onRefresh()}
         scrollEnabled
+        onEndReached={() => onMore()}
+        onEndReachedThreshold={0.8}
         ListEmptyComponent={() => (
           <View
             style={{
