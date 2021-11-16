@@ -1,17 +1,13 @@
 import React from 'react';
-import { FlatList, useWindowDimensions, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { useWindowDimensions, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
-import CustomButton from '@/Components/CustomButton';
-import { INFO_ITEM } from '@/Containers/My/ReservationDetailScreen/data';
 import { MyState } from '@/Stores/My/InitialState';
-import { inputMobileNumber, numberFormat } from '@/Components/Function';
+import { numberFormat } from '@/Components/Function';
 import { CommonState } from '@/Stores/Common/InitialState';
 
 const ReservationInfo = () => {
-  const { width } = useWindowDimensions();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { reservationDetail } = useSelector((state: MyState) => state.my);
   return (

@@ -37,6 +37,7 @@ export const INITIAL_STATE: MyState['my'] = {
   reservationListPage: { before: 1, after: 1, cancel: 1 },
   reservationSelectedTab: { title: '진행중', key: 'before' },
   reservationDetail: null,
+  reservationCancelDetail: null,
 };
 export interface MyState {
   my: {
@@ -70,6 +71,7 @@ export interface MyState {
     reservationListPage: reservationPageType;
     reservationSelectedTab: reservationTabType;
     reservationDetail: any;
+    reservationCancelDetail: any;
   };
 }
 export type qnaType =

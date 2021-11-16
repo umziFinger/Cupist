@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { Color } from '@/Assets/Color';
 
 import Header from '@/Components/Header';

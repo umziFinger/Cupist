@@ -21,8 +21,44 @@ const PlaceInfo = () => {
         data: {
           alertDialog: true,
           alertDialogType: 'choice',
-          alertDialogDataType: 'maxAttachFileCheck',
-          alertDialogTitle: '사진 첨부는 최대 5장까지 가능합니다',
+          alertDialogDataType: 'reservationCancel',
+          alertDialogMessage() {
+            return (
+              <>
+                {reservationDetail?.cancelType === '당일취소' ? (
+                  <CustomText
+                    style={{
+                      fontSize: 15,
+                      letterSpacing: -0.38,
+                      textAlign: 'center',
+                      color: Color.Black1000,
+                    }}
+                  >
+                    이용일 당일 취소로 환불규정에 따라
+                    <CustomText
+                      style={{
+                        color: Color.Error,
+                      }}
+                    >
+                      예약금액의 90%만 환불이 진행됩니다.
+                    </CustomText>
+                    예약을 취소하시겠습니까?
+                  </CustomText>
+                ) : (
+                  <CustomText
+                    style={{
+                      fontSize: 15,
+                      letterSpacing: -0.38,
+                      textAlign: 'center',
+                      color: Color.Black1000,
+                    }}
+                  >
+                    예약을 취소하시겠습니까?
+                  </CustomText>
+                )}
+              </>
+            );
+          },
         },
       }),
     );
@@ -43,7 +79,7 @@ const PlaceInfo = () => {
             {reservationDetail?.stateText}
           </CustomText>
         </View>
-        {reservationDetail?.stateText === '이용완료' && ( // TODO: 이용완료 -> 이용전으로 변경
+        {(reservationDetail?.cancelType === '당일취소' || reservationDetail?.cancelType === '취소가능') && ( // TODO: 이용완료 -> 이용전으로 변경
           <CustomButton onPress={() => onCancel()}>
             <View style={{ paddingVertical: 5, paddingHorizontal: 8, borderRadius: 3, backgroundColor: Color.Gray300 }}>
               <CustomText

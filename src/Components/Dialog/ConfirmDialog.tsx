@@ -22,7 +22,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
   const dispatch = useDispatch();
   const { item } = props;
   const { dataType, title, text } = item;
-  const { versionInfo, heightInfo, alertDialogParams } = useSelector((state: CommonState) => state.common);
+  const { versionInfo, heightInfo } = useSelector((state: CommonState) => state.common);
 
   const onConfirm = () => {
     switch (dataType) {
@@ -61,74 +61,81 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
     >
       <FlatList
         data={[0]}
-        ListHeaderComponent={() => (
-          <View
-            style={{
-              backgroundColor: Color.White,
-              borderTopLeftRadius: 24,
-              borderTopRightRadius: 24,
-              paddingHorizontal: 21.2,
-            }}
-          >
-            <View style={{ alignItems: 'center', marginTop: 36, marginBottom: 8 }}>
-              <CustomText
-                style={{
-                  color: Color.Black1000,
-                  fontSize: 19,
-                  letterSpacing: -0.48,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                }}
-              >
-                {title}
-              </CustomText>
-            </View>
-          </View>
-        )}
-        renderItem={() =>
-          text ? (
-            <View
-              style={{
-                backgroundColor: Color.White,
-                paddingBottom: 24,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <CustomText
-                style={{
-                  fontSize: 15,
-                  letterSpacing: -0.38,
-                  textAlign: 'center',
-                  color: Color.Black1000,
-                }}
-              >
-                {text}
-              </CustomText>
+        renderItem={() => {
+          return (
+            <>
+              {title && (
+                <View
+                  style={{
+                    backgroundColor: Color.White,
+                    borderTopLeftRadius: 3,
+                    borderTopRightRadius: 3,
+                  }}
+                >
+                  <View style={{ alignItems: 'center' }}>
+                    <CustomText
+                      style={{
+                        color: Color.Black1000,
+                        fontSize: 19,
+                        letterSpacing: -0.48,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {title}
+                    </CustomText>
+                  </View>
+                </View>
+              )}
+              {text ? (
+                <View
+                  style={{
+                    borderTopLeftRadius: 3,
+                    borderTopRightRadius: 3,
+                    backgroundColor: Color.White,
+                    paddingTop: 57,
+                    paddingBottom: 40,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <CustomText
+                    style={{
+                      fontSize: 13,
+                      letterSpacing: -0.2,
+                      textAlign: 'center',
+                      color: Color.Gray800,
+                    }}
+                  >
+                    {text}
+                  </CustomText>
 
-              {/* <View style={{ paddingLeft: 5 }}></View> */}
-            </View>
-          ) : (
-            <View style={{ paddingBottom: 24, backgroundColor: Color.White }} />
-          )
-        }
+                  {/* <View style={{ paddingLeft: 5 }}></View> */}
+                </View>
+              ) : (
+                <View style={{ backgroundColor: Color.White }} />
+              )}
+            </>
+          );
+        }}
         ListFooterComponent={() => (
-          <CustomButton onPress={() => onConfirm()}>
+          <CustomButton onPress={() => onConfirm()} effect={false}>
             <View
               style={{
                 backgroundColor: Color.Primary1000,
-                borderBottomLeftRadius: 24,
-                borderBottomRightRadius: 24,
-                paddingVertical: 21.5,
+                borderBottomLeftRadius: 3,
+                borderBottomRightRadius: 3,
+                paddingVertical: 15,
               }}
             >
               <CustomText
                 style={{
-                  color: Color.White,
-                  letterSpacing: -0.43,
-                  fontSize: 17,
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  letterSpacing: -0.25,
                   textAlign: 'center',
+                  color: Color.White,
                 }}
               >
                 확인

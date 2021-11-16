@@ -23,6 +23,7 @@ const { Types, Creators } = createActions({
   fetchMyWithdraw: ['params'],
   fetchMyReservationList: ['params'],
   fetchMyReservationDetailInfo: ['params'],
+  fetchMyReservationCancelDetailInfo: ['params'],
 });
 
 export const MyTypes = Types;

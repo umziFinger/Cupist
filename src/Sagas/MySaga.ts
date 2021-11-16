@@ -664,3 +664,31 @@ export function* fetchMyReservationDetailInfo(data: any): any {
     console.log('occurred Error...fetchMyReservationDetailInfo : ', e);
   }
 }
+
+export function* fetchMyReservationCancelDetailInfo(data: any): any {
+  try {
+    navigate('ReservationCancelDetailScreen');
+    const payload = {
+      ...data,
+      url: `${Config.MY_RESERVATION_URL}/${data.params.paymentIdx}/cancel`,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      console.log('예약 취소 상세: ', response.data);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'reservationCancelDetail',
+          data: response.data.payment,
+        }),
+      );
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyReservationCancelDetailInfo : ', e);
+  }
+}

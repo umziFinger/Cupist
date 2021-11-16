@@ -202,6 +202,10 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         draft.reservationDetail = data;
         break;
       }
+      case 'reservationCancelDetail': {
+        draft.reservationCancelDetail = data;
+        break;
+      }
 
       default:
         return draft;
