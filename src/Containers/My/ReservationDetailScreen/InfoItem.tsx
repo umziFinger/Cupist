@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import { Color } from '@/Assets/Color';
@@ -12,7 +12,7 @@ import CustomButton from '@/Components/CustomButton';
 import { INFO_ITEM } from '@/Containers/My/ReservationDetailScreen/data';
 
 const InfoItemScreen = () => {
-  const {width}=
+  const { width } = useWindowDimensions();
   return (
     <>
       <View
@@ -94,7 +94,7 @@ const InfoItemScreen = () => {
                 paddingBottom: 16,
                 paddingLeft: 16,
                 paddingRight: 14,
-                width:
+                width,
               }}
             >
               <View style={{ width: 20, height: 20 }}>
