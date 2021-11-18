@@ -40,6 +40,7 @@ const ReservationList = () => {
   };
   useEffect(() => {
     dispatch(MyActions.fetchMyReducer({ type: 'reservationListPageInit' }));
+    console.log('SelectedTabreservationSelectedTabreservationSelectedTab : ', reservationSelectedTab);
   }, []);
 
   const onRefresh = () => {
@@ -138,7 +139,7 @@ const ReservationList = () => {
       </View>
 
       <FlatList
-        data={reservationList[reservationSelectedTab.key]}
+        data={reservationList[reservationSelectedTab?.key]}
         renderItem={({ item, index }) => (
           <CustomButton onPress={() => onReservationDetail(item)}>
             <View
