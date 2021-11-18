@@ -1,6 +1,6 @@
 import { createReducer } from 'reduxsauce';
 import produce from 'immer';
-import { INITIAL_STATE, reservationPageType, reservationTabType } from '@/Stores/My/InitialState';
+import { INITIAL_STATE, reservationTabType } from '@/Stores/My/InitialState';
 import { MyTypes } from './Actions';
 
 export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
@@ -13,7 +13,7 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'myReviewInit': {
         draft.myReviewPage = data;
-        draft.myReviewList = [];
+        draft.myReviewList = INITIAL_STATE.myReviewList;
         break;
       }
 
@@ -24,9 +24,10 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'myReviewList': {
         if (actions.params.page === 1) {
-          draft.myReviewList = data;
+          draft.myReviewList.writeableReview = data.writeableReview;
+          draft.myReviewList.writeReview = data.writeReview;
         } else {
-          draft.myReviewList.push(data !== '' ? data : []);
+          draft.myReviewList.writeReview.push(data.writeReview !== '' ? data.writeReview : []);
         }
         break;
       }
@@ -204,6 +205,20 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
       }
       case 'reservationCancelDetail': {
         draft.reservationCancelDetail = data;
+        break;
+      }
+
+      case 'writeReviewInfo': {
+        draft.writeReviewInfo = data;
+        break;
+      }
+
+      case 'setWriteReview': {
+        const key = data.key;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        draft.writeReviewInfo[key] = data.value;
+        // console.log(draft.writeReviewInfo);
         break;
       }
 

@@ -12,7 +12,6 @@ import { MY_RESERVATION_TAB_MENU } from '@/Containers/My/MyScreen/data';
 import { MyState, reservationTabType } from '@/Stores/My/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
-import { fetchMyReservationDetailInfo } from '@/Sagas/MySaga';
 import CommonActions from '@/Stores/Common/Actions';
 
 const ReservationList = () => {

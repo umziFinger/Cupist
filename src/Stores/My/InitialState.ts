@@ -1,6 +1,11 @@
+import { number } from 'prop-types';
+
 export const INITIAL_STATE: MyState['my'] = {
   myReviewPage: 1,
-  myReviewList: [],
+  myReviewList: {
+    writeReview: [],
+    writeableReview: [],
+  },
   myCouponPage: 1,
   myCouponList: [],
   myPointList: [],
@@ -38,11 +43,23 @@ export const INITIAL_STATE: MyState['my'] = {
   reservationSelectedTab: { title: '진행중', key: 'before' },
   reservationDetail: null,
   reservationCancelDetail: null,
+  writeReviewInfo: {
+    paymentIdx: 0,
+    placeIdx: 0,
+    placeName: '',
+    ticketName: '',
+    star: 0,
+    content: '',
+    files: '',
+  }, // 작성 가능한 리뷰 데이터 담는 곳
 };
 export interface MyState {
   my: {
     myReviewPage: number;
-    myReviewList: any[];
+    myReviewList: {
+      writeReview: any[];
+      writeableReview: any[];
+    };
     myCouponPage: number;
     myCouponList: any[];
     myPointList: any[];
@@ -72,6 +89,15 @@ export interface MyState {
     reservationSelectedTab: reservationTabType;
     reservationDetail: any;
     reservationCancelDetail: any;
+    writeReviewInfo: {
+      paymentIdx: number;
+      placeIdx: number;
+      placeName: string;
+      ticketName: string;
+      star: number;
+      content: string;
+      files: any;
+    };
   };
 }
 export type qnaType =
