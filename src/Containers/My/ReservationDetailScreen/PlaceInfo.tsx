@@ -59,6 +59,7 @@ const PlaceInfo = () => {
               </>
             );
           },
+          alertDialogParams: { reservationIdx: reservationDetail.idx },
         },
       }),
     );

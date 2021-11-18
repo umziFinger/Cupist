@@ -15,7 +15,7 @@ import { MyState } from '@/Stores/My/InitialState';
 const ReviewList = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { myReviewPage } = useSelector((state: MyState) => state.my);
+  const { myReviewPage, myReviewList } = useSelector((state: MyState) => state.my);
   const onRefresh = () => {
     const params = {
       perPage: 10,
@@ -43,20 +43,28 @@ const ReviewList = () => {
     switch (index) {
       case 0: {
         return (
-          <>
-            <View style={{ paddingTop: 30, paddingHorizontal: 24, backgroundColor: Color.White, paddingBottom: 30 }}>
-              <WriteableReviewItem />
-            </View>
-            <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-          </>
+          <View>
+            {myReviewList?.writeableReview?.length > 0 && (
+              <>
+                <View
+                  style={{ paddingTop: 30, paddingHorizontal: 24, backgroundColor: Color.White, paddingBottom: 30 }}
+                >
+                  <WriteableReviewItem />
+                </View>
+                <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
+              </>
+            )}
+          </View>
         );
       }
       case 1: {
         return (
           <>
-            <View style={{ backgroundColor: Color.White, paddingTop: 30 }}>
-              <WriteReviewItem />
-            </View>
+            {myReviewList?.writeReview?.length > 0 && (
+              <View style={{ backgroundColor: Color.White, paddingTop: 30 }}>
+                <WriteReviewItem />
+              </View>
+            )}
           </>
         );
       }
@@ -68,59 +76,60 @@ const ReviewList = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <FlatList
-        data={[0, 1]}
-        renderItem={({ index }) => renderItem(index)}
-        keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={7}
-        maxToRenderPerBatch={10}
-        windowSize={7}
-        showsVerticalScrollIndicator={false}
-        refreshing={false}
-        onRefresh={() => onRefresh()}
-        scrollEnabled
-        onEndReached={() => onMore()}
-        onEndReachedThreshold={0.8}
-        ListEmptyComponent={() => (
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: Color.White,
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}
-          >
-            <View style={{ width: 60, height: 60, marginTop: 120 }}>
-              <FastImage
-                style={{ width: '100%', height: '100%' }}
-                source={require('@/Assets/Images/Common/emptyReview.png')}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            </View>
-            <View style={{ marginTop: 8 }}>
-              <CustomText
-                style={{
-                  fontSize: 14,
-                  fontWeight: '500',
-                  letterSpacing: -0.25,
-                  textAlign: 'center',
-                  color: Color.Gray400,
-                }}
-              >
-                {`작성한 리뷰가 없습니다.\n 볼링장 이용 후 리뷰를 남겨보세요!`}
+      {myReviewList?.writeReview?.length > 0 || myReviewList?.writeableReview?.length > 0 ? (
+        <FlatList
+          data={[0, 1]}
+          renderItem={({ index }) => renderItem(index)}
+          keyExtractor={(item, index) => index.toString()}
+          initialNumToRender={7}
+          maxToRenderPerBatch={10}
+          windowSize={7}
+          showsVerticalScrollIndicator={false}
+          refreshing={false}
+          onRefresh={() => onRefresh()}
+          scrollEnabled
+          onEndReached={() => onMore()}
+          onEndReachedThreshold={0.8}
+          ListFooterComponent={<View style={{ paddingBottom: heightInfo.subBottomHeight }} />}
+        />
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: Color.White,
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}
+        >
+          <View style={{ width: 60, height: 60, marginTop: 120 }}>
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={require('@/Assets/Images/Common/emptyReview.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </View>
+          <View style={{ marginTop: 8 }}>
+            <CustomText
+              style={{
+                fontSize: 14,
+                fontWeight: '500',
+                letterSpacing: -0.25,
+                textAlign: 'center',
+                color: Color.Gray400,
+              }}
+            >
+              {`작성한 리뷰가 없습니다.\n 볼링장 이용 후 리뷰를 남겨보세요!`}
+            </CustomText>
+          </View>
+          <CustomButton onPress={() => navigate('MyAroundScreen')}>
+            <View style={{ marginTop: 24 }}>
+              <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Point1000 }}>
+                내 주변 볼링장 보기
               </CustomText>
             </View>
-            <CustomButton onPress={() => navigate('MyAroundScreen')}>
-              <View style={{ marginTop: 24 }}>
-                <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Point1000 }}>
-                  내 주변 볼링장 보기
-                </CustomText>
-              </View>
-            </CustomButton>
-          </View>
-        )}
-        ListFooterComponent={<View style={{ paddingBottom: heightInfo.subBottomHeight }} />}
-      />
+          </CustomButton>
+        </View>
+      )}
     </View>
   );
 };
