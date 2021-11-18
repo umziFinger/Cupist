@@ -10,8 +10,6 @@ import { Color } from '@/Assets/Color';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { AuthState } from '@/Stores/Auth/InitialState';
-import CustomButton from '@/Components/CustomButton';
-import { navigate } from '@/Services/NavigationService';
 import 'moment/locale/ko';
 import CalendarSlider from '@/Containers/Home/HomeScreen/CalendarSlider';
 import DirectReservationArea from './DirectReservationArea';
@@ -26,7 +24,7 @@ import PrepaymentPriceArea from '@/Containers/Home/HomeScreen/PrepaymentPriceAre
 import HotArea from '@/Containers/Home/HomeScreen/HotArea';
 import EventArea from '@/Containers/Home/HomeScreen/EventArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
-import { scrollCalendarHandler, scrollHandler } from '@/Components/Function';
+import { scrollCalendarHandler } from '@/Components/Function';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -92,7 +90,7 @@ const HomeScreen = ({ route }: HomeProps) => {
   };
 
   const positionUpdate = async () => {
-    const myPosition = await LocationMyPosition();
+    const myPosition: any = await LocationMyPosition();
     console.log('myPosition is ', myPosition);
     const params = {
       date: moment(calendarDate).format('YYYY/MM/DD'),
@@ -124,7 +122,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     setIsShow(result.isShow);
   };
 
-  const renderItem = ({ item }: { item: any; index: number }) => {
+  const renderItem = (item: any) => {
     switch (item) {
       case 0: {
         return (
@@ -193,7 +191,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       <Header type="home" isShow={isShow} />
       <AnimatedFlatList
         data={[0, 1, 2, 3, 4, 5, 6]}
-        renderItem={renderItem}
+        renderItem={({ item }): any => renderItem(item)}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}
         maxToRenderPerBatch={7}
