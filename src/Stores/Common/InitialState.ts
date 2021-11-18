@@ -1,4 +1,4 @@
-export const INITIAL_STATE: CommonState['common'] = {
+export const INITIAL_STATE = {
   isOpenQnaTypeRBS: false,
   isOpenTimeFilterRBS: false,
   isOpenDirectReservationRBS: false,
@@ -47,6 +47,7 @@ export const INITIAL_STATE: CommonState['common'] = {
   currentRBS: '',
   isOpenKeyboard: false,
   homeTabRefreshYN: 'Y',
+  appCodePushVersion: '',
 };
 
 export interface CommonState {
@@ -90,6 +91,7 @@ export interface CommonState {
     currentRBS: string | null;
     isOpenKeyboard: boolean | false;
     homeTabRefreshYN: typeYN;
+    appCodePushVersion: string | '';
     isConnected: boolean | false;
     currentLocationStatus: any;
   };

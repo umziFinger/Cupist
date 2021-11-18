@@ -54,6 +54,7 @@ const ReservationRBS = () => {
         };
         console.log('params : ', params);
         dispatch(ReservationActions.fetchReservationSimplePayment(params));
+        dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
       } else {
         console.log('일반결제 진행합니다. : ', DATA_PAYMENT_METHOD[paymentMethod]);
       }

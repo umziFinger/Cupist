@@ -4,14 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import RNBootSplash from 'react-native-bootsplash';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { Color } from '@/Assets/Color';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { AuthState } from '@/Stores/Auth/InitialState';
-import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import 'moment/locale/ko';
@@ -184,63 +182,17 @@ const HomeScreen = ({ route }: HomeProps) => {
           </View>
         );
       }
-      case 7: {
-        return (
-          <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <CustomButton onPress={() => onPressTestLogin()}>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingVertical: 20,
-                  backgroundColor: Color.Gray300,
-                }}
-              >
-                <CustomText style={{ color: '#333', fontSize: 14 }}>{calendarDate} 테스트 로그인</CustomText>
-              </View>
-            </CustomButton>
-          </View>
-        );
-      }
 
-      case 8: {
-        return (
-          <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <CustomButton onPress={() => navigate('JoinStepThreeScreen')}>
-              {/* <CustomButton onPress={() => RNBootSplash.show({ fade: true })}> */}
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingVertical: 20,
-                  backgroundColor: Color.Gray300,
-                }}
-              >
-                <CustomText style={{ color: '#333', fontSize: 14 }}>
-                  {calendarDate} 테스트 상주 볼링장 바로가기
-                </CustomText>
-              </View>
-            </CustomButton>
-          </View>
-        );
-      }
       default:
         return null;
     }
-  };
-
-  const onPressTestLogin = () => {
-    console.log('onPressTestLogin');
-    navigate('SimpleLoginScreen');
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="home" isShow={isShow} />
       <AnimatedFlatList
-        data={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
+        data={[0, 1, 2, 3, 4, 5, 6]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}

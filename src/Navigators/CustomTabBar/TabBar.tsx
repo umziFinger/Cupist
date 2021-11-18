@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import { getBottomSpace, isIphoneX } from 'react-native-iphone-x-helper';
 import { useDispatch, useSelector } from 'react-redux';
 
+import RNBootSplash from 'react-native-bootsplash';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { DATA_MENUS } from '@/Navigators/CustomTabBar/data';
@@ -23,6 +24,10 @@ const TabBar = (props: TabBarProps) => {
   const { state, descriptors, navigation } = props;
   const { userIdx } = useSelector((authState: AuthState) => authState.auth);
   const [backHandlerClickCount, setBackHandlerClickCount] = useState(0);
+
+  useEffect(() => {
+    RNBootSplash.hide();
+  }, []);
 
   useEffect(() => {
     // const onBackButtonPressAndroid = () => {
