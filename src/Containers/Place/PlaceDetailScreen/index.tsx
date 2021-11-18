@@ -63,6 +63,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   useEffect(() => {
     console.log('didUpdate detail');
     dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
   }, [calendarDate]);
 
   const handleScroll = (event: any) => {
@@ -213,7 +214,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
                 <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
-                  {moment(selectedTicket?.startDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
+                  {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
                   {selectedTicket?.endTime.substr(0, 5)}
                 </CustomText>
               </View>

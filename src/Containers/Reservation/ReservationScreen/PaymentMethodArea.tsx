@@ -62,8 +62,6 @@ const PaymentMethodArea = (props: PropTypes) => {
     dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentMethod', data: value }));
   };
 
-  console.log('myCardList : ', list);
-
   return (
     <View style={{ flex: 1 }}>
       <View

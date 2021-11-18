@@ -80,6 +80,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+  <key>NMFClientId</key>
+  <string>je1t9qe3z7</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

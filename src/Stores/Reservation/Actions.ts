@@ -6,6 +6,7 @@ const { Types, Creators } = createActions({
   fetchReservation: ['params'],
   fetchReservationCardList: ['params'],
   fetchReservationCancel: ['params'],
+  fetchReservationSimplePayment: ['params'],
 });
 
 export const ReservationTypes = Types;

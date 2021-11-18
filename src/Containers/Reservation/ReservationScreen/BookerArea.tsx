@@ -8,6 +8,7 @@ import { Color } from '@/Assets/Color';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import { numberFormat } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
@@ -20,6 +21,7 @@ const BookerArea = (props: PropTypes) => {
 
   const onPressEdit = () => {
     console.log('onPressEdit');
+    navigate('EditBookerScreen');
   };
 
   return (

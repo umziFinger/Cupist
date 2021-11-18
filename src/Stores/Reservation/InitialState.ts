@@ -5,6 +5,10 @@ export const INITIAL_STATE = {
   paymentType: '',
   selcetedCardIdx: -1,
   paymentMethod: -1,
+  personCount: 1,
+  shoesCount: 0,
+  paymentInfo: null,
+  paymentResult: null,
 };
 
 export interface ReservationState {
@@ -15,5 +19,9 @@ export interface ReservationState {
     paymentType: string | '';
     selcetedCardIdx: number | -1;
     paymentMethod: number | -1;
+    personCount: number | 1;
+    shoesCount: number | 0;
+    paymentInfo: any;
+    paymentResult: any;
   };
 }

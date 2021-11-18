@@ -6,20 +6,22 @@ import CommonActions from '@/Stores/Common/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 import RootNavigator from '@/Navigators/RootNavigator';
 import Dialog from '@/Components/Dialog';
-// import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 import Toast from '@/Components/Toast';
 import Loading from '@/Components/Loading';
 import AgreeDetailScreen from '../Auth/AgreeDetailScreen';
 
 import GoogleLoginInitial from '@/Components/Login/SocialLogin/GoogleLoginInitial';
+import RootCodePush from './RootCodePush';
+// import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 // import RootCheckAppVersion from './RootCheckAppVersion';
 // import RootDynamicLink from './RootDynamicLink';
-import RootCodePush from './RootCodePush';
 // import RootFcm from '@/Containers/Root/RootFcm';
 
 import { NotificationRequest } from '@/Components/Permission/Notification';
 import TimeFilterRBS from '@/Components/RBS/Home/TimeFilterRBS';
 import QnaTypeRBS from '@/Components/RBS/Qna/QnaTypeRBS';
+import ReservationRBS from '@/Components/RBS/Reservation/ReservationRBS';
+import DirectReservationRBS from '@/Components/RBS/Home/DirectReservationRBS';
 
 LogBox.ignoreLogs([
   'interpolate() was renamed to interpolateNode()',
@@ -46,6 +48,7 @@ const RootScreen = () => {
     isOpenTimeFilterRBS,
     isOpenDirectReservationRBS,
     isOpenQnaTypeRBS,
+    isOpenReservationRBS,
   } = useSelector((state: CommonState) => state.common);
 
   useEffect(() => {
@@ -65,8 +68,8 @@ const RootScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log('RBSheet Flag State : ', isOpenTimeFilterRBS, isOpenDirectReservationRBS);
-  }, [isOpenTimeFilterRBS, isOpenDirectReservationRBS]);
+    console.log('RBSheet Flag State : ', isOpenTimeFilterRBS, isOpenDirectReservationRBS, isOpenReservationRBS);
+  }, [isOpenTimeFilterRBS, isOpenDirectReservationRBS, isOpenReservationRBS]);
 
   return (
     <>
@@ -94,6 +97,8 @@ const RootScreen = () => {
 
       {isOpenTimeFilterRBS && <TimeFilterRBS />}
       {isOpenQnaTypeRBS && <QnaTypeRBS />}
+      {isOpenDirectReservationRBS && <DirectReservationRBS />}
+      {isOpenReservationRBS && <ReservationRBS />}
       {/* {isOpenLoginRBS && <LoginScreen />} */}
       {/* {isOpenRepairNotificationRBS && <RepairNotificationScreen item={restorationInfo} />} */}
       {/* {isOpenMyAddressRBS && <MyAddressRBS />} */}

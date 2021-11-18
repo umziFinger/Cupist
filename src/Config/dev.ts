@@ -102,6 +102,7 @@ const dev = {
   RESERVATION_URL: 'reservation',
   RESERVATION_CARD_URL: 'reservation/card',
   RESERVATION_CANCEL_URL: 'reservation/cancel',
+  RESERVATION_PAYMENT_CARD_URL: 'reservation/payment/card',
 };
 
 export default dev;

@@ -14,6 +14,7 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.isOpenDirectReservationRBS = state.currentRBS === 'directReservation';
         draft.isOpenAgreeDetailRBS = state.currentRBS === 'agreeDetail';
         draft.isOpenQnaTypeRBS = state.currentRBS === 'qnaType';
+        draft.isOpenReservationRBS = state.currentRBS === 'reservation';
         break;
       }
       // RBS 추가 시 모두 추가해주세요.
@@ -22,6 +23,7 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.isOpenDirectReservationRBS = false;
         draft.isOpenAgreeDetailRBS = false;
         draft.isOpenQnaTypeRBS = false;
+        draft.isOpenReservationRBS = false;
         break;
       }
 
@@ -44,6 +46,11 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
       case 'isOpenAgreeDetailRBS': {
         draft.isOpenAgreeDetailRBS = data;
         draft.currentRBS = data ? 'agreeDetail' : state.currentRBS;
+        break;
+      }
+      case 'isOpenReservationRBS': {
+        draft.isOpenReservationRBS = data;
+        draft.currentRBS = data ? 'reservation' : state.currentRBS;
         break;
       }
 

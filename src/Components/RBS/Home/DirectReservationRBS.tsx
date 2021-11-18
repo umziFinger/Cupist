@@ -2,14 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { useWindowDimensions, View } from 'react-native';
+import moment from 'moment';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 import CustomText from '@/Components/CustomText';
+import PlaceActions from '@/Stores/Place/Actions';
+import { HomeState } from '@/Stores/Home/InitialState';
 
 const DirectReservationRBS = () => {
   const dispatch = useDispatch();
   const { width, height } = useWindowDimensions();
   const { heightInfo, isOpenDirectReservationRBS } = useSelector((state: CommonState) => state.common);
+  const { calendarDate } = useSelector((state: HomeState) => state.home);
   const RBSheetRef = useRef<any>();
 
   useEffect(() => {
@@ -17,6 +21,10 @@ const DirectReservationRBS = () => {
       RBSheetRef?.current.open();
     }
   }, [isOpenDirectReservationRBS]);
+
+  useEffect(() => {
+    dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
+  }, []);
 
   return (
     <RBSheet

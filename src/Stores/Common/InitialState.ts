@@ -1,6 +1,8 @@
 export const INITIAL_STATE: CommonState['common'] = {
+  isOpenQnaTypeRBS: false,
   isOpenTimeFilter: false,
   isOpenDirectReservationRBS: false,
+  isOpenReservationRBS: false,
   isLoading: false,
   isSkeleton: false,
   alertDialog: false,
@@ -42,7 +44,6 @@ export const INITIAL_STATE: CommonState['common'] = {
   currentRBS: '',
   isOpenKeyboard: false,
   homeTabRefreshYN: 'Y',
-  isOpenQnaTypeRBS: false,
 };
 type typeYN = 'Y' | 'N';
 export interface CommonState {
@@ -50,6 +51,7 @@ export interface CommonState {
     isOpenQnaTypeRBS: boolean | false;
     isOpenTimeFilterRBS: boolean | false;
     isOpenDirectReservationRBS: boolean | false;
+    isOpenReservationRBS: boolean | false;
     isLoading: boolean | false;
     isSkeleton: boolean | false;
     alertDialog: AlertInfo;

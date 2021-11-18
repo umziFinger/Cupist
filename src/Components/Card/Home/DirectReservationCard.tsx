@@ -1,24 +1,27 @@
 import React from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   item: any;
 }
 
 const DirectReservationCard = (props: PropTypes) => {
+  const dispatch = useDispatch();
   const { item } = props;
   const { userIdx } = useSelector((state: AuthState) => state.auth);
 
   const onPressReservation = () => {
     console.log('onPressReservation');
     console.log('rv item : ', item);
+    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenDirectReservationRBS', data: true }));
   };
 
   const onPressDibs = () => {
@@ -98,7 +101,7 @@ const DirectReservationCard = (props: PropTypes) => {
           }}
         >
           <View>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item.type}</CustomText>
+            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item.ticketName}</CustomText>
           </View>
           <View style={{ height: 9, width: 1, backgroundColor: Color.Gray400, marginHorizontal: 6 }} />
           <View style={{ flex: 1 }}>

@@ -7,6 +7,7 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import { numberFormat } from '@/Components/Function';
+import { HomeState } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   item: any;
@@ -15,6 +16,7 @@ interface PropTypes {
 const DefaultInfoArea = (props: PropTypes) => {
   const { item } = props;
   const { placeDetail, selectedTicket } = useSelector((state: PlaceState) => state.place);
+  const { calendarDate } = useSelector((state: HomeState) => state.home);
   const place: any = placeDetail?.place || {};
 
   return (
@@ -55,7 +57,7 @@ const DefaultInfoArea = (props: PropTypes) => {
           <View style={{ flexDirection: 'row' }}>
             <View style={{ justifyContent: 'center' }}>
               <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, fontWeight: '500' }}>
-                {moment(selectedTicket?.startDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
+                {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
                 {selectedTicket?.endTime.substr(0, 5)}
               </CustomText>
             </View>

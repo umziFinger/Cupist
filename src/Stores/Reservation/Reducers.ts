@@ -33,6 +33,9 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
       // 간편결제 | 다른 결제수단
       case 'paymentType': {
         console.log('call reducer paymentType : ', data);
+        if (data === 'simple') {
+          draft.paymentMethod = -1;
+        }
         draft.paymentType = data;
         break;
       }
@@ -47,6 +50,36 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
       case 'paymentMethod': {
         console.log('call reducer paymentMethod : ', data);
         draft.paymentMethod = data;
+        break;
+      }
+
+      case 'personCount': {
+        console.log('personCount : ', data);
+        draft.personCount = data;
+        break;
+      }
+
+      case 'shoesCount': {
+        console.log('shoesCount : ', data);
+        draft.shoesCount = data;
+        break;
+      }
+
+      case 'paymentInfo': {
+        console.log('paymentInfo : ', data.payment);
+        draft.paymentInfo = data.payment;
+        break;
+      }
+
+      case 'paymentInfoInit': {
+        console.log('call reducer paymentInfoInit');
+        draft.paymentInfo = null;
+        break;
+      }
+
+      case 'paymentResult': {
+        console.log('call reducer paymentResult : ', data.payment);
+        draft.paymentResult = data.payment;
         break;
       }
 

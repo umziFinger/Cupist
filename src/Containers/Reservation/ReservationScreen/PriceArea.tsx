@@ -16,36 +16,49 @@ interface PropTypes {
 const PriceArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { item } = props;
-  const { totalPrice } = useSelector((state: ReservationState) => state.reservation);
-  const [personCount, setPersonCount] = useState<number>(1);
-  const [shoesCount, setShoesCount] = useState<number>(0);
+  const { totalPrice, personCount, shoesCount } = useSelector((state: ReservationState) => state.reservation);
+  // const [personCount, setPersonCount] = useState<number>(1);
+  // const [shoesCount, setShoesCount] = useState<number>(0);
+
+  useEffect(() => {
+    dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: 1 }));
+    dispatch(ReservationActions.fetchReservationReducer({ type: 'shoesCount', data: 0 }));
+    return () => {
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: 1 }));
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'shoesCount', data: 0 }));
+    };
+  }, []);
 
   useEffect(() => {
     onChangeTotalPrice();
   }, [item, personCount, shoesCount]);
 
   const onChangeTotalPrice = () => {
-    const tempPrice = numberFormat(item?.salePrice * personCount + item?.shoesPrice * shoesCount);
+    const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
     dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
   };
 
   const onPressPersonCount = (type: string) => {
-    if (type === 'plus') setPersonCount(personCount + 1);
+    if (type === 'plus') {
+      console.log(personCount);
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: personCount + 1 }));
+    }
     if (type === 'minus') {
       if (personCount === 1) {
         return;
       }
-      setPersonCount(personCount - 1);
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: personCount - 1 }));
     }
   };
 
   const onPressShoesCount = (type: string) => {
-    if (type === 'plus') setShoesCount(shoesCount + 1);
+    if (type === 'plus')
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'shoesCount', data: shoesCount + 1 }));
     if (type === 'minus') {
       if (shoesCount === 0) {
         return;
       }
-      setShoesCount(shoesCount - 1);
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'shoesCount', data: shoesCount - 1 }));
     }
   };
 
@@ -226,12 +239,16 @@ const PriceArea = (props: PropTypes) => {
             </CustomText>
           </View>
           <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: 'bold' }}>{totalPrice}원</CustomText>
+            <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: 'bold' }}>
+              {numberFormat(totalPrice)}원
+            </CustomText>
           </View>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 24 }}>
           <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Point1000, fontSize: 18, fontWeight: 'bold' }}>{totalPrice}원</CustomText>
+            <CustomText style={{ color: Color.Point1000, fontSize: 18, fontWeight: 'bold' }}>
+              {numberFormat(totalPrice)}원
+            </CustomText>
           </View>
         </View>
       </View>
