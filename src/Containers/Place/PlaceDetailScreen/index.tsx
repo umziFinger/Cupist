@@ -172,7 +172,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'placeDetail'} isShow={isShowTopCalendar} />
       <AnimatedFlatList
-        data={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
+        data={[0, 1, 2, 3, 4, 5]}
         ref={animatedFlatRef}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}

@@ -201,6 +201,11 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'appCodePushVersion': {
+        draft.appCodePushVersion = data;
+        break;
+      }
+
       default:
         return draft;
     }

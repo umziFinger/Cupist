@@ -10,8 +10,6 @@ import Toast from '@/Components/Toast';
 import Loading from '@/Components/Loading';
 import AgreeDetailScreen from '../Auth/AgreeDetailScreen';
 
-import GoogleLoginInitial from '@/Components/Login/SocialLogin/GoogleLoginInitial';
-import RootCodePush from './RootCodePush';
 // import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 // import RootCheckAppVersion from './RootCheckAppVersion';
 // import RootDynamicLink from './RootDynamicLink';
@@ -29,6 +27,7 @@ LogBox.ignoreLogs([
   'If you want to use Reanimated 2 then go through our installation steps',
   'Warning: Overriding previous layout animation with new one before the first began',
   'new NativeEventEmitter()',
+  'Deprecation warning: value provided is not in a recognized RFC2822 or ISO format',
 ]);
 
 const RootScreen = () => {
@@ -56,12 +55,6 @@ const RootScreen = () => {
     AsyncStorage.getItem('splashStatus').then((r) => console.log('rootscreen splashStatus', r));
     dispatch(CommonActions.fetchInitialHandler());
 
-    // 알림 권한 없으면 요청 후 토큰 업데이트
-    NotificationRequest();
-
-    // 구글 로그인 초기화
-    GoogleLoginInitial();
-
     return () => {
       dispatch(CommonActions.fetchInitialHandler());
     };
@@ -87,23 +80,19 @@ const RootScreen = () => {
         />
       )}
       {alertToast && <Toast position={alertToastPosition} message={alertToastMessage} />}
+
       {/* <RootFcm /> */}
-      <RootCodePush />
+      {/* <RootCodePush /> */}
       {/* {checkSplash && <RootCodePush />} */}
-      {isOpenAgreeDetailRBS && <AgreeDetailScreen />}
       {/** 앱버전체크(realDB) 리스너 컴포넌트 * */}
       {/* <RootCheckAppVersion /> */}
       {/* <RootDynamicLink /> */}
 
+      {isOpenAgreeDetailRBS && <AgreeDetailScreen />}
       {isOpenTimeFilterRBS && <TimeFilterRBS />}
       {isOpenQnaTypeRBS && <QnaTypeRBS />}
       {isOpenDirectReservationRBS && <DirectReservationRBS />}
       {isOpenReservationRBS && <ReservationRBS />}
-      {/* {isOpenLoginRBS && <LoginScreen />} */}
-      {/* {isOpenRepairNotificationRBS && <RepairNotificationScreen item={restorationInfo} />} */}
-      {/* {isOpenMyAddressRBS && <MyAddressRBS />} */}
-      {/* {isOpenSearchAddressRBS && <SearchAddressRBS />} */}
-      {/* <AuthRBSheet /> */}
     </>
   );
 };

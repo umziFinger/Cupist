@@ -105,7 +105,7 @@ export function* fetchReservationSimplePayment(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(ReservationActions.fetchReservationReducer({ type: 'paymentResult', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      yield put(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
+      // yield put(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
       navigate('PaymentResultScreen');
     } else {
       yield put(CommonActions.fetchErrorHandler(response));

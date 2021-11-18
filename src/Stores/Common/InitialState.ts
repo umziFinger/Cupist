@@ -44,6 +44,7 @@ export const INITIAL_STATE: CommonState['common'] = {
   currentRBS: '',
   isOpenKeyboard: false,
   homeTabRefreshYN: 'Y',
+  appCodePushVersion: '',
 };
 type typeYN = 'Y' | 'N';
 export interface CommonState {
@@ -87,6 +88,7 @@ export interface CommonState {
     currentRBS: string | null;
     isOpenKeyboard: boolean | false;
     homeTabRefreshYN: typeYN;
+    appCodePushVersion: string | '';
   };
 }
 
