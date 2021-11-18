@@ -1,6 +1,6 @@
-export const INITIAL_STATE: CommonState['common'] = {
+export const INITIAL_STATE = {
   isOpenQnaTypeRBS: false,
-  isOpenTimeFilter: false,
+  isOpenTimeFilterRBS: false,
   isOpenDirectReservationRBS: false,
   isOpenReservationRBS: false,
   isLoading: false,
@@ -12,9 +12,9 @@ export const INITIAL_STATE: CommonState['common'] = {
   alertDialogMessage: null,
   alertDialogParams: null,
   alertToast: false,
-  alertToastPosition: null,
-  alertToastMessage: null,
-  isConnected: null,
+  alertToastPosition: '',
+  alertToastMessage: '',
+  isConnected: false,
   heightInfo: {
     mainBottomHeight: 0,
     subBottomHeight: 0,
@@ -22,14 +22,17 @@ export const INITIAL_STATE: CommonState['common'] = {
     tabBarBottomHeight: 0,
     statusHeight: 0,
   },
-  codePushPercent: null,
-  codePushSyncMessage: null,
-  versionInfo: null,
-  currentLocationStatus: null,
-  permissionYN: null,
+  codePushPercent: 0,
+  codePushSyncMessage: '',
+  versionInfo: {
+    currentVersion: '',
+    minimumVersion: '',
+  },
+  currentLocationStatus: '',
+  permissionYN: '',
   codePushStatus: null,
-  myLatitude: null,
-  myLongitude: null,
+  myLatitude: 0,
+  myLongitude: 0,
   attachFile: [] as any,
   attachFileIdx: [] as any,
   attachFileViewableIdx: 0,
@@ -46,7 +49,7 @@ export const INITIAL_STATE: CommonState['common'] = {
   homeTabRefreshYN: 'Y',
   appCodePushVersion: '',
 };
-type typeYN = 'Y' | 'N';
+
 export interface CommonState {
   common: {
     isOpenQnaTypeRBS: boolean | false;
@@ -55,22 +58,22 @@ export interface CommonState {
     isOpenReservationRBS: boolean | false;
     isLoading: boolean | false;
     isSkeleton: boolean | false;
-    alertDialog: AlertInfo;
-    alertDialogType: AlertInfo;
-    alertDialogDataType: AlertInfo;
-    alertDialogTitle: AlertInfo;
-    alertDialogMessage: AlertInfo;
-    alertDialogParams: AlertInfo;
-    codePushPercent: number | 0;
-    codePushSyncMessage: CodePushInfo;
+    alertDialog: AlertInfo['alertDialog'];
+    alertDialogType: AlertInfo['alertDialogType'];
+    alertDialogDataType: AlertInfo['alertDialogDataType'];
+    alertDialogTitle: AlertInfo['alertDialogTitle'];
+    alertDialogMessage: AlertInfo['alertDialogMessage'];
+    alertDialogParams: AlertInfo['alertDialogParams'];
+    codePushPercent: CodePushInfo['codePushPercent'];
+    codePushSyncMessage: CodePushInfo['codePushSyncMessage'];
     codePushStatus: string | null;
     heightInfo: HeightInfo;
     versionInfo: VersionInfo;
     permissionYN: string | 'N';
-    myLatitude: LocationInfo;
-    myLongitude: LocationInfo;
-    latitude: LocationInfo;
-    longitude: LocationInfo;
+    myLatitude: LocationInfo['myLatitude'];
+    myLongitude: LocationInfo['myLongitude'];
+    latitude: LocationInfo['latitude'];
+    longitude: LocationInfo['longitude'];
     attachFile: any[];
     attachFileIdx: string[];
     attachFileViewableIdx: number;
@@ -89,6 +92,8 @@ export interface CommonState {
     isOpenKeyboard: boolean | false;
     homeTabRefreshYN: typeYN;
     appCodePushVersion: string | '';
+    isConnected: boolean | false;
+    currentLocationStatus: any;
   };
 }
 
@@ -125,3 +130,5 @@ interface VersionInfo {
   currentVersion: string | '';
   minimumVersion: string | '';
 }
+
+type typeYN = 'Y' | 'N';

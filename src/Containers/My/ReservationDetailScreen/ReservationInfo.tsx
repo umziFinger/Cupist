@@ -31,14 +31,14 @@ const ReservationInfo = () => {
         style={{
           marginTop: 16,
           flexDirection: 'row',
-          alignItems: 'center',
+          // alignItems: 'center',
         }}
       >
-        <View>
-          <View style={{}}>
+        <View style={{ justifyContent: 'center' }}>
+          <View style={{ paddingVertical: 5 }}>
             <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Grayyellow500 }}>예약번호</CustomText>
           </View>
-          <View style={{ marginTop: 17 }}>
+          <View style={{ marginTop: 12 }}>
             <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Grayyellow500 }}>
               예약자 이름
             </CustomText>
@@ -50,11 +50,11 @@ const ReservationInfo = () => {
           </View>
         </View>
 
-        <View style={{ marginLeft: 24, flex: 1 }}>
+        <View style={{ marginLeft: 24, flex: 1, justifyContent: 'center' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
               <CustomText style={{ fontSize: 13, letterSpacing: 0, color: Color.Black1000 }}>
-                {reservationDetail?.receiptId}
+                {reservationDetail?.receiptId || ''}
               </CustomText>
             </View>
 
@@ -73,7 +73,7 @@ const ReservationInfo = () => {
               </View>
             </CustomButton>
           </View>
-          <View style={{ marginTop: 17 }}>
+          <View style={{ marginTop: 12 }}>
             <CustomText style={{ fontSize: 13, letterSpacing: 0, color: Color.Black1000 }}>
               {reservationDetail?.username || ''}
             </CustomText>

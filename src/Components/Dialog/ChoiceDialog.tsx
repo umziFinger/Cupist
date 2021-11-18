@@ -25,7 +25,7 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
   const { dataType, text } = item;
 
   const dispatch = useDispatch();
-  const { versionInfo } = useSelector((state: CommonState) => state.common);
+  const { versionInfo, alertDialogParams } = useSelector((state: CommonState) => state.common);
   const { reservationDetail } = useSelector((state: MyState) => state.my);
   const onCancel = () => {
     switch (dataType) {
@@ -76,8 +76,9 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
         break;
       }
       case 'reservationCancel': {
+        console.log('alertDialogParams', alertDialogParams);
         const params = {
-          paymentIdx: reservationDetail?.idx,
+          paymentIdx: alertDialogParams?.reservationIdx,
         };
         dispatch(MyActions.fetchMyReservationCancelDetailInfo(params));
         // navigateReplace('SimpleLoginScreen');
