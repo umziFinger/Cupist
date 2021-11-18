@@ -126,6 +126,7 @@ const ReservationList = () => {
               </>
             );
           },
+          alertDialogParams: { reservationIdx: item.idx },
         },
       }),
     );

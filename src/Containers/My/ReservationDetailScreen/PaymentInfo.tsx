@@ -171,7 +171,7 @@ const ReservationInfo = () => {
           </CustomText>
         </View>
       </View>
-      <View style={{ borderWidth: 1, borderColor: Color.Gray300, marginTop: 28 }} />
+      <View style={{ borderBottomWidth: 1, borderBottomColor: Color.Gray300, marginTop: 28 }} />
       <View style={{ marginTop: 28, paddingBottom: heightInfo.subBottomHeight }}>
         <CustomText
           style={{ fontSize: 10, letterSpacing: 0, color: Color.Gray400 }}
