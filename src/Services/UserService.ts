@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from '@/Config';
 import { navigate } from '@/Services/NavigationService';
 
-const refreshAuthLogic = async (failedRequest: any) => {
+export const refreshAuthLogic = async (failedRequest?: any) => {
   const token = await AsyncStorage.getItem('refreshToken');
   if (token) {
     console.log('토큰: ', token);

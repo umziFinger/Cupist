@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
@@ -11,12 +11,22 @@ import { numberFormat } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { PAYMENT_TYPE_TEXT } from '@/Components/Data/PAYMENT_TYPE_TEXT';
+import MyActions from '@/Stores/My/Actions';
 
 const PaymentResultScreen = () => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { paymentResult } = useSelector((state: ReservationState) => state.reservation);
   const place = paymentResult?.Place || {};
-
+  const dispatch = useDispatch();
+  const onMyScreen = () => {
+    const params = {
+      perPage: 10,
+      page: 1,
+      state: 'before',
+    };
+    dispatch(MyActions.fetchMyReservationList(params));
+    navigate('MyScreen');
+  };
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'back'} />
@@ -152,7 +162,7 @@ const PaymentResultScreen = () => {
           }}
         />
         <CustomButton
-          onPress={() => navigate('MyScreen')}
+          onPress={() => onMyScreen()}
           style={{
             flex: 1,
             flexDirection: 'row',

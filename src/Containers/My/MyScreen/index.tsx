@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 import { Color } from '@/Assets/Color';
 import { CommonState } from '@/Stores/Common/InitialState';
 import MyActions from '@/Stores/My/Actions';
@@ -12,6 +13,7 @@ import ReviewList from '@/Containers/My/MyScreen/ReviewList';
 import { fetchMyReviewList } from '@/Sagas/MySaga';
 
 const MyScreen = () => {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const {

@@ -7,6 +7,7 @@ import { Axios } from '@/Services/Axios';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { navigate } from '@/Services/NavigationService';
+import MyActions from '@/Stores/My/Actions';
 
 export function* fetchReservationInfo(data: any): any {
   try {
@@ -66,6 +67,7 @@ export function* fetchReservationCardList(data: any): any {
 
 export function* fetchReservationCancel(data: any): any {
   try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
       ...data,
       url: `${Config.RESERVATION_CANCEL_URL}`,
@@ -84,8 +86,18 @@ export function* fetchReservationCancel(data: any): any {
           },
         }),
       );
+
+      const params = {
+        perPage: 10,
+        page: 1,
+        state: 'cancel',
+      };
+      yield put(MyActions.fetchMyReservationList(params));
+      navigate('MyScreen');
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     }
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));

@@ -25,7 +25,6 @@ import HotArea from '@/Containers/Home/HomeScreen/HotArea';
 import EventArea from '@/Containers/Home/HomeScreen/EventArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import { scrollCalendarHandler } from '@/Components/Function';
-import { fetchHomePrepaymentPriceList } from '@/Sagas/HomeSaga';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -133,7 +132,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     setIsShow(result.isShow);
   };
 
-  const renderItem = ({ item }: { item: any }) => {
+  const renderItem = (item: any) => {
     switch (item) {
       case 0: {
         return (
@@ -202,7 +201,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       <Header type="home" isShow={isShow} />
       <AnimatedFlatList
         data={[0, 1, 2, 3, 4, 5, 6]}
-        renderItem={renderItem}
+        renderItem={({ item }): any => renderItem(item)}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}
         maxToRenderPerBatch={7}

@@ -40,7 +40,6 @@ const ReservationList = () => {
   };
   useEffect(() => {
     dispatch(MyActions.fetchMyReducer({ type: 'reservationListPageInit' }));
-    console.log('SelectedTabreservationSelectedTabreservationSelectedTab : ', reservationSelectedTab);
   }, []);
 
   const onRefresh = () => {
