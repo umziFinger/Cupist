@@ -40,3 +40,20 @@ export function* fetchHomeDirectReservationList(data: any): any {
     console.log('occurred Error...fetchHomeDirectReservationList : ', e);
   }
 }
+
+export function* fetchHomePrepaymentPriceList(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.HOME_EARLY_URL,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      yield put(HomeActions.fetchHomeReducer({ type: 'prepaymentPriceList', data: response.data }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchHomePrepaymentPriceList : ', e);
+  }
+}

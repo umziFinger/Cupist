@@ -13,7 +13,7 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'homeList': {
-        draft.homeList.early = data.early;
+        // draft.homeList.early = data.early;
         draft.homeList.special = data.special;
         draft.homeList.hotPlace = data.hotPlace;
         draft.homeList.event = data.event;
@@ -33,6 +33,11 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'directReservationList': {
         draft.homeList.place = data.place;
+        break;
+      }
+
+      case 'prepaymentPriceList': {
+        draft.homeList.early = data.early;
         break;
       }
 

@@ -66,8 +66,8 @@ const ReviewArea = (props: PropTypes) => {
             방문자리뷰
           </CustomText>
         </View>
-        <View style={{ alignItems: 'center' }}>
-          <View style={{ width: 60, height: 60, marginTop: 60 }}>
+        <View style={{ alignItems: 'center', paddingVertical: 60 }}>
+          <View style={{ width: 60, height: 60 }}>
             <FastImage
               style={{ width: '100%', height: '100%' }}
               source={require('@/Assets/Images/Common/emptyReview.png')}

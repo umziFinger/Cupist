@@ -15,7 +15,8 @@ async function GET(data: AxiosProps) {
   if (joinApiClient === undefined) {
     return result;
   }
-  console.log('params@@@@', params);
+  console.log(`| GET | /${url}`);
+  console.log(`| params ->`, params);
   return await joinApiClient
     .get(Config.API_URL + url, { params })
     .then((response) => {
@@ -39,9 +40,8 @@ async function POST(data: AxiosProps) {
     if (joinApiClient === undefined) {
       return result;
     }
-    console.log('POST params', params);
-    console.log('POST URL', url);
-
+    console.log(`| POST | /${url}`);
+    console.log(`| params ->`, params);
     return await joinApiClient
       .post(Config.API_URL + url, { ...params, platform: Platform.OS })
       .then((response) => {
@@ -67,6 +67,8 @@ async function PUT(data: AxiosProps) {
   if (joinApiClient === undefined) {
     return result;
   }
+  console.log(`| PUT | /${url}`);
+  console.log(`| params ->`, params);
   return await joinApiClient
     .put(Config.API_URL + url, { ...params, platform: Platform.OS })
     .then((response) => {
@@ -90,11 +92,9 @@ async function PATCH(data: AxiosProps) {
     if (joinApiClient === undefined) {
       return result;
     }
-
-    console.log('PATCH params@@@@', params);
-    console.log('PATCH url@@@@', url);
-    console.log('PATCH formData@@@@', formData);
-
+    console.log(`| PATCH | /${url}`);
+    console.log(`| params ->`, params);
+    console.log(`| formData ->`, formData);
     return await joinApiClient
       .patch(Config.API_URL + url, formData || { ...params, platform: Platform.OS })
       .then((response) => {
@@ -121,9 +121,8 @@ async function DELETE(data: AxiosProps) {
   if (joinApiClient === undefined) {
     return result;
   }
-
-  console.log('DELETE params@@@@', params);
-  console.log('DELETE url@@@@', url);
+  console.log(`| DELETE | /${url}`);
+  console.log(`| params ->`, params);
   return await joinApiClient
     .delete(Config.API_URL + url, params)
     .then((response) => {
@@ -146,8 +145,8 @@ async function FILE(data: AxiosProps) {
   if (joinApiClient === undefined) {
     return result;
   }
-  console.log('formdata@@@@', formData);
-  console.log('url@@@@', url);
+  console.log(`| POST(File) | /${url}`);
+  console.log(`| formData ->`, formData);
   const config = {
     headers: {
       accept: 'application/json',

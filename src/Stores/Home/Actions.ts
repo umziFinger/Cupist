@@ -5,6 +5,7 @@ const { Types, Creators } = createActions({
   fetchCheckLoginYN: ['params'],
   fetchHomeList: ['params'],
   fetchHomeDirectReservationList: ['params'],
+  fetchHomePrepaymentPriceList: ['params'],
 });
 
 export const HomeTypes = Types;

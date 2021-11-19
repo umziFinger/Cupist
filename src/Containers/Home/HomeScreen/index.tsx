@@ -101,9 +101,10 @@ const HomeScreen = ({ route }: HomeProps) => {
     // 홈 리스트 호출
     dispatch(HomeActions.fetchHomeList(params));
 
-    // 홈 바로 예약 호출
     const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
     const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
+
+    // 홈 바로 예약 호출
     dispatch(
       HomeActions.fetchHomeDirectReservationList({
         ...params,
@@ -111,6 +112,15 @@ const HomeScreen = ({ route }: HomeProps) => {
         page: 1,
         startTime,
         endTime,
+      }),
+    );
+
+    // 홈 선결제 특가 호출
+    dispatch(
+      HomeActions.fetchHomePrepaymentPriceList({
+        ...params,
+        perPage: 4,
+        page: 1,
       }),
     );
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
@@ -9,6 +9,7 @@ import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
 import CustomButton from '@/Components/CustomButton';
 import { HomeState } from '@/Stores/Home/InitialState';
 import HomeActions from '@/Stores/Home/Actions';
+import { CommonState } from '@/Stores/Common/InitialState';
 
 interface PropTypes {
   list: Array<any>;
@@ -17,7 +18,24 @@ const PrepaymentPriceArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { list } = props;
   const { width, height } = useWindowDimensions();
+  const { myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
   const { calendarDate, areaFilterIdx, timeFilterIdx } = useSelector((state: HomeState) => state.home);
+
+  useEffect(() => {
+    const params = {
+      date: moment(calendarDate).format('YYYY/MM/DD'),
+      lat: parseFloat(myLatitude?.toString()) || 37.56561,
+      lng: parseFloat(myLongitude?.toString()) || 126.97804,
+    };
+
+    dispatch(
+      HomeActions.fetchHomePrepaymentPriceList({
+        ...params,
+        perPage: 4,
+        page: 1,
+      }),
+    );
+  }, [calendarDate]);
 
   const onPressNextDay = () => {
     console.log('onPressNextDay');
@@ -69,7 +87,7 @@ const PrepaymentPriceArea = (props: PropTypes) => {
             data={list}
             renderItem={({ item, index }) => (
               <View style={{ marginRight: 11, marginBottom: index < 2 ? 13 : 0 }}>
-                <PlaceSmallCard item={item} width={(width - 42 - 11) / 2} showRate />
+                <PlaceSmallCard item={item} width={(width - 42 - 11) / 2} showRate showTicketName={false} />
               </View>
             )}
             keyExtractor={(item, index) => index.toString()}

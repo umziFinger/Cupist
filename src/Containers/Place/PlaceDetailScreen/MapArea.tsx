@@ -81,7 +81,7 @@ const MapArea = (props: PropTypes) => {
       <View style={{ alignItems: 'center', marginTop: 20 }}>
         <View
           style={{
-            paddingHorizontal: 23,
+            width: (width - 40 - 15) / 4,
             paddingTop: 23,
             paddingBottom: 15,
             alignItems: 'center',
@@ -160,7 +160,14 @@ const MapArea = (props: PropTypes) => {
           기본정보
         </CustomText>
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         {renderDefaultInfo('laneCnt')}
         {renderDefaultInfo('laneType')}
         {renderDefaultInfo('pinSetter')}
