@@ -72,7 +72,7 @@ const StartupContainer = () => {
     // NotificationRequest();
 
     // 구글 로그인 초기화
-    // GoogleLoginInitial();
+    GoogleLoginInitial();
 
     getStorage();
   }, []);

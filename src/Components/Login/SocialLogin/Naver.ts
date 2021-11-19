@@ -9,6 +9,7 @@ export default async function (props: naverLoginProps) {
   return accessToken;
 }
 const naverLogin = async (initials: any) => {
+  console.log(initials);
   return new Promise((resolve, reject) => {
     try {
       NaverLogin.logout();

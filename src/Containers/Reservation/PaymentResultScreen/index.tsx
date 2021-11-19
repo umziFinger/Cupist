@@ -10,7 +10,6 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import { numberFormat } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
-import { PAYMENT_TYPE_TEXT } from '@/Components/Data/PAYMENT_TYPE_TEXT';
 import MyActions from '@/Stores/My/Actions';
 
 const PaymentResultScreen = () => {
