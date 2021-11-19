@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
 import WithdrawList from '@/Containers/More/WithdrawScreen/WithdrawList';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
 import MyActions from '@/Stores/My/Actions';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 const WithdrawScreen = () => {
   const dispatch = useDispatch();
   const [isAgree, setIsAgree] = useState(false);
+  const { userInfo } = useSelector((state: AuthState) => state.auth);
 
   const onPressWithdrawal = () => {
     if (isValid()) {
       const withdrawType = '';
-      const params = { withdrawType };
+      const params = { withdrawType, providerType: userInfo.providerType };
+      // console.log(userInfo);
       dispatch(MyActions.fetchMyWithdraw(params));
     }
   };

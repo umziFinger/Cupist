@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, FlatList, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
+import Google from '@/Components/Login/SocialLogin/Google';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import HomeActions from '@/Stores/Home/Actions';
@@ -119,6 +120,7 @@ const SimpleLoginScreen = () => {
     switch (key) {
       case 'naver':
         try {
+          console.log('실행');
           const initials =
             Platform.OS === 'ios'
               ? {
@@ -136,7 +138,7 @@ const SimpleLoginScreen = () => {
           const naverToken = await Naver({ initials });
           params = { ...params, token: naverToken };
           console.log('accessToken : ', naverToken);
-          // if (naverToken) dispatch(AuthActions.fetchUserLogin(params));
+          if (naverToken) dispatch(AuthActions.fetchUserLogin(params));
         } catch (err) {
           console.log('naver e', err);
         }
@@ -162,6 +164,16 @@ const SimpleLoginScreen = () => {
           // if (appleTokenInfo.identityToken) dispatch(AuthActions.fetchUserLogin(params));
         } catch (e) {
           console.log('apple e', e);
+        }
+        break;
+      case 'google':
+        try {
+          const googleToken = await Google();
+          console.log('accessToken : ', googleToken);
+          params = { ...params, token: googleToken };
+          if (googleToken) dispatch(AuthActions.fetchUserLogin(params));
+        } catch (e) {
+          console.log('google e', e);
         }
         break;
       case 'email':

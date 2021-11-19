@@ -1,6 +1,8 @@
 import { put, call, select } from 'redux-saga/effects';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { unlink } from '@react-native-seoul/kakao-login';
+import { NaverLogin } from '@react-native-seoul/naver-login';
 import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
@@ -562,6 +564,14 @@ export function* fetchMyWithdraw(data: any): any {
       AsyncStorage.setItem('userIdx', '');
       AsyncStorage.setItem('accessToken', '');
       AsyncStorage.setItem('refreshToken', '');
+
+      if (data.params.providerType === 'KAKAO') {
+        const message = unlink();
+        console.log('카카오 언 링크: ', message);
+      } else if (data.params.providerType === 'NAVER') {
+        NaverLogin.logout();
+        console.log('네이버 로그 아웃: ');
+      }
 
       yield put(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: true } }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));

@@ -61,7 +61,7 @@ static void InitializeFlipper(UIApplication *application) {
   
   // naver login
   [[NaverThirdPartyLoginConnection getSharedInstance] setIsInAppOauthEnable:YES];
-  
+//  [[NaverThirdPartyLoginConnection getSharedInstance] setIsNaverAppOauthEnable:YES];
   // firebase message
   [FIRApp configure];
   

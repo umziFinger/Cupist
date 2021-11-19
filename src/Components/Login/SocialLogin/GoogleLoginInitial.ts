@@ -2,7 +2,7 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 
 export default function () {
   GoogleSignin.configure({
-    webClientId: '250630186651-19he6jsj8t77qhb4gk290rrd0bk2pg4g.apps.googleusercontent.com',
+    webClientId: '812978165702-i0kouh631omi4go6cbinuipoh3o77i23.apps.googleusercontent.com\n',
     offlineAccess: false,
   });
   return true;

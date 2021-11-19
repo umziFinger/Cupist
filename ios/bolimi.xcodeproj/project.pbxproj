@@ -10,6 +10,7 @@
 		00E356F31AD99517003FC87E /* bolimiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* bolimiTests.m */; };
 		0856240ADF3E03DC38DD31AD /* libPods-bolimi-bolimiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E79971A8B6DB1E18DD433F /* libPods-bolimi-bolimiTests.a */; };
 		11F0374827351F9200DD2904 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11F0374727351F9200DD2904 /* BootSplash.storyboard */; };
+		11F5A8E02747AE2900691803 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11F5A8DF2747AE2900691803 /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -25,7 +26,6 @@
 		8DE8CDBF27268EBD00A36663 /* push.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8DE8CDB727268EBD00A36663 /* push.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8DE8CDCB2726901800A36663 /* CreateBridgingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE8CDCA2726901800A36663 /* CreateBridgingHeader.swift */; };
 		8DE8CDD8272690B900A36663 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DE8CDDA272690B900A36663 /* InfoPlist.strings */; };
-		8DE8CF1B2726B11F00A36663 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE8CF1A2726B11F00A36663 /* GoogleService-Info.plist */; };
 		F5E125E2D87847F48999B545 /* SpoqaHanSansNeo-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E3F3173964AF45C2855BBB62 /* SpoqaHanSansNeo-Bold.otf */; };
 		FD3E4A6ABD202B85AA58D985 /* libPods-push.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2912A8120251EDDCED796CCF /* libPods-push.a */; };
 /* End PBXBuildFile section */
@@ -76,6 +76,7 @@
 		03E79971A8B6DB1E18DD433F /* libPods-bolimi-bolimiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bolimi-bolimiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		10ACE8560183868AA4F826E4 /* Pods-bolimi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bolimi.debug.xcconfig"; path = "Target Support Files/Pods-bolimi/Pods-bolimi.debug.xcconfig"; sourceTree = "<group>"; };
 		11F0374727351F9200DD2904 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = bolimi/BootSplash.storyboard; sourceTree = "<group>"; };
+		11F5A8DF2747AE2900691803 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* bolimi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bolimi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = bolimi/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = bolimi/AppDelegate.m; sourceTree = "<group>"; };
@@ -98,7 +99,6 @@
 		8DE8CDCA2726901800A36663 /* CreateBridgingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBridgingHeader.swift; sourceTree = "<group>"; };
 		8DE8CDD9272690B900A36663 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8DE8CDE5272690D600A36663 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8DE8CF1A2726B11F00A36663 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		968A20F8BD0245E30FBD22A5 /* Pods-bolimi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bolimi.release.xcconfig"; path = "Target Support Files/Pods-bolimi/Pods-bolimi.release.xcconfig"; sourceTree = "<group>"; };
 		A8A496B83138A0046DC1D49A /* Pods-bolimi-bolimiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bolimi-bolimiTests.release.xcconfig"; path = "Target Support Files/Pods-bolimi-bolimiTests/Pods-bolimi-bolimiTests.release.xcconfig"; sourceTree = "<group>"; };
 		A95FB307B06913E355E12A22 /* Pods-push.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-push.release.xcconfig"; path = "Target Support Files/Pods-push/Pods-push.release.xcconfig"; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				8DE8CF1A2726B11F00A36663 /* GoogleService-Info.plist */,
+				11F5A8DF2747AE2900691803 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* bolimi */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* bolimiTests */,
@@ -440,13 +440,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				11F5A8E02747AE2900691803 /* GoogleService-Info.plist in Resources */,
 				8DE8CDD8272690B900A36663 /* InfoPlist.strings in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				11F0374827351F9200DD2904 /* BootSplash.storyboard in Resources */,
 				F5E125E2D87847F48999B545 /* SpoqaHanSansNeo-Bold.otf in Resources */,
 				145382BEF4734527BC57F561 /* SpoqaHanSansNeo-Medium.otf in Resources */,
 				748BC43BE7284F648A35CC6C /* SpoqaHanSansNeo-Regular.otf in Resources */,
-				8DE8CF1B2726B11F00A36663 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,10 +24,10 @@ const prod = {
   MARKET_URL_ANDROID: 'market://details?id=com.luxurynall',
 
   // naver key
-  NAVER_KEY: 'WfWT7ibYlhiet1ujlWo_',
-  NAVER_SECRET: '4wti9stqdi',
-  NAVER_APP_NAME: '럭셔리앤올',
-  NAVER_APP_URL_SCHEME: 'com.luxurynall', // only for iOS
+  NAVER_KEY: 'oRxO0Jqlo_XYVxcKk_1A',
+  NAVER_SECRET: 'SOYTVQcWCq',
+  NAVER_APP_NAME: '볼리미',
+  NAVER_APP_URL_SCHEME: 'kr.bolimi', // only for iOS
 
   // home
   HOME_URL: 'main/home',
