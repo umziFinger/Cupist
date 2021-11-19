@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RNBootSplash from 'react-native-bootsplash';
 import CodePush from 'react-native-code-push';
 import OptimizationScreen from '@/Containers/Common/OptimizationScreen';
 import CommonActions from '@/Stores/Common/Actions';
 import { navigateAndSimpleReset } from '@/Services/NavigationService';
 import HomeActions from '@/Stores/Home/Actions';
+import { CommonState } from '@/Stores/Common/InitialState';
 
 /** ****************
  * CodePushStatus 상태별 타입
@@ -18,6 +19,7 @@ import HomeActions from '@/Stores/Home/Actions';
  ***************** */
 const CodePushContainer = () => {
   const dispatch = useDispatch();
+  const { permissionYN } = useSelector((state: CommonState) => state.common);
   useEffect(() => {
     CodePush.sync(
       {
@@ -155,7 +157,8 @@ const CodePushContainer = () => {
         dispatch(CommonActions.fetchCommonReducer({ type: 'appCodePushVersion', data: '' }));
         dispatch(HomeActions.fetchHomeReducer({ type: 'isHomeLoaded', data: true }));
         RNBootSplash.hide();
-        navigateAndSimpleReset('Main');
+        if (permissionYN === 'Y') navigateAndSimpleReset('Main');
+        else navigateAndSimpleReset('Permission');
       });
   }, []);
 

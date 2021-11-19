@@ -15,8 +15,8 @@ import Config from '@/Config';
 import { CommonState } from '@/Stores/Common/InitialState';
 
 const StartupContainer = () => {
-  const { appCodePushVersion } = useSelector((state: CommonState) => state.common);
   const dispatch = useDispatch();
+  const { appCodePushVersion, permissionYN } = useSelector((state: CommonState) => state.common);
 
   useEffect(() => {
     const path = Config.APP_MODE === 'prod' ? '/real/common/maintenance' : '/dev/common/maintenance';
@@ -39,7 +39,6 @@ const StartupContainer = () => {
         dispatch(CommonActions.fetchCommonReducer({ type: 'splashStart', data: 'end' }));
         // 코드푸시에서 체크용
         if (!appCodePushVersion) {
-          // 최초 코드푸시 버전 없을때
           if (codePushVersion > 'v0') {
             console.log('최초 코드푸시 업데이트 있음 코드푸시 컨테이너 이동', appCodePushVersion, codePushVersion);
             dispatch(HomeActions.fetchHomeReducer({ type: 'isHomeLoaded', data: false }));
@@ -48,7 +47,9 @@ const StartupContainer = () => {
           } else {
             console.log('최초 코드푸시 업데이트 없음 메인 이동', appCodePushVersion, codePushVersion);
             dispatch(HomeActions.fetchHomeReducer({ type: 'isHomeLoaded', data: true }));
-            navigateAndSimpleReset('Main');
+            RNBootSplash.hide();
+            if (permissionYN === 'Y') navigateAndSimpleReset('Main');
+            else navigateAndSimpleReset('Permission');
           }
         } else if (appCodePushVersion < codePushVersion) {
           console.log('코드푸시 업데이트 있음 코드푸시 컨테이너 이동', appCodePushVersion, codePushVersion);
@@ -58,7 +59,9 @@ const StartupContainer = () => {
         } else {
           console.log('코드푸시 업데이트 없음 메인 이동', appCodePushVersion, codePushVersion);
           dispatch(HomeActions.fetchHomeReducer({ type: 'isHomeLoaded', data: true }));
-          navigateAndSimpleReset('Main');
+          RNBootSplash.hide();
+          if (permissionYN === 'Y') navigateAndSimpleReset('Main');
+          else navigateAndSimpleReset('Permission');
         }
       }, 2000);
     };

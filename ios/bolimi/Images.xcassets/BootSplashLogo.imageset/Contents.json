@@ -1,23 +1,37 @@
 {
-  "images": [
+  "images" : [
     {
-      "idiom": "universal",
-      "filename": "bootsplash_logo.png",
-      "scale": "1x"
+      "filename" : "logoSplash.png",
+      "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 103,
+          "left" : 57,
+          "right" : 57,
+          "top" : 25
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
+      "scale" : "1x"
     },
     {
-      "idiom": "universal",
-      "filename": "bootsplash_logo@2x.png",
-      "scale": "2x"
+      "filename" : "logoSplash@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
     },
     {
-      "idiom": "universal",
-      "filename": "bootsplash_logo@3x.png",
-      "scale": "3x"
+      "filename" : "logoSplash@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
-  "info": {
-    "version": 1,
-    "author": "xcode"
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
   }
 }

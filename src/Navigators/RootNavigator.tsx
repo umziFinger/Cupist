@@ -7,6 +7,7 @@ import { navigationRef } from '@/Services/NavigationService';
 import CodePushContainer from './CodePushContainer';
 import StartupContainer from './StartupContainer';
 import MainNavigator from './MainNavigator';
+import PermissionNavigator from './PermissionNavigator';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,13 @@ const RootNavigator = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Startup" component={StartupContainer} />
         <Stack.Screen name="CodePush" component={CodePushContainer} />
+        <Stack.Screen
+          name="Permission"
+          component={PermissionNavigator}
+          options={{
+            animationEnabled: false,
+          }}
+        />
         <Stack.Screen
           name="Main"
           component={MainNavigator}

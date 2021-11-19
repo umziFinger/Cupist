@@ -17,9 +17,7 @@ import AgreeScreen from '@/Containers/Auth/AgreeScreen';
 import JoinStepOneScreen from '@/Containers/Auth/JoinStepOneScreen';
 import JoinStepTwoScreen from '@/Containers/Auth/JoinStepTwoScreen';
 import JoinStepThreeScreen from '@/Containers/Auth/JoinStepThreeScreen';
-
 import ResidentSearchScreen from '@/Containers/Search/ResidentSearchScreen';
-
 import PlaceDetailScreen from '@/Containers/Place/PlaceDetailScreen';
 import LocationSettingScreen from '@/Containers/Setting/LocationSettingScreen';
 import PermissionScreen from '@/Containers/Auth/PermissionScreen';
@@ -46,6 +44,7 @@ import EditBookerScreen from '@/Containers/Reservation/EditBookerScreen';
 import PaymentResultScreen from '@/Containers/Reservation/PaymentResultScreen';
 import WriteReviewScreen from '@/Containers/My/WriteReviewScreen';
 import WriteReviewDetailScreen from '@/Containers/My/WriteReviewDetailScreen';
+import WalkThroughScreen from '@/Containers/WalkThrough';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -112,6 +111,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="Bottom" component={BottomNavigator} />
       {/* Common */}
       <MainStack.Screen name="TotalImageScreen" component={TotalImageScreen} />
+      <MainStack.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
       {/* Auth */}
       <MainStack.Screen name="SimpleLoginScreen" component={SimpleLoginScreen} />
       <MainStack.Screen name="LoginScreen" component={LoginScreen} />

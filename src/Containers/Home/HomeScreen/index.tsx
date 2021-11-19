@@ -25,6 +25,9 @@ import HotArea from '@/Containers/Home/HomeScreen/HotArea';
 import EventArea from '@/Containers/Home/HomeScreen/EventArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import { scrollCalendarHandler } from '@/Components/Function';
+import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
+import CustomText from '@/Components/CustomText';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;

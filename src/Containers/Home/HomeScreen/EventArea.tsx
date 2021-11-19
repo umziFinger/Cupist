@@ -153,7 +153,7 @@ const EventArea = (props: PropTypes) => {
     <View style={{ flex: 1, marginTop: 40, paddingHorizontal: 20 }}>
       <FlatList
         ref={flatRef}
-        data={list2}
+        data={list}
         renderItem={({ item, index }) => (
           <CustomButton onPress={() => onMoveEventDetail(item)}>
             <View
@@ -218,7 +218,7 @@ const EventArea = (props: PropTypes) => {
         }}
       >
         <FlatList
-          data={list2}
+          data={list}
           renderItem={({ index }) =>
             viewableIndex === index ? (
               <View style={{ width: 6, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: Color.White }} />

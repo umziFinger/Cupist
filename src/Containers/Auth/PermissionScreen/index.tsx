@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
@@ -12,9 +12,13 @@ import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
 import LocationMyPosition from '@/Components/Permission/Location/LocationMyPosition';
 import { NotificationRequest } from '@/Components/Permission/Notification/index';
+import { navigateAndSimpleReset } from '@/Services/NavigationService';
 
 const PermissionScreen = () => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    console.log('@@@@@@@@@@');
+  }, []);
 
   const onConfirm = async () => {
     // dispatch(CommonActions.fetchCommonReducer({ type: 'permissionYN', data: 'Y' }));
@@ -26,14 +30,17 @@ const PermissionScreen = () => {
 
     // 위치 권한 체크
     if (LocationCheckResult) {
+      console.log('위치 권한 인증');
       const myPosition = await LocationMyPosition();
       console.log('myPosition is ', myPosition);
       // 퍼미션 권한 체크 & 위치 정보 저장 이후 화면 이동
       dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
       dispatch(CommonActions.fetchCommonReducer({ type: 'permissionYN', data: 'Y' }));
+      navigateAndSimpleReset('WalkThroughScreen');
     }
     // 위치 권한 요청
     else {
+      console.log('위치 권한 미인증');
       const LocationRequestResult = await LocationRequest();
       console.log('Location request Result : ', LocationRequestResult);
       // 위치 권한 요청 후 권한 있을때
@@ -43,11 +50,13 @@ const PermissionScreen = () => {
         console.log('myPosition is ', myPosition);
         dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
         dispatch(CommonActions.fetchCommonReducer({ type: 'permissionYN', data: 'Y' }));
+        navigateAndSimpleReset('WalkThroughScreen');
       }
       // 위치 권한 요청 후 권한 없을때
       else {
         // 퍼미션 권한 체크 후 화면 이동
         dispatch(CommonActions.fetchCommonReducer({ type: 'permissionYN', data: 'Y' }));
+        navigateAndSimpleReset('WalkThroughScreen');
       }
     }
   };
