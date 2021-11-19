@@ -8,10 +8,11 @@ import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
-  showRate?: boolean;
+  showRate: boolean;
+  showTicketName: boolean;
   width: number;
 }
-const PlaceSmallCard = ({ item, showRate = false, width }: PropTypes) => {
+const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width }: PropTypes) => {
   return (
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
       <View style={{ borderRadius: 2, borderWidth: 1, borderColor: Color.Gray200, backgroundColor: Color.White }}>
@@ -52,19 +53,26 @@ const PlaceSmallCard = ({ item, showRate = false, width }: PropTypes) => {
               <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>{item.area || '지역정보없음'}</CustomText>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-            {showRate && (
-              <View style={{ marginRight: 4 }}>
-                <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>
-                  {item.rate}%
-                </CustomText>
+          <View style={{ marginTop: 10 }}>
+            {showTicketName && item?.ticketName && (
+              <View style={{ justifyContent: 'center' }}>
+                <CustomText style={{ color: '#333', fontSize: 14 }}>{item.ticketName}</CustomText>
               </View>
             )}
-            <View style={{ flexDirection: 'row' }}>
-              <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold' }}>
-                {item.minPrice}
-              </CustomText>
-              <CustomText style={{ color: Color.Black1000, fontSize: 15 }}>원</CustomText>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {showRate && (
+                <View style={{ marginRight: 4 }}>
+                  <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>
+                    {item.rate}%
+                  </CustomText>
+                </View>
+              )}
+              <View style={{ flexDirection: 'row' }}>
+                <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold' }}>
+                  {item.minPrice}
+                </CustomText>
+                <CustomText style={{ color: Color.Black1000, fontSize: 15 }}>원</CustomText>
+              </View>
             </View>
           </View>
         </View>

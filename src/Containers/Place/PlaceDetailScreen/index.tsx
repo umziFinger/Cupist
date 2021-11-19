@@ -22,6 +22,7 @@ import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
+import TogetherArea from '@/Containers/Place/PlaceDetailScreen/TogetherArea';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
@@ -47,6 +48,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const place = placeDetail?.place || {};
   const latestReview = placeDetail?.latestReview || [];
   const starReview = placeDetail?.starReview || [];
+  const together = placeDetail?.together || [];
 
   // debounce
   useDebouncedFunction(() => setIsShowReservation(true), offsetY, 300);
@@ -152,13 +154,10 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       case 6: {
         // 다른 유저들이 함께 본 볼링장
         return (
-          <View style={{ flex: 1, marginTop: 80 }}>
+          <View style={{ flex: 1, marginTop: 16 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <View style={{ marginTop: 28 }}>
-              <View style={{ justifyContent: 'center' }}>
-                <CustomText style={{ color: '#333', fontSize: 14 }}>다른 유저들이 함께 본 볼링장</CustomText>
-              </View>
-              {/*  <ReviewArea item={place} latestReview={latestReview} starReview={starReview} /> */}
+              <TogetherArea list={together} />
             </View>
           </View>
         );
@@ -172,7 +171,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'placeDetail'} isShow={isShowTopCalendar} />
       <AnimatedFlatList
-        data={[0, 1, 2, 3, 4, 5]}
+        data={[0, 1, 2, 3, 4, 5, 6]}
         ref={animatedFlatRef}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}

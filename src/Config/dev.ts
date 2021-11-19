@@ -32,6 +32,7 @@ const dev = {
   // home
   HOME_URL: 'home',
   HOME_PLACE_URL: 'home/place',
+  HOME_EARLY_URL: 'home/early',
 
   // auth
   AUTH_LOGIN_URL: 'auth/login',
