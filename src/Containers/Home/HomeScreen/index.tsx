@@ -161,6 +161,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 3: {
         return (
+          // 빨리특가는 없으면 영역 숨김
           homeList['special']?.length > 0 && (
             <View style={{ flex: 1 }}>
               <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
