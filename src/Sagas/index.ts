@@ -1,4 +1,4 @@
-import { takeLatest, all } from 'redux-saga/effects';
+import { takeLatest, takeEvery, all } from 'redux-saga/effects';
 import { AuthTypes } from '@/Stores/Auth/Actions';
 import { CommonTypes } from '@/Stores/Common/Actions';
 import { HomeTypes } from '@/Stores/Home/Actions';
@@ -21,7 +21,12 @@ import {
 } from './CommonSaga';
 
 // home
-import { fetchHomeList, fetchHomeDirectReservationList, fetchHomePrepaymentPriceList } from './HomeSaga';
+import {
+  fetchHomeList,
+  fetchHomeDirectReservationList,
+  fetchHomePrepaymentPriceList,
+  fetchHomePossibleDate,
+} from './HomeSaga';
 
 // auth
 import {
@@ -96,6 +101,7 @@ export default function* root() {
     takeLatest(HomeTypes.FETCH_HOME_LIST, fetchHomeList),
     takeLatest(HomeTypes.FETCH_HOME_DIRECT_RESERVATION_LIST, fetchHomeDirectReservationList),
     takeLatest(HomeTypes.FETCH_HOME_PREPAYMENT_PRICE_LIST, fetchHomePrepaymentPriceList),
+    takeEvery(HomeTypes.FETCH_HOME_POSSIBLE_DATE, fetchHomePossibleDate),
 
     // auth
     takeLatest(AuthTypes.FETCH_AUTH_SMS_SEND, fetchAuthSmsSend),

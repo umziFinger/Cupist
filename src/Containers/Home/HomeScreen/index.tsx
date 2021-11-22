@@ -28,6 +28,7 @@ import { scrollCalendarHandler } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import CustomText from '@/Components/CustomText';
+import { SearchState } from '@/Stores/Search/InitialState';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -39,7 +40,8 @@ const HomeScreen = ({ route }: HomeProps) => {
   const dispatch = useDispatch();
   const scrollY = useRef(new Animated.Value(0)).current;
   const { myLongitude, myLatitude, homeTabRefreshYN } = useSelector((state: CommonState) => state.common);
-  const { homeList, calendarDate, timeFilterIdx } = useSelector((state: HomeState) => state.home);
+  const { homeList, calendarDate, timeFilterIdx, areaFilterIdx } = useSelector((state: HomeState) => state.home);
+  const { areaList } = useSelector((state: SearchState) => state.search);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const [isShow, setIsShow] = useState<boolean>(false);
   // const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY.MM.DD(dd)'));
@@ -75,22 +77,14 @@ const HomeScreen = ({ route }: HomeProps) => {
 
   // 캘린더 날짜 선택 시 홈 갱신
   useEffect(() => {
-    const params = {
-      date: moment(calendarDate).format('YYYY/MM/DD'),
-      lat: parseFloat(myLatitude?.toString()) || 37.56561,
-      lng: parseFloat(myLongitude?.toString()) || 126.97804,
-    };
+    // const params = {
+    //   date: moment(calendarDate).format('YYYY/MM/DD'),
+    //   lat: parseFloat(myLatitude?.toString()) || 37.56561,
+    //   lng: parseFloat(myLongitude?.toString()) || 126.97804,
+    // };
 
-    // 홈 리스트 호출
-    dispatch(HomeActions.fetchHomeList(params));
+    positionUpdate().then();
   }, [calendarDate]);
-
-  const onRefresh = () => {
-    console.log('새로고침');
-    dispatch(HomeActions.fetchHomeList());
-    dispatch(HomeActions.fetchHomeDirectReservationList());
-    dispatch(CommonActions.fetchCommonReducer({ type: 'homeTabRefreshYN', data: 'Y' }));
-  };
 
   const positionUpdate = async () => {
     const myPosition: any = await LocationMyPosition();
@@ -106,6 +100,12 @@ const HomeScreen = ({ route }: HomeProps) => {
 
     const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
     const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
+    let areaCode;
+
+    if (areaFilterIdx > 1) {
+      areaCode = areaList[areaFilterIdx - 2]?.code;
+      console.log('지역명 : ', areaList[areaFilterIdx - 2]?.area);
+    }
 
     // 홈 바로 예약 호출
     dispatch(
@@ -115,6 +115,7 @@ const HomeScreen = ({ route }: HomeProps) => {
         page: 1,
         startTime,
         endTime,
+        areaCode,
       }),
     );
 
@@ -128,6 +129,12 @@ const HomeScreen = ({ route }: HomeProps) => {
     );
 
     dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
+  };
+
+  const onRefresh = () => {
+    console.log('새로고침');
+    positionUpdate().then();
+    dispatch(CommonActions.fetchCommonReducer({ type: 'homeTabRefreshYN', data: 'Y' }));
   };
 
   const handleScroll = (event: any) => {
@@ -212,7 +219,7 @@ const HomeScreen = ({ route }: HomeProps) => {
         windowSize={7}
         showsVerticalScrollIndicator={false}
         refreshing={false}
-        // onRefresh={refreshHandler}
+        onRefresh={() => onRefresh()}
         // ListFooterComponent={<CopyRightView />}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
           listener: (event) => handleScroll(event),
