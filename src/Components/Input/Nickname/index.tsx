@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
@@ -16,10 +16,9 @@ type InputNicknameProps = {
 };
 
 const InputNickname = forwardRef<TextInput, InputNicknameProps>(
-  (
-    { nicknameValidText, onChangeText, onFocus, onBlur, value, onSubmitEditing, onTextClear }: InputNicknameProps,
-    ref,
-  ) => {
+  ({ nicknameValidText, onChangeText, value, onSubmitEditing, onTextClear }: InputNicknameProps, ref) => {
+    const [isFocused, setIsFocused] = useState(false);
+
     return (
       <>
         <View>
@@ -52,8 +51,8 @@ const InputNickname = forwardRef<TextInput, InputNicknameProps>(
               includeFontPadding: false,
               flex: 1,
             }}
-            onFocus={onFocus}
-            onBlur={onBlur}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             autoFocus={false}
             keyboardType={'default'}
             onChangeText={onChangeText}
@@ -62,7 +61,7 @@ const InputNickname = forwardRef<TextInput, InputNicknameProps>(
             allowFontScaling={false}
             onSubmitEditing={onSubmitEditing}
           />
-          {value?.length > 0 && (
+          {value?.length > 0 && isFocused && (
             <CustomButton onPress={onTextClear}>
               <View style={{ width: 16, height: 16 }}>
                 <FastImage
