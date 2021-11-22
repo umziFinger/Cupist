@@ -77,12 +77,7 @@ const HomeScreen = ({ route }: HomeProps) => {
 
   // 캘린더 날짜 선택 시 홈 갱신
   useEffect(() => {
-    // const params = {
-    //   date: moment(calendarDate).format('YYYY/MM/DD'),
-    //   lat: parseFloat(myLatitude?.toString()) || 37.56561,
-    //   lng: parseFloat(myLongitude?.toString()) || 126.97804,
-    // };
-
+    console.log('캘린더 날짜 변경 : ', calendarDate);
     positionUpdate().then();
   }, [calendarDate]);
 

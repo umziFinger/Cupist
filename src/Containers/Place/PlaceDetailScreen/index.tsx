@@ -125,9 +125,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         return (
           <View style={{ flex: 1, marginTop: 20 }}>
             <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
-            <View style={{ paddingLeft: 24 }}>
-              <TicketSlider allowedTimeArr={[0, 1, 2]} item={placeTicketList || {}} />
-            </View>
+            <TicketSlider allowedTimeArr={[0, 1, 2]} item={placeTicketList || {}} showDivider={false} />
           </View>
         );
       }

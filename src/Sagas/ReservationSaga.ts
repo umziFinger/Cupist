@@ -16,6 +16,7 @@ export function* fetchReservationInfo(data: any): any {
       url: `${Config.RESERVATION_URL}/${data.params.placeIdx}/ticket/${data.params.ticketInfoIdx}`,
     };
     const response = yield call(Axios.GET, payload);
+
     if (response.result === true && response.code === null) {
       yield put(ReservationActions.fetchReservationReducer({ type: 'reservationInfo', data: response.data }));
     } else {

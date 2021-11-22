@@ -13,6 +13,8 @@ export const INITIAL_STATE = {
   timeFilterIdx: 0,
   possibleDirectDate: '',
   possiblePrepaymentDate: '',
+  selectedDirectIdx: -1,
+  selectedDirectName: '',
 };
 
 export interface HomeState {
@@ -25,6 +27,8 @@ export interface HomeState {
     timeFilterIdx: number | 0;
     possibleDirectDate: string | null;
     possiblePrepaymentDate: string | null;
+    selectedDirectIdx: number | -1;
+    selectedDirectName: string | '';
   };
 }
 

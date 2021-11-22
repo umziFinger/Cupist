@@ -18,33 +18,11 @@ const PrepaymentPriceArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { list } = props;
   const { width, height } = useWindowDimensions();
-  const { myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
-  const { calendarDate, areaFilterIdx, timeFilterIdx, possiblePrepaymentDate } = useSelector(
-    (state: HomeState) => state.home,
-  );
-
-  useEffect(() => {
-    const params = {
-      date: moment(calendarDate).format('YYYY/MM/DD'),
-      lat: parseFloat(myLatitude?.toString()) || 37.56561,
-      lng: parseFloat(myLongitude?.toString()) || 126.97804,
-    };
-
-    // console.log('선결제 특가 호출');
-    // dispatch(
-    //   HomeActions.fetchHomePrepaymentPriceList({
-    //     ...params,
-    //     perPage: 4,
-    //     page: 1,
-    //   }),
-    // );
-  }, [calendarDate]);
+  const { calendarDate, possiblePrepaymentDate } = useSelector((state: HomeState) => state.home);
 
   const onPressNextDay = () => {
     console.log('onPressNextDay');
-    dispatch(
-      HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(calendarDate).add(1, 'day').toString() }),
-    );
+    dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(possiblePrepaymentDate).toString() }));
   };
 
   return (

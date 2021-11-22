@@ -19,6 +19,7 @@ import CancelInfoArea from '@/Containers/Reservation/ReservationScreen/CancelInf
 import PermissionArea from '@/Containers/Reservation/ReservationScreen/PermissionArea';
 import CustomButton from '@/Components/CustomButton';
 import CommonActions from '@/Stores/Common/Actions';
+import PlaceActions from '@/Stores/Place/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
@@ -28,6 +29,8 @@ interface PropTypes {
 const ReservationScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
   const { placeIdx, ticketInfoIdx } = route.params;
+  console.log('##### placeIdx, ticketInfoIdx :  ', placeIdx, ticketInfoIdx);
+
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
@@ -36,6 +39,19 @@ const ReservationScreen = ({ route }: PropTypes) => {
   );
   const reservationInfo = useSelector((state: ReservationState) => state.reservation.reservationInfo);
   const [validation, setValidation] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!userIdx) {
+      return navigate('SimpleLoginScreen');
+    }
+    dispatch(ReservationActions.fetchReservationInfo({ placeIdx, ticketInfoIdx }));
+    dispatch(ReservationActions.fetchReservationCardList());
+
+    return () => {
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'reservationInfoInit' }));
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
+    };
+  }, []);
 
   useEffect(() => {
     if (paymentType === 'simple') {
@@ -53,18 +69,6 @@ const ReservationScreen = ({ route }: PropTypes) => {
       }
     }
   }, [paymentType, selcetedCardIdx, paymentMethod]);
-
-  useEffect(() => {
-    if (!userIdx) {
-      return navigate('SimpleLoginScreen');
-    }
-    dispatch(ReservationActions.fetchReservationInfo({ placeIdx, ticketInfoIdx }));
-    dispatch(ReservationActions.fetchReservationCardList());
-
-    return () => {
-      dispatch(ReservationActions.fetchReservationReducer({ type: 'reservationInfoInit' }));
-    };
-  }, []);
 
   // 결제 임시 데이터 생성
   const onCreateTempReservation = () => {

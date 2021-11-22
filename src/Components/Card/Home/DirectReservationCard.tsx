@@ -8,6 +8,7 @@ import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
+import HomeActions from '@/Stores/Home/Actions';
 
 interface PropTypes {
   item: any;
@@ -20,7 +21,9 @@ const DirectReservationCard = (props: PropTypes) => {
 
   const onPressReservation = () => {
     console.log('onPressReservation');
-    console.log('rv item : ', item);
+    console.log('rv item : ', item?.name);
+    dispatch(HomeActions.fetchHomeReducer({ type: 'selectedDirectName', data: item?.name || '' }));
+    dispatch(HomeActions.fetchHomeReducer({ type: 'selectedDirectIdx', data: item?.idx || -1 }));
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenDirectReservationRBS', data: true }));
   };
 

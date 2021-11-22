@@ -63,6 +63,18 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'selectedDirectIdx': {
+        console.log('call reducer  selectedDirectIdx : ', data);
+        draft.selectedDirectIdx = data;
+        break;
+      }
+
+      case 'selectedDirectName': {
+        console.log('call reducer  selectedDirectName : ', data);
+        draft.selectedDirectName = data;
+        break;
+      }
+
       default:
         return draft;
     }
