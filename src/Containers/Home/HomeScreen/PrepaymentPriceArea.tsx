@@ -19,7 +19,9 @@ const PrepaymentPriceArea = (props: PropTypes) => {
   const { list } = props;
   const { width, height } = useWindowDimensions();
   const { myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
-  const { calendarDate, areaFilterIdx, timeFilterIdx } = useSelector((state: HomeState) => state.home);
+  const { calendarDate, areaFilterIdx, timeFilterIdx, possiblePrepaymentDate } = useSelector(
+    (state: HomeState) => state.home,
+  );
 
   useEffect(() => {
     const params = {
@@ -28,13 +30,14 @@ const PrepaymentPriceArea = (props: PropTypes) => {
       lng: parseFloat(myLongitude?.toString()) || 126.97804,
     };
 
-    dispatch(
-      HomeActions.fetchHomePrepaymentPriceList({
-        ...params,
-        perPage: 4,
-        page: 1,
-      }),
-    );
+    // console.log('선결제 특가 호출');
+    // dispatch(
+    //   HomeActions.fetchHomePrepaymentPriceList({
+    //     ...params,
+    //     perPage: 4,
+    //     page: 1,
+    //   }),
+    // );
   }, [calendarDate]);
 
   const onPressNextDay = () => {
@@ -104,41 +107,53 @@ const PrepaymentPriceArea = (props: PropTypes) => {
                     resizeMode={FastImage.resizeMode.cover}
                   />
                 </View>
-                <View style={{ marginTop: 16, alignItems: 'center' }}>
-                  <View style={{ flexDirection: 'row' }}>
-                    <CustomText
-                      style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold', letterSpacing: -0.29 }}
-                    >
-                      다른 날짜
-                    </CustomText>
-                    <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>에</CustomText>
-                  </View>
-                  <View>
-                    <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>
-                      선결제 특가 볼링장이 있어요!
-                    </CustomText>
-                  </View>
-
-                  <CustomButton onPress={() => onPressNextDay()}>
-                    <View style={{ marginTop: 30 }}>
-                      <View
-                        style={{
-                          borderRadius: 24,
-                          borderWidth: 1.5,
-                          borderColor: Color.Primary1000,
-                          paddingVertical: 15,
-                          paddingHorizontal: 24,
-                        }}
+                {possiblePrepaymentDate ? (
+                  <View style={{ marginTop: 16, alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row' }}>
+                      <CustomText
+                        style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold', letterSpacing: -0.29 }}
                       >
-                        <CustomText
-                          style={{ color: Color.Primary1000, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}
-                        >
-                          {moment(calendarDate).add(1, 'day').format('MM월 D일').toString()}로 날짜변경하기
-                        </CustomText>
-                      </View>
+                        다른 날짜
+                      </CustomText>
+                      <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>에</CustomText>
                     </View>
-                  </CustomButton>
-                </View>
+                    <View>
+                      <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>
+                        선결제 특가 볼링장이 있어요!
+                      </CustomText>
+                    </View>
+
+                    <CustomButton onPress={() => onPressNextDay()}>
+                      <View style={{ marginTop: 30 }}>
+                        <View
+                          style={{
+                            borderRadius: 24,
+                            borderWidth: 1.5,
+                            borderColor: Color.Primary1000,
+                            paddingVertical: 15,
+                            paddingHorizontal: 24,
+                          }}
+                        >
+                          <CustomText
+                            style={{ color: Color.Primary1000, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}
+                          >
+                            {moment(calendarDate).add(1, 'day').format('MM월 D일').toString()}로 날짜변경하기
+                          </CustomText>
+                        </View>
+                      </View>
+                    </CustomButton>
+                  </View>
+                ) : (
+                  <View style={{ marginTop: 16, alignItems: 'center' }}>
+                    <View style={{ justifyContent: 'center' }}>
+                      <CustomText
+                        style={{ color: Color.Gray400, fontSize: 14, fontWeight: '500', letterSpacing: -0.25 }}
+                      >
+                        해당날짜에 특가 상품이 없습니다.
+                      </CustomText>
+                    </View>
+                  </View>
+                )}
               </View>
             }
           />

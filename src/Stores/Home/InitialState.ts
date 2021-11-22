@@ -11,6 +11,8 @@ export const INITIAL_STATE = {
   calendarDate: '',
   areaFilterIdx: 1,
   timeFilterIdx: 0,
+  possibleDirectDate: '',
+  possiblePrepaymentDate: '',
 };
 
 export interface HomeState {
@@ -21,6 +23,8 @@ export interface HomeState {
     calendarDate: string | null;
     areaFilterIdx: number | 1;
     timeFilterIdx: number | 0;
+    possibleDirectDate: string | null;
+    possiblePrepaymentDate: string | null;
   };
 }
 
