@@ -164,8 +164,6 @@ const JoinStepTwoScreen = () => {
                     ref={ref_input[0]}
                     nameValidText={nameValidText}
                     onChangeText={onChangeName}
-                    onFocus={() => setCurrentFocus('userName')}
-                    onBlur={() => setCurrentFocus('')}
                     value={userName}
                     onSubmitEditing={() => {
                       onFocusNext(0);

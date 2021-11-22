@@ -160,7 +160,7 @@ export function* fetchUserJoin(data: any): any {
       AsyncStorage.setItem('refreshToken', refreshToken.toString());
 
       // 로그인 처리
-      yield put(AuthActions.fetchAuthReducer({ type: 'login', data: response.data }));
+      yield put(AuthActions.fetchAuthReducer({ type: 'login', data: { userIdx: response.data.idx } }));
 
       yield put(
         AuthActions.fetchAuthReducer({
@@ -174,7 +174,7 @@ export function* fetchUserJoin(data: any): any {
         }),
       );
       yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
-      yield put(AuthActions.fetchUserInfo({ idx }));
+      yield put(AuthActions.fetchUserInfo());
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       yield put(
         CommonActions.fetchCommonReducer({
@@ -195,62 +195,6 @@ export function* fetchUserJoin(data: any): any {
     yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchUserJoin : ', e);
-  }
-}
-
-export function* fetchAuthSocialJoin(data: any): any {
-  try {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
-
-    const payload = {
-      ...data,
-      url: Config.AUTH_SIGN_INFO,
-    };
-    const response = yield call(Axios.PATCH, payload);
-
-    if (response.result === true && response.code === null) {
-      const { access_token, refresh_token, idx } = response.data;
-      console.log('회원가입 response.data : ', response.data);
-
-      AsyncStorage.setItem('userIdx', idx.toString());
-      AsyncStorage.setItem('accessToken', access_token.toString());
-      AsyncStorage.setItem('refreshToken', refresh_token.toString());
-
-      // 로그인 처리
-      yield put(AuthActions.fetchAuthReducer({ type: 'login', data: { userIdx: idx } }));
-
-      yield put(
-        AuthActions.fetchAuthReducer({
-          type: 'tokenInfo',
-          data: {
-            tokenInfo: {
-              accessToken: access_token,
-              refreshToken: refresh_token,
-            },
-          },
-        }),
-      );
-      yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
-      yield put(AuthActions.fetchUserInfo({ idx }));
-      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      yield put(
-        CommonActions.fetchCommonReducer({
-          type: 'alertToast',
-          data: {
-            alertToast: true,
-            alertToastPosition: 'top',
-            alertToastMessage: '회원가입을 완료하였습니다.',
-          },
-        }),
-      );
-    } else {
-      yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    console.log('occurred Error...fetchAuthSocialJoin : ', e);
   }
 }
 

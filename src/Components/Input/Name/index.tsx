@@ -1,6 +1,7 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { is } from 'immer/dist/utils/common';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
@@ -17,7 +18,8 @@ type InputNameProps = {
 };
 
 const InputName = forwardRef<TextInput, InputNameProps>(
-  ({ nameValidText, onChangeText, onFocus, onBlur, value, onSubmitEditing, onTextClear }: InputNameProps, ref) => {
+  ({ nameValidText, onChangeText, value, onSubmitEditing, onTextClear }: InputNameProps, ref) => {
+    const [isFocused, setIsFocused] = useState(false);
     return (
       <>
         <View>
@@ -50,8 +52,8 @@ const InputName = forwardRef<TextInput, InputNameProps>(
               includeFontPadding: false,
               flex: 1,
             }}
-            onFocus={onFocus}
-            onBlur={onBlur}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             autoFocus
             keyboardType={'default'}
             onChangeText={onChangeText}
@@ -60,7 +62,7 @@ const InputName = forwardRef<TextInput, InputNameProps>(
             allowFontScaling={false}
             onSubmitEditing={onSubmitEditing}
           />
-          {value?.length > 0 && (
+          {value?.length > 0 && isFocused && (
             <CustomButton onPress={onTextClear}>
               <View style={{ width: 16, height: 16 }}>
                 <FastImage
