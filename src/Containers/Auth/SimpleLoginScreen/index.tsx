@@ -161,7 +161,7 @@ const SimpleLoginScreen = () => {
 
           console.log('accessToken : ', appleTokenInfo.identityToken);
           console.log('params', params);
-          // if (appleTokenInfo.identityToken) dispatch(AuthActions.fetchUserLogin(params));
+          if (appleTokenInfo.identityToken) dispatch(AuthActions.fetchUserLogin(params));
         } catch (e) {
           console.log('apple e', e);
         }
