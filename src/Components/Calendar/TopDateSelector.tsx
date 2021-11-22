@@ -1,23 +1,26 @@
 import React from 'react';
 import { Platform, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomText from '../CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   calendarDate: any;
   headerHeight: number;
 }
 const TopDateSelector = (props: PropTypes) => {
+  const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { calendarDate, headerHeight } = props;
 
   const onPressDate = () => {
     console.log('onPressDate');
+    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenCalendarRBS', data: true }));
   };
 
   return (

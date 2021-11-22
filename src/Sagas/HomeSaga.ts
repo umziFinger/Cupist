@@ -31,7 +31,6 @@ export function* fetchHomeDirectReservationList(data: any): any {
       url: Config.HOME_PLACE_URL,
     };
     const response = yield call(Axios.GET, payload);
-    console.log('home res : ', response.data);
     if (response.result === true && response.code === null) {
       yield put(HomeActions.fetchHomeReducer({ type: 'directReservationList', data: response.data }));
       yield put(HomeActions.fetchHomePossibleDate({ type: 'directReservation', ...data.params }));

@@ -72,8 +72,8 @@ const TicketSlider = (props: PropTypes) => {
             </View>
             <FlatList
               data={allowedTime === 0 ? morning : allowedTime === 1 ? afternoon : night}
-              renderItem={({ item, index }) => (
-                <CustomButton onPress={() => onPressTicket(item)}>
+              renderItem={({ item: time }) => (
+                <CustomButton onPress={() => onPressTicket(time)}>
                   <View
                     style={{
                       marginTop: 13,
@@ -90,7 +90,7 @@ const TicketSlider = (props: PropTypes) => {
                   >
                     <View style={{ justifyContent: 'center' }}>
                       <CustomText style={{ color: Color.Grayyellow1000, fontSize: 14, fontWeight: '500' }}>
-                        {item.startTime.substr(0, 5)} - {item.endTime.substr(0, 5)}
+                        {time.startTime.substr(0, 5)} - {time.endTime.substr(0, 5)}
                       </CustomText>
                     </View>
                     <View
