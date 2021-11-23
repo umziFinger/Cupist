@@ -35,6 +35,7 @@ const CalendarRBS = () => {
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const [markedDate, setMarkedDate] = useState<any>();
+  const dayNamesShort = ['일', '월', '화', '수', '목', '금', '토'];
 
   useEffect(() => {
     if (isOpenCalendarRBS) {
@@ -74,29 +75,49 @@ const CalendarRBS = () => {
               <CalendarList
                 current={moment().format('YYYY-MM-DD')}
                 minDate={moment().format('YYYY-MM-DD')}
-                // customHeader={(data) => {
-                //   console.log(data);
-                //   return (
-                //     <View style={{ paddingTop: 24 }}>
-                //       <View style={{ justifyContent: 'center' }}>
-                //         <CustomText style={{ color: '#333', fontSize: 14 }}>
-                //           sdfsdfsd
-                //           {/* {moment(month.toString()).format('MM월').toString()} */}
-                //         </CustomText>
-                //       </View>
-                //     </View>
-                //   );
-                // }}
+                customHeader={(data) => {
+                  return (
+                    <View style={{ flex: 1 }}>
+                      <View style={{ justifyContent: 'center' }}>
+                        <CustomText style={{ color: '#333', fontSize: 14 }}>
+                          {moment(data.month.toString()).format('MM월').toString()}
+                        </CustomText>
+                      </View>
+                      <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                        <FlatList
+                          data={dayNamesShort}
+                          renderItem={({ item, index }) => (
+                            <View style={{ width: (width - 30) / 7, alignItems: 'center' }}>
+                              <View style={{ padding: 11, justifyContent: 'center' }}>
+                                <CustomText style={{ color: '#333', fontSize: 14 }}>{item}</CustomText>
+                              </View>
+                            </View>
+                          )}
+                          keyExtractor={(item, index) => index.toString()}
+                          initialNumToRender={7}
+                          maxToRenderPerBatch={10}
+                          windowSize={7}
+                          horizontal
+                          scrollEnabled={false}
+                        />
+                      </View>
+                    </View>
+                  );
+                }}
+                style={{ marginTop: 32 }}
                 dayComponent={({ date, state }) => {
                   const borderStatus = 'transparent';
-                  const bgStatus = 'transparent';
-                  const textColor = Color.Black1000;
-                  const todayWeightStatus = false;
+                  let bgStatus = 'transparent';
+                  let textColor = Color.Black1000;
+
+                  if (date.dateString === moment(calendarDate).format('YYYY-MM-DD')) {
+                    textColor = Color.White;
+                    bgStatus = Color.Grayyellow1000;
+                  }
 
                   return (
                     <CustomButton
                       onPress={() => state !== 'disabled' && onPressDate(date)}
-                      style={{ alignItems: 'center' }}
                       hitSlop={{ left: 7, right: 7, bottom: 7, top: 7 }}
                     >
                       <View
@@ -104,7 +125,7 @@ const CalendarRBS = () => {
                           borderWidth: 2,
                           borderColor: borderStatus,
                           padding: 11,
-                          // borderRadius: 10,
+                          borderRadius: 50,
                           backgroundColor: bgStatus,
                           opacity: state === 'disabled' ? 0.2 : 1,
                         }}
@@ -114,8 +135,7 @@ const CalendarRBS = () => {
                             fontSize: 14,
                             textAlign: 'center',
                             color: textColor,
-                            fontWeight: todayWeightStatus ? 'bold' : 'normal',
-                            // textDecorationLine: state === 'disabled' ? 'line-through' : 'none',
+                            fontWeight: '500',
                           }}
                         >
                           {date.day}
@@ -126,9 +146,8 @@ const CalendarRBS = () => {
                 }}
                 onDayPress={onPressDate}
                 monthFormat={'MM월'}
-                headerStyle={{ alignItems: 'flex-start', flex: 1, backgroundColor: 'red' }}
-                pastScrollRange={1}
-                futureScrollRange={1}
+                pastScrollRange={0}
+                futureScrollRange={2}
                 scrollEnabled
               />
             )}
