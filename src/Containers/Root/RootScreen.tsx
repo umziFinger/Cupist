@@ -20,6 +20,7 @@ import TimeFilterRBS from '@/Components/RBS/Home/TimeFilterRBS';
 import QnaTypeRBS from '@/Components/RBS/Qna/QnaTypeRBS';
 import ReservationRBS from '@/Components/RBS/Reservation/ReservationRBS';
 import DirectReservationRBS from '@/Components/RBS/Home/DirectReservationRBS';
+import CalendarRBS from '@/Components/RBS/Common/CalendarRBS';
 
 LogBox.ignoreLogs([
   'interpolate() was renamed to interpolateNode()',
@@ -48,6 +49,7 @@ const RootScreen = () => {
     isOpenDirectReservationRBS,
     isOpenQnaTypeRBS,
     isOpenReservationRBS,
+    isOpenCalendarRBS,
   } = useSelector((state: CommonState) => state.common);
 
   useEffect(() => {
@@ -61,8 +63,14 @@ const RootScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log('RBSheet Flag State : ', isOpenTimeFilterRBS, isOpenDirectReservationRBS, isOpenReservationRBS);
-  }, [isOpenTimeFilterRBS, isOpenDirectReservationRBS, isOpenReservationRBS]);
+    console.log(
+      'RBSheet Flag State : ',
+      isOpenTimeFilterRBS,
+      isOpenDirectReservationRBS,
+      isOpenReservationRBS,
+      isOpenCalendarRBS,
+    );
+  }, [isOpenTimeFilterRBS, isOpenDirectReservationRBS, isOpenReservationRBS, isOpenCalendarRBS]);
 
   return (
     <>
@@ -93,6 +101,7 @@ const RootScreen = () => {
       {isOpenQnaTypeRBS && <QnaTypeRBS />}
       {isOpenDirectReservationRBS && <DirectReservationRBS />}
       {isOpenReservationRBS && <ReservationRBS />}
+      {isOpenCalendarRBS && <CalendarRBS />}
     </>
   );
 };

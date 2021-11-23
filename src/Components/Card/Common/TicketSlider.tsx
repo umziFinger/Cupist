@@ -13,11 +13,13 @@ import { PlaceState } from '@/Stores/Place/InitialState';
 interface PropTypes {
   allowedTimeArr: Array<any>;
   item: any;
+  showDivider: boolean;
 }
+
 const TicketSlider = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
-  const { allowedTimeArr, item } = props;
+  const { allowedTimeArr, item, showDivider = false } = props;
   const morning = item?.morning || [];
   const afternoon = item?.afternoon || [];
   const night = item?.night || [];
@@ -50,7 +52,7 @@ const TicketSlider = (props: PropTypes) => {
       renderItem={({ item: allowedTime, index }) =>
         isShowFunc(allowedTime) && (
           <View style={{ flex: 1, marginTop: 24 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 24 }}>
               <View style={{ width: 24, height: 24, marginRight: 2 }}>
                 <FastImage
                   style={{ width: '100%', height: '100%' }}
@@ -70,8 +72,8 @@ const TicketSlider = (props: PropTypes) => {
             </View>
             <FlatList
               data={allowedTime === 0 ? morning : allowedTime === 1 ? afternoon : night}
-              renderItem={({ item, index }) => (
-                <CustomButton onPress={() => onPressTicket(item)}>
+              renderItem={({ item: time }) => (
+                <CustomButton onPress={() => onPressTicket(time)}>
                   <View
                     style={{
                       marginTop: 13,
@@ -88,7 +90,7 @@ const TicketSlider = (props: PropTypes) => {
                   >
                     <View style={{ justifyContent: 'center' }}>
                       <CustomText style={{ color: Color.Grayyellow1000, fontSize: 14, fontWeight: '500' }}>
-                        {item.startTime.substr(0, 5)} - {item.endTime.substr(0, 5)}
+                        {time.startTime.substr(0, 5)} - {time.endTime.substr(0, 5)}
                       </CustomText>
                     </View>
                     <View
@@ -116,7 +118,11 @@ const TicketSlider = (props: PropTypes) => {
               windowSize={7}
               horizontal
               showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingLeft: 24 }}
             />
+            {showDivider && (allowedTime === 0 || allowedTime === 1) && (
+              <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 24 }} />
+            )}
           </View>
         )
       }

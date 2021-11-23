@@ -67,7 +67,6 @@ export function* fetchHomePossibleDate(data: any): any {
       url: Config.HOME_CHECK_URL,
     };
     const response = yield call(Axios.GET, payload);
-    console.log('res : ', response);
     if (response.result === true && response.code === null) {
       // yield put(HomeActions.fetchHomeReducer({ type: 'prepaymentPriceList', data: response.data }));
       if (data.params.type === 'directReservation') {

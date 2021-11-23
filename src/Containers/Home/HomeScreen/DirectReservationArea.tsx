@@ -56,11 +56,11 @@ const DirectReservationArea = (props: PropTypes) => {
         endTime,
       };
     }
+
     dispatch(HomeActions.fetchHomeDirectReservationList(params));
   };
 
   useEffect(() => {
-    console.log('timeFilterIdx : ', timeFilterIdx);
     getDirectReservationList(areaFilterIdx);
   }, [timeFilterIdx]);
 
