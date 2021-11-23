@@ -6,6 +6,8 @@ import Config from '@/Config';
 import 'moment/locale/ko';
 import { Path, Svg } from 'react-native-svg';
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import CommonActions from '@/Stores/Common/Actions';
 
 export const distanceCalc = (start: any, end: any) => {
   const distance = getDistance(start, end);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, Linking, useWindowDimensions, View } from 'react-native';
-import { Clipboard } from '@react-native-community/clipboard/dist/Clipboard';
+import Clipboard from '@react-native-clipboard/clipboard';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { useDispatch } from 'react-redux';
 import FastImage from 'react-native-fast-image';

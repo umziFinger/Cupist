@@ -667,7 +667,7 @@ export function* fetchMyReservationDetailInfo(data: any): any {
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
-      console.log('예약 상세: ', response.data);
+      // console.log('예약 상세: ', response.data);
       yield put(
         MyActions.fetchMyReducer({
           type: 'reservationDetail',

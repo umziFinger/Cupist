@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import BootSplash from 'react-native-bootsplash';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { Color } from '@/Assets/Color';
@@ -26,9 +25,7 @@ import HotArea from '@/Containers/Home/HomeScreen/HotArea';
 import EventArea from '@/Containers/Home/HomeScreen/EventArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import { scrollCalendarHandler } from '@/Components/Function';
-import CustomButton from '@/Components/CustomButton';
-import { navigate } from '@/Services/NavigationService';
-import CustomText from '@/Components/CustomText';
+
 import { SearchState } from '@/Stores/Search/InitialState';
 
 interface HomeProps {
@@ -40,7 +37,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const HomeScreen = ({ route }: HomeProps) => {
   const dispatch = useDispatch();
   const scrollY = useRef(new Animated.Value(0)).current;
-  const { myLongitude, myLatitude, homeTabRefreshYN } = useSelector((state: CommonState) => state.common);
+  const { homeTabRefreshYN } = useSelector((state: CommonState) => state.common);
   const { homeList, calendarDate, timeFilterIdx, areaFilterIdx } = useSelector((state: HomeState) => state.home);
   const { areaList } = useSelector((state: SearchState) => state.search);
   const { userIdx } = useSelector((state: AuthState) => state.auth);

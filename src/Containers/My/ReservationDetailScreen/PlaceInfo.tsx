@@ -1,11 +1,13 @@
 import React from 'react';
-import { FlatList, useWindowDimensions, View } from 'react-native';
+import { FlatList, Linking, Platform, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Clipboard from '@react-native-clipboard/clipboard';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
-import { INFO_ITEM } from '@/Containers/My/ReservationDetailScreen/data';
+import { INFO_ITEM, InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data';
 import { MyState } from '@/Stores/My/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 
@@ -63,6 +65,71 @@ const PlaceInfo = () => {
         },
       }),
     );
+  };
+
+  const onCall = (number: string) => {
+    if (number) {
+      let phoneNumber: string;
+      if (Platform.OS !== 'android') {
+        phoneNumber = `telprompt:${number || 0}`;
+      } else {
+        phoneNumber = `tel:${number || 0}`;
+      }
+      Linking.canOpenURL(phoneNumber)
+        .then((supported) => {
+          if (!supported) {
+            dispatch(
+              CommonActions.fetchCommonReducer({
+                type: 'alertToast',
+                data: {
+                  alertToast: true,
+                  alertToastPosition: 'top',
+                  alertToastMessage: '잘못된 전화번호입니다.',
+                },
+              }),
+            );
+            return true;
+          }
+          return Linking.openURL(phoneNumber).catch((e) => {
+            console.error('call error', e);
+          });
+        })
+        .catch((err) => console.log('call error', err));
+    }
+  };
+
+  const onPressButton = (type: InfoItemButtonType) => {
+    switch (type) {
+      case 'call': {
+        onCall(reservationDetail?.Place?.tel);
+        return null;
+      }
+      case 'addressCopy': {
+        Clipboard.setString(reservationDetail?.Place?.newAddress || '');
+        dispatch(
+          CommonActions.fetchCommonReducer({
+            type: 'alertToast',
+            data: {
+              alertToast: true,
+              alertToastPosition: 'bottom',
+              alertToastMessage: '주소가 복사 되었습니다.',
+            },
+          }),
+        );
+
+        break;
+      }
+      case 'mapView': {
+        return null;
+      }
+      case 'getDirections': {
+        return null;
+      }
+
+      default:
+        return null;
+    }
+    return null;
   };
   return (
     <View>
@@ -136,7 +203,7 @@ const PlaceInfo = () => {
         <FlatList
           data={INFO_ITEM}
           renderItem={({ item }) => (
-            <CustomButton>
+            <CustomButton onPress={() => onPressButton(item?.type)}>
               <View
                 style={{
                   borderRadius: 5,
