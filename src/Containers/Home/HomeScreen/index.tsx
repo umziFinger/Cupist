@@ -202,19 +202,19 @@ const HomeScreen = ({ route }: HomeProps) => {
           </View>
         );
       }
-      case 7: {
-        return (
-          <CustomButton
-            onPress={async () => {
-              await BootSplash.show({ fade: true });
-            }}
-          >
-            <View style={{ flex: 1, paddingVertical: 35, backgroundColor: Color.Gray200 }}>
-              <CustomText>스플래시 쇼</CustomText>
-            </View>
-          </CustomButton>
-        );
-      }
+      // case 7: {
+      //   return (
+      //     <CustomButton
+      //       onPress={async () => {
+      //         await BootSplash.show({ fade: true });
+      //       }}
+      //     >
+      //       <View style={{ flex: 1, paddingVertical: 35, backgroundColor: Color.Gray200 }}>
+      //         <CustomText>스플래시 쇼</CustomText>
+      //       </View>
+      //     </CustomButton>
+      //   );
+      // }
       default:
         return null;
     }
@@ -224,7 +224,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="home" isShow={isShow} />
       <AnimatedFlatList
-        data={[0, 1, 2, 3, 4, 5, 6, 7]}
+        data={[0, 1, 2, 3, 4, 5, 6]}
         renderItem={({ item }): any => renderItem(item)}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}
