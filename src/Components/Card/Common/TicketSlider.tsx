@@ -37,6 +37,8 @@ const TicketSlider = (props: PropTypes) => {
     return false;
   };
 
+  console.log('allowedTimeArr[0] : ', morning[0]?.salePrice);
+
   const onPressTicket = (value: any) => {
     if (selectedTicket?.idx === value.idx) {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
@@ -82,9 +84,9 @@ const TicketSlider = (props: PropTypes) => {
                       paddingRight: 21,
                       borderRadius: 5,
                       borderWidth: 1,
-                      borderColor: selectedTicket?.idx === item.idx ? Color.Primary1000 : Color.Gray300,
+                      borderColor: selectedTicket?.idx === time.idx ? Color.Primary1000 : Color.Gray300,
                       backgroundColor:
-                        selectedTicket?.idx === item.idx ? 'rgba(255, 185, 10, 0.05)' : Color.Grayyellow50,
+                        selectedTicket?.idx === time.idx ? 'rgba(255, 185, 10, 0.05)' : Color.Grayyellow50,
                       marginRight: 8,
                     }}
                   >
@@ -102,7 +104,7 @@ const TicketSlider = (props: PropTypes) => {
                     >
                       <View style={{ justifyContent: 'center' }}>
                         <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
-                          {numberFormat(item?.salePrice)}
+                          {numberFormat(time?.salePrice)}
                         </CustomText>
                       </View>
                       <View style={{ justifyContent: 'center' }}>
