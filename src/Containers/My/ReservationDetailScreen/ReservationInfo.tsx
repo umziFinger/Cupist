@@ -1,16 +1,30 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Clipboard from '@react-native-clipboard/clipboard';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { MyState } from '@/Stores/My/InitialState';
 import { inputMobileNumber } from '@/Components/Function';
+import CommonActions from '@/Stores/Common/Actions';
 
 const ReservationInfo = () => {
   const { reservationDetail } = useSelector((state: MyState) => state.my);
+  const dispatch = useDispatch();
+
   const onCopy = () => {
-    console.log('예약번호 복사 클릭');
+    Clipboard.setString(reservationDetail?.receiptId || '');
+    dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'alertToast',
+        data: {
+          alertToast: true,
+          alertToastPosition: 'bottom',
+          alertToastMessage: '예약번호가 복사 되었습니다.',
+        },
+      }),
+    );
   };
 
   return (

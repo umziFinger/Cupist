@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FlatList, Linking, Platform, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,11 +10,14 @@ import CustomButton from '@/Components/CustomButton';
 import { INFO_ITEM, InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data';
 import { MyState } from '@/Stores/My/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
+import Config from '@/Config';
+import { CommonState } from '@/Stores/Common/InitialState';
 
 const PlaceInfo = () => {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const { reservationDetail } = useSelector((state: MyState) => state.my);
+  const { myLongitude, myLatitude } = useSelector((state: CommonState) => state.common);
 
   const onCancel = () => {
     dispatch(
@@ -67,41 +70,38 @@ const PlaceInfo = () => {
     );
   };
 
-  const onCall = (number: string) => {
-    if (number) {
-      let phoneNumber: string;
-      if (Platform.OS !== 'android') {
-        phoneNumber = `telprompt:${number || 0}`;
-      } else {
-        phoneNumber = `tel:${number || 0}`;
-      }
-      Linking.canOpenURL(phoneNumber)
-        .then((supported) => {
-          if (!supported) {
-            dispatch(
-              CommonActions.fetchCommonReducer({
-                type: 'alertToast',
-                data: {
-                  alertToast: true,
-                  alertToastPosition: 'top',
-                  alertToastMessage: '잘못된 전화번호입니다.',
-                },
-              }),
-            );
-            return true;
-          }
-          return Linking.openURL(phoneNumber).catch((e) => {
-            console.error('call error', e);
-          });
-        })
-        .catch((err) => console.log('call error', err));
-    }
-  };
-
   const onPressButton = (type: InfoItemButtonType) => {
     switch (type) {
       case 'call': {
-        onCall(reservationDetail?.Place?.tel);
+        if (reservationDetail?.Place?.tel) {
+          let phoneNumber: string;
+          if (Platform.OS !== 'android') {
+            phoneNumber = `telprompt:${reservationDetail?.Place?.tel || 0}`;
+          } else {
+            phoneNumber = `tel:${reservationDetail?.Place?.tel || 0}`;
+          }
+          Linking.canOpenURL(phoneNumber)
+            .then((supported) => {
+              if (!supported) {
+                dispatch(
+                  CommonActions.fetchCommonReducer({
+                    type: 'alertToast',
+                    data: {
+                      alertToast: true,
+                      alertToastPosition: 'top',
+                      alertToastMessage: '잘못된 전화번호입니다.',
+                    },
+                  }),
+                );
+                return true;
+              }
+              return Linking.openURL(phoneNumber).catch((e) => {
+                console.error('call error', e);
+              });
+            })
+            .catch((err) => console.log('call error', err));
+        }
+
         return null;
       }
       case 'addressCopy': {
@@ -120,10 +120,62 @@ const PlaceInfo = () => {
         break;
       }
       case 'mapView': {
-        return null;
+        Linking.openURL(
+          `nmap://place?lat=${myLatitude}&lng=${myLongitude}&name=${reservationDetail?.Place?.name}&appname=${Config.NAVER_APP_URL_SCHEME}`,
+        )
+          .then((res) => {
+            // 앱 설치 o, 티맵 경로 바로 검색 성공
+            console.log('success tmap link : ', res);
+          })
+          .catch((err1) => {
+            // 앱 미설치, 마켓으로 이동
+            console.log('error : ', err1);
+            Linking.openURL(Platform.OS === 'android' ? Config.NMAP_MARKET_URL_ANDROID : Config.NMAP_MARKET_URL_IOS)
+              .then((res2) => {
+                console.log('result : ', res2);
+              })
+              .catch((err2) => {
+                console.log('error : ', err2);
+              });
+          });
+        break;
       }
       case 'getDirections': {
-        return null;
+        // Linking.openURL(`tmap://route?goalx=${reservationDetail?.Place?.lng}&goaly=${reservationDetail?.Place?.lat}`)
+        //   .then((res) => {
+        //     // 앱 설치 o, 티맵 경로 바로 검색 성공
+        //     console.log('success tmap link : ', res);
+        //   })
+        //   .catch((err1) => {
+        //     // 앱 미설치, 마켓으로 이동
+        //     console.log('error : ', err1);
+        //     Linking.openURL(Platform.OS === 'android' ? Config.TMAP_MARKET_URL_ANDROID : Config.TMAP_MARKET_URL_IOS)
+        //       .then((res2) => {
+        //         console.log('result : ', res2);
+        //       })
+        //       .catch((err2) => {
+        //         console.log('error : ', err2);
+        //       });
+        //   });
+        Linking.openURL(
+          `nmap://route/car?dlat=${reservationDetail?.Place?.lat}&dlng=${reservationDetail?.Place?.lng}&dname=${reservationDetail?.Place?.name}&appname=${Config.NAVER_APP_URL_SCHEME}`,
+        )
+          .then((res) => {
+            // 앱 설치 o, 티맵 경로 바로 검색 성공
+            console.log('success tmap link : ', res);
+          })
+          .catch((err1) => {
+            // 앱 미설치, 마켓으로 이동
+            console.log('error : ', err1);
+            Linking.openURL(Platform.OS === 'android' ? Config.NMAP_MARKET_URL_ANDROID : Config.NMAP_MARKET_URL_IOS)
+              .then((res2) => {
+                console.log('result : ', res2);
+              })
+              .catch((err2) => {
+                console.log('error : ', err2);
+              });
+          });
+        break;
       }
 
       default:

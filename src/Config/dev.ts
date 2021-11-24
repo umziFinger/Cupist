@@ -10,6 +10,14 @@ const dev = {
   CS_EMAIL: 'nallcorp.luxury@gmail.com',
   CS_PRIVACY: '이인성',
 
+  // NAVER MAP
+  NMAP_MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/네이버-지도-내비게이션/id311867728',
+  NMAP_MARKET_URL_ANDROID: 'market://details?id=com.nhn.android.nmap',
+
+  // TMAP
+  TMAP_MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/tmap-내비게이션-지도/id431589174',
+  TMAP_MARKET_URL_ANDROID: 'market://details?id=com.skt.tmap.ku',
+
   // API_URL: 'http://192.168.1.21:5000/',
   API_URL: 'https://api.bolimi.kr/',
 
