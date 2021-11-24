@@ -15,10 +15,10 @@ async function GET(data: AxiosProps) {
   if (joinApiClient === undefined) {
     return result;
   }
-  console.log(`| GET | /${url}`);
+  console.log(`| GET | ${Config.API_URL}${url}`);
   console.log(`| params ->`, params);
   return await joinApiClient
-    .get(Config.API_URL + url, { params })
+    .get(`${Config.API_URL}${url}`, { params })
     .then((response) => {
       console.log('Success Axios GET StatusCode: ', response.status);
       return response.data;

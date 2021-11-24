@@ -16,12 +16,13 @@ const ReviewList = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { myReviewPage, myReviewList } = useSelector((state: MyState) => state.my);
+
   const onRefresh = () => {
     const params = {
       perPage: 10,
       page: 1,
     };
-    dispatch(MyActions.fetchMyReservationList(params));
+    dispatch(MyActions.fetchMyReviewList(params));
     dispatch(
       MyActions.fetchMyReducer({
         type: 'myReviewPage',
@@ -36,7 +37,7 @@ const ReviewList = () => {
       page: myReviewPage,
     };
 
-    if (myReviewPage > 0) dispatch(MyActions.fetchMyReservationList(params));
+    if (myReviewPage > 0) dispatch(MyActions.fetchMyReviewList(params));
   };
 
   const renderItem = (index: number) => {

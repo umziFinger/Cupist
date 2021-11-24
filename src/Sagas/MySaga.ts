@@ -588,12 +588,12 @@ export function* fetchMyWithdraw(data: any): any {
 export function* fetchMyReviewList(data: any): any {
   try {
     if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
-    const payload = {
+    const params = {
       ...data,
       url: Config.MY_REVIEW,
     };
-    const response = yield call(Axios.GET, payload);
-    // console.log('마이 리뷰 데이터: ', response.data);
+    const response = yield call(Axios.GET, params);
+    console.log('마이 리뷰 데이터: ', response.data);
     if (response.result === true && response.code === null) {
       yield put(
         MyActions.fetchMyReducer({
