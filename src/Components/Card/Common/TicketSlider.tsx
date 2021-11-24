@@ -37,8 +37,6 @@ const TicketSlider = (props: PropTypes) => {
     return false;
   };
 
-  console.log('allowedTimeArr[0] : ', morning[0]?.salePrice);
-
   const onPressTicket = (value: any) => {
     if (selectedTicket?.idx === value.idx) {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
