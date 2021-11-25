@@ -25,6 +25,8 @@ const { Types, Creators } = createActions({
   fetchMyReservationDetailInfo: ['params'],
   fetchMyReservationCancelDetailInfo: ['params'],
   fetchMyReviewWrite: ['params'],
+  fetchMyReviewModify: ['params'],
+  fetchMyReviewDelete: ['params'],
 });
 
 export const MyTypes = Types;

@@ -45,6 +45,7 @@ import PaymentResultScreen from '@/Containers/Reservation/PaymentResultScreen';
 import WriteReviewScreen from '@/Containers/My/WriteReviewScreen';
 import WriteReviewDetailScreen from '@/Containers/My/WriteReviewDetailScreen';
 import WalkThroughScreen from '@/Containers/WalkThrough';
+import ReviewModifyScreen from '@/Containers/Review/ReviewModifyScreen';
 
 export type MainStackParamList = {
   Bottom: undefined;
@@ -88,6 +89,7 @@ export type MainStackParamList = {
   PaymentResultScreen: undefined;
   WriteReviewScreen: undefined;
   WriteReviewDetailScreen: undefined;
+  ReviewModifyScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -157,6 +159,9 @@ const MainNavigator = () => {
       <MainStack.Screen name="ReservationScreen" component={ReservationScreen} />
       <MainStack.Screen name="EditBookerScreen" component={EditBookerScreen} />
       <MainStack.Screen name="PaymentResultScreen" component={PaymentResultScreen} />
+
+      {/* Review */}
+      <MainStack.Screen name="ReviewModifyScreen" component={ReviewModifyScreen} />
     </MainStack.Navigator>
   );
 };

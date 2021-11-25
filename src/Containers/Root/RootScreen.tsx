@@ -21,6 +21,7 @@ import QnaTypeRBS from '@/Components/RBS/Qna/QnaTypeRBS';
 import ReservationRBS from '@/Components/RBS/Reservation/ReservationRBS';
 import DirectReservationRBS from '@/Components/RBS/Home/DirectReservationRBS';
 import CalendarRBS from '@/Components/RBS/Common/CalendarRBS';
+import MyReviewMoreRBS from '@/Components/RBS/My/ReviewMoreRBS';
 
 LogBox.ignoreLogs([
   'interpolate() was renamed to interpolateNode()',
@@ -50,6 +51,7 @@ const RootScreen = () => {
     isOpenQnaTypeRBS,
     isOpenReservationRBS,
     isOpenCalendarRBS,
+    isOpenMyReviewMoreRBS,
   } = useSelector((state: CommonState) => state.common);
 
   useEffect(() => {
@@ -102,6 +104,7 @@ const RootScreen = () => {
       {isOpenDirectReservationRBS && <DirectReservationRBS />}
       {isOpenReservationRBS && <ReservationRBS />}
       {isOpenCalendarRBS && <CalendarRBS />}
+      {isOpenMyReviewMoreRBS && <MyReviewMoreRBS />}
     </>
   );
 };
