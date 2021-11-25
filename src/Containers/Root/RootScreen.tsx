@@ -22,6 +22,7 @@ import ReservationRBS from '@/Components/RBS/Reservation/ReservationRBS';
 import DirectReservationRBS from '@/Components/RBS/Home/DirectReservationRBS';
 import CalendarRBS from '@/Components/RBS/Common/CalendarRBS';
 import MyReviewMoreRBS from '@/Components/RBS/My/ReviewMoreRBS';
+import PlaceReviewMoreRBS from '@/Components/RBS/Place/ReviewMoreRBS';
 
 LogBox.ignoreLogs([
   'interpolate() was renamed to interpolateNode()',
@@ -52,6 +53,7 @@ const RootScreen = () => {
     isOpenReservationRBS,
     isOpenCalendarRBS,
     isOpenMyReviewMoreRBS,
+    isOpenPlaceReviewMoreRBS,
   } = useSelector((state: CommonState) => state.common);
 
   useEffect(() => {
@@ -105,6 +107,7 @@ const RootScreen = () => {
       {isOpenReservationRBS && <ReservationRBS />}
       {isOpenCalendarRBS && <CalendarRBS />}
       {isOpenMyReviewMoreRBS && <MyReviewMoreRBS />}
+      {isOpenPlaceReviewMoreRBS && <PlaceReviewMoreRBS />}
     </>
   );
 };

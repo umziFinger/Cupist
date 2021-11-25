@@ -47,6 +47,7 @@ import WriteReviewDetailScreen from '@/Containers/My/WriteReviewDetailScreen';
 import WalkThroughScreen from '@/Containers/WalkThrough';
 import ReviewModifyScreen from '@/Containers/Review/ReviewModifyScreen';
 
+type ReviewModifyType = 'my' | 'placeDetail';
 export type MainStackParamList = {
   Bottom: undefined;
   SearchScreen: undefined;
@@ -89,7 +90,8 @@ export type MainStackParamList = {
   PaymentResultScreen: undefined;
   WriteReviewScreen: undefined;
   WriteReviewDetailScreen: undefined;
-  ReviewModifyScreen: undefined;
+  ReviewModifyScreen: { reviewData: any; type: ReviewModifyType };
+  WalkThroughScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();

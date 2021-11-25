@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, TextInput, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { RouteProp } from '@react-navigation/native';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
@@ -13,15 +14,22 @@ import CallAttachFile from '@/Components/Picture/CallAttachFile';
 import CommonActions from '@/Stores/Common/Actions';
 import { KeyboardSpacerProvider } from '@/Components/Keyboard';
 import CustomButton from '@/Components/CustomButton';
+import { MainStackParamList } from '@/Navigators/MainNavigator';
 
-const ReviewModifyScreen = () => {
+interface PropTypes {
+  route: RouteProp<MainStackParamList, 'ReviewModifyScreen'>;
+}
+
+const ReviewModifyScreen = ({ route }: PropTypes) => {
+  const { reviewData, type } = route?.params;
+
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
 
   const { attachFile, heightInfo } = useSelector((state: CommonState) => state.common);
   const { clickedReviewItem } = useSelector((state: MyState) => state.my);
-  const [content, setContent] = useState(clickedReviewItem?.PlaceReview?.content);
-  const [star, setStar] = useState(clickedReviewItem?.PlaceReview?.star);
+  const [content, setContent] = useState(type === 'my' ? reviewData?.PlaceReview?.content : reviewData?.content);
+  const [star, setStar] = useState(type === 'my' ? reviewData?.PlaceReview?.star : reviewData?.star);
   const [callAttachFile, setCallAttachFile] = useState(false);
   const [attachFileIdx, setAttachFileIdx] = useState(0);
   useEffect(() => {
@@ -59,17 +67,16 @@ const ReviewModifyScreen = () => {
   };
 
   const onWrite = () => {
-    if (
-      clickedReviewItem?.PlaceReview?.content?.length > 20 &&
-      clickedReviewItem?.PlaceReview?.content?.length <= 500
-    ) {
+    if (content?.length > 20 && content?.length <= 500) {
       const params = {
+        placeIdx: clickedReviewItem?.placeIdx || 0,
         reviewIdx: clickedReviewItem?.PlaceReview?.idx,
         files: attachFile,
         content,
         star,
+        screenType: type,
       };
-      console.log(attachFile);
+      // console.log(attachFile);
       dispatch(MyActions.fetchMyReviewModify(params));
     } else {
       dispatch(
@@ -98,7 +105,7 @@ const ReviewModifyScreen = () => {
               <View style={{ width: width - 48 }}>
                 <View style={{ alignItems: 'center' }}>
                   <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Black1000 }}>
-                    {clickedReviewItem?.placeName || ''}
+                    {reviewData?.placeName || ''}
                   </CustomText>
                 </View>
 
@@ -156,7 +163,7 @@ const ReviewModifyScreen = () => {
                   </View>
                   <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
                     <CustomText style={{ fontSize: 12, letterSpacing: -0.21, color: Color.Gray800 }}>
-                      {clickedReviewItem?.PlaceReview?.content.length}
+                      {content?.length || 0}
                     </CustomText>
                     <CustomText style={{ fontSize: 12, letterSpacing: -0.21, color: Color.Gray600 }}>/500</CustomText>
                   </View>
@@ -191,10 +198,7 @@ const ReviewModifyScreen = () => {
                 alignItems: 'center',
                 borderRadius: 3,
                 backgroundColor:
-                  clickedReviewItem?.PlaceReview?.content?.length > 20 &&
-                  clickedReviewItem?.PlaceReview?.content?.length <= 500
-                    ? Color.Primary1000
-                    : Color.Grayyellow200,
+                  content?.length > 20 && content?.length <= 500 ? Color.Primary1000 : Color.Grayyellow200,
                 paddingVertical: 15,
                 marginBottom: heightInfo.statusHeight,
               }}

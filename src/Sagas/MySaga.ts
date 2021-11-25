@@ -13,6 +13,7 @@ import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthAction from '@/Stores/Auth/Actions';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 import NotificationActions from '@/Stores/Notification/Actions';
+import PlaceActions from '@/Stores/Place/Actions';
 
 export function* fetchMyPushYN(data: any): any {
   try {
@@ -761,14 +762,22 @@ export function* fetchMyReviewModify(data: any): any {
 
     const url = `${Config.MY_REVIEW}/${data.params.reviewIdx}`;
     const formData = new FormData();
+    const attachFileInfo: any = [];
     // 이미지 첨부
     if (data.params.files) {
       data.params.files.map((v: any) => {
+        console.log(v);
+        if (v.idx) {
+          // 수정된 s3 이미지 리스트
+          return attachFileInfo.push(v?.idx);
+        }
         return formData.append('files', v);
       });
     }
+    formData.append('attachFileInfo', JSON.stringify(attachFileInfo));
     formData.append('content', data.params.content);
     formData.append('star', data.params.star);
+
     const payload = {
       formData,
       url,
@@ -777,12 +786,13 @@ export function* fetchMyReviewModify(data: any): any {
     const response = yield call(Axios.PATCH, payload);
 
     if (response.result === true && response.code === null) {
-      const params = {
-        perPage: 10,
-        page: 1,
-      };
-      yield put(MyActions.fetchMyReviewList(params));
-      navigate('MyScreen');
+      if (data.params.screenType === 'my') {
+        navigate('MyScreen');
+      } else if (data.params.screenType === 'placeDetail') {
+        yield put(PlaceActions.fetchPlaceDetail({ idx: data.params.placeIdx }));
+        navigateGoBack();
+      }
+      yield put(CommonActions.fetchCommonReducer({ type: 'myTabRefreshYN', data: 'N' }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
@@ -809,11 +819,12 @@ export function* fetchMyReviewDelete(data: any): any {
     const response = yield call(Axios.DELETE, payload);
     console.log('리뷰 삭제: ', response);
     if (response.result === true && response.code === null) {
-      const params = {
-        perPage: 10,
-        page: 1,
-      };
-      yield put(MyActions.fetchMyReviewList(params));
+      yield put(CommonActions.fetchCommonReducer({ type: 'myTabRefreshYN', data: 'N' }));
+
+      if (data.params.screenType === 'placeDetail') {
+        yield put(PlaceActions.fetchPlaceDetail({ idx: data.params.placeIdx }));
+      }
+
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
