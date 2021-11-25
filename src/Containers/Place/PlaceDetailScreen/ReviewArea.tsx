@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
-import _ from 'lodash';
 import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
 import CustomText from '@/Components/CustomText';
@@ -10,6 +9,7 @@ import Star from '@/Components/Star';
 import CustomShowMore from '@/Components/CustomShowMore';
 import CommonActions from '@/Stores/Common/Actions';
 import { navigate } from '@/Services/NavigationService';
+import PlaceActions from '@/Stores/Place/Actions';
 
 interface PropTypes {
   item: any;
@@ -18,7 +18,7 @@ interface PropTypes {
 }
 const ReviewArea = (props: PropTypes) => {
   const dispatch = useDispatch();
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const { item, latestReview, starReview } = props;
   const [filter, setFilter] = useState<string>('latest');
   const reviewList = filter === 'latest' ? latestReview : starReview;
@@ -33,8 +33,14 @@ const ReviewArea = (props: PropTypes) => {
     setFilter(value);
   };
 
-  const onPressReviewRBS = () => {
-    console.log('onPressReviewRBS');
+  const onPressReviewRBS = (review: any) => {
+    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenPlaceReviewMoreRBS', data: true }));
+    dispatch(
+      PlaceActions.fetchPlaceReducer({
+        type: 'clickedReviewItem',
+        data: { ...review, placeName: item.name, placeIdx: item.idx, screenType: 'placeDetail' },
+      }),
+    );
   };
 
   const onPressWriteReview = () => {
@@ -166,7 +172,7 @@ const ReviewArea = (props: PropTypes) => {
       </View>
       <FlatList
         data={reviewList}
-        renderItem={({ item: reviewItem, index }) => (
+        renderItem={({ item: reviewItem }) => (
           <View style={{ flex: 1, marginTop: 24, paddingLeft: 20 }}>
             <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
               <View style={{ width: 40, height: 40, marginRight: 12 }}>
@@ -185,7 +191,7 @@ const ReviewArea = (props: PropTypes) => {
                       {reviewItem?.User?.nickname}
                     </CustomText>
                   </View>
-                  <CustomButton onPress={() => onPressReviewRBS()}>
+                  <CustomButton onPress={() => onPressReviewRBS(reviewItem)}>
                     <View style={{ width: 16, height: 16 }}>
                       <FastImage
                         style={{ width: '100%', height: '100%' }}
@@ -211,6 +217,11 @@ const ReviewArea = (props: PropTypes) => {
                   <View style={{ justifyContent: 'center' }}>
                     <CustomText style={{ color: Color.Gray800, fontSize: 10 }}>{reviewItem?.regDateView}</CustomText>
                   </View>
+                </View>
+                <View style={{ marginTop: 12 }}>
+                  <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow1000 }}>
+                    {item?.PlaceReview?.visitCnt || 0}번째 방문
+                  </CustomText>
                 </View>
                 <View
                   style={{
@@ -244,7 +255,7 @@ const ReviewArea = (props: PropTypes) => {
                       </View>
                     </CustomButton>
                   )}
-                  keyExtractor={(item, index) => index.toString()}
+                  keyExtractor={(keyItem, index) => index.toString()}
                   initialNumToRender={2}
                   maxToRenderPerBatch={5}
                   windowSize={7}
@@ -263,7 +274,7 @@ const ReviewArea = (props: PropTypes) => {
             />
           </View>
         )}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(parentKeyItem, index) => index.toString()}
         initialNumToRender={2}
         maxToRenderPerBatch={1}
         windowSize={7}

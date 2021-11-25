@@ -1,6 +1,6 @@
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
@@ -11,13 +11,21 @@ import WriteableReviewItem from '@/Containers/My/MyScreen/WriteableReviewItem';
 import WriteReviewItem from '@/Containers/My/MyScreen/WriteReviewItem';
 import MyActions from '@/Stores/My/Actions';
 import { MyState } from '@/Stores/My/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
 
 const ReviewList = () => {
   const dispatch = useDispatch();
-  const { heightInfo } = useSelector((state: CommonState) => state.common);
+  const { heightInfo, myTabRefreshYN } = useSelector((state: CommonState) => state.common);
   const { myReviewPage, myReviewList } = useSelector((state: MyState) => state.my);
 
+  useEffect(() => {
+    if (myTabRefreshYN === 'N') {
+      onRefresh();
+    }
+  }, [myTabRefreshYN]);
+
   const onRefresh = () => {
+    console.log('리뷰 리프레시!!!!!!!!');
     const params = {
       perPage: 10,
       page: 1,
@@ -29,6 +37,7 @@ const ReviewList = () => {
         data: 1,
       }),
     );
+    dispatch(CommonActions.fetchCommonReducer({ type: 'myTabRefreshYN', data: 'Y' }));
   };
 
   const onMore = () => {
@@ -37,7 +46,7 @@ const ReviewList = () => {
       page: myReviewPage,
     };
 
-    if (myReviewPage > 0) dispatch(MyActions.fetchMyReviewList(params));
+    if (myReviewPage > 1) dispatch(MyActions.fetchMyReviewList(params));
   };
 
   const renderItem = (index: number) => {

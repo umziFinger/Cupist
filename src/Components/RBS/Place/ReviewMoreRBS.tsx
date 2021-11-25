@@ -1,43 +1,47 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { FlatList, useWindowDimensions, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import CommonActions from '@/Stores/Common/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { AuthState } from '@/Stores/Auth/InitialState';
-import { REVIEW_DATA_ME_MORE, ReviewMoreItemProp } from '@/Components/RBS/My/data';
+import { REVIEW_DATA_ME_MORE, REVIEW_DATA_OTHER_MORE, ReviewMoreItemProp } from '@/Components/RBS/Place/data';
 import { navigate } from '@/Services/NavigationService';
 import MyActions from '@/Stores/My/Actions';
 import { MyState } from '@/Stores/My/InitialState';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
-const MyReviewMoreRBS = () => {
+const PlaceReviewMoreRBS = () => {
   const dispatch = useDispatch();
   const RBSheetRef = useRef<any>();
-  const { width, height } = useWindowDimensions();
-  const { heightInfo, isOpenMyReviewMoreRBS } = useSelector((state: CommonState) => state.common);
-  const { clickedReviewItem } = useSelector((state: MyState) => state.my);
+  const { heightInfo, isOpenPlaceReviewMoreRBS } = useSelector((state: CommonState) => state.common);
+  const { userIdx } = useSelector((state: AuthState) => state.auth);
+  const { clickedReviewItem } = useSelector((state: PlaceState) => state.place);
 
   useEffect(() => {
-    if (isOpenMyReviewMoreRBS) {
+    if (isOpenPlaceReviewMoreRBS) {
       RBSheetRef?.current.open();
     }
-  }, [isOpenMyReviewMoreRBS]);
+  }, [isOpenPlaceReviewMoreRBS]);
 
   const onClick = (data: ReviewMoreItemProp): any => {
     console.log(data.selectKey);
     // const placeReviewIdx = item.idx;
     switch (data.selectKey) {
-      case 'modify':
-        navigate('ReviewModifyScreen', { reviewData: clickedReviewItem, type: 'my' });
+      case 'modify': {
+        console.log('더보기', clickedReviewItem);
+        navigate('ReviewModifyScreen', { reviewData: clickedReviewItem, type: 'placeDetail' });
         break;
+      }
 
       case 'remove': {
         const params = {
-          reviewIdx: clickedReviewItem?.PlaceReview?.idx,
-          type: 'my',
+          reviewIdx: clickedReviewItem?.idx,
+          placeIdx: clickedReviewItem?.placeIdx,
+          type: clickedReviewItem?.screenType,
         };
         dispatch(
           CommonActions.fetchCommonReducer({
@@ -76,7 +80,7 @@ const MyReviewMoreRBS = () => {
         },
       }}
       onClose={() => {
-        dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenMyReviewMoreRBS', data: false }));
+        dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenPlaceReviewMoreRBS', data: false }));
       }}
     >
       <View
@@ -94,7 +98,7 @@ const MyReviewMoreRBS = () => {
           </CustomText>
         </View>
         <FlatList
-          data={REVIEW_DATA_ME_MORE}
+          data={clickedReviewItem?.User?.idx === userIdx ? REVIEW_DATA_ME_MORE : REVIEW_DATA_OTHER_MORE}
           renderItem={(x) => (
             <CustomButton onPress={() => [onClick(x.item), RBSheetRef.current.close()]}>
               <View
@@ -155,4 +159,4 @@ const MyReviewMoreRBS = () => {
   );
 };
 
-export default MyReviewMoreRBS;
+export default PlaceReviewMoreRBS;

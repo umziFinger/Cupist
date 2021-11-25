@@ -10,6 +10,13 @@ export const REVIEW_DATA_ME_MORE: Array<ReviewMoreItemProp> = [
     selectKey: 'remove',
   },
 ];
+export const REVIEW_DATA_OTHER_MORE: Array<ReviewMoreItemProp> = [
+  {
+    idx: 1,
+    title: '부적절한 리뷰로 신고하기',
+    selectKey: 'report',
+  },
+];
 
 export interface ReviewMoreItemProp {
   idx: number;

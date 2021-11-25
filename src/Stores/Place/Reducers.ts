@@ -147,6 +147,11 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'clickedReviewItem': {
+        draft.clickedReviewItem = data;
+        break;
+      }
+
       default:
         return draft;
     }

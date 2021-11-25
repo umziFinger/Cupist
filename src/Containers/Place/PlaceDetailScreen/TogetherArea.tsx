@@ -32,6 +32,7 @@ const TogetherArea = (props: PropTypes) => {
           maxToRenderPerBatch={6}
           windowSize={7}
           horizontal
+          showsHorizontalScrollIndicator={false}
         />
       </View>
     </View>

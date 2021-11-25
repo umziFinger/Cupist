@@ -88,6 +88,8 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
       case 'myReviewRemove': {
         const params = {
           reviewIdx: alertDialogParams?.reviewIdx,
+          screenType: alertDialogParams?.type,
+          placeIdx: alertDialogParams?.placeIdx,
         };
         dispatch(MyActions.fetchMyReviewDelete(params));
         break;

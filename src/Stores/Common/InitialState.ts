@@ -5,6 +5,7 @@ export const INITIAL_STATE = {
   isOpenReservationRBS: false,
   isOpenCalendarRBS: false,
   isOpenMyReviewMoreRBS: false,
+  isOpenPlaceReviewMoreRBS: false,
   isLoading: false,
   isSkeleton: false,
   alertDialog: false,
@@ -49,6 +50,7 @@ export const INITIAL_STATE = {
   currentRBS: '',
   isOpenKeyboard: false,
   homeTabRefreshYN: 'Y',
+  myTabRefreshYN: 'Y',
   appCodePushVersion: '',
 };
 
@@ -60,6 +62,7 @@ export interface CommonState {
     isOpenReservationRBS: boolean | false;
     isOpenCalendarRBS: boolean | false;
     isOpenMyReviewMoreRBS: boolean | false;
+    isOpenPlaceReviewMoreRBS: boolean | false;
     isLoading: boolean | false;
     isSkeleton: boolean | false;
     alertDialog: AlertInfo['alertDialog'];
@@ -95,6 +98,7 @@ export interface CommonState {
     currentRBS: string | null;
     isOpenKeyboard: boolean | false;
     homeTabRefreshYN: typeYN;
+    myTabRefreshYN: typeYN;
     appCodePushVersion: string | '';
     isConnected: boolean | false;
     currentLocationStatus: any;
