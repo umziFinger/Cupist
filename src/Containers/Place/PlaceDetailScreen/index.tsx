@@ -56,6 +56,9 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   useEffect(() => {
     console.log('PlaceDetailScreen Idx : ', calendarDate);
     dispatch(PlaceActions.fetchPlaceDetail({ idx }));
+  }, [idx]);
+
+  useEffect(() => {
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeDetailInit' }));
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));

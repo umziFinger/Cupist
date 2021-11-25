@@ -13,9 +13,13 @@ interface PropTypes {
   width: number;
 }
 const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width }: PropTypes) => {
-  console.log('item.idx : ', item.idx);
+  const onPlaceDetail = () => {
+    console.log('item.idx : ', item);
+    navigate('PlaceDetailScreen', { idx: item.idx });
+  };
+
   return (
-    <CustomButton onPress={() => navigateReplace('PlaceDetailScreen', { idx: item.idx })}>
+    <CustomButton onPress={() => onPlaceDetail()}>
       <View style={{ borderRadius: 2, borderWidth: 1, borderColor: Color.Gray200, backgroundColor: Color.White }}>
         <View style={{ width, height: 93 }}>
           <FastImage

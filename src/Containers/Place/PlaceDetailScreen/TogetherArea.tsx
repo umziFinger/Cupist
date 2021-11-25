@@ -22,7 +22,7 @@ const TogetherArea = (props: PropTypes) => {
       <View style={{ flex: 1, paddingLeft: 20, marginTop: 21 }}>
         <FlatList
           data={list}
-          renderItem={({ item, index }) => (
+          renderItem={({ item }) => (
             <View style={{ marginRight: 11 }}>
               <PlaceSmallCard item={item} width={(width - 48 - 12) / 2} showRate={false} showTicketName />
             </View>
