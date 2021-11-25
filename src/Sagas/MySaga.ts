@@ -593,7 +593,7 @@ export function* fetchMyReviewList(data: any): any {
       url: Config.MY_REVIEW,
     };
     const response = yield call(Axios.GET, params);
-    console.log('마이 리뷰 데이터: ', response.data);
+    // console.log('마이 리뷰 데이터: ', response.data.writeReview);
     if (response.result === true && response.code === null) {
       yield put(
         MyActions.fetchMyReducer({
@@ -752,5 +752,75 @@ export function* fetchMyReviewWrite(data: any): any {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
 
     console.log('occurred Error...fetchMyReviewWrite : ', e);
+  }
+}
+
+export function* fetchMyReviewModify(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const url = `${Config.MY_REVIEW}/${data.params.reviewIdx}`;
+    const formData = new FormData();
+    // 이미지 첨부
+    if (data.params.files) {
+      data.params.files.map((v: any) => {
+        return formData.append('files', v);
+      });
+    }
+    formData.append('content', data.params.content);
+    formData.append('star', data.params.star);
+    const payload = {
+      formData,
+      url,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+
+    if (response.result === true && response.code === null) {
+      const params = {
+        perPage: 10,
+        page: 1,
+      };
+      yield put(MyActions.fetchMyReviewList(params));
+      navigate('MyScreen');
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      console.log('occurred Error...fetchMyReviewModify : ', response);
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyReviewModify : ', e);
+  }
+}
+
+export function* fetchMyReviewDelete(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const url = `${Config.MY_REVIEW}/${data.params.reviewIdx}`;
+
+    const payload = {
+      url,
+    };
+
+    const response = yield call(Axios.DELETE, payload);
+    console.log('리뷰 삭제: ', response);
+    if (response.result === true && response.code === null) {
+      const params = {
+        perPage: 10,
+        page: 1,
+      };
+      yield put(MyActions.fetchMyReviewList(params));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyReviewDelete : ', e);
   }
 }

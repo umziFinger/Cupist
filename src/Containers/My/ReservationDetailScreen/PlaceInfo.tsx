@@ -121,7 +121,7 @@ const PlaceInfo = () => {
       }
       case 'mapView': {
         Linking.openURL(
-          `nmap://place?lat=${myLatitude}&lng=${myLongitude}&name=${reservationDetail?.Place?.name}&appname=${Config.NAVER_APP_URL_SCHEME}`,
+          `nmap://place?lat=${reservationDetail?.Place?.lat}&lng=${reservationDetail?.Place?.lng}&name=${reservationDetail?.Place?.name}&appname=${Config.NAVER_APP_URL_SCHEME}`,
         )
           .then((res) => {
             // 앱 설치 o, 티맵 경로 바로 검색 성공

@@ -10,6 +10,7 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import { onAppUpdate } from '@/Components/Function';
 import MyActions from '@/Stores/My/Actions';
 import { MyState } from '@/Stores/My/InitialState';
+import { fetchMyReviewDelete } from '@/Sagas/MySaga';
 
 interface ChoiceDialogProps {
   item: {
@@ -82,6 +83,13 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
         };
         dispatch(MyActions.fetchMyReservationCancelDetailInfo(params));
         // navigateReplace('SimpleLoginScreen');
+        break;
+      }
+      case 'myReviewRemove': {
+        const params = {
+          reviewIdx: alertDialogParams?.reviewIdx,
+        };
+        dispatch(MyActions.fetchMyReviewDelete(params));
         break;
       }
 

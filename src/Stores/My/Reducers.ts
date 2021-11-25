@@ -24,10 +24,10 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'myReviewList': {
         if (actions.params.page === 1) {
-          draft.myReviewList.writeableReview = data.writeableReview;
-          draft.myReviewList.writeReview = data.writeReview;
+          draft.myReviewList.writeableReview = data?.writeableReview;
+          draft.myReviewList.writeReview = data?.writeReview;
         } else {
-          draft.myReviewList.writeReview.push(data.writeReview !== '' ? data.writeReview : []);
+          draft.myReviewList.writeReview.concat(data.writeReview !== '' ? data.writeReview : []);
         }
         break;
       }
@@ -219,6 +219,10 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         // @ts-ignore
         draft.writeReviewInfo[key] = data.value;
         // console.log(draft.writeReviewInfo);
+        break;
+      }
+      case 'clickedReviewItem': {
+        draft.clickedReviewItem = data;
         break;
       }
 

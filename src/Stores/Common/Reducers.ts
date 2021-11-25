@@ -16,6 +16,7 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.isOpenQnaTypeRBS = state.currentRBS === 'qnaType';
         draft.isOpenReservationRBS = state.currentRBS === 'reservation';
         draft.isOpenCalendarRBS = state.currentRBS === 'calendar';
+        draft.isOpenMyReviewMoreRBS = state.currentRBS === 'myReviewMore';
         break;
       }
       // RBS 추가 시 모두 추가해주세요.
@@ -26,6 +27,7 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.isOpenQnaTypeRBS = false;
         draft.isOpenReservationRBS = false;
         draft.isOpenCalendarRBS = false;
+        draft.isOpenMyReviewMoreRBS = false;
         break;
       }
 
@@ -58,6 +60,11 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
       case 'isOpenCalendarRBS': {
         draft.isOpenCalendarRBS = data;
         draft.currentRBS = data ? 'calendar' : state.currentRBS;
+        break;
+      }
+      case 'isOpenMyReviewMoreRBS': {
+        draft.isOpenMyReviewMoreRBS = data;
+        draft.currentRBS = data ? 'myReviewMore' : state.currentRBS;
         break;
       }
 

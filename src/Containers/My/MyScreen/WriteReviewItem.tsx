@@ -1,17 +1,27 @@
-import { FlatList, View } from 'react-native';
+import { FlatList, useWindowDimensions, View } from 'react-native';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import ReviewList from '@/Containers/My/MyScreen/ReviewList';
 import CustomText from '@/Components/CustomText';
-import { Color } from '@/Assets/Color';
+import { Color, Opacity } from '@/Assets/Color';
 import { MyState } from '@/Stores/My/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import Star from '@/Components/Star';
+import CommonActions from '@/Stores/Common/Actions';
+import MyActions from '@/Stores/My/Actions';
 
 const WriteReviewItem = () => {
-  const { myReviewList } = useSelector((state: MyState) => state.my);
+  const dispatch = useDispatch();
 
+  const { myReviewList } = useSelector((state: MyState) => state.my);
+  const { width } = useWindowDimensions();
+  const onMore = (item: any) => {
+    console.log('더보기', item);
+    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenMyReviewMoreRBS', data: true }));
+    dispatch(MyActions.fetchMyReducer({ type: 'clickedReviewItem', data: item }));
+  };
+
+  console.log(myReviewList?.writeReview[3]?.reviewPhoto);
   return (
     <>
       <View
@@ -37,16 +47,16 @@ const WriteReviewItem = () => {
         <FlatList
           data={myReviewList?.writeReview}
           renderItem={({ item, index }) => (
-            <CustomButton>
-              <View
-                style={{
-                  borderRadius: 5,
-                  backgroundColor: Color.White,
-                  paddingVertical: 20,
-                  borderBottomWidth: 1,
-                  borderBottomColor: Color.Gray300,
-                }}
-              >
+            <View
+              style={{
+                borderRadius: 5,
+                backgroundColor: Color.White,
+                paddingVertical: 20,
+                borderBottomWidth: myReviewList?.writeReview?.length - 1 === index ? 0 : 1,
+                borderBottomColor: Color.Gray300,
+              }}
+            >
+              <CustomButton>
                 <View style={{ paddingHorizontal: 24 }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <CustomText
@@ -81,13 +91,15 @@ const WriteReviewItem = () => {
                         </CustomText>
                       </View>
                     </View>
-                    <View style={{ width: 16, height: 16 }}>
-                      <FastImage
-                        style={{ width: '100%', height: '100%' }}
-                        source={require('@/Assets/Images/Button/icReveiwPlus.png')}
-                        resizeMode={FastImage.resizeMode.cover}
-                      />
-                    </View>
+                    <CustomButton onPress={() => onMore(item)}>
+                      <View style={{ width: 16, height: 16 }}>
+                        <FastImage
+                          style={{ width: '100%', height: '100%' }}
+                          source={require('@/Assets/Images/Button/icReveiwPlus.png')}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </View>
+                    </CustomButton>
                   </View>
 
                   <View style={{ marginTop: 13 }}>
@@ -107,8 +119,39 @@ const WriteReviewItem = () => {
                     </CustomText>
                   </View>
                 </View>
-              </View>
-            </CustomButton>
+              </CustomButton>
+              {item?.reviewPhoto?.length > 0 && (
+                <FlatList
+                  data={item?.reviewPhoto}
+                  renderItem={({ item: reviewPhoto, index: reviewPhotoIndex }) => (
+                    <View
+                      style={{
+                        width: 176,
+                        height: 110,
+                        borderRadius: 5,
+                        // marginLeft: reviewPhotoIndex === 0 ? 8 : 18,
+                        marginRight: 8,
+                        backgroundColor: Color.Gray200,
+                        alignSelf: 'center',
+                      }}
+                    >
+                      <FastImage
+                        style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                        source={{ uri: reviewPhoto.url || '' }}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(photo, photoKey) => photoKey.toString()}
+                  contentContainerStyle={{ paddingLeft: 24, marginTop: 16 }}
+                  horizontal
+                  initialNumToRender={5}
+                  maxToRenderPerBatch={8}
+                  windowSize={7}
+                  showsHorizontalScrollIndicator={false}
+                />
+              )}
+            </View>
           )}
           initialNumToRender={7}
           maxToRenderPerBatch={10}

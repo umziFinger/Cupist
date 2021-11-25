@@ -52,6 +52,7 @@ export const INITIAL_STATE: MyState['my'] = {
     content: '',
     files: '',
   }, // 작성 가능한 리뷰 데이터 담는 곳
+  clickedReviewItem: null,
 };
 export interface MyState {
   my: {
@@ -98,6 +99,7 @@ export interface MyState {
       content: string;
       files: any;
     };
+    clickedReviewItem: any;
   };
 }
 export type qnaType =

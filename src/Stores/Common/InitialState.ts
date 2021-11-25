@@ -4,6 +4,7 @@ export const INITIAL_STATE = {
   isOpenDirectReservationRBS: false,
   isOpenReservationRBS: false,
   isOpenCalendarRBS: false,
+  isOpenMyReviewMoreRBS: false,
   isLoading: false,
   isSkeleton: false,
   alertDialog: false,
@@ -58,6 +59,7 @@ export interface CommonState {
     isOpenDirectReservationRBS: boolean | false;
     isOpenReservationRBS: boolean | false;
     isOpenCalendarRBS: boolean | false;
+    isOpenMyReviewMoreRBS: boolean | false;
     isLoading: boolean | false;
     isSkeleton: boolean | false;
     alertDialog: AlertInfo['alertDialog'];
