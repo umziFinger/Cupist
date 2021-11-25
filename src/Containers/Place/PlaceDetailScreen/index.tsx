@@ -155,7 +155,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
           <View style={{ flex: 1, marginTop: 16 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <View style={{ marginTop: 28 }}>
-              <TogetherArea list={together} />
+              <TogetherArea list={together || []} />
             </View>
           </View>
         );

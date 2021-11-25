@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
-import { navigate } from '@/Services/NavigationService';
+import { navigate, navigateReplace } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
@@ -13,8 +13,9 @@ interface PropTypes {
   width: number;
 }
 const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width }: PropTypes) => {
+  console.log('item.idx : ', item.idx);
   return (
-    <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
+    <CustomButton onPress={() => navigateReplace('PlaceDetailScreen', { idx: item.idx })}>
       <View style={{ borderRadius: 2, borderWidth: 1, borderColor: Color.Gray200, backgroundColor: Color.White }}>
         <View style={{ width, height: 93 }}>
           <FastImage
