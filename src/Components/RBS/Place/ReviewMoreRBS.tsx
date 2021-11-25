@@ -59,7 +59,11 @@ const PlaceReviewMoreRBS = () => {
       }
 
       case 'report':
-        // navigate('ReportScreen', { mainIdx: placeIdx, subIdx: placeReviewIdx, reportType: 'placeReview' });
+        navigate('ReportScreen', {
+          mainIdx: clickedReviewItem?.placeIdx,
+          subIdx: clickedReviewItem?.idx,
+          reportType: 'placeReview',
+        });
         break;
 
       default:

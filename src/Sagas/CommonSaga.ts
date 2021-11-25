@@ -3,7 +3,7 @@ import moment from 'moment';
 import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import { Axios } from '@/Services/Axios';
-import { navigate, navigateReplace } from '@/Services/NavigationService';
+import { navigate, navigateGoBack, navigateReplace } from '@/Services/NavigationService';
 import HomeActions from '@/Stores/Home/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
 import MyActions from '@/Stores/My/Actions';
@@ -259,4 +259,61 @@ export function* fetchCommonPlaceDibsHandler(data: any): any {
   } catch (e) {
     console.log('occurred Error...fetchCommonPlaceDibsHandler : ', e);
   }
+}
+
+export function* fetchCommonReport(data: any): any {
+  try {
+    let url;
+    const { reportType, mainIdx, subIdx, reportCode } = data.params;
+    // console.log(reportCode);
+    switch (reportType) {
+      case 'placeReview': {
+        url = `place/${mainIdx}/review/${subIdx}/report`;
+        break;
+      }
+      case 'drama': {
+        url = `drama/${mainIdx}/board/${subIdx}/report`;
+        break;
+      }
+      case 'artist': {
+        url = `artist/${mainIdx}/board/${subIdx}/report`;
+        break;
+      }
+      default:
+        url = '';
+    }
+
+    const payload = {
+      params: {
+        reportCode,
+      },
+      url,
+    };
+
+    const response = yield call(Axios.POST, payload);
+
+    if (response.result === true && response.code === null) {
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertDialog',
+          data: {
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogMessage: '신고가 접수되었습니다.\n신고 접수건은 확인 후 24시간 이내에 처리될 예정입니다.',
+          },
+        }),
+      );
+
+      switch (reportType) {
+        default:
+          return null;
+      }
+      navigateGoBack();
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchCommonReport : ', e);
+  }
+  return false;
 }

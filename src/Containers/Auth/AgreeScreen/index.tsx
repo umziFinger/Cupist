@@ -228,30 +228,7 @@ const AgreeScreen = () => {
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
         />
-        <View style={{ paddingBottom: heightInfo.fixBottomHeight }}>
-          <CustomButton onPress={() => onPressNext()}>
-            <View
-              style={{
-                alignItems: 'center',
-                paddingVertical: 15,
-                borderRadius: 5,
-                backgroundColor: checkedArr?.includes('all') ? Color.Primary1000 : Color.Grayyellow200,
-              }}
-            >
-              <CustomText
-                style={{
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                  letterSpacing: -0.25,
-                  textAlign: 'center',
-                  color: Color.White,
-                }}
-              >
-                다음
-              </CustomText>
-            </View>
-          </CustomButton>
-        </View>
+        음
       </View>
     </>
   );
