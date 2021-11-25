@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Linking, useWindowDimensions, View } from 'react-native';
+import { FlatList, Linking, Platform, useWindowDimensions, View } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { useDispatch } from 'react-redux';
@@ -9,6 +9,7 @@ import CustomText from '@/Components/CustomText';
 import CommonActions from '@/Stores/Common/Actions';
 import CustomButton from '@/Components/CustomButton';
 import { renderFacilityIcon } from '@/Components/Function';
+import Config from '@/Config';
 
 interface PropTypes {
   item: any;
@@ -34,9 +35,11 @@ const MapArea = (props: PropTypes) => {
           }),
         );
         break;
-      /* case 'map':
-        // tmap 바로가기 (설정된 경로로 열기)
-        Linking.openURL(`tmap://route?goalx=${data?.lng}&goaly=${data?.lat}`)
+
+      case 'map': {
+        Linking.openURL(
+          `nmap://place?lat=${item?.lat}&lng=${item.lng}&name=${item.name}&appname=${Config.NAVER_APP_URL_SCHEME}`,
+        )
           .then((res) => {
             // 앱 설치 o, 티맵 경로 바로 검색 성공
             console.log('success tmap link : ', res);
@@ -44,7 +47,7 @@ const MapArea = (props: PropTypes) => {
           .catch((err1) => {
             // 앱 미설치, 마켓으로 이동
             console.log('error : ', err1);
-            Linking.openURL(Platform.OS === 'android' ? Config.TMAP_MARKET_URL_ANDROID : Config.TMAP_MARKET_URL_IOS)
+            Linking.openURL(Platform.OS === 'android' ? Config.NMAP_MARKET_URL_ANDROID : Config.NMAP_MARKET_URL_IOS)
               .then((res2) => {
                 console.log('result : ', res2);
               })
@@ -52,7 +55,7 @@ const MapArea = (props: PropTypes) => {
                 console.log('error : ', err2);
               });
           });
-        break; */
+      }
 
       default:
         break;
