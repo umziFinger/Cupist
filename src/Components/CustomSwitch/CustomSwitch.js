@@ -66,6 +66,7 @@ const CustomSwitch = (props) => {
     </View>
   );
 };
+
 CustomSwitch.propTypes = {
   trackColor: PropTypes.objectOf(PropTypes.any),
 };
