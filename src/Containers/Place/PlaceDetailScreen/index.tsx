@@ -56,6 +56,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   useEffect(() => {
     console.log('PlaceDetailScreen Idx : ', calendarDate);
     dispatch(PlaceActions.fetchPlaceDetail({ idx }));
+    animatedFlatRef.current?.scrollToIndex({ index: 0, animated: true });
   }, [idx]);
 
   useEffect(() => {
