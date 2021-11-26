@@ -21,7 +21,7 @@ const { width } = Dimensions.get('window');
 const TotalImageScreen = ({ route }: TotalImageProps) => {
   const dispatch = useDispatch();
   const { startIdx } = route.params;
-  const { totalImageList, heightInfo } = useSelector((state: CommonState) => state.common);
+  const { totalImageList, heightInfo, totalImageType } = useSelector((state: CommonState) => state.common);
 
   useEffect(() => {
     console.log('totalImageList', totalImageList);
@@ -39,7 +39,7 @@ const TotalImageScreen = ({ route }: TotalImageProps) => {
     if (totalImageList) {
       const items = totalImageList?.map((attach, i) => ({
         idx: i,
-        url: attach,
+        url: totalImageType === 'review' ? attach.url : attach,
         width,
         height: width,
       }));

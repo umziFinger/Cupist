@@ -5,7 +5,7 @@ import CustomText from '@/Components/CustomText';
 import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
 
 interface PropTypes {
-  list: any;
+  list: Array<any>;
 }
 
 const TogetherArea = (props: PropTypes) => {

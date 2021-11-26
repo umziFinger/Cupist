@@ -10,6 +10,7 @@ import CustomShowMore from '@/Components/CustomShowMore';
 import CommonActions from '@/Stores/Common/Actions';
 import { navigate } from '@/Services/NavigationService';
 import PlaceActions from '@/Stores/Place/Actions';
+import MyActions from '@/Stores/My/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
 
 interface PropTypes {
@@ -21,16 +22,20 @@ const ReviewArea = (props: PropTypes) => {
   const { item, latestReview, starReview } = props;
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
+  const { placeDetail } = useSelector((state: PlaceState) => state.place);
 
   const [filter, setFilter] = useState<string>('latest');
   const [reviewList, setReviewList] = useState<any>([]);
+  const [isReviewMore, setIsReviewMore] = useState(true);
 
   useEffect(() => {
     setReviewList(filter === 'latest' ? latestReview?.slice(-2) : starReview.slice(-2));
+    setIsReviewMore(true);
   }, [item]);
 
   const onReviewMore = () => {
     setReviewList(filter === 'latest' ? latestReview : starReview);
+    setIsReviewMore(false);
   };
 
   const onPressTotalList = () => {
@@ -58,8 +63,35 @@ const ReviewArea = (props: PropTypes) => {
     );
   };
 
-  const onPressWriteReview = () => {
-    console.log('onPressWriteReview');
+  const onReviewWrite = () => {
+    if (placeDetail?.user.isWriteable) {
+      dispatch(
+        MyActions.fetchMyReducer({
+          type: 'writeReviewInfo',
+          data: {
+            paymentIdx: placeDetail?.user.paymentIdx,
+            placeIdx: placeDetail?.place?.idx,
+            placeName: placeDetail?.place?.name,
+            ticketName: placeDetail?.user.ticketName,
+            star: 0,
+            content: '',
+            files: '',
+          },
+        }),
+      );
+      navigate('WriteReviewDetailScreen', { type: 'placeDetail' });
+    } else {
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: '이용한 내역이 없습니다.',
+          },
+        }),
+      );
+    }
   };
 
   const onTotalImage = (reviewIdx: number, value: number) => {
@@ -100,7 +132,7 @@ const ReviewArea = (props: PropTypes) => {
               style={{ color: '#333', fontSize: 14 }}
             >{`이 볼링장을 이용해보셨나요?\n볼링장에 대한 경험을 나눠주세요!`}</CustomText>
           </View>
-          <CustomButton onPress={() => onPressWriteReview()}>
+          <CustomButton onPress={() => onReviewWrite()}>
             <View style={{ justifyContent: 'center', marginTop: 24 }}>
               <CustomText style={{ color: Color.Point1000, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
                 리뷰쓰기
@@ -304,7 +336,7 @@ const ReviewArea = (props: PropTypes) => {
         maxToRenderPerBatch={1}
         windowSize={7}
       />
-      {reviewList?.length < 5 && (
+      {reviewList?.length < 5 && isReviewMore && (
         <CustomButton onPress={() => onReviewMore()}>
           <View style={{ alignItems: 'center', marginTop: 16 }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>

@@ -17,6 +17,11 @@ export const INITIAL_STATE: PlaceState['place'] = {
     latestReview: [],
     starReview: [],
     together: [],
+    user: {
+      isWriteable: false,
+      paymentIdx: null,
+      ticketName: '',
+    },
   },
   placeDetailIdx: -1,
   placeTicketList: {
@@ -86,6 +91,11 @@ interface PlaceDetail {
   latestReview: Array<any> | [];
   starReview: Array<any> | [];
   together: Array<any> | [];
+  user: {
+    isWriteable: true | false;
+    paymentIdx: number | null;
+    ticketName: string | '';
+  };
 }
 
 interface PlaceTicketList {
