@@ -51,6 +51,7 @@ import ReportScreen from '@/Containers/Report';
 import PlaceReviewScreen from '@/Containers/Place/PlaceReviewScreen';
 
 import PlaceListScreen from '@/Containers/Place/PlaceListScreen';
+import PermissionDetailScreen from '@/Containers/Common/PermissionDetailScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -100,6 +101,7 @@ export type MainStackParamList = {
   ReportScreen: { mainIdx: number; subIdx: number; reportType: string };
   PlaceReviewScreen: undefined;
   PlaceListScreen: { type: string };
+  PermissionDetailScreen: { agreeIdx: number };
 };
 
 const Tab = createBottomTabNavigator();
@@ -124,6 +126,7 @@ const MainNavigator = () => {
       {/* Common */}
       <MainStack.Screen name="TotalImageScreen" component={TotalImageScreen} />
       <MainStack.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
+      <MainStack.Screen name="PermissionDetailScreen" component={PermissionDetailScreen} />
       {/* Auth */}
       <MainStack.Screen name="SimpleLoginScreen" component={SimpleLoginScreen} />
       <MainStack.Screen name="LoginScreen" component={LoginScreen} />

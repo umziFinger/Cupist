@@ -228,7 +228,6 @@ const AgreeScreen = () => {
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
         />
-        음
       </View>
     </>
   );
