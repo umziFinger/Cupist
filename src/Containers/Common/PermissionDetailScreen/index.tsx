@@ -5,7 +5,7 @@ import { WebView } from 'react-native-webview';
 import { useSelector } from 'react-redux';
 import Header from '@/Components/Header';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
-import { DATA_PERMISSION_DETAILS } from '@/Containers/Auth/AgreeDetailScreen/data';
+import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
 import { Color } from '@/Assets/Color';
 import { CommonState } from '@/Stores/Common/InitialState';
 

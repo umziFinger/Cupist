@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
 
 const CopyRightArea = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -59,9 +60,13 @@ const CopyRightArea = () => {
           <View style={{ justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Gray400, fontSize: 12 }}>이용약관 | </CustomText>
           </View>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Gray700, fontSize: 12, fontWeight: '500' }}>개인정보 처리방침</CustomText>
-          </View>
+          <CustomButton onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 2 })}>
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.Gray700, fontSize: 12, fontWeight: '500' }}>
+                개인정보 처리방침
+              </CustomText>
+            </View>
+          </CustomButton>
         </View>
         <View style={{ flex: 1, marginTop: 20 }}>
           <View style={{ justifyContent: 'center' }}>

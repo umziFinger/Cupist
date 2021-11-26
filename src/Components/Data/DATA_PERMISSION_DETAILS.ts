@@ -7,7 +7,7 @@ export const DATA_PERMISSION_DETAILS = [
   {
     idx: 1,
     title: '위치정보 이용약관',
-    uri: 'https://bolimi.kr/policy/locationAgree',
+    uri: 'https://www.bolimi.kr/policy/locationAgree',
   },
   {
     idx: 2,

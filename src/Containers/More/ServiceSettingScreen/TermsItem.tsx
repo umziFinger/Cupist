@@ -5,9 +5,7 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import AuthActions from '@/Stores/Auth/Actions';
-import CommonActions from '@/Stores/Common/Actions';
 import { navigate } from '@/Services/NavigationService';
-import { DATA_PERMISSION_DETAILS } from '@/Containers/Auth/AgreeDetailScreen/data';
 
 type PropTypes = {
   title: string;
@@ -20,19 +18,19 @@ const TermsItem = ({ title, type }: PropTypes) => {
       case 'service': {
         dispatch(AuthActions.fetchAuthReducer({ type: 'selectedAgreeIdx', data: { selectedAgreeIdx: 0 } }));
         // dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeDetailRBS', data: true }));
-        navigate('PermissionDetailScreen', { title: DATA_PERMISSION_DETAILS[0].title, agreeIdx: 0 });
+        navigate('PermissionDetailScreen', { agreeIdx: 0 });
         break;
       }
       case 'personal': {
         dispatch(AuthActions.fetchAuthReducer({ type: 'selectedAgreeIdx', data: { selectedAgreeIdx: 2 } }));
         // dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeDetailRBS', data: true }));
-        navigate('PermissionDetailScreen', { title: DATA_PERMISSION_DETAILS[0].title, agreeIdx: 2 });
+        navigate('PermissionDetailScreen', { agreeIdx: 2 });
         break;
       }
       case 'location': {
         dispatch(AuthActions.fetchAuthReducer({ type: 'selectedAgreeIdx', data: { selectedAgreeIdx: 3 } }));
         // dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeDetailRBS', data: true }));
-        navigate('PermissionDetailScreen', { title: DATA_PERMISSION_DETAILS[0].title, agreeIdx: 3 });
+        navigate('PermissionDetailScreen', { agreeIdx: 1 });
         break;
       }
       default:
