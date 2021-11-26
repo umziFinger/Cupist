@@ -143,6 +143,7 @@ const PlaceReviewMoreRBS = () => {
               backgroundColor: Color.Primary1000,
               borderRadius: 3,
               alignItems: 'center',
+              marginBottom: 10,
             }}
           >
             <CustomText

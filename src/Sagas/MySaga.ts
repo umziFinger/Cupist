@@ -727,12 +727,13 @@ export function* fetchMyReviewWrite(data: any): any {
         return formData.append('files', v);
       });
     }
+
     formData.append('content', data.params.content);
     formData.append('paymentIdx', data.params.paymentIdx);
     formData.append('star', data.params.star);
     const payload = {
-      formData,
       url,
+      formData,
     };
 
     const response = yield call(Axios.FILE, payload);
@@ -762,25 +763,23 @@ export function* fetchMyReviewModify(data: any): any {
 
     const url = `${Config.MY_REVIEW}/${data.params.reviewIdx}`;
     const formData = new FormData();
-    const attachFileInfo: any = [];
+    const attachFileInfoArr: any = [];
     // 이미지 첨부
     if (data.params.files) {
       data.params.files.map((v: any) => {
-        console.log(v);
         if (v.idx) {
-          // 수정된 s3 이미지 리스트
-          return attachFileInfo.push(v?.idx);
+          return attachFileInfoArr.push(v.idx);
         }
         return formData.append('files', v);
       });
     }
-    formData.append('attachFileInfo', JSON.stringify(attachFileInfo));
+    formData.append('attachFileInfo', JSON.stringify(attachFileInfoArr));
     formData.append('content', data.params.content);
     formData.append('star', data.params.star);
 
     const payload = {
-      formData,
       url,
+      formData,
     };
 
     const response = yield call(Axios.PATCH, payload);

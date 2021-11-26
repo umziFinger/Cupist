@@ -7,16 +7,13 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
-import { AuthState } from '@/Stores/Auth/InitialState';
 import { REVIEW_DATA_ME_MORE, ReviewMoreItemProp } from '@/Components/RBS/My/data';
 import { navigate } from '@/Services/NavigationService';
-import MyActions from '@/Stores/My/Actions';
 import { MyState } from '@/Stores/My/InitialState';
 
 const MyReviewMoreRBS = () => {
   const dispatch = useDispatch();
   const RBSheetRef = useRef<any>();
-  const { width, height } = useWindowDimensions();
   const { heightInfo, isOpenMyReviewMoreRBS } = useSelector((state: CommonState) => state.common);
   const { clickedReviewItem } = useSelector((state: MyState) => state.my);
 
@@ -135,6 +132,7 @@ const MyReviewMoreRBS = () => {
               backgroundColor: Color.Primary1000,
               borderRadius: 3,
               alignItems: 'center',
+              marginBottom: 10,
             }}
           >
             <CustomText
