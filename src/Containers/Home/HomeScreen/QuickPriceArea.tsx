@@ -4,6 +4,8 @@ import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import QuickPriceCard from '@/Components/Card/Home/QuickPriceCard';
+import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   list: Array<any>;
@@ -26,6 +28,11 @@ const QuickPriceArea = (props: PropTypes) => {
       }
     },
   );
+
+  const onPressViewAll = () => {
+    console.log('onPressViewAll');
+    navigate('PlaceListScreen', { type: 'special' });
+  };
 
   return (
     <View style={{ flex: 1, marginTop: 40 }}>
@@ -50,20 +57,22 @@ const QuickPriceArea = (props: PropTypes) => {
               선착순 할인 특가로 즐기는 볼링장
             </CustomText>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ justifyContent: 'center', paddingTop: Platform.select({ ios: 0, android: 1 }) }}>
-              <CustomText style={{ color: Color.Gray400, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-                모두보기
-              </CustomText>
+          <CustomButton onPress={() => onPressViewAll()}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ justifyContent: 'center', paddingTop: Platform.select({ ios: 0, android: 1 }) }}>
+                <CustomText style={{ color: Color.Gray400, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
+                  모두보기
+                </CustomText>
+              </View>
+              <View style={{ width: 16, height: 16 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={require('@/Assets/Images/Arrow/icArrowRi.png')}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </View>
             </View>
-            <View style={{ width: 16, height: 16 }}>
-              <FastImage
-                style={{ width: '100%', height: '100%' }}
-                source={require('@/Assets/Images/Arrow/icArrowRi.png')}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            </View>
-          </View>
+          </CustomButton>
         </View>
       </View>
       <Animated.FlatList

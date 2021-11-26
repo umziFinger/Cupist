@@ -104,8 +104,6 @@ const HomeScreen = ({ route }: HomeProps) => {
     dispatch(
       HomeActions.fetchHomeDirectReservationList({
         ...params,
-        perPage: 3,
-        page: 1,
         startTime,
         endTime,
         areaCode,
@@ -153,6 +151,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 2: {
         return (
+          // 바로예약
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <DirectReservationArea list={homeList['place'] || []} />
@@ -172,6 +171,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 4: {
         return (
+          // 선결제 특가
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <PrepaymentPriceArea list={homeList['early'] || []} />
@@ -180,6 +180,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 5: {
         return (
+          // 볼리미 HOT
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <HotArea list={homeList['hotPlace'] || []} />

@@ -28,17 +28,15 @@ const DirectReservationArea = (props: PropTypes) => {
   );
   const { areaList } = useSelector((state: SearchState) => state.search);
 
-  const getDirectReservationList = (value: number) => {
+  const getDirectReservationList = (idx: number) => {
     const date = moment(calendarDate).format('YYYY/MM/DD');
-    const areaCode = areaFilter()[value].key;
+    const areaCode = areaFilter()[idx].key;
     const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
     const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
 
     let params = {};
-    if (value === 1) {
+    if (idx === 1) {
       params = {
-        perPage: 3,
-        page: 1,
         date,
         lat: myLatitude,
         lng: myLongitude,
@@ -46,10 +44,8 @@ const DirectReservationArea = (props: PropTypes) => {
         endTime,
       };
     }
-    if (value > 1) {
+    if (idx > 1) {
       params = {
-        perPage: 3,
-        page: 1,
         date,
         areaCode,
         startTime,
@@ -286,7 +282,7 @@ const DirectReservationArea = (props: PropTypes) => {
           </View>
         }
       />
-      {list?.length > 0 && (
+      {/* {list?.length > 0 && (
         <CustomButton onPress={() => navigate('SimpleLoginScreen')} style={{ paddingHorizontal: 20, marginTop: 20 }}>
           <View
             style={{
@@ -307,7 +303,7 @@ const DirectReservationArea = (props: PropTypes) => {
             </View>
           </View>
         </CustomButton>
-      )}
+      )} */}
     </View>
   );
 };

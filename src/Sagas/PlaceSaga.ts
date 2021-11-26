@@ -156,3 +156,23 @@ export function* fetchPlaceReviewList(data: any): any {
     console.log('occurred Error...fetchPlaceReviewList : ', e);
   }
 }
+
+export function* fetchPlaceList(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.PLACE_URL,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      yield put(PlaceActions.fetchPlaceReducer({ type: 'placeList', data: response.data, page: data.params.page }));
+      yield put(PlaceActions.fetchPlaceReducer({ type: 'placeListPage', data: data.params.page + 1 }));
+    } else {
+      yield put(PlaceActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchPlaceList : ', e);
+  }
+}

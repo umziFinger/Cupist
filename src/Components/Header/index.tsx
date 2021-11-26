@@ -5,7 +5,9 @@ import CloseHeader from './CloseHeader';
 
 import MyAroundHeader from '@/Components/Header/MyAroundHeader';
 import PlaceDetailHeader from './PlaceDetailHeader';
+
 import PlaceReviewHeader from '@/Components/Header/PlaceReviewHeader';
+import PlaceListHeader from '@/Components/Header/PlaceListHeader';
 
 export interface HeaderProps {
   type?: string;
@@ -36,8 +38,13 @@ const Header = (props: HeaderProps) => {
 
     case 'placeDetail':
       return <PlaceDetailHeader isShow={isShow} />;
+
     case 'placeReview':
       return <PlaceReviewHeader isShow={isShow} />;
+
+    case 'placeList':
+      return <PlaceListHeader text={text} isShow={isShow} />;
+
     default:
       return null;
   }

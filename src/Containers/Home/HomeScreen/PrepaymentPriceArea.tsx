@@ -10,6 +10,7 @@ import CustomButton from '@/Components/CustomButton';
 import { HomeState } from '@/Stores/Home/InitialState';
 import HomeActions from '@/Stores/Home/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   list: Array<any>;
@@ -23,6 +24,11 @@ const PrepaymentPriceArea = (props: PropTypes) => {
   const onPressNextDay = () => {
     console.log('onPressNextDay');
     dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(possiblePrepaymentDate).toString() }));
+  };
+
+  const onPressViewAll = () => {
+    console.log('onPressViewAll');
+    navigate('PlaceListScreen', { type: 'early' });
   };
 
   return (
@@ -48,20 +54,23 @@ const PrepaymentPriceArea = (props: PropTypes) => {
               선결제하고 할인받는 인기 볼링장
             </CustomText>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ justifyContent: 'center', paddingTop: Platform.select({ ios: 0, android: 1 }) }}>
-              <CustomText style={{ color: Color.Gray400, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-                모두보기
-              </CustomText>
+
+          <CustomButton onPress={() => onPressViewAll()}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ justifyContent: 'center', paddingTop: Platform.select({ ios: 0, android: 1 }) }}>
+                <CustomText style={{ color: Color.Gray400, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
+                  모두보기
+                </CustomText>
+              </View>
+              <View style={{ width: 16, height: 16 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={require('@/Assets/Images/Arrow/icArrowRi.png')}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </View>
             </View>
-            <View style={{ width: 16, height: 16 }}>
-              <FastImage
-                style={{ width: '100%', height: '100%' }}
-                source={require('@/Assets/Images/Arrow/icArrowRi.png')}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            </View>
-          </View>
+          </CustomButton>
         </View>
         <View style={{ flex: 1, marginTop: 20 }}>
           <FlatList
