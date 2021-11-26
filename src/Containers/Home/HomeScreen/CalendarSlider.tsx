@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import moment from 'moment';
 import { View } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -23,6 +23,10 @@ const CalendarSlider = () => {
   //   return date.format('YYYYMMDD') < current; // disable Saturdays
   // };
 
+  useEffect(() => {
+    setHeaderDate(moment(calendarDate).format('MM월 YYYY'));
+  }, [calendarDate]);
+
   // 선택 가능 날짜 범위
   const datesWhitelist = [
     moment(),
@@ -33,8 +37,14 @@ const CalendarSlider = () => {
   ];
 
   const onPressDate = (date: any) => {
+    console.log('onPressDate : ', calendarDate);
     setHeaderDate(date.format('MM월 YYYY'));
     dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(date).toString() }));
+  };
+
+  const onPressHeader = () => {
+    console.log('onPressHeader');
+    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenCalendarRBS', data: true }));
   };
 
   const renderDayComponent = (value: any) => {
@@ -44,7 +54,7 @@ const CalendarSlider = () => {
     // 요일
     const day = current.format('dd');
     // 일
-    const date = Number(current.format('D')) === 1 ? current.format('MM/D') : current.format('D');
+    const date = Number(current.format('D')) === 1 ? current.format('M/D') : current.format('D');
 
     let fontColor = Color.Black1000;
     if (day === '토') fontColor = Color.Calendar_Blue;
@@ -60,7 +70,7 @@ const CalendarSlider = () => {
                 data: {
                   alertToast: true,
                   alertToastPosition: 'top',
-                  alertToastMessage: '다른 날짜를 선택해주세요.',
+                  alertToastMessage: '오늘 날짜 이후로 선택헤주세요.',
                 },
               }),
             );
@@ -128,16 +138,18 @@ const CalendarSlider = () => {
   return (
     <View style={{ flex: 1 }}>
       {/* 캘린더 헤더 영역 */}
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <CustomText style={{ color: Color.Black1000, fontSize: 15, fontWeight: '500' }}>{headerDate}</CustomText>
-        <View style={{ width: 24, height: 24 }}>
-          <FastImage
-            style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/Arrow/icArrowDw.png')}
-            resizeMode={FastImage.resizeMode.cover}
-          />
+      <CustomButton onPress={() => onPressHeader()}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <CustomText style={{ color: Color.Black1000, fontSize: 15, fontWeight: '500' }}>{headerDate}</CustomText>
+          <View style={{ width: 24, height: 24 }}>
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={require('@/Assets/Images/Arrow/icArrowDw.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </View>
         </View>
-      </View>
+      </CustomButton>
 
       {/* 캘린더 영역 */}
       {renderCalendar()}
