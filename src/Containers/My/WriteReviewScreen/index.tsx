@@ -20,7 +20,7 @@ const WriteReviewScreen = () => {
         data: { key: 'star', value: e },
       }),
     );
-    navigate('WriteReviewDetailScreen');
+    navigate('WriteReviewDetailScreen', { type: 'my' });
   };
   return (
     <View style={{ flex: 1 }}>

@@ -22,10 +22,15 @@ const ReviewArea = (props: PropTypes) => {
   const { item, latestReview, starReview } = props;
   const [filter, setFilter] = useState<string>('latest');
   const reviewList = filter === 'latest' ? latestReview : starReview;
-  // const reviewList: Array<any> = [];
 
   const onPressTotalList = () => {
-    console.log('onPressTotalList');
+    const params = {
+      perPage: 10,
+      page: 1,
+      sort: 'latest',
+      placeIdx: item.idx,
+    };
+    dispatch(PlaceActions.fetchPlaceReviewList(params));
   };
 
   const onPressFilter = (value: string) => {
@@ -56,7 +61,7 @@ const ReviewArea = (props: PropTypes) => {
           type: 'totalImage',
           data: {
             totalImageType: 'review',
-            totalImageList: reviewList[idx]?.reviewPhotoArr || [],
+            totalImageList: reviewList[idx]?.reviewPhoto || [],
           },
         }),
       );
@@ -173,8 +178,8 @@ const ReviewArea = (props: PropTypes) => {
       <FlatList
         data={reviewList}
         renderItem={({ item: reviewItem }) => (
-          <View style={{ flex: 1, marginTop: 24, paddingLeft: 20 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+          <View style={{ flex: 1, marginTop: 24 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'flex-start', paddingRight: 20, paddingLeft: 20 }}>
               <View style={{ width: 40, height: 40, marginRight: 12 }}>
                 <FastImage
                   style={{ width: '100%', height: '100%', borderRadius: 50 }}
@@ -183,7 +188,7 @@ const ReviewArea = (props: PropTypes) => {
                 />
               </View>
               <View style={{ flex: 1 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 20 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <View style={{ justifyContent: 'center', flex: 1 }}>
                     <CustomText
                       style={{ color: Color.Black1000, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}
@@ -220,7 +225,7 @@ const ReviewArea = (props: PropTypes) => {
                 </View>
                 <View style={{ marginTop: 12 }}>
                   <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow1000 }}>
-                    {item?.PlaceReview?.visitCnt || 0}번째 방문
+                    {reviewItem?.visitCnt || 0}번째 방문
                   </CustomText>
                 </View>
                 <View
@@ -240,36 +245,46 @@ const ReviewArea = (props: PropTypes) => {
                     buttonColor={Color.Primary1000}
                   />
                 </View>
-                <FlatList
-                  data={[...reviewItem?.reviewPhotoArr] || []}
-                  renderItem={({ item: imgItem, index }) => (
-                    <CustomButton onPress={() => onTotalImage(reviewItem.idx, index)} effect={false}>
-                      <View style={{ marginTop: 16, marginRight: index === 3 ? 0 : 8 }}>
-                        <View style={{ width: width * 0.47, height: width * 0.47 * 0.625 }}>
-                          <FastImage
-                            style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                            source={{ uri: imgItem || '' }}
-                            resizeMode={FastImage.resizeMode.cover}
-                          />
-                        </View>
-                      </View>
-                    </CustomButton>
-                  )}
-                  keyExtractor={(keyItem, index) => index.toString()}
-                  initialNumToRender={2}
-                  maxToRenderPerBatch={5}
-                  windowSize={7}
-                  horizontal
-                />
               </View>
             </View>
+            {reviewItem?.reviewPhoto?.length > 0 && (
+              <FlatList
+                data={reviewItem?.reviewPhoto}
+                renderItem={({ item: imgItem, index }) => (
+                  <CustomButton onPress={() => onTotalImage(reviewItem.idx, index)} effect={false}>
+                    <View
+                      style={{
+                        marginTop: 16,
+                        marginRight: index === 5 ? 0 : 8,
+                        marginLeft: index === 0 ? 72 : undefined,
+                      }}
+                    >
+                      <View style={{ width: width * 0.47, height: width * 0.47 * 0.625 }}>
+                        <FastImage
+                          style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                          source={{ uri: imgItem.url || '' }}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </View>
+                    </View>
+                  </CustomButton>
+                )}
+                keyExtractor={(keyItem, index) => index.toString()}
+                initialNumToRender={2}
+                maxToRenderPerBatch={5}
+                windowSize={7}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            )}
             <View
               style={{
                 alignItems: 'center',
                 height: 1,
                 backgroundColor: Color.Gray300,
                 marginTop: 24,
-                width: width - 40,
+                marginRight: 20,
+                marginLeft: 20,
               }}
             />
           </View>

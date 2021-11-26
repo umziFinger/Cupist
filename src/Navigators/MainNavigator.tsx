@@ -47,8 +47,9 @@ import WriteReviewDetailScreen from '@/Containers/My/WriteReviewDetailScreen';
 import WalkThroughScreen from '@/Containers/WalkThrough';
 import ReviewModifyScreen from '@/Containers/Review/ReviewModifyScreen';
 import ReportScreen from '@/Containers/Report';
+import PlaceReviewScreen from '@/Containers/Place/PlaceReviewScreen';
 
-type ReviewModifyType = 'my' | 'placeDetail';
+type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
   Bottom: undefined;
   SearchScreen: undefined;
@@ -90,10 +91,11 @@ export type MainStackParamList = {
   EditBookerScreen: undefined;
   PaymentResultScreen: undefined;
   WriteReviewScreen: undefined;
-  WriteReviewDetailScreen: undefined;
+  WriteReviewDetailScreen: { type: ReviewModifyType };
   ReviewModifyScreen: { reviewData: any; type: ReviewModifyType };
   WalkThroughScreen: undefined;
   ReportScreen: { mainIdx: number; subIdx: number; reportType: string };
+  PlaceReviewScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -130,9 +132,11 @@ const MainNavigator = () => {
       {/* Search */}
       <MainStack.Screen name="ResidentSearchScreen" component={ResidentSearchScreen} />
       <MainStack.Screen name="SearchScreen" component={SearchScreen} />
+
       {/* place */}
       <MainStack.Screen name="PlaceDetailScreen" component={PlaceDetailScreen} />
       <MainStack.Screen name="RecentPlaceScreen" component={RecentPlaceScreen} />
+      <MainStack.Screen name="PlaceReviewScreen" component={PlaceReviewScreen} />
 
       {/*  Setting */}
       <MainStack.Screen name="LocationSettingScreen" component={LocationSettingScreen} />

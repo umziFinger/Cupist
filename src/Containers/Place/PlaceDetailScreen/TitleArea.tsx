@@ -1,9 +1,15 @@
 import React from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { Linking, Platform, useWindowDimensions, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import FastImage from 'react-native-fast-image';
+import Clipboard from '@react-native-clipboard/clipboard';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
+import CustomButton from '@/Components/CustomButton';
+import { InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data';
+import CommonActions from '@/Stores/Common/Actions';
+import Config from '@/Config';
+import PlaceActions from '@/Stores/Place/Actions';
 
 interface PropTypes {
   item: any;
@@ -11,8 +17,60 @@ interface PropTypes {
 
 const TitleArea = (props: PropTypes) => {
   const dispatch = useDispatch();
-  const { width, height } = useWindowDimensions();
   const { item } = props;
+
+  const onPressTotalList = () => {
+    const params = {
+      perPage: 10,
+      page: 1,
+      sort: 'latest',
+      placeIdx: item.idx,
+    };
+    dispatch(PlaceActions.fetchPlaceReviewList(params));
+  };
+
+  const onPressButton = (type: InfoItemButtonType) => {
+    switch (type) {
+      case 'addressCopy':
+        Clipboard.setString(item?.newAddress || '');
+        dispatch(
+          CommonActions.fetchCommonReducer({
+            type: 'alertToast',
+            data: {
+              alertToast: true,
+              alertToastPosition: 'bottom',
+              alertToastMessage: '주소가 복사 되었습니다.',
+            },
+          }),
+        );
+        break;
+
+      case 'getDirections': {
+        Linking.openURL(
+          `nmap://route/car?dlat=${item?.lat}&dlng=${item?.lng}&dname=${item?.name}&appname=${Config.NAVER_APP_URL_SCHEME}`,
+        )
+          .then((res) => {
+            // 앱 설치 o, 티맵 경로 바로 검색 성공
+            console.log('success tmap link : ', res);
+          })
+          .catch((err1) => {
+            // 앱 미설치, 마켓으로 이동
+            console.log('error : ', err1);
+            Linking.openURL(Platform.OS === 'android' ? Config.NMAP_MARKET_URL_ANDROID : Config.NMAP_MARKET_URL_IOS)
+              .then((res2) => {
+                console.log('result : ', res2);
+              })
+              .catch((err2) => {
+                console.log('error : ', err2);
+              });
+          });
+        break;
+      }
+
+      default:
+        break;
+    }
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -38,11 +96,14 @@ const TitleArea = (props: PropTypes) => {
           </CustomText>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Point1000, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-              길찾기
-            </CustomText>
-          </View>
+          <CustomButton onPress={() => onPressButton('getDirections')}>
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.Point1000, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
+                길찾기
+              </CustomText>
+            </View>
+          </CustomButton>
+
           <View style={{ width: 15, height: 15 }}>
             <FastImage
               style={{ width: '100%', height: '100%' }}
@@ -66,11 +127,14 @@ const TitleArea = (props: PropTypes) => {
           </CustomText>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Point1000, fontSize: 13, fontWeight: '500' }}>
-              {`리뷰 ${item?.reviewCnt || 0}개 보기`}
-            </CustomText>
-          </View>
+          <CustomButton onPress={() => onPressTotalList()} hitSlop={7}>
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.Point1000, fontSize: 13, fontWeight: '500' }}>
+                {`리뷰 ${item?.reviewCnt || 0}개 보기`}
+              </CustomText>
+            </View>
+          </CustomButton>
+
           <View style={{ width: 15, height: 15 }}>
             <FastImage
               style={{ width: '100%', height: '100%' }}

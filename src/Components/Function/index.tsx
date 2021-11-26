@@ -2,12 +2,10 @@ import { getDistance, convertDistance } from 'geolib';
 import { Linking, Platform, View } from 'react-native';
 import { getVersion } from 'react-native-device-info';
 import moment from 'moment';
-import Config from '@/Config';
 import 'moment/locale/ko';
 import { Path, Svg } from 'react-native-svg';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import CommonActions from '@/Stores/Common/Actions';
+import Config from '@/Config';
 
 export const distanceCalc = (start: any, end: any) => {
   const distance = getDistance(start, end);

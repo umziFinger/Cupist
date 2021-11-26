@@ -152,6 +152,41 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'placeReview': {
+        try {
+          if (actions.params.page === 1) {
+            draft.placeReview = data;
+          } else {
+            draft.placeReview.review =
+              data.review?.length > 0 ? draft.placeReview.review.concat(data.review) : draft.placeReview.review;
+          }
+        } catch (e) {
+          console.log(e);
+        }
+        break;
+      }
+
+      case 'reviewListPage': {
+        draft.reviewListPage = data;
+        break;
+      }
+
+      case 'reviewModify': {
+        const copyReviewList: any = state.placeReview.review;
+        const FIND_IDX = copyReviewList?.findIndex((v: any) => v?.idx === data.reviewIdx);
+        if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+          draft.placeReview.review[FIND_IDX] = data;
+        }
+
+        break;
+      }
+
+      case 'reviewDelete': {
+        const copyReviewList: any = state.placeReview.review;
+        draft.placeReview.review = copyReviewList.filter((v: any) => v?.idx !== data.reviewIdx);
+        break;
+      }
+
       default:
         return draft;
     }

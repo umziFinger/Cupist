@@ -4,6 +4,9 @@ import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
 import AuthAction from '@/Stores/Auth/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
+import MyActions from '@/Stores/My/Actions';
+import { navigate } from '@/Services/NavigationService';
 
 export function* fetchPlaceAroundList(data: any): any {
   try {
@@ -110,5 +113,46 @@ export function* fetchPlaceRecentList(data: any): any {
     }
   } catch (e) {
     console.log('occurred Error...fetchPlaceRecentList : ', e);
+  }
+}
+
+export function* fetchPlaceReviewList(data: any): any {
+  try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const payload = {
+      ...data,
+      url: `${Config.PLACE_URL}/${data.params.placeIdx}/review`,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('플레이스 디테일 리뷰 리스트: ', response.data);
+      yield put(
+        PlaceActions.fetchPlaceReducer({
+          type: 'placeReview',
+          data: response.data,
+          page: data.params.page,
+        }),
+      );
+
+      yield put(
+        PlaceActions.fetchPlaceReducer({
+          type: 'reviewListPage',
+          data: data.params.page + 1,
+        }),
+      );
+
+      navigate('PlaceReviewScreen');
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchPlaceReviewList : ', e);
   }
 }

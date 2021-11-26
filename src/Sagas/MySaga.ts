@@ -14,6 +14,8 @@ import AuthAction from '@/Stores/Auth/Actions';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 import NotificationActions from '@/Stores/Notification/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
+import { fetchPlaceReviewList } from '@/Sagas/PlaceSaga';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 export function* fetchMyPushYN(data: any): any {
   try {
@@ -739,12 +741,24 @@ export function* fetchMyReviewWrite(data: any): any {
     const response = yield call(Axios.FILE, payload);
 
     if (response.result === true && response.code === null) {
-      const params = {
-        perPage: 10,
-        page: 1,
-      };
-      yield put(MyActions.fetchMyReviewList(params));
-      navigate('MyScreen');
+      if (data.params.screenType === 'my') {
+        navigate('MyScreen');
+      } else if (data.params.screenType === 'placeDetail') {
+        yield put(PlaceActions.fetchPlaceDetail({ idx: data.params.placeIdx }));
+        navigateGoBack();
+      } else if (data.params.screenType === 'placeReview') {
+        yield put(PlaceActions.fetchPlaceDetail({ idx: data.params.placeIdx }));
+        yield put(
+          PlaceActions.fetchPlaceReviewList({
+            perPage: 10,
+            page: 1,
+            sort: 'latest',
+            placeIdx: data.params.placeIdx,
+          }),
+        );
+        navigateGoBack();
+      }
+      yield put(CommonActions.fetchCommonReducer({ type: 'myTabRefreshYN', data: 'N' }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
@@ -790,6 +804,10 @@ export function* fetchMyReviewModify(data: any): any {
       } else if (data.params.screenType === 'placeDetail') {
         yield put(PlaceActions.fetchPlaceDetail({ idx: data.params.placeIdx }));
         navigateGoBack();
+      } else if (data.params.screenType === 'placeReview') {
+        yield put(PlaceActions.fetchPlaceDetail({ idx: data.params.placeIdx }));
+        yield put(PlaceActions.fetchPlaceReducer({ type: 'reviewModify', data: data.params }));
+        navigateGoBack();
       }
       yield put(CommonActions.fetchCommonReducer({ type: 'myTabRefreshYN', data: 'N' }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
@@ -822,6 +840,11 @@ export function* fetchMyReviewDelete(data: any): any {
 
       if (data.params.screenType === 'placeDetail') {
         yield put(PlaceActions.fetchPlaceDetail({ idx: data.params.placeIdx }));
+      }
+
+      if (data.params.screenType === 'placeReview') {
+        yield put(PlaceActions.fetchPlaceDetail({ idx: data.params.placeIdx }));
+        yield put(PlaceActions.fetchPlaceReducer({ type: 'reviewDelete', data: data.params }));
       }
 
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));

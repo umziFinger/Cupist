@@ -10,8 +10,6 @@ import CustomButton from '@/Components/CustomButton';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { REVIEW_DATA_ME_MORE, REVIEW_DATA_OTHER_MORE, ReviewMoreItemProp } from '@/Components/RBS/Place/data';
 import { navigate } from '@/Services/NavigationService';
-import MyActions from '@/Stores/My/Actions';
-import { MyState } from '@/Stores/My/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 
 const PlaceReviewMoreRBS = () => {
@@ -33,7 +31,7 @@ const PlaceReviewMoreRBS = () => {
     switch (data.selectKey) {
       case 'modify': {
         console.log('더보기', clickedReviewItem);
-        navigate('ReviewModifyScreen', { reviewData: clickedReviewItem, type: 'placeDetail' });
+        navigate('ReviewModifyScreen', { reviewData: clickedReviewItem, type: clickedReviewItem?.screenType });
         break;
       }
 

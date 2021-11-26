@@ -141,22 +141,6 @@ const PlaceInfo = () => {
         break;
       }
       case 'getDirections': {
-        // Linking.openURL(`tmap://route?goalx=${reservationDetail?.Place?.lng}&goaly=${reservationDetail?.Place?.lat}`)
-        //   .then((res) => {
-        //     // 앱 설치 o, 티맵 경로 바로 검색 성공
-        //     console.log('success tmap link : ', res);
-        //   })
-        //   .catch((err1) => {
-        //     // 앱 미설치, 마켓으로 이동
-        //     console.log('error : ', err1);
-        //     Linking.openURL(Platform.OS === 'android' ? Config.TMAP_MARKET_URL_ANDROID : Config.TMAP_MARKET_URL_IOS)
-        //       .then((res2) => {
-        //         console.log('result : ', res2);
-        //       })
-        //       .catch((err2) => {
-        //         console.log('error : ', err2);
-        //       });
-        //   });
         Linking.openURL(
           `nmap://route/car?dlat=${reservationDetail?.Place?.lat}&dlng=${reservationDetail?.Place?.lng}&dname=${reservationDetail?.Place?.name}&appname=${Config.NAVER_APP_URL_SCHEME}`,
         )

@@ -10,6 +10,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import CustomButton from '@/Components/CustomButton';
 import { renderFacilityIcon } from '@/Components/Function';
 import Config from '@/Config';
+import { InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data';
 
 interface PropTypes {
   item: any;
@@ -20,9 +21,9 @@ const MapArea = (props: PropTypes) => {
   const { item } = props;
   const position = { latitude: parseFloat(item?.lat) || 37.553881, longitude: parseFloat(item?.lng) || 126.970488 };
 
-  const onPressButton = (type: string) => {
+  const onPressButton = (type: InfoItemButtonType) => {
     switch (type) {
-      case 'copy':
+      case 'addressCopy':
         Clipboard.setString(item?.newAddress || '');
         dispatch(
           CommonActions.fetchCommonReducer({
@@ -36,9 +37,9 @@ const MapArea = (props: PropTypes) => {
         );
         break;
 
-      case 'map': {
+      case 'getDirections': {
         Linking.openURL(
-          `nmap://place?lat=${item?.lat}&lng=${item.lng}&name=${item.name}&appname=${Config.NAVER_APP_URL_SCHEME}`,
+          `nmap://route/car?dlat=${item?.lat}&dlng=${item?.lng}&dname=${item?.name}&appname=${Config.NAVER_APP_URL_SCHEME}`,
         )
           .then((res) => {
             // 앱 설치 o, 티맵 경로 바로 검색 성공
@@ -55,6 +56,7 @@ const MapArea = (props: PropTypes) => {
                 console.log('error : ', err2);
               });
           });
+        break;
       }
 
       default:
@@ -115,21 +117,21 @@ const MapArea = (props: PropTypes) => {
       return (
         <FlatList
           data={arr}
-          renderItem={({ item, index }) => (
+          renderItem={({ item: icon, index }) => (
             <View key={index.toString()} style={{ alignItems: 'center', justifyContent: 'center', marginRight: 8 }}>
               <View style={{ width: 60, height: 48 }}>
                 <FastImage
                   style={{ width: '100%', height: '100%' }}
-                  source={renderFacilityIcon(item)}
+                  source={renderFacilityIcon(icon)}
                   resizeMode={FastImage.resizeMode.cover}
                 />
               </View>
               <View style={{ marginTop: 5 }}>
-                <CustomText style={{ color: '#333', fontSize: 14 }}>{item}</CustomText>
+                <CustomText style={{ color: '#333', fontSize: 14 }}>{icon}</CustomText>
               </View>
             </View>
           )}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(itemKey, index) => index.toString()}
           initialNumToRender={5}
           maxToRenderPerBatch={8}
           windowSize={7}
@@ -250,7 +252,7 @@ const MapArea = (props: PropTypes) => {
           marginTop: 16,
         }}
       >
-        <CustomButton onPress={() => onPressButton('copy')} style={{ flex: 1 }}>
+        <CustomButton onPress={() => onPressButton('addressCopy')} style={{ flex: 1 }}>
           <View
             style={{
               marginRight: 9,
@@ -264,7 +266,7 @@ const MapArea = (props: PropTypes) => {
             <CustomText style={{ color: Color.Primary1000, fontSize: 14, letterSpacing: -0.25 }}>주소복사</CustomText>
           </View>
         </CustomButton>
-        <CustomButton onPress={() => onPressButton('map')} style={{ flex: 1 }}>
+        <CustomButton onPress={() => onPressButton('getDirections')} style={{ flex: 1 }}>
           <View
             style={{
               alignItems: 'center',

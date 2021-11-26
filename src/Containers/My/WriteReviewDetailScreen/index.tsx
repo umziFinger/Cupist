@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, TextInput, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { RouteProp } from '@react-navigation/native';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
@@ -13,15 +14,21 @@ import CallAttachFile from '@/Components/Picture/CallAttachFile';
 import CommonActions from '@/Stores/Common/Actions';
 import { KeyboardSpacerProvider } from '@/Components/Keyboard';
 import CustomButton from '@/Components/CustomButton';
-import { fetchMyReviewWrite } from '@/Sagas/MySaga';
+import { MainStackParamList } from '@/Navigators/MainNavigator';
 
-const WriteReviewDetailScreen = () => {
+interface PropTypes {
+  route: RouteProp<MainStackParamList, 'ReviewModifyScreen'>;
+}
+
+const WriteReviewDetailScreen = ({ route }: PropTypes) => {
+  const { type } = route?.params;
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const { attachFile, heightInfo } = useSelector((state: CommonState) => state.common);
   const { writeReviewInfo } = useSelector((state: MyState) => state.my);
   const [callAttachFile, setCallAttachFile] = useState(false);
   const [attachFileIdx, setAttachFileIdx] = useState(0);
+  // console.log('==============', writeReviewInfo);
   useEffect(() => {
     dispatch(CommonActions.fetchCommonReducer({ type: 'attachFileInit' }));
     dispatch(MyActions.fetchMyReducer({ type: 'writeQnaContent', data: '' }));
@@ -51,6 +58,8 @@ const WriteReviewDetailScreen = () => {
         files: attachFile,
         content: writeReviewInfo.content,
         star: writeReviewInfo.star,
+        screenType: type,
+        placeIdx: writeReviewInfo.placeIdx,
       };
       dispatch(MyActions.fetchMyReviewWrite(params));
     } else {
@@ -76,7 +85,7 @@ const WriteReviewDetailScreen = () => {
         >
           <FlatList
             data={[0]}
-            renderItem={({ index }) => (
+            renderItem={({}) => (
               <View style={{ width: width - 48 }}>
                 <View style={{ alignItems: 'center' }}>
                   <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Black1000 }}>
