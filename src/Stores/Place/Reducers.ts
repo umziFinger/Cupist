@@ -142,13 +142,50 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'selectedTicket': {
-        console.log('call reducer : ', data);
+        console.log('call reducer selectedTicket: ', data);
         draft.selectedTicket = data;
         break;
       }
 
       case 'clickedReviewItem': {
         draft.clickedReviewItem = data;
+        break;
+      }
+
+      case 'placeList': {
+        if (actions.params.page === 1) {
+          draft.placeList = data.PlaceResult;
+          draft.placeList.map((item: any, index: number) => {
+            draft.placeList[index].isSelected = false;
+            return null;
+          });
+        } else {
+          draft.placeList = data.PlaceResult?.length > 0 ? draft.placeList.concat(data.PlaceResult) : draft.placeList;
+          draft.placeList.map((item: any, index: number) => {
+            draft.placeList[index].isSelected = false;
+            return null;
+          });
+        }
+        break;
+      }
+
+      case 'placeListPage': {
+        console.log('call reducer placeListPage : ', data);
+        draft.placeListPage = data;
+        break;
+      }
+
+      case 'placeListType': {
+        draft.placeListType = data;
+        break;
+      }
+
+      case 'togglePlaceCheck': {
+        console.log('call reducer togglePlaceCheck : ', data);
+        const idx = draft.placeList.findIndex((item) => item.idx === data);
+        if (idx > -1) {
+          draft.placeList[idx].isSelected = !draft.placeList[idx].isSelected;
+        }
         break;
       }
 

@@ -42,16 +42,11 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const animatedFlatRef = useRef<any>();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [isShowTopCalendar, setIsShowTopCalendar] = useState<boolean>(false);
-  const [isShowReservation, setIsShowReservation] = useState<boolean>(false);
-  const [offsetY, setOffsetY] = useState<number>(0);
 
   const place = placeDetail?.place || {};
   const latestReview = placeDetail?.latestReview || [];
   const starReview = placeDetail?.starReview || [];
   const together = placeDetail?.together || [];
-
-  // debounce
-  useDebouncedFunction(() => setIsShowReservation(true), offsetY, 300);
 
   useEffect(() => {
     console.log('PlaceDetailScreen Idx : ', calendarDate);
@@ -67,23 +62,17 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   }, []);
 
   useEffect(() => {
-    console.log('didUpdate detail');
     dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
   }, [calendarDate]);
 
   const handleScroll = (event: any) => {
-    setIsShowReservation(false);
-    setOffsetY(event.nativeEvent.contentOffset.y);
-
     const result = scrollCalendarHandler(event, 540);
     setIsShowTopCalendar(result.isShow);
   };
 
   const onPressReservation = () => {
     if (selectedTicket) {
-      console.log('place idx: ', idx);
-      console.log('selectedTicket idx: ', selectedTicket.idx);
       if (!userIdx) {
         return navigate('SimpleLoginScreen');
       }

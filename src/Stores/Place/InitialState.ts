@@ -28,6 +28,9 @@ export const INITIAL_STATE: PlaceState['place'] = {
   recentListPage: 1,
   selectedTicket: null,
   clickedReviewItem: null,
+  placeList: [],
+  placeListPage: 1,
+  placeListType: '',
 };
 
 export interface PlaceState {
@@ -50,6 +53,9 @@ export interface PlaceState {
     recentListPage: number | 1;
     selectedTicket: any | null;
     clickedReviewItem: any;
+    placeList: Array<any>;
+    placeListPage: number | 1;
+    placeListType: string;
   };
 }
 
