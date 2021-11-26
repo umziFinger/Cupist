@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
@@ -10,6 +10,7 @@ import CustomShowMore from '@/Components/CustomShowMore';
 import CommonActions from '@/Stores/Common/Actions';
 import { navigate } from '@/Services/NavigationService';
 import PlaceActions from '@/Stores/Place/Actions';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 interface PropTypes {
   item: any;
@@ -17,11 +18,20 @@ interface PropTypes {
   starReview: Array<any>;
 }
 const ReviewArea = (props: PropTypes) => {
+  const { item, latestReview, starReview } = props;
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-  const { item, latestReview, starReview } = props;
+
   const [filter, setFilter] = useState<string>('latest');
-  const reviewList = filter === 'latest' ? latestReview : starReview;
+  const [reviewList, setReviewList] = useState<any>([]);
+
+  useEffect(() => {
+    setReviewList(filter === 'latest' ? latestReview?.slice(-2) : starReview.slice(-2));
+  }, [item]);
+
+  const onReviewMore = () => {
+    setReviewList(filter === 'latest' ? latestReview : starReview);
+  };
 
   const onPressTotalList = () => {
     const params = {
@@ -294,11 +304,15 @@ const ReviewArea = (props: PropTypes) => {
         maxToRenderPerBatch={1}
         windowSize={7}
       />
-      <View style={{ alignItems: 'center', marginTop: 16 }}>
-        <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-          더보기
-        </CustomText>
-      </View>
+      {reviewList?.length < 5 && (
+        <CustomButton onPress={() => onReviewMore()}>
+          <View style={{ alignItems: 'center', marginTop: 16 }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
+              더보기
+            </CustomText>
+          </View>
+        </CustomButton>
+      )}
     </View>
   ) : (
     renderEmptyArea()

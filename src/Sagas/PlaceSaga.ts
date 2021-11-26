@@ -118,8 +118,10 @@ export function* fetchPlaceRecentList(data: any): any {
 
 export function* fetchPlaceReviewList(data: any): any {
   try {
-    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
-
+    if (data.params.page === 1) {
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    }
+    navigate('PlaceReviewScreen');
     const payload = {
       ...data,
       url: `${Config.PLACE_URL}/${data.params.placeIdx}/review`,
@@ -144,14 +146,16 @@ export function* fetchPlaceReviewList(data: any): any {
         }),
       );
 
-      navigate('PlaceReviewScreen');
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
     }
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
 
     console.log('occurred Error...fetchPlaceReviewList : ', e);
   }
