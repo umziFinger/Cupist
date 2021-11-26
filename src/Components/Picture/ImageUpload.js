@@ -27,7 +27,7 @@ export default async function (type, file) {
   return new Promise((resolve) => {
     file.map(async (x, i) => {
       const url = x.path;
-      const name = `${moment().format('YYYYMMDDHHmmss')}.jpg`;
+      const name = `${moment().format('YYYYMMDDHHmmss')}${i}.jpg`;
       const [result] = await Promise.all([
         resize(url).then((response) => {
           const fileResult = {
