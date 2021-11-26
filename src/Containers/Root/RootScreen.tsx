@@ -8,7 +8,6 @@ import RootNavigator from '@/Navigators/RootNavigator';
 import Dialog from '@/Components/Dialog';
 import Toast from '@/Components/Toast';
 import Loading from '@/Components/Loading';
-import AgreeDetailScreen from '../Auth/AgreeDetailScreen';
 
 // import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 // import RootCheckAppVersion from './RootCheckAppVersion';
@@ -46,7 +45,6 @@ const RootScreen = () => {
     alertToast,
     alertToastPosition,
     alertToastMessage,
-    isOpenAgreeDetailRBS,
     isOpenTimeFilterRBS,
     isOpenDirectReservationRBS,
     isOpenQnaTypeRBS,
@@ -100,7 +98,6 @@ const RootScreen = () => {
       {/* <RootCheckAppVersion /> */}
       {/* <RootDynamicLink /> */}
 
-      {isOpenAgreeDetailRBS && <AgreeDetailScreen />}
       {isOpenTimeFilterRBS && <TimeFilterRBS />}
       {isOpenQnaTypeRBS && <QnaTypeRBS />}
       {isOpenDirectReservationRBS && <DirectReservationRBS />}

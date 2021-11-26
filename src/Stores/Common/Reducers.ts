@@ -12,7 +12,6 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
       case 'openCurrentRBS': {
         draft.isOpenTimeFilterRBS = state.currentRBS === 'timeFilter';
         draft.isOpenDirectReservationRBS = state.currentRBS === 'directReservation';
-        draft.isOpenAgreeDetailRBS = state.currentRBS === 'agreeDetail';
         draft.isOpenQnaTypeRBS = state.currentRBS === 'qnaType';
         draft.isOpenReservationRBS = state.currentRBS === 'reservation';
         draft.isOpenCalendarRBS = state.currentRBS === 'calendar';
@@ -24,7 +23,6 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
       case 'closeAllRBS': {
         draft.isOpenTimeFilterRBS = false;
         draft.isOpenDirectReservationRBS = false;
-        draft.isOpenAgreeDetailRBS = false;
         draft.isOpenQnaTypeRBS = false;
         draft.isOpenReservationRBS = false;
         draft.isOpenCalendarRBS = false;
@@ -47,11 +45,6 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
       case 'isOpenDirectReservationRBS': {
         draft.isOpenDirectReservationRBS = data;
         draft.currentRBS = data ? 'directReservation' : state.currentRBS;
-        break;
-      }
-      case 'isOpenAgreeDetailRBS': {
-        draft.isOpenAgreeDetailRBS = data;
-        draft.currentRBS = data ? 'agreeDetail' : state.currentRBS;
         break;
       }
       case 'isOpenReservationRBS': {

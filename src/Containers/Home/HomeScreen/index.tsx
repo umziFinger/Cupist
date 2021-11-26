@@ -27,6 +27,8 @@ import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import { scrollCalendarHandler } from '@/Components/Function';
 
 import { SearchState } from '@/Stores/Search/InitialState';
+import CustomText from '@/Components/CustomText';
+import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -189,25 +191,20 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 6: {
         return (
+          // 이벤트
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <EventArea list={homeList['event'] || []} />
           </View>
         );
       }
-      // case 7: {
-      //   return (
-      //     <CustomButton
-      //       onPress={async () => {
-      //         await BootSplash.show({ fade: true });
-      //       }}
-      //     >
-      //       <View style={{ flex: 1, paddingVertical: 35, backgroundColor: Color.Gray200 }}>
-      //         <CustomText>스플래시 쇼</CustomText>
-      //       </View>
-      //     </CustomButton>
-      //   );
-      // }
+      case 7: {
+        return (
+          <View style={{ flex: 1, marginTop: 50, paddingHorizontal: 20, paddingBottom: 20 }}>
+            <CopyRightArea />
+          </View>
+        );
+      }
       default:
         return null;
     }
@@ -217,7 +214,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="home" isShow={isShow} />
       <AnimatedFlatList
-        data={[0, 1, 2, 3, 4, 5, 6]}
+        data={[0, 1, 2, 3, 4, 5, 6, 7]}
         renderItem={({ item }): any => renderItem(item)}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}

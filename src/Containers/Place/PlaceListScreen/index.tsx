@@ -16,7 +16,6 @@ import CustomButton from '@/Components/CustomButton';
 import CommonActions from '@/Stores/Common/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
-import { fetchPlaceList } from '@/Sagas/PlaceSaga';
 import PlaceListCard from '@/Components/Card/PlaceList/PlaceListCard';
 
 interface PropTypes {

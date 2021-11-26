@@ -46,7 +46,6 @@ export const INITIAL_STATE = {
   totalImageType: '',
   totalImageList: [],
   totalSelectImageIndex: 0,
-  isOpenAgreeDetailRBS: false,
   currentRBS: '',
   isOpenKeyboard: false,
   homeTabRefreshYN: 'Y',
@@ -94,7 +93,6 @@ export interface CommonState {
     totalImageType: string;
     totalImageList: any[];
     totalSelectImageIndex: number;
-    isOpenAgreeDetailRBS: boolean | false;
     currentRBS: string | null;
     isOpenKeyboard: boolean | false;
     homeTabRefreshYN: typeYN;

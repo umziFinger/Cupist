@@ -126,7 +126,8 @@ const AgreeScreen = () => {
   };
   const onAgreeDetail = (value: number) => {
     dispatch(AuthActions.fetchAuthReducer({ type: 'selectedAgreeIdx', data: { selectedAgreeIdx: value } }));
-    dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeDetailRBS', data: true }));
+    // dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeDetailRBS', data: true }));
+    navigate('PermissionDetailScreen', { agreeIdx: value });
   };
 
   const onPressNext = () => {
