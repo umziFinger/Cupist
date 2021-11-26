@@ -152,7 +152,6 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
-<<<<<<< HEAD
       case 'placeReview': {
         try {
           if (actions.params.page === 1) {
@@ -163,7 +162,10 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
           }
         } catch (e) {
           console.log(e);
-=======
+        }
+        break;
+      }
+
       case 'placeList': {
         if (actions.params.page === 1) {
           draft.placeList = data.PlaceResult;
@@ -177,12 +179,10 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
             draft.placeList[index].isSelected = false;
             return null;
           });
->>>>>>> 66259663723f09e922e3062825db030bb744b59c
         }
         break;
       }
 
-<<<<<<< HEAD
       case 'reviewListPage': {
         draft.reviewListPage = data;
         break;
@@ -201,7 +201,9 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       case 'reviewDelete': {
         const copyReviewList: any = state.placeReview.review;
         draft.placeReview.review = copyReviewList.filter((v: any) => v?.idx !== data.reviewIdx);
-=======
+        break;
+      }
+
       case 'placeListPage': {
         console.log('call reducer placeListPage : ', data);
         draft.placeListPage = data;
@@ -219,7 +221,6 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         if (idx > -1) {
           draft.placeList[idx].isSelected = !draft.placeList[idx].isSelected;
         }
->>>>>>> 66259663723f09e922e3062825db030bb744b59c
         break;
       }
 

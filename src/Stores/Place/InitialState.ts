@@ -28,7 +28,6 @@ export const INITIAL_STATE: PlaceState['place'] = {
   recentListPage: 1,
   selectedTicket: null,
   clickedReviewItem: null,
-<<<<<<< HEAD
   placeReview: {
     review: [],
     user: {
@@ -39,11 +38,9 @@ export const INITIAL_STATE: PlaceState['place'] = {
     reviewCnt: 0,
   },
   reviewListPage: 1,
-=======
   placeList: [],
   placeListPage: 1,
   placeListType: '',
->>>>>>> 66259663723f09e922e3062825db030bb744b59c
 };
 
 export interface PlaceState {
@@ -66,9 +63,11 @@ export interface PlaceState {
     recentListPage: number | 1;
     selectedTicket: any | null;
     clickedReviewItem: any;
-<<<<<<< HEAD
     placeReview: placeReview;
     reviewListPage: number | 1;
+    placeList: Array<any>;
+    placeListPage: number | 1;
+    placeListType: string;
   };
 }
 
@@ -78,11 +77,6 @@ interface placeReview {
     isWriteable: true | false;
     paymentIdx: number | null;
     ticketName: string | '';
-=======
-    placeList: Array<any>;
-    placeListPage: number | 1;
-    placeListType: string;
->>>>>>> 66259663723f09e922e3062825db030bb744b59c
   };
   reviewCnt: number | 0;
 }
