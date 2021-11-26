@@ -76,7 +76,6 @@ const ReviewModifyScreen = ({ route }: PropTypes) => {
         star,
         screenType: type,
       };
-      // console.log(attachFile);
       dispatch(MyActions.fetchMyReviewModify(params));
     } else {
       dispatch(
