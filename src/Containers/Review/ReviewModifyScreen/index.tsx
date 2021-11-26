@@ -5,7 +5,6 @@ import { RouteProp } from '@react-navigation/native';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
-import { MyState } from '@/Stores/My/InitialState';
 import Star from '@/Components/Star';
 import MyActions from '@/Stores/My/Actions';
 import AttachFileAddView from '@/Components/Picture/AttachFileAddView';
@@ -27,14 +26,14 @@ const ReviewModifyScreen = ({ route }: PropTypes) => {
   const { width } = useWindowDimensions();
 
   const { attachFile, heightInfo } = useSelector((state: CommonState) => state.common);
-  const { clickedReviewItem } = useSelector((state: MyState) => state.my);
   const [content, setContent] = useState(type === 'my' ? reviewData?.PlaceReview?.content : reviewData?.content);
   const [star, setStar] = useState(type === 'my' ? reviewData?.PlaceReview?.star : reviewData?.star);
   const [callAttachFile, setCallAttachFile] = useState(false);
   const [attachFileIdx, setAttachFileIdx] = useState(0);
+  const reviewIdx = type === 'my' ? reviewData?.PlaceReview?.idx : reviewData?.idx;
   useEffect(() => {
     dispatch(CommonActions.fetchCommonReducer({ type: 'attachFileInit' }));
-    attachFileInit(clickedReviewItem?.reviewPhoto);
+    attachFileInit(reviewData?.reviewPhoto);
     return () => {
       dispatch(CommonActions.fetchCommonReducer({ type: 'attachFileInit' }));
     };
@@ -54,12 +53,6 @@ const ReviewModifyScreen = ({ route }: PropTypes) => {
 
   const onStarUpdate = (e: number) => {
     setStar(e);
-    // dispatch(
-    //   MyActions.fetchMyReducer({
-    //     type: 'setWriteReview',
-    //     data: { key: 'star', value: e },
-    //   }),
-    // );
   };
 
   const onChangeText = (text: string) => {
@@ -69,13 +62,14 @@ const ReviewModifyScreen = ({ route }: PropTypes) => {
   const onWrite = () => {
     if (content?.length > 20 && content?.length <= 500) {
       const params = {
-        placeIdx: clickedReviewItem?.placeIdx || 0,
-        reviewIdx: clickedReviewItem?.PlaceReview?.idx,
+        placeIdx: reviewData?.placeIdx || 0,
+        reviewIdx,
         files: attachFile,
         content,
         star,
         screenType: type,
       };
+
       dispatch(MyActions.fetchMyReviewModify(params));
     } else {
       dispatch(
@@ -100,7 +94,7 @@ const ReviewModifyScreen = ({ route }: PropTypes) => {
         >
           <FlatList
             data={[0]}
-            renderItem={({ index }) => (
+            renderItem={() => (
               <View style={{ width: width - 48 }}>
                 <View style={{ alignItems: 'center' }}>
                   <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Black1000 }}>

@@ -774,7 +774,6 @@ export function* fetchMyReviewWrite(data: any): any {
 export function* fetchMyReviewModify(data: any): any {
   try {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
-
     const url = `${Config.MY_REVIEW}/${data.params.reviewIdx}`;
     const formData = new FormData();
     const attachFileInfoArr: any = [];
@@ -806,7 +805,14 @@ export function* fetchMyReviewModify(data: any): any {
         navigateGoBack();
       } else if (data.params.screenType === 'placeReview') {
         yield put(PlaceActions.fetchPlaceDetail({ idx: data.params.placeIdx }));
-        yield put(PlaceActions.fetchPlaceReducer({ type: 'reviewModify', data: data.params }));
+        yield put(
+          PlaceActions.fetchPlaceReviewList({
+            perPage: 10,
+            page: 1,
+            sort: 'latest',
+            placeIdx: data.params.placeIdx,
+          }),
+        );
         navigateGoBack();
       }
       yield put(CommonActions.fetchCommonReducer({ type: 'myTabRefreshYN', data: 'N' }));

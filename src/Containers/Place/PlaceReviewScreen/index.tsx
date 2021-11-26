@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
@@ -20,6 +20,11 @@ const PlaceReviewScreen = () => {
   const { placeReview, placeDetail, reviewListPage = 1 } = useSelector((state: PlaceState) => state.place);
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const [filter, setFilter] = useState<string>('latest');
+  useEffect(() => {
+    return () => {
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'reviewListPage', data: 1 }));
+    };
+  }, []);
 
   const onRefresh = () => {
     const params = {
@@ -151,6 +156,7 @@ const PlaceReviewScreen = () => {
           </View>
         </CustomButton>
       </View>
+
       <FlatList
         data={placeReview?.review}
         renderItem={({ item: reviewItem, index }) => (
