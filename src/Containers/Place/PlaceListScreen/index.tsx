@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, FlatList, View } from 'react-native';
+import { Animated, FlatList, Platform, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
@@ -8,7 +8,7 @@ import CustomText from '@/Components/CustomText';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import Header from '@/Components/Header';
 import { Color } from '@/Assets/Color';
-import { scrollCalendarHandler } from '@/Components/Function';
+import { numberFormat, scrollCalendarHandler } from '@/Components/Function';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { CommonState } from '@/Stores/Common/InitialState';
@@ -17,6 +17,8 @@ import CommonActions from '@/Stores/Common/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import PlaceListCard from '@/Components/Card/PlaceList/PlaceListCard';
+import MyActions from '@/Stores/My/Actions';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceListScreen'>;
@@ -27,21 +29,24 @@ const PlaceListScreen = ({ route }: PropTypes) => {
   const { heightInfo, myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { placeListPage, placeList } = useSelector((state: PlaceState) => state.place);
+  const { placeListPage, placeList, selectedTicket, selectedPlaceIdx } = useSelector(
+    (state: PlaceState) => state.place,
+  );
 
   const [isShowTopCalendar, setIsShowTopCalendar] = useState<boolean>(false);
   const [screenTitle, setScreenTitle] = useState<string>('');
   const [screenContent, setScreenContent] = useState<string>('');
 
-  console.log('type : ', type);
   useEffect(() => {
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeListType', data: null }));
     };
   }, []);
 
   useEffect(() => {
-    console.log('didupate : ', type);
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeListType', data: type }));
+
     let title = '';
     let content = '';
     if (type === 'special') {
@@ -79,15 +84,39 @@ const PlaceListScreen = ({ route }: PropTypes) => {
     dispatch(PlaceActions.fetchPlaceList(params));
   }, [calendarDate]);
 
+  const onMore = () => {
+    console.log('onMore');
+    const params = {
+      page: placeListPage || 1,
+      perPage: 10,
+    };
+    if (placeListPage > 1) dispatch(PlaceActions.fetchPlaceList(params));
+  };
+
   const handleScroll = (event: any) => {
-    console.log('y : ', event.nativeEvent.contentOffset.y);
     const result = scrollCalendarHandler(event, 100);
-    console.log(result);
     setIsShowTopCalendar(result.isShow);
   };
 
   const onPressDate = () => {
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenCalendarRBS', data: true }));
+  };
+
+  const onPressCancel = () => {
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
+  };
+
+  const onPressReservation = () => {
+    if (selectedTicket) {
+      if (!userIdx) {
+        return navigate('SimpleLoginScreen');
+      }
+
+      if (selectedTicket?.idx) {
+        return navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: selectedTicket?.idx });
+      }
+    }
+    // return animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
   };
 
   return (
@@ -156,6 +185,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 initialNumToRender={5}
                 maxToRenderPerBatch={8}
                 windowSize={7}
+                // onEndReached={() => onMore()}
+                // onEndReachedThreshold={0.8}
               />
             </View>
           </View>
@@ -169,6 +200,85 @@ const PlaceListScreen = ({ route }: PropTypes) => {
         onScroll={(e) => handleScroll(e)}
         contentContainerStyle={{ flexGrow: 1, paddingBottom: heightInfo.fixBottomHeight }}
       />
+      <View
+        style={{
+          paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,
+        }}
+      >
+        <View
+          style={{
+            height: 1,
+            backgroundColor: Color.Gray300,
+            shadowOffset: {
+              width: 0,
+              height: -2,
+            },
+            shadowColor: 'rgba(107, 107, 107, 0.1)',
+            shadowOpacity: 1,
+            shadowRadius: 4,
+            elevation: 1,
+          }}
+        />
+        {selectedTicket && (
+          <View style={{ paddingHorizontal: 24, paddingTop: 18, paddingBottom: 9 }}>
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>{selectedTicket?.ticketName}</CustomText>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
+                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
+                  {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
+                  {selectedTicket?.endTime.substr(0, 5)}
+                </CustomText>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ justifyContent: 'center' }}>
+                  <CustomText style={{ color: Color.Black1000, fontSize: 17, fontWeight: 'bold' }}>
+                    {numberFormat(selectedTicket?.salePrice)}
+                  </CustomText>
+                </View>
+                <View style={{ justifyContent: 'center' }}>
+                  <CustomText style={{ color: Color.Black1000, fontSize: 17 }}>원</CustomText>
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+        <View style={{ paddingHorizontal: 24, flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
+          {selectedTicket && (
+            <CustomButton onPress={() => onPressCancel()}>
+              <View
+                style={{
+                  borderRadius: 3,
+                  borderWidth: 1,
+                  borderColor: Color.Gray300,
+                  paddingVertical: 15,
+                  paddingHorizontal: 22,
+                  marginRight: 8,
+                }}
+              >
+                <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
+                  취소
+                </CustomText>
+              </View>
+            </CustomButton>
+          )}
+          <CustomButton
+            onPress={() => onPressReservation()}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              borderRadius: 3,
+              paddingVertical: 15,
+              backgroundColor: Color.Primary1000,
+            }}
+          >
+            <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
+              예약하기
+            </CustomText>
+          </CustomButton>
+        </View>
+      </View>
     </View>
   );
 };

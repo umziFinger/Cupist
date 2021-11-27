@@ -432,6 +432,16 @@ export const scrollCalendarHandler = (event: any, offsetY: number) => {
   return result;
 };
 
+export const scrollHomeHandler = (event: any, offsetY_start: number, offsetY_end: number) => {
+  let result;
+  if (event.nativeEvent.contentOffset.y >= offsetY_start && event.nativeEvent.contentOffset.y <= offsetY_end) {
+    result = { isShow: true };
+  } else {
+    result = { isShow: false };
+  }
+  return result;
+};
+
 export function useDebouncedFunction(handler: Function, watchedValue: any, delay: number) {
   useEffect(() => {
     const timeoutHandler = setTimeout(() => {

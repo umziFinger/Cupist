@@ -9,7 +9,7 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
-import CalendarSlider from '@/Containers/Home/HomeScreen/CalendarSlider';
+import CalendarSlider from '@/Components/Calendar/CalendarSlider';
 import TicketSlider from '@/Components/Card/Common/TicketSlider';
 import ImageArea from '@/Containers/Place/PlaceDetailScreen/ImageArea';
 import TitleArea from '@/Containers/Place/PlaceDetailScreen/TitleArea';

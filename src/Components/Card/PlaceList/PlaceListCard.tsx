@@ -19,17 +19,18 @@ const PlaceListCard = (props: PropTypes) => {
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
 
   const onValueChange = (data: any) => {
-    console.log(data);
+    console.log('select place idx : ', data.checkType);
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'togglePlaceCheck', data: data.checkType }));
   };
 
-  const onPressTicket = (value: any) => {
-    if (selectedTicket?.idx === value.idx) {
+  const onPressTicket = (placeIdx: number, ticket: any) => {
+    if (selectedTicket?.idx === ticket.idx) {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
     }
 
-    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: value }));
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: ticket }));
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedPlaceIdx', data: placeIdx }));
   };
 
   return (
@@ -122,13 +123,14 @@ const PlaceListCard = (props: PropTypes) => {
           <FlatList
             data={item?.PlaceTicketInfo}
             renderItem={({ item: ticket, index }) => (
-              <CustomButton onPress={() => onPressTicket(item)}>
+              <CustomButton onPress={() => onPressTicket(item?.idx, ticket)}>
                 <View
                   style={{
                     borderWidth: 1,
-                    borderColor: Color.Gray300,
+                    borderColor: selectedTicket?.idx === ticket.idx ? Color.Primary1000 : Color.Gray300,
                     borderRadius: 5,
-                    backgroundColor: Color.Grayyellow50,
+                    backgroundColor:
+                      selectedTicket?.idx === ticket.idx ? 'rgba(255, 185, 10, 0.05)' : Color.Grayyellow50,
                     paddingLeft: 12,
                     paddingRight: 21,
                     paddingVertical: 20,

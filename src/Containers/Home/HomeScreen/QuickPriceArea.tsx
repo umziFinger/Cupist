@@ -57,7 +57,7 @@ const QuickPriceArea = (props: PropTypes) => {
               선착순 할인 특가로 즐기는 볼링장
             </CustomText>
           </View>
-          <CustomButton onPress={() => onPressViewAll()}>
+          <CustomButton onPress={() => onPressViewAll()} hitSlop={7}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ justifyContent: 'center', paddingTop: Platform.select({ ios: 0, android: 1 }) }}>
                 <CustomText style={{ color: Color.Gray400, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>

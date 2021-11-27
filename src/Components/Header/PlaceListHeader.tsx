@@ -18,7 +18,7 @@ const PlaceDetailHeader = (props: HeaderProps) => {
   const { text, isShow } = props;
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const { placeDetailIdx } = useSelector((state: PlaceState) => state.place);
+  const { selectedPlaceIdx, placeListType } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
 
@@ -78,7 +78,15 @@ const PlaceDetailHeader = (props: HeaderProps) => {
         <View style={{ width: 24 }} />
       </View>
 
-      {isShow && <TopDateSelector calendarDate={calendarDate} headerHeight={headerHeight} />}
+      {placeListType === 'special' && isShow && (
+        <TopDateSelector calendarDate={calendarDate} headerHeight={headerHeight} />
+      )}
+
+      {/* {placeListType === 'early' && isShow && ( */}
+      {/*  <View style={{ justifyContent: 'center' }}> */}
+      {/*    <CustomText style={{ color: '#333', fontSize: 14 }}>hello</CustomText> */}
+      {/*  </View> */}
+      {/* )} */}
     </>
   );
 };

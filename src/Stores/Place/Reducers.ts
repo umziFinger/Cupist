@@ -201,6 +201,7 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'placeListType': {
+        console.log('call reducer placeListType : ', data);
         draft.placeListType = data;
         break;
       }
@@ -211,6 +212,12 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         if (idx > -1) {
           draft.placeList[idx].isSelected = !draft.placeList[idx].isSelected;
         }
+        break;
+      }
+
+      case 'selectedPlaceIdx': {
+        console.log('call reducer selectedPlaceIdx : ', data);
+        draft.selectedPlaceIdx = data;
         break;
       }
 

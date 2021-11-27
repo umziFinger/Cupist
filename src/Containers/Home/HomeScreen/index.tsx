@@ -11,7 +11,7 @@ import { HomeState } from '@/Stores/Home/InitialState';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import 'moment/locale/ko';
-import CalendarSlider from '@/Containers/Home/HomeScreen/CalendarSlider';
+import CalendarSlider from '@/Components/Calendar/CalendarSlider';
 import DirectReservationArea from './DirectReservationArea';
 import HomeActions from '@/Stores/Home/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
@@ -24,7 +24,7 @@ import PrepaymentPriceArea from '@/Containers/Home/HomeScreen/PrepaymentPriceAre
 import HotArea from '@/Containers/Home/HomeScreen/HotArea';
 import EventArea from '@/Containers/Home/HomeScreen/EventArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
-import { scrollCalendarHandler } from '@/Components/Function';
+import { scrollCalendarHandler, scrollHomeHandler } from '@/Components/Function';
 
 import { SearchState } from '@/Stores/Search/InitialState';
 import CustomText from '@/Components/CustomText';
@@ -116,8 +116,6 @@ const HomeScreen = ({ route }: HomeProps) => {
     dispatch(
       HomeActions.fetchHomePrepaymentPriceList({
         ...params,
-        perPage: 4,
-        page: 1,
       }),
     );
 
@@ -131,7 +129,7 @@ const HomeScreen = ({ route }: HomeProps) => {
   };
 
   const handleScroll = (event: any) => {
-    const result = scrollCalendarHandler(event, 230);
+    const result = scrollHomeHandler(event, 230, 1350);
     setIsShow(result.isShow);
   };
 
