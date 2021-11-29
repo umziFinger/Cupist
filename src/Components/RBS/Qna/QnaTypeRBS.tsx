@@ -64,7 +64,7 @@ const QnaTypeRBS = () => {
                 <View
                   style={{
                     paddingVertical: 16,
-                    borderBottomWidth: 1,
+                    borderBottomWidth: QNA_TYPE?.length - 1 === index ? 0 : 1,
                     borderBottomColor: Color.Gray200,
                   }}
                 >
