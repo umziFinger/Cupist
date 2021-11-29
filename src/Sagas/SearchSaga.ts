@@ -34,10 +34,11 @@ export function* fetchSearchBowlingClubList(data: any): any {
   try {
     const payload = {
       ...data,
-      url: Config.SEARCH_URL,
+      url: `${Config.SEARCH_URL}`,
     };
 
     const response = yield call(Axios.GET, payload);
+
     if (response.result === true && response.code === null) {
       yield put(SearchActions.fetchSearchReducer({ type: 'bowlingList', data: response.data, page: data.params.page }));
       yield put(SearchActions.fetchSearchReducer({ type: 'bowlingListPage', data: data.params.page + 1 }));
