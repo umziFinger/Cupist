@@ -345,52 +345,66 @@ const ProfileSettingScreen = () => {
                     </CustomText>
                   </View>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                      <View
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: 3,
-                          backgroundColor: 'red',
-                          marginRight: 12,
-                        }}
-                      >
-                        <FastImage
-                          style={{ width: '100%', height: '100%', borderRadius: 3 }}
-                          source={
-                            userInfo?.residentPlace?.mainPhoto
-                              ? { uri: userInfo?.residentPlace?.mainPhoto }
-                              : require('@/Assets/Images/Common/icNoImage.png')
-                          }
-                          resizeMode={FastImage.resizeMode.cover}
-                        />
-                      </View>
-                      <View>
-                        <View style={{ marginBottom: 4 }}>
-                          <CustomText
-                            style={{
-                              fontSize: 14,
-                              fontWeight: '500',
-                              letterSpacing: -0.25,
-                              color: Color.Black1000,
-                            }}
-                          >
-                            {userInfo?.residentPlace?.name || ''}
-                          </CustomText>
+                    {userInfo?.residentPlace?.placeIdx ? (
+                      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                        <View
+                          style={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: 3,
+                            backgroundColor: 'red',
+                            marginRight: 12,
+                          }}
+                        >
+                          <FastImage
+                            style={{ width: '100%', height: '100%', borderRadius: 3 }}
+                            source={
+                              userInfo?.residentPlace?.mainPhoto
+                                ? { uri: userInfo?.residentPlace?.mainPhoto }
+                                : require('@/Assets/Images/Common/icNoImage.png')
+                            }
+                            resizeMode={FastImage.resizeMode.cover}
+                          />
                         </View>
                         <View>
-                          <CustomText
-                            style={{
-                              fontSize: 12,
-                              letterSpacing: 0,
-                              color: Color.Gray700,
-                            }}
-                          >
-                            {userInfo?.residentPlace?.newAddress || ''}
-                          </CustomText>
+                          <View style={{ marginBottom: 4 }}>
+                            <CustomText
+                              style={{
+                                fontSize: 14,
+                                fontWeight: '500',
+                                letterSpacing: -0.25,
+                                color: Color.Black1000,
+                              }}
+                            >
+                              {userInfo?.residentPlace?.name || ''}
+                            </CustomText>
+                          </View>
+                          <View>
+                            <CustomText
+                              style={{
+                                fontSize: 12,
+                                letterSpacing: 0,
+                                color: Color.Gray700,
+                              }}
+                            >
+                              {userInfo?.residentPlace?.newAddress || ''}
+                            </CustomText>
+                          </View>
                         </View>
                       </View>
-                    </View>
+                    ) : (
+                      <View style={{ flex: 1 }}>
+                        <CustomText
+                          style={{
+                            fontSize: 14,
+                            letterSpacing: -0.25,
+                            color: Color.Gray600,
+                          }}
+                        >
+                          상주볼링장을 등록해주세요.
+                        </CustomText>
+                      </View>
+                    )}
 
                     <View
                       style={{

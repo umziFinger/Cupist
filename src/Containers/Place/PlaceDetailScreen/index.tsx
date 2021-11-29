@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, FlatList, Platform, useWindowDimensions, View } from 'react-native';
+import { Animated, FlatList, Platform, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import _ from 'lodash';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
@@ -17,7 +16,7 @@ import MapArea from '@/Containers/Place/PlaceDetailScreen/MapArea';
 import ReviewArea from '@/Containers/Place/PlaceDetailScreen/ReviewArea';
 import { HomeState } from '@/Stores/Home/InitialState';
 import PlaceActions from '@/Stores/Place/Actions';
-import { numberFormat, scrollCalendarHandler, useDebouncedFunction } from '@/Components/Function';
+import { numberFormat, scrollCalendarHandler } from '@/Components/Function';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
@@ -32,7 +31,6 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const PlaceDetailScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
-  const { width, height } = useWindowDimensions();
   const { idx } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
@@ -88,7 +86,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
   };
 
-  const renderItem = ({ item, index }: { item: any; index: number }) => {
+  const renderItem = ({ item }: { item: any }) => {
     switch (item) {
       case 0: {
         return (
@@ -263,5 +261,4 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     </View>
   );
 };
-
 export default PlaceDetailScreen;
