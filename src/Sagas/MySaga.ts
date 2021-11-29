@@ -464,22 +464,22 @@ export function* fetchMyQnaDetailInfo(data: any): any {
       url: `${Config.MY_QNA_URL}/${data.params.qnaIdx}`,
     };
 
-    // const response = yield call(Axios.GET, payload);
-    //
-    // if (response.result === true && response.code === null) {
-    //   console.log('문의하기 상세: ', response.data);
-    //   yield put(
-    //     MyActions.fetchMyReducer({
-    //       type: 'myQnaDetail',
-    //       data: response.data,
-    //       page: data.params.page,
-    //     }),
-    //   );
-    //   yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    // } else {
-    //   yield put(CommonActions.fetchErrorHandler(response));
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    // }
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('문의하기 상세: ', response.data);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'myQnaDetail',
+          data: response.data.qna,
+          page: data.params.page,
+        }),
+      );
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
 

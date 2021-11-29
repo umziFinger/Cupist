@@ -12,13 +12,16 @@ type ResultUseInputPassword = {
 
 function useInputPassword(): ResultUseInputPassword {
   const dispatch = useDispatch();
-  const { password } = useSelector((state: AuthState) => state.auth);
+  // const { password } = useSelector((state: AuthState) => state.auth);
+  const [password, setPassword] = useState<any>('');
+
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [passwordValidText, setPasswordValidText] = useState('');
 
   const onChangePassword = (value: string) => {
     if (value) {
-      dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: value } }));
+      setPassword(value);
+      // dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: value } }));
       const regExp4 = /^[0-9]*$/gi;
       const regExp3 = /^[a-zA-Z]*$/gi;
       const regExp2 = /^[a-zA-Z0-9]*$/gi;
@@ -47,7 +50,8 @@ function useInputPassword(): ResultUseInputPassword {
         setPasswordValidText('특수문자는 ?, ~, !, @, #, $ 만 가능합니다.');
       }
     } else {
-      dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: null } }));
+      // dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: null } }));
+      setPassword(null);
       setPasswordValidText('');
       setIsPasswordValid(false);
     }

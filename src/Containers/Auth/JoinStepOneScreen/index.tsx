@@ -38,6 +38,7 @@ const JoinStepOneScreen = () => {
 
   const onPressNext = () => {
     if (isEmailValid && isPasswordValid) {
+      dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password } }));
       navigate('JoinStepTwoScreen');
     }
   };

@@ -3,20 +3,39 @@ import { Platform, TextInput, View } from 'react-native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 
+type TitleType = '비밀번호' | '기존 비밀번호' | '새로운 비밀번호' | '새로운 비밀번호 확인';
+type PlaceHolderType =
+  | '비밀번호 영어, 숫자, 특수문자 8-12자'
+  | '기존 비밀번호를 입력해주세요.'
+  | '새로운 비밀번호를 입력해주세요.'
+  | '새로운 비밀번호를 다시 입력해주세요.';
+
 type InputPasswordProps = {
   passwordValidText?: string | '';
   onChangeText: (value: string) => void;
-  onFocus: () => void;
-  onBlur: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   value: string;
+  title?: TitleType;
+  placeHolder?: PlaceHolderType;
+  onSubmitEditing?: () => void;
 };
 
 const InputPassword = forwardRef<TextInput, InputPasswordProps>((props: InputPasswordProps, ref) => {
-  const { passwordValidText = '', onChangeText, onFocus, onBlur, value } = props;
+  const {
+    passwordValidText = '',
+    onChangeText,
+    onFocus,
+    onBlur,
+    value,
+    title = '비밀번호',
+    placeHolder = '비밀번호 영어, 숫자, 특수문자 8-12자',
+    onSubmitEditing,
+  } = props;
   return (
     <>
       <View style={{}}>
-        <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow500 }}>비밀번호</CustomText>
+        <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow500 }}>{title}</CustomText>
       </View>
 
       <View
@@ -32,7 +51,7 @@ const InputPassword = forwardRef<TextInput, InputPasswordProps>((props: InputPas
         <TextInput
           ref={ref}
           autoCompleteType="off"
-          placeholder="비밀번호 영어, 숫자, 특수문자 8-12자"
+          placeholder={placeHolder}
           placeholderTextColor={Color.Gray400}
           style={{
             color: Color.Black1000,
@@ -53,6 +72,7 @@ const InputPassword = forwardRef<TextInput, InputPasswordProps>((props: InputPas
           value={value}
           maxLength={12}
           allowFontScaling={false}
+          onSubmitEditing={onSubmitEditing}
         />
       </View>
       <View style={{ marginTop: 4 }}>
