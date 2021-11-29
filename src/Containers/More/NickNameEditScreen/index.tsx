@@ -60,6 +60,7 @@ const NickNameEditScreen = () => {
                     onChangeText={onChangeNickname}
                     onTextClear={onClearNickName}
                     value={nickName}
+                    autoFocus
                   />
                 </View>
               </View>
