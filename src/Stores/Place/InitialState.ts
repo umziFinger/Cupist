@@ -47,6 +47,8 @@ export const INITIAL_STATE: PlaceState['place'] = {
   placeListPage: 1,
   placeListType: '',
   selectedPlaceIdx: -1,
+  hotPlaceList: [],
+  hotPlaceListPage: 1,
 };
 
 export interface PlaceState {
@@ -75,6 +77,8 @@ export interface PlaceState {
     placeListPage: number | 1;
     placeListType: string;
     selectedPlaceIdx: number;
+    hotPlaceList: Array<any>;
+    hotPlaceListPage: number | 1;
   };
 }
 

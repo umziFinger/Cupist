@@ -33,7 +33,7 @@ export function* fetchHomeDirectReservationList(data: any): any {
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
       yield put(HomeActions.fetchHomeReducer({ type: 'directReservationList', data: response.data }));
-      yield put(HomeActions.fetchHomePossibleDate({ type: 'directReservation', ...data.params }));
+      yield put(HomeActions.fetchHomePossibleDate({ ...data.params }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
@@ -51,7 +51,6 @@ export function* fetchHomePrepaymentPriceList(data: any): any {
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
       yield put(HomeActions.fetchHomeReducer({ type: 'prepaymentPriceList', data: response.data }));
-      yield put(HomeActions.fetchHomePossibleDate({ type: 'prepayment', ...data.params }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
@@ -68,17 +67,28 @@ export function* fetchHomePossibleDate(data: any): any {
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
-      // yield put(HomeActions.fetchHomeReducer({ type: 'prepaymentPriceList', data: response.data }));
-      if (data.params.type === 'directReservation') {
-        yield put(HomeActions.fetchHomeReducer({ type: 'possibleDirectDate', data: response.data }));
-      }
-      if (data.params.type === 'prepayment') {
-        yield put(HomeActions.fetchHomeReducer({ type: 'possiblePrepaymentDate', data: response.data }));
-      }
+      yield put(HomeActions.fetchHomeReducer({ type: 'possibleDirectDate', data: response.data }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
     console.log('occurred Error...fetchHomePossibleDate : ', e);
+  }
+}
+
+export function* fetchHomeCheckEarly(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.HOME_CHECK_EARLY_URL,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      yield put(HomeActions.fetchHomeReducer({ type: 'prepaymentDateList', data: response.data }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchHomeCheckEarly : ', e);
   }
 }

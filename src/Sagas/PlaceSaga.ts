@@ -180,3 +180,23 @@ export function* fetchPlaceList(data: any): any {
     console.log('occurred Error...fetchPlaceList : ', e);
   }
 }
+
+export function* fetchPlaceHotList(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.PLACE_URL,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      yield put(PlaceActions.fetchPlaceReducer({ type: 'hotPlaceList', data: response.data, page: data.params.page }));
+      yield put(PlaceActions.fetchPlaceReducer({ type: 'hotPlaceListPage', data: data.params.page + 1 }));
+    } else {
+      yield put(PlaceActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchPlaceHotList : ', e);
+  }
+}

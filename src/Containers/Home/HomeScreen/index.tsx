@@ -24,10 +24,8 @@ import PrepaymentPriceArea from '@/Containers/Home/HomeScreen/PrepaymentPriceAre
 import HotArea from '@/Containers/Home/HomeScreen/HotArea';
 import EventArea from '@/Containers/Home/HomeScreen/EventArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
-import { scrollCalendarHandler, scrollHomeHandler } from '@/Components/Function';
-
+import { scrollHomeHandler } from '@/Components/Function';
 import { SearchState } from '@/Stores/Search/InitialState';
-import CustomText from '@/Components/CustomText';
 import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
 
 interface HomeProps {
@@ -39,12 +37,13 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const HomeScreen = ({ route }: HomeProps) => {
   const dispatch = useDispatch();
   const scrollY = useRef(new Animated.Value(0)).current;
-  const { homeTabRefreshYN } = useSelector((state: CommonState) => state.common);
-  const { homeList, calendarDate, timeFilterIdx, areaFilterIdx } = useSelector((state: HomeState) => state.home);
+  const { homeTabRefreshYN, myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
+  const { homeList, calendarDate, timeFilterIdx, areaFilterIdx, prepaymentDate } = useSelector(
+    (state: HomeState) => state.home,
+  );
   const { areaList } = useSelector((state: SearchState) => state.search);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const [isShow, setIsShow] = useState<boolean>(false);
-  // const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY.MM.DD(dd)'));
 
   useEffect(() => {
     // 첫 홈 화면 현재 위치값 갱신
@@ -81,6 +80,20 @@ const HomeScreen = ({ route }: HomeProps) => {
     positionUpdate().then();
   }, [calendarDate]);
 
+  // 선결제 특가 필터 날짜 변경
+  useEffect(() => {
+    console.log('선결제 특가  날짜 변경 : ', prepaymentDate);
+    // positionUpdate().then();
+    // 홈 선결제 특가 호출
+    dispatch(
+      HomeActions.fetchHomePrepaymentPriceList({
+        date: prepaymentDate,
+        lat: parseFloat(myLatitude?.toString()) || 37.56561,
+        lng: parseFloat(myLongitude?.toString()) || 126.97804,
+      }),
+    );
+  }, [prepaymentDate]);
+
   const positionUpdate = async () => {
     const myPosition: any = await LocationMyPosition();
     console.log('myPosition is ', myPosition);
@@ -115,7 +128,9 @@ const HomeScreen = ({ route }: HomeProps) => {
     // 홈 선결제 특가 호출
     dispatch(
       HomeActions.fetchHomePrepaymentPriceList({
-        ...params,
+        date: prepaymentDate,
+        lat: parseFloat(myPosition?.myLatitude?.toString()) || 37.56561,
+        lng: parseFloat(myPosition?.myLongitude?.toString()) || 126.97804,
       }),
     );
 
@@ -125,11 +140,20 @@ const HomeScreen = ({ route }: HomeProps) => {
   const onRefresh = () => {
     console.log('새로고침');
     positionUpdate().then();
+
+    // 선결제 필터 선택시 데이터가 없는경우 선결제 특가 영역 자체가 사라지며, 날짜 필터를 선택할 수 없는 경우 발생하여 추가
+    dispatch(
+      HomeActions.fetchHomeReducer({
+        type: 'prepaymentDate',
+        data: moment().add('days', 1).format('YYYY-MM-D').toString(),
+      }),
+    );
+
     dispatch(CommonActions.fetchCommonReducer({ type: 'homeTabRefreshYN', data: 'Y' }));
   };
 
   const handleScroll = (event: any) => {
-    const result = scrollHomeHandler(event, 230, 1350);
+    const result = scrollHomeHandler(event, 230, 1200);
     setIsShow(result.isShow);
   };
 
@@ -160,7 +184,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 3: {
         return (
-          // 빨리특가는 없으면 영역 숨김
+          // 빨리특가 (없으면 영역 숨김)
           homeList['special']?.length > 0 && (
             <View style={{ flex: 1 }}>
               <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
@@ -171,28 +195,31 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 4: {
         return (
-          // 선결제 특가
+          // 이벤트
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <PrepaymentPriceArea list={homeList['early'] || []} />
+            <EventArea list={homeList['event'] || []} />
           </View>
         );
       }
       case 5: {
         return (
-          // 볼리미 HOT
-          <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <HotArea list={homeList['hotPlace'] || []} />
-          </View>
+          // 선결제 특가 (없으면 영역 숨김)
+          homeList['early']?.length > 0 && (
+            <View style={{ flex: 1 }}>
+              <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+              {/* <PrepaymentPriceArea list={homeList['early'] || []} /> */}
+              <PrepaymentPriceArea list={homeList['early'] || []} />
+            </View>
+          )
         );
       }
       case 6: {
         return (
-          // 이벤트
+          // 볼리미 HOT
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <EventArea list={homeList['event'] || []} />
+            <HotArea list={homeList['hotPlace'] || []} />
           </View>
         );
       }

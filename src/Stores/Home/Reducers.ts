@@ -31,6 +31,12 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'prepaymentDate': {
+        console.log('call reducer prepaymentDate : ', data);
+        draft.prepaymentDate = data;
+        break;
+      }
+
       case 'directReservationList': {
         draft.homeList.place = data.place;
         break;
@@ -52,26 +58,22 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'possibleDirectDate': {
-        console.log('call reducer possibleDirectDate : ', data.date);
         draft.possibleDirectDate = data?.date || '';
         break;
       }
 
-      case 'possiblePrepaymentDate': {
-        console.log('call reducer possiblePrepaymentDate : ', data.date);
-        draft.possiblePrepaymentDate = data?.date || '';
-        break;
-      }
-
       case 'selectedDirectIdx': {
-        console.log('call reducer  selectedDirectIdx : ', data);
         draft.selectedDirectIdx = data;
         break;
       }
 
       case 'selectedDirectName': {
-        console.log('call reducer  selectedDirectName : ', data);
         draft.selectedDirectName = data;
+        break;
+      }
+
+      case 'prepaymentDateList': {
+        draft.prepaymentDateList = data.dateArray;
         break;
       }
 

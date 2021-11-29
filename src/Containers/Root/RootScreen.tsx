@@ -30,6 +30,7 @@ LogBox.ignoreLogs([
   'Warning: Overriding previous layout animation with new one before the first began',
   'new NativeEventEmitter()',
   'Deprecation warning: value provided is not in a recognized RFC2822 or ISO format',
+  'Deprecation warning: moment().add(period, number) is deprecated',
 ]);
 
 const RootScreen = () => {

@@ -13,13 +13,14 @@ import { AuthState } from '@/Stores/Auth/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import TopDateSelector from '@/Components/Calendar/TopDateSelector';
 import { HomeState } from '@/Stores/Home/InitialState';
+import DateFilter from '@/Components/FilterSilder/DateFilter';
 
 const PlaceDetailHeader = (props: HeaderProps) => {
   const { text, isShow } = props;
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { selectedPlaceIdx, placeListType } = useSelector((state: PlaceState) => state.place);
-  const { calendarDate } = useSelector((state: HomeState) => state.home);
+  const { calendarDate, prepaymentDate, prepaymentDateList } = useSelector((state: HomeState) => state.home);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
 
   // console.log('isShow : ', isShow);
@@ -82,11 +83,26 @@ const PlaceDetailHeader = (props: HeaderProps) => {
         <TopDateSelector calendarDate={calendarDate} headerHeight={headerHeight} />
       )}
 
-      {/* {placeListType === 'early' && isShow && ( */}
-      {/*  <View style={{ justifyContent: 'center' }}> */}
-      {/*    <CustomText style={{ color: '#333', fontSize: 14 }}>hello</CustomText> */}
-      {/*  </View> */}
-      {/* )} */}
+      {placeListType === 'early' && isShow && (
+        <View
+          style={{
+            position: 'absolute',
+            zIndex: 999,
+            top: headerHeight,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 33 + 8 + 12,
+            backgroundColor: Color.White,
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgb(240,240,240)',
+          }}
+        >
+          <View style={{ position: 'absolute', zIndex: 999, top: 8, paddingLeft: 16 }}>
+            <DateFilter />
+          </View>
+        </View>
+      )}
     </>
   );
 };

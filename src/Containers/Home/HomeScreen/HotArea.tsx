@@ -6,6 +6,7 @@ import { Color } from '@/Assets/Color';
 import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
 import HotPlaceCard from '@/Components/Card/Home/HotPlaceCard';
 import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   list: Array<any>;
@@ -31,6 +32,7 @@ const HotArea = (props: PropTypes) => {
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');
+    navigate('HotPlaceListScreen');
   };
 
   return (

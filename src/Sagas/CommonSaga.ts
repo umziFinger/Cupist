@@ -9,7 +9,7 @@ import PlaceActions from '@/Stores/Place/Actions';
 import MyActions from '@/Stores/My/Actions';
 import Config from '@/Config';
 
-export type placeDibsType = 'myAround' | 'home' | 'recentPlace';
+export type placeDibsType = 'myAround' | 'home' | 'recentPlace' | 'hot';
 export type dibsStatusType = 'dibs' | 'unDibs';
 
 export type placeDibsDataType = {
@@ -83,6 +83,14 @@ export function* fetchInitialHandler() {
   // 홈 캘린더 날짜 초기화
   yield put(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() }));
 
+  // 선결제 특가 날짜 필터 초기화
+  yield put(
+    HomeActions.fetchHomeReducer({
+      type: 'prepaymentDate',
+      data: moment().add('days', 1).format('YYYY-MM-D').toString(),
+    }),
+  );
+
   // 홈 바로예약 필터 초기화
   yield put(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: 1 }));
   yield put(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: 0 }));
@@ -99,6 +107,9 @@ export function* fetchInitialHandler() {
 
   // 선택한 티켓 정보 초기화
   yield put(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
+
+  // 선결제 특가 예약 가능일 목록 조회
+  yield put(HomeActions.fetchHomeCheckEarly());
 }
 
 export function* fetchErrorHandler(data: any) {

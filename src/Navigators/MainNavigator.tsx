@@ -52,6 +52,7 @@ import PlaceReviewScreen from '@/Containers/Place/PlaceReviewScreen';
 
 import PlaceListScreen from '@/Containers/Place/PlaceListScreen';
 import PermissionDetailScreen from '@/Containers/Common/PermissionDetailScreen';
+import HotPlaceListScreen from '@/Containers/Place/HotPlaceListScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -102,6 +103,7 @@ export type MainStackParamList = {
   PlaceReviewScreen: undefined;
   PlaceListScreen: { type: string };
   PermissionDetailScreen: { agreeIdx: number };
+  HotPlaceListScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -145,6 +147,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="RecentPlaceScreen" component={RecentPlaceScreen} />
       <MainStack.Screen name="PlaceReviewScreen" component={PlaceReviewScreen} />
       <MainStack.Screen name="PlaceListScreen" component={PlaceListScreen} />
+      <MainStack.Screen name="HotPlaceListScreen" component={HotPlaceListScreen} />
 
       {/*  Setting */}
       <MainStack.Screen name="LocationSettingScreen" component={LocationSettingScreen} />

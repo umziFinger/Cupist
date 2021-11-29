@@ -18,7 +18,7 @@ const TimeFilterRBS = () => {
   const { width, height } = useWindowDimensions();
   const { heightInfo, isOpenTimeFilterRBS } = useSelector((state: CommonState) => state.common);
   const { timeFilterIdx } = useSelector((state: HomeState) => state.home);
-  const [tempFilterIdx, setTempFilterIdx] = useState<number>(timeFilterIdx);
+  // const [tempFilterIdx, setTempFilterIdx] = useState<number>(timeFilterIdx);
   console.log('timeFilterIdx: ', timeFilterIdx);
 
   useEffect(() => {
@@ -28,14 +28,13 @@ const TimeFilterRBS = () => {
   }, [isOpenTimeFilterRBS]);
 
   const onPressClose = () => {
-    dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: tempFilterIdx }));
+    dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: timeFilterIdx }));
     RBSheetRef?.current.close();
   };
 
   const onPressFilter = (value: number) => {
-    console.log('onPressFilter : ', value);
-    setTempFilterIdx(value);
-    // dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: value }));
+    dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: value }));
+    RBSheetRef?.current.close();
   };
 
   return (
@@ -50,7 +49,7 @@ const TimeFilterRBS = () => {
         },
       }}
       onClose={() => {
-        dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: tempFilterIdx }));
+        // dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: tempFilterIdx }));
         dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenTimeFilterRBS', data: false }));
       }}
     >
@@ -68,10 +67,10 @@ const TimeFilterRBS = () => {
                 <View
                   style={{
                     marginBottom: 12,
-                    paddingVertical: tempFilterIdx === index ? 16 : 19,
+                    paddingVertical: timeFilterIdx === index ? 16 : 19,
                     borderRadius: 3,
                     borderWidth: 1,
-                    borderColor: tempFilterIdx === index ? Color.Primary1000 : Color.Grayyellow200,
+                    borderColor: timeFilterIdx === index ? Color.Primary1000 : Color.Grayyellow200,
                   }}
                 >
                   <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16 }}>
@@ -82,7 +81,7 @@ const TimeFilterRBS = () => {
                         {item.content}
                       </CustomText>
                     </View>
-                    {tempFilterIdx === index && (
+                    {timeFilterIdx === index && (
                       <View style={{ width: 24, height: 24 }}>
                         <FastImage
                           style={{ width: '100%', height: '100%' }}

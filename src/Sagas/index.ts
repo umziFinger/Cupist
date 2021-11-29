@@ -27,6 +27,7 @@ import {
   fetchHomeDirectReservationList,
   fetchHomePrepaymentPriceList,
   fetchHomePossibleDate,
+  fetchHomeCheckEarly,
 } from './HomeSaga';
 
 // auth
@@ -82,6 +83,7 @@ import {
   fetchPlaceSearchList,
   fetchPlaceTicketList,
   fetchPlaceList,
+  fetchPlaceHotList,
 } from '@/Sagas/PlaceSaga';
 
 import {
@@ -107,6 +109,7 @@ export default function* root() {
     takeLatest(HomeTypes.FETCH_HOME_DIRECT_RESERVATION_LIST, fetchHomeDirectReservationList),
     takeLatest(HomeTypes.FETCH_HOME_PREPAYMENT_PRICE_LIST, fetchHomePrepaymentPriceList),
     takeEvery(HomeTypes.FETCH_HOME_POSSIBLE_DATE, fetchHomePossibleDate),
+    takeEvery(HomeTypes.FETCH_HOME_CHECK_EARLY, fetchHomeCheckEarly),
 
     // auth
     takeLatest(AuthTypes.FETCH_AUTH_SMS_SEND, fetchAuthSmsSend),
@@ -163,6 +166,7 @@ export default function* root() {
     takeLatest(PlaceTypes.FETCH_PLACE_RECENT_LIST, fetchPlaceRecentList),
     takeLatest(PlaceTypes.FETCH_PLACE_REVIEW_LIST, fetchPlaceReviewList),
     takeLatest(PlaceTypes.FETCH_PLACE_LIST, fetchPlaceList),
+    takeLatest(PlaceTypes.FETCH_PLACE_HOT_LIST, fetchPlaceHotList),
 
     // reservation
     takeLatest(ReservationTypes.FETCH_RESERVATION_INFO, fetchReservationInfo),

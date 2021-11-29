@@ -17,8 +17,8 @@ import CommonActions from '@/Stores/Common/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import PlaceListCard from '@/Components/Card/PlaceList/PlaceListCard';
-import MyActions from '@/Stores/My/Actions';
 import { navigate } from '@/Services/NavigationService';
+import DateFilter from '@/Components/FilterSilder/DateFilter';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceListScreen'>;
@@ -28,7 +28,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
   const { type } = route.params;
   const { heightInfo, myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const { calendarDate } = useSelector((state: HomeState) => state.home);
+  const { calendarDate, prepaymentDate } = useSelector((state: HomeState) => state.home);
   const { placeListPage, placeList, selectedTicket, selectedPlaceIdx } = useSelector(
     (state: PlaceState) => state.place,
   );
@@ -49,13 +49,16 @@ const PlaceListScreen = ({ route }: PropTypes) => {
 
     let title = '';
     let content = '';
+    let date = calendarDate;
     if (type === 'special') {
       title = '빨리 특가';
       content = '선착순 할인 특가로 즐기는 볼링장';
+      date = calendarDate;
     }
     if (type === 'early') {
       title = '선결제 특가';
       content = '선결제하고 할인받는 인기 볼링장';
+      date = prepaymentDate;
     }
     setScreenTitle(title);
     setScreenContent(content);
@@ -66,31 +69,46 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: 1,
       perPage: 5,
-      date: calendarDate,
+      date,
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   }, [type]);
 
   useEffect(() => {
     console.log('날짜 변경');
+
     const params = {
       type,
       lat: myLatitude,
       lng: myLongitude,
       page: 1,
-      perPage: 5,
-      date: calendarDate,
+      perPage: 10,
+      date: type === 'special' ? calendarDate : prepaymentDate,
     };
     dispatch(PlaceActions.fetchPlaceList(params));
-  }, [calendarDate]);
+  }, [calendarDate, prepaymentDate]);
 
   const onMore = () => {
     console.log('onMore');
     const params = {
       page: placeListPage || 1,
       perPage: 10,
+      date: type === 'special' ? calendarDate : prepaymentDate,
     };
     if (placeListPage > 1) dispatch(PlaceActions.fetchPlaceList(params));
+  };
+
+  const onRefresh = () => {
+    console.log('onRefresh');
+    const params = {
+      type,
+      lat: myLatitude,
+      lng: myLongitude,
+      page: 1,
+      perPage: 10,
+      date: type === 'special' ? calendarDate : prepaymentDate,
+    };
+    dispatch(PlaceActions.fetchPlaceList(params));
   };
 
   const handleScroll = (event: any) => {
@@ -124,7 +142,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       <Header type={'placeList'} text={screenTitle} isShow={isShowTopCalendar} />
       <FlatList
         data={[0]}
-        renderItem={({ item, index }) => (
+        renderItem={() => (
           <View style={{ width: '100%', height: '100%' }}>
             <View style={{ paddingHorizontal: 16, marginTop: 16 }}>
               <View style={{ justifyContent: 'center' }}>
@@ -137,40 +155,48 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                   {screenContent}
                 </CustomText>
               </View>
-              <CustomButton onPress={() => onPressDate()} style={{ marginTop: 16 }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    backgroundColor: Color.Gray200,
-                    borderWidth: 1,
-                    borderColor: Color.Gray300,
-                    paddingVertical: 12,
-                    paddingLeft: 12,
-                    paddingRight: 8,
-                  }}
-                >
-                  <View style={{ width: 16, height: 16, marginRight: 9 }}>
-                    <FastImage
-                      style={{ width: '100%', height: '100%' }}
-                      source={require('@/Assets/Images/Common/icCalendar.png')}
-                      resizeMode={FastImage.resizeMode.cover}
-                    />
+            </View>
+            <View style={{ paddingLeft: 16 }}>
+              {type === 'special' ? (
+                <CustomButton onPress={() => onPressDate()} style={{ marginTop: 16 }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      backgroundColor: Color.Gray200,
+                      borderWidth: 1,
+                      borderColor: Color.Gray300,
+                      paddingVertical: 12,
+                      paddingLeft: 12,
+                      paddingRight: 8,
+                    }}
+                  >
+                    <View style={{ width: 16, height: 16, marginRight: 9 }}>
+                      <FastImage
+                        style={{ width: '100%', height: '100%' }}
+                        source={require('@/Assets/Images/Common/icCalendar.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
+                    <View style={{ justifyContent: 'center', flex: 1 }}>
+                      <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13 }}>
+                        {moment(calendarDate).format('YYYY.MM.DD(dd)')}
+                      </CustomText>
+                    </View>
+                    <View style={{ width: 24, height: 24 }}>
+                      <FastImage
+                        style={{ width: '100%', height: '100%' }}
+                        source={require('@/Assets/Images/Arrow/icArrowDw.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
                   </View>
-                  <View style={{ justifyContent: 'center', flex: 1 }}>
-                    <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13 }}>
-                      {moment(calendarDate).format('YYYY.MM.DD(dd)')}
-                    </CustomText>
-                  </View>
-                  <View style={{ width: 24, height: 24 }}>
-                    <FastImage
-                      style={{ width: '100%', height: '100%' }}
-                      source={require('@/Assets/Images/Arrow/icArrowDw.png')}
-                      resizeMode={FastImage.resizeMode.cover}
-                    />
-                  </View>
+                </CustomButton>
+              ) : (
+                <View style={{ flex: 1, marginTop: 16 }}>
+                  <DateFilter />
                 </View>
-              </CustomButton>
+              )}
             </View>
             <View style={{ flex: 1, marginTop: 16 }}>
               <FlatList
@@ -185,8 +211,27 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 initialNumToRender={5}
                 maxToRenderPerBatch={8}
                 windowSize={7}
-                // onEndReached={() => onMore()}
-                // onEndReachedThreshold={0.8}
+                onEndReached={() => onMore()}
+                onEndReachedThreshold={0.8}
+                ListEmptyComponent={
+                  <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ width: '100%', height: 8, backgroundColor: Color.Gray200 }} />
+                    <View style={{ width: 60, height: 60, marginTop: 120 }}>
+                      <FastImage
+                        style={{ width: '100%', height: '100%' }}
+                        source={require('@/Assets/Images/Home/emptyList.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
+                    <View style={{ justifyContent: 'center', marginTop: 8 }}>
+                      <CustomText
+                        style={{ color: Color.Gray400, fontSize: 14, fontWeight: '500', letterSpacing: -0.25 }}
+                      >
+                        {`해당날짜에 ${type === 'special' ? '특가' : '선결제'} 상품이 없습니다.`}
+                      </CustomText>
+                    </View>
+                  </View>
+                }
               />
             </View>
           </View>
@@ -197,6 +242,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
         windowSize={7}
         showsVerticalScrollIndicator={false}
         refreshing={false}
+        onRefresh={() => onRefresh()}
         onScroll={(e) => handleScroll(e)}
         contentContainerStyle={{ flexGrow: 1, paddingBottom: heightInfo.fixBottomHeight }}
       />

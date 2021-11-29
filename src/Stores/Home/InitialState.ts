@@ -9,12 +9,13 @@ export const INITIAL_STATE = {
   },
   isHomeLoaded: false,
   calendarDate: '',
+  prepaymentDate: '',
   areaFilterIdx: 1,
   timeFilterIdx: 0,
   possibleDirectDate: '',
-  possiblePrepaymentDate: '',
   selectedDirectIdx: -1,
   selectedDirectName: '',
+  prepaymentDateList: [],
 };
 
 export interface HomeState {
@@ -23,12 +24,13 @@ export interface HomeState {
     homeList: HomeList;
     isHomeLoaded: boolean | false;
     calendarDate: string | null;
+    prepaymentDate: string | null;
     areaFilterIdx: number | 1;
     timeFilterIdx: number | 0;
     possibleDirectDate: string | null;
-    possiblePrepaymentDate: string | null;
     selectedDirectIdx: number | -1;
     selectedDirectName: string | '';
+    prepaymentDateList: Array<any>;
   };
 }
 

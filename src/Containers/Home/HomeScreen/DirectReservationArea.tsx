@@ -57,6 +57,7 @@ const DirectReservationArea = (props: PropTypes) => {
   };
 
   useEffect(() => {
+    console.log('DIDUPATE : timeFilterIdx : ', timeFilterIdx);
     getDirectReservationList(areaFilterIdx);
   }, [timeFilterIdx]);
 

@@ -9,6 +9,7 @@ const { Types, Creators } = createActions({
   fetchPlaceRecentList: ['params'],
   fetchPlaceReviewList: ['params'],
   fetchPlaceList: ['params'],
+  fetchPlaceHotList: ['params'],
 });
 
 export const PlaceTypes = Types;

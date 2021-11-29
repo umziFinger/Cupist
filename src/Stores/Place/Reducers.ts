@@ -221,6 +221,23 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'hotPlaceList': {
+        console.log('call reducer hotPlaceList');
+        if (actions.params.page === 1) {
+          draft.hotPlaceList = data.PlaceResult;
+        } else {
+          draft.hotPlaceList =
+            data.PlaceResult?.length > 0 ? draft.hotPlaceList.concat(data.PlaceResult) : draft.hotPlaceList;
+        }
+        break;
+      }
+
+      case 'hotPlaceListPage': {
+        console.log('call reducer hotPlaceListPage : ', data);
+        draft.hotPlaceListPage = data;
+        break;
+      }
+
       default:
         return draft;
     }
