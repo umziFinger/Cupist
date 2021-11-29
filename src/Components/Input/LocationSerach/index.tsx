@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { View, Platform, TextInput } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
@@ -6,12 +6,16 @@ import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { SearchState } from '@/Stores/Search/InitialState';
 
-interface Props {
+type PlaceholderType = '구명으로 검색(ex.금천구)' | '볼링장을 검색해보세요.';
+type Props = {
   onChangeText: (value: string) => void;
   onClear: () => void;
-}
+  placeHolder?: PlaceholderType;
+  onSubmitEditing?: () => void;
+};
 
-const InputLocationSearch = ({ onChangeText, onClear }: Props) => {
+const InputLocationSearch = forwardRef<TextInput, Props>((props: Props) => {
+  const { onChangeText, onClear, placeHolder = '구명으로 검색(ex.금천구)', onSubmitEditing } = props;
   const { searchQuery } = useSelector((state: SearchState) => state.search);
 
   let clearBox = null;
@@ -70,7 +74,7 @@ const InputLocationSearch = ({ onChangeText, onClear }: Props) => {
               flex: 1,
             }}
             allowFontScaling={false}
-            placeholder={'구명으로 검색(ex.금천구)'}
+            placeholder={placeHolder}
             placeholderTextColor={Color.Gray400}
             numberOfLines={1}
             autoFocus
@@ -78,12 +82,13 @@ const InputLocationSearch = ({ onChangeText, onClear }: Props) => {
             autoCorrect={false}
             onChangeText={(text) => onChangeText(text)}
             value={searchQuery}
+            onSubmitEditing={onSubmitEditing}
           />
           {clearBox}
         </View>
       </View>
     </View>
   );
-};
-
+});
+InputLocationSearch.displayName = 'InputLocationSearch';
 export default InputLocationSearch;

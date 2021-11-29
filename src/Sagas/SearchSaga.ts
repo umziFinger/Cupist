@@ -49,3 +49,43 @@ export function* fetchSearchBowlingClubList(data: any): any {
     console.log('occurred Error...fetchSearchBowlingClubList : ', e);
   }
 }
+
+export function* fetchSearchRecentList(data: any): any {
+  try {
+    const params = {
+      ...data,
+      url: `${Config.SEARCH_QUERY_URL}`,
+    };
+
+    const response = yield call(Axios.GET, params);
+
+    if (response.result === true && response.code === null) {
+      console.log('최근 검색어 리스트: ', response.data);
+      yield put(SearchActions.fetchSearchReducer({ type: 'recentSearch', data: response.data.search }));
+    } else {
+      console.log('occurred Error...fetchSearchRecentList : ', response);
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchSearchRecentList : ', e);
+  }
+}
+
+export function* fetchSearchRecentListPost(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.SEARCH_QUERY_URL,
+    };
+
+    const response = yield call(Axios.POST, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('최근 검색어 등록 성공:', response);
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchSearchRecentListPost : ', e);
+  }
+}

@@ -24,7 +24,13 @@ const HomeHeader = (props: HeaderProps) => {
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { notificationConfirm } = useSelector((state: NotificationState) => state.notification);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
+  useEffect(() => {
+    console.log('headerHeight : ', headerHeight);
+  }, [headerHeight]);
 
+  const onMoveSearchScreen = () => {
+    navigate('SearchScreen');
+  };
   const onNotificationScreen = () => {
     // if (!userIdx) {
     //   dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: true }));
@@ -33,13 +39,6 @@ const HomeHeader = (props: HeaderProps) => {
     //   navigate('NotificationScreen');
     // }
   };
-
-  useEffect(() => {
-    console.log('headerHeight : ', headerHeight);
-  }, [headerHeight]);
-
-  // console.log('isShow : ', isShow);
-  // console.log('calendarDate : ', calendarDate);
 
   const onLayout = (e: Layout) => {
     // console.log('onLayout : ', e.height);
@@ -70,13 +69,16 @@ const HomeHeader = (props: HeaderProps) => {
           </View>
         </CustomButton>
         <View style={{ flex: 1 }} />
-        <View style={{ width: 24, height: 24, marginRight: 12 }}>
-          <FastImage
-            style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/Common/icSearch.png')}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-        </View>
+        <CustomButton onPress={() => onMoveSearchScreen()}>
+          <View style={{ width: 24, height: 24, marginRight: 12 }}>
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={require('@/Assets/Images/Common/icSearch.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </View>
+        </CustomButton>
+
         <View style={{ width: 24, height: 24 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}

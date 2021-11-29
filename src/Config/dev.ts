@@ -76,6 +76,7 @@ const dev = {
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',
+  SEARCH_QUERY_URL: 'search/searchQuery',
 
   // user
   USER_URL: 'user',

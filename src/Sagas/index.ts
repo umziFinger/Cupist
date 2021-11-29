@@ -9,7 +9,12 @@ import { PlaceTypes } from '@/Stores/Place/Actions';
 import { ReservationTypes } from '@/Stores/Reservation/Actions';
 
 // search
-import { fetchSearchAreaList, fetchSearchBowlingClubList } from '@/Sagas/SearchSaga';
+import {
+  fetchSearchAreaList,
+  fetchSearchBowlingClubList,
+  fetchSearchRecentList,
+  fetchSearchRecentListPost,
+} from '@/Sagas/SearchSaga';
 
 // common
 import {
@@ -122,6 +127,8 @@ export default function* root() {
     // search
     takeLatest(SearchTypes.FETCH_SEARCH_AREA_LIST, fetchSearchAreaList),
     takeLatest(SearchTypes.FETCH_SEARCH_BOWLING_CLUB_LIST, fetchSearchBowlingClubList),
+    takeLatest(SearchTypes.FETCH_SEARCH_RECENT_LIST, fetchSearchRecentList),
+    takeLatest(SearchTypes.FETCH_SEARCH_RECENT_LIST_POST, fetchSearchRecentListPost),
 
     // notification
     takeLatest(NotificationTypes.FETCH_NOTIFICATION_LIST, fetchNotificationList),
