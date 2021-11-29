@@ -13,10 +13,11 @@ type InputNicknameProps = {
   value: string;
   onSubmitEditing?: () => void;
   onTextClear: () => void;
+  autoFocus?: boolean;
 };
 
 const InputNickname = forwardRef<TextInput, InputNicknameProps>(
-  ({ nicknameValidText, onChangeText, value, onSubmitEditing, onTextClear }: InputNicknameProps, ref) => {
+  ({ nicknameValidText, onChangeText, value, onSubmitEditing, onTextClear, autoFocus }: InputNicknameProps, ref) => {
     const [isFocused, setIsFocused] = useState(false);
 
     return (
@@ -53,7 +54,7 @@ const InputNickname = forwardRef<TextInput, InputNicknameProps>(
             }}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            autoFocus={false}
+            autoFocus={autoFocus || false}
             keyboardType={'default'}
             onChangeText={onChangeText}
             autoCorrect={false}

@@ -12,6 +12,7 @@ import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthActions from '@/Stores/Auth/Actions';
+import CommonActions from '@/Stores/Common/Actions';
 
 const MoreScreen = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ const MoreScreen = () => {
   }, [isFocused]);
 
   const onMove = (screen: string) => {
+    if (screen === 'NotificationScreen') {
+      dispatch(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    }
     navigate(screen);
   };
   const renderItem = (item: { title: string; icon?: any; screen: string }, index: number) => {

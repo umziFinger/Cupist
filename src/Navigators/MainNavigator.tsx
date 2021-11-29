@@ -47,12 +47,11 @@ import WriteReviewDetailScreen from '@/Containers/My/WriteReviewDetailScreen';
 import WalkThroughScreen from '@/Containers/WalkThrough';
 import ReviewModifyScreen from '@/Containers/Review/ReviewModifyScreen';
 import ReportScreen from '@/Containers/Report';
-
 import PlaceReviewScreen from '@/Containers/Place/PlaceReviewScreen';
-
 import PlaceListScreen from '@/Containers/Place/PlaceListScreen';
 import PermissionDetailScreen from '@/Containers/Common/PermissionDetailScreen';
 import HotPlaceListScreen from '@/Containers/Place/HotPlaceListScreen';
+import PasswordEditScreen from '@/Containers/More/PasswordEditScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -104,6 +103,7 @@ export type MainStackParamList = {
   PlaceListScreen: { type: string };
   PermissionDetailScreen: { agreeIdx: number };
   HotPlaceListScreen: undefined;
+  PasswordEditScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -167,6 +167,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="QnaDetailScreen" component={QnaDetailScreen} />
       <MainStack.Screen name="ServiceSettingScreen" component={ServiceSettingScreen} />
       <MainStack.Screen name="WithdrawScreen" component={WithdrawScreen} />
+      <MainStack.Screen name="PasswordEditScreen" component={PasswordEditScreen} />
 
       {/*  My */}
       <MainStack.Screen name="ReservationDetailScreen" component={ReservationDetailScreen} />

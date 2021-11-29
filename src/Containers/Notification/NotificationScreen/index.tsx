@@ -16,7 +16,7 @@ import { NOTIFICATION_CATEGORY } from '@/Containers/Notification/NotificationScr
 const NotificationScreen = () => {
   const dispatch = useDispatch();
 
-  const { heightInfo } = useSelector((state: CommonState) => state.common);
+  const { heightInfo, isLoading } = useSelector((state: CommonState) => state.common);
   const {
     notificationListPage,
     notificationList,
@@ -55,6 +55,8 @@ const NotificationScreen = () => {
     if (notificationListPage > 1) dispatch(NotificationActions.fetchNotificationList(params));
   };
 
+  // console.log('========', notificationList?.readCnt);
+
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="back" />
@@ -69,7 +71,7 @@ const NotificationScreen = () => {
       </View>
 
       <View style={{ flex: 1, backgroundColor: Color.Gray200 }}>
-        {notificationList.new ? (
+        {notificationList?.readCnt > 0 || notificationList?.unreadCnt > 0 ? (
           <FlatList
             data={[0]}
             listKey="wrapper"
@@ -94,191 +96,228 @@ const NotificationScreen = () => {
             renderItem={() => (
               <View style={{ flex: 1 }}>
                 {/* 읽지 않음 영역 */}
-                <View style={{ paddingHorizontal: 24, backgroundColor: Color.White, paddingBottom: 30, flex: 1 }}>
-                  <FlatList
-                    data={notificationList?.unread}
-                    // data={[0, 1, 2, 3, 4]}
-                    listKey="content_1"
-                    keyExtractor={(item, index) => `2_${index.toString()}`}
-                    contentContainerStyle={{ flex: 1 }}
-                    ListHeaderComponent={() => (
-                      <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 22 }}>
-                        <View style={{ marginRight: 4 }}>
-                          <CustomText
-                            style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Black1000 }}
-                          >
-                            읽지 않음
-                          </CustomText>
-                        </View>
-                        <View>
-                          <CustomText
+                {notificationList?.unreadCnt > 0 && (
+                  <>
+                    <View style={{ paddingHorizontal: 24, backgroundColor: Color.White, paddingBottom: 30, flex: 1 }}>
+                      <FlatList
+                        data={notificationList?.unread}
+                        // data={[0, 1, 2, 3, 4]}
+                        listKey="content_1"
+                        keyExtractor={(item, index) => `2_${index.toString()}`}
+                        contentContainerStyle={{ flex: 1 }}
+                        ListHeaderComponent={() => (
+                          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 22 }}>
+                            <View style={{ marginRight: 4 }}>
+                              <CustomText
+                                style={{
+                                  fontSize: 15,
+                                  fontWeight: 'bold',
+                                  letterSpacing: -0.2,
+                                  color: Color.Black1000,
+                                }}
+                              >
+                                읽지 않음
+                              </CustomText>
+                            </View>
+                            <View>
+                              <CustomText
+                                style={{
+                                  fontSize: 15,
+                                  fontWeight: 'bold',
+                                  letterSpacing: -0.2,
+                                  color: Color.Primary1000,
+                                }}
+                              >
+                                {notificationList.unreadCnt}
+                              </CustomText>
+                            </View>
+                          </View>
+                        )}
+                        renderItem={({ item, index }) => (
+                          <View
                             style={{
-                              fontSize: 15,
-                              fontWeight: 'bold',
-                              letterSpacing: -0.2,
-                              color: Color.Primary1000,
+                              marginTop: index === 0 ? 0 : 16,
+                              paddingTop: index === 0 ? 0 : 16,
+                              borderTopColor: index === 0 ? undefined : Color.Gray200,
+                              borderTopWidth: index === 0 ? 0 : 1,
                             }}
                           >
-                            {notificationList.unreadCnt}
-                          </CustomText>
-                        </View>
-                      </View>
-                    )}
-                    renderItem={({ item, index }) => (
-                      <View
-                        style={{
-                          marginTop: index === 0 ? 0 : 16,
-                          paddingTop: index === 0 ? 0 : 16,
-                          borderTopColor: index === 0 ? undefined : Color.Gray200,
-                          borderTopWidth: index === 0 ? 0 : 1,
-                        }}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          {notificationCategory.category === 'all' && (
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                              {notificationCategory.category === 'all' && (
+                                <View
+                                  style={{
+                                    paddingVertical: 2,
+                                    paddingHorizontal: 4,
+                                    backgroundColor: `${Color.Primary1000}${Opacity._10}`,
+                                    borderRadius: 2,
+                                    marginRight: 6,
+                                  }}
+                                >
+                                  <CustomText
+                                    style={{
+                                      fontSize: 11,
+                                      fontWeight: 'bold',
+                                      letterSpacing: 0,
+                                      color: Color.Primary1000,
+                                    }}
+                                  >
+                                    {item?.category || ''}
+                                  </CustomText>
+                                </View>
+                              )}
+
+                              <View>
+                                <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
+                                  {item?.regDateView || ''}
+                                </CustomText>
+                              </View>
+                            </View>
                             <View
                               style={{
-                                paddingVertical: 2,
-                                paddingHorizontal: 4,
-                                backgroundColor: `${Color.Primary1000}${Opacity._10}`,
-                                borderRadius: 2,
-                                marginRight: 6,
+                                marginTop: 10,
                               }}
                             >
                               <CustomText
-                                style={{ fontSize: 11, fontWeight: 'bold', letterSpacing: 0, color: Color.Primary1000 }}
+                                style={{
+                                  fontSize: 14,
+                                  fontWeight: '500',
+                                  letterSpacing: -0.25,
+                                  color: Color.Black1000,
+                                }}
                               >
-                                {item?.category || ''}
+                                {item?.title || ''}
                               </CustomText>
                             </View>
-                          )}
-
-                          <View>
-                            <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
-                              {item?.regDateView || ''}
-                            </CustomText>
                           </View>
-                        </View>
-                        <View
-                          style={{
-                            marginTop: 10,
-                          }}
-                        >
-                          <CustomText
-                            style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}
-                          >
-                            {item?.title || ''}
-                          </CustomText>
-                        </View>
-                      </View>
-                    )}
-                    initialNumToRender={10}
-                    maxToRenderPerBatch={13}
-                    windowSize={7}
-                    showsVerticalScrollIndicator={false}
-                  />
-                </View>
+                        )}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={13}
+                        windowSize={7}
+                        showsVerticalScrollIndicator={false}
+                      />
+                    </View>
 
-                <View style={{ marginTop: 8 }} />
+                    <View style={{ marginTop: 8 }} />
+                  </>
+                )}
 
-                {/* 이전 알림 영역 */}
-                <View style={{ paddingHorizontal: 24, backgroundColor: Color.White, paddingTop: 30, flex: 1 }}>
-                  <FlatList
-                    data={notificationList?.read}
-                    // data={[0, 1]}
-                    listKey="content_2"
-                    keyExtractor={(item, index) => `3_${index.toString()}`}
-                    contentContainerStyle={{
-                      flex: 1,
-                    }}
-                    ListHeaderComponent={() => (
-                      <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 22 }}>
-                        <View style={{ marginRight: 4 }}>
-                          <CustomText
-                            style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Black1000 }}
-                          >
-                            읽음
-                          </CustomText>
-                        </View>
-                        <View>
-                          <CustomText
-                            style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Gray400 }}
-                          >
-                            {notificationList?.readCnt || 0}
-                          </CustomText>
-                        </View>
-                      </View>
-                    )}
-                    renderItem={({ item, index }) => (
-                      <View
-                        style={{
-                          marginTop: index === 0 ? 0 : 16,
-                          paddingTop: index === 0 ? 0 : 16,
-                          borderTopColor: index === 0 ? undefined : Color.Gray200,
-                          borderTopWidth: index === 0 ? 0 : 1,
+                {notificationList?.readCnt > 0 && (
+                  <>
+                    {/* 이전 알림 영역 */}
+                    <View style={{ paddingHorizontal: 24, backgroundColor: Color.White, paddingTop: 30, flex: 1 }}>
+                      <FlatList
+                        data={notificationList?.read}
+                        // data={[0, 1]}
+                        listKey="content_2"
+                        keyExtractor={(item, index) => `3_${index.toString()}`}
+                        contentContainerStyle={{
+                          flex: 1,
                         }}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          {notificationCategory.category === 'all' && (
+                        ListHeaderComponent={() => (
+                          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 22 }}>
+                            <View style={{ marginRight: 4 }}>
+                              <CustomText
+                                style={{
+                                  fontSize: 15,
+                                  fontWeight: 'bold',
+                                  letterSpacing: -0.2,
+                                  color: Color.Black1000,
+                                }}
+                              >
+                                읽음
+                              </CustomText>
+                            </View>
+                            <View>
+                              <CustomText
+                                style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Gray400 }}
+                              >
+                                {notificationList?.readCnt || 0}
+                              </CustomText>
+                            </View>
+                          </View>
+                        )}
+                        renderItem={({ item, index }) => (
+                          <View
+                            style={{
+                              marginTop: index === 0 ? 0 : 16,
+                              paddingTop: index === 0 ? 0 : 16,
+                              borderTopColor: index === 0 ? undefined : Color.Gray200,
+                              borderTopWidth: index === 0 ? 0 : 1,
+                            }}
+                          >
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                              {notificationCategory.category === 'all' && (
+                                <View
+                                  style={{
+                                    paddingVertical: 2,
+                                    paddingHorizontal: 4,
+                                    backgroundColor: `${Color.Gray600}${Opacity._10}`,
+                                    borderRadius: 2,
+                                    marginRight: 6,
+                                  }}
+                                >
+                                  <CustomText
+                                    style={{ fontSize: 11, fontWeight: 'bold', letterSpacing: 0, color: Color.Gray600 }}
+                                  >
+                                    {item?.category || ''}
+                                  </CustomText>
+                                </View>
+                              )}
+
+                              <View>
+                                <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
+                                  {item?.regDateView || ''}
+                                </CustomText>
+                              </View>
+                            </View>
                             <View
                               style={{
-                                paddingVertical: 2,
-                                paddingHorizontal: 4,
-                                backgroundColor: `${Color.Gray600}${Opacity._10}`,
-                                borderRadius: 2,
-                                marginRight: 6,
+                                marginTop: 10,
                               }}
                             >
                               <CustomText
-                                style={{ fontSize: 11, fontWeight: 'bold', letterSpacing: 0, color: Color.Gray600 }}
+                                style={{
+                                  fontSize: 14,
+                                  fontWeight: '500',
+                                  letterSpacing: -0.25,
+                                  color: Color.Black1000,
+                                }}
                               >
-                                {item?.category || ''}
+                                {item?.title || ''}
                               </CustomText>
                             </View>
-                          )}
-
-                          <View>
-                            <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
-                              {item?.regDateView || ''}
-                            </CustomText>
                           </View>
-                        </View>
-                        <View
-                          style={{
-                            marginTop: 10,
-                          }}
-                        >
-                          <CustomText
-                            style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}
-                          >
-                            {item?.title || ''}
-                          </CustomText>
-                        </View>
-                      </View>
-                    )}
-                    initialNumToRender={10}
-                    maxToRenderPerBatch={13}
-                    windowSize={7}
-                    showsVerticalScrollIndicator={false}
-                    ListFooterComponent={() => <View style={{ paddingTop: heightInfo.statusHeight }} />}
-                  />
-                </View>
+                        )}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={13}
+                        windowSize={7}
+                        showsVerticalScrollIndicator={false}
+                        ListFooterComponent={() => <View style={{ paddingTop: heightInfo.statusHeight }} />}
+                      />
+                    </View>
+                  </>
+                )}
               </View>
             )}
           />
         ) : (
           <View style={{ alignItems: 'center', paddingTop: 150, backgroundColor: Color.White, flex: 1 }}>
-            <View style={{ width: 60, height: 60 }}>
-              <FastImage
-                style={{ width: '100%', height: '100%' }}
-                source={require('@/Assets/Images/Common/emptyNotify.png')}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            </View>
-            <View style={{ justifyContent: 'center', marginTop: 8 }}>
-              <CustomText style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Gray400 }}>
-                새로운 알림이 없습니다.
-              </CustomText>
-            </View>
+            {!isLoading && (
+              <>
+                <View style={{ width: 60, height: 60 }}>
+                  <FastImage
+                    style={{ width: '100%', height: '100%' }}
+                    source={require('@/Assets/Images/Common/emptyNotify.png')}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                </View>
+                <View style={{ justifyContent: 'center', marginTop: 8 }}>
+                  <CustomText style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Gray400 }}>
+                    새로운 알림이 없습니다.
+                  </CustomText>
+                </View>
+              </>
+            )}
           </View>
         )}
       </View>

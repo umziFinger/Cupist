@@ -23,10 +23,9 @@ interface PropTypes {
 
 const ResidentSearchScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
-  const type = route?.params?.type;
+  const type: SCREEN_TYPE = route?.params?.type;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { searchQuery, bowlingList, bowlingListPage } = useSelector((state: SearchState) => state.search);
-
   const debounceFunc = useRef(
     _.debounce((text: any) => {
       const params = {
@@ -122,14 +121,13 @@ const ResidentSearchScreen = ({ route }: PropTypes) => {
           <Header type={'close'} text={'상주볼링장'} />
 
           <View style={{ flex: 1, paddingHorizontal: 20 }}>
-            {/* <InputResidentSearch /> */}
             <InputLocationSearch onChangeText={onChangeText} onClear={onClearKeyword} />
             {searchQuery !== '' && (
               <View style={{ backgroundColor: Color.White, paddingVertical: 20 }}>
                 <CustomText
                   style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow1000 }}
                 >
-                  {`‘${searchQuery}’`} 검색결과 {bowlingList?.placeCount || 0}건
+                  {searchQuery} 검색결과 {bowlingList?.placeCount || 0}건
                 </CustomText>
               </View>
             )}
@@ -159,36 +157,39 @@ const ResidentSearchScreen = ({ route }: PropTypes) => {
               )}
               ListEmptyComponent={() => renderEmpty()}
             />
-
-            <CustomButton onPress={() => onCancel()}>
-              <View
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: heightInfo.fixBottomHeight + 8,
-                  alignItems: 'center',
-                }}
-              >
+            {type === SCREEN_TYPE.JOIN && (
+              <CustomButton onPress={() => onCancel()}>
                 <View
                   style={{
-                    backgroundColor: Color.Primary1000,
-                    flexDirection: 'row',
-                    paddingRight: 46,
-                    paddingLeft: 45,
-                    paddingVertical: 13,
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: heightInfo.fixBottomHeight + 8,
                     alignItems: 'center',
-                    borderRadius: 24,
                   }}
                 >
-                  <View>
-                    <CustomText style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25, color: Color.White }}>
-                      다음에 할게요
-                    </CustomText>
+                  <View
+                    style={{
+                      backgroundColor: Color.Primary1000,
+                      flexDirection: 'row',
+                      paddingRight: 46,
+                      paddingLeft: 45,
+                      paddingVertical: 13,
+                      alignItems: 'center',
+                      borderRadius: 24,
+                    }}
+                  >
+                    <View>
+                      <CustomText
+                        style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25, color: Color.White }}
+                      >
+                        다음에 할게요
+                      </CustomText>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </CustomButton>
+              </CustomButton>
+            )}
           </View>
         </View>
         {Platform.OS === 'ios' && <KeyboardSpacer />}

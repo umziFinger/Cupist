@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, FlatList, Platform } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, FlatList, Platform, TextInput } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
@@ -12,8 +12,10 @@ import { AuthState } from '@/Stores/Auth/InitialState';
 import InputNickname from '@/Components/Input/Nickname';
 import useInputNickname from '@/Hooks/useInputNickname';
 import MyActions from '@/Stores/My/Actions';
+import InputPassword from '@/Components/Input/Password';
+import useInputPassword from '@/Hooks/useInputPassword';
 
-const NickNameEditScreen = () => {
+const PasswordEditScreen = () => {
   const dispatch = useDispatch();
 
   const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
@@ -21,6 +23,22 @@ const NickNameEditScreen = () => {
 
   const { nickName, onChangeNickname, nicknameValidText, isNicknameValid, onClearNickName, setNickName } =
     useInputNickname();
+
+  const { password, onChangePassword, passwordValidText } = useInputPassword();
+  const {
+    password: newPassword,
+    onChangePassword: onChangeNewPassword,
+    passwordValidText: newPasswordValidText,
+  } = useInputPassword();
+  const {
+    password: confirmPassword,
+    onChangePassword: onChangeConfirmPassword,
+    passwordValidText: confirmPasswordValidText,
+  } = useInputPassword();
+  const ref_input: Array<React.RefObject<TextInput>> = [];
+  ref_input[0] = useRef(null);
+  ref_input[1] = useRef(null);
+  ref_input[2] = useRef(null);
 
   useEffect(() => {
     if (setNickName) {
@@ -33,6 +51,13 @@ const NickNameEditScreen = () => {
       dispatch(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
     };
   }, []);
+
+  const onFocusNext = (currentFocusIndex: number) => {
+    if (ref_input[currentFocusIndex] && ref_input[currentFocusIndex + 1]) {
+      ref_input[currentFocusIndex].current?.blur();
+      ref_input[currentFocusIndex + 1].current?.focus();
+    }
+  };
 
   const onPressSave = () => {
     if (isNicknameValid) {
@@ -51,16 +76,41 @@ const NickNameEditScreen = () => {
           <FlatList
             data={[0]}
             renderItem={() => (
-              <View style={{ flex: 1, paddingTop: 44 }}>
-                {/* 이름 & 닉네임 & 휴대폰 번호 입력 */}
-
-                <View style={{ marginTop: 48, paddingBottom: 32 - 18 }}>
-                  <InputNickname
-                    nicknameValidText={nicknameValidText}
-                    onChangeText={onChangeNickname}
-                    onTextClear={onClearNickName}
-                    value={nickName}
-                    autoFocus
+              <View style={{ flex: 1, paddingTop: 40 }}>
+                <View style={{ paddingBottom: 32 - 18 }}>
+                  <InputPassword
+                    ref={ref_input[0]}
+                    passwordValidText={passwordValidText}
+                    onChangeText={onChangePassword}
+                    value={password}
+                    title={'기존 비밀번호'}
+                    placeHolder={'기존 비밀번호를 입력해주세요.'}
+                    onSubmitEditing={() => {
+                      onFocusNext(0);
+                    }}
+                  />
+                </View>
+                <View style={{ paddingBottom: 32 - 18 }}>
+                  <InputPassword
+                    ref={ref_input[1]}
+                    passwordValidText={newPasswordValidText}
+                    onChangeText={onChangeNewPassword}
+                    value={newPassword}
+                    title={'새로운 비밀번호'}
+                    placeHolder={'새로운 비밀번호를 입력해주세요.'}
+                    onSubmitEditing={() => {
+                      onFocusNext(1);
+                    }}
+                  />
+                </View>
+                <View style={{ paddingBottom: 32 - 18 }}>
+                  <InputPassword
+                    ref={ref_input[2]}
+                    passwordValidText={confirmPasswordValidText}
+                    onChangeText={onChangeConfirmPassword}
+                    value={confirmPassword}
+                    title={'새로운 비밀번호 확인'}
+                    placeHolder={'새로운 비밀번호를 다시 입력해주세요.'}
                   />
                 </View>
               </View>
@@ -113,4 +163,4 @@ const NickNameEditScreen = () => {
     </KeyboardSpacerProvider>
   );
 };
-export default NickNameEditScreen;
+export default PasswordEditScreen;

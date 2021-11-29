@@ -7,6 +7,7 @@ export const INITIAL_STATE = {
   bowlingListPage: 1,
   areaList: [],
   searchedAreaList: [],
+  recentSearch: [],
 };
 export interface SearchState {
   search: {
@@ -18,5 +19,6 @@ export interface SearchState {
     bowlingListPage: number | 0;
     areaList: any;
     searchedAreaList: Array<any>;
+    recentSearch: Array<any>;
   };
 }

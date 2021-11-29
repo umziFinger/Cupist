@@ -28,10 +28,6 @@ const HotPlaceListScreen = () => {
     dispatch(PlaceActions.fetchPlaceHotList(params));
   }, []);
 
-  console.log('hotPlaceList : ', hotPlaceList);
-
-  // const list = [...hotPlaceList, tempItem1];
-
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'back'} />

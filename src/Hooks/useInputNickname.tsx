@@ -41,7 +41,7 @@ function useInputNickname(): ResultUseInputNickname {
   };
 
   // const reset = useCallback(() => setEmail(initialForm), [initialForm]);
-  return { nickName, onChangeNickname, nicknameValidText, isNicknameValid, onClearNickName, setNickName };
+  return { nickName, onChangeNickname, nicknameValidText, isNicknameValid, onClearNickName };
 }
 
 export default useInputNickname;

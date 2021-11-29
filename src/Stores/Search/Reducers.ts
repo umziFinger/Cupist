@@ -2,7 +2,6 @@ import { createReducer } from 'reduxsauce';
 import produce from 'immer';
 import { INITIAL_STATE } from '@/Stores/Search/InitialState';
 import { SearchTypes } from './Actions';
-import { Color } from '@/Assets/Color';
 
 export const fetchSearchReducer = (state = INITIAL_STATE, actions: any) => {
   return produce(state, (draft) => {
@@ -18,11 +17,19 @@ export const fetchSearchReducer = (state = INITIAL_STATE, actions: any) => {
         draft.bowlingListPage = INITIAL_STATE.bowlingListPage;
         break;
       }
+
       case 'locationInit': {
         draft.searchQuery = INITIAL_STATE.searchQuery;
         draft.searchedAreaList = INITIAL_STATE.searchedAreaList;
         break;
       }
+      case 'searchQueryInit': {
+        draft.searchQuery = INITIAL_STATE.searchQuery;
+        draft.bowlingList = INITIAL_STATE.bowlingList;
+        draft.bowlingListPage = INITIAL_STATE.bowlingListPage;
+        break;
+      }
+
       case 'bowlingList': {
         try {
           if (actions.params.page === 1) {
@@ -54,6 +61,11 @@ export const fetchSearchReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'searchedAreaList': {
         draft.searchedAreaList = data;
+        break;
+      }
+
+      case 'recentSearch': {
+        draft.recentSearch = data;
         break;
       }
 
