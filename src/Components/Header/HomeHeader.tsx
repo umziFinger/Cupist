@@ -32,12 +32,12 @@ const HomeHeader = (props: HeaderProps) => {
     navigate('SearchScreen');
   };
   const onNotificationScreen = () => {
-    // if (!userIdx) {
-    //   dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSimpleLoginRBS', data: true }));
-    // } else {
-    //   dispatch(NotificationActions.fetchNotificationReducer({ type: 'notificationConfirm', data: 'Y' }));
-    //   navigate('NotificationScreen');
-    // }
+    if (!userIdx) {
+      navigate('SimpleLoginScreen');
+    } else {
+      dispatch(NotificationActions.fetchNotificationReducer({ type: 'notificationConfirm', data: 'Y' }));
+      navigate('NotificationScreen');
+    }
   };
 
   const onLayout = (e: Layout) => {
@@ -78,14 +78,15 @@ const HomeHeader = (props: HeaderProps) => {
             />
           </View>
         </CustomButton>
-
-        <View style={{ width: 24, height: 24 }}>
-          <FastImage
-            style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/Common/icNotify.png')}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-        </View>
+        <CustomButton onPress={() => onNotificationScreen()}>
+          <View style={{ width: 24, height: 24 }}>
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={require('@/Assets/Images/Common/icNotify.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </View>
+        </CustomButton>
       </View>
       {isShow && <TopDateSelector calendarDate={calendarDate} headerHeight={headerHeight} />}
     </>
