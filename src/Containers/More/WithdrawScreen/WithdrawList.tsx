@@ -55,13 +55,9 @@ const WithdrawList = ({ isAgree, setIsAgree }: any) => {
           </CustomText>
         </View>
 
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 24 }}>
-          <CustomButton
-            onPress={() => setIsAgree(!isAgree)}
-            hitSlop={{ left: 15, right: 15 }}
-            style={{ marginRight: 4 }}
-          >
-            <View style={{ width: 24, height: 24 }}>
+        <CustomButton onPress={() => setIsAgree(!isAgree)} hitSlop={{ left: 15, right: 15 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 24 }}>
+            <View style={{ width: 24, height: 24, marginRight: 4 }}>
               <FastImage
                 style={{ width: '100%', height: '100%' }}
                 source={
@@ -72,11 +68,12 @@ const WithdrawList = ({ isAgree, setIsAgree }: any) => {
                 resizeMode={FastImage.resizeMode.cover}
               />
             </View>
-          </CustomButton>
-          <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Gray800 }}>
-            위 내용에 동의합니다.
-          </CustomText>
-        </View>
+
+            <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Gray800 }}>
+              위 내용에 동의합니다.
+            </CustomText>
+          </View>
+        </CustomButton>
       </View>
     </>
   );
