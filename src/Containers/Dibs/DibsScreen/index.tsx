@@ -78,7 +78,6 @@ const DibsScreen = () => {
 
   const handleScroll = (event: any) => {
     const result = scrollCalendarHandler(event, 100);
-    console.log('result : ', result);
     setIsShowTopCalendar(result.isShow);
   };
 
@@ -96,6 +95,7 @@ const DibsScreen = () => {
         return navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: selectedTicket?.idx });
       }
     }
+    return null;
     // return animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
   };
 
