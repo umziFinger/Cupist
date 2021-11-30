@@ -105,7 +105,25 @@ const PlaceDetailHeader = (props: HeaderProps) => {
         </CustomButton>
       </View>
 
-      {isShow && <TopDateSelector calendarDate={calendarDate} headerHeight={headerHeight} />}
+      {isShow && (
+        <View
+          style={{
+            position: 'absolute',
+            zIndex: 999,
+            top: headerHeight,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 24 + 24 + 2 + 9,
+            backgroundColor: Color.White,
+            paddingHorizontal: 20,
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgb(240,240,240)',
+          }}
+        >
+          <TopDateSelector calendarDate={calendarDate} />
+        </View>
+      )}
     </>
   );
 };

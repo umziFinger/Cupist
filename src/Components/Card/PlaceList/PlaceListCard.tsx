@@ -11,16 +11,18 @@ import CustomButton from '@/Components/CustomButton';
 import { PlaceState } from '@/Stores/Place/InitialState';
 
 interface PropTypes {
+  type: string;
   item: any;
 }
 const PlaceListCard = (props: PropTypes) => {
   const dispatch = useDispatch();
-  const { item = {} } = props;
+  const { type, item = {} } = props;
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
+  const [isError, setIsError] = useState(false);
 
   const onValueChange = (data: any) => {
     console.log('select place idx : ', data.checkType);
-    dispatch(PlaceActions.fetchPlaceReducer({ type: 'togglePlaceCheck', data: data.checkType }));
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'isOpenTicketSlider', data: { type, idx: data.checkType } }));
   };
 
   const onPressTicket = (placeIdx: number, ticket: any) => {
@@ -79,8 +81,15 @@ const PlaceListCard = (props: PropTypes) => {
         <View style={{ width: 70, height: 70 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
-            source={{ uri: item?.placePhotoArr[0] || '' }}
+            source={
+              !item?.placePhotoArr[0] || isError
+                ? require('@/Assets/Images/Common/icNoImage.png')
+                : { uri: item?.placePhotoArr[0] }
+            }
             resizeMode={FastImage.resizeMode.cover}
+            onError={() => {
+              setIsError(true);
+            }}
           />
         </View>
       </View>

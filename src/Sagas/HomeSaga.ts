@@ -6,6 +6,7 @@ import { Axios } from '@/Services/Axios';
 
 export function* fetchHomeList(data: any): any {
   try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
     const payload = {
       ...data,
@@ -14,11 +15,13 @@ export function* fetchHomeList(data: any): any {
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
       yield put(HomeActions.fetchHomeReducer({ type: 'homeList', data: response.data }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
     console.log('occurred Error...fetchHomeList : ', e);
   }

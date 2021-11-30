@@ -116,7 +116,7 @@ const TabBar = (props: TabBarProps) => {
   };
 
   const onPressMenu = (value: string) => {
-    const authGuardScreen = ['MoreScreen', 'MyScreen'];
+    const authGuardScreen = ['MoreScreen', 'MyScreen', 'DibsScreen'];
     if (authGuardScreen.includes(value) && !userIdx) {
       navigate('SimpleLoginScreen');
       return;

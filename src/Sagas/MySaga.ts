@@ -12,10 +12,7 @@ import MyActions from '@/Stores/My/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthAction from '@/Stores/Auth/Actions';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
-import NotificationActions from '@/Stores/Notification/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
-import { fetchPlaceReviewList } from '@/Sagas/PlaceSaga';
-import { PlaceState } from '@/Stores/Place/InitialState';
 
 export function* fetchMyPushYN(data: any): any {
   try {
@@ -221,7 +218,7 @@ export function* fetchMyProfileImagePatch(data: any): any {
     }
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    console.log('occurred Error...fetchMyProfileImagePatch : ', e.message);
+    console.log('occurred Error...fetchMyProfileImagePatch : ', e);
   }
 }
 

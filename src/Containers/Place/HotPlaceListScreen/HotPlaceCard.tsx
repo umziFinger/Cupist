@@ -16,7 +16,6 @@ interface PropTypes {
 
 const HotPlaceCard = (props: PropTypes) => {
   const { item, type } = props;
-  console.log('item : ', item);
   const photoUrl = item?.PlacePhoto[0]?.url || '';
 
   const { width } = useWindowDimensions();
@@ -64,9 +63,9 @@ const HotPlaceCard = (props: PropTypes) => {
           marginBottom: 17,
         }}
       >
-        <View style={{ width, height: 145 }}>
+        <View style={{ height: 145 }}>
           <FastImage
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', borderTopLeftRadius: 5, borderTopRightRadius: 5 }}
             source={
               !item?.PlacePhoto[0] || isError ? require('@/Assets/Images/Common/icNoImage.png') : { uri: photoUrl }
             }

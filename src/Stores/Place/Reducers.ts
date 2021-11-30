@@ -1,7 +1,6 @@
 import { createReducer } from 'reduxsauce';
 import produce from 'immer';
 import { INITIAL_STATE } from '@/Stores/Place/InitialState';
-
 import { PlaceTypes } from './Actions';
 
 export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
@@ -167,6 +166,7 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'placeList': {
+        console.log('length@@@ : ', data.PlaceResult.length);
         if (actions.params.page === 1) {
           draft.placeList = data.PlaceResult;
           draft.placeList.map((item: any, index: number) => {
@@ -176,6 +176,9 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         } else {
           draft.placeList = data.PlaceResult?.length > 0 ? draft.placeList.concat(data.PlaceResult) : draft.placeList;
           draft.placeList.map((item: any, index: number) => {
+            if (draft.placeList[index].isSelected) {
+              return null;
+            }
             draft.placeList[index].isSelected = false;
             return null;
           });
@@ -195,7 +198,6 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'placeListPage': {
-        console.log('call reducer placeListPage : ', data);
         draft.placeListPage = data;
         break;
       }
@@ -206,23 +208,24 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
-      case 'togglePlaceCheck': {
-        console.log('call reducer togglePlaceCheck : ', data);
-        const idx = draft.placeList.findIndex((item) => item.idx === data);
+      case 'isOpenTicketSlider': {
+        let list = draft.placeList;
+        if (data.type === 'dibs') {
+          list = draft.dibsList;
+        }
+        const idx = list.findIndex((item) => item.idx === data.idx);
         if (idx > -1) {
-          draft.placeList[idx].isSelected = !draft.placeList[idx].isSelected;
+          list[idx].isSelected = !list[idx].isSelected;
         }
         break;
       }
 
       case 'selectedPlaceIdx': {
-        console.log('call reducer selectedPlaceIdx : ', data);
         draft.selectedPlaceIdx = data;
         break;
       }
 
       case 'hotPlaceList': {
-        console.log('call reducer hotPlaceList');
         if (actions.params.page === 1) {
           draft.hotPlaceList = data.PlaceResult;
         } else {
@@ -233,8 +236,32 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'hotPlaceListPage': {
-        console.log('call reducer hotPlaceListPage : ', data);
         draft.hotPlaceListPage = data;
+        break;
+      }
+
+      case 'dibsList': {
+        if (actions.params.page === 1) {
+          draft.dibsList = data.dibsResult;
+          draft.dibsList.map((item: any, index: number) => {
+            draft.dibsList[index].isSelected = false;
+            return null;
+          });
+        } else {
+          draft.dibsList = data.dibsResult?.length > 0 ? draft.dibsList.concat(data.dibsResult) : draft.dibsList;
+          draft.dibsList.map((item: any, index: number) => {
+            if (draft.dibsList[index].isSelected) {
+              return null;
+            }
+            draft.dibsList[index].isSelected = false;
+            return null;
+          });
+        }
+        break;
+      }
+
+      case 'dibsListPage': {
+        draft.dibsListPage = data;
         break;
       }
 

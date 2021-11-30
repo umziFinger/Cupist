@@ -89,6 +89,7 @@ import {
   fetchPlaceTicketList,
   fetchPlaceList,
   fetchPlaceHotList,
+  fetchPlaceDibsList,
 } from '@/Sagas/PlaceSaga';
 
 import {
@@ -174,6 +175,7 @@ export default function* root() {
     takeLatest(PlaceTypes.FETCH_PLACE_REVIEW_LIST, fetchPlaceReviewList),
     takeLatest(PlaceTypes.FETCH_PLACE_LIST, fetchPlaceList),
     takeLatest(PlaceTypes.FETCH_PLACE_HOT_LIST, fetchPlaceHotList),
+    takeLatest(PlaceTypes.FETCH_PLACE_DIBS_LIST, fetchPlaceDibsList),
 
     // reservation
     takeLatest(ReservationTypes.FETCH_RESERVATION_INFO, fetchReservationInfo),

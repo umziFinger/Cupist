@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
@@ -12,9 +12,10 @@ import HotPlaceCard from './HotPlaceCard';
 
 const HotPlaceListScreen = () => {
   const dispatch = useDispatch();
+  const { width } = useWindowDimensions();
   const { myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { hotPlaceList } = useSelector((state: PlaceState) => state.place);
+  const { hotPlaceList, hotPlaceListPage } = useSelector((state: PlaceState) => state.place);
 
   useEffect(() => {
     const params = {
@@ -27,6 +28,34 @@ const HotPlaceListScreen = () => {
     };
     dispatch(PlaceActions.fetchPlaceHotList(params));
   }, []);
+
+  const onRefresh = () => {
+    console.log('onRefresh');
+    const params = {
+      type: 'hot',
+      lat: myLatitude,
+      lng: myLongitude,
+      page: 1,
+      perPage: 10,
+      date: calendarDate,
+    };
+    dispatch(PlaceActions.fetchPlaceHotList(params));
+  };
+
+  const onMore = () => {
+    console.log('onMore');
+    if (hotPlaceListPage > 1) {
+      const params = {
+        type: 'hot',
+        lat: myLatitude,
+        lng: myLongitude,
+        page: 1,
+        perPage: hotPlaceListPage || 10,
+        date: calendarDate,
+      };
+      dispatch(PlaceActions.fetchPlaceHotList(params));
+    }
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
@@ -58,14 +87,19 @@ const HotPlaceListScreen = () => {
               <View style={{ flex: 1, marginTop: 24 }}>
                 <FlatList
                   data={hotPlaceList || []}
-                  // data={list || []}
                   renderItem={({ item: place, index }) => {
-                    return <HotPlaceCard item={place} type={'hot'} />;
+                    return (
+                      <View style={{ width: width - 32 }}>
+                        <HotPlaceCard item={place} type={'hot'} />
+                      </View>
+                    );
                   }}
                   keyExtractor={(item, index) => index.toString()}
                   initialNumToRender={2}
                   maxToRenderPerBatch={5}
                   windowSize={7}
+                  onEndReached={() => onMore()}
+                  onEndReachedThreshold={0.8}
                 />
               </View>
             </View>
@@ -74,6 +108,9 @@ const HotPlaceListScreen = () => {
           initialNumToRender={2}
           maxToRenderPerBatch={5}
           windowSize={7}
+          showsVerticalScrollIndicator={false}
+          refreshing={false}
+          onRefresh={() => onRefresh()}
         />
       </View>
     </View>

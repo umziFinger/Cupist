@@ -200,3 +200,29 @@ export function* fetchPlaceHotList(data: any): any {
     console.log('occurred Error...fetchPlaceHotList : ', e);
   }
 }
+
+export function* fetchPlaceDibsList(data: any): any {
+  try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const payload = {
+      ...data,
+      url: Config.MY_DIBS_URL,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      yield put(PlaceActions.fetchPlaceReducer({ type: 'dibsList', data: response.data, page: data.params.page }));
+      yield put(PlaceActions.fetchPlaceReducer({ type: 'dibsListPage', data: data.params.page + 1 }));
+
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchPlaceDibsList : ', e);
+  }
+}

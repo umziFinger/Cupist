@@ -91,6 +91,9 @@ const PlaceListScreen = ({ route }: PropTypes) => {
   const onMore = () => {
     console.log('onMore');
     const params = {
+      type,
+      lat: myLatitude,
+      lng: myLongitude,
       page: placeListPage || 1,
       perPage: 10,
       date: type === 'special' ? calendarDate : prepaymentDate,
@@ -137,6 +140,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
     // return animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
   };
 
+  console.log('selectedTicket : ', selectedTicket);
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'placeList'} text={screenTitle} isShow={isShowTopCalendar} />
@@ -156,7 +160,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 </CustomText>
               </View>
             </View>
-            <View style={{ paddingLeft: 16 }}>
+            <View style={{ paddingLeft: 16, paddingRight: type === 'special' ? 16 : 0 }}>
               {type === 'special' ? (
                 <CustomButton onPress={() => onPressDate()} style={{ marginTop: 16 }}>
                   <View
@@ -204,7 +208,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 renderItem={({ item, index }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-                    <PlaceListCard item={item} />
+                    <PlaceListCard item={item} type={type} />
                   </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
@@ -267,9 +271,11 @@ const PlaceListScreen = ({ route }: PropTypes) => {
         />
         {selectedTicket && (
           <View style={{ paddingHorizontal: 24, paddingTop: 18, paddingBottom: 9 }}>
-            <View style={{ justifyContent: 'center' }}>
-              <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>{selectedTicket?.ticketName}</CustomText>
-            </View>
+            {selectedTicket?.ticketName && (
+              <View style={{ justifyContent: 'center' }}>
+                <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>{selectedTicket?.ticketName}</CustomText>
+              </View>
+            )}
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
                 <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>

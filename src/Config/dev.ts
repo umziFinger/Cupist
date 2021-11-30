@@ -73,6 +73,7 @@ const dev = {
   MY_EVENT_YN_URL: 'my/event-push',
   MY_WITHDRAW_URL: 'my/withdraw',
   MY_RESERVATION_URL: 'my/reservation',
+  MY_DIBS_URL: 'my/dibs',
 
   // search
   SEARCH_AREA_URL: 'search/area',

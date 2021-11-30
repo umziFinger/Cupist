@@ -10,6 +10,7 @@ const { Types, Creators } = createActions({
   fetchPlaceReviewList: ['params'],
   fetchPlaceList: ['params'],
   fetchPlaceHotList: ['params'],
+  fetchPlaceDibsList: ['params'],
 });
 
 export const PlaceTypes = Types;
