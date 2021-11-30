@@ -96,7 +96,6 @@ const DibsScreen = () => {
       }
     }
     return null;
-    // return animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
   };
 
   return (

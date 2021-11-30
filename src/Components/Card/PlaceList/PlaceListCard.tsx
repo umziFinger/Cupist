@@ -64,19 +64,35 @@ const PlaceListCard = (props: PropTypes) => {
               </CustomText>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 9 }}>
-            <View style={{ justifyContent: 'center', marginRight: 4 }}>
-              <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>
-                {item?.rate}%
-              </CustomText>
+          {type === 'special' ||
+            (type === 'early' && (
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 9 }}>
+                <View style={{ justifyContent: 'center', marginRight: 4 }}>
+                  <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>
+                    {item?.rate}%
+                  </CustomText>
+                </View>
+                <View style={{ justifyContent: 'center' }}>
+                  <CustomText style={{ color: Color.Black1000, fontSize: 16 }}>
+                    <CustomText style={{ fontWeight: 'bold' }}>{numberFormat(item?.minPrice || 0)}</CustomText>
+                    <CustomText>원~</CustomText>
+                  </CustomText>
+                </View>
+              </View>
+            ))}
+          {type === 'dibs' && (
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 9 }}>
+              <View style={{ justifyContent: 'center', marginRight: 4 }}>
+                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13 }}>{item?.ticketName}</CustomText>
+              </View>
+              <View style={{ justifyContent: 'center' }}>
+                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, fontWeight: 'bold' }}>
+                  <CustomText style={{ fontWeight: 'bold' }}>{numberFormat(item?.minPrice || 0)}</CustomText>
+                  <CustomText>원~</CustomText>
+                </CustomText>
+              </View>
             </View>
-            <View style={{ justifyContent: 'center' }}>
-              <CustomText style={{ color: Color.Black1000, fontSize: 16 }}>
-                <CustomText style={{ fontWeight: 'bold' }}>{numberFormat(item?.minPrice || 0)}</CustomText>
-                <CustomText>원~</CustomText>
-              </CustomText>
-            </View>
-          </View>
+          )}
         </View>
         <View style={{ width: 70, height: 70 }}>
           <FastImage
