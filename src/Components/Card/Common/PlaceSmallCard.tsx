@@ -1,10 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
-import { navigate, navigateReplace } from '@/Services/NavigationService';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
@@ -17,7 +17,7 @@ const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width 
 
   const onPlaceDetail = () => {
     console.log('item.idx : ', item);
-    navigate('PlaceDetailScreen', { idx: item.idx });
+    navigate('PlaceDetailScreen', { idx: item?.idx });
   };
 
   return (
@@ -43,7 +43,7 @@ const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width 
               style={{ color: Color.Black1000, fontSize: 15, fontWeight: '500', letterSpacing: -0.2 }}
               numberOfLines={1}
             >
-              {item.name}
+              {item?.name}
             </CustomText>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
@@ -56,16 +56,16 @@ const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width 
             </View>
             <View>
               <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>
-                {item.averageStar}
+                {item?.averageStar?.toString().substr(0, 4)}
               </CustomText>
             </View>
 
             <View
               style={{ width: 3, height: 3, borderRadius: 1.5, backgroundColor: Color.Gray400, marginHorizontal: 4 }}
             />
-            <View>
-              <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>{item.area || '지역정보없음'}</CustomText>
-            </View>
+            <CustomText style={{ color: Color.Gray700, fontSize: 12 }} numberOfLines={1}>
+              {item?.area || '지역정보없음'}
+            </CustomText>
           </View>
           <View style={{ marginTop: 10 }}>
             {showTicketName && item?.ticketName && (
@@ -86,13 +86,13 @@ const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width 
               {showRate && (
                 <View style={{ marginRight: 4 }}>
                   <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>
-                    {item.rate}%
+                    {item?.rate}%
                   </CustomText>
                 </View>
               )}
               <View style={{ flexDirection: 'row' }}>
                 <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold' }}>
-                  {item.minPrice}
+                  {item?.minPrice}
                 </CustomText>
                 <CustomText style={{ color: Color.Black1000, fontSize: 15 }}>원</CustomText>
               </View>

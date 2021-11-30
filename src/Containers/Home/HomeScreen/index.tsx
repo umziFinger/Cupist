@@ -208,7 +208,6 @@ const HomeScreen = ({ route }: HomeProps) => {
           homeList['early']?.length > 0 && (
             <View style={{ flex: 1 }}>
               <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-              {/* <PrepaymentPriceArea list={homeList['early'] || []} /> */}
               <PrepaymentPriceArea list={homeList['early'] || []} />
             </View>
           )
