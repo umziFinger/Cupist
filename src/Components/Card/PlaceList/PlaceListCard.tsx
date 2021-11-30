@@ -45,6 +45,8 @@ const PlaceListCard = (props: PropTypes) => {
     return console.log('onPressDibs');
   };
 
+  // console.log('card item : ', item?.minPrice);
+
   return (
     <View style={{ flex: 1, paddingVertical: 20 }}>
       <View style={{ flex: 1, flexDirection: 'row', paddingHorizontal: 16 }}>
@@ -74,8 +76,8 @@ const PlaceListCard = (props: PropTypes) => {
               </CustomText>
             </View>
           </View>
-          {type === 'special' ||
-            (type === 'early' && (
+          {(type === 'special' || type === 'early') &&
+            (item?.PlaceTicketInfo?.length !== 0 ? (
               <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 9 }}>
                 <View style={{ justifyContent: 'center', marginRight: 4 }}>
                   <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>
@@ -89,20 +91,29 @@ const PlaceListCard = (props: PropTypes) => {
                   </CustomText>
                 </View>
               </View>
+            ) : (
+              <View style={{ justifyContent: 'center', marginTop: 15 }}>
+                <CustomText style={{ color: Color.Gray600, fontSize: 12 }}>예약 가능한 상품이 없습니다.</CustomText>
+              </View>
             ))}
-          {type === 'dibs' && (
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 9 }}>
-              <View style={{ justifyContent: 'center', marginRight: 4 }}>
-                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13 }}>{item?.ticketName}</CustomText>
+          {type === 'dibs' &&
+            (item?.PlaceTicketInfo?.length !== 0 ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
+                <View style={{ justifyContent: 'center', marginRight: 4 }}>
+                  <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13 }}>{item?.ticketName}</CustomText>
+                </View>
+                <View style={{ justifyContent: 'center' }}>
+                  <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, fontWeight: 'bold' }}>
+                    <CustomText style={{ fontWeight: 'bold' }}>{numberFormat(item?.minPrice || 0)}</CustomText>
+                    <CustomText>원~</CustomText>
+                  </CustomText>
+                </View>
               </View>
-              <View style={{ justifyContent: 'center' }}>
-                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, fontWeight: 'bold' }}>
-                  <CustomText style={{ fontWeight: 'bold' }}>{numberFormat(item?.minPrice || 0)}</CustomText>
-                  <CustomText>원~</CustomText>
-                </CustomText>
+            ) : (
+              <View style={{ justifyContent: 'center', marginTop: 15 }}>
+                <CustomText style={{ color: Color.Gray600, fontSize: 12 }}>예약 가능한 상품이 없습니다.</CustomText>
               </View>
-            </View>
-          )}
+            ))}
         </View>
         <View style={{ width: 70, height: 70 }}>
           <FastImage
@@ -144,44 +155,46 @@ const PlaceListCard = (props: PropTypes) => {
           </CustomButton>
         </View>
       </View>
-      <View
-        style={{ borderWidth: 1, borderColor: Color.Gray300, borderRadius: 5, marginTop: 14, marginHorizontal: 16 }}
-      >
-        <CustomButton onPress={() => onValueChange({ checkType: item?.idx })}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingLeft: 12,
-              paddingRight: 8,
-              paddingVertical: 8,
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ justifyContent: 'center', marginRight: 3 }}>
-                <CustomText style={{ color: Color.Black1000, fontSize: 13, letterSpacing: -0.2 }}>상품</CustomText>
+      {item?.PlaceTicketInfo?.length !== 0 && (
+        <View
+          style={{ borderWidth: 1, borderColor: Color.Gray300, borderRadius: 5, marginTop: 14, marginHorizontal: 16 }}
+        >
+          <CustomButton onPress={() => onValueChange({ checkType: item?.idx })}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingLeft: 12,
+                paddingRight: 8,
+                paddingVertical: 8,
+              }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ justifyContent: 'center', marginRight: 3 }}>
+                  <CustomText style={{ color: Color.Black1000, fontSize: 13, letterSpacing: -0.2 }}>상품</CustomText>
+                </View>
+                <View style={{ justifyContent: 'center', marginRight: 3 }}>
+                  <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}>
+                    {item?.PlaceTicketInfo?.length || 0}개
+                  </CustomText>
+                </View>
               </View>
-              <View style={{ justifyContent: 'center', marginRight: 3 }}>
-                <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}>
-                  {item?.PlaceTicketInfo?.length || 0}개
-                </CustomText>
-              </View>
+              <CustomCheckBox
+                type={item?.idx}
+                value={item?.isSelected}
+                onValueChange={onValueChange}
+                enableIcon={require('@/Assets/Images/Button/icArrowPdUp.png')}
+                disableIcon={require('@/Assets/Images/Button/icArrowPdDw.png')}
+              />
             </View>
-            <CustomCheckBox
-              type={item?.idx}
-              value={item?.isSelected}
-              onValueChange={onValueChange}
-              enableIcon={require('@/Assets/Images/Button/icArrowPdUp.png')}
-              disableIcon={require('@/Assets/Images/Button/icArrowPdDw.png')}
-            />
-          </View>
-        </CustomButton>
-      </View>
+          </CustomButton>
+        </View>
+      )}
       {item?.isSelected && (
         <View style={{ flex: 1, paddingLeft: 16, marginTop: 16 }}>
           <FlatList
-            data={item?.PlaceTicketInfo}
+            data={item?.PlaceTicketInfo || []}
             renderItem={({ item: ticket, index }) => (
               <CustomButton onPress={() => onPressTicket(item?.idx, ticket)}>
                 <View
