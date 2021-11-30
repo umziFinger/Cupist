@@ -79,6 +79,7 @@ const dev = {
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',
   SEARCH_QUERY_URL: 'search/searchQuery',
+  SEARCH_POPULAR_URL: 'search/popular',
 
   // user
   USER_URL: 'user',

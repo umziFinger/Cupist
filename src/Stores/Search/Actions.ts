@@ -6,6 +6,9 @@ const { Types, Creators } = createActions({
   fetchSearchBowlingClubList: ['params'],
   fetchSearchRecentList: ['params'],
   fetchSearchRecentListPost: ['params'],
+  fetchSearchRecentListDelete: ['params'],
+  fetchSearchRecentListDeleteAll: ['params'],
+  fetchSearchPopularList: ['params'],
 });
 
 export const SearchTypes = Types;

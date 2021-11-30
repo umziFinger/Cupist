@@ -12,7 +12,10 @@ import { ReservationTypes } from '@/Stores/Reservation/Actions';
 import {
   fetchSearchAreaList,
   fetchSearchBowlingClubList,
+  fetchSearchPopularList,
   fetchSearchRecentList,
+  fetchSearchRecentListDelete,
+  fetchSearchRecentListDeleteAll,
   fetchSearchRecentListPost,
 } from '@/Sagas/SearchSaga';
 
@@ -133,6 +136,9 @@ export default function* root() {
     takeLatest(SearchTypes.FETCH_SEARCH_BOWLING_CLUB_LIST, fetchSearchBowlingClubList),
     takeLatest(SearchTypes.FETCH_SEARCH_RECENT_LIST, fetchSearchRecentList),
     takeLatest(SearchTypes.FETCH_SEARCH_RECENT_LIST_POST, fetchSearchRecentListPost),
+    takeLatest(SearchTypes.FETCH_SEARCH_RECENT_LIST_DELETE, fetchSearchRecentListDelete),
+    takeLatest(SearchTypes.FETCH_SEARCH_RECENT_LIST_DELETE_ALL, fetchSearchRecentListDeleteAll),
+    takeLatest(SearchTypes.FETCH_SEARCH_POPULAR_LIST, fetchSearchPopularList),
 
     // notification
     takeLatest(NotificationTypes.FETCH_NOTIFICATION_LIST, fetchNotificationList),

@@ -8,6 +8,7 @@ export const INITIAL_STATE = {
   areaList: [],
   searchedAreaList: [],
   recentSearch: [],
+  popularList: [],
 };
 export interface SearchState {
   search: {
@@ -20,5 +21,6 @@ export interface SearchState {
     areaList: any;
     searchedAreaList: Array<any>;
     recentSearch: Array<any>;
+    popularList: Array<any>;
   };
 }

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
@@ -13,6 +13,8 @@ interface PropTypes {
   width: number;
 }
 const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width }: PropTypes) => {
+  const [isError, setIsError] = useState(false);
+
   const onPlaceDetail = () => {
     console.log('item.idx : ', item);
     navigate('PlaceDetailScreen', { idx: item.idx });
@@ -24,8 +26,15 @@ const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width 
         <View style={{ width, height: 93 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
-            source={{ uri: item?.placePhotoArr[0] }}
+            source={
+              !item?.placePhotoArr[0] || isError
+                ? require('@/Assets/Images/Common/icNoImage.png')
+                : { uri: item?.placePhotoArr[0] }
+            }
             resizeMode={FastImage.resizeMode.cover}
+            onError={() => {
+              setIsError(true);
+            }}
           />
         </View>
         <View style={{ paddingHorizontal: 9, paddingTop: 16, paddingBottom: 21 }}>
@@ -61,7 +70,16 @@ const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width 
           <View style={{ marginTop: 10 }}>
             {showTicketName && item?.ticketName && (
               <View style={{ justifyContent: 'center' }}>
-                <CustomText style={{ color: '#333', fontSize: 14 }}>{item.ticketName}</CustomText>
+                <CustomText
+                  style={{
+                    fontSize: 11,
+
+                    letterSpacing: -0.2,
+                    color: Color.Gray600,
+                  }}
+                >
+                  {item.ticketName}
+                </CustomText>
               </View>
             )}
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
