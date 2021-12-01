@@ -57,7 +57,7 @@ export function* fetchUserLogin(data: any): any {
         }),
       );
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      navigate('HomeScreen', { expired: false });
+      yield put(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: false } }));
 
       yield put(
         CommonActions.fetchCommonReducer({
@@ -124,8 +124,8 @@ export function* fetchUserLogout(): any {
 
       yield put(AuthActions.fetchAuthReducer({ type: 'logout' }));
 
-      // yield put(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: true } }));
-      navigate('HomeScreen');
+      yield put(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: true } }));
+      // navigate('HomeScreen');
     } else {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       yield put(CommonActions.fetchErrorHandler(response));

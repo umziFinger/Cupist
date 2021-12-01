@@ -46,6 +46,7 @@ const HomeScreen = ({ route }: HomeProps) => {
   const [isShow, setIsShow] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log('============홈 초기화');
     // 첫 홈 화면 현재 위치값 갱신
     // 홈 리스트 조회
     positionUpdate().then();
@@ -55,18 +56,7 @@ const HomeScreen = ({ route }: HomeProps) => {
 
     dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: 1 }));
     dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: DATA_TIME_FILTER[0].idx }));
-  }, []);
-
-  useEffect(() => {
-    if (route?.params?.expired) {
-      console.log('navigate token expired!!!', route);
-      AsyncStorage.setItem('userIdx', '');
-      dispatch(AuthActions.fetchAuthReducer({ type: 'logout' }));
-      dispatch(HomeActions.fetchHomeList());
-      dispatch(HomeActions.fetchHomeDirectReservationList());
-      console.log('userIdx expired', userIdx);
-    }
-  }, [route]);
+  }, [userIdx]);
 
   useEffect(() => {
     if (homeTabRefreshYN === 'N') {
