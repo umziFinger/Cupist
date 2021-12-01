@@ -10,8 +10,6 @@ const CancelInfoArea = () => {
   const { reservationInfo } = useSelector((state: ReservationState) => state.reservation);
   const cancelLimit = reservationInfo?.cancelLimit || moment().format('YYYY년 MM월 DD일 HH시 mm분');
 
-  console.log('cancelLimit : ', cancelLimit);
-
   return (
     <View style={{ flex: 1 }}>
       <View style={{ justifyContent: 'center' }}>

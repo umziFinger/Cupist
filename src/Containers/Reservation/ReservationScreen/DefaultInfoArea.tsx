@@ -19,8 +19,6 @@ const DefaultInfoArea = (props: PropTypes) => {
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const place: any = placeDetail?.place || {};
 
-  console.log('item : ', item);
-
   return (
     <View style={{ flex: 1 }}>
       <View style={{ justifyContent: 'center' }}>

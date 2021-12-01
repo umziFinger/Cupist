@@ -42,8 +42,9 @@ const CopyRightArea = () => {
         {isShow && (
           <View style={{ flex: 1, marginTop: 16 }}>
             <View style={{ justifyContent: 'center' }}>
-              <CustomText style={{ color: Color.Gray400, fontSize: 12 }} numberOfLines={3}>
-                {`주소: 경기도 광명시 일직로 12번길 22, 5층 볼링플러스\n`}
+              <CustomText style={{ color: Color.Gray400, fontSize: 12 }}>
+                {`(주)볼링플러스\n`}
+                {`주소: 경기도 광명시 일직로 12번길 22, 5층\n`}
                 {`대표이사: 유재수 | 사업자등록번호: 892-88-01731\n`}
                 {`통신판매번호: 2021-경기광명-0188`}
               </CustomText>
@@ -70,7 +71,7 @@ const CopyRightArea = () => {
         </View>
         <View style={{ flex: 1, marginTop: 20 }}>
           <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Gray400, fontSize: 9 }} numberOfLines={2}>
+            <CustomText style={{ color: Color.Gray400, fontSize: 9 }}>
               {`(주)볼리미는 통신판매중개자로서 통신판매의 당사자가 아니며,\n상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.`}
             </CustomText>
           </View>

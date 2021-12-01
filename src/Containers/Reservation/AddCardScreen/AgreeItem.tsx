@@ -8,7 +8,7 @@ import { Color } from '@/Assets/Color';
 interface AgreeItem {
   item: any;
   index: any;
-  checkArr: Array<string | number>;
+  checkArr: Array<boolean>;
   onCheck: Function;
   onAgreeDetail: Function;
 }

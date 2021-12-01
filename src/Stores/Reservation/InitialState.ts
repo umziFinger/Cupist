@@ -1,4 +1,4 @@
-export const INITIAL_STATE = {
+export const INITIAL_STATE: ReservationState['reservation'] = {
   reservationInfo: null,
   totalPrice: 0,
   myCardList: [],
@@ -9,6 +9,14 @@ export const INITIAL_STATE = {
   shoesCount: 0,
   paymentInfo: null,
   paymentResult: null,
+  agreeCheckedArr: [],
+  addCardInfo: {
+    cardNumber: '',
+    expiry: '',
+    birth: '',
+    pwd2Digit: '',
+    paymentPwd: '',
+  },
 };
 
 export interface ReservationState {
@@ -23,5 +31,13 @@ export interface ReservationState {
     shoesCount: number | 0;
     paymentInfo: any;
     paymentResult: any;
+    agreeCheckedArr: Array<any>;
+    addCardInfo: {
+      cardNumber: string | '';
+      expiry: string | '';
+      birth: string | '';
+      pwd2Digit: string | '';
+      paymentPwd: string | '';
+    };
   };
 }

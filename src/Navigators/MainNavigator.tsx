@@ -53,6 +53,7 @@ import PermissionDetailScreen from '@/Containers/Common/PermissionDetailScreen';
 import HotPlaceListScreen from '@/Containers/Place/HotPlaceListScreen';
 import PasswordEditScreen from '@/Containers/More/PasswordEditScreen';
 import AddCardScreen from '@/Containers/Reservation/AddCardScreen';
+import SimplePasswordScreen from '@/Containers/Reservation/SimplePasswordScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -106,6 +107,7 @@ export type MainStackParamList = {
   HotPlaceListScreen: undefined;
   PasswordEditScreen: undefined;
   AddCardScreen: undefined;
+  SimplePasswordScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -182,6 +184,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="EditBookerScreen" component={EditBookerScreen} />
       <MainStack.Screen name="PaymentResultScreen" component={PaymentResultScreen} />
       <MainStack.Screen name="AddCardScreen" component={AddCardScreen} />
+      <MainStack.Screen name="SimplePasswordScreen" component={SimplePasswordScreen} />
 
       {/* Review */}
       <MainStack.Screen name="ReviewModifyScreen" component={ReviewModifyScreen} />
