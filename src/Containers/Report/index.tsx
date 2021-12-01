@@ -41,7 +41,7 @@ const ReportScreen = ({ route }: ReporProps) => {
         reportType,
         mainIdx,
         subIdx,
-        reportCode: selected.code,
+        reportCode: selected.reportCode,
       };
 
       dispatch(CommonActions.fetchCommonReport(params));

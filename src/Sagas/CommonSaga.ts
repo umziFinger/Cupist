@@ -287,14 +287,7 @@ export function* fetchCommonReport(data: any): any {
         url = `place/${mainIdx}/review/${subIdx}/report`;
         break;
       }
-      case 'drama': {
-        url = `drama/${mainIdx}/board/${subIdx}/report`;
-        break;
-      }
-      case 'artist': {
-        url = `artist/${mainIdx}/board/${subIdx}/report`;
-        break;
-      }
+
       default:
         url = '';
     }
@@ -321,10 +314,14 @@ export function* fetchCommonReport(data: any): any {
       );
 
       switch (reportType) {
+        case 'placeReview': {
+          navigateGoBack();
+          break;
+        }
+
         default:
-          return null;
+          navigateGoBack();
       }
-      navigateGoBack();
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
