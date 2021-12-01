@@ -284,6 +284,7 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'hotPlaceList': {
+        // console.log('call reducer hotPlaceList : ', data);
         if (actions.params.page === 1) {
           draft.hotPlaceList = data.PlaceResult;
         } else {

@@ -7,7 +7,7 @@ import { AuthState } from '@/Stores/Auth/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import { timeFormat } from '@/Components/Function';
 
-type InputAuthNumberProps = {
+interface PropTypes {
   onChangeText: (value: string) => void;
   value: string;
   smsAuthTime: number;
@@ -15,9 +15,9 @@ type InputAuthNumberProps = {
   // onPressAuth: () => void;
   //
   // isPhoneValid: boolean;
-};
+}
 
-function InputSmsAuthNumber({ onChangeText, value, smsAuthTime, smsValidText }: InputAuthNumberProps) {
+function InputSmsAuthNumber({ onChangeText, value, smsAuthTime, smsValidText }: PropTypes) {
   const { isReceived } = useSelector((state: AuthState) => state.auth);
 
   return (

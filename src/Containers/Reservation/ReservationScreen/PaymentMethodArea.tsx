@@ -9,6 +9,7 @@ import MyPaymentCard from '@/Components/Card/Common/MyPaymentCard';
 import CustomButton from '@/Components/CustomButton';
 import { DATA_PAYMENT_METHOD } from './data';
 import ReservationActions from '@/Stores/Reservation/Actions';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   list: Array<any>;
@@ -104,17 +105,24 @@ const PaymentMethodArea = (props: PropTypes) => {
             </View>
           </View>
         </CustomButton>
-        <View
-          style={{
-            justifyContent: 'center',
-            backgroundColor: Color.Grayyellow50,
-            borderRadius: 15,
-            paddingVertical: 4,
-            paddingHorizontal: 8,
+        <CustomButton
+          onPress={() => {
+            console.log('sss');
+            navigate('AddCardScreen');
           }}
         >
-          <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>추가</CustomText>
-        </View>
+          <View
+            style={{
+              justifyContent: 'center',
+              backgroundColor: Color.Grayyellow50,
+              borderRadius: 15,
+              paddingVertical: 4,
+              paddingHorizontal: 8,
+            }}
+          >
+            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>추가</CustomText>
+          </View>
+        </CustomButton>
       </View>
 
       {/* 카드 슬라이더 */}
