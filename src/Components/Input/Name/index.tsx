@@ -1,7 +1,6 @@
 import React, { forwardRef, useState } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { is } from 'immer/dist/utils/common';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';

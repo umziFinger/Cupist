@@ -1,11 +1,10 @@
-import React, { forwardRef, useCallback, useEffect, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { AuthState } from '@/Stores/Auth/InitialState';
-import InputNickname from '@/Components/Input/Nickname';
 
 export enum AuthPhoneEnum {
   JOIN = 'join',
@@ -15,7 +14,7 @@ type InputAuthPhoneProps = {
   onChangeText: (value: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
-  onPressAuth: () => void;
+  onPressAuth?: () => void;
   value: string;
   isPhoneValid: boolean;
 };
@@ -94,31 +93,33 @@ const InputAuthPhone = forwardRef<TextInput, InputAuthPhoneProps>(
             />
           </View>
 
-          <CustomButton onPress={() => onPressAuth()}>
-            <View
-              style={{
-                backgroundColor: getValidColor().backgroundColor,
-                borderColor: getValidColor().borderColor,
-                borderWidth: getValidColor().borderColor ? 1 : undefined,
-                paddingVertical: 16,
-                borderRadius: 5,
-                paddingLeft: 25,
-                paddingRight: 24,
-                marginTop: 8,
-              }}
-            >
-              <CustomText
+          {onPressAuth && (
+            <CustomButton onPress={() => onPressAuth()}>
+              <View
                 style={{
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                  letterSpacing: -0.25,
-                  color: getValidColor().textColor,
+                  backgroundColor: getValidColor().backgroundColor,
+                  borderColor: getValidColor().borderColor,
+                  borderWidth: getValidColor().borderColor ? 1 : undefined,
+                  paddingVertical: 16,
+                  borderRadius: 5,
+                  paddingLeft: 25,
+                  paddingRight: 24,
+                  marginTop: 8,
                 }}
               >
-                {isReceived ? '다시 받기' : '인증하기'}
-              </CustomText>
-            </View>
-          </CustomButton>
+                <CustomText
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    letterSpacing: -0.25,
+                    color: getValidColor().textColor,
+                  }}
+                >
+                  {isReceived ? '다시 받기' : '인증하기'}
+                </CustomText>
+              </View>
+            </CustomButton>
+          )}
         </View>
       </>
     );

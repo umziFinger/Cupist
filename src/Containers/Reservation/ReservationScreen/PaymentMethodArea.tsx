@@ -126,11 +126,11 @@ const PaymentMethodArea = (props: PropTypes) => {
       </View>
 
       {/* 카드 슬라이더 */}
-      {paymentType === 'simple' && list.length > 0 && (
+      {paymentType === 'simple' && list?.length > 0 && (
         <Animated.FlatList
           data={list}
           ref={animatedFlatRef}
-          renderItem={({ item, index }) => {
+          renderItem={({ item }) => {
             return (
               <View style={{ flexDirection: 'row', marginHorizontal: 15, alignItems: 'center' }}>
                 <MyPaymentCard item={item} />
@@ -238,7 +238,7 @@ const PaymentMethodArea = (props: PropTypes) => {
         <View style={{ flex: 1, alignItems: 'center', marginTop: 12 }}>
           <FlatList
             data={DATA_PAYMENT_METHOD}
-            renderItem={({ item, index }) => (
+            renderItem={({ item }) => (
               <CustomButton onPress={() => onPressMethod(item.idx)}>
                 <View
                   style={{

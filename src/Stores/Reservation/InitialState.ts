@@ -1,4 +1,4 @@
-export const INITIAL_STATE = {
+export const INITIAL_STATE: ReservationState['reservation'] = {
   reservationInfo: null,
   totalPrice: 0,
   myCardList: [],

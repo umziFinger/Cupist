@@ -83,6 +83,12 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
         break;
       }
 
+      case 'reservationInfoEdit': {
+        draft.reservationInfo.username = data.username;
+        draft.reservationInfo.mobile = data.mobile;
+        break;
+      }
+
       default:
         return draft;
     }
