@@ -1,7 +1,4 @@
-import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import _ from 'lodash';
-import AuthActions from '@/Stores/Auth/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { navigate } from '@/Services/NavigationService';
 import { placeDibsDataType } from '@/Sagas/CommonSaga';
@@ -16,7 +13,6 @@ function usePlaceDibs(): ReturnType {
   const { userIdx } = useSelector((state: AuthState) => state.auth);
 
   const handlerPlaceDibs = (place: any) => {
-    console.log(place);
     if (!userIdx) {
       navigate('SimpleLoginScreen');
     } else if (place.isPlaceDibs) {
