@@ -83,6 +83,24 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
         break;
       }
 
+      case 'agreeCheckedArr': {
+        console.log('call reducer agreeCheckedArr : ', data);
+        draft.agreeCheckedArr = data;
+        break;
+      }
+
+      case 'addCardInfo': {
+        console.log('call reducer addCardInfo : ', data);
+        draft.addCardInfo = data;
+        break;
+      }
+
+      case 'addCardInfoInit': {
+        console.log('call reducer addCardInfoInit');
+        draft.addCardInfo = INITIAL_STATE.addCardInfo;
+        break;
+      }
+
       case 'reservationInfoEdit': {
         draft.reservationInfo.username = data.username;
         draft.reservationInfo.mobile = data.mobile;

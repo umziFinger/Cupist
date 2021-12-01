@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import produce from 'immer';
+import { useDispatch } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
 import { DATA_PERMISSIONS } from '@/Containers/Auth/AgreeScreen/data';
-import AuthActions from '@/Stores/Auth/Actions';
+import ReservationActions from '@/Stores/Reservation/Actions';
 import { DATA_PAYMENT_PERMISSIONS } from '@/Containers/Reservation/AddCardScreen/data';
 import AgreeItem from './AgreeItem';
 
 const AgreeArea = () => {
-  const [checkedArr, setCheckedArr] = useState<Array<any>>([false, false, false, false, false]);
+  const dispatch = useDispatch();
+  const [checkedArr, setCheckedArr] = useState<Array<boolean>>([false, false, false, false, false]);
 
   const onCheck = (value: any) => {
     produce(checkedArr, (draft) => {
@@ -41,8 +43,7 @@ const AgreeArea = () => {
       if (draft[1] && draft[2] && draft[3] && draft[4]) {
         draft[0] = true;
       }
-      console.log('d: ', draft);
-
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'agreeCheckedArr', data: [...draft] }));
       setCheckedArr([...draft]);
     });
   };

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, TextInput, useWindowDimensions, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
@@ -7,9 +8,109 @@ import CardNumberInput from '@/Containers/Reservation/AddCardScreen/CardNumberIn
 import CardDefaultInput from '@/Containers/Reservation/AddCardScreen/CardDefaultInput';
 import CardPasswordInput from '@/Containers/Reservation/AddCardScreen/CardPasswordInput';
 import AgreeArea from '@/Containers/Reservation/AddCardScreen/AgreeArea';
+import { ReservationState } from '@/Stores/Reservation/InitialState';
+import ReservationActions from '@/Stores/Reservation/Actions';
+import { CommonState } from '@/Stores/Common/InitialState';
+import CustomButton from '@/Components/CustomButton';
+import CommonActions from '@/Stores/Common/Actions';
+import { navigate } from '@/Services/NavigationService';
 
 const AddCardScreen = () => {
   const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
+  const { agreeCheckedArr, myCardList } = useSelector((state: ReservationState) => state.reservation);
+  const addCardInfo = useSelector((state: ReservationState) => state.reservation.addCardInfo);
+  const [validation, setValidation] = useState<boolean>(false);
+  const [cardNum1, setCardNum1] = useState<string>('');
+  const [cardNum2, setCardNum2] = useState<string>('');
+  const [cardNum3, setCardNum3] = useState<string>('');
+  const [cardNum4, setCardNum4] = useState<string>('');
+
+  useEffect(() => {
+    return () => {
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'addCardInfoInit' }));
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log('DID UPDATE Validation : ', agreeCheckedArr);
+    if (addCardInfo && agreeCheckedArr) {
+      if (
+        addCardInfo.cardNumber.length === 16 &&
+        addCardInfo.expiry.length === 4 &&
+        addCardInfo.pwd2Digit.length === 2 &&
+        !agreeCheckedArr.includes(false)
+      ) {
+        console.log('카드 정보 입력 성공!');
+        return setValidation(true);
+      }
+    }
+    return setValidation(false);
+  }, [addCardInfo, agreeCheckedArr]);
+
+  useEffect(() => {
+    console.log('cardNum1 : ', cardNum1, ' cardNum2 : ', cardNum2, ' cardNum3 : ', cardNum3, ' cardNum4 : ', cardNum4);
+    dispatch(
+      ReservationActions.fetchReservationReducer({
+        type: 'addCardInfo',
+        data: {
+          cardNumber: `${cardNum1}${cardNum2}${cardNum3}${cardNum4}`,
+          expiry: addCardInfo?.expiry || '',
+          birth: addCardInfo?.birth || '',
+          pwd2Digit: addCardInfo?.pwd2Digit || '',
+          paymentPwd: addCardInfo?.paymentPwd || '',
+        },
+      }),
+    );
+  }, [cardNum1, cardNum2, cardNum3, cardNum4]);
+
+  const onChangeCardNumber = (text: string, index: number) => {
+    if (index === 1) setCardNum1(text);
+    if (index === 2) setCardNum2(text);
+    if (index === 3) setCardNum3(text);
+    if (index === 4) setCardNum4(text);
+  };
+
+  const onChangeExpiry = (text: string) => {
+    dispatch(
+      ReservationActions.fetchReservationReducer({
+        type: 'addCardInfo',
+        data: { ...addCardInfo, expiry: text || '' },
+      }),
+    );
+  };
+
+  const onChangePassword = (text: string) => {
+    dispatch(
+      ReservationActions.fetchReservationReducer({
+        type: 'addCardInfo',
+        data: { ...addCardInfo, pwd2Digit: text || '' },
+      }),
+    );
+  };
+
+  const onPressAdd = () => {
+    if (validation) {
+      return navigate('SimplePasswordScreen');
+      // if (myCardList?.length === 0) {
+      //   return console.log('간편 결제 비밀번호 등록 페이지 이동!');
+      // }
+      // return console.log('등록완료!');
+    }
+    return navigate('SimplePasswordScreen');
+    // return dispatch(
+    //   CommonActions.fetchCommonReducer({
+    //     type: 'alertDialog',
+    //     data: {
+    //       alertDialog: true,
+    //       alertDialogType: 'confirm',
+    //       alertDialogMessage: '필수 정보를 입력해주세요',
+    //     },
+    //   }),
+    // );
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'close'} />
@@ -38,7 +139,12 @@ const AddCardScreen = () => {
                     </CustomText>
                   </View>
                   <View style={{ justifyContent: 'center', marginTop: 8 }}>
-                    <CardNumberInput />
+                    <CardNumberInput
+                      placeHolder={'0000'}
+                      maxLength={4}
+                      value={{ cardNum1, cardNum2, cardNum3, cardNum4 }}
+                      onChangeText={onChangeCardNumber}
+                    />
                   </View>
                 </View>
 
@@ -55,32 +161,33 @@ const AddCardScreen = () => {
                       </CustomText>
                     </View>
                     <View style={{ marginTop: 8 }}>
-                      <CardDefaultInput placeHolder={'MMYY'} maxLength={4} />
+                      <CardDefaultInput
+                        placeHolder={'MMYY'}
+                        maxLength={4}
+                        value={addCardInfo?.expiry}
+                        onChangeText={onChangeExpiry}
+                      />
                     </View>
                   </View>
                   <View style={{ flex: 1 }}>
                     <View style={{ justifyContent: 'center' }}>
                       <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
-                        CVC
+                        카드 비밀번호
                       </CustomText>
                     </View>
                     <View style={{ marginTop: 8 }}>
-                      <CardDefaultInput placeHolder={'카드 뒷면 3자리'} maxLength={3} />
+                      <CardPasswordInput
+                        placeHolder={'비밀번호 앞 2자리'}
+                        maxLength={2}
+                        value={addCardInfo?.pwd2Digit}
+                        onChangeText={onChangePassword}
+                      />
                     </View>
                   </View>
                 </View>
-
-                <View style={{ justifyContent: 'center', marginTop: 12 }}>
-                  <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
-                    카드 비밀번호
-                  </CustomText>
-                </View>
-                <View style={{ justifyContent: 'center', marginTop: 8 }}>
-                  <CardPasswordInput placeHolder={'비밀번호 앞 2자리 숫자'} maxLength={2} />
-                </View>
               </View>
               <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 24 }} />
-              <View style={{ marginTop: 24 }}>
+              <View style={{ flex: 1, marginTop: 24 }}>
                 <AgreeArea />
               </View>
             </View>
@@ -89,7 +196,25 @@ const AddCardScreen = () => {
           initialNumToRender={2}
           maxToRenderPerBatch={5}
           windowSize={7}
+          showsVerticalScrollIndicator={false}
         />
+        <CustomButton onPress={() => onPressAdd()}>
+          <View style={{ marginHorizontal: 24, marginBottom: heightInfo.fixBottomHeight + 8 }}>
+            <View
+              style={{
+                borderRadius: 3,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: validation ? Color.Primary1000 : Color.Grayyellow200,
+                paddingVertical: 15,
+              }}
+            >
+              <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
+                등록하기
+              </CustomText>
+            </View>
+          </View>
+        </CustomButton>
       </View>
     </View>
   );

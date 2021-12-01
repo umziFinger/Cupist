@@ -6,11 +6,10 @@ import CustomText from '@/Components/CustomText';
 type PropTypes = {
   placeHolder?: string | '';
   maxLength: number;
+  value: string;
+  onChangeText: (text: string) => void;
 };
-const CardPasswordInput = ({ placeHolder }: PropTypes) => {
-  const onChangeText = (text: string, position: number) => {
-    console.log('onChangeText : ', text, position);
-  };
+const CardPasswordInput = ({ placeHolder, maxLength, value, onChangeText }: PropTypes) => {
   return (
     <View
       style={{
@@ -33,10 +32,11 @@ const CardPasswordInput = ({ placeHolder }: PropTypes) => {
         }}
         autoFocus={false}
         keyboardType="number-pad"
+        secureTextEntry
         autoCorrect={false}
-        maxLength={3}
-        onChangeText={(text) => onChangeText(text, 1)}
-        value={''}
+        maxLength={maxLength}
+        onChangeText={(text) => onChangeText(text)}
+        value={value}
         allowFontScaling={false}
       />
     </View>
