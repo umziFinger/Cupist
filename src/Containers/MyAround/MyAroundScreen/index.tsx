@@ -83,7 +83,7 @@ const MyAroundScreen = () => {
           onRefresh={() => onRefresh()}
           onScroll={(e) => {
             // console.log(e.nativeEvent);
-            if (e.nativeEvent.contentOffset.y > 60) {
+            if (e.nativeEvent.contentOffset.y > 60 && myAroundList?.length > 2) {
               setIsScroll(true);
             } else {
               setIsScroll(false);
