@@ -16,11 +16,12 @@ interface PropTypes {
 
 const HotPlaceCard = (props: PropTypes) => {
   const { item, type } = props;
-  const photoUrl = item?.PlacePhoto[0]?.url || '';
 
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
+
+  console.log('hot item : ', item);
 
   const handlerPlaceDibs = (place: any) => {
     if (place.isPlaceDibs) {
@@ -66,13 +67,8 @@ const HotPlaceCard = (props: PropTypes) => {
         <View style={{ height: 145 }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderTopLeftRadius: 5, borderTopRightRadius: 5 }}
-            source={
-              !item?.PlacePhoto[0] || isError ? require('@/Assets/Images/Common/icNoImage.png') : { uri: photoUrl }
-            }
+            source={{ uri: item?.placePhotoArr[0] || '' }}
             resizeMode={FastImage.resizeMode.cover}
-            onError={() => {
-              setIsError(true);
-            }}
           />
         </View>
 

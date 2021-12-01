@@ -49,13 +49,15 @@ const HotPlaceListScreen = () => {
         type: 'hot',
         lat: myLatitude,
         lng: myLongitude,
-        page: 1,
-        perPage: hotPlaceListPage || 10,
+        page: hotPlaceListPage || 1,
+        perPage: 10,
         date: calendarDate,
       };
       dispatch(PlaceActions.fetchPlaceHotList(params));
     }
   };
+
+  console.log('hotPlaceList?.length  :', hotPlaceList?.length);
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
@@ -105,8 +107,8 @@ const HotPlaceListScreen = () => {
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
-          initialNumToRender={2}
-          maxToRenderPerBatch={5}
+          initialNumToRender={4}
+          maxToRenderPerBatch={7}
           windowSize={7}
           showsVerticalScrollIndicator={false}
           refreshing={false}
