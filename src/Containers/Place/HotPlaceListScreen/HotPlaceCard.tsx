@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
-import { placeDibsDataType } from '@/Sagas/CommonSaga';
-import CommonActions from '@/Stores/Common/Actions';
+
 import { navigate } from '@/Services/NavigationService';
+import usePlaceDibs from '@/Hooks/usePlaceDibs';
 
 interface PropTypes {
   item: any;
@@ -15,39 +14,9 @@ interface PropTypes {
 }
 
 const HotPlaceCard = (props: PropTypes) => {
-  const { item, type } = props;
-
-  const { width } = useWindowDimensions();
-  const dispatch = useDispatch();
+  const { item } = props;
+  const { handlerPlaceDibs } = usePlaceDibs();
   const [isError, setIsError] = useState(false);
-
-  console.log('hot item : ', item);
-
-  const handlerPlaceDibs = (place: any) => {
-    if (place.isPlaceDibs) {
-      onPlaceUnDibs(place.idx);
-    } else {
-      onPlaceDibs(place.idx);
-    }
-  };
-
-  const onPlaceDibs = (placeIdx: number) => {
-    const params: placeDibsDataType = {
-      placeIdx,
-
-      type: 'dibs',
-    };
-    dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
-  };
-
-  const onPlaceUnDibs = (placeIdx: number) => {
-    const params: placeDibsDataType = {
-      placeIdx,
-
-      type: 'unDibs',
-    };
-    dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
-  };
 
   const onPlaceDetail = (place: any) => {
     navigate('PlaceDetailScreen', { idx: place.idx });
@@ -67,8 +36,15 @@ const HotPlaceCard = (props: PropTypes) => {
         <View style={{ height: 145 }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderTopLeftRadius: 5, borderTopRightRadius: 5 }}
-            source={{ uri: item?.placePhotoArr[0] || '' }}
+            source={
+              !item?.placePhotoArr[0] || isError
+                ? require('@/Assets/Images/Common/icNoImage.png')
+                : { uri: item?.placePhotoArr[0] }
+            }
             resizeMode={FastImage.resizeMode.cover}
+            onError={() => {
+              setIsError(true);
+            }}
           />
         </View>
 
@@ -82,9 +58,6 @@ const HotPlaceCard = (props: PropTypes) => {
                   : require('@/Assets/Images/Button/icHeartOffWt.png')
               }
               resizeMode={FastImage.resizeMode.cover}
-              onError={() => {
-                setIsError(true);
-              }}
             />
           </CustomButton>
         </View>
@@ -99,9 +72,6 @@ const HotPlaceCard = (props: PropTypes) => {
                 style={{ width: '100%', height: '100%' }}
                 source={require('@/Assets/Images/Common/icStar.png')}
                 resizeMode={FastImage.resizeMode.cover}
-                onError={() => {
-                  setIsError(true);
-                }}
               />
             </View>
             <View style={{ marginLeft: 1.8 }}>

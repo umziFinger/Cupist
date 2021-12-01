@@ -198,6 +198,26 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'hotPlaceListDibsHandler': {
+        try {
+          const copyHotPlaceList: any = state.hotPlaceList;
+          if (data.type === 'dibs') {
+            const FIND_IDX = copyHotPlaceList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.hotPlaceList[FIND_IDX].isPlaceDibs = true;
+            }
+          } else if (data.type === 'unDibs') {
+            const FIND_IDX = copyHotPlaceList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.hotPlaceList[FIND_IDX].isPlaceDibs = false;
+            }
+          }
+        } catch (e) {
+          console.log('HOT 플레이스 리스트 찜하기 핸들러 에러: ', e);
+        }
+        break;
+      }
+
       case 'selectedTicket': {
         console.log('call reducer selectedTicket: ', data);
         draft.selectedTicket = data;

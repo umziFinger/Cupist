@@ -237,6 +237,7 @@ function* handlerPlaceDibs(type: dibsType, placeIdx: any) {
     yield put(PlaceActions.fetchPlaceReducer({ type: 'recentPlaceDibsHandler', data: { placeIdx, type } }));
     yield put(PlaceActions.fetchPlaceReducer({ type: 'dibListDibsHandler', data: { placeIdx, type } }));
     yield put(PlaceActions.fetchPlaceReducer({ type: 'placeListDibsHandler', data: { placeIdx, type } }));
+    yield put(PlaceActions.fetchPlaceReducer({ type: 'hotPlaceListDibsHandler', data: { placeIdx, type } }));
     yield put(PlaceActions.fetchPlaceReducer({ type: 'placeDetailDibsHandler', data: { placeIdx, type } }));
 
     yield put(HomeActions.fetchHomeReducer({ type: 'directReservationDibsHandler', data: { placeIdx, type } }));
