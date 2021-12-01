@@ -229,6 +229,16 @@ export function* fetchAuthSmsSend(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(AuthActions.fetchAuthReducer({ type: 'isReceived', data: true }));
       yield put(AuthActions.fetchAuthReducer({ type: 'log_cert', data: response.data }));
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertDialog',
+          data: {
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogTitle: response.data.authNum,
+          },
+        }),
+      );
     } else {
       // 인증정보 초기화
       yield put(AuthActions.fetchAuthReducer({ type: 'phoneNumber', data: { phoneNumber: null } }));
@@ -251,13 +261,13 @@ export function* fetchSmsAuth(data: any): any {
     console.log('인증번호 통과: ', response.data);
 
     if (response.result === true && response.code === null) {
-      const { log_cert, phoneNumber, email, password } = yield select((state: AuthState) => state.auth);
+      const { log_cert, email, password } = yield select((state: AuthState) => state.auth);
       if (log_cert.authNum === data.params.authNum) {
         yield put(AuthActions.fetchAuthReducer({ type: 'smsValueValid', data: true }));
 
         if (data.params.screen === 'JoinStepTwoScreen') {
           const params = {
-            mobile: phoneNumber.replace(/-/g, ''),
+            mobile: data.params.mobile.replace(/-/g, ''),
             email,
             password,
             nickname: data.params.nickName,
@@ -272,7 +282,7 @@ export function* fetchSmsAuth(data: any): any {
 
         if (data.params.screen === 'PhoneNumberEditScreen') {
           const params = {
-            mobile: phoneNumber.replace(/-/g, ''),
+            mobile: data.params.mobile.replace(/-/g, ''),
             authIdx: log_cert.authIdx,
           };
           yield put(MyActions.fetchMyProfilePatch(params));
