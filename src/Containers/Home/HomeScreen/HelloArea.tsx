@@ -49,7 +49,7 @@ const HelloArea = () => {
     <View style={{ justifyContent: 'center' }}>
       <View>
         <CustomText style={{ color: Color.Black1000, fontSize: 22, letterSpacing: -0.4 }}>
-          {userIdx ? `${userInfo.nickname}님, 반가워요.` : '반가워요.'}
+          {userIdx ? `${userInfo.nickname || ''}님, 반가워요.` : '반가워요.'}
         </CustomText>
       </View>
       <View style={{ flexDirection: 'row', marginTop: 6 }}>{renderContent()}</View>
