@@ -8,9 +8,6 @@ import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
 import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 import AuthActions from '@/Stores/Auth/Actions';
-import { AuthState } from '@/Stores/Auth/InitialState';
-import InputNickname from '@/Components/Input/Nickname';
-import useInputNickname from '@/Hooks/useInputNickname';
 import MyActions from '@/Stores/My/Actions';
 import InputPassword from '@/Components/Input/Password';
 import useInputPassword from '@/Hooks/useInputPassword';
@@ -19,32 +16,27 @@ const PasswordEditScreen = () => {
   const dispatch = useDispatch();
 
   const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
-  const { userInfo } = useSelector((state: AuthState) => state.auth);
 
-  const { nickName, onChangeNickname, nicknameValidText, isNicknameValid, onClearNickName, setNickName } =
-    useInputNickname();
+  const { password, onChangePassword, passwordValidText, isPasswordValid } = useInputPassword();
 
-  const { password, onChangePassword, passwordValidText } = useInputPassword();
   const {
     password: newPassword,
     onChangePassword: onChangeNewPassword,
     passwordValidText: newPasswordValidText,
+    isPasswordValid: isNewPasswordValid,
   } = useInputPassword();
+
   const {
     password: confirmPassword,
     onChangePassword: onChangeConfirmPassword,
     passwordValidText: confirmPasswordValidText,
+    isPasswordValid: isConfirmPasswordValid,
   } = useInputPassword();
+
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
   ref_input[2] = useRef(null);
-
-  useEffect(() => {
-    if (setNickName) {
-      setNickName(userInfo?.nickname || '');
-    }
-  }, [setNickName]);
 
   useEffect(() => {
     return () => {
@@ -59,12 +51,21 @@ const PasswordEditScreen = () => {
     }
   };
 
+  const isValid = () => {
+    if (isPasswordValid && isNewPasswordValid && isConfirmPasswordValid && newPassword === confirmPassword) {
+      return true;
+    }
+    return false;
+  };
+
   const onPressSave = () => {
-    if (isNicknameValid) {
+    if (isValid()) {
       const params = {
-        nickname: nickName,
+        oldPassword: password,
+        newPassword,
+        newPasswordCheck: confirmPassword,
       };
-      dispatch(MyActions.fetchMyProfilePatch(params));
+      dispatch(MyActions.fetchMyPasswordModify(params));
     }
   };
 
@@ -139,7 +140,7 @@ const PasswordEditScreen = () => {
                   alignItems: 'center',
                   paddingVertical: 15,
                   borderRadius: 5,
-                  backgroundColor: isNicknameValid ? Color.Primary1000 : Color.Grayyellow200,
+                  backgroundColor: isValid() ? Color.Primary1000 : Color.Grayyellow200,
                 }}
               >
                 <CustomText

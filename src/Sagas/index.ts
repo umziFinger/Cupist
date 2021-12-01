@@ -81,6 +81,7 @@ import {
   fetchMyReviewWrite,
   fetchMyReviewModify,
   fetchMyReviewDelete,
+  fetchMyPasswordModify,
 } from '@/Sagas/MySaga';
 
 import {
@@ -171,6 +172,7 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_REVIEW_WRITE, fetchMyReviewWrite),
     takeLatest(MyTypes.FETCH_MY_REVIEW_MODIFY, fetchMyReviewModify),
     takeLatest(MyTypes.FETCH_MY_REVIEW_DELETE, fetchMyReviewDelete),
+    takeLatest(MyTypes.FETCH_MY_PASSWORD_MODIFY, fetchMyPasswordModify),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),
