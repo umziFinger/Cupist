@@ -1,4 +1,5 @@
 import { put, call } from 'redux-saga/effects';
+import { getUniqueId } from 'react-native-device-info';
 import CommonActions from '@/Stores/Common/Actions';
 import SearchActions from '@/Stores/Search/Actions';
 import Config from '@/Config';
@@ -82,10 +83,77 @@ export function* fetchSearchRecentListPost(data: any): any {
 
     if (response.result === true && response.code === null) {
       console.log('최근 검색어 등록 성공:', response);
+      const uniqueId = getUniqueId();
+      const params = {
+        uniqueId,
+        perPage: 30,
+        page: 1,
+      };
+      yield put(SearchActions.fetchSearchRecentList(params));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
     console.log('occurred Error...fetchSearchRecentListPost : ', e);
+  }
+}
+
+export function* fetchSearchRecentListDelete(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: `${Config.SEARCH_QUERY_URL}/${data.params.idx}`,
+    };
+
+    const response = yield call(Axios.DELETE, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('최근 검색어 삭제 성공:', response);
+      yield put(SearchActions.fetchSearchReducer({ type: 'recentSearchDelete', data: data.params.idx }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchSearchRecentListDelete : ', e);
+  }
+}
+
+export function* fetchSearchRecentListDeleteAll(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: `${Config.SEARCH_QUERY_URL}`,
+    };
+
+    const response = yield call(Axios.DELETE, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('최근 검색어 전체 삭제 성공:', response);
+      yield put(SearchActions.fetchSearchReducer({ type: 'recentSearch', data: [] }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchSearchRecentListDeleteAll : ', e);
+  }
+}
+
+export function* fetchSearchPopularList(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: `${Config.SEARCH_POPULAR_URL}`,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('인기 볼리장:', response);
+      yield put(SearchActions.fetchSearchReducer({ type: 'popularList', data: response.data.placeResult }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchSearchPopularList : ', e);
   }
 }

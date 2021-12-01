@@ -18,7 +18,7 @@ import InputLocationSearch from '@/Components/Input/LocationSerach';
 
 const LocationSettingScreen = () => {
   const dispatch = useDispatch();
-  const { heightInfo, myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
+  const { heightInfo, myLatitude, myLongitude, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
   const { searchQuery, searchedAreaList, areaList } = useSelector((state: SearchState) => state.search);
   const [selectedCity, setSelectedCity] = useState({ code: '10', idx: 1 }); // 서울 code:"10" ,idx:1
   // const [selectedDistrict, setSelectedDistrict] = useState({ code: '1018', idx: 35 }); // 금천구 code:"1018" ,idx:35
@@ -80,7 +80,7 @@ const LocationSettingScreen = () => {
     dispatch(
       PlaceActions.fetchPlaceReducer({
         type: 'location',
-        data: { areaCode: undefined, lat: myLatitude || '37', lng: myLongitude || '126' },
+        data: { areaCode: undefined, lat: myLatitude || '37', lng: myLongitude || '126', areaName: '' },
       }),
     );
     navigateGoBack();
@@ -164,7 +164,13 @@ const LocationSettingScreen = () => {
                   windowSize={7}
                   initialNumToRender={16}
                   maxToRenderPerBatch={19}
-                  ListFooterComponent={() => <View style={{ paddingBottom: heightInfo.subBottomHeight }} />}
+                  ListFooterComponent={() => (
+                    <View
+                      style={{
+                        paddingBottom: isOpenKeyboard ? heightInfo.fixBottomHeight + 300 : heightInfo.fixBottomHeight,
+                      }}
+                    />
+                  )}
                   keyboardDismissMode={'interactive'}
                 />
               </View>
@@ -200,7 +206,16 @@ const LocationSettingScreen = () => {
                   initialNumToRender={16}
                   maxToRenderPerBatch={19}
                   keyboardShouldPersistTaps={'handled'}
-                  ListFooterComponent={() => <View style={{ paddingBottom: heightInfo.subBottomHeight }} />}
+                  ListFooterComponent={() => (
+                    <>
+                      {/* {Platform.OS === 'ios' && <KeyboardSpacer />} */}
+                      <View
+                        style={{
+                          paddingBottom: isOpenKeyboard ? heightInfo.fixBottomHeight + 300 : heightInfo.fixBottomHeight,
+                        }}
+                      />
+                    </>
+                  )}
                   keyboardDismissMode={'interactive'}
                 />
               </View>
@@ -251,15 +266,14 @@ const LocationSettingScreen = () => {
               keyboardDismissMode={'interactive'}
               ListFooterComponent={() => (
                 <>
-                  <View style={{ paddingBottom: heightInfo.subBottomHeight }} />
+                  {Platform.OS === 'ios' && <KeyboardSpacer />}
+                  <View style={{ paddingBottom: heightInfo.fixBottomHeight }} />
                 </>
               )}
               ListEmptyComponent={() => renderEmpty()}
             />
           </View>
         )}
-
-        {Platform.OS === 'ios' && <KeyboardSpacer />}
 
         <View
           style={{

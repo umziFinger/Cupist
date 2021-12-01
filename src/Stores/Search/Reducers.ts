@@ -68,6 +68,19 @@ export const fetchSearchReducer = (state = INITIAL_STATE, actions: any) => {
         draft.recentSearch = data;
         break;
       }
+      case 'recentSearchDelete': {
+        draft.recentSearch = state.recentSearch.filter((v: any) => v.idx !== data);
+        break;
+      }
+
+      case 'recentSearchAddQuery': {
+        draft.recentSearch = state.recentSearch.filter((v: any) => v.idx !== data);
+        break;
+      }
+      case 'popularList': {
+        draft.popularList = data;
+        break;
+      }
 
       default:
         return data;
