@@ -1,24 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Platform, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import CustomText from '@/Components/CustomText';
-import Header from '@/Components/Header';
 import { Color } from '@/Assets/Color';
 import { numberFormat, scrollCalendarHandler } from '@/Components/Function';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
-import CommonActions from '@/Stores/Common/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import PlaceListCard from '@/Components/Card/PlaceList/PlaceListCard';
 import { navigate } from '@/Services/NavigationService';
-import DateFilter from '@/Components/FilterSilder/DateFilter';
 import CalendarSlider from '@/Components/Calendar/CalendarSlider';
-import { MyState } from '@/Stores/My/InitialState';
 import TopDateSelector from '@/Components/Calendar/TopDateSelector';
 
 const DibsScreen = () => {
@@ -119,7 +115,7 @@ const DibsScreen = () => {
             <View style={{ flex: 1, marginTop: 16 }}>
               <FlatList
                 data={dibsList}
-                renderItem={({ item, index }) => (
+                renderItem={({ item }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
                     <PlaceListCard item={item} type={'dibs'} />

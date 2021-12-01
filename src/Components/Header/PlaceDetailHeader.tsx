@@ -4,37 +4,28 @@ import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import { Layout } from '@react-navigation/stack/lib/typescript/src/types';
 import { CommonState } from '@/Stores/Common/InitialState';
-import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { navigateGoBack } from '@/Services/NavigationService';
 import CustomText from '@/Components/CustomText';
 import { HeaderProps } from '@/Components/Header/index';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
-import { AuthState } from '@/Stores/Auth/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import TopDateSelector from '@/Components/Calendar/TopDateSelector';
 import { HomeState } from '@/Stores/Home/InitialState';
+import usePlaceDibs from '@/Hooks/usePlaceDibs';
 
 const PlaceDetailHeader = (props: HeaderProps) => {
   const { text, isShow } = props;
+  const { handlerPlaceDibs } = usePlaceDibs();
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
-  const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const { placeDetailIdx } = useSelector((state: PlaceState) => state.place);
+  const { placeDetail } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
-
-  // console.log('isShow : ', isShow);
 
   const bgColor = Color.White;
 
   const onPressShare = () => {
     console.log('onPressShare');
-  };
-
-  const onPressDibs = () => {
-    if (!userIdx) {
-      return navigate('SimpleLoginScreen');
-    }
-    return console.log('onPressDibs');
   };
 
   useEffect(() => {
@@ -94,11 +85,15 @@ const PlaceDetailHeader = (props: HeaderProps) => {
             />
           </View>
         </CustomButton>
-        <CustomButton onPress={() => onPressDibs()}>
+        <CustomButton onPress={() => handlerPlaceDibs(placeDetail.place)}>
           <View style={{ width: 24, height: 24 }}>
             <FastImage
               style={{ width: '100%', height: '100%' }}
-              source={require('@/Assets/Images/Button/icHeartBorder.png')}
+              source={
+                placeDetail?.place?.isPlaceDibs
+                  ? require('@/Assets/Images/Button/icHeartOn.png')
+                  : require('@/Assets/Images/Button/icHeartBorder.png')
+              }
               resizeMode={FastImage.resizeMode.cover}
             />
           </View>

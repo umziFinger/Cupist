@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
-import { placeDibsDataType } from '@/Sagas/CommonSaga';
-import CommonActions from '@/Stores/Common/Actions';
 import { navigate } from '@/Services/NavigationService';
+import usePlaceDibs from '@/Hooks/usePlaceDibs';
 
 interface PropTypes {
   item: any;
@@ -16,36 +14,9 @@ interface PropTypes {
 
 const PlaceLargeCard = (props: PropTypes) => {
   const { item, type } = props;
-
   const { width } = useWindowDimensions();
-  const dispatch = useDispatch();
+  const { handlerPlaceDibs } = usePlaceDibs();
   const [isError, setIsError] = useState(false);
-
-  const handlerPlaceDibs = (place: any) => {
-    if (place.isPlaceDibs) {
-      onPlaceUnDibs(place.idx);
-    } else {
-      onPlaceDibs(place.idx);
-    }
-  };
-
-  const onPlaceDibs = (placeIdx: number) => {
-    const params: placeDibsDataType = {
-      placeIdx,
-      type,
-      status: 'dibs',
-    };
-    dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
-  };
-
-  const onPlaceUnDibs = (placeIdx: number) => {
-    const params: placeDibsDataType = {
-      placeIdx,
-      type,
-      status: 'unDibs',
-    };
-    dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
-  };
 
   const onPlaceDetail = (place: any) => {
     navigate('PlaceDetailScreen', { idx: place.idx });

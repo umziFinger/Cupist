@@ -77,6 +77,66 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'directReservationDibsHandler': {
+        try {
+          const copyDirectReservationList: any = state.homeList.place;
+          if (data.type === 'dibs') {
+            const FIND_IDX = copyDirectReservationList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.homeList.place[FIND_IDX].isPlaceDibs = true;
+            }
+          } else if (data.type === 'unDibs') {
+            const FIND_IDX = copyDirectReservationList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.homeList.place[FIND_IDX].isPlaceDibs = false;
+            }
+          }
+        } catch (e) {
+          console.log('바로예약 볼링장 찜하기 핸들러 에러: ', e);
+        }
+        break;
+      }
+
+      case 'quickPriceDibsHandler': {
+        try {
+          const copyQuickPriceList: any = state.homeList.special;
+          if (data.type === 'dibs') {
+            const FIND_IDX = copyQuickPriceList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.homeList.special[FIND_IDX].isPlaceDibs = true;
+            }
+          } else if (data.type === 'unDibs') {
+            const FIND_IDX = copyQuickPriceList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.homeList.special[FIND_IDX].isPlaceDibs = false;
+            }
+          }
+        } catch (e) {
+          console.log('빨리 특가 볼링장 찜하기 핸들러 에러: ', e);
+        }
+        break;
+      }
+
+      case 'hotPlaceDibsHandler': {
+        try {
+          const copyHotPlaceList: any = state.homeList.hotPlace;
+          if (data.type === 'dibs') {
+            const FIND_IDX = copyHotPlaceList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.homeList.hotPlace[FIND_IDX].isPlaceDibs = true;
+            }
+          } else if (data.type === 'unDibs') {
+            const FIND_IDX = copyHotPlaceList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.homeList.hotPlace[FIND_IDX].isPlaceDibs = false;
+            }
+          }
+        } catch (e) {
+          console.log('HOT 볼링장 찜하기 핸들러 에러: ', e);
+        }
+        break;
+      }
+
       default:
         return draft;
     }

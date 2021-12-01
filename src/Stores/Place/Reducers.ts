@@ -103,13 +103,13 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       case 'placeMyAroundDibsHandler': {
         try {
           const copyMyAroundList: any = state.myAroundList;
-          if (data.status === 'dibs') {
-            const FIND_IDX = copyMyAroundList?.findIndex((v: any) => v.idx === data.placeIdx);
+          if (data.type === 'dibs') {
+            const FIND_IDX = copyMyAroundList?.findIndex((v: any) => v?.idx === data.placeIdx);
             if (FIND_IDX !== undefined && FIND_IDX !== -1) {
               draft.myAroundList[FIND_IDX].isPlaceDibs = true;
             }
-          } else if (data.status === 'unDibs') {
-            const FIND_IDX = copyMyAroundList?.findIndex((v: any) => v.idx === data.placeIdx);
+          } else if (data.type === 'unDibs') {
+            const FIND_IDX = copyMyAroundList?.findIndex((v: any) => v?.idx === data.placeIdx);
             if (FIND_IDX !== undefined && FIND_IDX !== -1) {
               draft.myAroundList[FIND_IDX].isPlaceDibs = false;
             }
@@ -123,19 +123,77 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       case 'recentPlaceDibsHandler': {
         try {
           const copyRecentList: any = state.recentList;
-          if (data.status === 'dibs') {
-            const FIND_IDX = copyRecentList?.findIndex((v: any) => v.idx === data.placeIdx);
+          if (data.type === 'dibs') {
+            const FIND_IDX = copyRecentList?.findIndex((v: any) => v?.idx === data.placeIdx);
             if (FIND_IDX !== undefined && FIND_IDX !== -1) {
               draft.recentList[FIND_IDX].isPlaceDibs = true;
             }
-          } else if (data.status === 'unDibs') {
-            const FIND_IDX = copyRecentList?.findIndex((v: any) => v.idx === data.placeIdx);
+          } else if (data.type === 'unDibs') {
+            const FIND_IDX = copyRecentList?.findIndex((v: any) => v?.idx === data.placeIdx);
             if (FIND_IDX !== undefined && FIND_IDX !== -1) {
               draft.recentList[FIND_IDX].isPlaceDibs = false;
             }
           }
         } catch (e) {
           console.log('최근 본 볼링장 찜하기 핸들러 에러: ', e);
+        }
+        break;
+      }
+
+      case 'dibListDibsHandler': {
+        try {
+          const copyDibList: any = state.dibsList;
+          if (data.type === 'dibs') {
+            const FIND_IDX = copyDibList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.dibsList[FIND_IDX].isPlaceDibs = true;
+            }
+          } else if (data.type === 'unDibs') {
+            const FIND_IDX = copyDibList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.dibsList[FIND_IDX].isPlaceDibs = false;
+            }
+          }
+        } catch (e) {
+          console.log('찜하기 핸들러 에러: ', e);
+        }
+        break;
+      }
+
+      case 'placeDetailDibsHandler': {
+        try {
+          const copyPlaceDetail: any = state?.placeDetail;
+          if (data.type === 'dibs') {
+            if (copyPlaceDetail !== undefined) {
+              copyPlaceDetail.place.isPlaceDibs = true;
+            }
+          } else if (data.type === 'unDibs') {
+            if (copyPlaceDetail !== undefined) {
+              copyPlaceDetail.place.isPlaceDibs = false;
+            }
+          }
+        } catch (e) {
+          console.log('볼링장 상세 찜하기 핸들러 에러: ', e);
+        }
+        break;
+      }
+
+      case 'placeListDibsHandler': {
+        try {
+          const copyPlaceList: any = state.placeList;
+          if (data.type === 'dibs') {
+            const FIND_IDX = copyPlaceList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.placeList[FIND_IDX].isPlaceDibs = true;
+            }
+          } else if (data.type === 'unDibs') {
+            const FIND_IDX = copyPlaceList?.findIndex((v: any) => v?.idx === data.placeIdx);
+            if (FIND_IDX !== undefined && FIND_IDX !== -1) {
+              draft.placeList[FIND_IDX].isPlaceDibs = false;
+            }
+          }
+        } catch (e) {
+          console.log('찜하기 핸들러 에러: ', e);
         }
         break;
       }

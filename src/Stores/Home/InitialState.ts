@@ -1,4 +1,4 @@
-export const INITIAL_STATE = {
+export const INITIAL_STATE: HomeState['home'] = {
   loginCheckYN: 'N',
   homeList: {
     place: [],

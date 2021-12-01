@@ -9,6 +9,8 @@ import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 import HomeActions from '@/Stores/Home/Actions';
+import { placeDibsDataType } from '@/Sagas/CommonSaga';
+import usePlaceDibs from '@/Hooks/usePlaceDibs';
 
 interface PropTypes {
   item: any;
@@ -17,7 +19,7 @@ interface PropTypes {
 const DirectReservationCard = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { item } = props;
-  const { userIdx } = useSelector((state: AuthState) => state.auth);
+  const { handlerPlaceDibs } = usePlaceDibs();
 
   const onPressReservation = () => {
     console.log('onPressReservation');
@@ -25,13 +27,6 @@ const DirectReservationCard = (props: PropTypes) => {
     dispatch(HomeActions.fetchHomeReducer({ type: 'selectedDirectName', data: item?.name || '' }));
     dispatch(HomeActions.fetchHomeReducer({ type: 'selectedDirectIdx', data: item?.idx || -1 }));
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenDirectReservationRBS', data: true }));
-  };
-
-  const onPressDibs = () => {
-    if (!userIdx) {
-      return navigate('SimpleLoginScreen');
-    }
-    return console.log('onPressDibs');
   };
 
   return (
@@ -79,7 +74,7 @@ const DirectReservationCard = (props: PropTypes) => {
               </View>
             </View>
           </View>
-          <CustomButton onPress={() => onPressDibs()} hitSlop={10}>
+          <CustomButton onPress={() => handlerPlaceDibs(item)} hitSlop={10}>
             <View style={{ width: 24, height: 24 }}>
               <FastImage
                 style={{ width: '100%', height: '100%' }}

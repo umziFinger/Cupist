@@ -33,8 +33,8 @@ const HotPlaceCard = (props: PropTypes) => {
   const onPlaceDibs = (placeIdx: number) => {
     const params: placeDibsDataType = {
       placeIdx,
-      type,
-      status: 'dibs',
+
+      type: 'dibs',
     };
     dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
   };
@@ -42,8 +42,8 @@ const HotPlaceCard = (props: PropTypes) => {
   const onPlaceUnDibs = (placeIdx: number) => {
     const params: placeDibsDataType = {
       placeIdx,
-      type,
-      status: 'unDibs',
+
+      type: 'unDibs',
     };
     dispatch(CommonActions.fetchCommonPlaceDibsHandler(params));
   };
