@@ -65,7 +65,7 @@ const HotPlaceListScreen = () => {
       <View style={{ flex: 1, paddingHorizontal: 16, marginTop: 16 }}>
         <FlatList
           data={[0]}
-          renderItem={({ item, index }) => (
+          renderItem={() => (
             <View style={{ flex: 1 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ justifyContent: 'center', marginRight: 2 }}>
@@ -89,7 +89,7 @@ const HotPlaceListScreen = () => {
               <View style={{ flex: 1, marginTop: 24 }}>
                 <FlatList
                   data={hotPlaceList || []}
-                  renderItem={({ item: place, index }) => {
+                  renderItem={({ item: place }) => {
                     return (
                       <View style={{ width: width - 32 }}>
                         <HotPlaceCard item={place} type={'hot'} />

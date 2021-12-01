@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, FlatList, Platform, TextInput } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
@@ -43,8 +43,6 @@ const JoinStepTwoScreen = () => {
     smsAuthTime,
   } = useInputAuthNumber();
 
-  const [currentFocus, setCurrentFocus] = useState<string>('name');
-
   useEffect(() => {
     return () => {
       dispatch(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
@@ -86,7 +84,7 @@ const JoinStepTwoScreen = () => {
 
   const onFocusNext = (currentFocusIndex: number) => {
     if (ref_input[currentFocusIndex] && ref_input[currentFocusIndex + 1]) {
-      ref_input[currentFocusIndex].current?.blur();
+      // ref_input[currentFocusIndex].current?.blur();
       ref_input[currentFocusIndex + 1].current?.focus();
     }
   };
@@ -177,8 +175,6 @@ const JoinStepTwoScreen = () => {
                     ref={ref_input[1]}
                     nicknameValidText={nicknameValidText}
                     onChangeText={onChangeNickname}
-                    onFocus={() => setCurrentFocus('nickName')}
-                    onBlur={() => setCurrentFocus('')}
                     value={nickName}
                     onTextClear={onClearNickName}
                     onSubmitEditing={() => {
@@ -191,8 +187,6 @@ const JoinStepTwoScreen = () => {
                   <InputAuthPhone
                     ref={ref_input[2]}
                     onChangeText={onChangePhoneNumber}
-                    onFocus={() => setCurrentFocus('phone')}
-                    onBlur={() => setCurrentFocus('')}
                     value={phoneNumber}
                     onPressAuth={onGetSmsAuth}
                     isPhoneValid={isPhoneValid}
@@ -217,7 +211,12 @@ const JoinStepTwoScreen = () => {
             windowSize={7}
             scrollEnabled
             showsVerticalScrollIndicator={false}
-            ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
+            ListFooterComponent={
+              <>
+                {Platform.OS === 'ios' && <KeyboardSpacer />}
+                <View style={{ paddingBottom: heightInfo.statusHeight }} />
+              </>
+            }
           />
 
           <View
@@ -254,8 +253,6 @@ const JoinStepTwoScreen = () => {
               </View>
             </CustomButton>
           </View>
-
-          {Platform.OS === 'ios' && <KeyboardSpacer />}
         </View>
       </View>
     </KeyboardSpacerProvider>

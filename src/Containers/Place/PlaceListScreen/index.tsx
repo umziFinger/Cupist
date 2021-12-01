@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, FlatList, Platform, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Platform, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
@@ -130,11 +130,11 @@ const PlaceListScreen = ({ route }: PropTypes) => {
   const onPressReservation = () => {
     if (selectedTicket) {
       if (!userIdx) {
-        return navigate('SimpleLoginScreen');
+        navigate('SimpleLoginScreen');
       }
 
       if (selectedTicket?.idx) {
-        return navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: selectedTicket?.idx });
+        navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: selectedTicket?.idx });
       }
     }
     // return animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
@@ -205,7 +205,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
             <View style={{ flex: 1, marginTop: 16 }}>
               <FlatList
                 data={placeList}
-                renderItem={({ item, index }) => (
+                renderItem={({ item }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
                     <PlaceListCard item={item} type={type} />

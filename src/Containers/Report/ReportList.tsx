@@ -21,7 +21,7 @@ const ReportList = ({ item, onCheck }: any) => {
           color: Color.Gray800,
         }}
       >
-        {item.code}
+        {item.reportCode}
       </CustomText>
 
       <CustomButton onPress={() => onCheck(item.idx)}>

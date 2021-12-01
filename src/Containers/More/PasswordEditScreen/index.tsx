@@ -54,7 +54,7 @@ const PasswordEditScreen = () => {
 
   const onFocusNext = (currentFocusIndex: number) => {
     if (ref_input[currentFocusIndex] && ref_input[currentFocusIndex + 1]) {
-      ref_input[currentFocusIndex].current?.blur();
+      // ref_input[currentFocusIndex].current?.blur();
       ref_input[currentFocusIndex + 1].current?.focus();
     }
   };

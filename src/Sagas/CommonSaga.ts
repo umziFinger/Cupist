@@ -9,13 +9,11 @@ import PlaceActions from '@/Stores/Place/Actions';
 import MyActions from '@/Stores/My/Actions';
 import Config from '@/Config';
 
-export type placeDibsType = 'myAround' | 'home' | 'recentPlace' | 'hot';
-export type dibsStatusType = 'dibs' | 'unDibs';
+export type dibsType = 'dibs' | 'unDibs';
 
 export type placeDibsDataType = {
   placeIdx: number;
-  type: placeDibsType;
-  status: dibsStatusType;
+  type: dibsType;
 };
 // --------------------------------------------------------------------------------------------------
 // 최초 진입시 초기화 함수 입니다 맨 밑에 유지 새로운 saga 생성시 !!주의!!
@@ -233,10 +231,18 @@ export function* fetchSkeletonNavigateReplace(data: any): any {
   }
 }
 
-function* handlerPlaceDibs(type: placeDibsType, status: dibsStatusType, placeIdx: any) {
+function* handlerPlaceDibs(type: dibsType, placeIdx: any) {
   try {
-    yield put(PlaceActions.fetchPlaceReducer({ type: 'placeMyAroundDibsHandler', data: { placeIdx, status } }));
-    yield put(PlaceActions.fetchPlaceReducer({ type: 'recentPlaceDibsHandler', data: { placeIdx, status } }));
+    yield put(PlaceActions.fetchPlaceReducer({ type: 'placeMyAroundDibsHandler', data: { placeIdx, type } }));
+    yield put(PlaceActions.fetchPlaceReducer({ type: 'recentPlaceDibsHandler', data: { placeIdx, type } }));
+    yield put(PlaceActions.fetchPlaceReducer({ type: 'dibListDibsHandler', data: { placeIdx, type } }));
+    yield put(PlaceActions.fetchPlaceReducer({ type: 'placeListDibsHandler', data: { placeIdx, type } }));
+    yield put(PlaceActions.fetchPlaceReducer({ type: 'hotPlaceListDibsHandler', data: { placeIdx, type } }));
+    yield put(PlaceActions.fetchPlaceReducer({ type: 'placeDetailDibsHandler', data: { placeIdx, type } }));
+
+    yield put(HomeActions.fetchHomeReducer({ type: 'directReservationDibsHandler', data: { placeIdx, type } }));
+    yield put(HomeActions.fetchHomeReducer({ type: 'quickPriceDibsHandler', data: { placeIdx, type } }));
+    yield put(HomeActions.fetchHomeReducer({ type: 'hotPlaceDibsHandler', data: { placeIdx, type } }));
   } catch (e) {
     console.log('occurred Error...handlerPlaceDibs : ', e);
   }
@@ -245,24 +251,23 @@ function* handlerPlaceDibs(type: placeDibsType, status: dibsStatusType, placeIdx
 
 export function* fetchCommonPlaceDibsHandler(data: any): any {
   try {
-    const { placeIdx, type, status }: placeDibsDataType = data.params;
-    yield handlerPlaceDibs(type, status, placeIdx);
+    const { placeIdx, type }: placeDibsDataType = data.params;
+    yield handlerPlaceDibs(type, placeIdx);
     const payload = {
       ...data,
       url: `${Config.PLACE_URL}/${placeIdx}/dibs`,
     };
 
-    const response = status === 'dibs' ? yield call(Axios.POST, payload) : yield call(Axios.DELETE, payload);
+    const response = type === 'dibs' ? yield call(Axios.POST, payload) : yield call(Axios.DELETE, payload);
 
     if (response.result === true && response.code === null) {
-      // yield handlerRefreshFlag(type);
-      handlerPlaceDibs(type, status, placeIdx);
+      yield handlerPlaceDibs(type, placeIdx);
     } else if (response.data.message === '이미 찜 되어있는 볼링장입니다.') {
       console.log('이미 찜 되어있는 볼링장입니다.');
-      yield handlerPlaceDibs(type, status, placeIdx);
+      yield handlerPlaceDibs(type, placeIdx);
     } else if (response.data.message === '찜이 존재하지 않습니다.') {
       console.log('찜이 존재하지 않습니다.');
-      yield handlerPlaceDibs(type, status, placeIdx);
+      yield handlerPlaceDibs(type, placeIdx);
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
       console.log('볼링장 찜하기 실패 !!!: ', response);
@@ -282,14 +287,7 @@ export function* fetchCommonReport(data: any): any {
         url = `place/${mainIdx}/review/${subIdx}/report`;
         break;
       }
-      case 'drama': {
-        url = `drama/${mainIdx}/board/${subIdx}/report`;
-        break;
-      }
-      case 'artist': {
-        url = `artist/${mainIdx}/board/${subIdx}/report`;
-        break;
-      }
+
       default:
         url = '';
     }
@@ -316,10 +314,14 @@ export function* fetchCommonReport(data: any): any {
       );
 
       switch (reportType) {
+        case 'placeReview': {
+          navigateGoBack();
+          break;
+        }
+
         default:
-          return null;
+          navigateGoBack();
       }
-      navigateGoBack();
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }

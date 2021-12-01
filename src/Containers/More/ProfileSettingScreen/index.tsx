@@ -388,7 +388,6 @@ const ProfileSettingScreen = () => {
                     paddingBottom: 16,
                     borderBottomWidth: 1,
                     borderBottomColor: Color.Gray300,
-                    marginBottom: 24,
                   }}
                 >
                   <View style={{ marginBottom: 8 }}>
@@ -477,73 +476,20 @@ const ProfileSettingScreen = () => {
               </CustomButton>
 
               <CustomButton onPress={() => onLogout()}>
-                <CustomText
-                  style={{
-                    fontSize: 13,
-                    fontWeight: '500',
-                    letterSpacing: -0.2,
-                    color: Color.Gray600,
-                    textDecorationLine: 'underline',
-                  }}
-                >
-                  로그아웃
-                </CustomText>
+                <View style={{ marginTop: 24 }}>
+                  <CustomText
+                    style={{
+                      fontSize: 13,
+                      fontWeight: '500',
+                      letterSpacing: -0.2,
+                      color: Color.Gray600,
+                      textDecorationLine: 'underline',
+                    }}
+                  >
+                    로그아웃
+                  </CustomText>
+                </View>
               </CustomButton>
-              {/*  <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}> */}
-              {/*    /!* <FastImage *!/ */}
-              {/*    /!*  style={{ width: 20, height: 20, marginRight: 4 }} *!/ */}
-              {/*    /!*  source={require('@/Assets/Images/Common/imgAccountKakao.png')} *!/ */}
-              {/*    /!*  resizeMode={FastImage.resizeMode.cover} *!/ */}
-              {/*    /!* /> *!/ */}
-              {/*    <CustomText style={{ color: Color.blackDefault, fontSize: 14, fontWeight: '500' }}> */}
-              {/*      {userInfo.providerType} */}
-              {/*    </CustomText> */}
-              {/*    <View */}
-              {/*      style={{ */}
-              {/*        width: 1, */}
-              {/*        height: 12, */}
-              {/*        backgroundColor: Color.grayBlue900, */}
-              {/*        marginHorizontal: 8, */}
-              {/*        alignSelf: 'center', */}
-              {/*      }} */}
-              {/*    /> */}
-              {/*    <CustomText style={{ color: Color.gray1000, fontSize: 15, fontWeight: '500', letterSpacing: -0.2 }}> */}
-              {/*      {userInfo.providerUid} */}
-              {/*    </CustomText> */}
-              {/*  </View> */}
-              {/* </View> */}
-
-              {/* <View style={{ height: 1, backgroundColor: Color.borderDefault }} /> */}
-
-              {/* <View */}
-              {/*  style={{ */}
-              {/*    height: 110, */}
-              {/*  }} */}
-              {/* > */}
-              {/*  <View style={{ marginTop: 30, marginBottom: 14 }}> */}
-              {/*    <CustomText */}
-              {/*      style={{ color: Color.black900, fontSize: 17, fontWeight: 'bold', letterSpacing: -0.3 }} */}
-              {/*    > */}
-              {/*      휴대폰 번호 */}
-              {/*    </CustomText> */}
-              {/*  </View> */}
-
-              {/*  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
-              {/*    <CustomText style={{ color: Color.gray1000, fontSize: 15, fontWeight: '500', letterSpacing: -0.2 }}> */}
-              {/*      {inputMobileNumber(userInfo.mobile)} */}
-              {/*    </CustomText> */}
-              {/*    {userInfo?.mobile !== '' && ( */}
-              {/*      <CustomButton onPress={() => onPressPhoneNumberEdit()} hitSlop={{ top: 5, bottom: 5 }}> */}
-              {/*        <CustomText */}
-              {/*          style={{ color: Color.primary1000, fontSize: 14, fontWeight: '500', letterSpacing: -0.2 }} */}
-              {/*        > */}
-              {/*          변경하기 */}
-              {/*        </CustomText> */}
-              {/*      </CustomButton> */}
-              {/*    )} */}
-              {/*  </View> */}
-
-              {/* <View style={{ height: 1, backgroundColor: Color.borderDefault }} /> */}
 
               <CallAttachFile
                 setCallAttachFile={setCallAttachFile}

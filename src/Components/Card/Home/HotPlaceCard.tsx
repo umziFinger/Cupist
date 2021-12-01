@@ -1,25 +1,19 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
-import { AuthState } from '@/Stores/Auth/InitialState';
+import usePlaceDibs from '@/Hooks/usePlaceDibs';
 
 interface PropTypes {
   item: any;
   width: number;
 }
+
 const HotPlaceCard = ({ item, width }: PropTypes) => {
-  const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const onPressDibs = () => {
-    if (!userIdx) {
-      return navigate('SimpleLoginScreen');
-    }
-    return console.log('onPressDibs');
-  };
+  const { handlerPlaceDibs } = usePlaceDibs();
 
   return (
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
@@ -31,7 +25,7 @@ const HotPlaceCard = ({ item, width }: PropTypes) => {
             resizeMode={FastImage.resizeMode.cover}
           />
           <CustomButton
-            onPress={() => onPressDibs()}
+            onPress={() => handlerPlaceDibs(item)}
             style={{
               width: 24,
               height: 24,
