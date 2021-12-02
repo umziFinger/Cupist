@@ -7,7 +7,6 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
 
 import { Color } from '@/Assets/Color';
-import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 import InputEmail from '@/Components/Input/Email';
 import InputPassword from '@/Components/Input/Password';
 import AuthActions from '@/Stores/Auth/Actions';
@@ -19,7 +18,7 @@ import { navigate } from '@/Services/NavigationService';
 const JoinStepOneScreen = () => {
   const dispatch = useDispatch();
 
-  const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
 
   const { email, onChangeEmail, emailValidText, isEmailValid } = useInputEmail();
   const { password, onChangePassword, passwordValidText, isPasswordValid } = useInputPassword();
@@ -51,8 +50,9 @@ const JoinStepOneScreen = () => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: '#ffffff' }}
-      behavior={'padding'}
-      enabled={Platform.OS !== 'android'}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
+      // enabled={Platform.OS !== 'android'}
     >
       <View style={{ flex: 1 }}>
         <Header type="back" />
@@ -150,11 +150,15 @@ const JoinStepOneScreen = () => {
             windowSize={7}
             scrollEnabled
             showsVerticalScrollIndicator={false}
-            ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
+            // ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
             keyboardShouldPersistTaps={'handled'}
           />
 
-          <View style={{ paddingBottom: heightInfo.fixBottomHeight }}>
+          <View
+            style={{
+              paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+            }}
+          >
             <CustomButton onPress={() => onPressNext()}>
               <View
                 style={{

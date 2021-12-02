@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
@@ -228,8 +228,13 @@ const AgreeScreen = () => {
           windowSize={7}
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
+          // ListFooterComponent={<View style={{ marginBottom: heightInfo.statusHeight }} />}
         />
-        <View style={{ paddingBottom: heightInfo.fixBottomHeight }}>
+        <View
+          style={{
+            paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+          }}
+        >
           <CustomButton onPress={() => onPressNext()}>
             <View
               style={{

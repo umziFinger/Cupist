@@ -6,7 +6,6 @@ import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
-import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 import AuthActions from '@/Stores/Auth/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import InputAuthPhone, { AuthPhoneEnum } from '@/Components/Input/AuthPhone';
@@ -27,7 +26,7 @@ const JoinStepTwoScreen = () => {
   ref_input[1] = useRef(null);
   ref_input[2] = useRef(null);
   const { isReceived, log_cert } = useSelector((state: AuthState) => state.auth);
-  const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
 
   const { userName, onChangeName, nameValidText, isNameValid, onClearName } = useInputName();
   const { nickName, onChangeNickname, nicknameValidText, isNicknameValid, onClearNickName } = useInputNickname();
@@ -92,8 +91,8 @@ const JoinStepTwoScreen = () => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: '#ffffff' }}
-      behavior={'padding'}
-      enabled={Platform.OS !== 'android'}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
     >
       <View style={{ flex: 1 }}>
         <Header type="back" />
@@ -218,7 +217,11 @@ const JoinStepTwoScreen = () => {
             ListFooterComponent={<>{/* <View style={{ paddingBottom: heightInfo.statusHeight }} /> */}</>}
           />
 
-          <View style={{ paddingBottom: heightInfo.fixBottomHeight }}>
+          <View
+            style={{
+              paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+            }}
+          >
             <CustomButton onPress={() => onPressJoin()}>
               <View
                 style={{

@@ -12,10 +12,11 @@ type Props = {
   onClear: () => void;
   placeHolder?: PlaceholderType;
   onSubmitEditing?: () => void;
+  autoFocus?: boolean;
 };
 
 const InputLocationSearch = forwardRef<TextInput, Props>((props: Props) => {
-  const { onChangeText, onClear, placeHolder = '구명으로 검색(ex.금천구)', onSubmitEditing } = props;
+  const { onChangeText, onClear, placeHolder = '구명으로 검색(ex.금천구)', onSubmitEditing, autoFocus = true } = props;
   const { searchQuery } = useSelector((state: SearchState) => state.search);
 
   let clearBox = null;
@@ -77,7 +78,7 @@ const InputLocationSearch = forwardRef<TextInput, Props>((props: Props) => {
             placeholder={placeHolder}
             placeholderTextColor={Color.Gray400}
             numberOfLines={1}
-            autoFocus
+            autoFocus={autoFocus}
             autoCompleteType="off"
             autoCorrect={false}
             onChangeText={(text) => onChangeText(text)}
