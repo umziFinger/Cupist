@@ -74,7 +74,7 @@ const dev = {
   MY_WITHDRAW_URL: 'my/withdraw',
   MY_RESERVATION_URL: 'my/reservation',
   MY_DIBS_URL: 'my/dibs',
-
+  MY_PASSWORD_URL: 'my/password',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

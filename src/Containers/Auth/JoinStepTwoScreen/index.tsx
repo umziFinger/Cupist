@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { View, FlatList, Platform, TextInput } from 'react-native';
+import { View, FlatList, Platform, TextInput, KeyboardAvoidingView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
-import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 import AuthActions from '@/Stores/Auth/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import InputAuthPhone, { AuthPhoneEnum } from '@/Components/Input/AuthPhone';
@@ -27,7 +26,7 @@ const JoinStepTwoScreen = () => {
   ref_input[1] = useRef(null);
   ref_input[2] = useRef(null);
   const { isReceived, log_cert } = useSelector((state: AuthState) => state.auth);
-  const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
 
   const { userName, onChangeName, nameValidText, isNameValid, onClearName } = useInputName();
   const { nickName, onChangeNickname, nicknameValidText, isNicknameValid, onClearNickName } = useInputNickname();
@@ -90,7 +89,11 @@ const JoinStepTwoScreen = () => {
   };
 
   return (
-    <KeyboardSpacerProvider>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#ffffff' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
+    >
       <View style={{ flex: 1 }}>
         <Header type="back" />
         <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
@@ -211,21 +214,13 @@ const JoinStepTwoScreen = () => {
             windowSize={7}
             scrollEnabled
             showsVerticalScrollIndicator={false}
-            ListFooterComponent={
-              <>
-                {Platform.OS === 'ios' && <KeyboardSpacer />}
-                <View style={{ paddingBottom: heightInfo.statusHeight }} />
-              </>
-            }
+            ListFooterComponent={<>{/* <View style={{ paddingBottom: heightInfo.statusHeight }} /> */}</>}
           />
 
           <View
-            style={[
-              { paddingBottom: heightInfo.fixBottomHeight },
-              {
-                transform: [{ translateY: isOpenKeyboard ? -8 : 0 }],
-              },
-            ]}
+            style={{
+              paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+            }}
           >
             <CustomButton onPress={() => onPressJoin()}>
               <View
@@ -255,7 +250,7 @@ const JoinStepTwoScreen = () => {
           </View>
         </View>
       </View>
-    </KeyboardSpacerProvider>
+    </KeyboardAvoidingView>
   );
 };
 export default JoinStepTwoScreen;

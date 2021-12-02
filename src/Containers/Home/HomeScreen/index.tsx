@@ -59,6 +59,14 @@ const HomeScreen = ({ route }: HomeProps) => {
   }, [userIdx]);
 
   useEffect(() => {
+    if (route?.params?.expired) {
+      console.log('navigate token expired!!!', route);
+      AsyncStorage.setItem('userIdx', '');
+      dispatch(AuthActions.fetchAuthReducer({ type: 'logout' }));
+    }
+  }, [route]);
+
+  useEffect(() => {
     if (homeTabRefreshYN === 'N') {
       onRefresh();
     }

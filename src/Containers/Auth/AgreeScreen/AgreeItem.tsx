@@ -16,9 +16,9 @@ interface AgreeItem {
 function AgreeItem(props: AgreeItem) {
   const { item, index, checkArr, onCheck, onAgreeDetail } = props;
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-        <CustomButton onPress={() => onCheck(index)}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 20 }}>
+      <CustomButton onPress={() => onCheck(index)}>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ width: 20, height: 20 }}>
             <FastImage
               style={{ width: '100%', height: '100%' }}
@@ -30,13 +30,13 @@ function AgreeItem(props: AgreeItem) {
               resizeMode={FastImage.resizeMode.cover}
             />
           </View>
-        </CustomButton>
-        <View style={{ marginLeft: 12 }}>
-          <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Gray800 }}>{item.content}</CustomText>
-        </View>
-      </View>
 
-      <CustomButton onPress={() => onAgreeDetail(index)}>
+          <View style={{ marginLeft: 12 }}>
+            <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Gray800 }}>{item.content}</CustomText>
+          </View>
+        </View>
+      </CustomButton>
+      <CustomButton onPress={() => onAgreeDetail(index)} hitSlop={10}>
         <View>
           <CustomText
             style={{

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { FlatList, KeyboardAvoidingView, Platform, TextInput, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUniqueId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -107,10 +107,10 @@ const SearchScreen = () => {
     dispatch(SearchActions.fetchSearchRecentListDeleteAll());
   };
 
-  const isValidKeyword = () => {
+  const isValidKeyword = useCallback(() => {
     // 검색어가 있을때
     return !(searchQuery !== '' && searchQuery !== null);
-  };
+  }, [searchQuery]);
 
   const renderItem = ({ index }: { index: number }) => {
     switch (index) {
@@ -253,101 +253,100 @@ const SearchScreen = () => {
     );
   };
   return (
-    <>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#ffffff' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+      // keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
+    >
       <View style={{ flex: 1, backgroundColor: Color.White }}>
-        <KeyboardSpacerProvider>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: Color.White,
-              paddingTop: Platform.OS === 'android' ? 0 : heightInfo.statusHeight,
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20 }}>
-                <View style={{ flex: 1 }}>
-                  <InputLocationSearch
-                    onChangeText={onChangeText}
-                    onClear={onClearKeyword}
-                    placeHolder={'볼링장을 검색해보세요.'}
-                    onSubmitEditing={() => onSubmit()}
-                  />
-                </View>
-                <CustomButton onPress={() => navigateGoBack()}>
-                  <View style={{ alignItems: 'center', marginLeft: 16 }}>
-                    <CustomText
-                      style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25, color: Color.Gray700 }}
-                    >
-                      취소
-                    </CustomText>
-                  </View>
-                </CustomButton>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: Color.White,
+            paddingTop: Platform.OS === 'android' ? 0 : heightInfo.statusHeight,
+          }}
+        >
+          <View style={{ flex: 1, backgroundColor: Color.White }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20 }}>
+              <View style={{ flex: 1 }}>
+                <InputLocationSearch
+                  onChangeText={onChangeText}
+                  onClear={onClearKeyword}
+                  placeHolder={'볼링장을 검색해보세요.'}
+                  onSubmitEditing={() => onSubmit()}
+                />
               </View>
-
-              {isValidKeyword() && (
-                <View style={{ flex: 1 }}>
-                  <FlatList
-                    data={[0, 1]}
-                    renderItem={renderItem}
-                    keyExtractor={(item, index) => index.toString()}
-                    initialNumToRender={7}
-                    maxToRenderPerBatch={10}
-                    windowSize={7}
-                    // scrollEnabled={false}
-                    showsVerticalScrollIndicator={false}
-                    ListFooterComponent={() => (
-                      <>
-                        <View style={{ paddingBottom: heightInfo.subBottomHeight }} />
-                      </>
-                    )}
-                  />
+              <CustomButton onPress={() => navigateGoBack()}>
+                <View style={{ alignItems: 'center', marginLeft: 16 }}>
+                  <CustomText style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25, color: Color.Gray700 }}>
+                    취소
+                  </CustomText>
                 </View>
-              )}
-
-              {!isValidKeyword() && (
-                <View style={{ flex: 1, paddingHorizontal: 20 }}>
-                  <View style={{ backgroundColor: Color.White, paddingTop: 20, marginBottom: 16 }}>
-                    <CustomText
-                      style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow1000 }}
-                    >
-                      {`‘${searchQuery}’`} 검색결과 {bowlingList?.placeCount || 0}건
-                    </CustomText>
-                  </View>
-                  {searchQuery !== '' && (
-                    <FlatList
-                      data={bowlingList?.place}
-                      renderItem={({ item }) => (
-                        <View style={{ marginRight: 10, marginBottom: 13 }}>
-                          <PlaceSmallCard item={item} width={(width - 40 - 10) / 2} showRate showTicketName={false} />
-                        </View>
-                      )}
-                      numColumns={2}
-                      keyExtractor={(keyItem, keyIndex) => keyIndex.toString()}
-                      initialNumToRender={8}
-                      maxToRenderPerBatch={11}
-                      windowSize={7}
-                      ListEmptyComponent={() => renderEmpty()}
-                      showsVerticalScrollIndicator={false}
-                      onEndReached={() => onMore()}
-                      onEndReachedThreshold={0.8}
-                      onRefresh={() => onRefresh()}
-                      refreshing={false}
-                      keyboardShouldPersistTaps={'never'}
-                      ListFooterComponent={
-                        <>
-                          <KeyboardSpacer />
-                          <View style={{ height: heightInfo.subBottomHeight }} />
-                        </>
-                      }
-                    />
-                  )}
-                </View>
-              )}
+              </CustomButton>
             </View>
+
+            {isValidKeyword() && (
+              <View style={{ flex: 1, zIndex: 99, backgroundColor: Color.White }}>
+                <FlatList
+                  data={[0, 1, 2]}
+                  renderItem={renderItem}
+                  keyExtractor={(item, index) => index.toString()}
+                  initialNumToRender={7}
+                  maxToRenderPerBatch={10}
+                  windowSize={7}
+                  // scrollEnabled={false}
+                  showsVerticalScrollIndicator={false}
+                  ListFooterComponent={() => (
+                    <>
+                      <View style={{ paddingBottom: heightInfo.subBottomHeight }} />
+                    </>
+                  )}
+                />
+              </View>
+            )}
+
+            {!isValidKeyword() && (
+              <View style={{ flex: 1, paddingHorizontal: 20 }}>
+                <View style={{ backgroundColor: Color.White, paddingTop: 20, marginBottom: 16 }}>
+                  <CustomText
+                    style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow1000 }}
+                  >
+                    {`‘${searchQuery}’`} 검색결과 {bowlingList?.placeCount || 0}건
+                  </CustomText>
+                </View>
+                {searchQuery !== '' && (
+                  <FlatList
+                    data={bowlingList?.place}
+                    renderItem={({ item }) => (
+                      <View style={{ marginRight: 10, marginBottom: 13 }}>
+                        <PlaceSmallCard item={item} width={(width - 40 - 10) / 2} showRate showTicketName={false} />
+                      </View>
+                    )}
+                    numColumns={2}
+                    keyExtractor={(keyItem, keyIndex) => keyIndex.toString()}
+                    initialNumToRender={8}
+                    maxToRenderPerBatch={11}
+                    windowSize={7}
+                    ListEmptyComponent={() => renderEmpty()}
+                    showsVerticalScrollIndicator={false}
+                    onEndReached={() => onMore()}
+                    onEndReachedThreshold={0.8}
+                    onRefresh={() => onRefresh()}
+                    refreshing={false}
+                    keyboardShouldPersistTaps={'never'}
+                    ListFooterComponent={
+                      <>
+                        <View style={{ height: heightInfo.subBottomHeight }} />
+                      </>
+                    }
+                  />
+                )}
+              </View>
+            )}
           </View>
-        </KeyboardSpacerProvider>
+        </View>
       </View>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
@@ -159,18 +159,19 @@ const AgreeScreen = () => {
                   특별한 혜택으로 볼링장을 만나보실 수 있어요.
                 </CustomText>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 48,
-                  paddingHorizontal: 12,
-                  paddingVertical: 18,
-                  borderWidth: 1,
-                  borderColor: Color.Gray300,
-                  borderRadius: 3,
-                }}
-              >
-                <CustomButton onPress={() => onCheck('all')} hitSlop={{ left: 15, right: 15 }}>
+
+              <CustomButton onPress={() => onCheck('all')} hitSlop={{ left: 15, right: 15 }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 48,
+                    paddingHorizontal: 12,
+                    paddingVertical: 18,
+                    borderWidth: 1,
+                    borderColor: Color.Gray300,
+                    borderRadius: 3,
+                  }}
+                >
                   <View style={{ width: 24, height: 24 }}>
                     <FastImage
                       style={{ width: '100%', height: '100%' }}
@@ -182,21 +183,20 @@ const AgreeScreen = () => {
                       resizeMode={FastImage.resizeMode.cover}
                     />
                   </View>
-                </CustomButton>
-
-                <View style={{ flex: 1, justifyContent: 'center', marginLeft: 12 }}>
-                  <CustomText
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 'bold',
-                      letterSpacing: -0.2,
-                      color: Color.Black1000,
-                    }}
-                  >
-                    모두 확인, 동의합니다
-                  </CustomText>
+                  <View style={{ flex: 1, justifyContent: 'center', marginLeft: 12 }}>
+                    <CustomText
+                      style={{
+                        fontSize: 15,
+                        fontWeight: 'bold',
+                        letterSpacing: -0.2,
+                        color: Color.Black1000,
+                      }}
+                    >
+                      모두 확인, 동의합니다
+                    </CustomText>
+                  </View>
                 </View>
-              </View>
+              </CustomButton>
 
               <View style={{ paddingHorizontal: 12 }}>
                 <FlatList
@@ -228,8 +228,13 @@ const AgreeScreen = () => {
           windowSize={7}
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
+          // ListFooterComponent={<View style={{ marginBottom: heightInfo.statusHeight }} />}
         />
-        <View style={{ paddingBottom: heightInfo.fixBottomHeight }}>
+        <View
+          style={{
+            paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+          }}
+        >
           <CustomButton onPress={() => onPressNext()}>
             <View
               style={{

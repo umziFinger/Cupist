@@ -860,3 +860,40 @@ export function* fetchMyReviewDelete(data: any): any {
     console.log('occurred Error...fetchMyReviewDelete : ', e);
   }
 }
+
+export function* fetchMyPasswordModify(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const url = `${Config.MY_PASSWORD_URL}`;
+
+    const payload = {
+      ...data,
+      url,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+    console.log('비밀번호 변경: ', response);
+    if (response.result === true && response.code === null) {
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: response.data.message,
+          },
+        }),
+      );
+
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      navigateGoBack();
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyPasswordModify : ', e);
+  }
+}

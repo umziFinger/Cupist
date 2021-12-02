@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, FlatList, Platform, TextInput } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, FlatList, Platform, TextInput, KeyboardAvoidingView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
@@ -7,7 +7,6 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
 
 import { Color } from '@/Assets/Color';
-import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 import InputEmail from '@/Components/Input/Email';
 import InputPassword from '@/Components/Input/Password';
 import AuthActions from '@/Stores/Auth/Actions';
@@ -19,12 +18,10 @@ import { navigate } from '@/Services/NavigationService';
 const JoinStepOneScreen = () => {
   const dispatch = useDispatch();
 
-  const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
 
   const { email, onChangeEmail, emailValidText, isEmailValid } = useInputEmail();
   const { password, onChangePassword, passwordValidText, isPasswordValid } = useInputPassword();
-
-  const [currentFocus, setCurrentFocus] = useState<string>('email');
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
@@ -38,6 +35,7 @@ const JoinStepOneScreen = () => {
 
   const onPressNext = () => {
     if (isEmailValid && isPasswordValid) {
+      dispatch(AuthActions.fetchAuthReducer({ type: 'email', data: { email } }));
       dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password } }));
       navigate('JoinStepTwoScreen');
     }
@@ -45,13 +43,17 @@ const JoinStepOneScreen = () => {
 
   const onFocusNext = (index: number) => {
     if (ref_input[index] && index < ref_input.length) {
-      ref_input[0].current?.blur();
       ref_input[index].current?.focus();
     }
   };
 
   return (
-    <KeyboardSpacerProvider>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#ffffff' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
+      // enabled={Platform.OS !== 'android'}
+    >
       <View style={{ flex: 1 }}>
         <Header type="back" />
         <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
@@ -123,8 +125,6 @@ const JoinStepOneScreen = () => {
                       ref={ref_input[0]}
                       emailValidText={emailValidText}
                       onChangeText={onChangeEmail}
-                      onFocus={() => setCurrentFocus('email')}
-                      onBlur={() => setCurrentFocus('')}
                       value={email}
                       autoFocus
                       onSubmitEditing={() => {
@@ -138,8 +138,6 @@ const JoinStepOneScreen = () => {
                       ref={ref_input[1]}
                       passwordValidText={passwordValidText}
                       onChangeText={onChangePassword}
-                      onFocus={() => setCurrentFocus('password')}
-                      onBlur={() => setCurrentFocus('')}
                       value={password}
                     />
                   </View>
@@ -152,16 +150,14 @@ const JoinStepOneScreen = () => {
             windowSize={7}
             scrollEnabled
             showsVerticalScrollIndicator={false}
-            ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
+            // ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
+            keyboardShouldPersistTaps={'handled'}
           />
 
           <View
-            style={[
-              { paddingBottom: heightInfo.fixBottomHeight },
-              {
-                transform: [{ translateY: isOpenKeyboard ? -8 : 0 }],
-              },
-            ]}
+            style={{
+              paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+            }}
           >
             <CustomButton onPress={() => onPressNext()}>
               <View
@@ -187,10 +183,10 @@ const JoinStepOneScreen = () => {
             </CustomButton>
           </View>
 
-          {Platform.OS === 'ios' && <KeyboardSpacer />}
+          {/* {Platform.OS === 'ios' && <KeyboardSpacer excludeHeight />} */}
         </View>
       </View>
-    </KeyboardSpacerProvider>
+    </KeyboardAvoidingView>
   );
 };
 export default JoinStepOneScreen;

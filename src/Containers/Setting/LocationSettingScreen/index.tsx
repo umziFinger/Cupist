@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Platform, View } from 'react-native';
+import { FlatList, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import _ from 'lodash';
@@ -12,13 +12,12 @@ import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
-import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
-import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { navigateGoBack } from '@/Services/NavigationService';
 import InputLocationSearch from '@/Components/Input/LocationSerach';
 
 const LocationSettingScreen = () => {
   const dispatch = useDispatch();
-  const { heightInfo, myLatitude, myLongitude, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
+  const { heightInfo, myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
   const { searchQuery, searchedAreaList, areaList } = useSelector((state: SearchState) => state.search);
   const [selectedCity, setSelectedCity] = useState({ code: '10', idx: 1 }); // 서울 code:"10" ,idx:1
   // const [selectedDistrict, setSelectedDistrict] = useState({ code: '1018', idx: 35 }); // 금천구 code:"1018" ,idx:35
@@ -45,10 +44,6 @@ const LocationSettingScreen = () => {
       dispatch(SearchActions.fetchSearchReducer({ type: 'locationInit' }));
     }
   }, [searchQuery]);
-
-  const onCancel = () => {
-    navigate('HomeScreen');
-  };
 
   // console.log(selectMenu);
   const onChangeText = (text: string) => {
@@ -121,15 +116,18 @@ const LocationSettingScreen = () => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <KeyboardSpacerProvider>
-        <Header type={'back'} text={'위치설정'} />
+      <Header type={'back'} text={'위치설정'} />
 
-        <View style={{ paddingTop: 4, paddingBottom: 8, borderBottomColor: Color.Gray200, borderBottomWidth: 1 }}>
-          <View style={{ paddingHorizontal: 20 }}>
-            <InputLocationSearch onChangeText={onChangeText} onClear={onClearKeyword} />
-          </View>
+      <View style={{ paddingTop: 4, paddingBottom: 8, borderBottomColor: Color.Gray200, borderBottomWidth: 1 }}>
+        <View style={{ paddingHorizontal: 20 }}>
+          <InputLocationSearch onChangeText={onChangeText} onClear={onClearKeyword} autoFocus={false} />
         </View>
-
+      </View>
+      <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: '#ffffff' }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
+      >
         {searchedAreaList?.length === 0 && searchQuery === '' ? (
           <View style={{ flex: 1, backgroundColor: Color.White }}>
             <View style={{ flexDirection: 'row' }}>
@@ -167,11 +165,13 @@ const LocationSettingScreen = () => {
                   ListFooterComponent={() => (
                     <View
                       style={{
-                        paddingBottom: isOpenKeyboard ? heightInfo.fixBottomHeight + 300 : heightInfo.fixBottomHeight,
+                        paddingBottom: heightInfo.fixBottomHeight,
                       }}
                     />
                   )}
-                  keyboardDismissMode={'interactive'}
+
+                  // keyboardDismissMode={'interactive'}
+                  // keyboardShouldPersistTaps={'handled'}
                 />
               </View>
 
@@ -205,18 +205,18 @@ const LocationSettingScreen = () => {
                   windowSize={7}
                   initialNumToRender={16}
                   maxToRenderPerBatch={19}
-                  keyboardShouldPersistTaps={'handled'}
+                  // keyboardShouldPersistTaps={'handled'}
                   ListFooterComponent={() => (
                     <>
                       {/* {Platform.OS === 'ios' && <KeyboardSpacer />} */}
                       <View
                         style={{
-                          paddingBottom: isOpenKeyboard ? heightInfo.fixBottomHeight + 300 : heightInfo.fixBottomHeight,
+                          paddingBottom: heightInfo.fixBottomHeight,
                         }}
                       />
                     </>
                   )}
-                  keyboardDismissMode={'interactive'}
+                  // keyboardDismissMode={'interactive'}
                 />
               </View>
             </View>
@@ -263,10 +263,10 @@ const LocationSettingScreen = () => {
               windowSize={7}
               scrollEnabled
               showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps={'handled'}
               keyboardDismissMode={'interactive'}
               ListFooterComponent={() => (
                 <>
-                  {Platform.OS === 'ios' && <KeyboardSpacer />}
                   <View style={{ paddingBottom: heightInfo.fixBottomHeight }} />
                 </>
               )}
@@ -274,43 +274,42 @@ const LocationSettingScreen = () => {
             />
           </View>
         )}
-
-        <View
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: heightInfo.fixBottomHeight + 8,
-            alignItems: 'center',
-          }}
-        >
-          <CustomButton onPress={() => onCurrentLocation()} style={{ zIndex: 99 }}>
-            <View
-              style={{
-                backgroundColor: Color.Primary1000,
-                flexDirection: 'row',
-                paddingHorizontal: 34,
-                paddingVertical: 14,
-                alignItems: 'center',
-                borderRadius: 24,
-              }}
-            >
-              <View style={{ width: 16, height: 16 }}>
-                <FastImage
-                  style={{ width: '100%', height: '100%' }}
-                  source={require('@/Assets/Images/Search/icLocaNow.png')}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              </View>
-              <View style={{ marginLeft: 4 }}>
-                <CustomText style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25, color: Color.White }}>
-                  현 위치로 설정
-                </CustomText>
-              </View>
+      </KeyboardAvoidingView>
+      <View
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: heightInfo.fixBottomHeight + 8,
+          alignItems: 'center',
+        }}
+      >
+        <CustomButton onPress={() => onCurrentLocation()} style={{ zIndex: 99 }}>
+          <View
+            style={{
+              backgroundColor: Color.Primary1000,
+              flexDirection: 'row',
+              paddingHorizontal: 34,
+              paddingVertical: 14,
+              alignItems: 'center',
+              borderRadius: 24,
+            }}
+          >
+            <View style={{ width: 16, height: 16 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Search/icLocaNow.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
             </View>
-          </CustomButton>
-        </View>
-      </KeyboardSpacerProvider>
+            <View style={{ marginLeft: 4 }}>
+              <CustomText style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25, color: Color.White }}>
+                현 위치로 설정
+              </CustomText>
+            </View>
+          </View>
+        </CustomButton>
+      </View>
     </View>
   );
 };

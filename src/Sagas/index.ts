@@ -46,8 +46,6 @@ import {
   fetchUserLogin,
   fetchUserInfo,
   fetchUserLogout,
-  fetchAuthTerms,
-  fetchAuthFindId,
   fetchAuthFindPassword,
 } from './AuthSaga';
 
@@ -81,6 +79,7 @@ import {
   fetchMyReviewWrite,
   fetchMyReviewModify,
   fetchMyReviewDelete,
+  fetchMyPasswordModify,
 } from '@/Sagas/MySaga';
 
 import {
@@ -129,8 +128,6 @@ export default function* root() {
     takeLatest(AuthTypes.FETCH_USER_LOGIN, fetchUserLogin),
     takeLatest(AuthTypes.FETCH_USER_INFO, fetchUserInfo),
     takeLatest(AuthTypes.FETCH_USER_LOGOUT, fetchUserLogout),
-    takeLatest(AuthTypes.FETCH_AUTH_TERMS, fetchAuthTerms),
-    takeLatest(AuthTypes.FETCH_AUTH_FIND_ID, fetchAuthFindId),
     takeLatest(AuthTypes.FETCH_AUTH_FIND_PASSWORD, fetchAuthFindPassword),
 
     // search
@@ -173,6 +170,7 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_REVIEW_WRITE, fetchMyReviewWrite),
     takeLatest(MyTypes.FETCH_MY_REVIEW_MODIFY, fetchMyReviewModify),
     takeLatest(MyTypes.FETCH_MY_REVIEW_DELETE, fetchMyReviewDelete),
+    takeLatest(MyTypes.FETCH_MY_PASSWORD_MODIFY, fetchMyPasswordModify),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

@@ -3,19 +3,19 @@ enum enumYN {
   N = 'N',
 }
 
-export const INITIAL_STATE = {
+export const INITIAL_STATE: AuthState['auth'] = {
   userIdx: null,
-  phoneNumber: null,
+  phoneNumber: '',
   log_cert: null,
   isReceived: false,
   smsValueValid: false,
-  smsValidText: null,
+  smsValidText: '',
   agreeInfo: {
-    selectedAgreeIdx: null,
+    selectedAgreeIdx: 0,
     checkedArr: [],
   },
-  email: null,
-  password: null,
+  email: '',
+  password: '',
   userInfo: {
     idx: null,
     mobile: null,
@@ -33,15 +33,15 @@ export const INITIAL_STATE = {
     eventYN: enumYN.Y,
   },
   tokenInfo: {
-    token: null,
-    refreshToken: null,
+    token: '',
+    refreshToken: '',
   },
-  inputAuthNum: null,
+  inputAuthNum: '',
   emailValid: false,
   passwordValid: false,
-  userName: null,
+  userName: '',
   userNameValid: false,
-  nickName: null,
+  nickName: '',
   nickNameValid: false,
   terms: [],
 };
