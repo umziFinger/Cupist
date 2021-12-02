@@ -107,6 +107,12 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
         break;
       }
 
+      case 'paymentPwd': {
+        console.log('call reducer paymentPwd : ', data);
+        draft.paymentPwd = data;
+        break;
+      }
+
       default:
         return draft;
     }

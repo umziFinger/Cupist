@@ -107,7 +107,6 @@ const PaymentMethodArea = (props: PropTypes) => {
         </CustomButton>
         <CustomButton
           onPress={() => {
-            console.log('sss');
             navigate('AddCardScreen');
           }}
         >
@@ -180,19 +179,25 @@ const PaymentMethodArea = (props: PropTypes) => {
                 등록하고 1초 결제
               </CustomText>
             </View>
-            <View
-              style={{
-                borderRadius: 20.5,
-                backgroundColor: Color.Primary1000,
-                paddingVertical: 12,
-                paddingHorizontal: 20,
-                marginTop: 20,
+            <CustomButton
+              onPress={() => {
+                navigate('AddCardScreen');
               }}
             >
-              <CustomText style={{ color: Color.White, fontSize: 12, fontWeight: 'bold' }}>
-                카드, 계좌 등록하기
-              </CustomText>
-            </View>
+              <View
+                style={{
+                  borderRadius: 20.5,
+                  backgroundColor: Color.Primary1000,
+                  paddingVertical: 12,
+                  paddingHorizontal: 20,
+                  marginTop: 20,
+                }}
+              >
+                <CustomText style={{ color: Color.White, fontSize: 12, fontWeight: 'bold' }}>
+                  카드, 계좌 등록하기
+                </CustomText>
+              </View>
+            </CustomButton>
           </View>
         </View>
       )}

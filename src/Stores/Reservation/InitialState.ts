@@ -17,6 +17,7 @@ export const INITIAL_STATE: ReservationState['reservation'] = {
     pwd2Digit: '',
     paymentPwd: '',
   },
+  paymentPwd: '',
 };
 
 export interface ReservationState {
@@ -39,5 +40,6 @@ export interface ReservationState {
       pwd2Digit: string | '';
       paymentPwd: string | '';
     };
+    paymentPwd: string;
   };
 }

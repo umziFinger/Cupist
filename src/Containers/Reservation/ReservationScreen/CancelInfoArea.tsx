@@ -5,6 +5,8 @@ import moment from 'moment';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
+import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
 
 const CancelInfoArea = () => {
   const { reservationInfo } = useSelector((state: ReservationState) => state.reservation);
@@ -27,11 +29,13 @@ const CancelInfoArea = () => {
           이후 예약을 취소할 경우 전액 취소 수수료가 부과될 수 있습니다.
         </CustomText>
       </View>
-      <View style={{ justifyContent: 'center', marginTop: 18 }}>
-        <CustomText style={{ color: Color.Error, fontSize: 11, fontWeight: '500', textDecorationLine: 'underline' }}>
-          나중에 예약을 취소하면 어떻게 되나요?
-        </CustomText>
-      </View>
+      <CustomButton onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 5 })}>
+        <View style={{ justifyContent: 'center', marginTop: 18 }}>
+          <CustomText style={{ color: Color.Error, fontSize: 11, fontWeight: '500', textDecorationLine: 'underline' }}>
+            나중에 예약을 취소하면 어떻게 되나요?
+          </CustomText>
+        </View>
+      </CustomButton>
     </View>
   );
 };

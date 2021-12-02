@@ -21,6 +21,7 @@ import CustomButton from '@/Components/CustomButton';
 import CommonActions from '@/Stores/Common/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'ReservationScreen'>;
@@ -34,6 +35,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
+  const { selectedPlaceIdx } = useSelector((state: PlaceState) => state.place);
   const { myCardList, selcetedCardIdx, paymentMethod, paymentType, totalPrice, personCount, shoesCount } = useSelector(
     (state: ReservationState) => state.reservation,
   );
@@ -41,12 +43,6 @@ const ReservationScreen = ({ route }: PropTypes) => {
   const [validation, setValidation] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!userIdx) {
-      return navigate('SimpleLoginScreen');
-    }
-    dispatch(ReservationActions.fetchReservationInfo({ placeIdx, ticketInfoIdx }));
-    dispatch(ReservationActions.fetchReservationCardList());
-
     return () => {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'reservationInfoInit' }));
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
@@ -54,8 +50,17 @@ const ReservationScreen = ({ route }: PropTypes) => {
   }, []);
 
   useEffect(() => {
+    if (!userIdx) {
+      navigate('SimpleLoginScreen');
+      return;
+    }
+    dispatch(ReservationActions.fetchReservationInfo({ placeIdx, ticketInfoIdx }));
+    dispatch(ReservationActions.fetchReservationCardList());
+  }, [route]);
+
+  useEffect(() => {
     if (paymentType === 'simple') {
-      if (selcetedCardIdx > -1) {
+      if (selcetedCardIdx > -1 && myCardList?.length !== 0) {
         setValidation(true);
       } else {
         setValidation(false);
@@ -68,7 +73,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
         setValidation(false);
       }
     }
-  }, [paymentType, selcetedCardIdx, paymentMethod]);
+  }, [paymentType, selcetedCardIdx, paymentMethod, myCardList]);
 
   // 결제 임시 데이터 생성
   const onCreateTempReservation = () => {
@@ -92,6 +97,8 @@ const ReservationScreen = ({ route }: PropTypes) => {
       // dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: true }));
     }
   };
+
+  console.log('reservationInfo : ', reservationInfo);
 
   const renderItem = ({ item }: { item: any }) => {
     switch (item) {
@@ -128,7 +135,6 @@ const ReservationScreen = ({ route }: PropTypes) => {
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <View style={{ marginTop: 28 }}>
               <PaymentMethodArea list={myCardList} />
-              {/* <PaymentMethodArea list={[]} /> */}
             </View>
           </View>
         );

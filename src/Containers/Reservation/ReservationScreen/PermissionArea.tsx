@@ -3,6 +3,7 @@ import { useWindowDimensions, View } from 'react-native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
 
 const PermissionArea = () => {
   const { width } = useWindowDimensions();
@@ -15,7 +16,10 @@ const PermissionArea = () => {
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
         <CustomText style={{ lineHeight: 20 }}>
-          <CustomButton onPress={() => console.log('sssss')} style={{ flexDirection: 'row' }}>
+          <CustomButton
+            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 5 })}
+            style={{ flexDirection: 'row' }}
+          >
             <CustomText
               style={{
                 fontSize: 12,
@@ -29,7 +33,10 @@ const PermissionArea = () => {
             </CustomText>
             <CustomText style={{ fontSize: 12, color: Color.Black1000, fontWeight: '500' }}>{', '}</CustomText>
           </CustomButton>
-          <CustomButton onPress={() => console.log('sssss')} style={{ flexDirection: 'row' }}>
+          <CustomButton
+            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 2 })}
+            style={{ flexDirection: 'row' }}
+          >
             <CustomText
               style={{
                 fontSize: 12,
@@ -43,7 +50,10 @@ const PermissionArea = () => {
             </CustomText>
             <CustomText style={{ fontSize: 12, color: Color.Black1000, fontWeight: '500' }}>{' 및 '}</CustomText>
           </CustomButton>
-          <CustomButton onPress={() => console.log('sssss')} style={{ flexDirection: 'row' }}>
+          <CustomButton
+            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 3 })}
+            style={{ flexDirection: 'row' }}
+          >
             <CustomText
               style={{
                 fontSize: 12,

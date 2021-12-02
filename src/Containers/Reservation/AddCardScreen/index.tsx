@@ -28,13 +28,24 @@ const AddCardScreen = () => {
   const [cardNum4, setCardNum4] = useState<string>('');
 
   useEffect(() => {
+    dispatch(
+      ReservationActions.fetchReservationReducer({
+        type: 'agreeCheckedArr',
+        data: [false, false, false, false, false],
+      }),
+    );
     return () => {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'addCardInfoInit' }));
+      dispatch(
+        ReservationActions.fetchReservationReducer({
+          type: 'agreeCheckedArr',
+          data: [false, false, false, false, false],
+        }),
+      );
     };
   }, []);
 
   useEffect(() => {
-    console.log('DID UPDATE Validation : ', agreeCheckedArr);
     if (addCardInfo && agreeCheckedArr) {
       if (
         addCardInfo.cardNumber.length === 16 &&
@@ -42,7 +53,6 @@ const AddCardScreen = () => {
         addCardInfo.pwd2Digit.length === 2 &&
         !agreeCheckedArr.includes(false)
       ) {
-        console.log('카드 정보 입력 성공!');
         return setValidation(true);
       }
     }
@@ -55,11 +65,8 @@ const AddCardScreen = () => {
       ReservationActions.fetchReservationReducer({
         type: 'addCardInfo',
         data: {
+          ...addCardInfo,
           cardNumber: `${cardNum1}${cardNum2}${cardNum3}${cardNum4}`,
-          expiry: addCardInfo?.expiry || '',
-          birth: addCardInfo?.birth || '',
-          pwd2Digit: addCardInfo?.pwd2Digit || '',
-          paymentPwd: addCardInfo?.paymentPwd || '',
         },
       }),
     );
@@ -91,24 +98,34 @@ const AddCardScreen = () => {
   };
 
   const onPressAdd = () => {
+    console.log('validation : ', validation);
     if (validation) {
-      return navigate('SimplePasswordScreen');
-      // if (myCardList?.length === 0) {
-      //   return console.log('간편 결제 비밀번호 등록 페이지 이동!');
-      // }
-      // return console.log('등록완료!');
+      // 기존 등록된 카드가 없을때 비밀번호 등록
+      if (myCardList?.length === 0) {
+        console.log('간편 결제 비밀번호 등록 페이지 이동!');
+        return navigate('RegisterPasswordScreen');
+      }
+
+      // 기존 등록된 카드가 있을때 바로 카드 등록
+      if (myCardList?.length !== 0) {
+        console.log('카드 등록 api 호출!');
+        console.log('카드 등록 params :', addCardInfo);
+
+        dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, birth: '930618' }));
+      }
+      return null;
     }
-    return navigate('SimplePasswordScreen');
-    // return dispatch(
-    //   CommonActions.fetchCommonReducer({
-    //     type: 'alertDialog',
-    //     data: {
-    //       alertDialog: true,
-    //       alertDialogType: 'confirm',
-    //       alertDialogMessage: '필수 정보를 입력해주세요',
-    //     },
-    //   }),
-    // );
+
+    return dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'alertDialog',
+        data: {
+          alertDialog: true,
+          alertDialogType: 'confirm',
+          alertDialogMessage: '카드 정보 및 약관동의를 확인해주세요',
+        },
+      }),
+    );
   };
 
   return (
