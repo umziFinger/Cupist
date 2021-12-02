@@ -7,6 +7,7 @@ import CustomText from '@/Components/CustomText';
 import { Color, Opacity } from '@/Assets/Color';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { onAppUpdate } from '@/Components/Function';
+import { navigateGoBack } from '@/Services/NavigationService';
 
 interface ConfirmDialogProps {
   item: {
@@ -34,6 +35,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
       }
       case 'goToStore': {
         onAppUpdate(versionInfo.minimumVersion);
+        break;
+      }
+      case 'findPassword': {
+        navigateGoBack();
         break;
       }
       default:

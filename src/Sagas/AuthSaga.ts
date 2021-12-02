@@ -6,6 +6,7 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 // @ts-ignore
 import BadgeAndroid from 'react-native-android-badge';
 import DeviceInfo from 'react-native-device-info';
+import moment from 'moment';
 import { Axios } from '@/Services/Axios';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
@@ -332,16 +333,19 @@ export function* fetchAuthFindPassword(data: any): any {
       console.log('fetchAuthFindsPassword response : ', response.data);
       yield put(
         CommonActions.fetchCommonReducer({
-          type: 'alertToast',
+          type: 'alertDialog',
           data: {
-            alertToast: true,
-            alertToastPosition: 'top',
-            alertToastMessage: '발급된 임시 비밀번호로 로그인해주세요.',
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogDataType: 'findPassword',
+            alertDialogTitle: `발급된 임시 비밀번호로 로그인해주세요.${
+              Config.APP_MODE === 'dev' && response.data.password
+            }`,
           },
         }),
       );
       // yield put(AuthActions.fetchAuthReducer({ type: 'foundPw', data: response.data.tmp_pw }));
-      navigate('LoginScreen');
+      // navigate('LoginScreen');
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }

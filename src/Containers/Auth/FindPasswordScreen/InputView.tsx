@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Platform, TextInput, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
-import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthActions from '@/Stores/Auth/Actions';
 import InputEmail from '@/Components/Input/Email';
 import useInputEmail from '@/Hooks/useInputEmail';
