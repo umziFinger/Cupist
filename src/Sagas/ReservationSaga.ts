@@ -1,4 +1,4 @@
-import { put, call } from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 import React from 'react';
 import CommonActions from '@/Stores/Common/Actions';
 import ReservationActions from '@/Stores/Reservation/Actions';
@@ -6,8 +6,9 @@ import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
-import { navigate } from '@/Services/NavigationService';
+import { navigate, navigateAndReset, navigateGoBack } from '@/Services/NavigationService';
 import MyActions from '@/Stores/My/Actions';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 export function* fetchReservationInfo(data: any): any {
   try {
@@ -118,13 +119,57 @@ export function* fetchReservationSimplePayment(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(ReservationActions.fetchReservationReducer({ type: 'paymentResult', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      // yield put(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
       navigate('PaymentResultScreen');
+      navigateAndReset('PaymentResultScreen');
     } else {
+      yield put(ReservationActions.fetchReservationReducer({ type: 'paymentPwd', data: '' }));
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchReservationSimplePayment : ', e);
+  }
+}
+
+export function* fetchReservationCard(data: any): any {
+  try {
+    const { selectedPlaceIdx, selectedTicket } = yield select((state: PlaceState) => state.place);
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: Config.RESERVATION_CARD_URL,
+    };
+    const response = yield call(Axios.POST, payload);
+    if (response.result === true && response.code === null) {
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      console.log('call saga 카드 등록 성공! : ', selectedTicket);
+      navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: selectedTicket?.idx });
+    } else {
+      navigateGoBack();
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchReservationCard : ', e);
+  }
+}
+
+export function* fetchReservationDeleteCard(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: `${Config.RESERVATION_CARD_URL}/${data.params.idx}`,
+    };
+    const response = yield call(Axios.DELETE, payload);
+    if (response.result === true && response.code === null) {
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(ReservationActions.fetchReservationCardList());
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchReservationDeleteCard : ', e);
   }
 }

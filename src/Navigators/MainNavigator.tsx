@@ -53,7 +53,8 @@ import PermissionDetailScreen from '@/Containers/Common/PermissionDetailScreen';
 import HotPlaceListScreen from '@/Containers/Place/HotPlaceListScreen';
 import PasswordEditScreen from '@/Containers/More/PasswordEditScreen';
 import AddCardScreen from '@/Containers/Reservation/AddCardScreen';
-import SimplePasswordScreen from '@/Containers/Reservation/SimplePasswordScreen';
+import RegisterPasswordScreen from '@/Containers/Reservation/RegisterPasswordScreen';
+import CheckPasswordScreen from '@/Containers/Reservation/CheckPasswordScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -107,7 +108,8 @@ export type MainStackParamList = {
   HotPlaceListScreen: undefined;
   PasswordEditScreen: undefined;
   AddCardScreen: undefined;
-  SimplePasswordScreen: undefined;
+  RegisterPasswordScreen: undefined;
+  CheckPasswordScreen: { paymentIdx: number; billingIdx: number };
 };
 
 const Tab = createBottomTabNavigator();
@@ -184,7 +186,8 @@ const MainNavigator = () => {
       <MainStack.Screen name="EditBookerScreen" component={EditBookerScreen} />
       <MainStack.Screen name="PaymentResultScreen" component={PaymentResultScreen} />
       <MainStack.Screen name="AddCardScreen" component={AddCardScreen} />
-      <MainStack.Screen name="SimplePasswordScreen" component={SimplePasswordScreen} />
+      <MainStack.Screen name="RegisterPasswordScreen" component={RegisterPasswordScreen} />
+      <MainStack.Screen name="CheckPasswordScreen" component={CheckPasswordScreen} />
 
       {/* Review */}
       <MainStack.Screen name="ReviewModifyScreen" component={ReviewModifyScreen} />

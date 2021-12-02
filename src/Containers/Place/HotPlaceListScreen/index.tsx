@@ -57,8 +57,6 @@ const HotPlaceListScreen = () => {
     }
   };
 
-  console.log('hotPlaceList?.length  :', hotPlaceList?.length);
-
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'back'} />

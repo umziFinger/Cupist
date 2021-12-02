@@ -299,6 +299,7 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'selectedPlaceIdx': {
+        console.log('@@@@ selectedPlaceIdx : ', data);
         draft.selectedPlaceIdx = data;
         break;
       }

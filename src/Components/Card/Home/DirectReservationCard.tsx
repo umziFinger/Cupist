@@ -11,6 +11,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import HomeActions from '@/Stores/Home/Actions';
 import { placeDibsDataType } from '@/Sagas/CommonSaga';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
+import PlaceActions from '@/Stores/Place/Actions';
 
 interface PropTypes {
   item: any;
@@ -26,6 +27,7 @@ const DirectReservationCard = (props: PropTypes) => {
     console.log('rv item : ', item?.name);
     dispatch(HomeActions.fetchHomeReducer({ type: 'selectedDirectName', data: item?.name || '' }));
     dispatch(HomeActions.fetchHomeReducer({ type: 'selectedDirectIdx', data: item?.idx || -1 }));
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedPlaceIdx', data: item?.idx || -1 }));
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenDirectReservationRBS', data: true }));
   };
 

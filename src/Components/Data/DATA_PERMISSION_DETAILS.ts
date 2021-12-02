@@ -24,4 +24,9 @@ export const DATA_PERMISSION_DETAILS = [
     title: '이벤트 및 할인정보 수신동의',
     uri: 'https://bolimi.kr/policy/agree',
   },
+  {
+    idx: 5,
+    title: '취소 / 이용규정',
+    uri: 'https://bolimi.kr/policy/agree',
+  },
 ];
