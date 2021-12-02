@@ -2,6 +2,8 @@ import { put, call, select } from 'redux-saga/effects';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import BadgeAndroid from 'react-native-android-badge';
 import DeviceInfo from 'react-native-device-info';
 import { Axios } from '@/Services/Axios';
@@ -314,45 +316,6 @@ export function* fetchSmsAuth(data: any): any {
     }
   } catch (e) {
     console.log('occurred Error...fetchSmsAuth : ', e);
-  }
-}
-
-export function* fetchAuthTerms(data: any): any {
-  try {
-    const payload = {
-      ...data,
-      url: Config.AUTH_TERMS_URL,
-    };
-
-    const response = yield call(Axios.GET, payload);
-
-    if (response.result === true && response.code === null) {
-      yield put(AuthActions.fetchAuthReducer({ type: 'terms', data: response.data }));
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchAuthTerms : ', e);
-  }
-}
-
-export function* fetchAuthFindId(data: any): any {
-  try {
-    const payload = {
-      ...data,
-      url: Config.AUTH_FIND_ID_URL,
-    };
-
-    const response = yield call(Axios.POST, payload);
-
-    if (response.result === true && response.code === null) {
-      console.log('fetchAuthFindId response : ', response.data.user_id);
-      yield put(AuthActions.fetchAuthReducer({ type: 'foundId', data: response.data.user_id }));
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchAuthFindId : ', e);
   }
 }
 

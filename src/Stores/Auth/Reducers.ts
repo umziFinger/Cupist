@@ -2,7 +2,6 @@ import { createReducer } from 'reduxsauce';
 import produce from 'immer';
 import { INITIAL_STATE } from '@/Stores/Auth/InitialState';
 import { AuthTypes } from './Actions';
-import { navigateGoBack } from '@/Services/NavigationService';
 
 export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
   return produce(state, (draft) => {
@@ -11,9 +10,9 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
       case 'login': {
         draft.userIdx = data.userIdx;
         draft.userInfo.idx = data.userIdx;
-        draft.phoneNumber = null;
-        draft.email = null;
-        draft.password = null;
+        draft.phoneNumber = '';
+        draft.email = '';
+        draft.password = '';
         draft.log_cert = null;
         break;
       }
@@ -26,26 +25,26 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         console.log('call reducer joinInfoInit');
         const d = draft;
         d.agreeInfo = INITIAL_STATE.agreeInfo;
-        d.phoneNumber = null;
+        d.phoneNumber = '';
         d.log_cert = null;
-        d.email = null;
-        d.password = null;
-        d.userName = null;
+        d.email = '';
+        d.password = '';
+        d.userName = '';
         d.smsValueValid = false;
-        d.smsValidText = null;
+        d.smsValidText = '';
         d.emailValid = false;
         d.passwordValid = false;
         d.userNameValid = false;
-        d.inputAuthNum = null;
+        d.inputAuthNum = '';
         d.isReceived = false;
-        d.nickName = null;
+        d.nickName = '';
 
         break;
       }
       case 'smsInfoInit': {
         draft.log_cert = null;
         draft.smsValueValid = false;
-        draft.smsValidText = null;
+        draft.smsValidText = '';
         break;
       }
       case 'agreeInfo': {

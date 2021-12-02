@@ -63,7 +63,6 @@ const HomeScreen = ({ route }: HomeProps) => {
       console.log('navigate token expired!!!', route);
       AsyncStorage.setItem('userIdx', '');
       dispatch(AuthActions.fetchAuthReducer({ type: 'logout' }));
-      console.log('userIdx expired', userIdx);
     }
   }, [route]);
 

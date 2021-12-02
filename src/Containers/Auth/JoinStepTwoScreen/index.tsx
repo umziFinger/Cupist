@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, FlatList, Platform, TextInput } from 'react-native';
+import { View, FlatList, Platform, TextInput, KeyboardAvoidingView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
@@ -90,7 +90,11 @@ const JoinStepTwoScreen = () => {
   };
 
   return (
-    <KeyboardSpacerProvider>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#ffffff' }}
+      behavior={'padding'}
+      enabled={Platform.OS !== 'android'}
+    >
       <View style={{ flex: 1 }}>
         <Header type="back" />
         <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
@@ -211,22 +215,10 @@ const JoinStepTwoScreen = () => {
             windowSize={7}
             scrollEnabled
             showsVerticalScrollIndicator={false}
-            ListFooterComponent={
-              <>
-                {Platform.OS === 'ios' && <KeyboardSpacer />}
-                <View style={{ paddingBottom: heightInfo.statusHeight }} />
-              </>
-            }
+            ListFooterComponent={<>{/* <View style={{ paddingBottom: heightInfo.statusHeight }} /> */}</>}
           />
 
-          <View
-            style={[
-              { paddingBottom: heightInfo.fixBottomHeight },
-              {
-                transform: [{ translateY: isOpenKeyboard ? -8 : 0 }],
-              },
-            ]}
-          >
+          <View style={{ paddingBottom: heightInfo.fixBottomHeight }}>
             <CustomButton onPress={() => onPressJoin()}>
               <View
                 style={{
@@ -255,7 +247,7 @@ const JoinStepTwoScreen = () => {
           </View>
         </View>
       </View>
-    </KeyboardSpacerProvider>
+    </KeyboardAvoidingView>
   );
 };
 export default JoinStepTwoScreen;

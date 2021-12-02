@@ -46,8 +46,6 @@ import {
   fetchUserLogin,
   fetchUserInfo,
   fetchUserLogout,
-  fetchAuthTerms,
-  fetchAuthFindId,
   fetchAuthFindPassword,
 } from './AuthSaga';
 
@@ -128,8 +126,6 @@ export default function* root() {
     takeLatest(AuthTypes.FETCH_USER_LOGIN, fetchUserLogin),
     takeLatest(AuthTypes.FETCH_USER_INFO, fetchUserInfo),
     takeLatest(AuthTypes.FETCH_USER_LOGOUT, fetchUserLogout),
-    takeLatest(AuthTypes.FETCH_AUTH_TERMS, fetchAuthTerms),
-    takeLatest(AuthTypes.FETCH_AUTH_FIND_ID, fetchAuthFindId),
     takeLatest(AuthTypes.FETCH_AUTH_FIND_PASSWORD, fetchAuthFindPassword),
 
     // search
