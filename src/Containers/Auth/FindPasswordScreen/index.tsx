@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { View, FlatList, Platform, KeyboardAvoidingView } from 'react-native';
+import { useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { Color } from '@/Assets/Color';
@@ -11,7 +11,11 @@ const FindPasswordScreen = () => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
 
   return (
-    <>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#ffffff' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
+    >
       <Header type={'back'} />
       <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
         <FlatList
@@ -74,7 +78,7 @@ const FindPasswordScreen = () => {
           ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
         />
       </View>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 export default FindPasswordScreen;

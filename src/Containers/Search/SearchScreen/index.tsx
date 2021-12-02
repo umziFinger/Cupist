@@ -106,6 +106,9 @@ const SearchScreen = () => {
   const onDeleteAll = () => {
     dispatch(SearchActions.fetchSearchRecentListDeleteAll());
   };
+  const onPressQuery = (text: string) => {
+    dispatch(SearchActions.fetchSearchReducer({ type: 'searchQuery', data: text }));
+  };
 
   const isValidKeyword = useCallback(() => {
     // 검색어가 있을때
@@ -156,7 +159,9 @@ const SearchScreen = () => {
                       style={{ flexDirection: 'row', alignItems: 'center', paddingTop: recentIndex === 0 ? 0 : 16 }}
                     >
                       <View style={{ flex: 1 }}>
-                        <CustomText>{item.query}</CustomText>
+                        <CustomButton onPress={() => onPressQuery(item.query)}>
+                          <CustomText>{item.query}</CustomText>
+                        </CustomButton>
                       </View>
                       <CustomButton onPress={() => onDelete(item)}>
                         <View style={{ width: 18, height: 18 }}>

@@ -211,7 +211,7 @@ const LocationSettingScreen = () => {
                       {/* {Platform.OS === 'ios' && <KeyboardSpacer />} */}
                       <View
                         style={{
-                          paddingBottom: heightInfo.fixBottomHeight,
+                          paddingBottom: heightInfo.subBottomHeight,
                         }}
                       />
                     </>

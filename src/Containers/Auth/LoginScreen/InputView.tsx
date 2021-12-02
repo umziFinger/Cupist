@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React, { useRef } from 'react';
+import { TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
@@ -12,10 +12,19 @@ import useInputPassword from '@/Hooks/useInputPassword';
 
 function InputView() {
   const dispatch = useDispatch();
-  const { email, onChangeEmail, emailValidText, isEmailValid } = useInputEmail();
-  const { password, passwordValidText, isPasswordValid } = useInputPassword();
 
-  const [currentFocus, setCurrentFocus] = useState<string>('email');
+  const ref_input: Array<React.RefObject<TextInput>> = [];
+  ref_input[0] = useRef(null);
+  ref_input[1] = useRef(null);
+
+  const { email, onChangeEmail, emailValidText, isEmailValid } = useInputEmail();
+  const { password, passwordValidText } = useInputPassword();
+
+  const onFocusNext = (index: number) => {
+    if (ref_input[index] && index < ref_input.length) {
+      ref_input[index].current?.focus();
+    }
+  };
 
   const onChangePassword = (value: string) => {
     if (value) {
@@ -39,19 +48,20 @@ function InputView() {
     <View style={{}}>
       <View style={{ marginTop: 48, paddingBottom: 32 - 18 }}>
         <InputEmail
+          ref={ref_input[0]}
           emailValidText={emailValidText}
           onChangeText={onChangeEmail}
-          onFocus={() => setCurrentFocus('email')}
-          onBlur={() => setCurrentFocus('')}
           value={email}
+          onSubmitEditing={() => {
+            onFocusNext(1);
+          }}
         />
       </View>
 
       <View style={{ paddingBottom: 36 - 18 }}>
         <InputPassword
+          ref={ref_input[1]}
           onChangeText={onChangePassword}
-          onFocus={() => setCurrentFocus('password')}
-          onBlur={() => setCurrentFocus('')}
           value={password}
           passwordValidText={passwordValidText}
         />
