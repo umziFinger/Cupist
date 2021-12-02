@@ -126,7 +126,7 @@ const LocationSettingScreen = () => {
       <KeyboardAvoidingView
         style={{ flex: 1, backgroundColor: '#ffffff' }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        // enabled={Platform.OS !== 'android'}
+        keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
       >
         {searchedAreaList?.length === 0 && searchQuery === '' ? (
           <View style={{ flex: 1, backgroundColor: Color.White }}>
@@ -169,6 +169,7 @@ const LocationSettingScreen = () => {
                       }}
                     />
                   )}
+
                   // keyboardDismissMode={'interactive'}
                   // keyboardShouldPersistTaps={'handled'}
                 />
