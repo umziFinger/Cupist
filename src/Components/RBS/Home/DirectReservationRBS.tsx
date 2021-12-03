@@ -48,6 +48,7 @@ const DirectReservationRBS = () => {
         navigate('SimpleLoginScreen');
       }
       if (selectedTicket?.idx) {
+        dispatch(PlaceActions.fetchPlaceDetail({ idx: selectedDirectIdx }));
         navigate('ReservationScreen', { placeIdx: selectedDirectIdx, ticketInfoIdx: selectedTicket?.idx });
       }
       RBSheetRef?.current.close();

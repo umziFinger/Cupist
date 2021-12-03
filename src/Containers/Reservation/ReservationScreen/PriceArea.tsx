@@ -8,6 +8,7 @@ import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   item: any;
@@ -17,8 +18,6 @@ const PriceArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { item } = props;
   const { totalPrice, personCount, shoesCount } = useSelector((state: ReservationState) => state.reservation);
-  // const [personCount, setPersonCount] = useState<number>(1);
-  // const [shoesCount, setShoesCount] = useState<number>(0);
 
   useEffect(() => {
     dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: 1 }));
@@ -41,11 +40,26 @@ const PriceArea = (props: PropTypes) => {
   const onPressPersonCount = (type: string) => {
     if (type === 'plus') {
       console.log(personCount);
+      const maxPeople = item?.maxPeople;
+      if (maxPeople) {
+        if (maxPeople === personCount) {
+          return dispatch(
+            CommonActions.fetchCommonReducer({
+              type: 'alertDialog',
+              data: {
+                alertDialog: true,
+                alertDialogType: 'confirm',
+                alertDialogMessage: '예약가능한 인원수를 초과했습니다.\n\u2022 인원 1~4인당 1레인이 배치됩니다.',
+              },
+            }),
+          );
+        }
+      }
       dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: personCount + 1 }));
     }
     if (type === 'minus') {
       if (personCount === 1) {
-        return;
+        return null;
       }
       dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: personCount - 1 }));
     }

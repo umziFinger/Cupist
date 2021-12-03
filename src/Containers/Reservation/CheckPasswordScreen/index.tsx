@@ -23,12 +23,13 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
   const { paymentIdx, billingIdx } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { paymentPwd } = useSelector((state: ReservationState) => state.reservation);
-  // const [paymentPwd, setPaymentPwd] = useState<string>('');
   const [showArr, setShowArr] = useState<Array<boolean>>([false, false, false, false, false, false]);
   const [validation, setValidation] = useState<boolean>(false);
 
   useEffect(() => {
+    // 간헐적으로 키보드 안열리는 현상때문에 didmount에서 처리하도록함 (안드로이드)
     InputRef.current.focus();
+
     return () => {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentPwd', data: '' }));
     };
