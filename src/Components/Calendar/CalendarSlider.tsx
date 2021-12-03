@@ -70,7 +70,7 @@ const CalendarSlider = () => {
                 data: {
                   alertToast: true,
                   alertToastPosition: 'top',
-                  alertToastMessage: '오늘을 포함한 이후 날짜를 선택헤주세요.',
+                  alertToastMessage: '이전 날짜는 선택하실 수 없습니다.',
                 },
               }),
             );
