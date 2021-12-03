@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Platform, KeyboardAvoidingView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { CommonState } from '@/Stores/Common/InitialState';
-import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import { Color } from '@/Assets/Color';
 import InputView from './InputView';
@@ -21,16 +20,6 @@ const LoginScreen = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   console.log('didmount input focus : ', isFocusInput);
-  //   console.log(RBSheetRef.current?.state.animatedHeight);
-  //   if (isFocusInput) {
-  //     setHeightRBS(0.5);
-  //   } else {
-  //     setHeightRBS(0.7);
-  //   }
-  // }, [isFocusInput]);
-
   const onPressJoin = () => {
     navigate('AgreeScreen');
   };
@@ -44,59 +33,64 @@ const LoginScreen = () => {
     <>
       <Header type={'back'} />
       <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
-        <FlatList
-          data={[0]}
-          renderItem={() => (
-            <View
-              style={{
-                flex: 1,
-              }}
-            >
-              <View style={{ paddingTop: 44, flex: 1 }}>
-                <View style={{}}>
-                  <CustomText
-                    style={{
-                      fontSize: 22,
-                      fontWeight: 'bold',
-                      letterSpacing: -0.4,
-                      color: Color.Black1000,
-                    }}
-                  >
-                    이메일로 시작하기
-                  </CustomText>
-                </View>
-
-                {/* 이메일 & 비밀번호 입력 */}
-                <InputView />
-
-                <CustomButton onPress={() => onPressFindPassword()}>
-                  <View style={{ alignItems: 'center', marginTop: 16 }}>
+        <KeyboardAvoidingView
+          style={{ flex: 1, backgroundColor: '#ffffff' }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
+        >
+          <FlatList
+            data={[0]}
+            renderItem={() => (
+              <View
+                style={{
+                  flex: 1,
+                }}
+              >
+                <View style={{ paddingTop: 44, flex: 1 }}>
+                  <View style={{}}>
                     <CustomText
                       style={{
-                        fontSize: 12,
-                        letterSpacing: 0,
-                        color: Color.Gray400,
-                        textDecorationLine: 'underline',
-                        textDecorationColor: Color.Gray400,
+                        fontSize: 22,
+                        fontWeight: 'bold',
+                        letterSpacing: -0.4,
+                        color: Color.Black1000,
                       }}
                     >
-                      비밀번호를 잊으셨나요?
+                      이메일로 시작하기
                     </CustomText>
                   </View>
-                </CustomButton>
-              </View>
-            </View>
-          )}
-          // contentContainerStyle={{ backgroundColor: 'red', flex: 1 }}
-          keyExtractor={(item, index) => index.toString()}
-          initialNumToRender={3}
-          maxToRenderPerBatch={6}
-          windowSize={7}
-          showsVerticalScrollIndicator={false}
-          renderToHardwareTextureAndroid
-          ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
-        />
 
+                  {/* 이메일 & 비밀번호 입력 */}
+                  <InputView />
+
+                  <CustomButton onPress={() => onPressFindPassword()}>
+                    <View style={{ alignItems: 'center', marginTop: 16 }}>
+                      <CustomText
+                        style={{
+                          fontSize: 12,
+                          letterSpacing: 0,
+                          color: Color.Gray400,
+                          textDecorationLine: 'underline',
+                          textDecorationColor: Color.Gray400,
+                        }}
+                      >
+                        비밀번호를 잊으셨나요?
+                      </CustomText>
+                    </View>
+                  </CustomButton>
+                </View>
+              </View>
+            )}
+            // contentContainerStyle={{ backgroundColor: 'red', flex: 1 }}
+            keyExtractor={(item, index) => index.toString()}
+            initialNumToRender={3}
+            maxToRenderPerBatch={6}
+            windowSize={7}
+            showsVerticalScrollIndicator={false}
+            renderToHardwareTextureAndroid
+            ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
+          />
+        </KeyboardAvoidingView>
         <View
           style={{
             alignItems: 'center',
