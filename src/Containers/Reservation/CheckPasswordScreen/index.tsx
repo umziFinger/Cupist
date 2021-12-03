@@ -11,6 +11,7 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import ReservationActions from '@/Stores/Reservation/Actions';
+import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'CheckPasswordScreen'>;
@@ -25,6 +26,10 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
   // const [paymentPwd, setPaymentPwd] = useState<string>('');
   const [showArr, setShowArr] = useState<Array<boolean>>([false, false, false, false, false, false]);
   const [validation, setValidation] = useState<boolean>(false);
+
+  useEffect(() => {
+    InputRef.current.focus();
+  }, []);
 
   useEffect(() => {
     if (paymentPwd) {
@@ -76,17 +81,19 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
   };
 
   return (
-    <CustomButton
-      onPress={() => Keyboard.dismiss()}
-      effect={false}
-      style={{ flex: 1, backgroundColor: Color.White, paddingBottom: heightInfo.statusHeight + 44 }}
-    >
-      <Header type={'close'} />
-      <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: 'transparent' }}
-        behavior={'padding'}
-        enabled={Platform.OS !== 'android'}
+    <KeyboardSpacerProvider>
+      {/* <KeyboardAvoidingView */}
+      {/*  style={{ flex: 1, backgroundColor: 'transparent' }} */}
+      {/*  behavior={Platform.OS === 'ios' ? 'padding' : 'height'} */}
+      {/*  keyboardVerticalOffset={Platform.OS === 'android' ? 1 : undefined} */}
+      {/* > */}
+      <CustomButton
+        onPress={() => Keyboard.dismiss()}
+        effect={false}
+        style={{ flex: 1, backgroundColor: Color.White, paddingBottom: heightInfo.statusHeight + 44 }}
       >
+        <Header type={'close'} />
+
         <View style={{ flex: 0.7 }} />
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{}}>
@@ -129,7 +136,8 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
             </View>
           </CustomButton>
         </View>
-      </KeyboardAvoidingView>
+        {<KeyboardSpacer />}
+      </CustomButton>
       <TextInput
         ref={InputRef}
         autoCompleteType="off"
@@ -138,8 +146,10 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
           color: 'transparent',
           fontSize: 0,
           padding: 0,
+          position: 'absolute',
+          bottom: -100,
         }}
-        autoFocus
+        // autoFocus
         keyboardType="number-pad"
         autoCorrect={false}
         maxLength={6}
@@ -147,7 +157,8 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
         value={paymentPwd}
         allowFontScaling={false}
       />
-    </CustomButton>
+      {/* </KeyboardAvoidingView> */}
+    </KeyboardSpacerProvider>
   );
 };
 
