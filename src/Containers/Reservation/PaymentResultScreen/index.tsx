@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
+import moment from 'moment';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
@@ -14,7 +15,7 @@ import MyActions from '@/Stores/My/Actions';
 
 const PaymentResultScreen = () => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { paymentResult } = useSelector((state: ReservationState) => state.reservation);
+  const { paymentResult, reservationInfo } = useSelector((state: ReservationState) => state.reservation);
   const place = paymentResult?.Place || {};
   const dispatch = useDispatch();
   const onMyScreen = () => {
@@ -26,8 +27,11 @@ const PaymentResultScreen = () => {
     dispatch(MyActions.fetchMyReservationList(params));
     navigate('MyScreen');
   };
+
+  const cancelLimit = reservationInfo?.cancelLimit || moment().format('YYYY년 MM월 DD일 HH시 mm분');
+
   return (
-    <View style={{ flex: 1, backgroundColor: Color.White }}>
+    <View style={{ flex: 1, backgroundColor: Color.White, paddingBottom: heightInfo.fixBottomHeight + 48 }}>
       <Header type={'back'} />
       <View style={{ flex: 1, paddingHorizontal: 24 }}>
         <View style={{ alignItems: 'center' }}>
@@ -166,7 +170,6 @@ const PaymentResultScreen = () => {
             flex: 1,
             flexDirection: 'row',
             alignItems: 'flex-end',
-            paddingBottom: heightInfo.fixBottomHeight + 48,
           }}
         >
           <View
@@ -185,6 +188,11 @@ const PaymentResultScreen = () => {
             </CustomText>
           </View>
         </CustomButton>
+        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 12 }}>
+          <CustomText style={{ color: Color.Point1000, fontSize: 13, letterSpacing: -0.2 }}>
+            {cancelLimit}까지 취소가 가능합니다.
+          </CustomText>
+        </View>
       </View>
     </View>
   );
