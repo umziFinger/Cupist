@@ -29,6 +29,9 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
 
   useEffect(() => {
     InputRef.current.focus();
+    return () => {
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentPwd', data: '' }));
+    };
   }, []);
 
   useEffect(() => {
@@ -50,13 +53,11 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
         billingIdx,
         paymentPwd,
       };
-      console.log('간편결제 params : ', params);
       dispatch(ReservationActions.fetchReservationSimplePayment({ paymentIdx, billingIdx, paymentPwd }));
     }
   }, [validation]);
 
   const onChangeText = async (text: string) => {
-    // setPaymentPwd(text);
     dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentPwd', data: text }));
     produce(showArr, (draft) => {
       if (text.length > 0) {
