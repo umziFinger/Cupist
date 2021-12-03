@@ -82,6 +82,44 @@ const ReservationList = () => {
   };
 
   const onCancel = (item: any) => {
+    const customAlertDialogMessage = () => {
+      return (
+        <>
+          {item?.cancelType === '당일취소' ? (
+            <CustomText
+              style={{
+                fontSize: 15,
+                letterSpacing: -0.38,
+                textAlign: 'center',
+                color: Color.Black1000,
+              }}
+            >
+              이용일 당일 취소로 환불규정에 따라
+              <CustomText
+                style={{
+                  color: Color.Error,
+                }}
+              >
+                예약금액의 90%만 환불이 진행됩니다.
+              </CustomText>
+              예약을 취소하시겠습니까?
+            </CustomText>
+          ) : (
+            <CustomText
+              style={{
+                fontSize: 15,
+                letterSpacing: -0.38,
+                textAlign: 'center',
+                color: Color.Black1000,
+              }}
+            >
+              예약을 취소하시겠습니까?
+            </CustomText>
+          )}
+        </>
+      );
+    };
+
     dispatch(
       CommonActions.fetchCommonReducer({
         type: 'alertDialog',
@@ -89,43 +127,7 @@ const ReservationList = () => {
           alertDialog: true,
           alertDialogType: 'choice',
           alertDialogDataType: 'reservationCancel',
-          alertDialogMessage() {
-            return (
-              <>
-                {item?.cancelType === '당일취소' ? (
-                  <CustomText
-                    style={{
-                      fontSize: 15,
-                      letterSpacing: -0.38,
-                      textAlign: 'center',
-                      color: Color.Black1000,
-                    }}
-                  >
-                    이용일 당일 취소로 환불규정에 따라
-                    <CustomText
-                      style={{
-                        color: Color.Error,
-                      }}
-                    >
-                      예약금액의 90%만 환불이 진행됩니다.
-                    </CustomText>
-                    예약을 취소하시겠습니까?
-                  </CustomText>
-                ) : (
-                  <CustomText
-                    style={{
-                      fontSize: 15,
-                      letterSpacing: -0.38,
-                      textAlign: 'center',
-                      color: Color.Black1000,
-                    }}
-                  >
-                    예약을 취소하시겠습니까?
-                  </CustomText>
-                )}
-              </>
-            );
-          },
+          alertDialogMessage: customAlertDialogMessage(),
           alertDialogParams: { reservationIdx: item.idx },
         },
       }),
