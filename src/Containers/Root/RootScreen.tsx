@@ -10,7 +10,7 @@ import Toast from '@/Components/Toast';
 import Loading from '@/Components/Loading';
 
 // import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
-// import RootCheckAppVersion from './RootCheckAppVersion';
+import RootCheckAppVersion from './RootCheckAppVersion';
 // import RootDynamicLink from './RootDynamicLink';
 // import RootFcm from '@/Containers/Root/RootFcm';
 
@@ -93,10 +93,8 @@ const RootScreen = () => {
       {alertToast && <Toast position={alertToastPosition} message={alertToastMessage} />}
 
       {/* <RootFcm /> */}
-      {/* <RootCodePush /> */}
-      {/* {checkSplash && <RootCodePush />} */}
       {/** 앱버전체크(realDB) 리스너 컴포넌트 * */}
-      {/* <RootCheckAppVersion /> */}
+      <RootCheckAppVersion />
       {/* <RootDynamicLink /> */}
 
       {isOpenTimeFilterRBS && <TimeFilterRBS />}

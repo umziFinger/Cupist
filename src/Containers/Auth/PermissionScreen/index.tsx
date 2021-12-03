@@ -16,9 +16,6 @@ import { navigateAndSimpleReset } from '@/Services/NavigationService';
 
 const PermissionScreen = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log('@@@@@@@@@@');
-  }, []);
 
   const onConfirm = async () => {
     // dispatch(CommonActions.fetchCommonReducer({ type: 'permissionYN', data: 'Y' }));

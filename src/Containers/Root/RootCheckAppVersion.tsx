@@ -52,7 +52,7 @@ const RootCheckAppVersion = () => {
               alertDialog: true,
               alertDialogType: updateType,
               alertDialogDataType: 'goToStore',
-              alertDialogTitle: '원할한 서비스 이용을 위해\n앱 업데이트가 꼭 필요합니다.',
+              alertDialogMessage: '원할한 서비스 이용을 위해\n앱 업데이트가 꼭 필요합니다.',
             },
           }),
         );
