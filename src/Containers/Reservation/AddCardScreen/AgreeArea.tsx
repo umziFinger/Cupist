@@ -10,6 +10,8 @@ import { DATA_PERMISSIONS } from '@/Containers/Auth/AgreeScreen/data';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { DATA_PAYMENT_PERMISSIONS } from '@/Containers/Reservation/AddCardScreen/data';
 import AgreeItem from './AgreeItem';
+import { navigate } from '@/Services/NavigationService';
+import { DATA_PERMISSION_PAYMENT_DETAILS } from '@/Components/Data/DATA_PERMISSION_PAYMENT_DETAILS';
 
 const AgreeArea = () => {
   const dispatch = useDispatch();
@@ -48,8 +50,9 @@ const AgreeArea = () => {
     });
   };
 
-  const onAgreeDetail = () => {
-    console.log('onAgreeDetail');
+  const onAgreeDetail = (index: number) => {
+    console.log('onAgreeDetail : ', index);
+    navigate('PermissionDetailScreen', { agreeIdx: index, detailArr: DATA_PERMISSION_PAYMENT_DETAILS });
   };
 
   return (
@@ -62,17 +65,17 @@ const AgreeArea = () => {
         data={[0]}
         renderItem={() => (
           <View style={{ flex: 1 }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                paddingHorizontal: 12,
-                paddingVertical: 18,
-                borderWidth: 1,
-                borderColor: Color.Gray300,
-                borderRadius: 3,
-              }}
-            >
-              <CustomButton onPress={() => onCheck(0)} hitSlop={{ left: 15, right: 15 }}>
+            <CustomButton onPress={() => onCheck(0)}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingHorizontal: 12,
+                  paddingVertical: 18,
+                  borderWidth: 1,
+                  borderColor: Color.Gray300,
+                  borderRadius: 3,
+                }}
+              >
                 <View style={{ width: 24, height: 24 }}>
                   <FastImage
                     style={{ width: '100%', height: '100%' }}
@@ -84,21 +87,21 @@ const AgreeArea = () => {
                     resizeMode={FastImage.resizeMode.cover}
                   />
                 </View>
-              </CustomButton>
 
-              <View style={{ flex: 1, justifyContent: 'center', marginLeft: 12 }}>
-                <CustomText
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 'bold',
-                    letterSpacing: -0.2,
-                    color: Color.Black1000,
-                  }}
-                >
-                  모두 확인, 동의합니다
-                </CustomText>
+                <View style={{ flex: 1, justifyContent: 'center', marginLeft: 12 }}>
+                  <CustomText
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                      letterSpacing: -0.2,
+                      color: Color.Black1000,
+                    }}
+                  >
+                    모두 확인, 동의합니다
+                  </CustomText>
+                </View>
               </View>
-            </View>
+            </CustomButton>
 
             <View style={{ paddingHorizontal: 12 }}>
               <FlatList
@@ -107,7 +110,7 @@ const AgreeArea = () => {
                   return (
                     <AgreeItem
                       item={item}
-                      index={index + 1}
+                      index={index}
                       checkArr={checkedArr}
                       onCheck={onCheck}
                       onAgreeDetail={onAgreeDetail}

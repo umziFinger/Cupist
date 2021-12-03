@@ -4,6 +4,7 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
 
 const PermissionArea = () => {
   const { width } = useWindowDimensions();
@@ -17,7 +18,7 @@ const PermissionArea = () => {
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
         <CustomText style={{ lineHeight: 20 }}>
           <CustomButton
-            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 5 })}
+            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 5, detailArr: DATA_PERMISSION_DETAILS })}
             style={{ flexDirection: 'row' }}
           >
             <CustomText
@@ -34,7 +35,7 @@ const PermissionArea = () => {
             <CustomText style={{ fontSize: 12, color: Color.Black1000, fontWeight: '500' }}>{', '}</CustomText>
           </CustomButton>
           <CustomButton
-            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 2 })}
+            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 2, detailArr: DATA_PERMISSION_DETAILS })}
             style={{ flexDirection: 'row' }}
           >
             <CustomText
@@ -51,7 +52,7 @@ const PermissionArea = () => {
             <CustomText style={{ fontSize: 12, color: Color.Black1000, fontWeight: '500' }}>{' 및 '}</CustomText>
           </CustomButton>
           <CustomButton
-            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 3 })}
+            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 3, detailArr: DATA_PERMISSION_DETAILS })}
             style={{ flexDirection: 'row' }}
           >
             <CustomText

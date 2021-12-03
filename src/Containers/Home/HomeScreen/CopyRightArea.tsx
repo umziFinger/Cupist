@@ -5,6 +5,7 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
 
 const CopyRightArea = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -52,7 +53,7 @@ const CopyRightArea = () => {
             <View style={{ justifyContent: 'center', marginTop: 12 }}>
               <CustomText style={{ color: Color.Gray400, fontSize: 12 }}>
                 {`전화번호 : 070-4680-3267\n`}
-                {`전자우편주소 : bolimiapp@naver.com`}
+                {`전자우편주소 : help@bolimi.kr`}
               </CustomText>
             </View>
           </View>
@@ -61,7 +62,9 @@ const CopyRightArea = () => {
           <View style={{ justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Gray400, fontSize: 12 }}>이용약관 | </CustomText>
           </View>
-          <CustomButton onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 2 })}>
+          <CustomButton
+            onPress={() => navigate('PermissionDetailScreen', { agreeIdx: 2, detailArr: DATA_PERMISSION_DETAILS })}
+          >
             <View style={{ justifyContent: 'center' }}>
               <CustomText style={{ color: Color.Gray700, fontSize: 12, fontWeight: '500' }}>
                 개인정보 처리방침

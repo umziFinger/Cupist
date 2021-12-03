@@ -6,13 +6,13 @@ import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
-import CommonActions from '@/Stores/Common/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import AgreeItem from '@/Containers/Auth/AgreeScreen/AgreeItem';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { Color } from '@/Assets/Color';
 import { DATA_PERMISSIONS } from './data';
 import { navigate } from '@/Services/NavigationService';
+import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
 
 const AgreeScreen = () => {
   const dispatch = useDispatch();
@@ -127,7 +127,7 @@ const AgreeScreen = () => {
   const onAgreeDetail = (value: number) => {
     dispatch(AuthActions.fetchAuthReducer({ type: 'selectedAgreeIdx', data: { selectedAgreeIdx: value } }));
     // dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeDetailRBS', data: true }));
-    navigate('PermissionDetailScreen', { agreeIdx: value });
+    navigate('PermissionDetailScreen', { agreeIdx: value, detailArr: DATA_PERMISSION_DETAILS });
   };
 
   const onPressNext = () => {

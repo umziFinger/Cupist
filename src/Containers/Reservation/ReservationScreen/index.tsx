@@ -18,7 +18,6 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CancelInfoArea from '@/Containers/Reservation/ReservationScreen/CancelInfoArea';
 import PermissionArea from '@/Containers/Reservation/ReservationScreen/PermissionArea';
 import CustomButton from '@/Components/CustomButton';
-import CommonActions from '@/Stores/Common/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
@@ -30,7 +29,7 @@ interface PropTypes {
 const ReservationScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
   const { placeIdx, ticketInfoIdx } = route.params;
-  console.log('##### placeIdx, ticketInfoIdx :  ', placeIdx, ticketInfoIdx);
+  console.log('ReservationScreen route.params : ', route.params);
 
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
@@ -97,8 +96,6 @@ const ReservationScreen = ({ route }: PropTypes) => {
       // dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: true }));
     }
   };
-
-  console.log('reservationInfo : ', reservationInfo);
 
   const renderItem = ({ item }: { item: any }) => {
     switch (item) {

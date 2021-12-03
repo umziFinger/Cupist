@@ -104,7 +104,7 @@ export type MainStackParamList = {
   ReportScreen: { mainIdx: number; subIdx: number; reportType: string };
   PlaceReviewScreen: undefined;
   PlaceListScreen: { type: string };
-  PermissionDetailScreen: { agreeIdx: number };
+  PermissionDetailScreen: { agreeIdx: number; detailArr: Array<any> };
   HotPlaceListScreen: undefined;
   PasswordEditScreen: undefined;
   AddCardScreen: undefined;
