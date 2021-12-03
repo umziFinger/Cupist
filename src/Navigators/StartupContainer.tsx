@@ -28,7 +28,7 @@ const StartupContainer = () => {
           console.log('StartupContainer snapshot!!!!! : ', snapshot.val());
           if (snapshot.val()) {
             const { version } = snapshot.val();
-            codePushVersion = version?.codepush?.current || null;
+            codePushVersion = Platform.OS === 'ios' ? version?.ios?.codepush : version?.android?.codepush || null;
             console.log('appCodePushVersion 111', appCodePushVersion, codePushVersion);
           }
         });
