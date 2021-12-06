@@ -46,7 +46,7 @@ const dev = {
 
   // auth
   AUTH_LOGIN_URL: 'auth/login',
-  AUTH_LOGIN_SOCIAL_URL: 'auth/login/social',
+  AUTH_LOGIN_SOCIAL_URL: 'auth/login/social', // 소셜 로그인/임시가입
   AUTH_LOGOUT_URL: 'auth/logout',
   AUTH_REFRESH_URL: 'auth/refresh',
   AUTH_SMS_SEND_URL: 'auth/sms-send',
@@ -54,7 +54,7 @@ const dev = {
   AUTH_JOIN_URL: 'auth/join',
   AUTH_FIND_PASSWORD_URL: 'auth/find-password',
   AUTH_RENEW_TOKEN_URL: 'auth/refresh',
-
+  AUTH_JOIN_SOCIAL_URL: 'auth/join/social', // 동의 후 소셜 가입
   // my
   MY_URL: 'my',
   MY_PUSH_YN_URL: 'my/pushYN',

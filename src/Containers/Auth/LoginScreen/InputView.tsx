@@ -18,19 +18,11 @@ function InputView() {
   ref_input[1] = useRef(null);
 
   const { email, onChangeEmail, emailValidText, isEmailValid } = useInputEmail();
-  const { password, passwordValidText } = useInputPassword();
+  const { password, passwordValidText, onChangePassword } = useInputPassword();
 
   const onFocusNext = (index: number) => {
     if (ref_input[index] && index < ref_input.length) {
       ref_input[index].current?.focus();
-    }
-  };
-
-  const onChangePassword = (value: string) => {
-    if (value) {
-      dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: value } }));
-    } else {
-      dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: null } }));
     }
   };
 
@@ -61,7 +53,7 @@ function InputView() {
       <View style={{ paddingBottom: 36 - 18 }}>
         <InputPassword
           ref={ref_input[1]}
-          onChangeText={onChangePassword}
+          onChangeText={(e) => onChangePassword(e, 'login')}
           value={password}
           passwordValidText={passwordValidText}
         />

@@ -1,5 +1,4 @@
 import { createActions } from 'reduxsauce';
-import { fetchAuthSocialLogin } from '@/Sagas/AuthSaga';
 
 const { Types, Creators } = createActions({
   fetchAuthReducer: ['params'],

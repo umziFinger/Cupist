@@ -51,10 +51,15 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         draft.agreeInfo.checkedArr = data.checkedArr;
         break;
       }
-      case 'agreeInfoWithDeleteAll': {
+      case 'agreeInfoItemCheck': {
+        const { index } = data;
+        draft.agreeInfo.checkedArr[index] = !draft.agreeInfo.checkedArr[index];
+        break;
+      }
+
+      case 'agreeInfoAllCheck': {
         try {
-          const deleteAll = state.agreeInfo.checkedArr.filter((v) => v !== 'all');
-          draft.agreeInfo.checkedArr = deleteAll.filter((v) => v !== data);
+          draft.agreeInfo.checkedArr[0] = data;
         } catch (e) {
           console.log(e);
         }
@@ -157,6 +162,11 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         draft.userInfo.eventYN = data;
         break;
       }
+      case 'tempUserIdx': {
+        draft.tempUserIdx = data;
+        break;
+      }
+
       default:
         return draft;
     }

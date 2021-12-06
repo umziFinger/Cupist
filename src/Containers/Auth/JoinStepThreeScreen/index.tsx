@@ -139,8 +139,8 @@ const JoinStepThreeScreen = () => {
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
-          initialNumToRender={3}
-          maxToRenderPerBatch={7}
+          initialNumToRender={7}
+          maxToRenderPerBatch={10}
           windowSize={7}
           scrollEnabled
           showsVerticalScrollIndicator={false}

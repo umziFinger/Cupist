@@ -1,29 +1,32 @@
 import React from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 interface AgreeItem {
   item: any;
-  index: string | number;
-  checkArr: Array<string | number>;
+  index: number;
+  checkArr: Array<boolean>;
   onCheck: Function;
   onAgreeDetail: Function;
 }
 
 function AgreeItem(props: AgreeItem) {
   const { item, index, checkArr, onCheck, onAgreeDetail } = props;
+
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 20 }}>
-      <CustomButton onPress={() => onCheck(index)}>
+      <CustomButton onPress={() => onCheck(index + 1)}>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ width: 20, height: 20 }}>
             <FastImage
               style={{ width: '100%', height: '100%' }}
               source={
-                checkArr?.includes(index)
+                checkArr[index + 1]
                   ? require('@/Assets/Images/Button/icCheck.png')
                   : require('@/Assets/Images/Button/icCheckOff.png')
               }

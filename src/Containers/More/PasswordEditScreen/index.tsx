@@ -82,7 +82,7 @@ const PasswordEditScreen = () => {
                   <InputPassword
                     ref={ref_input[0]}
                     passwordValidText={passwordValidText}
-                    onChangeText={onChangePassword}
+                    onChangeText={(e) => onChangePassword(e, 'login')}
                     value={password}
                     title={'기존 비밀번호'}
                     placeHolder={'기존 비밀번호를 입력해주세요.'}
@@ -95,7 +95,7 @@ const PasswordEditScreen = () => {
                   <InputPassword
                     ref={ref_input[1]}
                     passwordValidText={newPasswordValidText}
-                    onChangeText={onChangeNewPassword}
+                    onChangeText={(e) => onChangeNewPassword(e, 'modify')}
                     value={newPassword}
                     title={'새로운 비밀번호'}
                     placeHolder={'새로운 비밀번호를 입력해주세요.'}
@@ -108,7 +108,7 @@ const PasswordEditScreen = () => {
                   <InputPassword
                     ref={ref_input[2]}
                     passwordValidText={confirmPasswordValidText}
-                    onChangeText={onChangeConfirmPassword}
+                    onChangeText={(e) => onChangeConfirmPassword(e, 'login')}
                     value={confirmPassword}
                     title={'새로운 비밀번호 확인'}
                     placeHolder={'새로운 비밀번호를 다시 입력해주세요.'}

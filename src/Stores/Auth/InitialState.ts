@@ -12,7 +12,7 @@ export const INITIAL_STATE: AuthState['auth'] = {
   smsValidText: '',
   agreeInfo: {
     selectedAgreeIdx: 0,
-    checkedArr: [],
+    checkedArr: [false, false, false, false, false, false],
   },
   email: '',
   password: '',
@@ -44,6 +44,7 @@ export const INITIAL_STATE: AuthState['auth'] = {
   nickName: '',
   nickNameValid: false,
   terms: [],
+  tempUserIdx: '',
 };
 
 export interface AuthState {
@@ -67,12 +68,13 @@ export interface AuthState {
     nickName: string | '';
     nickNameValid: boolean | false;
     terms: Array<any> | [];
+    tempUserIdx: any; // 처음 소셜 로그인 시 이용약관 동의를 위한 tempUserIdx 가 발행됨
   };
 }
 
 interface AgreeInfo {
   selectedAgreeIdx: number | 0;
-  checkedArr: Array<string | number>;
+  checkedArr: Array<boolean>;
 }
 
 interface userInfo {

@@ -18,39 +18,35 @@ const AgreeScreen = () => {
   const dispatch = useDispatch();
 
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { agreeInfo } = useSelector((state: AuthState) => state.auth);
+  const { agreeInfo, tempUserIdx } = useSelector((state: AuthState) => state.auth);
   const { checkedArr } = agreeInfo;
 
   useEffect(() => {
-    // 선택 옵션 미선택시
-    if (checkedArr?.length === 4) {
-      const idx = checkedArr?.findIndex((item) => item === 4);
-      if (idx === -1) {
-        dispatch(
-          AuthActions.fetchAuthReducer({
-            type: 'agreeInfo',
-            data: {
-              checkedArr: [0, 1, 2, 3, 'all'],
-            },
-          }),
-        );
-      }
-    }
     // 모두 체크 되었을때
-    if (checkedArr?.length === 5) {
-      const idx = checkedArr?.findIndex((item) => item === 'all');
-      if (idx === -1) {
+    if (!checkedArr[0]) {
+      if (checkedArr[1] && checkedArr[2] && checkedArr[3] && checkedArr[4]) {
+        // console.log('========3: ', checkedArr);
         dispatch(
           AuthActions.fetchAuthReducer({
-            type: 'agreeInfo',
-            data: {
-              checkedArr: [0, 1, 2, 3, 4, 'all'],
-            },
+            type: 'agreeInfoAllCheck',
+            data: true,
           }),
         );
       }
     }
-  }, [checkedArr]);
+
+    if (checkedArr[0]) {
+      if (!checkedArr[1] || !checkedArr[2] || !checkedArr[3] || !checkedArr[4]) {
+        // console.log('=========4: ', checkedArr);
+        dispatch(
+          AuthActions.fetchAuthReducer({
+            type: 'agreeInfoAllCheck',
+            data: false,
+          }),
+        );
+      }
+    }
+  }, [agreeInfo]);
 
   useEffect(() => {
     return () => {
@@ -62,68 +58,45 @@ const AgreeScreen = () => {
     };
   }, []);
 
-  // console.log(checkedArr);
-  const onCheck = (index: string | number) => {
-    if (index === 'all') {
-      if (checkedArr?.includes(index)) {
-        dispatch(
-          AuthActions.fetchAuthReducer({
-            type: 'agreeInfo',
-            data: {
-              checkedArr: null,
-            },
-          }),
-        );
-      } else {
-        dispatch(
-          AuthActions.fetchAuthReducer({
-            type: 'agreeInfo',
-            data: {
-              checkedArr: [0, 1, 2, 3, 4, 'all'],
-            },
-          }),
-        );
+  const onCheck = (index: any) => {
+    switch (index) {
+      case 0: {
+        if (checkedArr[0]) {
+          // console.log('========1: ', index);
+          dispatch(
+            AuthActions.fetchAuthReducer({
+              type: 'agreeInfo',
+              data: {
+                checkedArr: [false, false, false, false, false, false],
+              },
+            }),
+          );
+        } else {
+          // console.log('========5: ', index);
+          dispatch(
+            AuthActions.fetchAuthReducer({
+              type: 'agreeInfo',
+              data: {
+                checkedArr: [true, true, true, true, true, true],
+              },
+            }),
+          );
+        }
+        break;
       }
-    } else if (checkedArr?.includes(index)) {
-      const idx = checkedArr?.findIndex((item) => item === 'all');
-      if (idx > -1 && index !== 4) {
+      default: {
         dispatch(
           AuthActions.fetchAuthReducer({
-            type: 'agreeInfoWithDeleteAll',
-            data: index,
-          }),
-        );
-      } else {
-        dispatch(
-          AuthActions.fetchAuthReducer({
-            type: 'agreeInfo',
+            type: 'agreeInfoItemCheck',
             data: {
-              checkedArr: checkedArr?.filter((v) => v !== index),
-            },
-          }),
-        );
-      }
-    } else {
-      dispatch(
-        AuthActions.fetchAuthReducer({
-          type: 'agreeInfo',
-          data: {
-            checkedArr: checkedArr ? checkedArr?.concat(index) : [index],
-          },
-        }),
-      );
-      if (checkedArr?.length === 5) {
-        dispatch(
-          AuthActions.fetchAuthReducer({
-            type: 'agreeInfo',
-            data: {
-              checkedArr: [0, 1, 2, 3, 4, 'all'],
+              index,
             },
           }),
         );
       }
     }
   };
+
   const onAgreeDetail = (value: number) => {
     dispatch(AuthActions.fetchAuthReducer({ type: 'selectedAgreeIdx', data: { selectedAgreeIdx: value } }));
     // dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenAgreeDetailRBS', data: true }));
@@ -131,8 +104,14 @@ const AgreeScreen = () => {
   };
 
   const onPressNext = () => {
-    if (checkedArr?.includes('all')) {
-      navigate('JoinStepOneScreen');
+    if (checkedArr[0]) {
+      if (tempUserIdx) {
+        console.log('=======소셜!:');
+        const params = { agreeInfo: JSON.stringify(agreeInfo.checkedArr), tempUserIdx };
+        dispatch(AuthActions.fetchAuthSocialJoin(params));
+      } else {
+        navigate('JoinStepOneScreen');
+      }
     }
   };
 
@@ -160,7 +139,7 @@ const AgreeScreen = () => {
                 </CustomText>
               </View>
 
-              <CustomButton onPress={() => onCheck('all')} hitSlop={{ left: 15, right: 15 }}>
+              <CustomButton onPress={() => onCheck(0)} hitSlop={{ left: 15, right: 15 }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -176,7 +155,7 @@ const AgreeScreen = () => {
                     <FastImage
                       style={{ width: '100%', height: '100%' }}
                       source={
-                        checkedArr?.includes('all')
+                        checkedArr[0]
                           ? require('@/Assets/Images/Button/icCheck.png')
                           : require('@/Assets/Images/Button/icCheckOff.png')
                       }
@@ -241,7 +220,7 @@ const AgreeScreen = () => {
                 alignItems: 'center',
                 paddingVertical: 15,
                 borderRadius: 5,
-                backgroundColor: checkedArr?.includes('all') ? Color.Primary1000 : Color.Grayyellow200,
+                backgroundColor: checkedArr[0] ? Color.Primary1000 : Color.Grayyellow200,
               }}
             >
               <CustomText

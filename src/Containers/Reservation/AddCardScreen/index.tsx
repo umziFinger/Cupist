@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, TextInput, useWindowDimensions, View } from 'react-native';
+import { FlatList, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
@@ -16,7 +16,6 @@ import CommonActions from '@/Stores/Common/Actions';
 import { navigate } from '@/Services/NavigationService';
 
 const AddCardScreen = () => {
-  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { agreeCheckedArr, myCardList } = useSelector((state: ReservationState) => state.reservation);
@@ -134,7 +133,7 @@ const AddCardScreen = () => {
       <View style={{ flex: 1 }}>
         <FlatList
           data={[0]}
-          renderItem={({ item, index }) => (
+          renderItem={() => (
             <View style={{ flex: 1 }}>
               <View style={{ paddingHorizontal: 20 }}>
                 <View style={{ justifyContent: 'center', marginTop: 16 }}>

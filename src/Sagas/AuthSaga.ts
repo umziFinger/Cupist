@@ -6,7 +6,6 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 // @ts-ignore
 import BadgeAndroid from 'react-native-android-badge';
 import DeviceInfo from 'react-native-device-info';
-import moment from 'moment';
 import { Axios } from '@/Services/Axios';
 import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
@@ -39,39 +38,45 @@ export function* fetchUserLogin(data: any): any {
     const response = yield call(Axios.POST, payload);
     console.log('로그인 반응: ', response.data);
     if (response.result === true && response.code === null) {
-      const { accessToken, refreshToken, idx } = response.data;
-      console.log('Login token : ', accessToken);
-      console.log('Login refresh token : ', refreshToken);
-      console.log('Login user idx : ', idx);
+      const { accessToken, refreshToken, idx, tempUserIdx } = response.data;
+      if (tempUserIdx) {
+        yield put(AuthActions.fetchAuthReducer({ type: 'tempUserIdx', data: tempUserIdx }));
+        navigate('AgreeScreen');
+      } else {
+        console.log('Login token : ', accessToken);
+        console.log('Login refresh token : ', refreshToken);
+        console.log('Login user idx : ', idx);
 
-      AsyncStorage.setItem('userIdx', idx.toString());
-      AsyncStorage.setItem('accessToken', accessToken.toString());
-      AsyncStorage.setItem('refreshToken', refreshToken.toString());
+        AsyncStorage.setItem('userIdx', idx.toString());
+        AsyncStorage.setItem('accessToken', accessToken.toString());
+        AsyncStorage.setItem('refreshToken', refreshToken.toString());
 
-      yield put(AuthActions.fetchAuthReducer({ type: 'login', data: { userIdx: idx } }));
-      FirebaseTokenUpdate();
-      yield put(AuthActions.fetchUserInfo());
-      yield put(
-        AuthActions.fetchAuthReducer({
-          type: 'tokenInfo',
-          data: {
-            tokenInfo: { accessToken, refreshToken },
-          },
-        }),
-      );
+        yield put(AuthActions.fetchAuthReducer({ type: 'login', data: { userIdx: idx } }));
+        FirebaseTokenUpdate();
+        yield put(AuthActions.fetchUserInfo());
+        yield put(
+          AuthActions.fetchAuthReducer({
+            type: 'tokenInfo',
+            data: {
+              tokenInfo: { accessToken, refreshToken },
+            },
+          }),
+        );
+
+        yield put(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: false } }));
+
+        yield put(
+          CommonActions.fetchCommonReducer({
+            type: 'alertToast',
+            data: {
+              alertToast: true,
+              alertToastPosition: 'bottom',
+              alertToastMessage: '로그인이 완료되었습니다.',
+            },
+          }),
+        );
+      }
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      yield put(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: false } }));
-
-      yield put(
-        CommonActions.fetchCommonReducer({
-          type: 'alertToast',
-          data: {
-            alertToast: true,
-            alertToastPosition: 'bottom',
-            alertToastMessage: '로그인이 완료되었습니다.',
-          },
-        }),
-      );
     } else {
       // yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
       yield put(CommonActions.fetchErrorHandler(response));
@@ -351,5 +356,59 @@ export function* fetchAuthFindPassword(data: any): any {
     }
   } catch (e) {
     console.log('occurred Error...fetchAuthFindPassword : ', e);
+  }
+}
+export function* fetchAuthSocialJoin(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.AUTH_JOIN_SOCIAL_URL,
+    };
+
+    const response = yield call(Axios.POST, payload);
+
+    if (response.result === true && response.code === null) {
+      const { accessToken, refreshToken, idx } = response.data;
+
+      console.log('소셜가입 : ', response.data);
+      console.log('Login token : ', accessToken);
+      console.log('Login refresh token : ', refreshToken);
+      console.log('Login user idx : ', idx);
+
+      AsyncStorage.setItem('userIdx', idx.toString());
+      AsyncStorage.setItem('accessToken', accessToken.toString());
+      AsyncStorage.setItem('refreshToken', refreshToken.toString());
+
+      yield put(AuthActions.fetchAuthReducer({ type: 'login', data: { userIdx: idx } }));
+      FirebaseTokenUpdate();
+      yield put(AuthActions.fetchUserInfo());
+      yield put(
+        AuthActions.fetchAuthReducer({
+          type: 'tokenInfo',
+          data: {
+            tokenInfo: { accessToken, refreshToken },
+          },
+        }),
+      );
+
+      navigate('JoinStepThreeScreen');
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'bottom',
+            alertToastMessage: '로그인이 완료되었습니다.',
+          },
+        }),
+      );
+
+      // tempUserIdx 초기화
+      yield put(AuthActions.fetchAuthReducer({ type: 'tempUserIdx', data: null }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchAuthSocialJoin : ', e);
   }
 }

@@ -137,7 +137,7 @@ const JoinStepOneScreen = () => {
                     <InputPassword
                       ref={ref_input[1]}
                       passwordValidText={passwordValidText}
-                      onChangeText={onChangePassword}
+                      onChangeText={(e) => onChangePassword(e, 'join')}
                       value={password}
                     />
                   </View>
