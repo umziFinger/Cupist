@@ -179,8 +179,6 @@ const EventArea = (props: PropTypes) => {
         horizontal
         onScrollBeginDrag={() => console.log('start')}
         onScrollEndDrag={(event: NativeSyntheticEvent<any>) => {
-          console.log('eve', event?.nativeEvent.velocity);
-
           if (viewableIndex === list?.length - 1) {
             console.log('마지막이다');
             if (Platform.OS === 'android') {
@@ -213,7 +211,7 @@ const EventArea = (props: PropTypes) => {
         style={{
           position: 'absolute',
           bottom: 12,
-          left: '50%',
+          left: (width - list?.length * 6) / 2,
           height: 6,
         }}
       >
@@ -230,6 +228,7 @@ const EventArea = (props: PropTypes) => {
                   marginRight: 4,
                   borderRadius: 50,
                   backgroundColor: 'rgba(255,255,255,0.4)',
+                  // backgroundColor: 'red',
                 }}
               />
             )

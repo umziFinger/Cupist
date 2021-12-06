@@ -7,6 +7,7 @@ import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
 import HotPlaceCard from '@/Components/Card/Home/HotPlaceCard';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import PlaceActions from '@/Stores/Place/Actions';
 
 interface PropTypes {
   list: Array<any>;
