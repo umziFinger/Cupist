@@ -13,7 +13,7 @@ import HotPlaceCard from './HotPlaceCard';
 const HotPlaceListScreen = () => {
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-  const { myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
+  const { myLatitude, myLongitude, heightInfo } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { hotPlaceList, hotPlaceListPage } = useSelector((state: PlaceState) => state.place);
 
@@ -111,6 +111,7 @@ const HotPlaceListScreen = () => {
           showsVerticalScrollIndicator={false}
           refreshing={false}
           onRefresh={() => onRefresh()}
+          contentContainerStyle={{ paddingBottom: heightInfo.fixBottomHeight }}
         />
       </View>
     </View>

@@ -87,6 +87,24 @@ const PrepaymentPriceArea = (props: PropTypes) => {
           maxToRenderPerBatch={7}
           windowSize={7}
           numColumns={2}
+          ListEmptyComponent={
+            <View style={{ paddingHorizontal: 20, marginTop: 80, marginBottom: 50, alignItems: 'center' }}>
+              <View style={{ width: 60, height: 60 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={require('@/Assets/Images/Home/emptyList.png')}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </View>
+              <View style={{ marginTop: 16, alignItems: 'center' }}>
+                <View style={{ justifyContent: 'center' }}>
+                  <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: '500', letterSpacing: -0.25 }}>
+                    해당날짜에 선결제 특가 상품이 없습니다.
+                  </CustomText>
+                </View>
+              </View>
+            </View>
+          }
         />
       </View>
     </View>
