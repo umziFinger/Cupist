@@ -58,6 +58,7 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'possibleDirectDate': {
+        console.log('call reducer possibleDirectDate : ', data);
         draft.possibleDirectDate = data?.date || '';
         break;
       }
