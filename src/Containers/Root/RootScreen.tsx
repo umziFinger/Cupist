@@ -11,7 +11,7 @@ import Loading from '@/Components/Loading';
 
 // import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 import RootCheckAppVersion from './RootCheckAppVersion';
-// import RootDynamicLink from './RootDynamicLink';
+import RootDynamicLink from './RootDynamicLink';
 // import RootFcm from '@/Containers/Root/RootFcm';
 
 import { NotificationRequest } from '@/Components/Permission/Notification';
@@ -95,7 +95,7 @@ const RootScreen = () => {
       {/* <RootFcm /> */}
       {/** 앱버전체크(realDB) 리스너 컴포넌트 * */}
       <RootCheckAppVersion />
-      {/* <RootDynamicLink /> */}
+      <RootDynamicLink />
 
       {isOpenTimeFilterRBS && <TimeFilterRBS />}
       {isOpenQnaTypeRBS && <QnaTypeRBS />}

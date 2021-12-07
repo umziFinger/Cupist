@@ -13,6 +13,8 @@ import { PlaceState } from '@/Stores/Place/InitialState';
 import TopDateSelector from '@/Components/Calendar/TopDateSelector';
 import { HomeState } from '@/Stores/Home/InitialState';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
+import CreateDynamicLink from '@/Components/Share/CreateDynamicLink';
+import CommonShare from '@/Components/Share/CommonShare';
 
 const PlaceDetailHeader = (props: HeaderProps) => {
   const { text, isShow } = props;
@@ -24,8 +26,16 @@ const PlaceDetailHeader = (props: HeaderProps) => {
 
   const bgColor = Color.White;
 
-  const onPressShare = () => {
+  const onPressShare = async () => {
     console.log('onPressShare');
+    const placeIdx = placeDetail?.place?.idx || -1;
+    const link = await CreateDynamicLink({ type: 'placeDetail', idx: placeIdx });
+    console.log('link : ', link);
+    const params = {
+      type: 'placeDetail',
+      data: placeDetail?.place || '',
+    };
+    await CommonShare(params);
   };
 
   useEffect(() => {

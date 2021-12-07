@@ -180,7 +180,8 @@ const CalendarRBS = () => {
             initialNumToRender={2}
             maxToRenderPerBatch={1}
             windowSize={7}
-            contentContainerStyle={{ paddingBottom: heightInfo.fixBottomHeight, paddingTop: 32 }}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: heightInfo.fixBottomHeight + 44, paddingTop: 32 }}
           />
         </View>
         <View

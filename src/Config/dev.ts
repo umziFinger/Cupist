@@ -24,6 +24,9 @@ const dev = {
   // 이미지 url
   IMAGE_URL: 'https://www.luxurynall.com/',
 
+  // dynamicLink URL
+  DYNAMIC_URL: 'https://link.bolimi.kr',
+
   // 자체 관리 rn 버전
   APP_VERSION: '1.0.0',
 

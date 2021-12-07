@@ -1,7 +1,17 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CommonActions from '@/Stores/Common/Actions';
+import { HomeState } from '@/Stores/Home/InitialState';
+import { CommonState } from '@/Stores/Common/InitialState';
+import { URLParser } from '@/Components/Function';
+import { navigate } from '@/Services/NavigationService';
+import PickActions from '@/Stores/Pick/Actions';
+import MyActions from '@/Stores/My/Actions';
+import SectionActions from '@/Stores/Section/Actions';
+import PlaceActions from '@/Stores/Place/Actions';
+import CollectionActions from '@/Stores/Collection/Actions';
 
 /** ****************
  *
@@ -10,6 +20,11 @@ import CommonActions from '@/Stores/Common/Actions';
  ***************** */
 function RootDynamicLink() {
   const dispatch = useDispatch();
+  const { isHomeLoaded } = useSelector((state: HomeState) => state.home);
+
+  const { dynamicLinkFlag, dynamicLinkUrl, myLatitude, myLongitude } = useSelector(
+    (state: CommonState) => state.common,
+  );
 
   useEffect(() => {
     // 앱 실행상태
@@ -22,6 +37,37 @@ function RootDynamicLink() {
         handleDynamicLink(link);
       });
   }, []);
+
+  useEffect(() => {
+    AsyncStorage.getItem('splashStatus').then((value) => {
+      console.log('Root code push isHomeLoaded : ', isHomeLoaded, value, dynamicLinkFlag);
+      if (isHomeLoaded && value === 'end' && dynamicLinkFlag) {
+        onDynamicLinkNavigate();
+      }
+    });
+  }, [isHomeLoaded, dynamicLinkFlag]);
+
+  const onDynamicLinkNavigate = () => {
+    if (dynamicLinkUrl) {
+      const path = URLParser(dynamicLinkUrl).getPath();
+      const idx = URLParser(dynamicLinkUrl).getParam('idx');
+      const subIdx = URLParser(dynamicLinkUrl).getParam('subIdx');
+      console.log('dynamic path : ', path);
+      console.log('dynamic idx : ', idx);
+      console.log('dynamic subIdx : ', subIdx);
+
+      if (path === 'placeDetail') {
+        if (idx) {
+          dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeDetailIdx', data: idx }));
+          navigate('PlaceDetailScreen', { idx });
+        }
+      }
+      dispatch(CommonActions.fetchCommonReducer({ type: 'dynamicLinkInfoInit' }));
+    } else {
+      dispatch(CommonActions.fetchCommonReducer({ type: 'dynamicLinkInfoInit' }));
+      dispatch(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: false } }));
+    }
+  };
 
   const handleDynamicLink = (link: any) => {
     console.log('in deep link-->', link);

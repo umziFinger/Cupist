@@ -23,15 +23,15 @@ export default async function (props: PropTypes) {
   const link = await dynamicLinks().buildShortLink(
     {
       link: url,
-      domainUriPrefix: 'https://applink.watple.co',
+      domainUriPrefix: Config.DYNAMIC_URL,
       navigation: {
         forcedRedirectEnabled: true,
       },
       android: {
-        packageName: 'co.watple.www',
+        packageName: 'kr.bolimi',
       },
       ios: {
-        bundleId: 'co.watple.www',
+        bundleId: 'kr.bolimi',
         appStoreId: '',
       },
     },
