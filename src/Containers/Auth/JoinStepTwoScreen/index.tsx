@@ -92,7 +92,7 @@ const JoinStepTwoScreen = () => {
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: '#ffffff' }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
+      enabled={Platform.OS === 'ios'}
     >
       <View style={{ flex: 1 }}>
         <Header type="back" />

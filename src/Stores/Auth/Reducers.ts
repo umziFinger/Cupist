@@ -25,6 +25,7 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         console.log('call reducer joinInfoInit');
         const d = draft;
         d.agreeInfo = INITIAL_STATE.agreeInfo;
+        d.tempUserIdx = INITIAL_STATE.tempUserIdx;
         d.phoneNumber = '';
         d.log_cert = null;
         d.email = '';
