@@ -18,10 +18,10 @@ export const INITIAL_STATE: AuthState['auth'] = {
   password: '',
   userInfo: {
     idx: null,
-    mobile: null,
-    nickname: null,
-    profile: null,
-    username: null,
+    mobile: '',
+    nickname: '',
+    profile: '',
+    username: '',
     reservationCnt: null,
     email: null,
     providerType: null,
@@ -79,10 +79,10 @@ interface AgreeInfo {
 
 interface userInfo {
   idx: number | null;
-  mobile: string | null;
-  nickname: string | null;
-  profile: string | null;
-  username: string | null;
+  mobile: string | '';
+  nickname: string | '';
+  profile: string | '';
+  username: string | '';
   reservationCnt: number | null;
   email: string | null;
   providerType: string | null;

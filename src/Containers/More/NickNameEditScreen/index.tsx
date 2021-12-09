@@ -23,10 +23,8 @@ const NickNameEditScreen = () => {
     useInputNickname();
 
   useEffect(() => {
-    if (setNickName) {
-      setNickName(userInfo?.nickname || '');
-    }
-  }, [setNickName]);
+    onChangeNickname(userInfo?.nickname);
+  }, [userInfo]);
 
   useEffect(() => {
     return () => {
@@ -74,14 +72,7 @@ const NickNameEditScreen = () => {
           ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
         />
 
-        <View
-          style={[
-            { paddingBottom: heightInfo.fixBottomHeight },
-            {
-              transform: [{ translateY: isOpenKeyboard ? -8 : 0 }],
-            },
-          ]}
-        >
+        <View style={{ paddingBottom: heightInfo.fixBottomHeight, marginBottom: Platform.OS === 'android' ? 8 : 0 }}>
           <CustomButton onPress={() => onPressSave()}>
             <View
               style={{
