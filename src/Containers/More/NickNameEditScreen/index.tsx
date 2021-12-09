@@ -16,11 +16,10 @@ import MyActions from '@/Stores/My/Actions';
 const NickNameEditScreen = () => {
   const dispatch = useDispatch();
 
-  const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userInfo } = useSelector((state: AuthState) => state.auth);
 
-  const { nickName, onChangeNickname, nicknameValidText, isNicknameValid, onClearNickName, setNickName } =
-    useInputNickname();
+  const { nickName, onChangeNickname, nicknameValidText, isNicknameValid, onClearNickName } = useInputNickname();
 
   useEffect(() => {
     onChangeNickname(userInfo?.nickname);

@@ -23,7 +23,6 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       case 'recentList': {
         try {
           if (actions.params.page === 1) {
-            console.log('asdjfklsajfl: ', data);
             draft.recentList = data;
           } else {
             draft.recentList = data?.length > 0 ? draft.recentList.concat(data) : draft.recentList;

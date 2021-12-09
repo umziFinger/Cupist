@@ -29,7 +29,6 @@ const PhoneNumberEditScreen = () => {
     smsValidText,
     setSmsAuthNumber,
     setSmsAuthTime,
-    timer,
     smsAuthTime,
   } = useInputAuthNumber();
 
@@ -51,8 +50,6 @@ const PhoneNumberEditScreen = () => {
     dispatch(AuthActions.fetchAuthReducer({ type: 'smsValidText', data: { smsValidText: null } }));
     setSmsAuthNumber('');
     setSmsAuthTime(300);
-
-    if (timer) clearTimeout(timer);
 
     dispatch(
       AuthActions.fetchAuthSmsSend({
