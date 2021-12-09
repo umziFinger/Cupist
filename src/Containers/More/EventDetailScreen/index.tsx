@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
-import CustomText from '@/Components/CustomText';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { MyState } from '@/Stores/My/InitialState';
 import MyActions from '@/Stores/My/Actions';

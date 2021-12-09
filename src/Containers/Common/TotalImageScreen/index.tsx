@@ -68,7 +68,13 @@ const TotalImageScreen = ({ route }: TotalImageProps) => {
                   }}
                 >
                   <CustomButton onPress={() => navigateGoBack()}>
-                    <View style={{ width: 24, height: 24 }}></View>
+                    <View style={{ width: 24, height: 24 }}>
+                      <FastImage
+                        style={{ width: '100%', height: '100%' }}
+                        source={require('@/Assets/Images/Button/icCloseWhite.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
                   </CustomButton>
 
                   <View style={{}}>
