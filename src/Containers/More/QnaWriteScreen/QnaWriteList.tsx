@@ -56,6 +56,14 @@ const QnaWriteList = () => {
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenQnaTypeRBS', data: true }));
   };
 
+  const onContentInit = () => {
+    if (writeQnaContent?.length <= 124) {
+      dispatch(MyActions.fetchMyReducer({ type: 'writeQnaContent', data: PLACEHOLDER }));
+    }
+  };
+
+  // console.log(isInputFocus);
+
   return (
     <>
       <View
@@ -131,6 +139,7 @@ const QnaWriteList = () => {
             onChangeText={(value) => onChangeText(value)}
             value={writeQnaContent}
             keyboardType={'default'}
+            onFocus={() => onContentInit()}
           />
         </View>
 
