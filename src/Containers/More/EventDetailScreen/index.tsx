@@ -7,6 +7,7 @@ import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { MyState } from '@/Stores/My/InitialState';
 import MyActions from '@/Stores/My/Actions';
+import CustomText from '@/Components/CustomText';
 
 const EventDetailScreen = () => {
   const dispatch = useDispatch();
@@ -33,14 +34,28 @@ const EventDetailScreen = () => {
           data={[0]}
           renderItem={() => (
             <View style={{}}>
-              <View>
-                <View style={{ width, height, backgroundColor: Color.Grayyellow100 }}>
-                  <FastImage
-                    style={{ width: '100%', height: '100%' }}
-                    source={{ uri: myEventDetail?.mainFile }}
-                    resizeMode={FastImage.resizeMode.stretch}
-                  />
+              <View style={{ width, height: 318, backgroundColor: Color.Grayyellow100 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={{ uri: myEventDetail?.bannerFile }}
+                  resizeMode={FastImage.resizeMode.stretch}
+                />
+              </View>
+
+              <View style={{ paddingHorizontal: 24, marginVertical: 40 }}>
+                <CustomText>{myEventDetail?.title || ''}</CustomText>
+
+                <View style={{ marginTop: 12 }}>
+                  <CustomText>{myEventDetail?.content || ''}</CustomText>
                 </View>
+              </View>
+
+              <View style={{ width, height, backgroundColor: Color.Grayyellow100 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={{ uri: myEventDetail?.mainFile }}
+                  resizeMode={FastImage.resizeMode.stretch}
+                />
               </View>
             </View>
           )}

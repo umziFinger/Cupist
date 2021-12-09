@@ -62,8 +62,6 @@ const QnaWriteList = () => {
     }
   };
 
-  // console.log(isInputFocus);
-
   return (
     <>
       <View
