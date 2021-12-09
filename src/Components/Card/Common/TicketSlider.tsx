@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,90 +47,119 @@ const TicketSlider = (props: PropTypes) => {
   };
 
   return (
-    <FlatList
-      data={allowedTimeArr}
-      renderItem={({ item: allowedTime, index }) =>
-        isShowFunc(allowedTime) && (
-          <View style={{ flex: 1, marginTop: 24 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 24 }}>
-              <View style={{ width: 24, height: 24, marginRight: 2 }}>
-                <FastImage
-                  style={{ width: '100%', height: '100%' }}
-                  source={require('@/Assets/Images/Common/icTime.png')}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              </View>
-              <View style={{ justifyContent: 'center', marginRight: 6 }}>
-                <CustomText style={{ color: Color.Primary1000, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}>
-                  {DATA_TICKET_TIME[index].type}
-                </CustomText>
-              </View>
-              <View style={{ backgroundColor: Color.Gray300, width: 1, height: 11, marginRight: 6 }} />
-              <View style={{ justifyContent: 'center' }}>
-                <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>{DATA_TICKET_TIME[index].time}</CustomText>
-              </View>
-            </View>
-            <FlatList
-              data={allowedTime === 0 ? morning : allowedTime === 1 ? afternoon : night}
-              renderItem={({ item: time }) => (
-                <CustomButton onPress={() => onPressTicket(time)}>
-                  <View
-                    style={{
-                      marginTop: 13,
-                      paddingVertical: 20,
-                      paddingLeft: 12,
-                      paddingRight: 21,
-                      borderRadius: 5,
-                      borderWidth: 1,
-                      borderColor: selectedTicket?.idx === time.idx ? Color.Primary1000 : Color.Gray300,
-                      backgroundColor:
-                        selectedTicket?.idx === time.idx ? 'rgba(255, 185, 10, 0.05)' : Color.Grayyellow50,
-                      marginRight: 8,
-                    }}
-                  >
-                    <View style={{ justifyContent: 'center' }}>
-                      <CustomText style={{ color: Color.Grayyellow1000, fontSize: 14, fontWeight: '500' }}>
-                        {time.startTime.substr(0, 5)} - {time.endTime.substr(0, 5)}
-                      </CustomText>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 2,
-                      }}
-                    >
-                      <View style={{ justifyContent: 'center' }}>
-                        <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
-                          {numberFormat(time?.salePrice)}
+    <View>
+      {morning.length > 0 || afternoon.length > 0 || night.length > 0 ? (
+        <FlatList
+          data={allowedTimeArr}
+          renderItem={({ item: allowedTime, index }) => {
+            return (
+              <>
+                {isShowFunc(allowedTime) && (
+                  <View style={{ flex: 1, marginTop: 24 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 24 }}>
+                      <View style={{ width: 24, height: 24, marginRight: 2 }}>
+                        <FastImage
+                          style={{ width: '100%', height: '100%' }}
+                          source={require('@/Assets/Images/Common/icTime.png')}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </View>
+                      <View style={{ justifyContent: 'center', marginRight: 6 }}>
+                        <CustomText
+                          style={{ color: Color.Primary1000, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}
+                        >
+                          {DATA_TICKET_TIME[index].type}
                         </CustomText>
                       </View>
+                      <View style={{ backgroundColor: Color.Gray300, width: 1, height: 11, marginRight: 6 }} />
                       <View style={{ justifyContent: 'center' }}>
-                        <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15 }}>원</CustomText>
+                        <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>
+                          {DATA_TICKET_TIME[index].time}
+                        </CustomText>
                       </View>
                     </View>
+                    <FlatList
+                      data={allowedTime === 0 ? morning : allowedTime === 1 ? afternoon : night}
+                      renderItem={({ item: time }) => (
+                        <CustomButton onPress={() => onPressTicket(time)}>
+                          <View
+                            style={{
+                              marginTop: 13,
+                              paddingVertical: 20,
+                              paddingLeft: 12,
+                              paddingRight: 21,
+                              borderRadius: 5,
+                              borderWidth: 1,
+                              borderColor: selectedTicket?.idx === time.idx ? Color.Primary1000 : Color.Gray300,
+                              backgroundColor:
+                                selectedTicket?.idx === time.idx ? 'rgba(255, 185, 10, 0.05)' : Color.Grayyellow50,
+                              marginRight: 8,
+                            }}
+                          >
+                            <View style={{ justifyContent: 'center' }}>
+                              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 14, fontWeight: '500' }}>
+                                {time.startTime.substr(0, 5)} - {time.endTime.substr(0, 5)}
+                              </CustomText>
+                            </View>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginTop: 2,
+                              }}
+                            >
+                              <View style={{ justifyContent: 'center' }}>
+                                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
+                                  {numberFormat(time?.salePrice)}
+                                </CustomText>
+                              </View>
+                              <View style={{ justifyContent: 'center' }}>
+                                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15 }}>원</CustomText>
+                              </View>
+                            </View>
+                          </View>
+                        </CustomButton>
+                      )}
+                      keyExtractor={(cardKey, keyIndex) => keyIndex.toString()}
+                      initialNumToRender={3}
+                      maxToRenderPerBatch={6}
+                      windowSize={7}
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={{ paddingLeft: 24 }}
+                    />
+                    {showDivider && (allowedTime === 0 || allowedTime === 1) && (
+                      <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 24 }} />
+                    )}
                   </View>
-                </CustomButton>
-              )}
-              keyExtractor={(item, index) => index.toString()}
-              initialNumToRender={3}
-              maxToRenderPerBatch={6}
-              windowSize={7}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingLeft: 24 }}
+                )}
+              </>
+            );
+          }}
+          keyExtractor={(keyItem, index) => index.toString()}
+          initialNumToRender={3}
+          maxToRenderPerBatch={6}
+          windowSize={7}
+        />
+      ) : (
+        <View style={{ marginTop: 60, marginBottom: 52, alignItems: 'center' }}>
+          <View style={{ width: 60, height: 60 }}>
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={require('@/Assets/Images/Home/emptyList.png')}
+              resizeMode={FastImage.resizeMode.cover}
             />
-            {showDivider && (allowedTime === 0 || allowedTime === 1) && (
-              <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 24 }} />
-            )}
           </View>
-        )
-      }
-      keyExtractor={(item, index) => index.toString()}
-      initialNumToRender={3}
-      maxToRenderPerBatch={6}
-      windowSize={7}
-    />
+          <View style={{ marginTop: 8, alignItems: 'center' }}>
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: '500', letterSpacing: -0.25 }}>
+                해당 날짜에 예약할 수 있는 상품이 없습니다.
+              </CustomText>
+            </View>
+          </View>
+        </View>
+      )}
+    </View>
   );
 };
 
