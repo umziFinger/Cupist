@@ -10,7 +10,6 @@ type ResultUseInputAuth = {
   onChangeAuthNumber: (e: string) => void;
   smsValueValid: boolean;
   smsValidText: string;
-  timer: NodeJS.Timeout | null;
   smsAuthTime: number;
   setSmsAuthTime: Dispatch<SetStateAction<number>>;
 };
@@ -21,7 +20,7 @@ function useInputAuthNumber(): ResultUseInputAuth {
   const [smsAuthNumber, setSmsAuthNumber] = useState('');
   const [smsAuthTime, setSmsAuthTime] = useState(300);
 
-  let timer: NodeJS.Timeout | null = null;
+  let timer: NodeJS.Timeout;
   useEffect(() => {
     if (isReceived) {
       timer = setTimeout(() => {
@@ -48,6 +47,9 @@ function useInputAuthNumber(): ResultUseInputAuth {
         dispatch(AuthActions.fetchAuthReducer({ type: 'log_cert', data: { log_cert: null } }));
       }
     }
+    return () => {
+      clearTimeout(timer);
+    };
   }, [smsAuthTime, isReceived]);
 
   const onChangeAuthNumber = (value: string) => {
@@ -82,7 +84,6 @@ function useInputAuthNumber(): ResultUseInputAuth {
     onChangeAuthNumber,
     smsValueValid,
     smsValidText,
-    timer,
     setSmsAuthNumber,
     setSmsAuthTime,
     smsAuthTime,
