@@ -204,13 +204,10 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 5: {
         return (
-          // 선결제 특가 (없으면 영역 숨김)
-          // homeList['early']?.length > 0 && (
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <PrepaymentPriceArea list={homeList['early'] || []} />
           </View>
-          // )
         );
       }
       case 6: {
