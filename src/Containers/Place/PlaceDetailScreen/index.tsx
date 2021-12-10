@@ -22,6 +22,7 @@ import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import TogetherArea from '@/Containers/Place/PlaceDetailScreen/TogetherArea';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
@@ -78,8 +79,19 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       if (selectedTicket?.idx) {
         return navigate('ReservationScreen', { placeIdx: idx, ticketInfoIdx: selectedTicket?.idx });
       }
+    } else {
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: '상품을 선택해주세요',
+          },
+        }),
+      );
+      animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
     }
-    return animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
   };
 
   const onPressCancel = () => {
