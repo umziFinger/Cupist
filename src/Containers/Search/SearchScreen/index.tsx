@@ -99,19 +99,19 @@ const SearchScreen = () => {
 
   const onDelete = (item: any) => {
     const uniqueId = getUniqueId();
-    const params = {
+    const data = {
       idx: item.idx,
       uniqueId,
     };
-    dispatch(SearchActions.fetchSearchRecentListDelete(params));
+    dispatch(SearchActions.fetchSearchRecentListDelete(data));
   };
 
   const onDeleteAll = () => {
     const uniqueId = getUniqueId();
-    const params = {
+    const data = {
       uniqueId,
     };
-    dispatch(SearchActions.fetchSearchRecentListDeleteAll(params));
+    dispatch(SearchActions.fetchSearchRecentListDeleteAll(data));
   };
   const onPressQuery = (text: string) => {
     const params = {

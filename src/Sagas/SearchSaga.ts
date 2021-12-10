@@ -107,20 +107,17 @@ export function* fetchSearchRecentListPost(data: any): any {
   }
 }
 
-export function* fetchSearchRecentListDelete(data: any): any {
+export function* fetchSearchRecentListDelete(item: any): any {
   try {
     const payload = {
-      params: {
-        uniqueId: data.params.uniqueId,
-      },
-      url: `${Config.SEARCH_QUERY_URL}/${data.params.idx}`,
+      ...item,
+      url: `${Config.SEARCH_QUERY_URL}/${item.data.idx}`,
     };
 
     const response = yield call(Axios.DELETE, payload);
-
+    console.log('최근 검색어 삭제 성공:', response);
     if (response.result === true && response.code === null) {
-      console.log('최근 검색어 삭제 성공:', response);
-      yield put(SearchActions.fetchSearchReducer({ type: 'recentSearchDelete', data: data.params.idx }));
+      yield put(SearchActions.fetchSearchReducer({ type: 'recentSearchDelete', data: item.data.idx }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
@@ -129,10 +126,10 @@ export function* fetchSearchRecentListDelete(data: any): any {
   }
 }
 
-export function* fetchSearchRecentListDeleteAll(data: any): any {
+export function* fetchSearchRecentListDeleteAll(item: any): any {
   try {
     const payload = {
-      ...data,
+      ...item,
       url: `${Config.SEARCH_QUERY_URL}`,
     };
 
