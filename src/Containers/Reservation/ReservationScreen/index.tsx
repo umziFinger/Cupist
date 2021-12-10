@@ -29,7 +29,7 @@ interface PropTypes {
 const ReservationScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
   const { placeIdx, ticketInfoIdx } = route.params;
-  console.log('ReservationScreen route.params : ', route.params);
+  // console.log('ReservationScreen route.params : ', route.params);
 
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);

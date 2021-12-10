@@ -15,9 +15,9 @@ interface PropTypes {
 
 const DefaultInfoArea = (props: PropTypes) => {
   const { item } = props;
-  const { placeDetail, selectedTicket } = useSelector((state: PlaceState) => state.place);
+
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const place: any = placeDetail?.place || {};
+  const { selectedTicket } = useSelector((state: PlaceState) => state.place);
 
   return (
     <View style={{ flex: 1 }}>
@@ -27,9 +27,9 @@ const DefaultInfoArea = (props: PropTypes) => {
         </CustomText>
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginTop: 24 }}>
-        <View style={{ width: 60, height: 60, marginRight: 12 }}>
+        <View style={{ width: 60, height: 60, marginRight: 12, borderRadius: 3 }}>
           <FastImage
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', borderRadius: 3, backgroundColor: Color.Gray400 }}
             source={{ uri: item?.PlacePhoto || '' }}
             resizeMode={FastImage.resizeMode.cover}
           />
@@ -37,12 +37,12 @@ const DefaultInfoArea = (props: PropTypes) => {
         <View style={{ flex: 1 }}>
           <View style={{ justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold', letterSpacing: -0.25 }}>
-              {place?.name}
+              {item?.place?.name || ''}
             </CustomText>
           </View>
           <View style={{ justifyContent: 'center', marginTop: 4 }}>
             <CustomText style={{ color: Color.Primary1000, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-              {selectedTicket?.ticketName}
+              {item?.ticketName || ''}
             </CustomText>
           </View>
         </View>
