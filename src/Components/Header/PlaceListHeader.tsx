@@ -4,12 +4,11 @@ import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import { Layout } from '@react-navigation/stack/lib/typescript/src/types';
 import { CommonState } from '@/Stores/Common/InitialState';
-import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { navigateGoBack } from '@/Services/NavigationService';
 import CustomText from '@/Components/CustomText';
 import { HeaderProps } from '@/Components/Header/index';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
-import { AuthState } from '@/Stores/Auth/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import TopDateSelector from '@/Components/Calendar/TopDateSelector';
 import { HomeState } from '@/Stores/Home/InitialState';
@@ -18,9 +17,8 @@ import DateFilter from '@/Components/FilterSilder/DateFilter';
 const PlaceDetailHeader = (props: HeaderProps) => {
   const { text, isShow } = props;
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
-  const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const { selectedPlaceIdx, placeListType } = useSelector((state: PlaceState) => state.place);
-  const { calendarDate, prepaymentDate, prepaymentDateList } = useSelector((state: HomeState) => state.home);
+  const { placeListType } = useSelector((state: PlaceState) => state.place);
+  const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
 
   // console.log('isShow : ', isShow);

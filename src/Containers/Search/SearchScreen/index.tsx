@@ -98,14 +98,20 @@ const SearchScreen = () => {
   };
 
   const onDelete = (item: any) => {
+    const uniqueId = getUniqueId();
     const params = {
       idx: item.idx,
+      uniqueId,
     };
     dispatch(SearchActions.fetchSearchRecentListDelete(params));
   };
 
   const onDeleteAll = () => {
-    dispatch(SearchActions.fetchSearchRecentListDeleteAll());
+    const uniqueId = getUniqueId();
+    const params = {
+      uniqueId,
+    };
+    dispatch(SearchActions.fetchSearchRecentListDeleteAll(params));
   };
   const onPressQuery = (text: string) => {
     const params = {
@@ -183,8 +189,8 @@ const SearchScreen = () => {
                       </CustomButton>
                     </View>
                   )}
-                  initialNumToRender={7}
-                  maxToRenderPerBatch={10}
+                  initialNumToRender={30}
+                  maxToRenderPerBatch={33}
                   showsVerticalScrollIndicator={false}
                   scrollEnabled
                 />
@@ -308,7 +314,7 @@ const SearchScreen = () => {
                 initialNumToRender={7}
                 maxToRenderPerBatch={10}
                 windowSize={7}
-                // scrollEnabled={false}
+                keyboardShouldPersistTaps={'handled'}
                 showsVerticalScrollIndicator={false}
                 ListFooterComponent={() => (
                   <>
@@ -347,7 +353,6 @@ const SearchScreen = () => {
                   onEndReached={() => onMore()}
                   onRefresh={() => onRefresh()}
                   refreshing={false}
-                  keyboardShouldPersistTaps={'never'}
                   ListFooterComponent={
                     <>
                       <View style={{ height: heightInfo.subBottomHeight }} />

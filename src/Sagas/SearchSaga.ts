@@ -110,7 +110,9 @@ export function* fetchSearchRecentListPost(data: any): any {
 export function* fetchSearchRecentListDelete(data: any): any {
   try {
     const payload = {
-      ...data,
+      params: {
+        uniqueId: data.params.uniqueId,
+      },
       url: `${Config.SEARCH_QUERY_URL}/${data.params.idx}`,
     };
 
