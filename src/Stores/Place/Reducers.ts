@@ -164,11 +164,11 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
           const copyPlaceDetail: any = state?.placeDetail;
           if (data.type === 'dibs') {
             if (copyPlaceDetail !== undefined) {
-              copyPlaceDetail.place.isPlaceDibs = true;
+              draft.placeDetail.place.isPlaceDibs = true;
             }
           } else if (data.type === 'unDibs') {
             if (copyPlaceDetail !== undefined) {
-              copyPlaceDetail.place.isPlaceDibs = false;
+              draft.placeDetail.place.isPlaceDibs = false;
             }
           }
         } catch (e) {
