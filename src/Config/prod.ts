@@ -10,11 +10,22 @@ const prod = {
   CS_EMAIL: 'nallcorp.luxury@gmail.com',
   CS_PRIVACY: '이인성',
 
-  // API_URL: 'https://luxurynall2.split.co.kr/api/v1/',
-  API_URL: 'https://customer.luxurynall.com/api/v1/',
+  // NAVER MAP
+  NMAP_MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/네이버-지도-내비게이션/id311867728',
+  NMAP_MARKET_URL_ANDROID: 'market://details?id=com.nhn.android.nmap',
+
+  // TMAP
+  TMAP_MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/tmap-내비게이션-지도/id431589174',
+  TMAP_MARKET_URL_ANDROID: 'market://details?id=com.skt.tmap.ku',
+
+  // API_URL: 'http://192.168.0.11:8080/',
+  API_URL: 'https://api.bolimi.kr/',
 
   // 이미지 url
   IMAGE_URL: 'https://www.luxurynall.com/',
+
+  // dynamicLink URL
+  DYNAMIC_URL: 'https://link.bolimi.kr',
 
   // 자체 관리 rn 버전
   APP_VERSION: '1.0.0',
@@ -30,48 +41,50 @@ const prod = {
   NAVER_APP_URL_SCHEME: 'kr.bolimi', // only for iOS
 
   // home
-  HOME_URL: 'main/home',
+  HOME_URL: 'home',
+  HOME_PLACE_URL: 'home/place',
+  HOME_EARLY_URL: 'home/early',
+  HOME_CHECK_URL: 'home/check',
+  HOME_CHECK_EARLY_URL: 'home/check/early',
 
   // auth
-  AUTH_SIGN_UP_URL: 'auth/signup',
-  AUTH_SIGN_SNS_URL: 'auth/signsns',
-  AUTH_SIGN_IN_URL: 'auth/signin',
-  AUTH_SIGN_OUT_URL: 'auth/signout',
-  AUTH_RENEW_TOKEN_URL: 'auth/renewtoken',
-  AUTH_TERMS_URL: 'auth/terms',
-  AUTH_CERT_GET_URL: 'auth/cert/get',
-  AUTH_CERT_CHECK_URL: 'auth/cert/check',
-  AUTH_FIND_ID_URL: 'auth/findid',
-  AUTH_FIND_PW_URL: 'auth/findpw',
-  AUTH_SIGN_INFO: 'auth/signsnsinfo',
-
-  // rental
-  RENTAL_LIST: 'rental/main',
-  RENTAL_POPULAR_LIST: 'rental/popular',
-  RENTAL_RECOMMEND_LIST: 'rental/recommend',
-  RENTAL_BRAND_LIST: 'rental/brand',
-  RENTAL_DIBS_URL: 'rental/dibs',
-  RENTAL_DETAIL: 'rental/detail',
-  RENTAL_SEARCH_LIST: 'rental/search',
-  RENTAL_CART_URL: 'rental/cart',
-  RENTAL_PAYMENT: 'rental/payment',
-  RENTAL_PAYMENT_RESULT_URL: 'rental/payment-result',
-  RENTAL_HISTORY: 'my/rental',
+  AUTH_LOGIN_URL: 'auth/login',
+  AUTH_LOGIN_SOCIAL_URL: 'auth/login/social', // 소셜 로그인/임시가입
+  AUTH_LOGOUT_URL: 'auth/logout',
+  AUTH_REFRESH_URL: 'auth/refresh',
+  AUTH_SMS_SEND_URL: 'auth/sms-send',
+  AUTH_SMS_AUTH_URL: 'auth/sms-auth',
+  AUTH_JOIN_URL: 'auth/join',
+  AUTH_FIND_PASSWORD_URL: 'auth/find-password',
+  AUTH_RENEW_TOKEN_URL: 'auth/refresh',
+  AUTH_JOIN_SOCIAL_URL: 'auth/join/social', // 동의 후 소셜 가입
+  AUTH_CHECK_EMAIL_URL: 'auth/check/email',
 
   // my
-  MY_USER_URL: 'my/user',
+  MY_URL: 'my',
   MY_PUSH_YN_URL: 'my/pushYN',
-  MY_REVIEW: 'my/reviews',
+  MY_REVIEW: 'my/review',
   MY_MILEAGES: 'my/mileages',
   MY_PROMOTION_URL: 'my/promotion',
   MY_CERT_GET_URL: 'my/cert/get',
-
-  // review
-  REVIEW: 'reviews',
-
+  MY_PROFILE_URL: 'my/profile',
+  MY_VIEW_URL: 'my/view',
+  MY_NOTIFICATION_URL: 'my/notification',
+  MY_NOTICE_URL: 'my/notice',
+  MY_EVENT_URL: 'my/event',
+  MY_QNA_URL: 'my/qna',
+  MY_NOTIFICATION_YN_URL: 'my/notification-push',
+  MY_MARKETING_YN_URL: 'my/marketing-push',
+  MY_EVENT_YN_URL: 'my/event-push',
+  MY_WITHDRAW_URL: 'my/withdraw',
+  MY_RESERVATION_URL: 'my/reservation',
+  MY_DIBS_URL: 'my/dibs',
+  MY_PASSWORD_URL: 'my/password',
   // search
+  SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',
   SEARCH_QUERY_URL: 'search/searchQuery',
+  SEARCH_POPULAR_URL: 'search/popular',
 
   // user
   USER_URL: 'user',
@@ -92,6 +105,7 @@ const prod = {
   RESTORATIONS_CCL_URL: 'restorations/ccl', // 수선 취소 목록 (내 명품 수선 내역)
   RESTORATIONS_PAYMENT_URL: 'restorations/payment',
   RESTORATIONS_PAYMENT_RESULT_URL: 'restorations/payment-result',
+  RESTORATIONS_CHECK_STATE: 'restorations/checkstate',
 
   // util
   UTIL_RESTORETYPE_URL: 'restoretype',
@@ -100,6 +114,17 @@ const prod = {
   UTIL_CATEGORY_URL: 'category',
   UTIL_BRAND_LIST_URL: 'brand',
   UTIL_BRAND_FAV_URL: 'brand/fav',
+
+  // place
+  PLACE_URL: 'place',
+  PLACE_AROUND_LIST_URL: 'place/around',
+  PLACE_SEARCH_LIST_URL: 'place/search', // 내주변/지역별 예약 가능한 볼링장 찾기
+
+  // reservation
+  RESERVATION_URL: 'reservation',
+  RESERVATION_CARD_URL: 'reservation/card',
+  RESERVATION_CANCEL_URL: 'reservation/cancel',
+  RESERVATION_PAYMENT_CARD_URL: 'reservation/payment/card',
 };
 
 export default prod;
