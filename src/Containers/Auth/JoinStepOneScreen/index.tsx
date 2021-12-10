@@ -16,6 +16,7 @@ import useInputEmail from '@/Hooks/useInputEmail';
 import useInputPassword from '@/Hooks/useInputPassword';
 
 import { navigate } from '@/Services/NavigationService';
+import { fetchAuthCheckEmail } from '@/Sagas/AuthSaga';
 
 const JoinStepOneScreen = () => {
   const dispatch = useDispatch();
@@ -36,9 +37,14 @@ const JoinStepOneScreen = () => {
 
   const onPressNext = () => {
     if (isEmailValid && isPasswordValid) {
+      const params = {
+        email,
+      };
       dispatch(AuthActions.fetchAuthReducer({ type: 'email', data: { email } }));
       dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password } }));
-      navigate('JoinStepTwoScreen');
+      dispatch(AuthActions.fetchAuthCheckEmail(params));
+
+      // navigate('JoinStepTwoScreen');
     }
   };
 
