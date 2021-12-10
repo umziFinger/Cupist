@@ -31,10 +31,7 @@ const TicketSlider = (props: PropTypes) => {
     if (value === 1 && afternoon.length > 0) {
       return true;
     }
-    if (value === 2 && night.length > 0) {
-      return true;
-    }
-    return false;
+    return value === 2 && night.length > 0;
   };
 
   const onPressTicket = (value: any) => {

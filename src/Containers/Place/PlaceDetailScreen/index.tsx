@@ -73,12 +73,27 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const onPressReservation = () => {
     if (selectedTicket) {
       if (!userIdx) {
-        return navigate('SimpleLoginScreen');
+        navigate('SimpleLoginScreen');
       }
 
       if (selectedTicket?.idx) {
-        return navigate('ReservationScreen', { placeIdx: idx, ticketInfoIdx: selectedTicket?.idx });
+        navigate('ReservationScreen', { placeIdx: idx, ticketInfoIdx: selectedTicket?.idx });
       }
+    } else if (
+      placeTicketList?.morning.length < 1 &&
+      placeTicketList?.afternoon.length < 1 &&
+      placeTicketList?.night.length < 1
+    ) {
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: '날짜를 다시 선택해주세요',
+          },
+        }),
+      );
     } else {
       dispatch(
         CommonActions.fetchCommonReducer({
