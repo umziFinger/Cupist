@@ -50,6 +50,7 @@ const AddCardScreen = () => {
         addCardInfo.cardNumber.length === 16 &&
         addCardInfo.expiry.length === 4 &&
         addCardInfo.pwd2Digit.length === 2 &&
+        addCardInfo.birth.length === 6 &&
         !agreeCheckedArr.includes(false)
       ) {
         return setValidation(true);
@@ -96,6 +97,15 @@ const AddCardScreen = () => {
     );
   };
 
+  const onChangeBirth = (text: string) => {
+    dispatch(
+      ReservationActions.fetchReservationReducer({
+        type: 'addCardInfo',
+        data: { ...addCardInfo, birth: text || '' },
+      }),
+    );
+  };
+
   const onPressAdd = () => {
     console.log('validation : ', validation);
     if (validation) {
@@ -110,7 +120,7 @@ const AddCardScreen = () => {
         console.log('카드 등록 api 호출!');
         console.log('카드 등록 params :', addCardInfo);
 
-        dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, birth: '930618' }));
+        dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo }));
       }
       return null;
     }
@@ -199,6 +209,21 @@ const AddCardScreen = () => {
                         onChangeText={onChangePassword}
                       />
                     </View>
+                  </View>
+                </View>
+                <View>
+                  <View style={{ justifyContent: 'center', marginTop: 16 }}>
+                    <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
+                      생년월일
+                    </CustomText>
+                  </View>
+                  <View style={{ justifyContent: 'center', marginTop: 8 }}>
+                    <CardDefaultInput
+                      placeHolder={'생년월일 6자리'}
+                      maxLength={6}
+                      value={addCardInfo?.birth}
+                      onChangeText={onChangeBirth}
+                    />
                   </View>
                 </View>
               </View>

@@ -40,7 +40,6 @@ const RegisterPasswordScreen = () => {
     );
     if (paymentPwd.length === 6) {
       console.log('1차 비밀번호 입력완료!');
-      // setValidation(true);
       setPasswordType('second');
       setShowArr([false, false, false, false, false, false]);
     }
@@ -72,7 +71,7 @@ const RegisterPasswordScreen = () => {
 
   useEffect(() => {
     if (validation) {
-      dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, birth: '930618' }));
+      dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo }));
     }
   }, [validation]);
 
