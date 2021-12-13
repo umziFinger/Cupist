@@ -51,7 +51,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                         color: Color.Grayyellow1000,
                       }}
                     >
-                      {moment(cancelLimit).subtract(5, 'hours').format('YYYY년 MM월 DD일 HH시 mm분')}까지
+                      {moment(cancelLimit).subtract(4, 'hours').format('YYYY년 MM월 DD일 HH시 mm분')}까지
                     </CustomText>
                   </View>
                 </View>
@@ -89,7 +89,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                         color: Color.Grayyellow1000,
                       }}
                     >
-                      {moment(cancelLimit).subtract(3, 'hours').format('YYYY년 MM월 DD일 HH시 mm분')}까지
+                      {moment(cancelLimit).subtract(2, 'hours').format('YYYY년 MM월 DD일 HH시 mm분')}까지
                     </CustomText>
                   </View>
                 </View>
@@ -128,7 +128,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                         color: Color.Grayyellow1000,
                       }}
                     >
-                      {moment(cancelLimit).subtract(1, 'hours').format('YYYY년 MM월 DD일 HH시 mm분')}까지
+                      {moment(cancelLimit).format('YYYY년 MM월 DD일 HH시 mm분')}까지
                     </CustomText>
                   </View>
                 </View>
