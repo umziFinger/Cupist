@@ -53,6 +53,17 @@ const ReservationRBS = () => {
         dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
       } else {
         console.log('일반결제 진행합니다. : ', DATA_PAYMENT_METHOD[paymentMethod]);
+        dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
+        dispatch(
+          CommonActions.fetchCommonReducer({
+            type: 'alertDialog',
+            data: {
+              alertDialog: true,
+              alertDialogType: 'confirm',
+              alertDialogMessage: '서비스 준비중입니다',
+            },
+          }),
+        );
       }
     }
   };
