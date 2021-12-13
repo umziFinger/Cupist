@@ -72,7 +72,7 @@ const RegisterPasswordScreen = () => {
 
   useEffect(() => {
     if (validation) {
-      dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, birth: '930618' }));
+      dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo }));
     }
   }, [validation]);
 

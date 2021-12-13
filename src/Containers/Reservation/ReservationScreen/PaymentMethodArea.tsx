@@ -24,12 +24,6 @@ const PaymentMethodArea = (props: PropTypes) => {
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
 
   useEffect(() => {
-    if (list?.length !== 0) {
-      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'simple' }));
-    } else {
-      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'normal' }));
-    }
-
     return () => {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'selcetedCardIdx', data: -1 }));
       dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentMethod', data: -1 }));
@@ -37,13 +31,20 @@ const PaymentMethodArea = (props: PropTypes) => {
   }, []);
 
   useEffect(() => {
-    console.log('viewableIndex : ', viewableIndex);
+    if (list?.length !== 0) {
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'simple' }));
+    } else {
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'normal' }));
+    }
+  }, [list]);
+
+  useEffect(() => {
     if (list?.length !== 0) {
       dispatch(
         ReservationActions.fetchReservationReducer({ type: 'selcetedCardIdx', data: Number(viewableIndex) + 1 }),
       );
     }
-  }, [viewableIndex]);
+  }, [viewableIndex, paymentType]);
 
   const onViewableItemsChanged = React.useRef(
     (info: { viewableItems: Array<ViewToken>; changed: Array<ViewToken> }) => {

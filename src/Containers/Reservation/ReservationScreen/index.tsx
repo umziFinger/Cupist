@@ -58,6 +58,9 @@ const ReservationScreen = ({ route }: PropTypes) => {
   }, [route]);
 
   useEffect(() => {
+    console.log('paymentType: ', paymentType);
+    console.log('selcetedCardIdx: ', selcetedCardIdx);
+    console.log('myCardList: ', myCardList);
     if (paymentType === 'simple') {
       if (selcetedCardIdx > -1 && myCardList?.length !== 0) {
         setValidation(true);
