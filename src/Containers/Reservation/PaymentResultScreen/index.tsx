@@ -188,6 +188,7 @@ const PaymentResultScreen = () => {
             </CustomText>
           </View>
         </CustomButton>
+
         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 12 }}>
           <CustomText style={{ color: Color.Point1000, fontSize: 13, letterSpacing: -0.2 }}>
             {cancelLimit}까지 취소가 가능합니다.
