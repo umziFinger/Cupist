@@ -104,6 +104,7 @@ import {
   fetchReservationSimplePayment,
   fetchReservationCard,
   fetchReservationDeleteCard,
+  fetchReservationPaymentSign,
 } from '@/Sagas/ReservationSaga';
 
 export default function* root() {
@@ -195,5 +196,6 @@ export default function* root() {
     takeLatest(ReservationTypes.FETCH_RESERVATION_SIMPLE_PAYMENT, fetchReservationSimplePayment),
     takeLatest(ReservationTypes.FETCH_RESERVATION_CARD, fetchReservationCard),
     takeLatest(ReservationTypes.FETCH_RESERVATION_DELETE_CARD, fetchReservationDeleteCard),
+    takeLatest(ReservationTypes.FETCH_RESERVATION_PAYMENT_SIGN, fetchReservationPaymentSign),
   ]);
 }

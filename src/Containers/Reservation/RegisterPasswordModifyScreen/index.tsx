@@ -2,65 +2,75 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import produce from 'immer';
-import { RouteProp } from '@react-navigation/native';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
+import ReservationActions from '@/Stores/Reservation/Actions';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { CommonState } from '@/Stores/Common/InitialState';
-import { ReservationState } from '@/Stores/Reservation/InitialState';
-import { MainStackParamList } from '@/Navigators/MainNavigator';
-import ReservationActions from '@/Stores/Reservation/Actions';
-import { navigate } from '@/Services/NavigationService';
+import CommonActions from '@/Stores/Common/Actions';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
-interface PropTypes {
-  route: RouteProp<MainStackParamList, 'CheckPasswordScreen'>;
-}
-
-const CheckPasswordScreen = ({ route }: PropTypes) => {
+const RegisterPasswordModifyScreen = () => {
   const InputRef = useRef<any>();
   const dispatch = useDispatch();
-  const { paymentIdx, billingIdx } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { paymentPwd } = useSelector((state: ReservationState) => state.reservation);
+  const { selectedTicket } = useSelector((state: PlaceState) => state.place);
+  const [paymentPwd, setPaymentPwd] = useState<string>('');
+  const [confirmPaymentPwd, setConfirmPaymentPwd] = useState<string>('');
   const [showArr, setShowArr] = useState<Array<boolean>>([false, false, false, false, false, false]);
+  const [passwordType, setPasswordType] = useState<string>('first');
   const [validation, setValidation] = useState<boolean>(false);
 
   useEffect(() => {
-    // 간헐적으로 키보드 안열리는 현상때문에 didmount에서 처리하도록함 (안드로이드)
-    InputRef.current.focus();
-
-    return () => {
-      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentPwd', data: '' }));
-    };
-  }, []);
-
-  useEffect(() => {
-    if (paymentPwd) {
-      if (paymentPwd.length === 6) {
-        console.log('간편결제 비밀번호 입력완료!');
-        setValidation(true);
-      }
-    } else {
+    if (paymentPwd.length === 6) {
+      console.log('1차 비밀번호 입력완료!');
+      // setValidation(true);
+      setPasswordType('second');
       setShowArr([false, false, false, false, false, false]);
-      setValidation(false);
     }
   }, [paymentPwd]);
 
   useEffect(() => {
+    console.log('selectedTicket : ', selectedTicket?.idx);
+    if (paymentPwd.length === 6 && confirmPaymentPwd.length === 6) {
+      if (paymentPwd === confirmPaymentPwd) {
+        console.log('2차 비밀번호 입력완료!');
+        setValidation(true);
+      } else {
+        dispatch(
+          CommonActions.fetchCommonReducer({
+            type: 'alertDialog',
+            data: {
+              alertDialog: true,
+              alertDialogType: 'confirm',
+              alertDialogMessage: '비밀번호가 일치하지 않습니다.',
+            },
+          }),
+        );
+        setValidation(false);
+        setConfirmPaymentPwd('');
+        setShowArr([false, false, false, false, false, false]);
+      }
+    }
+  }, [confirmPaymentPwd]);
+
+  useEffect(() => {
     if (validation) {
       const params = {
-        paymentIdx,
-        billingIdx,
         paymentPwd,
       };
-      dispatch(ReservationActions.fetchReservationSimplePayment({ paymentIdx, billingIdx, paymentPwd }));
+      dispatch(ReservationActions.fetchReservationPaymentSign(params));
     }
   }, [validation]);
 
   const onChangeText = async (text: string) => {
-    dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentPwd', data: text }));
+    console.log('passwordType : ', passwordType);
+    if (passwordType === 'first') {
+      setPaymentPwd(text);
+    } else {
+      setConfirmPaymentPwd(text);
+    }
     produce(showArr, (draft) => {
       if (text.length > 0) {
         if (!draft[text.length - 1]) {
@@ -79,25 +89,23 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
     InputRef.current.focus();
   };
 
-  const onPressReset = () => {
-    navigate('RegisterPasswordModifyScreen');
-    // dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentPwd', data: '' }));
-  };
-
   return (
-    <>
-      <CustomButton
-        onPress={() => Keyboard.dismiss()}
-        effect={false}
-        style={{ flex: 1, backgroundColor: Color.White, paddingBottom: heightInfo.statusHeight + 44 }}
+    <CustomButton
+      onPress={() => Keyboard.dismiss()}
+      effect={false}
+      style={{ flex: 1, backgroundColor: Color.White, paddingBottom: heightInfo.statusHeight + 44 }}
+    >
+      <Header type={'close'} />
+      <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: '#ffffff' }}
+        behavior={'padding'}
+        enabled={Platform.OS !== 'android'}
       >
-        <Header type={'close'} />
-
         <View style={{ flex: 0.7 }} />
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{}}>
             <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold', letterSpacing: -0.25 }}>
-              {'비밀번호 확인'}
+              {passwordType === 'first' ? '비밀번호 재설정' : '비밀번호 재설정 확인'}
             </CustomText>
           </View>
           <CustomButton onPress={() => onFocus()} style={{ paddingTop: 24 }}>
@@ -119,23 +127,8 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
               })}
             </View>
           </CustomButton>
-          <CustomButton onPress={() => onPressReset()} style={{ marginTop: 60 }}>
-            <View>
-              <CustomText
-                style={{
-                  color: Color.Gray600,
-                  fontSize: 13,
-                  fontWeight: 'bold',
-                  letterSpacing: -0.2,
-                  textDecorationLine: 'underline',
-                }}
-              >
-                비밀번호 재설정
-              </CustomText>
-            </View>
-          </CustomButton>
         </View>
-      </CustomButton>
+      </KeyboardAvoidingView>
       <TextInput
         ref={InputRef}
         autoCompleteType="off"
@@ -144,20 +137,17 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
           color: 'transparent',
           fontSize: 0,
           padding: 0,
-          position: 'absolute',
-          bottom: -100,
         }}
-        // autoFocus
+        autoFocus
         keyboardType="number-pad"
         autoCorrect={false}
         maxLength={6}
         onChangeText={(text) => onChangeText(text)}
-        value={paymentPwd}
+        value={passwordType === 'first' ? paymentPwd : confirmPaymentPwd}
         allowFontScaling={false}
       />
-      {Platform.OS === 'ios' && <KeyboardSpacer />}
-    </>
+    </CustomButton>
   );
 };
 
-export default CheckPasswordScreen;
+export default RegisterPasswordModifyScreen;
