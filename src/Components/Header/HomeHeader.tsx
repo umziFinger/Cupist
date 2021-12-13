@@ -53,10 +53,11 @@ const HomeHeader = (props: HeaderProps) => {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          height: Platform.OS === 'android' ? 53 : 53 + statusHeight,
-          paddingTop: Platform.OS === 'android' ? 0 : statusHeight,
+          paddingTop: Platform.OS === 'android' ? 12 : statusHeight + 12,
+          paddingBottom: 12,
           paddingHorizontal: 20,
           backgroundColor: Color.White,
+          // backgroundColor: 'yellow',
         }}
       >
         <CustomButton onPress={() => navigateGoBack()} hitSlop={20}>
@@ -99,6 +100,7 @@ const HomeHeader = (props: HeaderProps) => {
             right: 0,
             height: 24 + 24 + 2 + 9,
             backgroundColor: Color.White,
+            // backgroundColor: 'red',
             paddingHorizontal: 20,
             borderBottomWidth: 1,
             borderBottomColor: 'rgb(240,240,240)',

@@ -4,7 +4,6 @@ import CommonActions from '@/Stores/Common/Actions';
 import SearchActions from '@/Stores/Search/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
-import NotificationActions from '@/Stores/Notification/Actions';
 
 export function* fetchSearchAreaList(data: any): any {
   try {
@@ -33,6 +32,10 @@ export function* fetchSearchAreaList(data: any): any {
 
 export function* fetchSearchBowlingClubList(data: any): any {
   try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
+
     const payload = {
       ...data,
       url: `${Config.SEARCH_URL}`,
@@ -43,10 +46,16 @@ export function* fetchSearchBowlingClubList(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(SearchActions.fetchSearchReducer({ type: 'bowlingList', data: response.data, page: data.params.page }));
       yield put(SearchActions.fetchSearchReducer({ type: 'bowlingListPage', data: data.params.page + 1 }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
+      yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
     console.log('occurred Error...fetchSearchBowlingClubList : ', e);
   }
 }
@@ -98,18 +107,17 @@ export function* fetchSearchRecentListPost(data: any): any {
   }
 }
 
-export function* fetchSearchRecentListDelete(data: any): any {
+export function* fetchSearchRecentListDelete(item: any): any {
   try {
     const payload = {
-      ...data,
-      url: `${Config.SEARCH_QUERY_URL}/${data.params.idx}`,
+      ...item,
+      url: `${Config.SEARCH_QUERY_URL}/${item.data.idx}`,
     };
 
     const response = yield call(Axios.DELETE, payload);
-
+    console.log('최근 검색어 삭제 성공:', response);
     if (response.result === true && response.code === null) {
-      console.log('최근 검색어 삭제 성공:', response);
-      yield put(SearchActions.fetchSearchReducer({ type: 'recentSearchDelete', data: data.params.idx }));
+      yield put(SearchActions.fetchSearchReducer({ type: 'recentSearchDelete', data: item.data.idx }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
@@ -118,10 +126,10 @@ export function* fetchSearchRecentListDelete(data: any): any {
   }
 }
 
-export function* fetchSearchRecentListDeleteAll(data: any): any {
+export function* fetchSearchRecentListDeleteAll(item: any): any {
   try {
     const payload = {
-      ...data,
+      ...item,
       url: `${Config.SEARCH_QUERY_URL}`,
     };
 

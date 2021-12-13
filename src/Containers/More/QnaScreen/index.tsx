@@ -12,13 +12,12 @@ import CustomButton from '@/Components/CustomButton';
 import TabMenu from '@/Components/TabMenu';
 import { QNA_TAB_MENU } from '@/Containers/More/QnaScreen/data';
 import { navigate } from '@/Services/NavigationService';
-import { fetchMyQnaDetailInfo } from '@/Sagas/MySaga';
 
 const QnaScreen = () => {
   const dispatch = useDispatch();
 
-  const { isLoading } = useSelector((state: CommonState) => state.common);
-  const { myNoticeList, myQnaList, myQnaListPage } = useSelector((state: MyState) => state.my);
+  const { isLoading, heightInfo } = useSelector((state: CommonState) => state.common);
+  const { myQnaList, myQnaListPage } = useSelector((state: MyState) => state.my);
 
   useEffect(() => {
     const params = {
@@ -74,6 +73,7 @@ const QnaScreen = () => {
           }
           onEndReached={() => onMore()}
           onEndReachedThreshold={0.8}
+          ListFooterComponent={<View style={{ paddingBottom: heightInfo.subBottomHeight }} />}
           renderItem={({ item, index }) => (
             <CustomButton onPress={() => onDetail(item.idx)}>
               <View

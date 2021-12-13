@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
@@ -7,15 +7,9 @@ import { CalendarList, DateObject, LocaleConfig } from 'react-native-calendars';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 import CustomText from '@/Components/CustomText';
-import PlaceActions from '@/Stores/Place/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
-import { PlaceState } from '@/Stores/Place/InitialState';
 import { Color } from '@/Assets/Color';
-import TicketSlider from '@/Components/Card/Common/TicketSlider';
-import { numberFormat } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
-import { navigate } from '@/Services/NavigationService';
-import { AuthState } from '@/Stores/Auth/InitialState';
 import HomeActions from '@/Stores/Home/Actions';
 import { DATA_HOLIDAYS } from '@/Components/RBS/Common/data';
 
@@ -35,8 +29,8 @@ const CalendarRBS = () => {
   const { width, height } = useWindowDimensions();
   const { heightInfo, isOpenCalendarRBS } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
-  const [markedDate, setMarkedDate] = useState<any>();
+  // const { placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
+  // const [markedDate, setMarkedDate] = useState<any>();
   const dayNamesShort = ['일', '월', '화', '수', '목', '금', '토'];
 
   useEffect(() => {
@@ -73,7 +67,7 @@ const CalendarRBS = () => {
         <View style={{ flex: 1 }}>
           <FlatList
             data={[0]}
-            renderItem={({ item, index }) => (
+            renderItem={() => (
               <CalendarList
                 current={moment().format('YYYY-MM-DD')}
                 minDate={moment().format('YYYY-MM-DD')}
@@ -181,7 +175,7 @@ const CalendarRBS = () => {
             maxToRenderPerBatch={1}
             windowSize={7}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: heightInfo.fixBottomHeight + 44, paddingTop: 32 }}
+            contentContainerStyle={{ paddingBottom: heightInfo.fixBottomHeight + 56, paddingTop: 32 }}
           />
         </View>
         <View

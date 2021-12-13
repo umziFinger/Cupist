@@ -28,14 +28,16 @@ const PlaceListCard = (props: PropTypes) => {
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'isOpenTicketSlider', data: { type, idx: data.checkType } }));
   };
 
-  const onPressTicket = (placeIdx: number, ticket: any) => {
+  const onPressTicket = (place: any, ticket: any) => {
     if (selectedTicket?.idx === ticket.idx) {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
     }
-
-    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: ticket }));
-    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedPlaceIdx', data: placeIdx }));
+    // console.log(ticket);
+    dispatch(
+      PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: { ...ticket, ticketName: place.ticketName } }),
+    );
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedPlaceIdx', data: place.idx }));
   };
 
   const onPlaceDetail = (place: any) => {
@@ -194,7 +196,7 @@ const PlaceListCard = (props: PropTypes) => {
           <FlatList
             data={item?.PlaceTicketInfo || []}
             renderItem={({ item: ticket }) => (
-              <CustomButton onPress={() => onPressTicket(item?.idx, ticket)}>
+              <CustomButton onPress={() => onPressTicket(item, ticket)}>
                 <View
                   style={{
                     borderWidth: 1,

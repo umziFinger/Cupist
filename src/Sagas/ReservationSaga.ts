@@ -173,3 +173,25 @@ export function* fetchReservationDeleteCard(data: any): any {
     console.log('occurred Error...fetchReservationDeleteCard : ', e);
   }
 }
+
+export function* fetchReservationPaymentSign(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: `${Config.RESERVATION_PAYMENT_SIGN_URL}`,
+    };
+    const response = yield call(Axios.PATCH, payload);
+    console.log('비밀번호 재등록!!: ', response.data);
+    if (response.result === true && response.code === null) {
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(ReservationActions.fetchReservationCardList());
+      navigateGoBack();
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchReservationDeleteCard : ', e);
+  }
+}

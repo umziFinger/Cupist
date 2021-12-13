@@ -67,12 +67,13 @@ const InputPassword = forwardRef<TextInput, InputPasswordProps>((props: InputPas
           onChangeText={onChangeText}
           autoCorrect={false}
           secureTextEntry
-          textContentType={'newPassword'}
-          autoCapitalize={'none'}
+          textContentType={'none'}
+          // autoCapitalize={'none'}
           value={value}
           maxLength={12}
           allowFontScaling={false}
           onSubmitEditing={onSubmitEditing}
+          blurOnSubmit={false}
         />
       </View>
       <View style={{ marginTop: 4 }}>

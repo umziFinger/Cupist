@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { AxiosRequestConfig } from 'axios';
 import Config from '@/Config';
 import { UserService } from './UserService';
 
@@ -6,6 +7,7 @@ interface AxiosProps {
   url: string;
   params?: any | null;
   formData?: any | null;
+  data?: any | null;
 }
 
 async function GET(data: AxiosProps) {
@@ -113,8 +115,8 @@ async function PATCH(data: AxiosProps) {
   }
 }
 
-async function DELETE(data: AxiosProps) {
-  const { url, params } = data;
+async function DELETE(item: AxiosRequestConfig) {
+  const { url, params, data } = item;
 
   const joinApiClient = await UserService.getApiClient(Config.API_URL);
   let result;
@@ -123,8 +125,9 @@ async function DELETE(data: AxiosProps) {
   }
   console.log(`| DELETE | /${url}`);
   console.log(`| params ->`, params);
+  console.log(`| data ->`, data);
   return await joinApiClient
-    .delete(Config.API_URL + url, params)
+    .delete(Config.API_URL + url, { data } || { ...params })
     .then((response) => {
       console.log('Success Axios DELETE StatusCode: ', response.status);
       return response.data;

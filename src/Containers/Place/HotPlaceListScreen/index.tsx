@@ -68,7 +68,7 @@ const HotPlaceListScreen = () => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ justifyContent: 'center', marginRight: 2 }}>
                   <CustomText style={{ color: Color.Black1000, fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4 }}>
-                    Hot 볼리
+                    볼리미 HOT
                   </CustomText>
                 </View>
                 <View style={{ justifyContent: 'center' }}>

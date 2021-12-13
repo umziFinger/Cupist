@@ -12,6 +12,7 @@ import { MyState } from '@/Stores/My/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 import Config from '@/Config';
 import { CommonState } from '@/Stores/Common/InitialState';
+import { navigate } from '@/Services/NavigationService';
 
 const PlaceInfo = () => {
   const { width } = useWindowDimensions();
@@ -167,6 +168,11 @@ const PlaceInfo = () => {
     }
     return null;
   };
+
+  const onPlaceDetail = () => {
+    navigate('PlaceDetailScreen', { idx: reservationDetail?.Place?.idx });
+  };
+
   return (
     <View>
       <View
@@ -200,40 +206,42 @@ const PlaceInfo = () => {
           </CustomButton>
         )}
       </View>
-      <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ flex: 1 }}>
-          <View>
-            <CustomText
-              style={{
-                fontSize: 17,
-                fontWeight: '500',
-                letterSpacing: -0.3,
-                color: Color.Black1000,
-              }}
-            >
-              {reservationDetail?.Place?.name || ''}
-            </CustomText>
+      <CustomButton onPress={() => onPlaceDetail()}>
+        <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flex: 1 }}>
+            <View>
+              <CustomText
+                style={{
+                  fontSize: 17,
+                  fontWeight: '500',
+                  letterSpacing: -0.3,
+                  color: Color.Black1000,
+                }}
+              >
+                {reservationDetail?.Place?.name || ''}
+              </CustomText>
+            </View>
+            <View style={{ marginTop: 6 }}>
+              <CustomText
+                style={{
+                  fontSize: 12,
+                  letterSpacing: -0.22,
+                  color: Color.Gray600,
+                }}
+              >
+                {reservationDetail?.Place?.newAddress || ''}
+              </CustomText>
+            </View>
           </View>
-          <View style={{ marginTop: 6 }}>
-            <CustomText
-              style={{
-                fontSize: 12,
-                letterSpacing: -0.22,
-                color: Color.Gray600,
-              }}
-            >
-              {reservationDetail?.Place?.newAddress || ''}
-            </CustomText>
+          <View style={{ width: 24, height: 24 }}>
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={require('@/Assets/Images/Arrow/icArrowRightHeavy.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
           </View>
         </View>
-        <View style={{ width: 24, height: 24 }}>
-          <FastImage
-            style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/Arrow/icArrowRightHeavy.png')}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-        </View>
-      </View>
+      </CustomButton>
 
       <View style={{ marginTop: 20 }}>
         <FlatList

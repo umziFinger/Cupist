@@ -61,6 +61,7 @@ const InputNickname = forwardRef<TextInput, InputNicknameProps>(
             value={value}
             allowFontScaling={false}
             onSubmitEditing={onSubmitEditing}
+            blurOnSubmit={false}
           />
           {value?.length > 0 && isFocused && (
             <CustomButton onPress={onTextClear}>

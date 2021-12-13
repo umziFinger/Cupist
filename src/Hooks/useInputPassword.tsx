@@ -10,7 +10,7 @@ type ResultUseInputPassword = {
 
 function useInputPassword(): ResultUseInputPassword {
   // const { password } = useSelector((state: AuthState) => state.auth);
-  const [password, setPassword] = useState<any>('');
+  const [password, setPassword] = useState('');
 
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [passwordValidText, setPasswordValidText] = useState('');
@@ -50,7 +50,7 @@ function useInputPassword(): ResultUseInputPassword {
       }
     } else {
       // dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: null } }));
-      setPassword(null);
+      setPassword('');
       setPasswordValidText('');
       setIsPasswordValid(false);
     }

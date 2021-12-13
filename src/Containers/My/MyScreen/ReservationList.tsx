@@ -14,6 +14,8 @@ import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import CommonActions from '@/Stores/Common/Actions';
 
+type typeYN = 'Y' | 'N';
+
 const ReservationList = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
@@ -132,6 +134,32 @@ const ReservationList = () => {
         },
       }),
     );
+  };
+
+  const onReviewButtonHandler = (item: any) => {
+    if (item.reviewYN === 'Y') {
+      onWriteReview(item);
+    } else {
+      dispatch(MyActions.fetchMyReducer({ type: 'mySelectedTab', data: { title: '리뷰', selectKey: 'review' } }));
+    }
+  };
+
+  const onWriteReview = (item: any) => {
+    dispatch(
+      MyActions.fetchMyReducer({
+        type: 'writeReviewInfo',
+        data: {
+          paymentIdx: item.idx,
+          placeIdx: item.placeIdx,
+          placeName: item.placeName,
+          ticketName: item.placeName,
+          star: 0,
+          content: '',
+          files: '',
+        },
+      }),
+    );
+    navigate('WriteReviewScreen');
   };
 
   return (
@@ -255,15 +283,15 @@ const ReservationList = () => {
                       </View>
                     </CustomButton>
 
-                    <CustomButton style={{ flex: 1 }}>
+                    <CustomButton style={{ flex: 1 }} onPress={() => onReviewButtonHandler(item)}>
                       <View
                         style={{
                           paddingTop: 12,
                           paddingBottom: 11,
-                          backgroundColor: item?.reviewYN === 'N' ? Color.Primary1000 : Color.White,
+                          backgroundColor: item?.reviewYN === 'Y' ? Color.Primary1000 : Color.White,
                           borderRadius: 5,
                           borderWidth: 1,
-                          borderColor: item?.reviewYN === 'N' ? 'transparent' : Color.Primary1000,
+                          borderColor: item?.reviewYN === 'Y' ? 'transparent' : Color.Primary1000,
                         }}
                       >
                         <CustomText
@@ -272,10 +300,10 @@ const ReservationList = () => {
                             fontWeight: '500',
                             letterSpacing: -0.2,
                             textAlign: 'center',
-                            color: item?.reviewYN === 'N' ? Color.White : Color.Primary1000,
+                            color: item?.reviewYN === 'Y' ? Color.White : Color.Primary1000,
                           }}
                         >
-                          {item?.reviewYN === 'N' ? '리뷰쓰기' : '내 리뷰 보기'}
+                          {item?.reviewYN === 'Y' ? '리뷰쓰기' : '내 리뷰 보기'}
                         </CustomText>
                       </View>
                     </CustomButton>

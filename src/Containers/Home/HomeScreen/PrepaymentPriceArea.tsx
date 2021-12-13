@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import moment from 'moment';
-import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
 import CustomButton from '@/Components/CustomButton';
-import { HomeState } from '@/Stores/Home/InitialState';
-import HomeActions from '@/Stores/Home/Actions';
-import { CommonState } from '@/Stores/Common/InitialState';
+
 import { navigate } from '@/Services/NavigationService';
 import DateFilter from '@/Components/FilterSilder/DateFilter';
 
@@ -17,10 +13,8 @@ interface PropTypes {
   list: Array<any>;
 }
 const PrepaymentPriceArea = (props: PropTypes) => {
-  const dispatch = useDispatch();
   const { list } = props;
   const { width } = useWindowDimensions();
-  const { prepaymentDate, prepaymentDateList } = useSelector((state: HomeState) => state.home);
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');

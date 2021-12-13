@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { FlatList, ListRenderItemInfo, Platform, View } from 'react-native';
+import { FlatList, Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import { useIsFocused } from '@react-navigation/native';
-import { put } from 'redux-saga/effects';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { CommonState } from '@/Stores/Common/InitialState';

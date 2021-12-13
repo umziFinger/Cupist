@@ -57,7 +57,7 @@ const RecentPlaceScreen = () => {
           windowSize={7}
           showsVerticalScrollIndicator={false}
           refreshing={false}
-          contentContainerStyle={{ backgroundColor: Color.White, paddingBottom: heightInfo.statusHeight, flex: 1 }}
+          ListFooterComponent={<View style={{ paddingBottom: heightInfo.subBottomHeight }} />}
           scrollEnabled
           onEndReached={() => onMore()}
           onEndReachedThreshold={0.8}

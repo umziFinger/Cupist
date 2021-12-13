@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import _ from 'lodash';
 import { RouteProp } from '@react-navigation/native';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Color } from '@/Assets/Color';
 import { SearchState } from '@/Stores/Search/InitialState';
 import SearchActions from '@/Stores/Search/Actions';
@@ -12,7 +13,6 @@ import Header from '@/Components/Header';
 import PlaceXSmallCard, { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
-import { KeyboardSpacer, KeyboardSpacerProvider } from '@/Components/Keyboard';
 import { navigate } from '@/Services/NavigationService';
 import InputLocationSearch from '@/Components/Input/LocationSerach';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
@@ -116,84 +116,80 @@ const ResidentSearchScreen = ({ route }: PropTypes) => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <KeyboardSpacerProvider>
-        <View style={{ flex: 1, backgroundColor: Color.White }}>
-          <Header type={'close'} text={'상주볼링장'} />
+      <View style={{ flex: 1, backgroundColor: Color.White }}>
+        <Header type={'close'} text={'상주볼링장'} />
 
-          <View style={{ flex: 1, paddingHorizontal: 20 }}>
-            <InputLocationSearch onChangeText={onChangeText} onClear={onClearKeyword} />
-            {searchQuery !== '' && (
-              <View style={{ backgroundColor: Color.White, paddingVertical: 20 }}>
-                <CustomText
-                  style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow1000 }}
-                >
-                  {searchQuery} 검색결과 {bowlingList?.placeCount || 0}건
-                </CustomText>
+        <View style={{ flex: 1, paddingHorizontal: 20 }}>
+          <InputLocationSearch onChangeText={onChangeText} onClear={onClearKeyword} />
+          {searchQuery !== '' && (
+            <View style={{ backgroundColor: Color.White, paddingVertical: 20 }}>
+              <CustomText
+                style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow1000 }}
+              >
+                {searchQuery} 검색결과 {bowlingList?.placeCount || 0}건
+              </CustomText>
+            </View>
+          )}
+
+          <FlatList
+            data={bowlingList?.place}
+            renderItem={({ item }) => (
+              <View style={{ backgroundColor: Color.White }}>
+                <PlaceXSmallCard item={item} type={type} />
               </View>
             )}
-
-            <FlatList
-              data={bowlingList?.place}
-              renderItem={({ item }) => (
-                <View style={{ backgroundColor: Color.White }}>
-                  <PlaceXSmallCard item={item} type={type} />
-                </View>
-              )}
-              keyExtractor={(item, index) => index.toString()}
-              initialNumToRender={10}
-              maxToRenderPerBatch={13}
-              windowSize={7}
-              scrollEnabled
-              showsVerticalScrollIndicator={false}
-              onEndReached={() => onMore()}
-              onEndReachedThreshold={0.8}
-              refreshing={false}
-              onRefresh={() => onRefresh()}
-              keyboardDismissMode={'interactive'}
-              ListFooterComponent={() => (
-                <>
-                  <View style={{ paddingBottom: heightInfo.subBottomHeight }} />
-                </>
-              )}
-              ListEmptyComponent={() => renderEmpty()}
-            />
-            {type === SCREEN_TYPE.JOIN && (
-              <CustomButton onPress={() => onCancel()}>
+            keyExtractor={(item, index) => index.toString()}
+            initialNumToRender={10}
+            maxToRenderPerBatch={13}
+            windowSize={7}
+            scrollEnabled
+            showsVerticalScrollIndicator={false}
+            onEndReached={() => onMore()}
+            onEndReachedThreshold={0.8}
+            refreshing={false}
+            onRefresh={() => onRefresh()}
+            keyboardDismissMode={'interactive'}
+            ListFooterComponent={() => (
+              <>
+                <View style={{ paddingBottom: heightInfo.subBottomHeight }} />
+              </>
+            )}
+            ListEmptyComponent={() => renderEmpty()}
+          />
+          {type === SCREEN_TYPE.JOIN && (
+            <CustomButton onPress={() => onCancel()}>
+              <View
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  bottom: heightInfo.fixBottomHeight + 8,
+                  alignItems: 'center',
+                }}
+              >
                 <View
                   style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: heightInfo.fixBottomHeight + 8,
+                    backgroundColor: Color.Primary1000,
+                    flexDirection: 'row',
+                    paddingRight: 46,
+                    paddingLeft: 45,
+                    paddingVertical: 13,
                     alignItems: 'center',
+                    borderRadius: 24,
                   }}
                 >
-                  <View
-                    style={{
-                      backgroundColor: Color.Primary1000,
-                      flexDirection: 'row',
-                      paddingRight: 46,
-                      paddingLeft: 45,
-                      paddingVertical: 13,
-                      alignItems: 'center',
-                      borderRadius: 24,
-                    }}
-                  >
-                    <View>
-                      <CustomText
-                        style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25, color: Color.White }}
-                      >
-                        다음에 할게요
-                      </CustomText>
-                    </View>
+                  <View>
+                    <CustomText style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25, color: Color.White }}>
+                      다음에 할게요
+                    </CustomText>
                   </View>
                 </View>
-              </CustomButton>
-            )}
-          </View>
+              </View>
+            </CustomButton>
+          )}
         </View>
-        {Platform.OS === 'ios' && <KeyboardSpacer />}
-      </KeyboardSpacerProvider>
+      </View>
+      {Platform.OS === 'ios' && <KeyboardSpacer />}
     </View>
   );
 };

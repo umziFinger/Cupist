@@ -9,6 +9,7 @@ const { Types, Creators } = createActions({
   fetchReservationSimplePayment: ['params'],
   fetchReservationCard: ['params'],
   fetchReservationDeleteCard: ['params'],
+  fetchReservationPaymentSign: ['params'],
 });
 
 export const ReservationTypes = Types;

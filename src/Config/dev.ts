@@ -18,7 +18,7 @@ const dev = {
   TMAP_MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/tmap-내비게이션-지도/id431589174',
   TMAP_MARKET_URL_ANDROID: 'market://details?id=com.skt.tmap.ku',
 
-  // API_URL: 'http://192.168.1.36:8080/',
+  // API_URL: 'http://192.168.0.11:8080/',
   API_URL: 'https://api.bolimi.kr/',
 
   // 이미지 url
@@ -58,6 +58,8 @@ const dev = {
   AUTH_FIND_PASSWORD_URL: 'auth/find-password',
   AUTH_RENEW_TOKEN_URL: 'auth/refresh',
   AUTH_JOIN_SOCIAL_URL: 'auth/join/social', // 동의 후 소셜 가입
+  AUTH_CHECK_EMAIL_URL: 'auth/check/email',
+
   // my
   MY_URL: 'my',
   MY_PUSH_YN_URL: 'my/pushYN',
@@ -123,6 +125,7 @@ const dev = {
   RESERVATION_CARD_URL: 'reservation/card',
   RESERVATION_CANCEL_URL: 'reservation/cancel',
   RESERVATION_PAYMENT_CARD_URL: 'reservation/payment/card',
+  RESERVATION_PAYMENT_SIGN_URL: 'reservation/payment/sign',
 };
 
 export default dev;

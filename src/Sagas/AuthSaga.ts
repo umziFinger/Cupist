@@ -412,3 +412,40 @@ export function* fetchAuthSocialJoin(data: any): any {
     console.log('occurred Error...fetchAuthSocialJoin : ', e);
   }
 }
+
+export function* fetchAuthCheckEmail(data: any): any {
+  try {
+    // if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const payload = {
+      ...data,
+      url: Config.AUTH_CHECK_EMAIL_URL,
+    };
+
+    const response = yield call(Axios.POST, payload);
+    console.log('이메일 중복 체크', response.data);
+    if (response.result === true && response.code === null) {
+      if (response.data.response) {
+        navigate('JoinStepTwoScreen');
+      } else {
+        yield put(
+          CommonActions.fetchCommonReducer({
+            type: 'alertDialog',
+            data: {
+              alertDialog: true,
+              alertDialogType: 'confirm',
+              alertDialogTitle: '이미 사용중인 이메일 입니다.',
+            },
+          }),
+        );
+      }
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchAuthCheckEmail : ', e);
+  }
+}

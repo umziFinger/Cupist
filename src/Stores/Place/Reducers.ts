@@ -23,7 +23,6 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       case 'recentList': {
         try {
           if (actions.params.page === 1) {
-            console.log('asdjfklsajfl: ', data);
             draft.recentList = data;
           } else {
             draft.recentList = data?.length > 0 ? draft.recentList.concat(data) : draft.recentList;
@@ -165,11 +164,11 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
           const copyPlaceDetail: any = state?.placeDetail;
           if (data.type === 'dibs') {
             if (copyPlaceDetail !== undefined) {
-              copyPlaceDetail.place.isPlaceDibs = true;
+              draft.placeDetail.place.isPlaceDibs = true;
             }
           } else if (data.type === 'unDibs') {
             if (copyPlaceDetail !== undefined) {
-              copyPlaceDetail.place.isPlaceDibs = false;
+              draft.placeDetail.place.isPlaceDibs = false;
             }
           }
         } catch (e) {

@@ -11,6 +11,7 @@ import { MyState } from '@/Stores/My/InitialState';
 import ReservationList from '@/Containers/My/MyScreen/ReservationList';
 import ReviewList from '@/Containers/My/MyScreen/ReviewList';
 import { fetchMyReviewList } from '@/Sagas/MySaga';
+import { navigationRef } from '@/Services/NavigationService';
 
 const MyScreen = () => {
   const isFocused = useIsFocused();
@@ -40,6 +41,13 @@ const MyScreen = () => {
       dispatch(MyActions.fetchMyReviewList(params));
     }
   }, [mySelectedTab.selectKey, reservationSelectedTab.key]);
+
+  // 다른 탭 이동시 예약 서브 탭 상태값 초기화
+  useEffect(() => {
+    if (!isFocused && navigationRef.current.getCurrentRoute().name !== 'WriteReviewScreen') {
+      dispatch(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '진행중', key: 'before' } }));
+    }
+  }, [isFocused]);
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White, paddingTop: paddingTop + 29 }}>

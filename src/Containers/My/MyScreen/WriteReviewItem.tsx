@@ -1,9 +1,9 @@
-import { FlatList, useWindowDimensions, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
-import { Color, Opacity } from '@/Assets/Color';
+import { Color } from '@/Assets/Color';
 import { MyState } from '@/Stores/My/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import Star from '@/Components/Star';
@@ -11,16 +11,43 @@ import CommonActions from '@/Stores/Common/Actions';
 import MyActions from '@/Stores/My/Actions';
 import { navigate } from '@/Services/NavigationService';
 import CustomShowMore from '@/Components/CustomShowMore';
+import PlaceActions from '@/Stores/Place/Actions';
 
 const WriteReviewItem = () => {
   const dispatch = useDispatch();
 
   const { myReviewList } = useSelector((state: MyState) => state.my);
-  const { width } = useWindowDimensions();
   const onPressReviewRBS = (item: any) => {
     console.log('더보기', item);
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenMyReviewMoreRBS', data: true }));
     dispatch(MyActions.fetchMyReducer({ type: 'clickedReviewItem', data: item }));
+  };
+
+  const onPressTotalList = (reviewIdx: number) => {
+    // console.log(reviewIdx);
+    const params = {
+      perPage: 10,
+      page: 1,
+      sort: 'latest',
+      placeIdx: myReviewList.writeReview[reviewIdx].placeIdx,
+    };
+    dispatch(PlaceActions.fetchPlaceReviewList(params));
+  };
+
+  const onTotalImage = (reviewIdx: number, photoIdx: number, value: number) => {
+    const idx = myReviewList?.writeReview[reviewIdx]?.reviewPhoto?.findIndex((review: any) => review.idx === photoIdx);
+    if (idx > -1) {
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'totalImage',
+          data: {
+            totalImageType: 'review',
+            totalImageList: [...myReviewList?.writeReview[reviewIdx]?.reviewPhoto] || [],
+          },
+        }),
+      );
+      navigate('TotalImageScreen', { startIdx: value });
+    }
   };
 
   return (
@@ -47,13 +74,13 @@ const WriteReviewItem = () => {
       <View style={{}}>
         <FlatList
           data={myReviewList?.writeReview}
-          renderItem={({ item, index }) => (
+          renderItem={({ item, index: reviewIdx }) => (
             <View
               style={{
                 borderRadius: 5,
                 backgroundColor: Color.White,
                 paddingVertical: 20,
-                borderBottomWidth: myReviewList?.writeReview?.length - 1 === index ? 0 : 1,
+                borderBottomWidth: myReviewList?.writeReview?.length - 1 === reviewIdx ? 0 : 1,
                 borderBottomColor: Color.Gray300,
               }}
             >
@@ -74,85 +101,90 @@ const WriteReviewItem = () => {
                     </View>
                   </View>
                 </CustomButton>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-                    <Star
-                      default={item?.PlaceReview?.star || 0}
-                      opacity
-                      count={5}
-                      starSize={12}
-                      spacing={0}
-                      disabled
-                      fullStar={require('@/Assets/Images/Common/icStarOnBig.png')}
-                      emptyStar={require('@/Assets/Images/Common/icStarOffBig.png')}
-                    />
-                    <View>
-                      <CustomText style={{ fontSize: 10, letterSpacing: 0, color: Color.Gray800 }}>
-                        {item?.PlaceReview?.regDateView || ''}
-                      </CustomText>
+                <CustomButton onPress={() => onPressTotalList(reviewIdx)}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                      <Star
+                        default={item?.PlaceReview?.star || 0}
+                        opacity
+                        count={5}
+                        starSize={12}
+                        spacing={0}
+                        disabled
+                        fullStar={require('@/Assets/Images/Common/icStarOnBig.png')}
+                        emptyStar={require('@/Assets/Images/Common/icStarOffBig.png')}
+                      />
+                      <View>
+                        <CustomText style={{ fontSize: 10, letterSpacing: 0, color: Color.Gray800 }}>
+                          {item?.PlaceReview?.regDateView || ''}
+                        </CustomText>
+                      </View>
                     </View>
+                    <CustomButton onPress={() => onPressReviewRBS(item)}>
+                      <View style={{ width: 16, height: 16 }}>
+                        <FastImage
+                          style={{ width: '100%', height: '100%' }}
+                          source={require('@/Assets/Images/Button/icReveiwPlus.png')}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </View>
+                    </CustomButton>
                   </View>
-                  <CustomButton onPress={() => onPressReviewRBS(item)}>
-                    <View style={{ width: 16, height: 16 }}>
-                      <FastImage
-                        style={{ width: '100%', height: '100%' }}
-                        source={require('@/Assets/Images/Button/icReveiwPlus.png')}
-                        resizeMode={FastImage.resizeMode.cover}
-                      />
-                    </View>
-                  </CustomButton>
-                </View>
 
-                <View style={{ marginTop: 13 }}>
-                  <CustomText
-                    style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.Grayyellow1000 }}
-                  >
-                    {item?.PlaceReview?.visitCnt || 1}번째 방문
-                  </CustomText>
-                </View>
-
-                <View style={{ marginTop: 10 }}>
-                  <CustomShowMore
-                    text={item?.PlaceReview?.content || ''}
-                    targetLines={2}
-                    backgroundColor={'transparent'}
-                    textColor={Color.Black1000}
-                    buttonColor={Color.Primary1000}
-                  />
-                </View>
-              </View>
-
-              {item?.reviewPhoto?.length > 0 && (
-                <FlatList
-                  data={item?.reviewPhoto}
-                  renderItem={({ item: reviewPhoto }) => (
-                    <View
-                      style={{
-                        width: 176,
-                        height: 110,
-                        borderRadius: 5,
-                        // marginLeft: reviewPhotoIndex === 0 ? 8 : 18,
-                        marginRight: 8,
-                        backgroundColor: Color.Gray200,
-                        alignSelf: 'center',
-                      }}
+                  <View style={{ marginTop: 13 }}>
+                    <CustomText
+                      style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.Grayyellow1000 }}
                     >
-                      <FastImage
-                        style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                        source={{ uri: reviewPhoto.url || '' }}
-                        resizeMode={FastImage.resizeMode.cover}
-                      />
-                    </View>
+                      {item?.PlaceReview?.visitCnt || 1}번째 방문
+                    </CustomText>
+                  </View>
+                  <View style={{ marginTop: 10 }}>
+                    <CustomShowMore
+                      text={item?.PlaceReview?.content || ''}
+                      targetLines={2}
+                      backgroundColor={'transparent'}
+                      textColor={Color.Black1000}
+                      buttonColor={Color.Primary1000}
+                    />
+                  </View>
+                  {item?.reviewPhoto?.length > 0 && (
+                    <FlatList
+                      data={item?.reviewPhoto}
+                      renderItem={({ item: reviewPhoto, index: photoIndex }) => (
+                        <CustomButton
+                          onPress={() => onTotalImage(reviewIdx, reviewPhoto.idx, photoIndex)}
+                          effect={false}
+                        >
+                          <View
+                            style={{
+                              width: 176,
+                              height: 110,
+                              borderRadius: 5,
+                              // marginLeft: reviewPhotoIndex === 0 ? 8 : 18,
+                              marginRight: 8,
+                              backgroundColor: Color.Gray200,
+                              alignSelf: 'center',
+                            }}
+                          >
+                            <FastImage
+                              style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                              source={{ uri: reviewPhoto.url || '' }}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                          </View>
+                        </CustomButton>
+                      )}
+                      keyExtractor={(photo, photoKey) => photoKey.toString()}
+                      contentContainerStyle={{ paddingLeft: 24, marginTop: 16 }}
+                      horizontal
+                      initialNumToRender={5}
+                      maxToRenderPerBatch={8}
+                      windowSize={7}
+                      showsHorizontalScrollIndicator={false}
+                    />
                   )}
-                  keyExtractor={(photo, photoKey) => photoKey.toString()}
-                  contentContainerStyle={{ paddingLeft: 24, marginTop: 16 }}
-                  horizontal
-                  initialNumToRender={5}
-                  maxToRenderPerBatch={8}
-                  windowSize={7}
-                  showsHorizontalScrollIndicator={false}
-                />
-              )}
+                </CustomButton>
+              </View>
             </View>
           )}
           initialNumToRender={7}

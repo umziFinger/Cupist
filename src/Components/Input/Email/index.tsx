@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { Platform, TextInput, View } from 'react-native';
+import { NativeSyntheticEvent, Platform, TextInput, TextInputFocusEventData, View } from 'react-native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 
@@ -60,6 +60,9 @@ const InputEmail = forwardRef<TextInput, InputEmailProps>((props: InputEmailProp
           value={value}
           allowFontScaling={false}
           onSubmitEditing={onSubmitEditing}
+          secureTextEntry={false}
+          blurOnSubmit={false}
+          // returnKeyType="next"
         />
       </View>
       <View style={{ marginTop: 4 }}>

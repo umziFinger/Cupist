@@ -48,6 +48,7 @@ import {
   fetchUserLogout,
   fetchAuthFindPassword,
   fetchAuthSocialJoin,
+  fetchAuthCheckEmail,
 } from './AuthSaga';
 
 // notification
@@ -103,6 +104,7 @@ import {
   fetchReservationSimplePayment,
   fetchReservationCard,
   fetchReservationDeleteCard,
+  fetchReservationPaymentSign,
 } from '@/Sagas/ReservationSaga';
 
 export default function* root() {
@@ -131,6 +133,7 @@ export default function* root() {
     takeLatest(AuthTypes.FETCH_USER_LOGOUT, fetchUserLogout),
     takeLatest(AuthTypes.FETCH_AUTH_FIND_PASSWORD, fetchAuthFindPassword),
     takeLatest(AuthTypes.FETCH_AUTH_SOCIAL_JOIN, fetchAuthSocialJoin),
+    takeLatest(AuthTypes.FETCH_AUTH_CHECK_EMAIL, fetchAuthCheckEmail),
 
     // search
     takeLatest(SearchTypes.FETCH_SEARCH_AREA_LIST, fetchSearchAreaList),
@@ -193,5 +196,6 @@ export default function* root() {
     takeLatest(ReservationTypes.FETCH_RESERVATION_SIMPLE_PAYMENT, fetchReservationSimplePayment),
     takeLatest(ReservationTypes.FETCH_RESERVATION_CARD, fetchReservationCard),
     takeLatest(ReservationTypes.FETCH_RESERVATION_DELETE_CARD, fetchReservationDeleteCard),
+    takeLatest(ReservationTypes.FETCH_RESERVATION_PAYMENT_SIGN, fetchReservationPaymentSign),
   ]);
 }

@@ -38,7 +38,6 @@ const JoinStepTwoScreen = () => {
     smsValidText,
     setSmsAuthNumber,
     setSmsAuthTime,
-    timer,
     smsAuthTime,
   } = useInputAuthNumber();
 
@@ -52,10 +51,9 @@ const JoinStepTwoScreen = () => {
   const onGetSmsAuth = () => {
     dispatch(AuthActions.fetchAuthReducer({ type: 'smsValueValid', data: false }));
     dispatch(AuthActions.fetchAuthReducer({ type: 'smsValidText', data: { smsValidText: null } }));
+
     setSmsAuthNumber('');
     setSmsAuthTime(300);
-
-    if (timer) clearTimeout(timer);
 
     dispatch(
       AuthActions.fetchAuthSmsSend({
@@ -92,7 +90,7 @@ const JoinStepTwoScreen = () => {
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: '#ffffff' }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'android' ? heightInfo.statusHeight : undefined}
+      enabled={Platform.OS === 'ios'}
     >
       <View style={{ flex: 1 }}>
         <Header type="back" />
@@ -215,6 +213,7 @@ const JoinStepTwoScreen = () => {
             scrollEnabled
             showsVerticalScrollIndicator={false}
             ListFooterComponent={<>{/* <View style={{ paddingBottom: heightInfo.statusHeight }} /> */}</>}
+            keyboardShouldPersistTaps={'handled'}
           />
 
           <View
