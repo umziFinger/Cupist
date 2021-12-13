@@ -125,6 +125,7 @@ const prod = {
   RESERVATION_CARD_URL: 'reservation/card',
   RESERVATION_CANCEL_URL: 'reservation/cancel',
   RESERVATION_PAYMENT_CARD_URL: 'reservation/payment/card',
+  RESERVATION_PAYMENT_SIGN_URL: 'reservation/payment/sign',
 };
 
 export default prod;

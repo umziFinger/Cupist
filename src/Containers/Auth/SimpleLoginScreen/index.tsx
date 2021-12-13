@@ -229,19 +229,21 @@ const SimpleLoginScreen = () => {
               </View>
             </View>
             {/* Todo: 테스트 코드이므로 삭제 해야됩니다. */}
-            <CustomButton onPress={() => onPressTestLogin()} hitSlop={20}>
-              <View style={{ alignItems: 'center' }}>
-                <CustomText
-                  style={{
-                    color: Color.Gray700,
-                    fontSize: 15,
-                    letterSpacing: -0.2,
-                  }}
-                >
-                  테스트 로그인
-                </CustomText>
-              </View>
-            </CustomButton>
+            {Config.APP_MODE === 'dev' && (
+              <CustomButton onPress={() => onPressTestLogin()} hitSlop={20}>
+                <View style={{ alignItems: 'center' }}>
+                  <CustomText
+                    style={{
+                      color: Color.Gray700,
+                      fontSize: 15,
+                      letterSpacing: -0.2,
+                    }}
+                  >
+                    테스트 로그인
+                  </CustomText>
+                </View>
+              </CustomButton>
+            )}
             <FlatList
               data={osCheck}
               renderItem={({ item, index }) => (
