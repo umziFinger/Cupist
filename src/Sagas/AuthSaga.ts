@@ -425,7 +425,7 @@ export function* fetchAuthCheckEmail(data: any): any {
     const response = yield call(Axios.POST, payload);
     console.log('이메일 중복 체크', response.data);
     if (response.result === true && response.code === null) {
-      if (response.data.response) {
+      if (response.data.isAvailable) {
         navigate('JoinStepTwoScreen');
       } else {
         yield put(
