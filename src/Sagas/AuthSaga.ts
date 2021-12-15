@@ -327,6 +327,8 @@ export function* fetchSmsAuth(data: any): any {
 
 export function* fetchAuthFindPassword(data: any): any {
   try {
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
     const payload = {
       ...data,
       url: Config.AUTH_FIND_PASSWORD_URL,
@@ -335,6 +337,7 @@ export function* fetchAuthFindPassword(data: any): any {
     const response = yield call(Axios.POST, payload);
 
     if (response.result === true && response.code === null) {
+      // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       console.log('fetchAuthFindsPassword response : ', response.data);
       yield put(
         CommonActions.fetchCommonReducer({

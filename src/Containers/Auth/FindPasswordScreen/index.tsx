@@ -76,6 +76,7 @@ const FindPasswordScreen = () => {
           showsVerticalScrollIndicator={false}
           renderToHardwareTextureAndroid
           ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
+          keyboardShouldPersistTaps={'handled'}
         />
       </View>
     </KeyboardAvoidingView>

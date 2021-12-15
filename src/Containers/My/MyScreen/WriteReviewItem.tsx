@@ -11,7 +11,6 @@ import CommonActions from '@/Stores/Common/Actions';
 import MyActions from '@/Stores/My/Actions';
 import { navigate } from '@/Services/NavigationService';
 import CustomShowMore from '@/Components/CustomShowMore';
-import PlaceActions from '@/Stores/Place/Actions';
 
 const WriteReviewItem = () => {
   const dispatch = useDispatch();
@@ -24,14 +23,10 @@ const WriteReviewItem = () => {
   };
 
   const onPressTotalList = (reviewIdx: number) => {
-    // console.log(reviewIdx);
-    const params = {
-      perPage: 10,
-      page: 1,
-      sort: 'latest',
+    navigate('PlaceReviewScreen', {
       placeIdx: myReviewList.writeReview[reviewIdx].placeIdx,
-    };
-    dispatch(PlaceActions.fetchPlaceReviewList(params));
+      placeName: myReviewList.writeReview[reviewIdx].placeName,
+    });
   };
 
   const onTotalImage = (reviewIdx: number, photoIdx: number, value: number) => {
