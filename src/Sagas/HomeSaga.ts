@@ -64,6 +64,8 @@ export function* fetchHomePrepaymentPriceList(data: any): any {
 
 export function* fetchHomePossibleDate(data: any): any {
   try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
+
     const payload = {
       ...data,
       url: Config.HOME_CHECK_URL,
@@ -71,6 +73,7 @@ export function* fetchHomePossibleDate(data: any): any {
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
       yield put(HomeActions.fetchHomeReducer({ type: 'possibleDirectDate', data: response.data }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
