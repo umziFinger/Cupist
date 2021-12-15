@@ -23,7 +23,7 @@ interface PropsType {
 const PlaceReviewScreen = ({ route }: PropsType) => {
   // console.log('======', route?.params?.place);
   const placeIdx = route?.params?.placeIdx || 0;
-  const placeName = route?.params?.placeName || 0;
+  const placeName = route?.params?.placeName || '';
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const { placeReview, reviewListPage = 1 } = useSelector((state: PlaceState) => state.place);

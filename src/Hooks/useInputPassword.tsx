@@ -48,6 +48,7 @@ function useInputPassword(): ResultUseInputPassword {
           setPasswordValidText('특수문자는 ?, ~, !, @, #, $ 만 가능합니다.');
         }
       }
+      setIsPasswordValid(true);
     } else {
       // dispatch(AuthActions.fetchAuthReducer({ type: 'password', data: { password: null } }));
       setPassword('');
