@@ -31,7 +31,7 @@ const ReviewArea = (props: PropTypes) => {
   useEffect(() => {
     setReviewList(filter === 'latest' ? latestReview?.slice(0, 3) : starReview.slice(0, 3));
     setIsReviewMore(true);
-  }, [item]);
+  }, [item, filter]);
 
   const onReviewMore = () => {
     setReviewList(filter === 'latest' ? latestReview : starReview);
