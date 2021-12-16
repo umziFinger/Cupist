@@ -13,7 +13,7 @@ export function* fetchSearchAreaList(data: any): any {
     };
 
     const response = yield call(Axios.GET, payload);
-    // console.log('성공: ', response.data);
+    // console.log('성공: ', response);
 
     if (response.result === true && response.code === null) {
       // console.log('여기야 여기: ', data.params);
@@ -23,6 +23,7 @@ export function* fetchSearchAreaList(data: any): any {
         yield put(SearchActions.fetchSearchReducer({ type: 'areaList', data: response.data.area }));
       }
     } else {
+      console.log('Error...fetchSearchAreaList : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {

@@ -29,9 +29,9 @@ const ReviewArea = (props: PropTypes) => {
   const [isReviewMore, setIsReviewMore] = useState(true);
 
   useEffect(() => {
-    setReviewList(filter === 'latest' ? latestReview?.slice(-2) : starReview.slice(-2));
+    setReviewList(filter === 'latest' ? latestReview?.slice(0, 3) : starReview.slice(0, 3));
     setIsReviewMore(true);
-  }, [item]);
+  }, [item, filter]);
 
   const onReviewMore = () => {
     setReviewList(filter === 'latest' ? latestReview : starReview);
@@ -39,13 +39,7 @@ const ReviewArea = (props: PropTypes) => {
   };
 
   const onPressTotalList = () => {
-    const params = {
-      perPage: 10,
-      page: 1,
-      sort: 'latest',
-      placeIdx: item.idx,
-    };
-    dispatch(PlaceActions.fetchPlaceReviewList(params));
+    navigate('PlaceReviewScreen', { placeIdx: item.idx, placeName: item.name });
   };
 
   const onPressFilter = (value: string) => {

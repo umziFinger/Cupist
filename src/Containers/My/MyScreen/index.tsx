@@ -10,7 +10,6 @@ import { MY_TAB_MENU } from '@/Containers/My/MyScreen/data';
 import { MyState } from '@/Stores/My/InitialState';
 import ReservationList from '@/Containers/My/MyScreen/ReservationList';
 import ReviewList from '@/Containers/My/MyScreen/ReviewList';
-import { fetchMyReviewList } from '@/Sagas/MySaga';
 import { navigationRef } from '@/Services/NavigationService';
 
 const MyScreen = () => {

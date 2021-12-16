@@ -3,6 +3,7 @@ import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
+import { useIsFocused } from '@react-navigation/native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { numberFormat, scrollCalendarHandler } from '@/Components/Function';
@@ -19,6 +20,7 @@ import TopDateSelector from '@/Components/Calendar/TopDateSelector';
 
 const DibsScreen = () => {
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const { heightInfo, myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
@@ -33,6 +35,7 @@ const DibsScreen = () => {
   }, []);
 
   useEffect(() => {
+    console.log('============!!');
     const params = {
       lat: myLatitude,
       lng: myLongitude,
@@ -44,12 +47,14 @@ const DibsScreen = () => {
   }, []);
 
   useEffect(() => {
-    const params = {
-      page: 1,
-      perPage: 10,
-      date: calendarDate,
-    };
-    dispatch(PlaceActions.fetchPlaceDibsList(params));
+    if (isFocused) {
+      const params = {
+        page: 1,
+        perPage: 10,
+        date: calendarDate,
+      };
+      dispatch(PlaceActions.fetchPlaceDibsList(params));
+    }
   }, [calendarDate]);
 
   const onMore = () => {

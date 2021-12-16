@@ -104,7 +104,7 @@ export type MainStackParamList = {
   ReviewModifyScreen: { reviewData: any; type: ReviewModifyType };
   WalkThroughScreen: undefined;
   ReportScreen: { mainIdx: number; subIdx: number; reportType: string };
-  PlaceReviewScreen: undefined;
+  PlaceReviewScreen: { placeIdx: number; placeName: string };
   PlaceListScreen: { type: string };
   PermissionDetailScreen: { agreeIdx: number; detailArr: Array<any> };
   HotPlaceListScreen: undefined;

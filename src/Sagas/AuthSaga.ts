@@ -136,6 +136,7 @@ export function* fetchUserLogout(): any {
       // navigate('HomeScreen');
     } else {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      console.log(' Error...fetchUserLogout : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
@@ -327,6 +328,8 @@ export function* fetchSmsAuth(data: any): any {
 
 export function* fetchAuthFindPassword(data: any): any {
   try {
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
     const payload = {
       ...data,
       url: Config.AUTH_FIND_PASSWORD_URL,
@@ -335,6 +338,7 @@ export function* fetchAuthFindPassword(data: any): any {
     const response = yield call(Axios.POST, payload);
 
     if (response.result === true && response.code === null) {
+      // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       console.log('fetchAuthFindsPassword response : ', response.data);
       yield put(
         CommonActions.fetchCommonReducer({
@@ -425,7 +429,7 @@ export function* fetchAuthCheckEmail(data: any): any {
     const response = yield call(Axios.POST, payload);
     console.log('이메일 중복 체크', response.data);
     if (response.result === true && response.code === null) {
-      if (response.data.response) {
+      if (response.data.isAvailable) {
         navigate('JoinStepTwoScreen');
       } else {
         yield put(

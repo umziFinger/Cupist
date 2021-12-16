@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
+import { RouteProp } from '@react-navigation/native';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
@@ -13,13 +14,31 @@ import CommonActions from '@/Stores/Common/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
 import { navigate } from '@/Services/NavigationService';
 import { CommonState } from '@/Stores/Common/InitialState';
+import { MainStackParamList } from '@/Navigators/MainNavigator';
 
-const PlaceReviewScreen = () => {
+interface PropsType {
+  route: RouteProp<MainStackParamList, 'PlaceReviewScreen'>;
+}
+
+const PlaceReviewScreen = ({ route }: PropsType) => {
+  // console.log('======', route?.params?.place);
+  const placeIdx = route?.params?.placeIdx || 0;
+  const placeName = route?.params?.placeName || '';
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-  const { placeReview, placeDetail, reviewListPage = 1 } = useSelector((state: PlaceState) => state.place);
+  const { placeReview, reviewListPage = 1 } = useSelector((state: PlaceState) => state.place);
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const [filter, setFilter] = useState<string>('latest');
+  useEffect(() => {
+    const params = {
+      perPage: 10,
+      page: 1,
+      sort: 'latest',
+      placeIdx,
+    };
+    dispatch(PlaceActions.fetchPlaceReviewList(params));
+  }, [placeIdx]);
+
   useEffect(() => {
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'reviewListPage', data: 1 }));
@@ -31,7 +50,7 @@ const PlaceReviewScreen = () => {
       perPage: 10,
       page: 1,
       sort: filter,
-      placeIdx: placeDetail.place.idx,
+      placeIdx,
     };
     dispatch(PlaceActions.fetchPlaceReviewList(params));
   };
@@ -41,19 +60,19 @@ const PlaceReviewScreen = () => {
       perPage: 10,
       page: reviewListPage,
       sort: filter,
-      placeIdx: placeDetail.place.idx,
+      placeIdx,
     };
     if (reviewListPage > 1) dispatch(PlaceActions.fetchPlaceReviewList(params));
   };
 
   const onPressFilter = (value: string) => {
-    console.log('onPressFilter');
+    // console.log('onPressFilter: ', place);
     setFilter(value);
     const params = {
       perPage: 10,
       page: 1,
       sort: value,
-      placeIdx: placeDetail.place.idx,
+      placeIdx,
     };
     dispatch(PlaceActions.fetchPlaceReviewList(params));
   };
@@ -65,8 +84,8 @@ const PlaceReviewScreen = () => {
         type: 'clickedReviewItem',
         data: {
           ...review,
-          placeName: placeDetail.place.name,
-          placeIdx: placeDetail.place.idx,
+          placeName,
+          placeIdx,
           screenType: 'placeReview',
         },
       }),

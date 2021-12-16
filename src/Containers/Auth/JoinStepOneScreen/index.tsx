@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { View, FlatList, Platform, TextInput, Keyboard, LayoutAnimation } from 'react-native';
+import { View, FlatList, Platform, TextInput } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { CommonState } from '@/Stores/Common/InitialState';
@@ -14,9 +13,6 @@ import InputPassword from '@/Components/Input/Password';
 import AuthActions from '@/Stores/Auth/Actions';
 import useInputEmail from '@/Hooks/useInputEmail';
 import useInputPassword from '@/Hooks/useInputPassword';
-
-import { navigate } from '@/Services/NavigationService';
-import { fetchAuthCheckEmail } from '@/Sagas/AuthSaga';
 
 const JoinStepOneScreen = () => {
   const dispatch = useDispatch();

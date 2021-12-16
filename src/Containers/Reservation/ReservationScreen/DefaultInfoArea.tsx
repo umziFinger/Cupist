@@ -37,7 +37,7 @@ const DefaultInfoArea = (props: PropTypes) => {
         <View style={{ flex: 1 }}>
           <View style={{ justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold', letterSpacing: -0.25 }}>
-              {item?.place?.name || ''}
+              {item?.placeName || ''}
             </CustomText>
           </View>
           <View style={{ justifyContent: 'center', marginTop: 4 }}>

@@ -53,10 +53,11 @@ const PasswordEditScreen = () => {
   };
 
   const isValid = () => {
-    if (isPasswordValid && isNewPasswordValid && isConfirmPasswordValid && newPassword === confirmPassword) {
-      return true;
-    }
-    return false;
+    console.log('1', isPasswordValid);
+    console.log('2', isNewPasswordValid);
+    console.log('3', isConfirmPasswordValid);
+    console.log('4', newPassword === confirmPassword);
+    return isPasswordValid && isNewPasswordValid && isConfirmPasswordValid && newPassword === confirmPassword;
   };
 
   const onPressSave = () => {

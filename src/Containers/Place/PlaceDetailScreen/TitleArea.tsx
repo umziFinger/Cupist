@@ -10,6 +10,7 @@ import { InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data
 import CommonActions from '@/Stores/Common/Actions';
 import Config from '@/Config';
 import PlaceActions from '@/Stores/Place/Actions';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
@@ -20,13 +21,8 @@ const TitleArea = (props: PropTypes) => {
   const { item } = props;
 
   const onPressTotalList = () => {
-    const params = {
-      perPage: 10,
-      page: 1,
-      sort: 'latest',
-      placeIdx: item.idx,
-    };
-    dispatch(PlaceActions.fetchPlaceReviewList(params));
+    // console.log('======');
+    navigate('PlaceReviewScreen', { placeIdx: item.idx, placeName: item.name });
   };
 
   const onPressButton = (type: InfoItemButtonType) => {

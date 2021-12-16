@@ -121,7 +121,7 @@ export function* fetchPlaceReviewList(data: any): any {
     if (data.params.page === 1) {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     }
-    navigate('PlaceReviewScreen');
+
     const payload = {
       ...data,
       url: `${Config.PLACE_URL}/${data.params.placeIdx}/review`,
@@ -218,6 +218,8 @@ export function* fetchPlaceDibsList(data: any): any {
 
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
+      console.log(' Error...fetchPlaceDibsList : ', response);
+
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {

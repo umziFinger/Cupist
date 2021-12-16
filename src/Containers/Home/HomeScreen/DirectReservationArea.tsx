@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -7,7 +7,6 @@ import moment from 'moment';
 import CustomText from '@/Components/CustomText';
 import DirectReservationCard from '@/Components/Card/Home/DirectReservationCard';
 import CustomButton from '@/Components/CustomButton';
-import { navigate } from '@/Services/NavigationService';
 import { SearchState } from '@/Stores/Search/InitialState';
 import { Color } from '@/Assets/Color';
 import { CommonState } from '@/Stores/Common/InitialState';
@@ -66,6 +65,8 @@ const DirectReservationArea = (props: PropTypes) => {
       dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenTimeFilterRBS', data: true }));
       return;
     }
+    // dispatch(HomeActions.fetchHomeReducer({ type: 'possibleDirectDate', data: '' }));
+
     dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
     getDirectReservationList(value);
   };
@@ -110,6 +111,57 @@ const DirectReservationArea = (props: PropTypes) => {
       }),
     [areaList, timeFilterIdx],
   );
+
+  const onPossibleDirectDateYNRender = useCallback(() => {
+    if (list?.length < 1 && possibleDirectDate) {
+      return (
+        <View style={{ marginTop: 16, alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row' }}>
+            <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold', letterSpacing: -0.29 }}>
+              다른 날짜
+            </CustomText>
+            <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>에</CustomText>
+          </View>
+          <View>
+            <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>
+              바로 예약 볼링장이 있어요!
+            </CustomText>
+          </View>
+
+          <CustomButton onPress={() => onPressNextDay()}>
+            <View style={{ marginTop: 30 }}>
+              <View
+                style={{
+                  borderRadius: 24,
+                  borderWidth: 1.5,
+                  borderColor: Color.Primary1000,
+                  paddingVertical: 15,
+                  paddingHorizontal: 24,
+                }}
+              >
+                <CustomText
+                  style={{ color: Color.Primary1000, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}
+                >
+                  {moment(possibleDirectDate).format('MM월 D일').toString()}로 날짜변경하기
+                </CustomText>
+              </View>
+            </View>
+          </CustomButton>
+        </View>
+      );
+    }
+    return (
+      <View style={{ marginTop: 16, alignItems: 'center' }}>
+        <View style={{ justifyContent: 'center' }}>
+          <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: '500', letterSpacing: -0.25 }}>
+            해당날짜에 바로예약 상품이 없습니다.
+          </CustomText>
+        </View>
+      </View>
+    );
+  }, [possibleDirectDate]);
+
+  // const test = [];
 
   return (
     <View style={{ flex: 1, marginTop: 40 }}>
@@ -216,6 +268,7 @@ const DirectReservationArea = (props: PropTypes) => {
       </View>
       <FlatList
         data={list}
+        // data={test}
         renderItem={({ item }) => (
           <View style={{ paddingHorizontal: 20, marginTop: 16 }}>
             <DirectReservationCard item={item} />
@@ -234,77 +287,10 @@ const DirectReservationArea = (props: PropTypes) => {
                 resizeMode={FastImage.resizeMode.cover}
               />
             </View>
-
-            {possibleDirectDate ? (
-              <View style={{ marginTop: 16, alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <CustomText
-                    style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold', letterSpacing: -0.29 }}
-                  >
-                    다른 날짜
-                  </CustomText>
-                  <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>에</CustomText>
-                </View>
-                <View>
-                  <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.29 }}>
-                    바로 예약 볼링장이 있어요!
-                  </CustomText>
-                </View>
-
-                <CustomButton onPress={() => onPressNextDay()}>
-                  <View style={{ marginTop: 30 }}>
-                    <View
-                      style={{
-                        borderRadius: 24,
-                        borderWidth: 1.5,
-                        borderColor: Color.Primary1000,
-                        paddingVertical: 15,
-                        paddingHorizontal: 24,
-                      }}
-                    >
-                      <CustomText
-                        style={{ color: Color.Primary1000, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}
-                      >
-                        {moment(possibleDirectDate).format('MM월 D일').toString()}로 날짜변경하기
-                      </CustomText>
-                    </View>
-                  </View>
-                </CustomButton>
-              </View>
-            ) : (
-              <View style={{ marginTop: 16, alignItems: 'center' }}>
-                <View style={{ justifyContent: 'center' }}>
-                  <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: '500', letterSpacing: -0.25 }}>
-                    해당날짜에 바로예약 상품이 없습니다.
-                  </CustomText>
-                </View>
-              </View>
-            )}
+            {onPossibleDirectDateYNRender()}
           </View>
         }
       />
-      {/* {list?.length > 0 && (
-        <CustomButton onPress={() => navigate('SimpleLoginScreen')} style={{ paddingHorizontal: 20, marginTop: 20 }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingVertical: 12,
-              borderWidth: 1,
-              borderRadius: 3,
-              borderColor: Color.Grayyellow200,
-            }}
-          >
-            <View style={{ justifyContent: 'center' }}>
-              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2 }}>
-                바로예약 볼링장 모두보기
-              </CustomText>
-            </View>
-          </View>
-        </CustomButton>
-      )} */}
     </View>
   );
 };

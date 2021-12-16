@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteProp } from '@react-navigation/native';
@@ -27,6 +27,9 @@ import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import { scrollHomeHandler } from '@/Components/Function';
 import { SearchState } from '@/Stores/Search/InitialState';
 import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
+import CustomButton from '@/Components/CustomButton';
+import CustomText from '@/Components/CustomText';
+import { navigate } from '@/Services/NavigationService';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -160,6 +163,20 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 0: {
         return (
           <View style={{ flex: 1, marginTop: 40, paddingLeft: 20 }}>
+            {/* <CustomButton */}
+            {/*  onPress={() => { */}
+            {/*    console.log('제거'); */}
+
+            {/*    AsyncStorage.setItem('accessToken', ''); */}
+            {/*    AsyncStorage.setItem('refreshToken', ''); */}
+            {/*    navigate('HomeScreen', { expired: true }); */}
+            {/*  }} */}
+            {/* > */}
+            {/*  <View style={{ paddingVertical: 20 }}> */}
+            {/*    <CustomText>리프레시 토큰 제거</CustomText> */}
+            {/*  </View> */}
+            {/* </CustomButton> */}
+
             <HelloArea />
           </View>
         );

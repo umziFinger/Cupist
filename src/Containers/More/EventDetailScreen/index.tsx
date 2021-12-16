@@ -25,46 +25,50 @@ const EventDetailScreen = () => {
       );
     };
   }, []);
-
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="back" text={myEventDetail?.title} />
-      <View style={{ flex: 1, backgroundColor: Color.White }}>
+      <View style={{ flex: 1 }}>
         <FlatList
           data={[0]}
+          keyExtractor={(item, index) => index.toString()}
+          ListHeaderComponent={
+            <View style={{ width: '100%', height: 240 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={
+                  myEventDetail?.bannerFile
+                    ? { uri: myEventDetail?.bannerFile || '' }
+                    : require('@/Assets/Images/Common/icNoImage.png')
+                }
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
+          }
           renderItem={() => (
-            <View style={{}}>
-              <View style={{ width, height: 318, backgroundColor: Color.Grayyellow100 }}>
-                <FastImage
-                  style={{ width: '100%', height: '100%' }}
-                  source={{ uri: myEventDetail?.bannerFile }}
-                  resizeMode={FastImage.resizeMode.stretch}
-                />
+            <View style={{ flex: 1, paddingHorizontal: 24, marginTop: 40 }}>
+              <View style={{ justifyContent: 'center' }}>
+                <CustomText style={{ fontSize: 17, fontWeight: 'bold', letterSpacing: -0.3 }}>
+                  {myEventDetail?.title || ''}
+                </CustomText>
               </View>
-
-              <View style={{ paddingHorizontal: 24, marginVertical: 40 }}>
-                <CustomText>{myEventDetail?.title || ''}</CustomText>
-
-                <View style={{ marginTop: 12 }}>
-                  <CustomText>{myEventDetail?.content || ''}</CustomText>
-                </View>
+              <View style={{ justifyContent: 'center', marginTop: 12 }}>
+                <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>{myEventDetail?.content || ''}</CustomText>
               </View>
-
-              <View style={{ width, height, backgroundColor: Color.Grayyellow100 }}>
-                <FastImage
-                  style={{ width: '100%', height: '100%' }}
-                  source={{ uri: myEventDetail?.mainFile }}
-                  resizeMode={FastImage.resizeMode.stretch}
-                />
-              </View>
+              {/* <View style={{ width: width - 48, height, backgroundColor: Color.Grayyellow100 }}> */}
+              {/*  <FastImage */}
+              {/*    style={{ width: '100%', height: '100%' }} */}
+              {/*    source={{ uri: myEventDetail?.mainFile }} */}
+              {/*    resizeMode={FastImage.resizeMode.stretch} */}
+              {/*  /> */}
+              {/* </View> */}
             </View>
           )}
-          scrollEnabled
-          initialNumToRender={1}
-          maxToRenderPerBatch={3}
+          initialNumToRender={2}
+          maxToRenderPerBatch={5}
           windowSize={7}
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={<View style={{ marginBottom: heightInfo.fixBottomHeight }} />}
+          ListFooterComponent={<View style={{ height: heightInfo.subBottomHeight }} />}
         />
       </View>
     </View>

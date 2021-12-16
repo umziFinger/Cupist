@@ -108,6 +108,9 @@ export function* fetchInitialHandler() {
 
   // 선결제 특가 예약 가능일 목록 조회
   yield put(HomeActions.fetchHomeCheckEarly());
+
+  // 마이스크린 탭 초기화
+  yield put(MyActions.fetchMyReducer({ type: 'myTabInit' }));
 }
 
 export function* fetchErrorHandler(data: any) {
