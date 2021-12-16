@@ -12,9 +12,8 @@ import Loading from '@/Components/Loading';
 // import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 import RootCheckAppVersion from './RootCheckAppVersion';
 import RootDynamicLink from './RootDynamicLink';
-// import RootFcm from '@/Containers/Root/RootFcm';
+import RootFcm from '@/Containers/Root/RootFcm';
 
-import { NotificationRequest } from '@/Components/Permission/Notification';
 import TimeFilterRBS from '@/Components/RBS/Home/TimeFilterRBS';
 import QnaTypeRBS from '@/Components/RBS/Qna/QnaTypeRBS';
 import ReservationRBS from '@/Components/RBS/Reservation/ReservationRBS';
@@ -92,7 +91,7 @@ const RootScreen = () => {
       )}
       {alertToast && <Toast position={alertToastPosition} message={alertToastMessage} />}
 
-      {/* <RootFcm /> */}
+      <RootFcm />
       {/** 앱버전체크(realDB) 리스너 컴포넌트 * */}
       <RootCheckAppVersion />
       <RootDynamicLink />

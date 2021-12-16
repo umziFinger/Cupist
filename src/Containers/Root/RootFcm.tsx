@@ -101,6 +101,7 @@ const RootFcm = () => {
 
   const onMessageBackgroundReceivedWithMoveScreen = (message: FirebaseMessagingTypes.RemoteMessage) => {
     console.log('notification (background) with move screen!', JSON.stringify(message));
+    navigate('HomeScreen');
     // dispatch(NotificationActions.fetchNotificationCount());
     //
     // const params = {
