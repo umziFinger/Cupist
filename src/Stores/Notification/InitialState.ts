@@ -8,7 +8,7 @@ export const INITIAL_STATE: NotificationState['notification'] = {
     unreadCnt: 0,
   },
   notificationConfirm: 'N',
-  notificationCategory: { title: '전체', category: 'all' },
+  notificationCategory: { name: '전체', category: 'all' },
 };
 
 export interface NotificationState {
@@ -26,7 +26,7 @@ export interface NotificationState {
   };
 }
 export type notificationType =
-  | { title: '전체'; category: 'all' }
+  | { name: '전체'; category: 'all' }
   | { name: '예약'; category: 'reservation' }
   | { name: '리뷰'; category: 'review' }
   | { name: '이벤트'; category: 'event' }
