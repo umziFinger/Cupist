@@ -226,6 +226,12 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'myTabInit': {
+        draft.reservationSelectedTab = INITIAL_STATE.reservationSelectedTab;
+        draft.mySelectedTab = INITIAL_STATE.mySelectedTab;
+        break;
+      }
+
       default:
         return draft;
     }

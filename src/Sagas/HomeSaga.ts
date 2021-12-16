@@ -18,6 +18,7 @@ export function* fetchHomeList(data: any): any {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
     } else {
+      console.log('fetchHomeList : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
@@ -38,6 +39,7 @@ export function* fetchHomeDirectReservationList(data: any): any {
       yield put(HomeActions.fetchHomeReducer({ type: 'directReservationList', data: response.data }));
       yield put(HomeActions.fetchHomePossibleDate({ ...data.params }));
     } else {
+      console.log('fetchHomeDirectReservationList : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
@@ -55,6 +57,7 @@ export function* fetchHomePrepaymentPriceList(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(HomeActions.fetchHomeReducer({ type: 'prepaymentPriceList', data: response.data }));
     } else {
+      console.log('fetchHomePrepaymentPriceList : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {

@@ -23,6 +23,7 @@ export function* fetchSearchAreaList(data: any): any {
         yield put(SearchActions.fetchSearchReducer({ type: 'areaList', data: response.data.area }));
       }
     } else {
+      console.log('Error...fetchSearchAreaList : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
