@@ -68,7 +68,7 @@ const HotPlaceListScreen = () => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ justifyContent: 'center', marginRight: 2 }}>
                   <CustomText style={{ color: Color.Black1000, fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4 }}>
-                    볼리미 HOT
+                    이벤트 HOT
                   </CustomText>
                 </View>
                 <View style={{ justifyContent: 'center' }}>
@@ -81,7 +81,7 @@ const HotPlaceListScreen = () => {
               </View>
               <View style={{ justifyContent: 'center', marginTop: 6 }}>
                 <CustomText style={{ color: Color.Gray400, fontSize: 13, letterSpacing: -0.2 }}>
-                  요즘 가장 핫한 BEST 볼링장
+                  캡슐, 솔로 각종 이벤트 볼링장
                 </CustomText>
               </View>
               <View style={{ flex: 1, marginTop: 24 }}>

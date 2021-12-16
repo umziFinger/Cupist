@@ -182,7 +182,7 @@ const DirectReservationArea = (props: PropTypes) => {
         </View>
         <View style={{ marginTop: 6 }}>
           <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-            지금 예약 가능한 볼링장
+            실시간 예약 가능한 곳
           </CustomText>
         </View>
       </View>

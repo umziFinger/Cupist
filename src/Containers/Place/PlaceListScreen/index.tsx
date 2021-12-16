@@ -51,13 +51,13 @@ const PlaceListScreen = ({ route }: PropTypes) => {
     let content = '';
     let date = calendarDate;
     if (type === 'special') {
-      title = '빨리 특가';
-      content = '선착순 할인 특가로 즐기는 볼링장';
+      title = '자유 볼링';
+      content = '1인 3~4시간 무제한 상품';
       date = calendarDate;
     }
     if (type === 'early') {
-      title = '선결제 특가';
-      content = '선결제하고 할인받는 인기 볼링장';
+      title = '할인 특가';
+      content = '선착순 할인특가로 즐기는 볼링장';
       date = prepaymentDate;
     }
     setScreenTitle(title);

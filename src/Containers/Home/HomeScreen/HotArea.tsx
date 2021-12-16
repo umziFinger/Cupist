@@ -42,7 +42,7 @@ const HotArea = (props: PropTypes) => {
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end' }}>
           <View style={{ marginRight: 4 }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 20, fontWeight: 'bold', letterSpacing: -0.35 }}>
-              볼리미 HOT
+              이벤트 HOT
             </CustomText>
           </View>
           <View style={{ width: 5, height: 5, marginBottom: 5 }}>
@@ -56,7 +56,7 @@ const HotArea = (props: PropTypes) => {
         <View style={{ flexDirection: 'row', marginTop: 6 }}>
           <View style={{ flex: 1 }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-              요즘 가장 핫한 BEST 볼링장
+              캡슐, 솔로 각종 이벤트 볼링장
             </CustomText>
           </View>
           <CustomButton onPress={() => onPressViewAll()} hitSlop={7}>

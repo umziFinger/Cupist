@@ -221,6 +221,7 @@ const HomeScreen = ({ route }: HomeProps) => {
       }
       case 5: {
         return (
+          // 선결제 특가
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <PrepaymentPriceArea list={homeList['early'] || []} />

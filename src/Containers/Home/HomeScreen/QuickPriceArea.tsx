@@ -40,7 +40,7 @@ const QuickPriceArea = (props: PropTypes) => {
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end' }}>
           <View style={{ marginRight: 4 }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 20, fontWeight: 'bold', letterSpacing: -0.35 }}>
-              빨리 특가
+              자유 볼링
             </CustomText>
           </View>
           <View style={{ width: 5, height: 5, marginBottom: 5 }}>
@@ -54,7 +54,7 @@ const QuickPriceArea = (props: PropTypes) => {
         <View style={{ flexDirection: 'row', marginTop: 6 }}>
           <View style={{ flex: 1 }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-              선착순 할인 특가로 즐기는 볼링장
+              1인 3 ~ 4시간 무제한 상품
             </CustomText>
           </View>
           <CustomButton onPress={() => onPressViewAll()} hitSlop={7}>
