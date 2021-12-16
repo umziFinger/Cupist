@@ -22,6 +22,8 @@ const NotificationTabMenu = (props: any) => {
       category: item.category,
     };
     dispatch(NotificationActions.fetchNotificationReducer({ type: 'notificationCategory', data: item }));
+    dispatch(NotificationActions.fetchNotificationReducer({ type: 'notificationListPage', data: 1 }));
+
     dispatch(NotificationActions.fetchNotificationList(params));
   };
 
