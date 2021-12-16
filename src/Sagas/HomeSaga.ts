@@ -78,6 +78,7 @@ export function* fetchHomePossibleDate(data: any): any {
       yield put(HomeActions.fetchHomeReducer({ type: 'possibleDirectDate', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
     } else {
+      console.log('fetchHomePossibleDate : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {

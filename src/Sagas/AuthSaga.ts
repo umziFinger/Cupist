@@ -136,6 +136,7 @@ export function* fetchUserLogout(): any {
       // navigate('HomeScreen');
     } else {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      console.log(' Error...fetchUserLogout : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
