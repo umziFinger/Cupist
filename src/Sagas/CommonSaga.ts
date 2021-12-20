@@ -114,7 +114,7 @@ export function* fetchInitialHandler() {
 }
 
 export function* fetchErrorHandler(data: any) {
-  console.log('call Error handler');
+  console.log('call Error handler : ', data);
   const { isRBS = false } = data.params; // RBS가 open 상태에서 api 에러 발생시 닫혔다가 다시 open 하기위한 flag
 
   yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
@@ -146,17 +146,6 @@ export function* fetchErrorHandler(data: any) {
             alertDialogType: 'confirm',
             alertDialogDataType: 'errorRBS',
             alertDialogTitle: data.params.data.message,
-          },
-        }),
-      );
-    } else if (data.params.data.message === '이미 쇼핑백에 담은 상품입니다.') {
-      yield put(
-        CommonActions.fetchCommonReducer({
-          type: 'alertToast',
-          data: {
-            alertToast: true,
-            alertToastPosition: 'top',
-            alertToastMessage: data.params.data.message,
           },
         }),
       );

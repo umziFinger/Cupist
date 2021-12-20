@@ -18,7 +18,7 @@ export const refreshAuthLogic = async (failedRequest?: any) => {
         AsyncStorage.setItem('refreshToken', refreshToken);
       })
       .catch((e) => {
-        console.log('error:', e);
+        console.log('catch error refreshAuthLogic :', e);
 
         AsyncStorage.setItem('userIdx', '');
         AsyncStorage.setItem('accessToken', '');

@@ -153,7 +153,6 @@ const RegisterPasswordScreen = () => {
                   style={{
                     color: Color.Gray600,
                     fontSize: 13,
-                    fontWeight: 'bold',
                     letterSpacing: -0.2,
                     textDecorationLine: 'underline',
                   }}

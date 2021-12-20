@@ -36,7 +36,7 @@ export function* fetchUserLogin(data: any): any {
     };
 
     const response = yield call(Axios.POST, payload);
-    console.log('로그인 반응: ', response.data);
+    console.log('로그인 반응: ', response);
     if (response.result === true && response.code === null) {
       const { accessToken, refreshToken, idx, tempUserIdx } = response.data;
       if (tempUserIdx) {
@@ -131,7 +131,6 @@ export function* fetchUserLogout(): any {
       );
 
       yield put(AuthActions.fetchAuthReducer({ type: 'logout' }));
-
       yield put(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: true } }));
       // navigate('HomeScreen');
     } else {

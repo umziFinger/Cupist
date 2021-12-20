@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,12 +44,20 @@ const PriceArea = (props: PropTypes) => {
       if (maxPeople) {
         if (maxPeople === personCount) {
           return dispatch(
+            // CommonActions.fetchCommonReducer({
+            //   type: 'alertDialog',
+            //   data: {
+            //     alertDialog: true,
+            //     alertDialogType: 'confirm',
+            //     alertDialogMessage: '예약가능한 인원수를 초과했습니다.\n\u2022 인원 1~4인당 1레인이 배치됩니다.',
+            //   },
+            // }),
             CommonActions.fetchCommonReducer({
-              type: 'alertDialog',
+              type: 'alertToast',
               data: {
-                alertDialog: true,
-                alertDialogType: 'confirm',
-                alertDialogMessage: '예약가능한 인원수를 초과했습니다.\n\u2022 인원 1~4인당 1레인이 배치됩니다.',
+                alertToast: true,
+                alertToastPosition: 'bottom',
+                alertToastMessage: '예약가능한 인원수를 초과했습니다. 인원 1~4인당 1레인이 배치됩니다',
               },
             }),
           );
@@ -63,6 +71,7 @@ const PriceArea = (props: PropTypes) => {
       }
       dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: personCount - 1 }));
     }
+    return null;
   };
 
   const onPressShoesCount = (type: string) => {
@@ -124,11 +133,21 @@ const PriceArea = (props: PropTypes) => {
             </CustomText>
           </View>
           <CustomButton onPress={() => onPressPersonCount('plus')}>
-            <View style={{ backgroundColor: Color.Gray300, borderRadius: 50, padding: 12 }}>
+            <View
+              style={{
+                backgroundColor: item?.maxPeople !== personCount ? Color.Gray300 : Color.Gray100,
+                borderRadius: 50,
+                padding: 12,
+              }}
+            >
               <View style={{ width: 16, height: 16 }}>
                 <FastImage
                   style={{ width: '100%', height: '100%' }}
-                  source={require('@/Assets/Images/Button/icNumPlusOn.png')}
+                  source={
+                    item?.maxPeople !== personCount
+                      ? require('@/Assets/Images/Button/icNumPlusOn.png')
+                      : require('@/Assets/Images/Button/icNumPlusOff.png')
+                  }
                   resizeMode={FastImage.resizeMode.cover}
                 />
               </View>

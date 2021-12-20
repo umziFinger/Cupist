@@ -10,7 +10,7 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import { DATA_WALK_THROUGH_IMAGE } from './data';
 
 const WalkThroughScreen = () => {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
 
@@ -29,36 +29,65 @@ const WalkThroughScreen = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White, paddingTop: heightInfo.statusHeight }}>
-      <View
-        style={{
-          flex: 0.25,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <View style={{ width: 125, height: 40 }}>
-          <FastImage
-            style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/WalkThrough/logoWalk.png')}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-        </View>
-        <View style={{ justifyContent: 'center', marginTop: 16 }}>
-          <CustomText style={{ color: Color.Gray600, fontSize: 20, letterSpacing: -0.35 }}>
-            쉽고 편한 볼링장 예약 어플
-          </CustomText>
-        </View>
-      </View>
-      <View style={{ flex: 0.75 }}>
+      <View style={{ flex: 1 }}>
         <FlatList
           data={DATA_WALK_THROUGH_IMAGE}
           renderItem={({ item, index }) => (
-            <View style={{ width, height: width * 1.1 }}>
-              <FastImage
-                style={{ width: '100%', height: '100%' }}
-                source={item.img}
-                resizeMode={FastImage.resizeMode.contain}
-              />
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {index === 0 ? (
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                  <View style={{ width: 125, height: 40 }}>
+                    <FastImage
+                      style={{ width: '100%', height: '100%' }}
+                      source={require('@/Assets/Images/WalkThrough/logoWalk.png')}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </View>
+                  <View style={{ justifyContent: 'center', marginTop: 16 }}>
+                    <CustomText style={{ color: Color.Gray600, fontSize: 20, letterSpacing: -0.35 }}>
+                      쉽고 편한 볼링장 예약 어플
+                    </CustomText>
+                  </View>
+                </View>
+              ) : (
+                <View style={{ alignItems: 'center' }}>
+                  <CustomText
+                    style={{
+                      color: Color.Black1000,
+                      fontSize: 22,
+                      fontWeight: 'bold',
+                      letterSpacing: -0.38,
+                      textAlign: 'center',
+                    }}
+                  >
+                    {item.title}
+                  </CustomText>
+                  <CustomText
+                    style={{
+                      color: Color.Gray600,
+                      fontSize: 14,
+                      letterSpacing: -0.25,
+                      textAlign: 'center',
+                      marginTop: 15,
+                    }}
+                  >
+                    {item.content}
+                  </CustomText>
+                </View>
+              )}
+              <View style={{ flex: 0.6, width, height: width * 1.1, marginTop: index === 0 ? 47 : 35 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={item.img}
+                  resizeMode={FastImage.resizeMode.contain}
+                />
+              </View>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -78,6 +107,7 @@ const WalkThroughScreen = () => {
           viewabilityConfig={{
             itemVisiblePercentThreshold: 50,
           }}
+          // contentContainerStyle={{ paddingTop: height * 0.1 }}
         />
         <View
           style={{

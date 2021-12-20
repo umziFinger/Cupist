@@ -81,8 +81,8 @@ const DirectReservationArea = (props: PropTypes) => {
       index: 0,
       key: 'all',
       value: DATA_TIME_FILTER[timeFilterIdx]?.content || 0,
-      color: Color.Grayyellow1000,
-      backgroundColor: Color.Gray200,
+      color: timeFilterIdx === 0 ? Color.Grayyellow1000 : Color.White,
+      backgroundColor: timeFilterIdx === 0 ? Color.Gray200 : Color.Grayyellow1000,
     },
     {
       index: 1,
@@ -211,7 +211,7 @@ const DirectReservationArea = (props: PropTypes) => {
                       <FastImage
                         style={{ width: '100%', height: '100%' }}
                         source={
-                          areaFilterIdx !== 0 && areaFilterIdx === item.index
+                          (areaFilterIdx !== 0 && areaFilterIdx === item.index) || timeFilterIdx !== 0
                             ? require('@/Assets/Images/Common/icTimeWhite.png')
                             : require('@/Assets/Images/Common/icTime.png')
                         }

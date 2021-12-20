@@ -87,169 +87,166 @@ const JoinStepTwoScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: '#ffffff' }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      enabled={Platform.OS === 'ios'}
-    >
-      <View style={{ flex: 1 }}>
-        <Header type="back" />
-        <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
-          <FlatList
-            data={[0]}
-            renderItem={() => (
-              <View style={{ flex: 1, paddingTop: 44 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <View style={{ flex: 1 }}>
+    // <KeyboardAvoidingView
+    //   style={{ flex: 1, backgroundColor: '#ffffff' }}
+    //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    //   enabled={Platform.OS === 'ios'}
+    // >
+    <View style={{ flex: 1, backgroundColor: Color.White }}>
+      <Header type="back" />
+      <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
+        <FlatList
+          data={[0]}
+          renderItem={() => (
+            <View style={{ flex: 1, paddingTop: 44 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flex: 1 }}>
+                  <CustomText style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}>
+                    회원가입
+                  </CustomText>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <View
+                    style={{
+                      backgroundColor: Color.White,
+                      borderWidth: 1,
+                      borderColor: Color.Gray400,
+                      paddingVertical: 3,
+                      paddingRight: 6,
+                      paddingLeft: 7,
+                      borderRadius: 24,
+                      marginRight: 8,
+                    }}
+                  >
                     <CustomText
-                      style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 'bold',
+                        letterSpacing: 0,
+                        color: Color.Gray400,
+                      }}
                     >
-                      회원가입
+                      1
                     </CustomText>
                   </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <View
+                  <View
+                    style={{
+                      backgroundColor: Color.White,
+                      borderWidth: 1,
+                      borderColor: Color.Primary1000,
+                      paddingVertical: 3,
+                      paddingRight: 6,
+                      paddingLeft: 7,
+                      borderRadius: 24,
+                    }}
+                  >
+                    <CustomText
                       style={{
-                        backgroundColor: Color.White,
-                        borderWidth: 1,
-                        borderColor: Color.Gray400,
-                        paddingVertical: 3,
-                        paddingRight: 6,
-                        paddingLeft: 7,
-                        borderRadius: 24,
-                        marginRight: 8,
+                        fontSize: 11,
+                        fontWeight: 'bold',
+                        letterSpacing: 0,
+                        color: Color.Primary1000,
                       }}
                     >
-                      <CustomText
-                        style={{
-                          fontSize: 11,
-                          fontWeight: 'bold',
-                          letterSpacing: 0,
-                          color: Color.Gray400,
-                        }}
-                      >
-                        1
-                      </CustomText>
-                    </View>
-                    <View
-                      style={{
-                        backgroundColor: Color.White,
-                        borderWidth: 1,
-                        borderColor: Color.Primary1000,
-                        paddingVertical: 3,
-                        paddingRight: 6,
-                        paddingLeft: 7,
-                        borderRadius: 24,
-                      }}
-                    >
-                      <CustomText
-                        style={{
-                          fontSize: 11,
-                          fontWeight: 'bold',
-                          letterSpacing: 0,
-                          color: Color.Primary1000,
-                        }}
-                      >
-                        2
-                      </CustomText>
-                    </View>
+                      2
+                    </CustomText>
                   </View>
                 </View>
-
-                {/* 이름 & 닉네임 & 휴대폰 번호 입력 */}
-
-                <View style={{ marginTop: 48, paddingBottom: 32 - 18 }}>
-                  <InputName
-                    ref={ref_input[0]}
-                    nameValidText={nameValidText}
-                    onChangeText={onChangeName}
-                    value={userName}
-                    onSubmitEditing={() => {
-                      onFocusNext(0);
-                    }}
-                    onTextClear={onClearName}
-                  />
-                </View>
-
-                <View style={{ paddingBottom: 32 - 18 }}>
-                  <InputNickname
-                    ref={ref_input[1]}
-                    nicknameValidText={nicknameValidText}
-                    onChangeText={onChangeNickname}
-                    value={nickName}
-                    onTextClear={onClearNickName}
-                    onSubmitEditing={() => {
-                      onFocusNext(1);
-                    }}
-                  />
-                </View>
-
-                <View style={{ paddingBottom: 32 }}>
-                  <InputAuthPhone
-                    ref={ref_input[2]}
-                    onChangeText={onChangePhoneNumber}
-                    value={phoneNumber}
-                    onPressAuth={onGetSmsAuth}
-                    isPhoneValid={isPhoneValid}
-                  />
-                </View>
-
-                {isReceived && (
-                  <View style={{ paddingBottom: 32 - 18 }}>
-                    <InputSmsAuthNumber
-                      onChangeText={onChangeAuthNumber}
-                      value={smsAuthNumber}
-                      smsAuthTime={smsAuthTime}
-                      smsValidText={smsValidText}
-                    />
-                  </View>
-                )}
               </View>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            initialNumToRender={1}
-            maxToRenderPerBatch={2}
-            windowSize={7}
-            scrollEnabled
-            showsVerticalScrollIndicator={false}
-            ListFooterComponent={<>{/* <View style={{ paddingBottom: heightInfo.statusHeight }} /> */}</>}
-            keyboardShouldPersistTaps={'handled'}
-          />
 
-          <View
-            style={{
-              paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
-            }}
-          >
-            <CustomButton onPress={() => onPressJoin()}>
-              <View
+              {/* 이름 & 닉네임 & 휴대폰 번호 입력 */}
+
+              <View style={{ marginTop: 48, paddingBottom: 32 - 18 }}>
+                <InputName
+                  ref={ref_input[0]}
+                  nameValidText={nameValidText}
+                  onChangeText={onChangeName}
+                  value={userName}
+                  onSubmitEditing={() => {
+                    onFocusNext(0);
+                  }}
+                  onTextClear={onClearName}
+                />
+              </View>
+
+              <View style={{ paddingBottom: 32 - 18 }}>
+                <InputNickname
+                  ref={ref_input[1]}
+                  nicknameValidText={nicknameValidText}
+                  onChangeText={onChangeNickname}
+                  value={nickName}
+                  onTextClear={onClearNickName}
+                  onSubmitEditing={() => {
+                    onFocusNext(1);
+                  }}
+                />
+              </View>
+
+              <View style={{ paddingBottom: 32 }}>
+                <InputAuthPhone
+                  ref={ref_input[2]}
+                  onChangeText={onChangePhoneNumber}
+                  value={phoneNumber}
+                  onPressAuth={onGetSmsAuth}
+                  isPhoneValid={isPhoneValid}
+                />
+              </View>
+
+              {isReceived && (
+                <View style={{ paddingBottom: 32 - 18 }}>
+                  <InputSmsAuthNumber
+                    onChangeText={onChangeAuthNumber}
+                    value={smsAuthNumber}
+                    smsAuthTime={smsAuthTime}
+                    smsValidText={smsValidText}
+                  />
+                </View>
+              )}
+            </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          initialNumToRender={1}
+          maxToRenderPerBatch={2}
+          windowSize={7}
+          scrollEnabled
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={<>{/* <View style={{ paddingBottom: heightInfo.statusHeight }} /> */}</>}
+          keyboardShouldPersistTaps={'handled'}
+        />
+
+        <View
+          style={{
+            paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+          }}
+        >
+          <CustomButton onPress={() => onPressJoin()}>
+            <View
+              style={{
+                alignItems: 'center',
+                paddingVertical: 15,
+                borderRadius: 5,
+                backgroundColor:
+                  isNameValid && isNicknameValid && isPhoneValid && smsValueValid
+                    ? Color.Primary1000
+                    : Color.Grayyellow200,
+              }}
+            >
+              <CustomText
                 style={{
-                  alignItems: 'center',
-                  paddingVertical: 15,
-                  borderRadius: 5,
-                  backgroundColor:
-                    isNameValid && isNicknameValid && isPhoneValid && smsValueValid
-                      ? Color.Primary1000
-                      : Color.Grayyellow200,
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  letterSpacing: -0.25,
+                  textAlign: 'center',
+                  color: Color.White,
                 }}
               >
-                <CustomText
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    letterSpacing: -0.25,
-                    textAlign: 'center',
-                    color: Color.White,
-                  }}
-                >
-                  가입하기
-                </CustomText>
-              </View>
-            </CustomButton>
-          </View>
+                가입하기
+              </CustomText>
+            </View>
+          </CustomButton>
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 export default JoinStepTwoScreen;

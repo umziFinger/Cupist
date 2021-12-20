@@ -104,7 +104,7 @@ const RegisterPasswordModifyScreen = () => {
         <View style={{ flex: 0.7 }} />
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{}}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold', letterSpacing: -0.25 }}>
+            <CustomText style={{ color: Color.Black1000, fontSize: 16, letterSpacing: -0.25 }}>
               {passwordType === 'first' ? '비밀번호 재설정' : '비밀번호 재설정 확인'}
             </CustomText>
           </View>

@@ -68,107 +68,115 @@ const CalendarRBS = () => {
           <FlatList
             data={[0]}
             renderItem={() => (
-              <CalendarList
-                current={moment().format('YYYY-MM-DD')}
-                minDate={moment().format('YYYY-MM-DD')}
-                customHeader={(data) => {
-                  const date = moment(data.month.toString()).format('MM').toString();
-                  const showDivider = moment().format('MM').toString() !== date;
-                  return (
-                    <View ref={CalendarRef}>
-                      {showDivider && <View style={{ height: 8, backgroundColor: Color.Gray200, marginBottom: 28 }} />}
-                      <View style={{ justifyContent: 'center', paddingLeft: 11 }}>
-                        <CustomText style={{ color: Color.Black1000, fontSize: 17, fontWeight: '500' }}>
-                          {date}월
-                        </CustomText>
-                      </View>
-                      <FlatList
-                        data={dayNamesShort}
-                        renderItem={({ item, index }) => (
-                          <View style={{ width: (width - 30) / 7, alignItems: 'center' }}>
-                            <View style={{ justifyContent: 'center' }}>
-                              <CustomText
-                                style={{
-                                  color:
-                                    index === 0
-                                      ? Color.Calendar_Red
-                                      : index === 6
-                                      ? Color.Calendar_Blue
-                                      : Color.Grayyellow1000,
-                                  fontSize: 12,
-                                }}
-                              >
-                                {item}
-                              </CustomText>
-                            </View>
-                          </View>
+              <View style={{ width }}>
+                <CalendarList
+                  current={moment().format('YYYY-MM-DD')}
+                  minDate={moment().format('YYYY-MM-DD')}
+                  customHeader={(data) => {
+                    const date = moment(data.month.toString()).format('MM').toString();
+                    const showDivider = moment().format('MM').toString() !== date;
+                    return (
+                      <View ref={CalendarRef} style={{ width, marginLeft: -15 }}>
+                        {showDivider && (
+                          <View style={{ height: 8, backgroundColor: Color.Gray200, marginBottom: 28 }} />
                         )}
-                        keyExtractor={(item, index) => index.toString()}
-                        initialNumToRender={7}
-                        maxToRenderPerBatch={10}
-                        windowSize={7}
-                        horizontal
-                        scrollEnabled={false}
-                        contentContainerStyle={{ paddingTop: 20, paddingBottom: 11 }}
-                      />
-                    </View>
-                  );
-                }}
-                dayComponent={(data) => {
-                  const { date, state } = data;
-                  const dow = moment(date.timestamp).isoWeekday();
-                  const holidayIdx = DATA_HOLIDAYS.findIndex(
-                    (h) => h.toString() === moment(date.timestamp).format('YYYYMMDD'),
-                  );
-                  let bgStatus = 'transparent';
-                  let textColor =
-                    dow === 6
-                      ? Color.Calendar_Blue
-                      : dow === 7 || holidayIdx > -1
-                      ? Color.Calendar_Red
-                      : Color.Black1000;
+                        <View style={{ justifyContent: 'center', paddingLeft: 11 + 15 }}>
+                          <CustomText style={{ color: Color.Black1000, fontSize: 17, fontWeight: '500' }}>
+                            {date}월
+                          </CustomText>
+                        </View>
+                        <FlatList
+                          data={dayNamesShort}
+                          renderItem={({ item, index }) => (
+                            <View
+                              style={{
+                                width: (width - 30) / 7,
+                                alignItems: 'center',
+                                paddingLeft: 30,
+                              }}
+                            >
+                              <View style={{ justifyContent: 'center' }}>
+                                <CustomText
+                                  style={{
+                                    color:
+                                      index === 0
+                                        ? Color.Calendar_Red
+                                        : index === 6
+                                        ? Color.Calendar_Blue
+                                        : Color.Grayyellow1000,
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  {item}
+                                </CustomText>
+                              </View>
+                            </View>
+                          )}
+                          keyExtractor={(item, index) => index.toString()}
+                          initialNumToRender={7}
+                          maxToRenderPerBatch={10}
+                          windowSize={7}
+                          horizontal
+                          scrollEnabled={false}
+                          contentContainerStyle={{ paddingTop: 20, paddingBottom: 11 }}
+                        />
+                      </View>
+                    );
+                  }}
+                  dayComponent={(data) => {
+                    const { date, state } = data;
+                    const dow = moment(date.timestamp).isoWeekday();
+                    const holidayIdx = DATA_HOLIDAYS.findIndex(
+                      (h) => h.toString() === moment(date.timestamp).format('YYYYMMDD'),
+                    );
+                    let bgStatus = 'transparent';
+                    let textColor =
+                      dow === 6
+                        ? Color.Calendar_Blue
+                        : dow === 7 || holidayIdx > -1
+                        ? Color.Calendar_Red
+                        : Color.Black1000;
 
-                  if (date.dateString === moment(calendarDate).format('YYYY-MM-DD')) {
-                    textColor = Color.White;
-                    bgStatus = Color.Grayyellow1000;
-                  }
+                    if (date.dateString === moment(calendarDate).format('YYYY-MM-DD')) {
+                      textColor = Color.White;
+                      bgStatus = Color.Grayyellow1000;
+                    }
 
-                  return (
-                    <CustomButton
-                      onPress={() => state !== 'disabled' && onPressDate(date)}
-                      hitSlop={{ left: 7, right: 7, bottom: 7, top: 7 }}
-                    >
-                      <View
-                        style={{
-                          // borderWidth: 2,
-                          // borderColor: borderStatus,
-                          paddingHorizontal: 11,
-                          paddingVertical: 11,
-                          borderRadius: 50,
-                          backgroundColor: bgStatus,
-                          opacity: state === 'disabled' ? 0.2 : 1,
-                        }}
+                    return (
+                      <CustomButton
+                        onPress={() => state !== 'disabled' && onPressDate(date)}
+                        hitSlop={{ left: 7, right: 7, bottom: 7, top: 7 }}
                       >
-                        <CustomText
+                        <View
                           style={{
-                            fontSize: 14,
-                            textAlign: 'center',
-                            color: textColor,
-                            fontWeight: '500',
+                            paddingHorizontal: date.day.toString().length > 1 ? 11 : 16,
+                            paddingVertical: 11,
+                            borderRadius: 50,
+                            backgroundColor: bgStatus,
+                            opacity: state === 'disabled' ? 0.2 : 1,
                           }}
                         >
-                          {date.day}
-                        </CustomText>
-                      </View>
-                    </CustomButton>
-                  );
-                }}
-                onDayPress={onPressDate}
-                monthFormat={'MM월'}
-                pastScrollRange={0}
-                futureScrollRange={1}
-                scrollEnabled
-              />
+                          <CustomText
+                            style={{
+                              fontSize: 14,
+                              textAlign: 'center',
+                              color: textColor,
+                              fontWeight: '500',
+                            }}
+                          >
+                            {date.day}
+                          </CustomText>
+                        </View>
+                      </CustomButton>
+                    );
+                  }}
+                  onDayPress={onPressDate}
+                  monthFormat={'MM월'}
+                  pastScrollRange={0}
+                  futureScrollRange={1}
+                  scrollEnabled
+                />
+              </View>
             )}
             keyExtractor={(item, index) => index.toString()}
             initialNumToRender={2}

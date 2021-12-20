@@ -18,7 +18,7 @@ function InputView() {
   ref_input[1] = useRef(null);
 
   const { email, onChangeEmail, emailValidText, isEmailValid } = useInputEmail();
-  const { password, passwordValidText, onChangePassword } = useInputPassword();
+  const { password, passwordValidText, onChangePassword, isPasswordValid } = useInputPassword();
 
   const onFocusNext = (index: number) => {
     if (ref_input[index] && index < ref_input.length) {
@@ -27,7 +27,7 @@ function InputView() {
   };
 
   const onPressLogin = () => {
-    if (isEmailValid) {
+    if (isEmailValid && isPasswordValid) {
       const params = {
         email,
         password,
@@ -66,7 +66,7 @@ function InputView() {
               alignItems: 'center',
               paddingVertical: 15,
               borderRadius: 3,
-              backgroundColor: isEmailValid ? Color.Primary1000 : Color.Grayyellow200,
+              backgroundColor: isEmailValid && isPasswordValid ? Color.Primary1000 : Color.Grayyellow200,
             }}
           >
             <CustomText

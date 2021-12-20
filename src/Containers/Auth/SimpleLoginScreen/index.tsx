@@ -219,7 +219,7 @@ const SimpleLoginScreen = () => {
               paddingHorizontal: 28,
             }}
           >
-            <View style={{ flex: 1, alignItems: 'center', marginTop: 76 }}>
+            <View style={{ flex: 0.25, alignItems: 'center', justifyContent: 'flex-end' }}>
               <View style={{ width: 190, height: 87 }}>
                 <FastImage
                   style={{ width: '100%', height: '100%' }}
@@ -228,65 +228,68 @@ const SimpleLoginScreen = () => {
                 />
               </View>
             </View>
-            {/* Todo: 테스트 코드이므로 삭제 해야됩니다. */}
-            {Config.APP_MODE === 'dev' && (
-              <CustomButton onPress={() => onPressTestLogin()} hitSlop={20}>
-                <View style={{ alignItems: 'center' }}>
-                  <CustomText
-                    style={{
-                      color: Color.Gray700,
-                      fontSize: 15,
-                      letterSpacing: -0.2,
-                    }}
-                  >
-                    테스트 로그인
-                  </CustomText>
-                </View>
-              </CustomButton>
-            )}
-            <FlatList
-              data={osCheck}
-              renderItem={({ item, index }) => (
-                <CustomButton
-                  onPress={() => onPressSocialLogin(item.key)}
-                  style={{
-                    alignItems: 'center',
-                    backgroundColor: item.backgroundColor,
-                    borderRadius: 5,
-                    borderWidth: item.borderWidth || 0,
-                    borderColor: item.borderColor || 'transparent',
-                    paddingVertical: 12,
-                    marginTop: index === 0 ? 50 : 16,
-                  }}
-                >
-                  <View style={{ flexDirection: 'row' }}>
-                    <View style={{ width: 24, height: 24, marginRight: 2 }}>
-                      <FastImage
-                        style={{ width: '100%', height: '100%' }}
-                        source={item.img}
-                        resizeMode={FastImage.resizeMode.contain}
-                      />
-                    </View>
-                    <View
+            <View style={{ flex: 0.5 }}>
+              {/* Todo: 테스트 코드이므로 삭제 해야됩니다. */}
+              {Config.APP_MODE === 'dev' && (
+                <CustomButton onPress={() => onPressTestLogin()} hitSlop={20}>
+                  <View style={{ alignItems: 'center' }}>
+                    <CustomText
                       style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        color: Color.Gray700,
+                        fontSize: 15,
+                        letterSpacing: -0.2,
                       }}
                     >
-                      <CustomText style={{ color: item.color, fontSize: 14, fontWeight: 'bold' }}>
-                        {item.content}
-                      </CustomText>
-                    </View>
+                      테스트 로그인
+                    </CustomText>
                   </View>
                 </CustomButton>
               )}
-              keyExtractor={(item, index) => index.toString()}
-              initialNumToRender={5}
-              maxToRenderPerBatch={8}
-              windowSize={2}
-              showsVerticalScrollIndicator={false}
-            />
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <FlatList
+                data={osCheck}
+                renderItem={({ item, index }) => (
+                  <CustomButton
+                    onPress={() => onPressSocialLogin(item.key)}
+                    style={{
+                      flex: 1,
+                      alignItems: 'center',
+                      backgroundColor: item.backgroundColor,
+                      borderRadius: 5,
+                      borderWidth: item.borderWidth || 0,
+                      borderColor: item.borderColor || 'transparent',
+                      paddingVertical: 12,
+                      marginTop: index === 0 ? 50 : 16,
+                    }}
+                  >
+                    <View style={{ flexDirection: 'row' }}>
+                      <View style={{ width: 24, height: 24, marginRight: 2 }}>
+                        <FastImage
+                          style={{ width: '100%', height: '100%' }}
+                          source={item.img}
+                          resizeMode={FastImage.resizeMode.contain}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <CustomText style={{ color: item.color, fontSize: 14, fontWeight: 'bold' }}>
+                          {item.content}
+                        </CustomText>
+                      </View>
+                    </View>
+                  </CustomButton>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+                initialNumToRender={5}
+                maxToRenderPerBatch={8}
+                windowSize={2}
+                showsVerticalScrollIndicator={false}
+              />
+            </View>
+            <View style={{ flex: 0.25, justifyContent: 'center', alignItems: 'center' }}>
               <View>
                 <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>아직 볼리미 회원이 아니신가요?</CustomText>
               </View>
@@ -296,6 +299,7 @@ const SimpleLoginScreen = () => {
                     style={{
                       color: Color.Black1000,
                       fontSize: 15,
+                      fontWeight: '500',
                       letterSpacing: -0.2,
                     }}
                   >

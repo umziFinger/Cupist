@@ -40,7 +40,7 @@ const TimeFilterRBS = () => {
   return (
     <RBSheet
       ref={RBSheetRef}
-      height={height * 0.5}
+      height={height * 0.6}
       openDuration={500}
       customStyles={{
         container: {
@@ -53,7 +53,7 @@ const TimeFilterRBS = () => {
         dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenTimeFilterRBS', data: false }));
       }}
     >
-      <View style={{ flex: 1, height: height * 0.5, paddingBottom: heightInfo.statusHeight }}>
+      <View style={{ flex: 1, height: height * 0.6, paddingBottom: heightInfo.statusHeight }}>
         <View style={{ flex: 1, paddingHorizontal: 24 }}>
           <View style={{ paddingTop: 28, paddingBottom: 20 }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 17, fontWeight: 'bold', letterSpacing: -0.3 }}>
