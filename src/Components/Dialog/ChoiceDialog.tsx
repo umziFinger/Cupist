@@ -119,12 +119,12 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
     >
       <View
         style={{
-          height: 131,
+          minHeight: 131,
+          borderTopLeftRadius: 3,
+          borderTopRightRadius: 3,
           backgroundColor: Color.White,
-          borderTopEndRadius: 3,
-          borderTopStartRadius: 3,
-          justifyContent: 'center',
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -133,10 +133,10 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
           ) : (
             <CustomText
               style={{
-                fontSize: 15,
-                letterSpacing: -0.38,
+                fontSize: 13,
+                letterSpacing: -0.2,
                 textAlign: 'center',
-                color: Color.Black1000,
+                color: Color.Gray800,
               }}
             >
               {text}

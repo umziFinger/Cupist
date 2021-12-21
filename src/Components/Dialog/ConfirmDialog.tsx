@@ -59,7 +59,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 24,
+        paddingHorizontal: 48,
         zIndex: 99,
         backgroundColor: `${Color.Black1000}${Opacity._70}`,
       }}
@@ -72,21 +72,22 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
               {title && (
                 <View
                   style={{
+                    minHeight: 131,
                     backgroundColor: Color.White,
                     borderTopLeftRadius: 3,
                     borderTopRightRadius: 3,
-                    paddingTop: 57,
-                    paddingBottom: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    // alignItems: 'center',
                   }}
                 >
-                  <View style={{ alignItems: 'center' }}>
+                  <View style={{}}>
                     <CustomText
                       style={{
-                        color: Color.Black1000,
-                        fontSize: 19,
-                        letterSpacing: -0.48,
-                        fontWeight: 'bold',
+                        fontSize: 13,
+                        letterSpacing: -0.2,
                         textAlign: 'center',
+                        color: Color.Gray800,
                       }}
                     >
                       {title}
@@ -97,12 +98,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
               {text ? (
                 <View
                   style={{
+                    minHeight: 131,
                     borderTopLeftRadius: 3,
                     borderTopRightRadius: 3,
                     backgroundColor: Color.White,
-                    paddingTop: 57,
-                    paddingBottom: 40,
-                    flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
@@ -111,7 +110,6 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                     style={{
                       fontSize: 13,
                       letterSpacing: -0.2,
-                      textAlign: 'center',
                       color: Color.Gray800,
                     }}
                   >
@@ -158,7 +156,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         scrollEnabled={false}
         contentContainerStyle={{
           marginTop: heightInfo.statusHeight + height / 3,
-          width: width - 48,
+          width: width - 48 - 48,
         }}
       />
     </View>

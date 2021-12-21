@@ -90,10 +90,10 @@ const ReservationList = () => {
           {item?.cancelType === '당일취소' ? (
             <CustomText
               style={{
-                fontSize: 15,
-                letterSpacing: -0.38,
+                fontSize: 13,
+                letterSpacing: -0.2,
                 textAlign: 'center',
-                color: Color.Black1000,
+                color: Color.Gray800,
               }}
             >
               이용일 당일 취소로 환불규정에 따라
@@ -109,10 +109,10 @@ const ReservationList = () => {
           ) : (
             <CustomText
               style={{
-                fontSize: 15,
-                letterSpacing: -0.38,
+                fontSize: 13,
+                letterSpacing: -0.2,
                 textAlign: 'center',
-                color: Color.Black1000,
+                color: Color.Gray800,
               }}
             >
               예약을 취소하시겠습니까?
