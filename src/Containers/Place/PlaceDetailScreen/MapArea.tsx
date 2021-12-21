@@ -20,7 +20,7 @@ const MapArea = (props: PropTypes) => {
   const { width, height } = useWindowDimensions();
   const { item } = props;
   const position = { latitude: parseFloat(item?.lat) || 37.553881, longitude: parseFloat(item?.lng) || 126.970488 };
-
+  // console.log('========', item?.shoeCost);
   const onPressButton = (type: InfoItemButtonType) => {
     switch (type) {
       case 'addressCopy':

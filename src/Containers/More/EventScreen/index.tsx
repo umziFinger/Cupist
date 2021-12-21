@@ -16,7 +16,7 @@ const EventScreen = () => {
   const { width } = useWindowDimensions();
   const { isLoading } = useSelector((state: CommonState) => state.common);
   const { myEventList, myEventListPage } = useSelector((state: MyState) => state.my);
-  // console.log(myEventList);
+  console.log(myEventList);
   useEffect(() => {
     const params = {
       per_page: 10,
@@ -104,7 +104,7 @@ const EventScreen = () => {
                   <View style={{ width: 1, height: 10, backgroundColor: Color.Gray300, marginHorizontal: 6 }} />
                   <View>
                     <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.Gray600 }}>
-                      {item?.regDate || ''}
+                      {item?.period || ''}
                     </CustomText>
                   </View>
                 </View>
