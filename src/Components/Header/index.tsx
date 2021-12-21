@@ -40,7 +40,7 @@ const Header = (props: HeaderProps) => {
       return <PlaceDetailHeader isShow={isShow} />;
 
     case 'placeReview':
-      return <PlaceReviewHeader isShow={isShow} />;
+      return <PlaceReviewHeader />;
 
     case 'placeList':
       return <PlaceListHeader text={text} isShow={isShow} />;

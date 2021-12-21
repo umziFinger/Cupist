@@ -62,7 +62,7 @@ const MyAroundScreen = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <Header type={'myAround'} text={location?.areaName === '' ? '내주변' : location.areaName} isScroll={isScroll} />
+      <Header type={'myAround'} text={location?.areaName === '' ? '내주변' : location.areaName} />
       <View style={{ flex: 1, backgroundColor: Color.White, paddingHorizontal: 20 }}>
         <FlatList
           data={myAroundList}

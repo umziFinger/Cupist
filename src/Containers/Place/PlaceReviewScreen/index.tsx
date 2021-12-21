@@ -26,6 +26,8 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
   const placeName = route?.params?.placeName || '';
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
+  const [isScroll, setIsScroll] = useState(false);
+  const [currentOffset, setCurrentOffset] = useState(0);
   const { placeReview, reviewListPage = 1 } = useSelector((state: PlaceState) => state.place);
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const [filter, setFilter] = useState<string>('latest');
@@ -111,70 +113,75 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <Header type={'placeReview'} />
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, marginTop: 24 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-          <View style={{ marginRight: 2, justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 18, fontWeight: 'bold', letterSpacing: -0.2 }}>
-              방문자리뷰
-            </CustomText>
+      <Header type={'placeReview'} isScroll={isScroll} />
+
+      {!isScroll && (
+        <>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, marginTop: 24 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+              <View style={{ marginRight: 2, justifyContent: 'center' }}>
+                <CustomText style={{ color: Color.Black1000, fontSize: 18, fontWeight: 'bold', letterSpacing: -0.2 }}>
+                  방문자리뷰
+                </CustomText>
+              </View>
+              <View style={{ justifyContent: 'center' }}>
+                <CustomText style={{ color: Color.Primary1000, fontSize: 18, fontWeight: 'bold', letterSpacing: -0.2 }}>
+                  {placeReview?.reviewCnt || 0}
+                </CustomText>
+              </View>
+            </View>
           </View>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Primary1000, fontSize: 18, fontWeight: 'bold', letterSpacing: -0.2 }}>
-              {placeReview?.reviewCnt || 0}
-            </CustomText>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20, marginVertical: 16 }}>
+            <CustomButton onPress={() => onPressFilter('latest')}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  marginRight: 7,
+                  paddingVertical: 8,
+                  paddingHorizontal: 12,
+                  borderRadius: 16.5,
+                  borderWidth: 1,
+                  borderColor: filter === 'latest' ? Color.Grayyellow1000 : Color.Gray300,
+                  backgroundColor: filter === 'latest' ? Color.Grayyellow1000 : Color.White,
+                }}
+              >
+                <CustomText
+                  style={{
+                    color: filter === 'latest' ? Color.White : Color.Grayyellow1000,
+                    fontSize: 13,
+                    fontWeight: filter === 'latest' ? '500' : 'normal',
+                  }}
+                >
+                  최신순
+                </CustomText>
+              </View>
+            </CustomButton>
+            <CustomButton onPress={() => onPressFilter('reviewStar')}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  paddingVertical: 8,
+                  paddingHorizontal: 12,
+                  borderRadius: 16.5,
+                  borderWidth: 1,
+                  backgroundColor: filter === 'reviewStar' ? Color.Grayyellow1000 : Color.White,
+                  borderColor: filter === 'reviewStar' ? Color.Grayyellow1000 : Color.Gray300,
+                }}
+              >
+                <CustomText
+                  style={{
+                    color: filter === 'reviewStar' ? Color.White : Color.Grayyellow1000,
+                    fontSize: 13,
+                    fontWeight: filter === 'reviewStar' ? '500' : 'normal',
+                  }}
+                >
+                  평점순
+                </CustomText>
+              </View>
+            </CustomButton>
           </View>
-        </View>
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20, marginVertical: 16 }}>
-        <CustomButton onPress={() => onPressFilter('latest')}>
-          <View
-            style={{
-              justifyContent: 'center',
-              marginRight: 7,
-              paddingVertical: 8,
-              paddingHorizontal: 12,
-              borderRadius: 16.5,
-              borderWidth: 1,
-              borderColor: filter === 'latest' ? Color.Grayyellow1000 : Color.Gray300,
-              backgroundColor: filter === 'latest' ? Color.Grayyellow1000 : Color.White,
-            }}
-          >
-            <CustomText
-              style={{
-                color: filter === 'latest' ? Color.White : Color.Grayyellow1000,
-                fontSize: 13,
-                fontWeight: filter === 'latest' ? '500' : 'normal',
-              }}
-            >
-              최신순
-            </CustomText>
-          </View>
-        </CustomButton>
-        <CustomButton onPress={() => onPressFilter('reviewStar')}>
-          <View
-            style={{
-              justifyContent: 'center',
-              paddingVertical: 8,
-              paddingHorizontal: 12,
-              borderRadius: 16.5,
-              borderWidth: 1,
-              backgroundColor: filter === 'reviewStar' ? Color.Grayyellow1000 : Color.White,
-              borderColor: filter === 'reviewStar' ? Color.Grayyellow1000 : Color.Gray300,
-            }}
-          >
-            <CustomText
-              style={{
-                color: filter === 'reviewStar' ? Color.White : Color.Grayyellow1000,
-                fontSize: 13,
-                fontWeight: filter === 'reviewStar' ? '500' : 'normal',
-              }}
-            >
-              평점순
-            </CustomText>
-          </View>
-        </CustomButton>
-      </View>
+        </>
+      )}
 
       <FlatList
         data={placeReview?.review}
@@ -312,6 +319,22 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
         onEndReachedThreshold={0.8}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
+        onScroll={(e) => {
+          // console.log(e.nativeEvent.contentOffset.y);
+
+          if (e.nativeEvent.contentOffset.y > 60 && placeReview?.review?.length > 3) {
+            setIsScroll(true);
+          } else {
+            setIsScroll(false);
+          }
+        }}
+        // onScrollBeginDrag={(e) => {
+        //   console.log(e.nativeEvent.contentOffset.y);
+        //   setIsScroll(true);
+        // }}
+        // onScrollEndDrag={(e) => {
+        //   setIsScroll(false);
+        // }}
       />
     </View>
   );
