@@ -196,8 +196,8 @@ const ReservationList = () => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   paddingBottom: 20,
-                  borderBottomWidth: 1,
-                  borderBottomColor: Color.Gray300,
+                  // borderBottomWidth: 1,
+                  // borderBottomColor: Color.Gray300,
                 }}
               >
                 <View style={{ width: 36, height: 36, borderRadius: 5 }}>
@@ -213,6 +213,8 @@ const ReservationList = () => {
                   </CustomText>
                 </View>
               </View>
+
+              <View style={{ borderStyle: 'dashed', borderWidth: 0.5, borderColor: Color.Gray300 }} />
 
               <View style={{ marginTop: 16 }}>
                 <View>
