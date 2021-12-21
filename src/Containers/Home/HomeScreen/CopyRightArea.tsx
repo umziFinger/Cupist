@@ -6,6 +6,7 @@ import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
+import Config from '@/Config';
 
 const CopyRightArea = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -44,16 +45,16 @@ const CopyRightArea = () => {
           <View style={{ flex: 1, marginTop: 16 }}>
             <View style={{ justifyContent: 'center' }}>
               <CustomText style={{ color: Color.Gray400, fontSize: 12 }}>
-                {`(주)볼링플러스\n`}
-                {`주소: 경기도 광명시 일직로 12번길 22, 5층\n`}
-                {`대표이사: 유재수 | 사업자등록번호: 892-88-01731\n`}
-                {`통신판매번호: 2021-경기광명-0188`}
+                {`${Config.CS_COMPANY_NAME}\n`}
+                {`주소: ${Config.CS_ADDRESS}\n`}
+                {`대표이사: ${Config.CS_PRIVACY} | 사업자등록번호: ${Config.CS_COMPANY}\n`}
+                {`통신판매번호: ${Config.CS_SELL_REPORT}`}
               </CustomText>
             </View>
             <View style={{ justifyContent: 'center', marginTop: 12 }}>
               <CustomText style={{ color: Color.Gray400, fontSize: 12 }}>
-                {`전화번호 : 070-4680-3267\n`}
-                {`전자우편주소 : help@bolimi.kr`}
+                {`전화번호 : ${Config.CS_NUMBER}\n`}
+                {`전자우편주소 : ${Config.CS_EMAIL}`}
               </CustomText>
             </View>
           </View>

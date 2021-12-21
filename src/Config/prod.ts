@@ -1,14 +1,13 @@
 const prod = {
   APP_MODE: 'prod',
 
-  CS_NUMBER: '0507-1374-1929',
-  CS_ADDRESS: '서울시 강남구 테헤란로 419, 1528호',
-  CS_SELL_REPORT: '제2021-제주정방-19호',
-  CS_COMPANY: '367-87-01771',
-  CS_HEAD_OFFICE: '제주특별자치도 서귀포시 중정로 86, 3층 315호',
-  CS_SEOUL_OFFICE: '서울시 강남구 테헤란로 419, 1528호',
-  CS_EMAIL: 'nallcorp.luxury@gmail.com',
-  CS_PRIVACY: '이인성',
+  CS_COMPANY_NAME: '(주)볼링플러스',
+  CS_ADDRESS: '경기도 광명시 일직로 12번길 22, 5층',
+  CS_PRIVACY: '유재수',
+  CS_COMPANY: '892-88-01731',
+  CS_SELL_REPORT: '2021-경기광명-0188',
+  CS_NUMBER: '070-4680-3267',
+  CS_EMAIL: 'help@bolimi.kr',
 
   // NAVER MAP
   NMAP_MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/네이버-지도-내비게이션/id311867728',
