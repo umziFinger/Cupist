@@ -55,7 +55,7 @@ const NotificationScreen = () => {
     if (notificationListPage > 1) dispatch(NotificationActions.fetchNotificationList(params));
   };
 
-  // console.log('========', notificationList?.readCnt);
+  // console.log('========', notificationList);
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>

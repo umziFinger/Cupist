@@ -113,7 +113,7 @@ const MyAroundHeader = (props: HeaderProps) => {
                         borderRadius: 16.5,
                         paddingHorizontal: 12,
                         paddingVertical: 8,
-                        borderWidth: 1,
+                        borderWidth: myAroundSort?.key === item.key ? 0 : 1,
                         borderColor: myAroundSort?.key === item.key ? undefined : Color.Gray300,
                         backgroundColor: myAroundSort?.key === item.key ? Color.Grayyellow1000 : Color.White,
                       }}
