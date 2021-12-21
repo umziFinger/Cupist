@@ -60,7 +60,7 @@ const NotificationScreen = () => {
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="back" />
-      <View style={{ marginTop: 16, paddingLeft: 24, paddingBottom: 30 }}>
+      <View style={{ marginTop: 16, paddingLeft: 24 }}>
         <View style={{ marginBottom: 16 }}>
           <CustomText style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}>
             내 알림
@@ -98,7 +98,15 @@ const NotificationScreen = () => {
                 {/* 읽지 않음 영역 */}
                 {notificationList?.unreadCnt > 0 && (
                   <>
-                    <View style={{ paddingHorizontal: 24, backgroundColor: Color.White, paddingBottom: 30, flex: 1 }}>
+                    <View
+                      style={{
+                        paddingHorizontal: 24,
+                        backgroundColor: Color.White,
+                        paddingBottom: 30,
+                        paddingTop: 30,
+                        flex: 1,
+                      }}
+                    >
                       <FlatList
                         data={notificationList?.unread}
                         // data={[0, 1, 2, 3, 4]}
