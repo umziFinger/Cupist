@@ -48,11 +48,13 @@ const WriteReviewDetailScreen = ({ route }: PropTypes) => {
   };
 
   const onChangeText = (content: string) => {
-    dispatch(MyActions.fetchMyReducer({ type: 'setWriteReview', data: { key: 'content', value: content } }));
+    if (writeReviewInfo?.content?.length <= 499) {
+      dispatch(MyActions.fetchMyReducer({ type: 'setWriteReview', data: { key: 'content', value: content } }));
+    }
   };
 
   const onWrite = () => {
-    if (writeReviewInfo?.content?.length > 20 && writeReviewInfo?.content?.length <= 500) {
+    if (writeReviewInfo?.content?.length > 20 && writeReviewInfo?.content?.length <= 499) {
       const params = {
         paymentIdx: writeReviewInfo.paymentIdx,
         files: attachFile,
