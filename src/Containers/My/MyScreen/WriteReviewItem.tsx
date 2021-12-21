@@ -109,7 +109,7 @@ const WriteReviewItem = () => {
                         fullStar={require('@/Assets/Images/Common/icStarOnBig.png')}
                         emptyStar={require('@/Assets/Images/Common/icStarOffBig.png')}
                       />
-                      <View>
+                      <View style={{ marginLeft: 4 }}>
                         <CustomText style={{ fontSize: 10, letterSpacing: 0, color: Color.Gray800 }}>
                           {item?.PlaceReview?.regDateView || ''}
                         </CustomText>
@@ -142,44 +142,42 @@ const WriteReviewItem = () => {
                       buttonColor={Color.Primary1000}
                     />
                   </View>
-                  {item?.reviewPhoto?.length > 0 && (
-                    <FlatList
-                      data={item?.reviewPhoto}
-                      renderItem={({ item: reviewPhoto, index: photoIndex }) => (
-                        <CustomButton
-                          onPress={() => onTotalImage(reviewIdx, reviewPhoto.idx, photoIndex)}
-                          effect={false}
-                        >
-                          <View
-                            style={{
-                              width: 176,
-                              height: 110,
-                              borderRadius: 5,
-                              // marginLeft: reviewPhotoIndex === 0 ? 8 : 18,
-                              marginRight: 8,
-                              backgroundColor: Color.Gray200,
-                              alignSelf: 'center',
-                            }}
-                          >
-                            <FastImage
-                              style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                              source={{ uri: reviewPhoto.url || '' }}
-                              resizeMode={FastImage.resizeMode.cover}
-                            />
-                          </View>
-                        </CustomButton>
-                      )}
-                      keyExtractor={(photo, photoKey) => photoKey.toString()}
-                      contentContainerStyle={{ paddingLeft: 24, marginTop: 16 }}
-                      horizontal
-                      initialNumToRender={5}
-                      maxToRenderPerBatch={8}
-                      windowSize={7}
-                      showsHorizontalScrollIndicator={false}
-                    />
-                  )}
                 </CustomButton>
               </View>
+
+              {item?.reviewPhoto?.length > 0 && (
+                <FlatList
+                  data={item?.reviewPhoto}
+                  renderItem={({ item: reviewPhoto, index: photoIndex }) => (
+                    <CustomButton onPress={() => onTotalImage(reviewIdx, reviewPhoto.idx, photoIndex)} effect={false}>
+                      <View
+                        style={{
+                          width: 176,
+                          height: 110,
+                          borderRadius: 5,
+                          // marginLeft: reviewPhotoIndex === 0 ? 8 : 18,
+                          marginRight: 8,
+                          backgroundColor: Color.Gray200,
+                          alignSelf: 'center',
+                        }}
+                      >
+                        <FastImage
+                          style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                          source={{ uri: reviewPhoto.url || '' }}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </View>
+                    </CustomButton>
+                  )}
+                  keyExtractor={(photo, photoKey) => photoKey.toString()}
+                  contentContainerStyle={{ paddingLeft: 24, marginTop: 16 }}
+                  horizontal
+                  initialNumToRender={5}
+                  maxToRenderPerBatch={8}
+                  windowSize={7}
+                  showsHorizontalScrollIndicator={false}
+                />
+              )}
             </View>
           )}
           initialNumToRender={7}

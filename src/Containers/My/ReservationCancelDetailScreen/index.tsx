@@ -61,7 +61,7 @@ const ReservationCancelDetailScreen = () => {
                 <RowItem title={'추가옵션'} content={`볼링화 ${reservationCancelDetail?.shoesCnt || ''}켤레`} />
               </View>
 
-              <View style={{ borderStyle: 'dotted', borderWidth: 1, borderColor: Color.Gray350 }} />
+              <View style={{ borderStyle: 'dashed', borderWidth: 0.5, borderColor: Color.Gray350 }} />
 
               <View style={{ marginTop: 28, flexDirection: 'row', alignItems: 'center' }}>
                 <RowItem title={'취소 가능 기한'} content={reservationCancelDetail?.cancelLimitDate || ''} />
@@ -70,7 +70,7 @@ const ReservationCancelDetailScreen = () => {
                 <RowItem title={'결제방법'} content={reservationCancelDetail?.type || ''} />
               </View>
 
-              <View style={{ borderStyle: 'dotted', borderWidth: 1, borderColor: Color.Gray350 }} />
+              <View style={{ borderStyle: 'dashed', borderWidth: 0.5, borderColor: Color.Gray350 }} />
 
               {reservationCancelDetail?.cancelType === '당일취소' && (
                 <View
@@ -115,7 +115,7 @@ const ReservationCancelDetailScreen = () => {
                 />
               </View>
 
-              <View style={{ borderStyle: 'dotted', borderWidth: 1, borderColor: Color.Gray350 }} />
+              <View style={{ borderStyle: 'dashed', borderWidth: 0.5, borderColor: Color.Gray350 }} />
 
               <View style={{ marginTop: 13, flexDirection: 'row', alignItems: 'center', marginBottom: 28 }}>
                 <RowItem

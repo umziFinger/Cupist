@@ -36,28 +36,28 @@ const CustomShowMore = (props: PropTypes) => {
         style={{ flex: 1, fontSize: 14, color: props.textColor, letterSpacing: -0.25, paddingVertical: 1 }}
       >
         {props.text}
-        {lengthMore && textShown ? (
-          <CustomButton
-            onPress={toggleNumberOfLines}
-            style={{
-              flexDirection: 'row',
-              backgroundColor: props.backgroundColor,
-            }}
-            hitSlop={10}
-          >
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <CustomText
-                style={{
-                  color: props.buttonColor,
-                  fontSize: 14,
-                  letterSpacing: -0.25,
-                }}
-              >
-                {' 접기'}
-              </CustomText>
-            </View>
-          </CustomButton>
-        ) : null}
+        {/* {lengthMore && textShown ? ( */}
+        {/*  <CustomButton */}
+        {/*    onPress={toggleNumberOfLines} */}
+        {/*    style={{ */}
+        {/*      flexDirection: 'row', */}
+        {/*      backgroundColor: props.backgroundColor, */}
+        {/*    }} */}
+        {/*    hitSlop={10} */}
+        {/*  > */}
+        {/*    <View style={{ alignItems: 'center', justifyContent: 'center' }}> */}
+        {/*      <CustomText */}
+        {/*        style={{ */}
+        {/*          color: props.buttonColor, */}
+        {/*          fontSize: 14, */}
+        {/*          letterSpacing: -0.25, */}
+        {/*        }} */}
+        {/*      > */}
+        {/*        {' 접기'} */}
+        {/*      </CustomText> */}
+        {/*    </View> */}
+        {/*  </CustomButton> */}
+        {/* ) : null} */}
       </CustomText>
       {lengthMore && !textShown ? (
         <CustomButton

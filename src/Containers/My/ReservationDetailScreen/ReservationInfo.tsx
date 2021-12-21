@@ -32,9 +32,9 @@ const ReservationInfo = () => {
       <View>
         <CustomText
           style={{
-            fontSize: 17,
-            fontWeight: '500',
-            letterSpacing: -0.3,
+            fontSize: 15,
+            fontWeight: 'bold',
+            letterSpacing: -0.2,
             color: Color.Black1000,
           }}
         >
