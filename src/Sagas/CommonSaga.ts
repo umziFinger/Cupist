@@ -161,6 +161,18 @@ export function* fetchErrorHandler(data: any) {
           },
         }),
       );
+    } else if (data.params.data.message === 'Unauthorized') {
+      navigate('SimpleLoginScreen');
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'bottom',
+            alertToastMessage: data.params.data.message,
+          },
+        }),
+      );
     } else {
       yield put(
         CommonActions.fetchCommonReducer({

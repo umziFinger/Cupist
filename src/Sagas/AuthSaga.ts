@@ -218,6 +218,7 @@ export function* fetchUserInfo(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(AuthActions.fetchAuthReducer({ type: 'userInfo', data: response.data }));
     } else {
+      console.log(' Error...fetchUserInfo : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {

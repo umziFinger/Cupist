@@ -167,9 +167,11 @@ const HomeScreen = ({ route }: HomeProps) => {
             {/*  onPress={() => { */}
             {/*    console.log('제거'); */}
 
+            {/*    AsyncStorage.setItem('userIdx', ''); */}
             {/*    AsyncStorage.setItem('accessToken', ''); */}
             {/*    AsyncStorage.setItem('refreshToken', ''); */}
-            {/*    navigate('HomeScreen', { expired: true }); */}
+
+            {/*    // navigate('HomeScreen', { expired: true }); */}
             {/*  }} */}
             {/* > */}
             {/*  <View style={{ paddingVertical: 20 }}> */}
