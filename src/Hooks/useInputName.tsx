@@ -20,7 +20,7 @@ function useInputName(): ResultUseInputName {
   // change
   const onChangeName = (value: string) => {
     if (value) {
-      if (value.length < 6) {
+      if (value.length < 8) {
         // dispatch(AuthActions.fetchAuthReducer({ type: 'userName', data: value }));
         setUserName(value);
         setNameValidText('');
@@ -28,7 +28,7 @@ function useInputName(): ResultUseInputName {
       } else {
         // dispatch(AuthActions.fetchAuthReducer({ type: 'userName', data: value }));
         setUserName(value);
-        setNameValidText('이름은 최대 5글자 입니다.');
+        setNameValidText('이름은 최대 7글자 입니다.');
         setIsNameValid(false);
       }
     } else {

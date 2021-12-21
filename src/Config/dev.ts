@@ -18,8 +18,8 @@ const dev = {
   TMAP_MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/tmap-내비게이션-지도/id431589174',
   TMAP_MARKET_URL_ANDROID: 'market://details?id=com.skt.tmap.ku',
 
-  API_URL: 'http://192.168.0.12:5000/',
-  // API_URL: 'https://api.bolimi.kr/',
+  // API_URL: 'http://192.168.0.12:5000/',
+  API_URL: 'https://api.bolimi.kr/',
 
   // 이미지 url
   IMAGE_URL: 'https://www.luxurynall.com/',
