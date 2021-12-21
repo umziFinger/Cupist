@@ -283,7 +283,7 @@ export function* fetchSmsAuth(data: any): any {
             uniqueId: DeviceInfo.getUniqueId(),
             providerType: 'email',
             authIdx: log_cert.authIdx,
-            name: data.params.userName,
+            username: data.params.userName,
           };
           yield put(AuthActions.fetchUserJoin(params));
         }
