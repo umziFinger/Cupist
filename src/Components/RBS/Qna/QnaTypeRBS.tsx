@@ -70,9 +70,7 @@ const QnaTypeRBS = () => {
                 >
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ flex: 1 }}>
-                      <CustomText
-                        style={{ color: Color.Grayyellow1000, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}
-                      >
+                      <CustomText style={{ color: Color.Grayyellow1000, fontSize: 14, letterSpacing: -0.12 }}>
                         {item.content}
                       </CustomText>
                     </View>
