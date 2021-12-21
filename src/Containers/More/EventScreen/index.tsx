@@ -80,7 +80,7 @@ const EventScreen = () => {
               >
                 <View style={{ marginBottom: 10 }}>
                   <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
-                    {item?.regDate || ''}
+                    {item?.regDateView || ''}
                   </CustomText>
                 </View>
                 <View style={{ marginBottom: 12 }}>

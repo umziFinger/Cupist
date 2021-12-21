@@ -18,7 +18,7 @@ const QnaScreen = () => {
 
   const { isLoading, heightInfo } = useSelector((state: CommonState) => state.common);
   const { myQnaList, myQnaListPage } = useSelector((state: MyState) => state.my);
-
+  // console.log(myQnaList);
   useEffect(() => {
     const params = {
       per_page: 10,
@@ -97,7 +97,7 @@ const QnaScreen = () => {
                     }}
                   >
                     <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
-                      {item?.type || ''}
+                      {item?.answerYN === 'N' ? '문의접수' : '답변완료' || ''}
                     </CustomText>
                   </View>
                   <View>
@@ -108,13 +108,13 @@ const QnaScreen = () => {
                         color: Color.Gray600,
                       }}
                     >
-                      {item?.regDate || ''}
+                      {item?.regDateView || ''}
                     </CustomText>
                   </View>
                 </View>
                 <View style={{ marginBottom: 16 }}>
                   <CustomText style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}>
-                    {item?.content || ''}
+                    {item?.type || ''}
                   </CustomText>
                 </View>
               </View>
