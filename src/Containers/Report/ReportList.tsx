@@ -7,24 +7,25 @@ import CustomButton from '@/Components/CustomButton';
 
 const ReportList = ({ item, onCheck }: any) => {
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingVertical: 16,
-      }}
-    >
-      <CustomText
+    <CustomButton onPress={() => onCheck(item.idx)}>
+      <View
         style={{
-          fontSize: 14,
-          letterSpacing: -0.25,
-          color: Color.Gray800,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingVertical: 16,
         }}
       >
-        {item.reportCode}
-      </CustomText>
+        <CustomText
+          style={{
+            fontSize: 14,
+            letterSpacing: -0.25,
+            color: Color.Gray800,
+          }}
+        >
+          {item.reportCode}
+        </CustomText>
 
-      <CustomButton onPress={() => onCheck(item.idx)}>
         <View style={{ width: 24, height: 24 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
@@ -36,8 +37,8 @@ const ReportList = ({ item, onCheck }: any) => {
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>
-      </CustomButton>
-    </View>
+      </View>
+    </CustomButton>
   );
 };
 
