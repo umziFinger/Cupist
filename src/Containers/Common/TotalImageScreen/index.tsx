@@ -80,16 +80,18 @@ const TotalImageScreen = ({ route }: TotalImageProps) => {
                   <View style={{}}>
                     <CustomText
                       style={{
-                        fontSize: 17,
-                        letterSpacing: -0.3,
+                        fontSize: 15,
+                        letterSpacing: -0.2,
+                        fontWeight: '500',
                         color: Color.White,
                       }}
                     >
                       {currentIndex}
                       <CustomText
                         style={{
-                          fontSize: 17,
-                          letterSpacing: -0.3,
+                          fontSize: 15,
+                          fontWeight: 'normal',
+                          letterSpacing: -0.2,
                           color: Color.White,
                         }}
                       >
