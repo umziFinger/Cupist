@@ -1,7 +1,7 @@
 import { getDistance, convertDistance } from 'geolib';
 import { Linking, Platform, View } from 'react-native';
 import { getVersion } from 'react-native-device-info';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import 'moment/locale/ko';
 import { Path, Svg } from 'react-native-svg';
 import React, { useEffect } from 'react';

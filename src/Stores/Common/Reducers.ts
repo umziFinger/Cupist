@@ -223,6 +223,10 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.appCodePushVersion = data;
         break;
       }
+      case 'calendarMonthPosition': {
+        draft.calendarMonthPosition = data;
+        break;
+      }
 
       default:
         return draft;

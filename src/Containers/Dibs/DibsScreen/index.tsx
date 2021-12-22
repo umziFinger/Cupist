@@ -35,7 +35,7 @@ const DibsScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log('============!!');
+    console.log('======딥딥딥딥딥======!!');
     const params = {
       lat: myLatitude,
       lng: myLongitude,
