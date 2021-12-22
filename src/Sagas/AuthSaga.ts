@@ -79,6 +79,7 @@ export function* fetchUserLogin(data: any): any {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       // yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
+      console.log('===========로그인에러');
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {

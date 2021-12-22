@@ -10,7 +10,7 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import { DATA_WALK_THROUGH_IMAGE } from './data';
 
 const WalkThroughScreen = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
 
@@ -26,9 +26,9 @@ const WalkThroughScreen = () => {
       }
     },
   );
-
   return (
-    <View style={{ flex: 1, backgroundColor: Color.White, paddingTop: heightInfo.statusHeight }}>
+    <View style={{ flex: 1, backgroundColor: Color.White }}>
+      {/* <View style={{ flex: 1, backgroundColor: 'red' }}> */}
       <View style={{ flex: 1 }}>
         <FlatList
           data={DATA_WALK_THROUGH_IMAGE}
@@ -121,23 +121,25 @@ const WalkThroughScreen = () => {
         >
           <FlatList
             data={DATA_WALK_THROUGH_IMAGE}
-            renderItem={({ index }) =>
-              viewableIndex === index ? (
-                <View
-                  style={{ width: 19, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: Color.Gray800 }}
-                />
-              ) : (
-                <View
-                  style={{
-                    width: 6,
-                    height: 6,
-                    marginRight: 4,
-                    borderRadius: 50,
-                    backgroundColor: Color.Gray300,
-                  }}
-                />
-              )
-            }
+            renderItem={({ index }) => (
+              <>
+                {viewableIndex === index ? (
+                  <View
+                    style={{ width: 19, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: Color.Gray800 }}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      width: 6,
+                      height: 6,
+                      marginRight: 4,
+                      borderRadius: 50,
+                      backgroundColor: Color.Gray300,
+                    }}
+                  />
+                )}
+              </>
+            )}
             showsHorizontalScrollIndicator={false}
             keyExtractor={(zItem, index) => index.toString()}
             horizontal
