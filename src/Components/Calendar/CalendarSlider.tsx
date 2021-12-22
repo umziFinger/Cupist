@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import moment from 'moment';
 import { View } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -13,31 +13,23 @@ import { HomeState } from '@/Stores/Home/InitialState';
 
 const CalendarSlider = () => {
   const dispatch = useDispatch();
+  const calendarRef = useRef<any>();
+
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerDate, setHeaderDate] = useState<string>(moment().format('MM월 YYYY').toString());
-
-  // 선택 불가 날짜
-  // const datesBlacklistFunc = (date: any) => {
-  //   const current = moment().format('YYYYMMDD');
-  //   console.log(date.format('YYYYMMDD') < current);
-  //   return date.format('YYYYMMDD') < current; // disable Saturdays
-  // };
 
   useEffect(() => {
     setHeaderDate(moment(calendarDate).format('MM월 YYYY'));
   }, [calendarDate]);
 
   // 선택 가능 날짜 범위
-  const datesWhitelist = [
-    moment(),
-    {
-      start: moment(),
-      end: moment().add(2, 'month'),
-    },
-  ];
+  const datesWhitelist = (date: any) => {
+    // console.log(`${date.format('YYYYMMDD')}: ${date.format('YYYYMMDD') >= moment().format('YYYYMMDD')}`);
+    return date.format('YYYYMMDD') >= moment().format('YYYYMMDD');
+  };
 
   const onPressDate = (date: any) => {
-    console.log('onPressDate : ', calendarDate);
+    // console.log('onPressDate : ', calendarDate);
     setHeaderDate(date.format('MM월 YYYY'));
     dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(date).toString() }));
   };
@@ -48,9 +40,10 @@ const CalendarSlider = () => {
   };
 
   const renderDayComponent = (value: any) => {
-    const current = moment(value.date);
+    const current = moment(value?.date);
     const { selected, onDateSelected } = value;
 
+    // onBlackItemCounter(current);
     // 요일
     const day = current.format('dd');
     // 일
@@ -60,22 +53,13 @@ const CalendarSlider = () => {
     if (day === '토') fontColor = Color.Calendar_Blue;
     if (day === '일') fontColor = Color.Calendar_Red;
 
+    if (current.format('YYYYMMDD') < moment().format('YYYYMMDD')) {
+      return null;
+    }
     return (
       <CustomButton
         onPress={() => {
-          if (current.format('YYYYMMDD') < moment().format('YYYYMMDD')) {
-            return dispatch(
-              CommonActions.fetchCommonReducer({
-                type: 'alertToast',
-                data: {
-                  alertToast: true,
-                  alertToastPosition: 'top',
-                  alertToastMessage: '이전 날짜는 선택하실 수 없습니다.',
-                },
-              }),
-            );
-          }
-          return onDateSelected(current);
+          onDateSelected(current);
         }}
       >
         <View
@@ -115,7 +99,23 @@ const CalendarSlider = () => {
     () => () => {
       return (
         <CalendarStrip
+          ref={calendarRef}
+          scrollerPaging
+          onWeekScrollStart={(date) => {
+            if (moment(date).format('YYYYMMDD') < moment().format('YYYYMMDD')) {
+              console.log('스크롤 시작', moment(date));
+              calendarRef?.current.updateWeekView(date);
+            }
+          }}
+          onWeekScrollEnd={(date) => {
+            if (moment(date).format('YYYYMMDD') < moment().format('YYYYMMDD')) {
+              console.log('스크롤 끝', moment(date));
+              calendarRef?.current.updateWeekView(date);
+            }
+          }}
+          shouldAllowFontScaling={false}
           style={{ flex: 1, marginTop: 5, marginBottom: -7 }}
+          startingDate={moment(calendarDate)}
           scrollable
           numDaysInWeek={8}
           selectedDate={moment(calendarDate)}
@@ -152,6 +152,7 @@ const CalendarSlider = () => {
       </CustomButton>
 
       {/* 캘린더 영역 */}
+
       {renderCalendar()}
     </View>
   );
