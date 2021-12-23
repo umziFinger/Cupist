@@ -100,7 +100,7 @@ const CalendarSlider = () => {
       return (
         <CalendarStrip
           ref={calendarRef}
-          scrollerPaging
+          // scrollerPaging
           onWeekScrollStart={(date) => {
             if (moment(date).format('YYYYMMDD') < moment().format('YYYYMMDD')) {
               console.log('스크롤 시작', moment(date));
