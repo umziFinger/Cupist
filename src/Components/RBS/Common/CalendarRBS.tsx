@@ -192,7 +192,7 @@ const CalendarRBS = () => {
           maxToRenderPerBatch={1}
           windowSize={7}
           showsVerticalScrollIndicator={false}
-          onScrollToIndexFailed={(info) => {
+          onScrollToIndexFailed={() => {
             // console.log(info.index);
             const wait = new Promise((resolve) => setTimeout(resolve, 300));
             wait.then(() => {
