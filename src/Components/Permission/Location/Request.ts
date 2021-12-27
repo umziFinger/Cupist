@@ -14,7 +14,7 @@ const hasLocationPermission = async () => {
   if (result === RESULTS.GRANTED) {
     return true;
   }
-  Alert.alert('회원님의 현재 위치를 바탕으로 주변 왓플레이스 정보를 찾는데 사용됩니다.', '', [
+  Alert.alert('회원님의 현재 위치를 바탕으로 내 주변 볼링장을 안내하기 위해 위치정보를 사용합니다.', '', [
     { text: '설정', style: 'destructive', onPress: () => Linking.openSettings() },
     { text: '허용 안함' },
   ]);
