@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import { PERMISSIONS, check } from 'react-native-permissions';
 
-const PLATFORM_LOCATION_PERMISSIONS = {
+const PLATFORM_LOCATION_PERMISSIONS: any = {
   ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
   android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
 };

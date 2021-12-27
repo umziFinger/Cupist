@@ -30,6 +30,7 @@ LogBox.ignoreLogs([
   'new NativeEventEmitter()',
   'Deprecation warning: value provided is not in a recognized RFC2822 or ISO format',
   'Deprecation warning: moment().add(period, number) is deprecated',
+  'Method has been deprecated. Please instead use `remove()`',
 ]);
 
 const RootScreen = () => {

@@ -20,10 +20,11 @@ export interface HeaderProps {
   rightItem?: React.ReactNode;
   isScroll?: boolean;
   isShow?: boolean;
+  activeFilter?: boolean;
 }
 
 const Header = (props: HeaderProps) => {
-  const { type, text, isScroll, isShow } = props;
+  const { type, text, isScroll, isShow, activeFilter } = props;
 
   switch (type) {
     case 'back':
@@ -34,7 +35,7 @@ const Header = (props: HeaderProps) => {
       return <CloseHeader text={text} />;
 
     case 'myAround':
-      return <MyAroundHeader text={text} isScroll={isScroll} />;
+      return <MyAroundHeader text={text} isScroll={isScroll} activeFilter={activeFilter} />;
 
     case 'placeDetail':
       return <PlaceDetailHeader isShow={isShow} />;

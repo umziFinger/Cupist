@@ -31,8 +31,8 @@ const SORT_TAG = [
 ];
 
 const MyAroundHeader = (props: HeaderProps) => {
-  const { text, isScroll } = props;
   const dispatch = useDispatch();
+  const { isScroll, text, activeFilter } = props;
 
   const { statusHeight } = useSelector((state: CommonState) => state.common.heightInfo);
   const { myAroundSort = { index: 0, key: 'distance', value: '거리순' } } = useSelector(
@@ -106,8 +106,23 @@ const MyAroundHeader = (props: HeaderProps) => {
             <FlatList
               data={SORT_TAG}
               renderItem={({ item }) => (
-                <CustomButton onPress={() => onSelectSort(item)}>
-                  <View style={{ flexDirection: 'row', marginRight: 8, alignItems: 'center' }}>
+                <CustomButton
+                  onPress={
+                    activeFilter
+                      ? () => onSelectSort(item)
+                      : () => {
+                          return null;
+                        }
+                  }
+                >
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginRight: 8,
+                      alignItems: 'center',
+                      opacity: activeFilter ? 1 : 0.2,
+                    }}
+                  >
                     <View
                       style={{
                         borderRadius: 16.5,

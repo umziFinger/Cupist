@@ -14,6 +14,9 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import { navigateGoBack } from '@/Services/NavigationService';
 import InputLocationSearch from '@/Components/Input/LocationSerach';
+import LocationMyPosition from '@/Components/Permission/Location/LocationMyPosition';
+import CommonActions from '@/Stores/Common/Actions';
+import { LocationCheck, LocationRequest } from '@/Components/Permission/Location';
 
 const LocationSettingScreen = () => {
   const dispatch = useDispatch();

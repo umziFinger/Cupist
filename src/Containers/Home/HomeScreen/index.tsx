@@ -30,6 +30,7 @@ import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
 import { navigate } from '@/Services/NavigationService';
+import { LocationCheck } from '@/Components/Permission/Location';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -96,12 +97,24 @@ const HomeScreen = ({ route }: HomeProps) => {
   }, [prepaymentDate]);
 
   const positionUpdate = async () => {
-    const myPosition: any = await LocationMyPosition();
+    const LocationCheckResult = await LocationCheck();
+    if (LocationCheckResult) {
+      console.log('위치 권한 인증');
+      const myPosition = await LocationMyPosition();
+      dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
+    }
+    /* const myPosition: any = await LocationMyPosition();
     console.log('myPosition is ', myPosition);
     const params = {
       date: moment(calendarDate).format('YYYY/MM/DD'),
       lat: parseFloat(myPosition?.myLatitude?.toString()) || 37.56561,
       lng: parseFloat(myPosition?.myLongitude?.toString()) || 126.97804,
+    }; */
+
+    const params = {
+      date: moment(calendarDate).format('YYYY/MM/DD'),
+      lat: parseFloat(myLatitude?.toString()) || 37.56561,
+      lng: parseFloat(myLongitude?.toString()) || 126.97804,
     };
 
     // 홈 리스트 호출
@@ -130,12 +143,10 @@ const HomeScreen = ({ route }: HomeProps) => {
     dispatch(
       HomeActions.fetchHomePrepaymentPriceList({
         date: prepaymentDate,
-        lat: parseFloat(myPosition?.myLatitude?.toString()) || 37.56561,
-        lng: parseFloat(myPosition?.myLongitude?.toString()) || 126.97804,
+        lat: parseFloat(myLatitude?.toString()) || 37.56561,
+        lng: parseFloat(myLongitude?.toString()) || 126.97804,
       }),
     );
-
-    dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
   };
 
   const onRefresh = () => {
