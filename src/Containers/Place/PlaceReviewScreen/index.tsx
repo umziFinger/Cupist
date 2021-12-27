@@ -27,7 +27,6 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const [isScroll, setIsScroll] = useState(false);
-  const [currentOffset, setCurrentOffset] = useState(0);
   const { placeReview, reviewListPage = 1 } = useSelector((state: PlaceState) => state.place);
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const [filter, setFilter] = useState<string>('latest');
@@ -322,7 +321,7 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
         onScroll={(e) => {
           // console.log(e.nativeEvent.contentOffset.y);
 
-          if (e.nativeEvent.contentOffset.y > 60 && placeReview?.review?.length > 3) {
+          if (e.nativeEvent.contentOffset.y > 60 && placeReview?.review?.length > 5) {
             setIsScroll(true);
           } else {
             setIsScroll(false);
