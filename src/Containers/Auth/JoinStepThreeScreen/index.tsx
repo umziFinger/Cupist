@@ -21,8 +21,8 @@ const JoinStepThreeScreen = () => {
 
   useEffect(() => {
     const params = {
-      lat: myLatitude.toString(),
-      lng: myLongitude.toString(),
+      lat: myLatitude?.toString() || 37.56561,
+      lng: myLongitude?.toString() || 126.97804,
       page: 1,
       perPage: 10,
     };
@@ -35,8 +35,8 @@ const JoinStepThreeScreen = () => {
 
   const onMore = () => {
     const params = {
-      lat: myLatitude.toString(),
-      lng: myLongitude.toString(),
+      lat: myLatitude?.toString() || 37.56561,
+      lng: myLongitude?.toString() || 126.97804,
       perPage: 10,
       page: aroundListPage,
     };
@@ -46,8 +46,8 @@ const JoinStepThreeScreen = () => {
 
   const onRefresh = () => {
     const params = {
-      lat: myLatitude.toString(),
-      lng: myLongitude.toString(),
+      lat: myLatitude?.toString() || 37.56561,
+      lng: myLongitude?.toString() || 126.97804,
       perPage: 10,
       page: 1,
     };
