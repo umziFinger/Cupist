@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
@@ -13,6 +13,8 @@ interface PropTypes {
 }
 
 const HotPlaceCard = ({ item, width }: PropTypes) => {
+  const [isError, setIsError] = useState(false);
+
   const { handlerPlaceDibs } = usePlaceDibs();
 
   return (
@@ -21,8 +23,15 @@ const HotPlaceCard = ({ item, width }: PropTypes) => {
         <View style={{ width, height: 145 }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderTopLeftRadius: 5, borderTopRightRadius: 5 }}
-            source={{ uri: item?.placePhotoArr[0] }}
+            source={
+              !item?.placePhotoArr[0] || isError
+                ? require('@/Assets/Images/Common/icNoImage.png')
+                : { uri: item?.placePhotoArr[0] }
+            }
             resizeMode={FastImage.resizeMode.cover}
+            onError={() => {
+              setIsError(true);
+            }}
           />
           <CustomButton
             onPress={() => handlerPlaceDibs(item)}

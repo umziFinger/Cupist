@@ -1,10 +1,11 @@
 import React from 'react';
 import { CommonActions, NavigationContainerRef, StackActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MainStackParamList } from '@/Navigators/MainNavigator';
 
-export const navigationRef = React.createRef<NavigationContainerRef>();
+export const navigationRef = React.createRef<NavigationContainerRef<MainStackParamList>>();
 
-export function navigate(name: string, params?: any) {
+export function navigate(name: keyof MainStackParamList, params?: MainStackParamList[keyof MainStackParamList]) {
   AsyncStorage.setItem('currentScreen', name);
 
   navigationRef.current?.navigate(name, params);
@@ -17,7 +18,7 @@ export function navigateReplace(name: string, params?: any) {
 }
 
 export function navigateGoBack() {
-  navigationRef.current.goBack();
+  navigationRef.current?.goBack();
 }
 
 export function navigateAndReset(name: string, index = 0) {

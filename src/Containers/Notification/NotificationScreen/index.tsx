@@ -169,7 +169,7 @@ const NotificationScreen = () => {
                                       color: Color.Primary1000,
                                     }}
                                   >
-                                    {item?.category || ''}
+                                    {item?.categoryView || ''}
                                   </CustomText>
                                 </View>
                               )}
@@ -267,7 +267,7 @@ const NotificationScreen = () => {
                                   <CustomText
                                     style={{ fontSize: 11, fontWeight: 'bold', letterSpacing: 0, color: Color.Gray600 }}
                                   >
-                                    {item?.category || ''}
+                                    {item?.categoryView || ''}
                                   </CustomText>
                                 </View>
                               )}

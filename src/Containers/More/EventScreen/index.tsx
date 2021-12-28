@@ -91,7 +91,9 @@ const EventScreen = () => {
                 <View style={{ width: width - 48, height: 126, borderRadius: 5 }}>
                   <FastImage
                     style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                    source={{ uri: item.bannerFile }}
+                    source={
+                      !item?.bannerFile ? require('@/Assets/Images/Common/icNoImage.png') : { uri: item?.bannerFile }
+                    }
                     resizeMode={FastImage.resizeMode.stretch}
                   />
                 </View>

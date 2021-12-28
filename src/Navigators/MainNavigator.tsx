@@ -57,6 +57,7 @@ import RegisterPasswordScreen from '@/Containers/Reservation/RegisterPasswordScr
 import CheckPasswordScreen from '@/Containers/Reservation/CheckPasswordScreen';
 import ReservationCancelPopupScreen from '@/Containers/Reservation/ReservationCancelPopupScreen';
 import RegisterPasswordModifyScreen from '@/Containers/Reservation/RegisterPasswordModifyScreen';
+import BasicInfoDetailScreen from '@/Containers/Place/BasicInfoDetailScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -114,6 +115,7 @@ export type MainStackParamList = {
   CheckPasswordScreen: { paymentIdx: number; billingIdx: number };
   ReservationCancelPopupScreen: { cancelLimit: string; totalPrice: number };
   RegisterPasswordModifyScreen: undefined;
+  BasicInfoDetailScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -158,6 +160,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="PlaceReviewScreen" component={PlaceReviewScreen} />
       <MainStack.Screen name="PlaceListScreen" component={PlaceListScreen} />
       <MainStack.Screen name="HotPlaceListScreen" component={HotPlaceListScreen} />
+      <MainStack.Screen name="BasicInfoDetailScreen" component={BasicInfoDetailScreen} />
 
       {/*  Setting */}
       <MainStack.Screen name="LocationSettingScreen" component={LocationSettingScreen} />

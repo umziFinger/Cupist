@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,14 +19,23 @@ const QuickPriceCard = (props: PropTypes) => {
   const { item } = props;
   const { handlerPlaceDibs } = usePlaceDibs();
 
+  const [isError, setIsError] = useState(false);
+
   return (
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
       <View style={{ borderRadius: 5, borderWidth: 1, borderColor: Color.Grayyellow200, backgroundColor: Color.White }}>
         <View style={{ width: width - 40, height: 149 }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderTopLeftRadius: 4, borderTopRightRadius: 4 }}
-            source={{ uri: item.placePhotoArr[0] }}
+            source={
+              !item?.placePhotoArr[0] || isError
+                ? require('@/Assets/Images/Common/icNoImage.png')
+                : { uri: item?.placePhotoArr[0] }
+            }
             resizeMode={FastImage.resizeMode.cover}
+            onError={() => {
+              setIsError(true);
+            }}
           />
           <CustomButton
             onPress={() => handlerPlaceDibs(item)}
