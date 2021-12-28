@@ -11,6 +11,7 @@ import CustomButton from '@/Components/CustomButton';
 import { renderFacilityIcon } from '@/Components/Function';
 import Config from '@/Config';
 import { InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
@@ -76,35 +77,47 @@ const MapArea = (props: PropTypes) => {
     }
     if (type === 'pinSetter') {
       title = '핀세터';
-      value = item?.pinSetter;
+      const array = item?.pinSetter?.split(',');
+      if (array?.length > 1) {
+        value = array[0];
+      } else {
+        value = item?.pinSetter;
+      }
     }
     if (type === 'laneDivision') {
       title = '시설타입';
       value = item?.laneDivision;
     }
     return (
-      <View style={{ alignItems: 'center', marginTop: 20 }}>
-        <View
-          style={{
-            width: (width - 40 - 15) / 4,
-            paddingTop: 23,
-            paddingBottom: 15,
-            alignItems: 'center',
-            borderRadius: 5,
-            borderWidth: 1,
-            borderColor: Color.Grayyellow100,
-          }}
-        >
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, letterSpacing: -0.07 }}>{title}</CustomText>
-          </View>
-          <View style={{ justifyContent: 'center', marginTop: 4 }}>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 14, fontWeight: '500', letterSpacing: -0.08 }}>
-              {value}
-            </CustomText>
+      <CustomButton onPress={() => navigate('BasicInfoDetailScreen')}>
+        <View style={{ alignItems: 'center', marginTop: 20 }}>
+          <View
+            style={{
+              width: (width - 40 - 15) / 4,
+              maxHeight: (width - 40 - 15) / 4 - 13,
+              paddingTop: 23,
+              paddingBottom: 15,
+              alignItems: 'center',
+              borderRadius: 5,
+              borderWidth: 1,
+              borderColor: Color.Grayyellow100,
+            }}
+          >
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, letterSpacing: -0.07 }}>
+                {title}
+              </CustomText>
+            </View>
+            <View style={{ justifyContent: 'center', marginTop: 4 }}>
+              <CustomText
+                style={{ color: Color.Grayyellow1000, fontSize: 14, fontWeight: '500', letterSpacing: -0.08 }}
+              >
+                {value}
+              </CustomText>
+            </View>
           </View>
         </View>
-      </View>
+      </CustomButton>
     );
   };
 

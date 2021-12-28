@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +21,7 @@ const DirectReservationCard = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { item } = props;
   const { handlerPlaceDibs } = usePlaceDibs();
+  const [isError, setIsError] = useState(false);
 
   const onPressReservation = () => {
     console.log('onPressReservation');
@@ -40,8 +41,15 @@ const DirectReservationCard = (props: PropTypes) => {
           >
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              source={{ uri: item.placePhotoArr[0] }}
+              source={
+                !item?.placePhotoArr[0] || isError
+                  ? require('@/Assets/Images/Common/icNoImage.png')
+                  : { uri: item?.placePhotoArr[0] }
+              }
               resizeMode={FastImage.resizeMode.cover}
+              onError={() => {
+                setIsError(true);
+              }}
             />
           </View>
           <View style={{ flex: 1, justifyContent: 'center' }}>
