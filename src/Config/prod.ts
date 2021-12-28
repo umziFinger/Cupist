@@ -20,9 +20,6 @@ const prod = {
   // API_URL: 'http://192.168.0.11:8080/',
   API_URL: 'https://api.bolimi.kr/',
 
-  // 이미지 url
-  IMAGE_URL: 'https://www.luxurynall.com/',
-
   // dynamicLink URL
   DYNAMIC_URL: 'https://link.bolimi.kr',
 
@@ -30,7 +27,7 @@ const prod = {
   APP_VERSION: '1.0.0',
 
   // market url
-  MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/apple-store/id1587131376',
+  MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/apple-store/id1596274166',
   MARKET_URL_ANDROID: 'market://details?id=com.luxurynall',
 
   // naver key

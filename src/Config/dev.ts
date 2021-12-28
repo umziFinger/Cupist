@@ -20,9 +20,6 @@ const dev = {
   // API_URL: 'http://192.168.0.12:5000/',
   API_URL: 'https://api.bolimi.kr/',
 
-  // 이미지 url
-  IMAGE_URL: 'https://www.luxurynall.com/',
-
   // dynamicLink URL
   DYNAMIC_URL: 'https://link.bolimi.kr',
 
