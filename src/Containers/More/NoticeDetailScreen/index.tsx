@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
+import HTMLView from 'react-native-htmlview';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
@@ -44,11 +45,26 @@ const NoticeDetailScreen = () => {
                   </CustomText>
                 </View>
                 <View style={{ height: 1, backgroundColor: Color.Gray200, marginVertical: 20 }} />
-                <View>
-                  <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Black1000 }}>
-                    {myNoticeDetail?.content || ''}
-                  </CustomText>
-                </View>
+                {/* <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Black1000 }}> */}
+                {/*  {myNoticeDetail?.content || ''} */}
+                {/* </CustomText> */}
+
+                {/* <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Black1000 }}> */}
+                {/*  {myNoticeDetail?.content || ''} */}
+                {/* </CustomText> */}
+                {/* <WebView */}
+                {/*  originWhitelist={['*']} */}
+                {/*  onError={(event: any) => { */}
+                {/*    console.log('웹뷰 에러', event); */}
+                {/*  }} */}
+                {/*  source={{ */}
+                {/*    html: `<Text>${myNoticeDetail?.content || ''}</Text>`, */}
+                {/*  }} */}
+                {/* /> */}
+                {/* <WebView originWhitelist={['*']} source={{ html: '<p>Here I am</p>' }} /> */}
+                {/* </CustomText> */}
+
+                <HTMLView value={`${myNoticeDetail?.content || ''}`} />
               </View>
 
               {myNoticeDetail?.NoticePhoto?.length > 0 && (
