@@ -33,12 +33,12 @@ const EventDetailScreen = () => {
           data={[0]}
           keyExtractor={(item, index) => index.toString()}
           ListHeaderComponent={
-            <View style={{ width: '100%', height: 240 }}>
+            <View style={{ width: '100%', height: width }}>
               <FastImage
                 style={{ width: '100%', height: '100%' }}
                 source={
                   myEventDetail?.bannerFile
-                    ? { uri: myEventDetail?.bannerFile || '' }
+                    ? { uri: myEventDetail?.endFile || '' }
                     : require('@/Assets/Images/Common/icNoImage.png')
                 }
                 resizeMode={FastImage.resizeMode.cover}

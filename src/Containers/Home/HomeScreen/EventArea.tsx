@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
+import MyActions from '@/Stores/My/Actions';
 
 interface PropTypes {
   list: Array<any>;
@@ -134,7 +135,11 @@ const EventArea = (props: PropTypes) => {
   };
 
   const onMoveEventDetail = (item: any) => {
-    console.log('onPressPop: ', item);
+    console.log('onPressPop: ', item.idx);
+    const params = {
+      eventIdx: item.idx,
+    };
+    dispatch(MyActions.fetchMyEventDetailInfo(params));
   };
 
   const onViewableItemsChanged = React.useRef(
@@ -165,8 +170,8 @@ const EventArea = (props: PropTypes) => {
             >
               <FastImage
                 style={{ width: '100%', height: '100%', borderRadius: 10 }}
-                source={{ uri: item?.bannerFile || '' }}
-                resizeMode={FastImage.resizeMode.stretch}
+                source={{ uri: item?.mainFile || '' }}
+                resizeMode={FastImage.resizeMode.cover}
               />
             </View>
           </CustomButton>

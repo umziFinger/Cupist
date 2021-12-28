@@ -72,11 +72,11 @@ const NoticeDetailScreen = () => {
                   <FlatList
                     data={myNoticeDetail?.NoticePhoto}
                     renderItem={({ item }) => (
-                      <View style={{ width, height: 393, backgroundColor: 'green' }}>
+                      <View style={{ width, height: width, backgroundColor: 'green' }}>
                         <FastImage
                           style={{ width: '100%', height: '100%' }}
                           source={{ uri: item.url }}
-                          resizeMode={FastImage.resizeMode.stretch}
+                          resizeMode={FastImage.resizeMode.cover}
                         />
                       </View>
                     )}
