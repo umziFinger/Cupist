@@ -157,16 +157,16 @@ const ResidentSearchScreen = ({ route }: PropTypes) => {
             ListEmptyComponent={() => renderEmpty()}
           />
           {type === SCREEN_TYPE.JOIN && (
-            <CustomButton onPress={() => onCancel()}>
-              <View
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: heightInfo.fixBottomHeight + 8,
-                  alignItems: 'center',
-                }}
-              >
+            <View
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: heightInfo.fixBottomHeight + 8,
+                alignItems: 'center',
+              }}
+            >
+              <CustomButton onPress={() => onCancel()}>
                 <View
                   style={{
                     backgroundColor: Color.Primary1000,
@@ -184,8 +184,8 @@ const ResidentSearchScreen = ({ route }: PropTypes) => {
                     </CustomText>
                   </View>
                 </View>
-              </View>
-            </CustomButton>
+              </CustomButton>
+            </View>
           )}
         </View>
       </View>
