@@ -30,7 +30,7 @@ const dev = {
   APP_VERSION: '1.0.0',
 
   // market url
-  MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/apple-store/id1587131376',
+  MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/apple-store/id1596274166',
   MARKET_URL_ANDROID: 'market://details?id=com.luxurynall',
 
   // naver key
