@@ -9,7 +9,6 @@ import CustomButton from '@/Components/CustomButton';
 import { InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data';
 import CommonActions from '@/Stores/Common/Actions';
 import Config from '@/Config';
-import PlaceActions from '@/Stores/Place/Actions';
 import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {

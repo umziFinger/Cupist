@@ -9,9 +9,9 @@ import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 
 const CancelInfoArea = () => {
-  const { paymentResult, reservationInfo } = useSelector((state: ReservationState) => state.reservation);
+  const { totalPrice, reservationInfo } = useSelector((state: ReservationState) => state.reservation);
   const cancelLimit = reservationInfo?.cancelLimit || moment().format('YYYY년 MM월 DD일 HH시 mm분');
-  const totalPrice = paymentResult?.totalPrice || 0;
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ justifyContent: 'center' }}>
