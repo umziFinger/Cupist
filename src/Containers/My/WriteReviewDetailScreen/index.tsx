@@ -134,6 +134,7 @@ const WriteReviewDetailScreen = ({ route }: PropTypes) => {
                     placeholder={
                       '예약하신 볼링장의 후기(이용시설, 편의시설)를 20자 이상 남겨주시면 다른 회원분들에게도 도움이 됩니다.'
                     }
+                    numberOfLines={2}
                     multiline
                     onChangeText={(value) => onChangeText(value)}
                     value={writeReviewInfo.content}
