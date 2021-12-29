@@ -17,8 +17,8 @@ function Loading() {
     >
       <Animation
         style={{
-          width: 120,
-          height: 120,
+          width: 72,
+          height: 69,
         }}
         autoPlay
         loop
