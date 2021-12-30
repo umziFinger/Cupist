@@ -1,11 +1,8 @@
 import { put, call, select } from 'redux-saga/effects';
-import React from 'react';
 import CommonActions from '@/Stores/Common/Actions';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
-import CustomText from '@/Components/CustomText';
-import { Color } from '@/Assets/Color';
 import { navigate, navigateAndReset, navigateGoBack } from '@/Services/NavigationService';
 import MyActions from '@/Stores/My/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
@@ -40,6 +37,25 @@ export function* fetchReservation(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(ReservationActions.fetchReservationReducer({ type: 'paymentInfo', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      console.log('예약 response.data : ', response.data);
+
+      // const userCode = Config.USER_CODE;
+      // const data = {
+      //   pg: 'html5_inicis', // PG사
+      //   pay_method: 'card', // 결제수단
+      //   merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
+      //   amount: 100, // 결제금액
+      //   name: '아임포트 결제 데이터 분석', // 주문명
+      //   buyer_name: '홍길동', // 구매자 이름
+      //   buyer_tel: '01012341234', // 구매자 전화번호
+      //   buyer_email: 'example@example', // 구매자 이메일
+      //   buyer_addr: '신사동 661-16', // 구매자 주소
+      //   buyer_postcode: '06018', // 구매자 우편번호
+      // };
+      // console.log('paymentMethod : ', DATA_PAYMENT_METHOD[paymentMethod].key);
+      // navigate('PaymentScreen', { userCode, data });
+
+      // 웹뷰에서 결제 성공 후 callback 에서 rbs open
       yield put(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: true }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
@@ -193,5 +209,29 @@ export function* fetchReservationPaymentSign(data: any): any {
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchReservationDeleteCard : ', e);
+  }
+}
+
+export function* fetchReservationPaymentVerify(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: `${Config.RESERVATION_PAYMENT_VERIFY_URL}`,
+    };
+    const response = yield call(Axios.POST, payload);
+    console.log('SAGA 결제 검증 response : ', response);
+    if (response.result === true && response.code === null) {
+      yield put(ReservationActions.fetchReservationReducer({ type: 'paymentResult', data: response.data }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      navigate('PaymentResultScreen');
+      navigateAndReset('PaymentResultScreen');
+    } else {
+      navigateGoBack();
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchReservationPaymentVerify : ', e);
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,6 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
-import ReservationActions from '@/Stores/Reservation/Actions';
 import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import DefaultInfoArea from '@/Containers/Reservation/ReservationScreen/DefaultInfoArea';
@@ -19,8 +18,10 @@ import CancelInfoArea from '@/Containers/Reservation/ReservationScreen/CancelInf
 import PermissionArea from '@/Containers/Reservation/ReservationScreen/PermissionArea';
 import CustomButton from '@/Components/CustomButton';
 import PlaceActions from '@/Stores/Place/Actions';
+import ReservationActions from '@/Stores/Reservation/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'ReservationScreen'>;
@@ -28,8 +29,8 @@ interface PropTypes {
 
 const ReservationScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
+  const flatRef = useRef<any>();
   const { placeIdx, ticketInfoIdx } = route.params;
-  // console.log('ReservationScreen route.params : ', route.params);
 
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
@@ -40,6 +41,24 @@ const ReservationScreen = ({ route }: PropTypes) => {
   );
   const reservationInfo = useSelector((state: ReservationState) => state.reservation.reservationInfo);
   const [validation, setValidation] = useState<boolean>(false);
+
+  const checkMobile = () => {
+    if (!reservationInfo?.mobile) {
+      flatRef?.current?.scrollToIndex({ index: 1, animated: true });
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'bottom',
+            alertToastMessage: '예약자 정보를 확인해주세요.',
+          },
+        }),
+      );
+      return false;
+    }
+    return true;
+  };
 
   useEffect(() => {
     return () => {
@@ -58,29 +77,28 @@ const ReservationScreen = ({ route }: PropTypes) => {
   }, [route]);
 
   useEffect(() => {
-    console.log('paymentType: ', paymentType);
-    console.log('selcetedCardIdx: ', selcetedCardIdx);
-    console.log('myCardList: ', myCardList);
     if (paymentType === 'simple') {
       if (selcetedCardIdx > -1 && myCardList?.length !== 0) {
         setValidation(true);
       } else {
         setValidation(false);
       }
+      // setValidation(true);
     }
+
     if (paymentType === 'normal') {
       if (paymentMethod > -1) {
         setValidation(true);
       } else {
         setValidation(false);
       }
+      // setValidation(true);
     }
-  }, [paymentType, selcetedCardIdx, paymentMethod, myCardList]);
+  }, [paymentType, selcetedCardIdx, paymentMethod, myCardList, reservationInfo]);
 
   // 결제 임시 데이터 생성
   const onCreateTempReservation = () => {
-    if (validation) {
-      console.log('onPressReservation : ', reservationInfo);
+    if (checkMobile()) {
       const params = {
         placeIdx,
         placeTicketIdx: ticketInfoIdx,
@@ -96,7 +114,6 @@ const ReservationScreen = ({ route }: PropTypes) => {
       };
       console.log('params : ', params);
       dispatch(ReservationActions.fetchReservation(params));
-      // dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: true }));
     }
   };
 
@@ -189,6 +206,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'back'} />
       <FlatList
+        ref={flatRef}
         data={[0, 1, 2, 3, 4, 5, 6]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}

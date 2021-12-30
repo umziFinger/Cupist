@@ -4,7 +4,6 @@ import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
-import { BootpayWebView } from 'react-native-bootpay-api';
 import CommonActions from '@/Stores/Common/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomText from '@/Components/CustomText';
@@ -16,11 +15,11 @@ import CustomButton from '@/Components/CustomButton';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { DATA_PAYMENT_METHOD } from '@/Containers/Reservation/ReservationScreen/data';
 import { navigate } from '@/Services/NavigationService';
+import Config from '@/Config';
 
 const ReservationRBS = () => {
   const dispatch = useDispatch();
   const RBSheetRef = useRef<any>();
-  const bootpay = useRef<BootpayWebView>(null);
   const { height } = useWindowDimensions();
   const { heightInfo, isOpenReservationRBS } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
@@ -43,7 +42,10 @@ const ReservationRBS = () => {
   };
 
   const onPressReservation = () => {
-    if (paymentInfo) {
+    console.log('최종결제 진행(RBS) : paymentInfo : ', paymentInfo);
+    console.log('최종결제 진행(RBS) : reservationInfo : ', reservationInfo);
+
+    if (paymentInfo && reservationInfo) {
       if (paymentType === 'simple') {
         console.log('간편결제 진행합니다. : ', selcetedCardIdx);
         navigate('CheckPasswordScreen', {
@@ -54,16 +56,21 @@ const ReservationRBS = () => {
       } else {
         console.log('일반결제 진행합니다. : ', DATA_PAYMENT_METHOD[paymentMethod]);
         dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
-        dispatch(
-          CommonActions.fetchCommonReducer({
-            type: 'alertDialog',
-            data: {
-              alertDialog: true,
-              alertDialogType: 'confirm',
-              alertDialogMessage: '서비스 준비중입니다',
-            },
-          }),
-        );
+        const userCode = Config.USER_CODE;
+        const data = {
+          pg: 'html5_inicis', // PG사
+          pay_method: 'card', // 결제수단
+          merchant_uid: paymentInfo?.merchantUid || '', // 주문번호 (백엔드에서 임시 예약시 생성된 주문번호 넣어줄것)
+          amount: paymentInfo?.totalPrice || 0, // 결제금액
+          name: reservationInfo?.placeName || '', // 주문명
+          buyer_name: reservationInfo?.username || '', // 구매자 이름
+          buyer_tel: reservationInfo?.mobile, // 구매자 전화번호
+          buyer_email: '', // 구매자 이메일
+          // buyer_addr: '신사동 661-16', // 구매자 주소
+          // buyer_postcode: '06018', // 구매자 우편번호
+        };
+        console.log('paymentMethod : ', DATA_PAYMENT_METHOD[paymentMethod].key);
+        navigate('PaymentScreen', { userCode, data });
       }
     }
   };

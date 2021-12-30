@@ -9,6 +9,9 @@ const prod = {
   CS_NUMBER: '070-4680-3267',
   CS_EMAIL: 'help@bolimi.kr',
 
+  // iamport User Code
+  USER_CODE: 'imp00301699',
+
   // NAVER MAP
   NMAP_MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/네이버-지도-내비게이션/id311867728',
   NMAP_MARKET_URL_ANDROID: 'market://details?id=com.nhn.android.nmap',
@@ -122,6 +125,7 @@ const prod = {
   RESERVATION_CANCEL_URL: 'reservation/cancel',
   RESERVATION_PAYMENT_CARD_URL: 'reservation/payment/card',
   RESERVATION_PAYMENT_SIGN_URL: 'reservation/payment/sign',
+  RESERVATION_PAYMENT_VERIFY_URL: 'reservation/payment/verify',
 };
 
 export default prod;

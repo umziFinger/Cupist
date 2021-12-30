@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { View } from 'react-native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
@@ -7,7 +7,6 @@ import { navigate } from '@/Services/NavigationService';
 import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
 
 const PermissionArea = () => {
-  const { width } = useWindowDimensions();
   return (
     <View style={{ flex: 1 }}>
       <View style={{ justifyContent: 'center' }}>
@@ -30,7 +29,7 @@ const PermissionArea = () => {
                 textDecorationLine: 'underline',
               }}
             >
-              취소 / 이용규정
+              취소 / 환불규정
             </CustomText>
             <CustomText style={{ fontSize: 12, color: Color.Black1000, fontWeight: '500' }}>{', '}</CustomText>
           </CustomButton>
