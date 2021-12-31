@@ -14,7 +14,7 @@ const ReservationInfo = () => {
   const dispatch = useDispatch();
 
   const onCopy = () => {
-    Clipboard.setString(reservationDetail?.receiptId || '');
+    Clipboard.setString(reservationDetail?.merchantUid || '');
     dispatch(
       CommonActions.fetchCommonReducer({
         type: 'alertToast',
@@ -68,7 +68,7 @@ const ReservationInfo = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
               <CustomText style={{ fontSize: 13, letterSpacing: 0, color: Color.Black1000 }}>
-                {reservationDetail?.receiptId || ''}
+                {reservationDetail?.merchantUid || ''}
               </CustomText>
             </View>
 
