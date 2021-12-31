@@ -218,7 +218,6 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'selectedTicket': {
-        console.log('call reducer selectedTicket: ', data);
         draft.selectedTicket = data;
         break;
       }

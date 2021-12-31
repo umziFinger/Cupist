@@ -66,7 +66,7 @@ const WriteReviewItem = () => {
           </CustomText>
         </View>
       </View>
-      <View style={{}}>
+      <View>
         <FlatList
           data={myReviewList?.writeReview}
           renderItem={({ item, index: reviewIdx }) => (

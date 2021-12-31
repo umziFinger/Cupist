@@ -130,7 +130,6 @@ export function* fetchPlaceReviewList(data: any): any {
     const response = yield call(Axios.GET, payload);
 
     if (response.result === true && response.code === null) {
-      console.log('플레이스 디테일 리뷰 리스트: ', response.data);
       yield put(
         PlaceActions.fetchPlaceReducer({
           type: 'placeReview',

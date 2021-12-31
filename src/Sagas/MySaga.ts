@@ -593,7 +593,7 @@ export function* fetchMyReviewList(data: any): any {
       url: Config.MY_REVIEW,
     };
     const response = yield call(Axios.GET, params);
-    // console.log('마이 리뷰 데이터: ', response.data.writeReview);
+    console.log('마이 리뷰 데이터: ', response.data);
     if (response.result === true && response.code === null) {
       yield put(
         MyActions.fetchMyReducer({

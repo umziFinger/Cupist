@@ -185,7 +185,7 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
       <FlatList
         data={placeReview?.review}
         renderItem={({ item: reviewItem, index }) => (
-          <View style={{ flex: 1, marginTop: index === 0 ? 8 : 24 }}>
+          <View style={{ flex: 1, marginTop: index === 0 ? 20 : 24 }}>
             <View
               style={{
                 flexDirection: 'row',
@@ -200,7 +200,7 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
                   resizeMode={FastImage.resizeMode.cover}
                 />
               </View>
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: 1, marginTop: 4 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <View style={{ flex: 1 }}>
                     <CustomText
@@ -297,6 +297,67 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
                 showsHorizontalScrollIndicator={false}
               />
             )}
+            {/* 사장님 댓글 */}
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                paddingRight: 20,
+                paddingLeft: 25,
+                marginTop: 16,
+              }}
+            >
+              <View style={{ width: 30, height: 30, marginRight: 8 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%', borderRadius: 50 }}
+                  source={require('@/Assets/Images/Common/imgReviewPrfoile.png')}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </View>
+              <View style={{ width: 9, height: 15, marginTop: 6 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={require('@/Assets/Images/Common/imgSpeach.png')}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: 6,
+                  backgroundColor: Color.Grayyellow50,
+                  borderTopRightRadius: 8,
+                  borderBottomRightRadius: 8,
+                  borderBottomLeftRadius: 8,
+                  padding: 15,
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={{ justifyContent: 'center', marginRight: 4 }}>
+                    <CustomText
+                      style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2, fontWeight: 'bold' }}
+                    >
+                      사장님
+                    </CustomText>
+                  </View>
+                  <View style={{ justifyContent: 'center' }}>
+                    <CustomText style={{ color: Color.Gray600, fontSize: 10 }}>
+                      {reviewItem?.PlaceReviewComment[0]?.regDateView || '0일 전'}
+                    </CustomText>
+                  </View>
+                </View>
+
+                <View style={{ justifyContent: 'center', marginTop: 6 }}>
+                  <CustomShowMore
+                    text={reviewItem?.PlaceReviewComment[0]?.content}
+                    targetLines={2}
+                    backgroundColor={'transparent'}
+                    textColor={Color.Grayyellow1000}
+                    buttonColor={Color.Primary1000}
+                  />
+                </View>
+              </View>
+            </View>
             <View
               style={{
                 alignItems: 'center',
@@ -319,21 +380,12 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
         showsVerticalScrollIndicator={false}
         ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
         onScroll={(e) => {
-          // console.log(e.nativeEvent.contentOffset.y);
-
           if (e.nativeEvent.contentOffset.y > 60 && placeReview?.review?.length > 5) {
             setIsScroll(true);
           } else {
             setIsScroll(false);
           }
         }}
-        // onScrollBeginDrag={(e) => {
-        //   console.log(e.nativeEvent.contentOffset.y);
-        //   setIsScroll(true);
-        // }}
-        // onScrollEndDrag={(e) => {
-        //   setIsScroll(false);
-        // }}
       />
     </View>
   );
