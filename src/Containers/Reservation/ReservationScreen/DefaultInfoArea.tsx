@@ -29,7 +29,9 @@ const DefaultInfoArea = (props: PropTypes) => {
         <View style={{ width: 60, height: 60, marginRight: 12, borderRadius: 3 }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderRadius: 3, backgroundColor: Color.Gray400 }}
-            source={{ uri: item?.PlacePhoto || '' }}
+            source={
+              item?.PlacePhoto ? { uri: item?.placePhotoArr[0] } : require('@/Assets/Images/Common/icNoImage.png')
+            }
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>
