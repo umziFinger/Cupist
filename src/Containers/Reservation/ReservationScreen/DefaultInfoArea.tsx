@@ -15,7 +15,6 @@ interface PropTypes {
 
 const DefaultInfoArea = (props: PropTypes) => {
   const { item } = props;
-
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
 

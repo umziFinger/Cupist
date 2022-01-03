@@ -16,7 +16,6 @@ const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width 
   const [isError, setIsError] = useState(false);
 
   const onPlaceDetail = () => {
-    console.log('item.idx : ', item);
     navigate('PlaceDetailScreen', { idx: item?.idx });
   };
 

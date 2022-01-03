@@ -24,7 +24,6 @@ const PlaceListCard = (props: PropTypes) => {
   const [isError, setIsError] = useState(false);
 
   const onValueChange = (data: any) => {
-    console.log('select place idx : ', data.checkType);
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'isOpenTicketSlider', data: { type, idx: data.checkType } }));
   };
 

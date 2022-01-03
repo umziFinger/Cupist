@@ -36,9 +36,7 @@ const DirectReservationCard = (props: PropTypes) => {
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
       <View style={{ flex: 1, borderWidth: 1, borderRadius: 5, borderColor: Color.Grayyellow200 }}>
         <View style={{ flexDirection: 'row', marginLeft: 12, marginTop: 8, marginRight: 8, marginBottom: 12 }}>
-          <View
-            style={{ width: 72, height: 72, backgroundColor: 'pink', borderRadius: 5, marginTop: 4, marginRight: 12 }}
-          >
+          <View style={{ width: 72, height: 72, borderRadius: 5, marginTop: 4, marginRight: 12 }}>
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 5 }}
               source={
