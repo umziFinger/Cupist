@@ -58,7 +58,7 @@ const ReservationRBS = () => {
         dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
         const userCode = Config.USER_CODE;
         const data = {
-          pg: 'html5_inicis', // PG사
+          pg: 'nice', // PG사
           pay_method: 'card', // 결제수단
           merchant_uid: paymentInfo?.merchantUid || '', // 주문번호 (백엔드에서 임시 예약시 생성된 주문번호 넣어줄것)
           amount: paymentInfo?.totalPrice || 0, // 결제금액
@@ -111,7 +111,11 @@ const ReservationRBS = () => {
                     <View style={{ width: 60, height: 60, marginRight: 12 }}>
                       <FastImage
                         style={{ width: '100%', height: '100%' }}
-                        source={{ uri: reservationInfo?.PlacePhoto || '' }}
+                        source={
+                          reservationInfo?.PlacePhoto
+                            ? { uri: reservationInfo?.PlacePhoto }
+                            : require('@/Assets/Images/Common/icNoImage.png')
+                        }
                         resizeMode={FastImage.resizeMode.cover}
                       />
                     </View>

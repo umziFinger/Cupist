@@ -5,6 +5,7 @@ import { getUniqueId, getDeviceId } from 'react-native-device-info';
 import VersionCheck from 'react-native-version-check';
 import messaging from '@react-native-firebase/messaging';
 import Config from '@/Config';
+import { Axios } from '@/Services/Axios';
 
 export default async function TokenUpdate() {
   try {
@@ -20,16 +21,16 @@ export default async function TokenUpdate() {
 
     const params = {
       platform,
-      unique_id: uniqueId,
-      device_id: deviceId,
+      uniqueId,
+      deviceId,
       token: fcmToken,
-      app_version: appVersion,
-      market_version: marketVersion.toString(),
+      appVersion,
+      marketVersion: marketVersion.toString(),
     };
     console.log('\n\nfcm token info-->>', params);
 
     const token = await AsyncStorage.getItem('accessToken');
-    const url = `${Config.API_URL}auth/fcmToken`;
+    const url = `auth/fcmToken`;
     const config = {
       headers: {
         accept: 'application/json',
@@ -37,8 +38,16 @@ export default async function TokenUpdate() {
         authorization: `Bearer ${token}`,
       },
     };
-    axios.post(url, params, config).then((result) => console.log('fcm update api success'));
-    return true;
+    console.log('@@@@@@@@@@@@@@@ call auth/fcmToken API');
+    const payload = {
+      params,
+      url,
+    };
+    const response = await Axios.POST(payload);
+    // .post(url, params, config)
+    // .then((result: any) => console.log('fcm update api success'))
+    // .catch((e: any) => console.log('fcm get token error :', e));
+    return response;
   } catch (e) {
     console.log('fcm get token error :', e);
     return false;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, useWindowDimensions, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';

@@ -23,10 +23,12 @@ async function GET(data: AxiosProps) {
     .get(`${Config.API_URL}${url}`, { params })
     .then((response) => {
       console.log('Success Axios GET StatusCode: ', response.status);
+      console.log('Success Axios GET URL: ', url);
       return response.data;
     })
     .catch((error) => {
       console.log('Error Axios GET API --> ', error);
+      console.log('Error Axios GET URL --> ', url);
       return error.response.data;
     })
     .finally(() => {
@@ -42,16 +44,18 @@ async function POST(data: AxiosProps) {
     if (joinApiClient === undefined) {
       return result;
     }
-    console.log(`| POST | /${url}`);
+    console.log(`| POST | ${Config.API_URL}${url}`);
     console.log(`| params ->`, params);
     return await joinApiClient
-      .post(Config.API_URL + url, { ...params, platform: Platform.OS })
+      .post(`${Config.API_URL}${url}`, { ...params, platform: Platform.OS })
       .then((response) => {
         console.log('Success Axios POST StatusCode: ', response.status);
+        console.log('Success Axios POST URL: ', url);
         return response.data;
       })
       .catch((error) => {
         console.log('Error Axios POST API --> ', error);
+        console.log('Error Axios POST URL --> ', url);
         return error.response.data;
       })
       .finally(() => {
@@ -75,10 +79,12 @@ async function PUT(data: AxiosProps) {
     .put(Config.API_URL + url, { ...params, platform: Platform.OS })
     .then((response) => {
       console.log('Success Axios PUT StatusCode: ', response.status);
+      console.log('Success Axios PUT URL: ', url);
       return response.data;
     })
     .catch((error) => {
-      console.log('Error Axios PUT API --> ', url);
+      console.log('Error Axios PUT API --> ', error);
+      console.log('Error Axios PUT URL --> ', url);
       return error.response.data;
     })
     .finally(() => {

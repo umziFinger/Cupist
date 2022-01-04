@@ -59,6 +59,7 @@ import ReservationCancelPopupScreen from '@/Containers/Reservation/ReservationCa
 import RegisterPasswordModifyScreen from '@/Containers/Reservation/RegisterPasswordModifyScreen';
 import BasicInfoDetailScreen from '@/Containers/Place/BasicInfoDetailScreen';
 import PaymentScreen from '@/Components/IamPort/PaymentScreen';
+import CertificationScreen from '@/Components/IamPort/CertificationScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -118,6 +119,7 @@ export type MainStackParamList = {
   RegisterPasswordModifyScreen: undefined;
   BasicInfoDetailScreen: undefined;
   PaymentScreen: { userCode: any; data: any };
+  CertificationScreen: { userCode: any; data: any };
 };
 
 const Tab = createBottomTabNavigator();
@@ -208,6 +210,7 @@ const MainNavigator = () => {
 
       {/* iamport */}
       <MainStack.Screen name="PaymentScreen" component={PaymentScreen} />
+      <MainStack.Screen name="CertificationScreen" component={CertificationScreen} />
     </MainStack.Navigator>
   );
 };

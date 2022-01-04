@@ -10,6 +10,7 @@ import CustomButton from '@/Components/CustomButton';
 import { DATA_PAYMENT_METHOD } from './data';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { navigate } from '@/Services/NavigationService';
+import Config from '@/Config';
 
 interface PropTypes {
   list: Array<any>;
@@ -64,6 +65,15 @@ const PaymentMethodArea = (props: PropTypes) => {
     dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentMethod', data: value }));
   };
 
+  const onPressAddCard = () => {
+    const userCode = Config.USER_CODE;
+    const data = {
+      merchant_uid: `mid_${new Date().getTime()}`,
+      company: '아임포트',
+    };
+    navigate('CertificationScreen', { userCode, data });
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -106,11 +116,7 @@ const PaymentMethodArea = (props: PropTypes) => {
             </View>
           </View>
         </CustomButton>
-        <CustomButton
-          onPress={() => {
-            navigate('AddCardScreen');
-          }}
-        >
+        <CustomButton onPress={() => onPressAddCard()}>
           <View
             style={{
               justifyContent: 'center',
@@ -180,11 +186,7 @@ const PaymentMethodArea = (props: PropTypes) => {
                 등록하고 1초 결제
               </CustomText>
             </View>
-            <CustomButton
-              onPress={() => {
-                navigate('AddCardScreen');
-              }}
-            >
+            <CustomButton onPress={() => onPressAddCard()}>
               <View
                 style={{
                   borderRadius: 20.5,
@@ -260,7 +262,17 @@ const PaymentMethodArea = (props: PropTypes) => {
                     marginTop: 8,
                   }}
                 >
-                  {item.type === 'text' ? (
+                  <View style={{ justifyContent: 'center' }}>
+                    <CustomText
+                      style={{
+                        color: paymentMethod === item.idx ? Color.Primary1000 : Color.Black1000,
+                        fontSize: 14,
+                      }}
+                    >
+                      {item.content}
+                    </CustomText>
+                  </View>
+                  {/* {item?.type === 'text' ? (
                     <View style={{ justifyContent: 'center' }}>
                       <CustomText
                         style={{
@@ -279,7 +291,7 @@ const PaymentMethodArea = (props: PropTypes) => {
                         resizeMode={FastImage.resizeMode.cover}
                       />
                     </View>
-                  )}
+                  )} */}
                 </View>
               </CustomButton>
             )}
