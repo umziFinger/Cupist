@@ -69,7 +69,7 @@ const PaymentMethodArea = (props: PropTypes) => {
     const userCode = Config.USER_CODE;
     const data = {
       merchant_uid: `mid_${new Date().getTime()}`,
-      company: '아임포트',
+      company: '(주)볼리미',
     };
     navigate('CertificationScreen', { userCode, data });
   };
