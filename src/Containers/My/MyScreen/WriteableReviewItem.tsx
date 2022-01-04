@@ -64,7 +64,9 @@ const WriteableReviewItem = () => {
                 <View style={{ width: 40, height: 40, borderRadius: 5 }}>
                   <FastImage
                     style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                    source={{ uri: item.placePhoto }}
+                    source={
+                      item?.PlacePhoto ? { uri: item?.PlacePhoto } : require('@/Assets/Images/Common/icNoImage.png')
+                    }
                     resizeMode={FastImage.resizeMode.stretch}
                   />
                 </View>

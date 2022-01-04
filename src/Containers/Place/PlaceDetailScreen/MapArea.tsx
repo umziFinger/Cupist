@@ -95,8 +95,7 @@ const MapArea = (props: PropTypes) => {
             style={{
               width: (width - 40 - 15) / 4,
               maxHeight: (width - 40 - 15) / 4 - 13,
-              paddingTop: 23,
-              paddingBottom: 15,
+              paddingVertical: 15,
               alignItems: 'center',
               borderRadius: 5,
               borderWidth: 1,
@@ -149,6 +148,7 @@ const MapArea = (props: PropTypes) => {
           maxToRenderPerBatch={8}
           windowSize={7}
           horizontal
+          showsHorizontalScrollIndicator={false}
         />
       );
       /* return tempArr.map((text: string, index: number) => {
