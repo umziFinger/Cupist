@@ -151,7 +151,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         return (
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-            <View style={{ paddingHorizontal: 20, marginTop: 28 }}>
+            <View style={{ marginTop: 28 }}>
               <MapArea item={place} />
             </View>
           </View>

@@ -11,10 +11,11 @@ import usePlaceDibs from '@/Hooks/usePlaceDibs';
 interface PropTypes {
   item: any;
   type: 'myAround' | 'recentPlace' | 'hot';
+  parentWidth: number;
 }
 
 const HotPlaceCard = (props: PropTypes) => {
-  const { item } = props;
+  const { item, parentWidth } = props;
   const { handlerPlaceDibs } = usePlaceDibs();
   const [isError, setIsError] = useState(false);
 
@@ -33,7 +34,7 @@ const HotPlaceCard = (props: PropTypes) => {
           marginBottom: 17,
         }}
       >
-        <View style={{ height: 145 }}>
+        <View style={{ height: parentWidth * 0.42 }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderTopLeftRadius: 5, borderTopRightRadius: 5 }}
             source={
@@ -90,7 +91,7 @@ const HotPlaceCard = (props: PropTypes) => {
           <View style={{ marginTop: 8, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ marginRight: 4 }}>
               <CustomText style={{ fontSize: 13, letterSpacing: 0, color: Color.Grayyellow1000 }}>
-                {item?.type || ''}
+                {item?.ticketName || ''}
               </CustomText>
             </View>
             <CustomText style={{ fontSize: 16, fontWeight: 'bold', letterSpacing: 0, color: Color.Black1000 }}>

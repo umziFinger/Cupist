@@ -69,7 +69,7 @@ const PlaceListCard = (props: PropTypes) => {
               <View style={{ width: 1, height: 10, backgroundColor: Color.Gray400, marginHorizontal: 6 }} />
               <View>
                 <CustomText style={{ fontSize: 12, letterSpacing: 0, color: Color.Gray700 }}>
-                  {item?.area || '지역정보없음'} {'\u2022'} {item?.distance}
+                  {item?.area || '지역정보없음'} {'\u2022'} {item?.distance || '거리정보없음'}
                 </CustomText>
               </View>
             </View>

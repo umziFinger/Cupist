@@ -33,7 +33,7 @@ const PlaceLargeCard = (props: PropTypes) => {
           marginBottom: 17,
         }}
       >
-        <View style={{ width, height: 145 }}>
+        <View style={{ width, height: width * 0.42 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
             source={
@@ -88,7 +88,7 @@ const PlaceLargeCard = (props: PropTypes) => {
             <View style={{ width: 1, height: 10, backgroundColor: Color.Gray400, marginHorizontal: 6 }} />
             <View>
               <CustomText style={{ fontSize: 12, letterSpacing: 0, color: Color.Gray700 }}>
-                {item?.area || ''} {'\u2022'} {item?.distance}
+                {item?.area || '지역정보없음'} {'\u2022'} {item?.distance || '거리정보없음'}
               </CustomText>
             </View>
           </View>
@@ -96,7 +96,7 @@ const PlaceLargeCard = (props: PropTypes) => {
           <View style={{ marginTop: 8, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ marginRight: 4 }}>
               <CustomText style={{ fontSize: 13, letterSpacing: 0, color: Color.Grayyellow1000 }}>
-                {item?.type || ''}
+                {item?.ticketName || ''}
               </CustomText>
             </View>
             <CustomText style={{ fontSize: 16, fontWeight: 'bold', letterSpacing: 0, color: Color.Black1000 }}>

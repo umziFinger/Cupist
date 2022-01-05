@@ -24,7 +24,7 @@ const QuickPriceCard = (props: PropTypes) => {
   return (
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
       <View style={{ borderRadius: 5, borderWidth: 1, borderColor: Color.Grayyellow200, backgroundColor: Color.White }}>
-        <View style={{ width: width - 40, height: 149 }}>
+        <View style={{ width: width - 40, height: (width - 40) * (149 / 333) }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderTopLeftRadius: 4, borderTopRightRadius: 4 }}
             source={
@@ -66,7 +66,7 @@ const QuickPriceCard = (props: PropTypes) => {
         <View style={{ padding: 12 }}>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: 1 }}>
-              <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>{item.area}</CustomText>
+              <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>{item?.area || '지역정보없음'}</CustomText>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ width: 13, height: 13, marginRight: 2 }}>
@@ -78,7 +78,7 @@ const QuickPriceCard = (props: PropTypes) => {
               </View>
               <View>
                 <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>
-                  {item.averageStar}
+                  {item?.averageStar}
                 </CustomText>
               </View>
             </View>
@@ -92,7 +92,7 @@ const QuickPriceCard = (props: PropTypes) => {
                 letterSpacing: -0.3,
               }}
             >
-              {item.name}
+              {item?.name}
             </CustomText>
           </View>
           <View style={{ flexDirection: 'row', marginTop: 4 }}>
@@ -101,7 +101,7 @@ const QuickPriceCard = (props: PropTypes) => {
             </View>
             <View style={{ flexDirection: 'row' }}>
               <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold' }}>
-                {item.minPrice}
+                {item?.minPrice}
               </CustomText>
               <CustomText style={{ color: Color.Black1000, fontSize: 15 }}>원</CustomText>
             </View>
@@ -119,18 +119,17 @@ const QuickPriceCard = (props: PropTypes) => {
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
-              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item.type}</CustomText>
+              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item?.ticketName || ''}</CustomText>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View>
                 <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>
-                  {item.ticketTime}
+                  {item?.ticketTime}
                 </CustomText>
               </View>
             </View>
           </View>
         </View>
-        {/* <View style={{ paddingVertical: 12, paddingHorizontal: 11 }}></View> */}
       </View>
     </CustomButton>
   );

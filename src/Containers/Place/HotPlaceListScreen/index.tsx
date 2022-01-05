@@ -90,7 +90,7 @@ const HotPlaceListScreen = () => {
                   renderItem={({ item: place }) => {
                     return (
                       <View style={{ width: width - 32 }}>
-                        <HotPlaceCard item={place} type={'hot'} />
+                        <HotPlaceCard item={place} type={'hot'} parentWidth={width - 32} />
                       </View>
                     );
                   }}

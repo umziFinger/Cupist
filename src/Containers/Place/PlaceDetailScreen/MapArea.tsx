@@ -8,7 +8,7 @@ import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CommonActions from '@/Stores/Common/Actions';
 import CustomButton from '@/Components/CustomButton';
-import { renderFacilityIcon } from '@/Components/Function';
+import { inputMobileNumber, renderFacilityIcon } from '@/Components/Function';
 import Config from '@/Config';
 import { InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data';
 import { navigate } from '@/Services/NavigationService';
@@ -173,128 +173,141 @@ const MapArea = (props: PropTypes) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ justifyContent: 'center' }}>
-        <CustomText style={{ color: Color.Black1000, fontSize: 20, fontWeight: 'bold', letterSpacing: -0.4 }}>
-          기본정보
-        </CustomText>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        {renderDefaultInfo('laneCnt')}
-        {renderDefaultInfo('laneType')}
-        {renderDefaultInfo('pinSetter')}
-        {renderDefaultInfo('laneDivision')}
-      </View>
-      <View
-        style={{ height: width * 0.41, width: '100%', backgroundColor: Color.White, marginTop: 16, borderRadius: 5 }}
-      >
-        <NaverMapView
-          style={{ width: '100%', height: '100%' }}
-          center={{ ...position, zoom: 14 }}
-          scaleBar={false}
-          zoomControl={false}
-          scrollGesturesEnabled={false}
+      <View style={{ justifyContent: 'center', paddingHorizontal: 20 }}>
+        <View style={{ justifyContent: 'center' }}>
+          <CustomText style={{ color: Color.Black1000, fontSize: 20, fontWeight: 'bold', letterSpacing: -0.4 }}>
+            기본정보
+          </CustomText>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
         >
-          <Marker coordinate={position} image={require('@/Assets/Images/Common/icMapPin.png')} width={28} height={28} />
-        </NaverMapView>
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 16 }}>
-        <View style={{ flex: 0.3, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-            주소
-          </CustomText>
+          {renderDefaultInfo('laneCnt')}
+          {renderDefaultInfo('laneType')}
+          {renderDefaultInfo('pinSetter')}
+          {renderDefaultInfo('laneDivision')}
         </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>
-            {item?.newAddress}
-          </CustomText>
-        </View>
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-        <View style={{ flex: 0.3, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-            전화번호
-          </CustomText>
-        </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>{item?.tel}</CustomText>
-        </View>
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-        <View style={{ flex: 0.3, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-            영업시간
-          </CustomText>
-        </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>{item?.openHour}</CustomText>
-        </View>
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-        <View style={{ flex: 0.3, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-            이용요금
-          </CustomText>
-        </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>{item?.charge}</CustomText>
-        </View>
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-        <View style={{ flex: 0.3, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-            대화료
-          </CustomText>
-        </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>{item?.shoeCost}</CustomText>
-        </View>
-      </View>
-      <View
-        style={{
-          width: width - 40 - 9,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: 16,
-        }}
-      >
-        <CustomButton onPress={() => onPressButton('addressCopy')} style={{ flex: 1 }}>
-          <View
-            style={{
-              marginRight: 9,
-              alignItems: 'center',
-              paddingVertical: 13,
-              borderWidth: 1,
-              borderRadius: 3,
-              borderColor: Color.Primary1000,
-            }}
+        <View
+          style={{ height: width * 0.41, width: '100%', backgroundColor: Color.White, marginTop: 16, borderRadius: 5 }}
+        >
+          <NaverMapView
+            style={{ width: '100%', height: '100%' }}
+            center={{ ...position, zoom: 14 }}
+            scaleBar={false}
+            zoomControl={false}
+            scrollGesturesEnabled={false}
           >
-            <CustomText style={{ color: Color.Primary1000, fontSize: 14, letterSpacing: -0.25 }}>주소복사</CustomText>
+            <Marker
+              coordinate={position}
+              image={require('@/Assets/Images/Common/icMapPin.png')}
+              width={28}
+              height={28}
+            />
+          </NaverMapView>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 16 }}>
+          <View style={{ flex: 0.3, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
+              주소
+            </CustomText>
           </View>
-        </CustomButton>
-        <CustomButton onPress={() => onPressButton('getDirections')} style={{ flex: 1 }}>
-          <View
-            style={{
-              alignItems: 'center',
-              paddingVertical: 13,
-              borderRadius: 3,
-              backgroundColor: Color.Primary1000,
-            }}
-          >
-            <CustomText style={{ color: Color.White, fontSize: 14, letterSpacing: -0.25 }}>길찾기</CustomText>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>
+              {item?.newAddress}
+            </CustomText>
           </View>
-        </CustomButton>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+          <View style={{ flex: 0.3, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
+              전화번호
+            </CustomText>
+          </View>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>
+              {inputMobileNumber(item?.tel)}
+            </CustomText>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+          <View style={{ flex: 0.3, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
+              영업시간
+            </CustomText>
+          </View>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>
+              {item?.openHour}
+            </CustomText>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+          <View style={{ flex: 0.3, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
+              이용요금
+            </CustomText>
+          </View>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>{item?.charge}</CustomText>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+          <View style={{ flex: 0.3, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
+              대화료
+            </CustomText>
+          </View>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>
+              {item?.shoeCost}
+            </CustomText>
+          </View>
+        </View>
+        <View
+          style={{
+            width: width - 40,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 16,
+          }}
+        >
+          <CustomButton onPress={() => onPressButton('addressCopy')} style={{ flex: 1 }}>
+            <View
+              style={{
+                marginRight: 9,
+                alignItems: 'center',
+                paddingVertical: 13,
+                borderWidth: 1,
+                borderRadius: 3,
+                borderColor: Color.Primary1000,
+              }}
+            >
+              <CustomText style={{ color: Color.Primary1000, fontSize: 14, letterSpacing: -0.25 }}>주소복사</CustomText>
+            </View>
+          </CustomButton>
+          <CustomButton onPress={() => onPressButton('getDirections')} style={{ flex: 1 }}>
+            <View
+              style={{
+                alignItems: 'center',
+                paddingVertical: 13,
+                borderRadius: 3,
+                backgroundColor: Color.Primary1000,
+              }}
+            >
+              <CustomText style={{ color: Color.White, fontSize: 14, letterSpacing: -0.25 }}>길찾기</CustomText>
+            </View>
+          </CustomButton>
+        </View>
       </View>
       {item?.facility ? (
-        <View>
-          <View style={{ height: 1, backgroundColor: Color.Gray200, marginTop: 24 }} />
+        <View style={{ paddingLeft: 20 }}>
+          <View style={{ height: 1, backgroundColor: Color.Gray200, marginTop: 24, marginRight: 20 }} />
           <View style={{ marginTop: 24, paddingLeft: 4 }}>
             <View style={{ justifyContent: 'center' }}>
               <CustomText style={{ color: Color.Black1000, fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2 }}>
