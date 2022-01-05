@@ -52,7 +52,12 @@ import {
 } from './AuthSaga';
 
 // notification
-import { fetchNotificationList, fetchNotificationRead, fetchNotificationCount } from './NotificationSaga';
+import {
+  fetchNotificationList,
+  fetchNotificationRead,
+  fetchNotificationCount,
+  fetchNotificationDetailNavigate,
+} from './NotificationSaga';
 
 // my
 import {
@@ -149,6 +154,7 @@ export default function* root() {
     takeLatest(NotificationTypes.FETCH_NOTIFICATION_LIST, fetchNotificationList),
     takeLatest(NotificationTypes.FETCH_NOTIFICATION_READ, fetchNotificationRead),
     takeLatest(NotificationTypes.FETCH_NOTIFICATION_COUNT, fetchNotificationCount),
+    takeLatest(NotificationTypes.FETCH_NOTIFICATION_DETAIL_NAVIGATE, fetchNotificationDetailNavigate),
 
     // my
     takeLatest(MyTypes.FETCH_MY_REVIEW_LIST, fetchMyReviewList),

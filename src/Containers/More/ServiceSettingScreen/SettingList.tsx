@@ -19,6 +19,8 @@ enum enumYN {
 const SettingList = ({ index }: any) => {
   const { userInfo } = useSelector((state: AuthState) => state.auth);
 
+  console.log('userInfo : ', userInfo);
+
   const onWithdrawal = () => {
     navigate('WithdrawScreen');
   };
@@ -43,19 +45,19 @@ const SettingList = ({ index }: any) => {
             title={'알림 설정'}
             subTitle={'볼링장 예약 및 리뷰 등 실시간 알림'}
             type={'notification'}
-            status={userInfo?.notificationYN || enumYN.Y}
+            status={userInfo?.notificationPushYN || enumYN.Y}
           />
           <ToggleItem
             title={'정보성 알림 설정'}
             subTitle={'공지사항, 앱정보 등 안내사항 알림'}
             type={'marketing'}
-            status={userInfo?.marketingYN || enumYN.Y}
+            status={userInfo?.marketingPushYN || enumYN.Y}
           />
           <ToggleItem
             title={'이벤트 혜택 알림'}
             subTitle={'이벤트 및 마케팅 정보 알림'}
             type={'event'}
-            status={userInfo?.eventYN || enumYN.Y}
+            status={userInfo?.eventPushYN || enumYN.Y}
           />
         </>
       );

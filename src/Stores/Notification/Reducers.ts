@@ -33,6 +33,7 @@ export const fetchNotificationReducer = (state = INITIAL_STATE, actions: any) =>
         break;
       }
       case 'notificationConfirm': {
+        console.log('call reducer notificationConfirm : ', data);
         draft.notificationConfirm = data;
         break;
       }

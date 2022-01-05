@@ -24,9 +24,6 @@ const HomeHeader = (props: HeaderProps) => {
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { notificationConfirm } = useSelector((state: NotificationState) => state.notification);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
-  useEffect(() => {
-    console.log('headerHeight : ', headerHeight);
-  }, [headerHeight]);
 
   const onMoveSearchScreen = () => {
     navigate('SearchScreen');
@@ -79,15 +76,22 @@ const HomeHeader = (props: HeaderProps) => {
             />
           </View>
         </CustomButton>
-        <CustomButton onPress={() => onNotificationScreen()}>
+        <View style={{ flexDirection: 'row' }}>
           <View style={{ width: 24, height: 24 }}>
-            <FastImage
-              style={{ width: '100%', height: '100%' }}
-              source={require('@/Assets/Images/Common/icNotify.png')}
-              resizeMode={FastImage.resizeMode.cover}
-            />
+            <CustomButton onPress={() => onNotificationScreen()}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Common/icNotify.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </CustomButton>
           </View>
-        </CustomButton>
+          {userIdx && notificationConfirm === 'N' ? (
+            <View style={{ width: 4, height: 4, backgroundColor: Color.Error, borderRadius: 50 }} />
+          ) : (
+            <View style={{ width: 4 }} />
+          )}
+        </View>
       </View>
       {isShow && (
         <View

@@ -12,6 +12,8 @@ import { NotificationState } from '@/Stores/Notification/InitialState';
 
 import TabMenu from '@/Components/TabMenu';
 import { NOTIFICATION_CATEGORY } from '@/Containers/Notification/NotificationScreen/data';
+import CustomButton from '@/Components/CustomButton';
+import { fetchNotificationDetailNavigate } from '@/Sagas/NotificationSaga';
 
 const NotificationScreen = () => {
   const dispatch = useDispatch();
@@ -48,14 +50,24 @@ const NotificationScreen = () => {
   const onMore = () => {
     console.log('더보기 실행');
     const params = {
-      per_page: 10,
+      // per_page: 10,
       page: notificationListPage || 1,
       category: notificationCategory.category,
     };
     if (notificationListPage > 1) dispatch(NotificationActions.fetchNotificationList(params));
   };
 
-  // console.log('========', notificationList);
+  console.log('========', notificationList);
+
+  const onPressNotification = (data: any) => {
+    console.log('onPressNotification : ', data);
+    const params = {
+      idx: data.idx,
+      category: data.category,
+      type: data.type,
+    };
+    dispatch(NotificationActions.fetchNotificationDetailNavigate(params));
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
@@ -142,61 +154,63 @@ const NotificationScreen = () => {
                           </View>
                         )}
                         renderItem={({ item, index }) => (
-                          <View
-                            style={{
-                              marginTop: index === 0 ? 0 : 16,
-                              paddingTop: index === 0 ? 0 : 16,
-                              borderTopColor: index === 0 ? undefined : Color.Gray200,
-                              borderTopWidth: index === 0 ? 0 : 1,
-                            }}
-                          >
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                              {notificationCategory.category === 'all' && (
-                                <View
-                                  style={{
-                                    paddingVertical: 2,
-                                    paddingHorizontal: 4,
-                                    backgroundColor: `${Color.Primary1000}${Opacity._10}`,
-                                    borderRadius: 2,
-                                    marginRight: 6,
-                                  }}
-                                >
-                                  <CustomText
+                          <CustomButton onPress={() => onPressNotification()}>
+                            <View
+                              style={{
+                                marginTop: index === 0 ? 0 : 16,
+                                paddingTop: index === 0 ? 0 : 16,
+                                borderTopColor: index === 0 ? undefined : Color.Gray200,
+                                borderTopWidth: index === 0 ? 0 : 1,
+                              }}
+                            >
+                              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                {notificationCategory.category === 'all' && (
+                                  <View
                                     style={{
-                                      fontSize: 11,
-                                      fontWeight: 'bold',
-                                      letterSpacing: 0,
-                                      color: Color.Primary1000,
+                                      paddingVertical: 2,
+                                      paddingHorizontal: 4,
+                                      backgroundColor: `${Color.Primary1000}${Opacity._10}`,
+                                      borderRadius: 2,
+                                      marginRight: 6,
                                     }}
                                   >
-                                    {item?.categoryView || ''}
+                                    <CustomText
+                                      style={{
+                                        fontSize: 11,
+                                        fontWeight: 'bold',
+                                        letterSpacing: 0,
+                                        color: Color.Primary1000,
+                                      }}
+                                    >
+                                      {item?.categoryView || ''}
+                                    </CustomText>
+                                  </View>
+                                )}
+
+                                <View>
+                                  <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
+                                    {item?.regDateView || ''}
                                   </CustomText>
                                 </View>
-                              )}
-
-                              <View>
-                                <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
-                                  {item?.regDateView || ''}
+                              </View>
+                              <View
+                                style={{
+                                  marginTop: 10,
+                                }}
+                              >
+                                <CustomText
+                                  style={{
+                                    fontSize: 14,
+                                    fontWeight: '500',
+                                    letterSpacing: -0.25,
+                                    color: Color.Black1000,
+                                  }}
+                                >
+                                  {item?.title || ''}
                                 </CustomText>
                               </View>
                             </View>
-                            <View
-                              style={{
-                                marginTop: 10,
-                              }}
-                            >
-                              <CustomText
-                                style={{
-                                  fontSize: 14,
-                                  fontWeight: '500',
-                                  letterSpacing: -0.25,
-                                  color: Color.Black1000,
-                                }}
-                              >
-                                {item?.title || ''}
-                              </CustomText>
-                            </View>
-                          </View>
+                          </CustomButton>
                         )}
                         initialNumToRender={10}
                         maxToRenderPerBatch={13}
@@ -245,56 +259,63 @@ const NotificationScreen = () => {
                           </View>
                         )}
                         renderItem={({ item, index }) => (
-                          <View
-                            style={{
-                              marginTop: index === 0 ? 0 : 16,
-                              paddingTop: index === 0 ? 0 : 16,
-                              borderTopColor: index === 0 ? undefined : Color.Gray200,
-                              borderTopWidth: index === 0 ? 0 : 1,
-                            }}
-                          >
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                              {notificationCategory.category === 'all' && (
-                                <View
-                                  style={{
-                                    paddingVertical: 2,
-                                    paddingHorizontal: 4,
-                                    backgroundColor: `${Color.Gray600}${Opacity._10}`,
-                                    borderRadius: 2,
-                                    marginRight: 6,
-                                  }}
-                                >
-                                  <CustomText
-                                    style={{ fontSize: 11, fontWeight: 'bold', letterSpacing: 0, color: Color.Gray600 }}
+                          <CustomButton onPress={() => onPressNotification(item)}>
+                            <View
+                              style={{
+                                marginTop: index === 0 ? 0 : 16,
+                                paddingTop: index === 0 ? 0 : 16,
+                                borderTopColor: index === 0 ? undefined : Color.Gray200,
+                                borderTopWidth: index === 0 ? 0 : 1,
+                              }}
+                            >
+                              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                {notificationCategory.category === 'all' && (
+                                  <View
+                                    style={{
+                                      paddingVertical: 2,
+                                      paddingHorizontal: 4,
+                                      backgroundColor: `${Color.Gray600}${Opacity._10}`,
+                                      borderRadius: 2,
+                                      marginRight: 6,
+                                    }}
                                   >
-                                    {item?.categoryView || ''}
+                                    <CustomText
+                                      style={{
+                                        fontSize: 11,
+                                        fontWeight: 'bold',
+                                        letterSpacing: 0,
+                                        color: Color.Gray600,
+                                      }}
+                                    >
+                                      {item?.categoryView || ''}
+                                    </CustomText>
+                                  </View>
+                                )}
+
+                                <View>
+                                  <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
+                                    {item?.regDateView || ''}
                                   </CustomText>
                                 </View>
-                              )}
-
-                              <View>
-                                <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray600 }}>
-                                  {item?.regDateView || ''}
+                              </View>
+                              <View
+                                style={{
+                                  marginTop: 10,
+                                }}
+                              >
+                                <CustomText
+                                  style={{
+                                    fontSize: 14,
+                                    fontWeight: '500',
+                                    letterSpacing: -0.25,
+                                    color: Color.Black1000,
+                                  }}
+                                >
+                                  {item?.title || ''}
                                 </CustomText>
                               </View>
                             </View>
-                            <View
-                              style={{
-                                marginTop: 10,
-                              }}
-                            >
-                              <CustomText
-                                style={{
-                                  fontSize: 14,
-                                  fontWeight: '500',
-                                  letterSpacing: -0.25,
-                                  color: Color.Black1000,
-                                }}
-                              >
-                                {item?.title || ''}
-                              </CustomText>
-                            </View>
-                          </View>
+                          </CustomButton>
                         )}
                         initialNumToRender={10}
                         maxToRenderPerBatch={13}

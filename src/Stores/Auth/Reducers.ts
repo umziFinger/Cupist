@@ -149,18 +149,18 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
-      case 'notificationYN': {
-        draft.userInfo.notificationYN = data;
+      case 'notificationPushYN': {
+        draft.userInfo.notificationPushYN = data;
         break;
       }
 
-      case 'marketingYN': {
-        draft.userInfo.marketingYN = data;
+      case 'marketingPushYN': {
+        draft.userInfo.marketingPushYN = data;
         break;
       }
 
-      case 'eventYN': {
-        draft.userInfo.eventYN = data;
+      case 'eventPushYN': {
+        draft.userInfo.eventPushYN = data;
         break;
       }
       case 'tempUserIdx': {

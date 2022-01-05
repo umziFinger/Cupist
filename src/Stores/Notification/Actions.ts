@@ -5,6 +5,7 @@ const { Types, Creators } = createActions({
   fetchNotificationList: ['params'],
   fetchNotificationRead: ['params'],
   fetchNotificationCount: ['params'],
+  fetchNotificationDetailNavigate: ['params'],
 });
 
 export const NotificationTypes = Types;

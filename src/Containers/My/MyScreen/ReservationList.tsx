@@ -203,8 +203,11 @@ const ReservationList = () => {
                 <View style={{ width: 36, height: 36, borderRadius: 5 }}>
                   <FastImage
                     style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                    source={{ uri: item?.placePhoto }}
-                    resizeMode={FastImage.resizeMode.stretch}
+                    // source={{ uri: item?.placePhoto }}
+                    source={
+                      item?.placePhoto ? { uri: item?.placePhoto } : require('@/Assets/Images/Common/icNoImage.png')
+                    }
+                    resizeMode={FastImage.resizeMode.cover}
                   />
                 </View>
                 <View style={{ marginLeft: 12 }}>

@@ -79,6 +79,9 @@ const prod = {
   MY_RESERVATION_URL: 'my/reservation',
   MY_DIBS_URL: 'my/dibs',
   MY_PASSWORD_URL: 'my/password',
+
+  NOTIFICATION_COUNT_URL: 'my/notification/count',
+
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',
@@ -87,10 +90,6 @@ const prod = {
 
   // user
   USER_URL: 'user',
-
-  // notification
-  NOTIFICATION_URL: 'notifications',
-  NOTIFICATION_COUNT_URL: 'notifications/count',
 
   // main
   MAIN_REVIEWS: 'main/reviews',
