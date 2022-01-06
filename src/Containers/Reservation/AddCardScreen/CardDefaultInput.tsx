@@ -1,15 +1,15 @@
 import React from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import { Color } from '@/Assets/Color';
-import CustomText from '@/Components/CustomText';
 
 type PropTypes = {
   placeHolder?: string | '';
   maxLength: number;
   value: string;
   onChangeText: (text: string) => void;
+  editable?: boolean | true;
 };
-const CardDefaultInput = ({ placeHolder, maxLength, value, onChangeText }: PropTypes) => {
+const CardDefaultInput = ({ placeHolder, maxLength, value, onChangeText, editable = true }: PropTypes) => {
   return (
     <View
       style={{
@@ -25,7 +25,7 @@ const CardDefaultInput = ({ placeHolder, maxLength, value, onChangeText }: PropT
         placeholder={placeHolder}
         placeholderTextColor={Color.Gray300}
         style={{
-          color: Color.Gray400,
+          color: Color.Black1000,
           fontSize: 14,
           letterSpacing: -0.22,
           padding: 0,
@@ -37,6 +37,7 @@ const CardDefaultInput = ({ placeHolder, maxLength, value, onChangeText }: PropT
         onChangeText={(text) => onChangeText(text)}
         value={value}
         allowFontScaling={false}
+        editable={editable}
       />
     </View>
   );

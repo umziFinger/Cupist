@@ -53,10 +53,11 @@ export function* fetchNotificationRead(data: any): any {
     const response = yield call(Axios.PATCH, payload);
     console.log('알림 읽음: ', response);
     if (response.result === true && response.code === null) {
-      const params = {
-        page: 1,
-      };
-      yield put(NotificationActions.fetchNotificationList(params));
+      // const params = {
+      //   page: 1,
+      // };
+      // yield put(NotificationActions.fetchNotificationList(params));
+      yield put(NotificationActions.fetchNotificationDetailNavigate(data.params));
       // yield put(NotificationActions.fetchNotificationCount());
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
@@ -99,6 +100,39 @@ export function* fetchNotificationCount(data: any): any {
 
 export function* fetchNotificationDetailNavigate(data: any): any {
   try {
+    const { category, type } = data.params;
+
+    if (category) {
+      if (category === 'reservation') {
+        if (type === 'done')
+          // yield put(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '지난', key: 'after' } }));
+          yield put(
+            MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '진행중', key: 'before' } }),
+          );
+        if (type === 'cancel')
+          yield put(
+            MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '취소', key: 'cancel' } }),
+          );
+        if (type === 'wait')
+          yield put(
+            MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '진행중', key: 'before' } }),
+          );
+        navigate('MyScreen');
+      }
+      if (category === 'review') {
+        yield put(MyActions.fetchMyReducer({ type: 'mySelectedTab', data: { title: '리뷰', selectKey: 'review' } }));
+        navigate('MyScreen');
+      }
+    } else {
+      navigate('HomeScreen');
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchNotificationDetailNavigate : ', e);
+  }
+}
+
+/* export function* fetchNotificationDetailNavigate(data: any): any {
+  try {
     const { idx } = data.params;
 
     const payload = {
@@ -123,21 +157,13 @@ export function* fetchNotificationDetailNavigate(data: any): any {
       // 스크린 이동
       console.log('스크린 이동 : ', data.params);
       yield moveScreen(data.params);
-
-      // if (category === 'info') {
-      //   console.log('알림 디테일 이동');
-      //   moveScreen(data.params);
-      // } else {
-      //   console.log('내 활동 디테일 이동');
-      //   moveScreen(data.params);
-      // }
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
     console.log('occurred Error...fetchNotificationDetailNavigate : ', e);
   }
-}
+} */
 
 function* moveScreen(item: any) {
   console.log('category! : ', item);

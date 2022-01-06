@@ -125,6 +125,7 @@ const dev = {
   RESERVATION_PAYMENT_CARD_URL: 'reservation/payment/card',
   RESERVATION_PAYMENT_SIGN_URL: 'reservation/payment/sign',
   RESERVATION_PAYMENT_VERIFY_URL: 'reservation/payment/verify',
+  RESERVATION_CERTIFICATION_URL: 'reservation/certification',
 };
 
 export default dev;

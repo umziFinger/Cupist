@@ -13,7 +13,7 @@ import { NotificationState } from '@/Stores/Notification/InitialState';
 import TabMenu from '@/Components/TabMenu';
 import { NOTIFICATION_CATEGORY } from '@/Containers/Notification/NotificationScreen/data';
 import CustomButton from '@/Components/CustomButton';
-import { fetchNotificationDetailNavigate } from '@/Sagas/NotificationSaga';
+import { fetchNotificationDetailNavigate, fetchNotificationRead } from '@/Sagas/NotificationSaga';
 
 const NotificationScreen = () => {
   const dispatch = useDispatch();
@@ -50,14 +50,12 @@ const NotificationScreen = () => {
   const onMore = () => {
     console.log('더보기 실행');
     const params = {
-      // per_page: 10,
+      per_page: 10,
       page: notificationListPage || 1,
       category: notificationCategory.category,
     };
     if (notificationListPage > 1) dispatch(NotificationActions.fetchNotificationList(params));
   };
-
-  console.log('========', notificationList);
 
   const onPressNotification = (data: any) => {
     console.log('onPressNotification : ', data);
@@ -66,13 +64,13 @@ const NotificationScreen = () => {
       category: data.category,
       type: data.type,
     };
-    dispatch(NotificationActions.fetchNotificationDetailNavigate(params));
+    dispatch(NotificationActions.fetchNotificationRead(params));
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type="back" />
-      <View style={{ marginTop: 16, paddingLeft: 24 }}>
+      <View style={{ marginTop: 16, paddingLeft: 24, paddingBottom: 10 }}>
         <View style={{ marginBottom: 16 }}>
           <CustomText style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}>
             내 알림
@@ -154,7 +152,7 @@ const NotificationScreen = () => {
                           </View>
                         )}
                         renderItem={({ item, index }) => (
-                          <CustomButton onPress={() => onPressNotification()}>
+                          <CustomButton onPress={() => onPressNotification(item)}>
                             <View
                               style={{
                                 marginTop: index === 0 ? 0 : 16,
@@ -226,7 +224,7 @@ const NotificationScreen = () => {
                 {notificationList?.readCnt > 0 && (
                   <>
                     {/* 이전 알림 영역 */}
-                    <View style={{ paddingHorizontal: 24, backgroundColor: Color.White, paddingTop: 30, flex: 1 }}>
+                    <View style={{ paddingHorizontal: 24, backgroundColor: Color.White, paddingTop: 20, flex: 1 }}>
                       <FlatList
                         data={notificationList?.read}
                         // data={[0, 1]}

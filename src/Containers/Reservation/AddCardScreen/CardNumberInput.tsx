@@ -29,7 +29,7 @@ const CardNumberInput = forwardRef<TextInput, PropTypes>(
           placeholder={placeHolder}
           placeholderTextColor={Color.Gray300}
           style={{
-            color: Color.Gray400,
+            color: Color.Black1000,
             fontSize: 14,
             letterSpacing: -0.22,
             padding: 0,
@@ -49,7 +49,7 @@ const CardNumberInput = forwardRef<TextInput, PropTypes>(
           placeholder="0000"
           placeholderTextColor={Color.Gray300}
           style={{
-            color: Color.Gray400,
+            color: Color.Black1000,
             fontSize: 14,
             letterSpacing: -0.22,
             padding: 0,
@@ -69,7 +69,7 @@ const CardNumberInput = forwardRef<TextInput, PropTypes>(
           placeholder="0000"
           placeholderTextColor={Color.Gray300}
           style={{
-            color: Color.Gray400,
+            color: Color.Black1000,
             fontSize: 14,
             letterSpacing: -0.22,
             padding: 0,
@@ -89,7 +89,7 @@ const CardNumberInput = forwardRef<TextInput, PropTypes>(
           placeholder="0000"
           placeholderTextColor={Color.Gray300}
           style={{
-            color: Color.Gray400,
+            color: Color.Black1000,
             fontSize: 14,
             letterSpacing: -0.22,
             padding: 0,

@@ -25,7 +25,7 @@ const CardPasswordInput = ({ placeHolder, maxLength, value, onChangeText }: Prop
         placeholder={placeHolder}
         placeholderTextColor={Color.Gray300}
         style={{
-          color: Color.Gray400,
+          color: Color.Black1000,
           fontSize: 14,
           letterSpacing: -0.22,
           padding: 0,

@@ -16,11 +16,19 @@ const RootFcm = () => {
   const [moveScreenParams, setMoveScreenParams] = useState<any>(null);
 
   useEffect(() => {
-    console.log('FCM DIDUPDATE isHomeLoaded : ', isHomeLoaded);
-    if (isHomeLoaded && moveScreenParams) {
-      dispatch(NotificationActions.fetchNotificationDetailNavigate(moveScreenParams));
-      setMoveScreenParams(null);
-    }
+    AsyncStorage.getItem('splashStatus').then((value) => {
+      console.log('Root Fcm isHomeLoaded : ', isHomeLoaded, value);
+      if (isHomeLoaded && value === 'end') {
+        dispatch(NotificationActions.fetchNotificationDetailNavigate(moveScreenParams));
+        setMoveScreenParams(null);
+      }
+    });
+    // console.log('FCM DIDUPDATE isHomeLoaded : ', isHomeLoaded);
+    // console.log('FCM DIDUPDATE moveScreenParams : ', moveScreenParams);
+    // if (isHomeLoaded && moveScreenParams) {
+    //   dispatch(NotificationActions.fetchNotificationDetailNavigate(moveScreenParams));
+    //   setMoveScreenParams(null);
+    // }
   }, [isHomeLoaded]);
 
   useEffect(() => {
@@ -99,7 +107,6 @@ const RootFcm = () => {
 
     const category = message?.data?.category;
     const type = message?.data?.type;
-    const json = message?.data?.json;
     const pushIdx = message?.data?.idx;
     const badgeCnt = message?.data?.badge || 0;
 

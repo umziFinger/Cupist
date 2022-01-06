@@ -6,6 +6,7 @@ import { Axios } from '@/Services/Axios';
 import { navigate, navigateAndReset, navigateGoBack } from '@/Services/NavigationService';
 import MyActions from '@/Stores/My/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
+import { ReservationState } from '@/Stores/Reservation/InitialState';
 
 export function* fetchReservationInfo(data: any): any {
   try {
@@ -233,5 +234,32 @@ export function* fetchReservationPaymentVerify(data: any): any {
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchReservationPaymentVerify : ', e);
+  }
+}
+
+export function* fetchReservationCertification(data: any): any {
+  try {
+    const { addCardInfo } = yield select((state: ReservationState) => state.reservation);
+    const payload = {
+      ...data,
+      url: Config.RESERVATION_CERTIFICATION_URL,
+    };
+
+    const response = yield call(Axios.POST, payload);
+    if (response.result === true && response.code === null) {
+      console.log('본인인증 검증 Res : ', response);
+      const birth = response.data?.certification?.birthday.replace('-', '').replace('-', '').substring(2) || '';
+      yield put(
+        ReservationActions.fetchReservationReducer({
+          type: 'addCardInfo',
+          data: { ...addCardInfo, birth },
+        }),
+      );
+      navigate('AddCardScreen');
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchAuthCheckEmail : ', e);
   }
 }

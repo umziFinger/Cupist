@@ -223,6 +223,7 @@ const AddCardScreen = () => {
                       maxLength={6}
                       value={addCardInfo?.birth}
                       onChangeText={onChangeBirth}
+                      editable={false}
                     />
                   </View>
                 </View>

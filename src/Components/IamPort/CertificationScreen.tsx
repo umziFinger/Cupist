@@ -4,12 +4,16 @@ import IMP from 'iamport-react-native';
 import { RouteProp } from '@react-navigation/native';
 import { Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { navigate, navigateGoBack } from '@/Services/NavigationService';
 import Loading from '@/Components/Loading';
 import { CommonState } from '@/Stores/Common/InitialState';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
+import Config from '@/Config';
+import { fetchReservationCertification } from '@/Sagas/ReservationSaga';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'CertificationScreen'>;
@@ -18,6 +22,7 @@ interface PropTypes {
 function CertificationScreen({ route }: PropTypes) {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
+  const addCardInfo = useSelector((state: ReservationState) => state.reservation.addCardInfo);
 
   /* 가맹점 식별코드, 결제 데이터 추출 */
   const { userCode, data } = route.params;
@@ -32,11 +37,11 @@ function CertificationScreen({ route }: PropTypes) {
         type: 'certification', // 결제와 본인인증 구분을 위한 필드
       };
       console.log('########## Success IAMPORT params : ', params);
-      // Todo 카드 등록 페이지 이동
+      dispatch(ReservationActions.fetchReservationCertification({ imp_uid: params.imp_uid }));
     } else {
       console.log('본인인증 취소!!!!');
-      navigate('AddCardScreen');
-      // navigateGoBack();
+      // navigate('AddCardScreen');
+      navigateGoBack();
     }
   }
 

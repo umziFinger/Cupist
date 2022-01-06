@@ -14,6 +14,7 @@ const { Types, Creators } = createActions({
   fetchAuthFindId: ['params'],
   fetchAuthFindPassword: ['params'],
   fetchAuthCheckEmail: ['params'],
+  fetchCertificationVerify: ['params'],
 });
 
 export const AuthTypes = Types;
