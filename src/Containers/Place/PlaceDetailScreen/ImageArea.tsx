@@ -53,7 +53,7 @@ const ImageArea = (props: PropTypes) => {
             <View
               style={{
                 width,
-                height: width * 0.75,
+                height: width * 0.5,
                 backgroundColor: Color.White,
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -69,6 +69,23 @@ const ImageArea = (props: PropTypes) => {
             </View>
           </CustomButton>
         )}
+        ListEmptyComponent={
+          <View
+            style={{
+              width,
+              height: width * 0.5,
+              backgroundColor: Color.White,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={require('@/Assets/Images/Common/icNoImage.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </View>
+        }
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={1}
         maxToRenderPerBatch={1}
@@ -86,22 +103,24 @@ const ImageArea = (props: PropTypes) => {
       />
 
       {/* 이미지 페이징 영역 */}
-      <View style={{ position: 'absolute', bottom: 12, right: 12 }}>
-        <View
-          style={{
-            paddingVertical: 7.5,
-            paddingHorizontal: 10,
-            backgroundColor: 'rgba(0,0,0,0.6)',
-            borderRadius: 15,
-          }}
-        >
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.White, fontSize: 10 }}>{`${viewableIndex + 1 || 0} / ${
-              item.placePhotoArr?.length || 0
-            }`}</CustomText>
+      {item.placePhotoArr && (
+        <View style={{ position: 'absolute', bottom: 12, right: 12 }}>
+          <View
+            style={{
+              paddingVertical: 7.5,
+              paddingHorizontal: 10,
+              backgroundColor: 'rgba(0,0,0,0.6)',
+              borderRadius: 15,
+            }}
+          >
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.White, fontSize: 10 }}>{`${viewableIndex + 1 || 0} / ${
+                item.placePhotoArr?.length || 0
+              }`}</CustomText>
+            </View>
           </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };
