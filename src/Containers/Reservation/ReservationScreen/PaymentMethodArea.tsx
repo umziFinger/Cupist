@@ -242,7 +242,7 @@ const PaymentMethodArea = (props: PropTypes) => {
         </View>
       </CustomButton>
       {paymentType === 'normal' && (
-        <View style={{ flex: 1, alignItems: 'center', marginTop: 12 }}>
+        <View style={{ flex: 1, alignItems: 'flex-start', marginTop: 12, paddingLeft: 16 }}>
           <FlatList
             data={DATA_PAYMENT_METHOD}
             renderItem={({ item }) => (

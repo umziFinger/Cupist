@@ -160,7 +160,17 @@ export function* fetchReservationCard(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       console.log('call saga 카드 등록 성공! : ', selectedTicket);
-      navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: selectedTicket?.idx });
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: '카드가 등록되었습니다.',
+          },
+        }),
+      );
+      navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: data.params.ticketInfoIdx });
     } else {
       navigateGoBack();
       yield put(CommonActions.fetchErrorHandler(response));
@@ -256,6 +266,7 @@ export function* fetchReservationCertification(data: any): any {
         }),
       );
       navigate('AddCardScreen');
+      navigateAndReset('AddCardScreen');
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
