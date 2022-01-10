@@ -150,7 +150,7 @@ export function* fetchReservationSimplePayment(data: any): any {
 
 export function* fetchReservationCard(data: any): any {
   try {
-    const { selectedPlaceIdx, selectedTicket } = yield select((state: PlaceState) => state.place);
+    const { selectedPlaceIdx } = yield select((state: PlaceState) => state.place);
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
       ...data,
@@ -159,7 +159,7 @@ export function* fetchReservationCard(data: any): any {
     const response = yield call(Axios.POST, payload);
     if (response.result === true && response.code === null) {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      console.log('call saga 카드 등록 성공! : ', selectedTicket);
+      console.log('call saga 카드 등록 성공!! : ', data.params.ticketInfoIdx);
       yield put(
         CommonActions.fetchCommonReducer({
           type: 'alertToast',
