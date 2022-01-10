@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, FlatList, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +11,9 @@ import AgreeItem from '@/Containers/Auth/AgreeScreen/AgreeItem';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { Color } from '@/Assets/Color';
 import { DATA_PERMISSIONS } from './data';
-import { navigate } from '@/Services/NavigationService';
+import { navigate, navigateAndJoinReset, navigateAndReset, navigateAndSimpleReset } from '@/Services/NavigationService';
 import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
+import useDebounce from '@/Hooks/useDebounce';
 
 const AgreeScreen = () => {
   const dispatch = useDispatch();
@@ -107,10 +108,18 @@ const AgreeScreen = () => {
     if (checkedArr[0]) {
       if (tempUserIdx) {
         console.log('=======소셜!:');
-        const params = { agreeInfo: JSON.stringify(agreeInfo.checkedArr), tempUserIdx };
-        dispatch(AuthActions.fetchAuthSocialJoin(params));
+        // 검수 실패 시 주석 풀것
+        // if (debounceContent) {
+        //   const params = { agreeInfo: JSON.stringify(agreeInfo.checkedArr), tempUserIdx };
+        //   dispatch(AuthActions.fetchAuthSocialJoin(params));
+        // }
+
+        // 검수 실패 시 제거
+        navigate('SocialJoinScreen');
+        navigateAndJoinReset('SocialJoinScreen');
       } else {
         navigate('JoinStepOneScreen');
+        navigateAndJoinReset('JoinStepOneScreen');
       }
     }
   };
@@ -214,6 +223,7 @@ const AgreeScreen = () => {
             paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
           }}
         >
+          {/* <CustomButton onPress={() => onPressNext()}> */}
           <CustomButton onPress={() => onPressNext()}>
             <View
               style={{

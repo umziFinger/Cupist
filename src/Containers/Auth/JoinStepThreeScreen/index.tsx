@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList, Platform, View } from 'react-native';
+import { BackHandler, FlatList, Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
@@ -11,15 +11,20 @@ import PlaceActions from '@/Stores/Place/Actions';
 
 import { PlaceState } from '@/Stores/Place/InitialState';
 import PlaceXSmallCard, { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
-import { navigate } from '@/Services/NavigationService';
+import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 const JoinStepThreeScreen = () => {
   const { heightInfo, myLongitude, myLatitude } = useSelector((state: CommonState) => state.common);
   const { aroundListPage = 1, aroundList } = useSelector((state: PlaceState) => state.place);
+  const { tempUserIdx } = useSelector((state: AuthState) => state.auth);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener('hardwareBackPress', onBackButtonPressAndroid);
+    }
     const params = {
       lat: myLatitude?.toString() || 37.56561,
       lng: myLongitude?.toString() || 126.97804,
@@ -27,7 +32,21 @@ const JoinStepThreeScreen = () => {
       perPage: 10,
     };
     dispatch(PlaceActions.fetchPlaceAroundList(params));
+    return () => {
+      if (Platform.OS === 'android') {
+        BackHandler.removeEventListener('hardwareBackPress', onBackButtonPressAndroid);
+      }
+    };
   }, []);
+
+  const onBackButtonPressAndroid = () => {
+    if (tempUserIdx) {
+      onCancel();
+    } else {
+      navigateGoBack();
+    }
+    return true;
+  };
 
   const onCancel = () => {
     navigate('HomeScreen');

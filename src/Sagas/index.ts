@@ -49,6 +49,7 @@ import {
   fetchAuthFindPassword,
   fetchAuthSocialJoin,
   fetchAuthCheckEmail,
+  fetchAuthSocialJoin2,
 } from './AuthSaga';
 
 // notification
@@ -141,6 +142,7 @@ export default function* root() {
     takeLatest(AuthTypes.FETCH_AUTH_FIND_PASSWORD, fetchAuthFindPassword),
     takeLatest(AuthTypes.FETCH_AUTH_SOCIAL_JOIN, fetchAuthSocialJoin),
     takeLatest(AuthTypes.FETCH_AUTH_CHECK_EMAIL, fetchAuthCheckEmail),
+    takeLatest(AuthTypes.FETCH_AUTH_SOCIAL_JOIN2, fetchAuthSocialJoin2),
 
     // search
     takeLatest(SearchTypes.FETCH_SEARCH_AREA_LIST, fetchSearchAreaList),

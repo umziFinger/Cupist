@@ -1,5 +1,5 @@
 import React from 'react';
-import IMP from 'iamport-react-native';
+import IMP, { IMPData } from 'iamport-react-native';
 
 import { RouteProp } from '@react-navigation/native';
 import { Platform, View } from 'react-native';
@@ -7,25 +7,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
-import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { navigateGoBack } from '@/Services/NavigationService';
 import Loading from '@/Components/Loading';
 import { CommonState } from '@/Stores/Common/InitialState';
 import ReservationActions from '@/Stores/Reservation/Actions';
-import { ReservationState } from '@/Stores/Reservation/InitialState';
 import Config from '@/Config';
-import { fetchReservationCertification } from '@/Sagas/ReservationSaga';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'CertificationScreen'>;
 }
 
-function CertificationScreen({ route }: PropTypes) {
+function CertificationScreen() {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const addCardInfo = useSelector((state: ReservationState) => state.reservation.addCardInfo);
+  // const addCardInfo = useSelector((state: ReservationState) => state.reservation.addCardInfo);
 
   /* 가맹점 식별코드, 결제 데이터 추출 */
-  const { userCode, data } = route.params;
+  const userCode: string = Config.USER_CODE;
+  const data: any = {
+    company: '(주)볼리미',
+  };
 
   /* 본인인증 후 실행될 콜백 함수 입력 */
   function callback(response: any) {

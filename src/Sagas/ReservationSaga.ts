@@ -256,6 +256,7 @@ export function* fetchReservationCertification(data: any): any {
         }),
       );
       navigate('AddCardScreen');
+      navigateAndReset('AddCardScreen');
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }

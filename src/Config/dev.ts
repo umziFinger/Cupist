@@ -57,6 +57,7 @@ const dev = {
   AUTH_FIND_PASSWORD_URL: 'auth/find-password',
   AUTH_RENEW_TOKEN_URL: 'auth/refresh',
   AUTH_JOIN_SOCIAL_URL: 'auth/join/social', // 동의 후 소셜 가입
+  AUTH_JOIN_SOCIAL_URL2: 'auth/join-social', // 동의 후 소셜 가입
   AUTH_CHECK_EMAIL_URL: 'auth/check/email',
 
   // my

@@ -12,7 +12,7 @@ import { Color } from '@/Assets/Color';
 import Naver from '@/Components/Login/SocialLogin/Naver';
 import Kakao from '@/Components/Login/SocialLogin/Kakao';
 import Apple from '@/Components/Login/SocialLogin/Apple';
-import { navigate } from '@/Services/NavigationService';
+import { navigate, navigateAndSimpleReset } from '@/Services/NavigationService';
 import Header from '@/Components/Header';
 
 const SimpleLoginScreen = () => {

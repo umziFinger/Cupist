@@ -9,8 +9,7 @@ import MyPaymentCard from '@/Components/Card/Common/MyPaymentCard';
 import CustomButton from '@/Components/CustomButton';
 import { DATA_PAYMENT_METHOD } from './data';
 import ReservationActions from '@/Stores/Reservation/Actions';
-import { navigate } from '@/Services/NavigationService';
-import Config from '@/Config';
+import { navigate, navigateAndReset } from '@/Services/NavigationService';
 
 interface PropTypes {
   list: Array<any>;
@@ -66,11 +65,7 @@ const PaymentMethodArea = (props: PropTypes) => {
   };
 
   const onPressAddCard = () => {
-    const userCode = Config.USER_CODE;
-    const data = {
-      company: '(주)볼리미',
-    };
-    navigate('CertificationScreen', { userCode, data });
+    navigate('CertificationScreen');
   };
 
   return (

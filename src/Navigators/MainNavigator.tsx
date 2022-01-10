@@ -60,6 +60,7 @@ import RegisterPasswordModifyScreen from '@/Containers/Reservation/RegisterPassw
 import BasicInfoDetailScreen from '@/Containers/Place/BasicInfoDetailScreen';
 import PaymentScreen from '@/Components/IamPort/PaymentScreen';
 import CertificationScreen from '@/Components/IamPort/CertificationScreen';
+import SocialJoinScreen from '@/Containers/Auth/SocialJoinScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -78,6 +79,7 @@ export type MainStackParamList = {
   JoinStepOneScreen: undefined;
   JoinStepTwoScreen: undefined;
   JoinStepThreeScreen: undefined;
+  SocialJoinScreen: undefined;
   ResidentSearchScreen: { type: SCREEN_TYPE };
   PlaceDetailScreen: { idx: number };
   LocationSettingScreen: undefined;
@@ -119,7 +121,7 @@ export type MainStackParamList = {
   RegisterPasswordModifyScreen: undefined;
   BasicInfoDetailScreen: undefined;
   PaymentScreen: { userCode: any; data: any };
-  CertificationScreen: { userCode: any; data: any };
+  CertificationScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -153,6 +155,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="JoinStepOneScreen" component={JoinStepOneScreen} />
       <MainStack.Screen name="JoinStepTwoScreen" component={JoinStepTwoScreen} />
       <MainStack.Screen name="JoinStepThreeScreen" component={JoinStepThreeScreen} />
+      <MainStack.Screen name="SocialJoinScreen" component={SocialJoinScreen} />
       <MainStack.Screen name="PermissionScreen" component={PermissionScreen} />
       {/* Search */}
       <MainStack.Screen name="ResidentSearchScreen" component={ResidentSearchScreen} />

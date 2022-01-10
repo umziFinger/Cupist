@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { BackHandler, Platform, View } from 'react-native';
+import { BackHandler, Platform, ToastAndroid, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { getBottomSpace, isIphoneX } from 'react-native-iphone-x-helper';
 import { useDispatch, useSelector } from 'react-redux';
 
 import RNBootSplash from 'react-native-bootsplash';
+import { useFocusEffect } from '@react-navigation/native';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { DATA_MENUS } from '@/Navigators/CustomTabBar/data';
@@ -29,7 +30,7 @@ const TabBar = (props: TabBarProps) => {
     RNBootSplash.hide();
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     // const onBackButtonPressAndroid = () => {
     //   console.log('navigation : ', navigation);
     //   console.log('state : ', state);
@@ -67,7 +68,36 @@ const TabBar = (props: TabBarProps) => {
     return () => {
       // if (backHandler) backHandler.remove();
     };
-  }, [backHandlerClickCount, state.index, userIdx]);
+  }, [backHandlerClickCount, state.index, userIdx]); */
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackButtonPressAndroid = () => {
+        console.log('state : ', state);
+        setBackHandlerClickCount((prevState) => prevState + 1);
+        if (backHandlerClickCount < 1) {
+          ToastAndroid.show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 2000);
+        } else {
+          BackHandler.exitApp();
+        }
+
+        setTimeout(() => {
+          setBackHandlerClickCount(0);
+        }, 2000);
+
+        return true;
+      };
+      if (Platform.OS === 'android') {
+        console.log('state : ', state);
+        BackHandler.addEventListener('hardwareBackPress', onBackButtonPressAndroid);
+      }
+      return () => {
+        if (Platform.OS === 'android') {
+          BackHandler.removeEventListener('hardwareBackPress', onBackButtonPressAndroid);
+        }
+      };
+    }, [backHandlerClickCount]),
+  );
 
   const renderIcon = <T extends React.ReactNode>(type: T) => {
     switch (type) {

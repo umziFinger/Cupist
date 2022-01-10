@@ -36,7 +36,7 @@ export function* fetchUserLogin(data: any): any {
     };
 
     const response = yield call(Axios.POST, payload);
-    console.log('로그인 반응: ', response);
+    console.log('로그인 반응111: ', response);
     if (response.result === true && response.code === null) {
       const { accessToken, refreshToken, idx, tempUserIdx } = response.data;
       if (tempUserIdx) {
@@ -239,7 +239,7 @@ export function* fetchAuthSmsSend(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(AuthActions.fetchAuthReducer({ type: 'isReceived', data: true }));
       yield put(AuthActions.fetchAuthReducer({ type: 'log_cert', data: response.data }));
-      yield put(
+      /* yield put(
         CommonActions.fetchCommonReducer({
           type: 'alertDialog',
           data: {
@@ -248,7 +248,7 @@ export function* fetchAuthSmsSend(data: any): any {
             alertDialogTitle: response.data.authNum,
           },
         }),
-      );
+      ); */
     } else {
       // 인증정보 초기화
       yield put(AuthActions.fetchAuthReducer({ type: 'phoneNumber', data: { phoneNumber: null } }));
@@ -296,6 +296,19 @@ export function* fetchSmsAuth(data: any): any {
             authIdx: log_cert.authIdx,
           };
           yield put(MyActions.fetchMyProfilePatch(params));
+        }
+
+        if (data.params.screen === 'SocialJoinScreen') {
+          const params = {
+            mobile: data.params.mobile.replace(/-/g, ''),
+            nickname: data.params.nickName,
+            authIdx: log_cert.authIdx,
+            username: data.params.userName,
+            tempUserIdx: data.params.tempUserIdx,
+            agreeInfo: data.params.agreeInfo,
+            authNum: log_cert.authNum,
+          };
+          yield put(AuthActions.fetchAuthSocialJoin2(params));
         }
       } else {
         yield put(
@@ -363,11 +376,67 @@ export function* fetchAuthFindPassword(data: any): any {
     console.log('occurred Error...fetchAuthFindPassword : ', e);
   }
 }
+
 export function* fetchAuthSocialJoin(data: any): any {
   try {
     const payload = {
       ...data,
       url: Config.AUTH_JOIN_SOCIAL_URL,
+    };
+
+    const response = yield call(Axios.POST, payload);
+
+    if (response.result === true && response.code === null) {
+      const { accessToken, refreshToken, idx } = response.data;
+
+      console.log('소셜가입 : ', response.data);
+      console.log('Login token : ', accessToken);
+      console.log('Login refresh token : ', refreshToken);
+      console.log('Login user idx : ', idx);
+
+      AsyncStorage.setItem('userIdx', idx.toString());
+      AsyncStorage.setItem('accessToken', accessToken.toString());
+      AsyncStorage.setItem('refreshToken', refreshToken.toString());
+
+      yield put(AuthActions.fetchAuthReducer({ type: 'login', data: { userIdx: idx } }));
+      FirebaseTokenUpdate();
+      yield put(AuthActions.fetchUserInfo());
+      yield put(
+        AuthActions.fetchAuthReducer({
+          type: 'tokenInfo',
+          data: {
+            tokenInfo: { accessToken, refreshToken },
+          },
+        }),
+      );
+
+      navigate('JoinStepThreeScreen');
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'bottom',
+            alertToastMessage: '로그인이 완료되었습니다.',
+          },
+        }),
+      );
+
+      // tempUserIdx 초기화
+      yield put(AuthActions.fetchAuthReducer({ type: 'tempUserIdx', data: null }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchAuthSocialJoin : ', e);
+  }
+}
+
+export function* fetchAuthSocialJoin2(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.AUTH_JOIN_SOCIAL_URL2,
     };
 
     const response = yield call(Axios.POST, payload);
