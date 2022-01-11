@@ -110,6 +110,7 @@ const SimpleLoginScreen = () => {
   useEffect(() => {
     return () => {
       dispatch(HomeActions.fetchHomeReducer({ type: 'loginCheckYN', data: { loginCheckYN: 'Y' } }));
+      dispatch(AuthActions.fetchAuthReducer({ type: 'agreeInfoInit' }));
     };
   }, []);
 

@@ -12,7 +12,7 @@ import Config from '@/Config';
 import CommonActions from '@/Stores/Common/Actions';
 import MyActions from '@/Stores/My/Actions';
 import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
-import { navigate } from '@/Services/NavigationService';
+import { navigate, navigateAndJoinReset, navigateAndReset } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 
 export function* fetchUserLogin(data: any): any {
@@ -466,16 +466,17 @@ export function* fetchAuthSocialJoin2(data: any): any {
       );
 
       navigate('JoinStepThreeScreen');
-      yield put(
-        CommonActions.fetchCommonReducer({
-          type: 'alertToast',
-          data: {
-            alertToast: true,
-            alertToastPosition: 'bottom',
-            alertToastMessage: '로그인이 완료되었습니다.',
-          },
-        }),
-      );
+      navigateAndReset('JoinStepThreeScreen');
+      // yield put(
+      //   CommonActions.fetchCommonReducer({
+      //     type: 'alertToast',
+      //     data: {
+      //       alertToast: true,
+      //       alertToastPosition: 'bottom',
+      //       alertToastMessage: '본인 인증이 완료되었습니다.',
+      //     },
+      //   }),
+      // );
 
       // tempUserIdx 초기화
       yield put(AuthActions.fetchAuthReducer({ type: 'tempUserIdx', data: null }));

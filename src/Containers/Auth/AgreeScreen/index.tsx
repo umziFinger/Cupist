@@ -23,6 +23,7 @@ const AgreeScreen = () => {
   const { checkedArr } = agreeInfo;
 
   useEffect(() => {
+    console.log('agreeInfo.checkedArr : ', agreeInfo.checkedArr);
     // 모두 체크 되었을때
     if (!checkedArr[0]) {
       if (checkedArr[1] && checkedArr[2] && checkedArr[3] && checkedArr[4]) {
@@ -48,16 +49,6 @@ const AgreeScreen = () => {
       }
     }
   }, [agreeInfo]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(
-        AuthActions.fetchAuthReducer({
-          type: 'agreeInfoInit',
-        }),
-      );
-    };
-  }, []);
 
   const onCheck = (index: any) => {
     switch (index) {

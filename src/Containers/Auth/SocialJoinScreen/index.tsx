@@ -19,7 +19,6 @@ import InputNickname from '@/Components/Input/Nickname';
 import useInputName from '@/Hooks/useInputName';
 import useInputNickname from '@/Hooks/useInputNickname';
 import useDebounce from '@/Hooks/useDebounce';
-import dev from '@/Config/dev';
 
 const SocialJoinScreen = () => {
   const dispatch = useDispatch();
