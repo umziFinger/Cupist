@@ -5,10 +5,8 @@ import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messag
 import { Platform } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { navigate } from '@/Services/NavigationService';
 import NotificationActions from '@/Stores/Notification/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
-import MyActions from '@/Stores/My/Actions';
 
 const RootFcm = () => {
   const dispatch = useDispatch();
