@@ -34,28 +34,9 @@ export function* fetchReservation(data: any): any {
       url: Config.RESERVATION_URL,
     };
     const response = yield call(Axios.POST, payload);
-    console.log('예약 res : ', response);
     if (response.result === true && response.code === null) {
       yield put(ReservationActions.fetchReservationReducer({ type: 'paymentInfo', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      console.log('예약 response.data : ', response.data);
-
-      // const userCode = Config.USER_CODE;
-      // const data = {
-      //   pg: 'html5_inicis', // PG사
-      //   pay_method: 'card', // 결제수단
-      //   merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
-      //   amount: 100, // 결제금액
-      //   name: '아임포트 결제 데이터 분석', // 주문명
-      //   buyer_name: '홍길동', // 구매자 이름
-      //   buyer_tel: '01012341234', // 구매자 전화번호
-      //   buyer_email: 'example@example', // 구매자 이메일
-      //   buyer_addr: '신사동 661-16', // 구매자 주소
-      //   buyer_postcode: '06018', // 구매자 우편번호
-      // };
-      // console.log('paymentMethod : ', DATA_PAYMENT_METHOD[paymentMethod].key);
-      // navigate('PaymentScreen', { userCode, data });
-
       // 웹뷰에서 결제 성공 후 callback 에서 rbs open
       yield put(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: true }));
     } else {
@@ -75,6 +56,7 @@ export function* fetchReservationCardList(data: any): any {
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
+      console.log('card response : ', response);
       yield put(ReservationActions.fetchReservationReducer({ type: 'myCardList', data: response.data }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
@@ -150,7 +132,7 @@ export function* fetchReservationSimplePayment(data: any): any {
 
 export function* fetchReservationCard(data: any): any {
   try {
-    const { selectedPlaceIdx, selectedTicket } = yield select((state: PlaceState) => state.place);
+    const { selectedPlaceIdx } = yield select((state: PlaceState) => state.place);
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
       ...data,
@@ -159,8 +141,18 @@ export function* fetchReservationCard(data: any): any {
     const response = yield call(Axios.POST, payload);
     if (response.result === true && response.code === null) {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      console.log('call saga 카드 등록 성공! : ', selectedTicket);
-      navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: selectedTicket?.idx });
+      console.log('call saga 카드 등록 성공!! : ', data.params.ticketInfoIdx);
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: '카드가 등록되었습니다.',
+          },
+        }),
+      );
+      navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: data.params.ticketInfoIdx });
     } else {
       navigateGoBack();
       yield put(CommonActions.fetchErrorHandler(response));

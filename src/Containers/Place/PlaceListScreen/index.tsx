@@ -52,7 +52,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
     let date = calendarDate;
     if (type === 'special') {
       title = '자유 볼링';
-      content = '1인 3~4시간 무제한 상품';
+      content = '1인 2 ~ 4시간 무제한 상품';
       date = calendarDate;
     }
     if (type === 'early') {

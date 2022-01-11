@@ -17,8 +17,8 @@ const RootFcm = () => {
 
   useEffect(() => {
     AsyncStorage.getItem('splashStatus').then((value) => {
-      console.log('Root Fcm isHomeLoaded : ', isHomeLoaded, value);
-      if (isHomeLoaded && value === 'end') {
+      console.log('Root Fcm isHomeLoaded : ', isHomeLoaded, value, moveScreenParams);
+      if (isHomeLoaded && value === 'end' && moveScreenParams) {
         dispatch(NotificationActions.fetchNotificationDetailNavigate(moveScreenParams));
         setMoveScreenParams(null);
       }

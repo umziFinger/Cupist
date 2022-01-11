@@ -4,7 +4,6 @@ import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
-import { PAYMENT_CARD_IMAGE } from '@/Components/Data/PAYMENT_CARD_IMAGE';
 import CustomButton from '@/Components/CustomButton';
 import ReservationActions from '@/Stores/Reservation/Actions';
 
@@ -34,7 +33,7 @@ const MyPaymentCard = (props: PropTypes) => {
     >
       <FastImage
         style={{ width: '100%', height: '100%' }}
-        source={PAYMENT_CARD_IMAGE(item?.cardCode)}
+        source={item?.cardImage ? { uri: item?.cardImage || '' } : require('@/Assets/Images/CreditCard/imgCardN.png')}
         resizeMode={FastImage.resizeMode.cover}
       />
       <CustomButton

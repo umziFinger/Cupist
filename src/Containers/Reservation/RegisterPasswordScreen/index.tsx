@@ -71,7 +71,7 @@ const RegisterPasswordScreen = () => {
 
   useEffect(() => {
     if (validation) {
-      dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo }));
+      dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, ticketInfoIdx: selectedTicket?.idx }));
     }
   }, [validation]);
 

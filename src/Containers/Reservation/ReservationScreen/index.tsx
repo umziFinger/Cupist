@@ -63,7 +63,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
   useEffect(() => {
     return () => {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'reservationInfoInit' }));
-      dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
+      // dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
     };
   }, []);
 

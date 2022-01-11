@@ -14,11 +14,13 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import CommonActions from '@/Stores/Common/Actions';
 import { navigate } from '@/Services/NavigationService';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 const AddCardScreen = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { agreeCheckedArr, myCardList } = useSelector((state: ReservationState) => state.reservation);
+  const { selectedTicket } = useSelector((state: PlaceState) => state.place);
   const addCardInfo = useSelector((state: ReservationState) => state.reservation.addCardInfo);
   const [validation, setValidation] = useState<boolean>(false);
   const [cardNum1, setCardNum1] = useState<string>('');
@@ -120,7 +122,7 @@ const AddCardScreen = () => {
         console.log('카드 등록 api 호출!');
         console.log('카드 등록 params :', addCardInfo);
 
-        dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo }));
+        dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, ticketInfoIdx: selectedTicket?.idx }));
       }
       return null;
     }

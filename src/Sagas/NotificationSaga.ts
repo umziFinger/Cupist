@@ -105,7 +105,6 @@ export function* fetchNotificationDetailNavigate(data: any): any {
     if (category) {
       if (category === 'reservation') {
         if (type === 'done')
-          // yield put(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '지난', key: 'after' } }));
           yield put(
             MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '진행중', key: 'before' } }),
           );
@@ -130,40 +129,6 @@ export function* fetchNotificationDetailNavigate(data: any): any {
     console.log('occurred Error...fetchNotificationDetailNavigate : ', e);
   }
 }
-
-/* export function* fetchNotificationDetailNavigate(data: any): any {
-  try {
-    const { idx } = data.params;
-
-    const payload = {
-      ...data,
-      url: `${Config.MY_NOTIFICATION_URL}/${idx}`,
-    };
-
-    // 읽음 처리 api
-    const response = yield call(Axios.PATCH, payload);
-
-    if (response.result === true && response.code === null) {
-      // 알림 뱃지 업데이트
-      const badgeCnt = response.data.badgeCnt;
-      if (badgeCnt) {
-        if (Platform.OS === 'android') {
-          BadgeAndroid.setBadge(Number(badgeCnt));
-        } else if (Platform.OS === 'ios') {
-          PushNotificationIOS.setApplicationIconBadgeNumber(Number(badgeCnt));
-        }
-      }
-
-      // 스크린 이동
-      console.log('스크린 이동 : ', data.params);
-      yield moveScreen(data.params);
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchNotificationDetailNavigate : ', e);
-  }
-} */
 
 function* moveScreen(item: any) {
   console.log('category! : ', item);
