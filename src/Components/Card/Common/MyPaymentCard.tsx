@@ -34,8 +34,7 @@ const MyPaymentCard = (props: PropTypes) => {
     >
       <FastImage
         style={{ width: '100%', height: '100%' }}
-        // source={PAYMENT_CARD_IMAGE(item?.cardCode)}
-        source={require('@/Assets/Images/CreditCard/imgCardN.png')}
+        source={item?.cardImage ? { uri: item?.cardImage || '' } : require('@/Assets/Images/CreditCard/imgCardN.png')}
         resizeMode={FastImage.resizeMode.cover}
       />
       <CustomButton
