@@ -22,7 +22,7 @@ function Loading() {
         }}
         autoPlay
         loop
-        source={require('@/Assets/Lottie/Loading.json')}
+        source={require('@/Assets/Lottie/loading_220110.json')}
         imageAssetsFolder={'images'}
       />
     </View>
