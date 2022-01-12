@@ -78,7 +78,6 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
       }
 
       case 'paymentResult': {
-        console.log('call reducer paymentResult : ', data.payment);
         draft.paymentResult = data.payment;
         break;
       }

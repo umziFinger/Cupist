@@ -23,7 +23,6 @@ export function navigateGoBack() {
 
 export function navigateAndReset(name: string, index = 0) {
   navigationRef.current?.dispatch((state: any) => {
-    console.log('navigateAndReset state.routes : ', state.routes);
     const tempRoutes = [];
     const routes = state.routes.filter((r) => {
       if (r.name === 'Bottom') {
@@ -43,7 +42,6 @@ export function navigateAndReset(name: string, index = 0) {
 
 export function navigateAndJoinReset(name: string, index = 0) {
   navigationRef.current?.dispatch((state: any) => {
-    console.log('navigateAndJoinReset state.routes : ', state.routes);
     const routes = state.routes.filter((r) => {
       if (r.name === 'Bottom') {
         return r;
@@ -64,7 +62,6 @@ export function navigateAndJoinReset(name: string, index = 0) {
 }
 
 export function navigateAndSimpleReset(name: string, index = 0) {
-  console.log('navigationRef.current : ', navigationRef.current);
   navigationRef.current?.dispatch(
     CommonActions.reset({
       index,

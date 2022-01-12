@@ -45,6 +45,7 @@ export const INITIAL_STATE: AuthState['auth'] = {
   nickNameValid: false,
   terms: [],
   tempUserIdx: '',
+  socialType: '',
 };
 
 export interface AuthState {
@@ -69,6 +70,7 @@ export interface AuthState {
     nickNameValid: boolean | false;
     terms: Array<any> | [];
     tempUserIdx: any; // 처음 소셜 로그인 시 이용약관 동의를 위한 tempUserIdx 가 발행됨
+    socialType: string | '';
   };
 }
 

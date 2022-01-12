@@ -41,6 +41,7 @@ export function* fetchUserLogin(data: any): any {
       const { accessToken, refreshToken, idx, tempUserIdx } = response.data;
       if (tempUserIdx) {
         yield put(AuthActions.fetchAuthReducer({ type: 'tempUserIdx', data: tempUserIdx }));
+        yield put(AuthActions.fetchAuthReducer({ type: 'socialType', data: type }));
         navigate('AgreeScreen');
       } else {
         console.log('Login token : ', accessToken);

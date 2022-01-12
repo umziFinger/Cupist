@@ -163,8 +163,15 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         draft.userInfo.eventPushYN = data;
         break;
       }
+
       case 'tempUserIdx': {
         draft.tempUserIdx = data;
+        break;
+      }
+
+      case 'socialType': {
+        console.log('call reducer socialType : ', data);
+        draft.socialType = data;
         break;
       }
 

@@ -1,7 +1,12 @@
-import React from 'react';
-import { Text, Platform, TextProps } from 'react-native';
+import React, { ReactChild } from 'react';
+import { Text, Platform, TextStyle } from 'react-native';
 
-const CustomText: React.SFC<TextProps> = (props) => {
+interface PropsType {
+  children: ReactChild;
+  style: TextStyle;
+}
+
+const CustomText = (props: PropsType) => {
   const { children, style } = props;
 
   const defaultStyle = Platform.select({

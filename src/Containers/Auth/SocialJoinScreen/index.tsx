@@ -19,6 +19,7 @@ import InputNickname from '@/Components/Input/Nickname';
 import useInputName from '@/Hooks/useInputName';
 import useInputNickname from '@/Hooks/useInputNickname';
 import useDebounce from '@/Hooks/useDebounce';
+import DATA_SOCIAL_HEADER_TEXT from '@/Containers/Auth/SocialJoinScreen/data';
 
 const SocialJoinScreen = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const SocialJoinScreen = () => {
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
   ref_input[2] = useRef(null);
-  const { isReceived, log_cert, tempUserIdx, agreeInfo } = useSelector((state: AuthState) => state.auth);
+  const { isReceived, log_cert, tempUserIdx, agreeInfo, socialType } = useSelector((state: AuthState) => state.auth);
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const [touchCnt, setTouchCnt] = useState<number>(0);
 
@@ -112,7 +113,7 @@ const SocialJoinScreen = () => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1 }}>
                   <CustomText style={{ fontSize: 22, fontWeight: 'bold', letterSpacing: -0.4, color: Color.Black1000 }}>
-                    회원정보
+                    {DATA_SOCIAL_HEADER_TEXT[socialType]?.text || '계속하기'}
                   </CustomText>
                 </View>
               </View>

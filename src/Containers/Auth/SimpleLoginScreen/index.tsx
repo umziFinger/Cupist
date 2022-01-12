@@ -111,6 +111,7 @@ const SimpleLoginScreen = () => {
     return () => {
       dispatch(HomeActions.fetchHomeReducer({ type: 'loginCheckYN', data: { loginCheckYN: 'Y' } }));
       dispatch(AuthActions.fetchAuthReducer({ type: 'agreeInfoInit' }));
+      dispatch(AuthActions.fetchAuthReducer({ type: 'socialType', data: '' }));
     };
   }, []);
 
