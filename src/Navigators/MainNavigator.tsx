@@ -61,6 +61,7 @@ import BasicInfoDetailScreen from '@/Containers/Place/BasicInfoDetailScreen';
 import PaymentScreen from '@/Components/IamPort/PaymentScreen';
 import CertificationScreen from '@/Components/IamPort/CertificationScreen';
 import SocialJoinScreen from '@/Containers/Auth/SocialJoinScreen';
+import MyCouponScreen from '@/Containers/More/MyCouponScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -122,6 +123,7 @@ export type MainStackParamList = {
   BasicInfoDetailScreen: undefined;
   PaymentScreen: { userCode: any; data: any };
   CertificationScreen: undefined;
+  MyCouponScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -194,6 +196,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="ReservationCancelDetailScreen" component={ReservationCancelDetailScreen} />
       <MainStack.Screen name="WriteReviewScreen" component={WriteReviewScreen} />
       <MainStack.Screen name="WriteReviewDetailScreen" component={WriteReviewDetailScreen} />
+      <MainStack.Screen name="MyCouponScreen" component={MyCouponScreen} />
 
       {/* Reservation */}
       <MainStack.Screen name="ReservationScreen" component={ReservationScreen} />

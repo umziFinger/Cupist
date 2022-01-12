@@ -12,6 +12,7 @@ import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthActions from '@/Stores/Auth/Actions';
 import CommonActions from '@/Stores/Common/Actions';
+import { MainStackParamList } from '@/Navigators/MainNavigator';
 
 const MoreScreen = () => {
   const dispatch = useDispatch();
@@ -27,13 +28,14 @@ const MoreScreen = () => {
     }
   }, [isFocused]);
 
-  const onMove = (screen: string) => {
-    if (screen === 'NotificationScreen') {
-      dispatch(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
-    }
+  const onMove = (screen: keyof MainStackParamList) => {
+    // if (screen === 'NotificationScreen') {
+    //   dispatch(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    // }
     navigate(screen);
   };
-  const renderItem = (item: { title: string; icon?: any; screen: string }, index: number) => {
+
+  const renderItem = (item: { title: string; icon?: any; screen: keyof MainStackParamList }, index: number) => {
     return (
       <CustomButton onPress={() => onMove(item?.screen)}>
         <View
