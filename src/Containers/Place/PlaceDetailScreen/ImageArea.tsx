@@ -44,7 +44,7 @@ const ImageArea = (props: PropTypes) => {
     navigate('TotalImageScreen', { startIdx: value });
   };
 
-  return (
+  return item.placePhotoArr?.length !== 0 ? (
     <View style={{ flex: 1 }}>
       <FlatList
         data={item.placePhotoArr || []}
@@ -69,7 +69,7 @@ const ImageArea = (props: PropTypes) => {
             </View>
           </CustomButton>
         )}
-        ListEmptyComponent={
+        /* ListEmptyComponent={
           <View
             style={{
               width,
@@ -85,7 +85,7 @@ const ImageArea = (props: PropTypes) => {
               resizeMode={FastImage.resizeMode.cover}
             />
           </View>
-        }
+        } */
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={1}
         maxToRenderPerBatch={1}
@@ -103,7 +103,7 @@ const ImageArea = (props: PropTypes) => {
       />
 
       {/* 이미지 페이징 영역 */}
-      {item.placePhotoArr && (
+      {item?.placePhotoArr?.length !== 0 && (
         <View style={{ position: 'absolute', bottom: 12, right: 12 }}>
           <View
             style={{
@@ -122,7 +122,7 @@ const ImageArea = (props: PropTypes) => {
         </View>
       )}
     </View>
-  );
+  ) : null;
 };
 
 export default ImageArea;

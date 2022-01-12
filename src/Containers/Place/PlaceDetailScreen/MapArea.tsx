@@ -229,9 +229,7 @@ const MapArea = (props: PropTypes) => {
             </CustomText>
           </View>
           <View style={{ flex: 1, justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>
-              {inputMobileNumber(item?.tel)}
-            </CustomText>
+            <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>{item?.tel}</CustomText>
           </View>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
