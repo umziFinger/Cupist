@@ -25,7 +25,7 @@ function CertificationScreen() {
   /* 가맹점 식별코드, 결제 데이터 추출 */
   const userCode: string = Config.USER_CODE;
   const data: any = {
-    company: '(주)볼리미',
+    company: '(주)볼링플러스',
   };
 
   /* 본인인증 후 실행될 콜백 함수 입력 */

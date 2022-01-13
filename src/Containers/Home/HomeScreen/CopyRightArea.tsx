@@ -76,7 +76,7 @@ const CopyRightArea = () => {
         <View style={{ flex: 1, marginTop: 20 }}>
           <View style={{ justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Gray400, fontSize: 9 }}>
-              {`(주)볼리미는 통신판매중개자로서 통신판매의 당사자가 아니며,\n상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.`}
+              {`(주)볼링플러스는 통신판매중개자로서 통신판매의 당사자가 아니며,\n상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.`}
             </CustomText>
           </View>
         </View>
