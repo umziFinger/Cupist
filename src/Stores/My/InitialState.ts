@@ -1,4 +1,4 @@
-import { number } from 'prop-types';
+import { MainStackParamList } from '@/Navigators/MainNavigator';
 
 export const INITIAL_STATE: MyState['my'] = {
   myReviewPage: 1,
@@ -17,6 +17,7 @@ export const INITIAL_STATE: MyState['my'] = {
       icon: require('@/Assets/Images/More/icPlusProfile.png'),
       screen: 'ProfileSettingScreen',
     },
+    { title: '내 쿠폰함', screen: 'MyCouponScreen' },
     { title: '내 알림', screen: 'NotificationScreen' },
     { title: '최근 본 볼링장', screen: 'RecentPlaceScreen' },
     { title: '공지사항', icon: require('@/Assets/Images/More/icPlusNotice.png'), screen: 'NoticeScreen' },
@@ -66,7 +67,7 @@ export interface MyState {
     myPointList: any[];
     myPointListPage: number;
     total_mileage: number;
-    moreScreenRenderItem: Array<{ title: string; icon?: any; screen: string }>;
+    moreScreenRenderItem: Array<{ title: string; icon?: any; screen: keyof MainStackParamList }>;
     myNoticeList: any[];
     myNoticeListPage: number;
     myNoticeDetail: any;

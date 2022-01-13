@@ -5,7 +5,6 @@ const { Types, Creators } = createActions({
   fetchMyReviewList: ['params'],
   fetchMyCouponList: ['params'],
   fetchMyPushYN: ['params'],
-  fetchMyPointList: ['params'], // 내 마일리지 현황
   fetchMySmsSend: ['params'],
   fetchMyPlacePatch: ['params'],
   fetchMyProfilePatch: ['params'],

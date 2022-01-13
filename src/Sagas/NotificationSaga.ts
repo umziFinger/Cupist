@@ -6,7 +6,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import NotificationActions from '@/Stores/Notification/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
-import { navigate, navigateAndReset, navigateAndSimpleReset } from '@/Services/NavigationService';
+import { navigate } from '@/Services/NavigationService';
 import MyActions from '@/Stores/My/Actions';
 
 export function* fetchNotificationList(data: any): any {

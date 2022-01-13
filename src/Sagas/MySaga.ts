@@ -88,36 +88,6 @@ export function* fetchMyCouponList(data: any): any {
   }
 }
 
-export function* fetchMyPointList(data: any): any {
-  try {
-    yield put(MyActions.fetchMyReducer({ type: 'myPointListPage', data: data.params.page + 1 }));
-    const payload = {
-      ...data,
-      url: Config.MY_MILEAGES,
-    };
-
-    const response = yield call(Axios.GET, payload);
-    console.log('마일리지 내역: ', response.data);
-    if (response.result === true && response.code === null) {
-      yield put(
-        MyActions.fetchMyReducer({
-          type: 'myPointList',
-          data: response.data,
-          page: data.params.page,
-        }),
-      );
-      yield put(MyActions.fetchMyReducer({ type: 'myPointListPage', data: data.params.page + 1 }));
-
-      // userInfo의 마일리지 정보 업데이트
-      yield put(AuthActions.fetchAuthReducer({ type: 'myMileage', data: response.data.total_mileage }));
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchMyPointList : ', e);
-  }
-}
-
 export function* fetchMySmsSend(data: any): any {
   try {
     const payload = {

@@ -64,7 +64,6 @@ const dev = {
   MY_URL: 'my',
   MY_PUSH_YN_URL: 'my/pushYN',
   MY_REVIEW: 'my/review',
-  MY_MILEAGES: 'my/mileages',
   MY_PROMOTION_URL: 'my/promotion',
   MY_CERT_GET_URL: 'my/cert/get',
   MY_PROFILE_URL: 'my/profile',
