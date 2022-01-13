@@ -14,38 +14,27 @@ import CustomButton from '@/Components/CustomButton';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { navigateGoBack } from '@/Services/NavigationService';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 const EditBookerScreen = () => {
   const dispatch = useDispatch();
 
-  const ref_input: Array<React.RefObject<TextInput>> = [];
-  ref_input[0] = useRef(null);
-  ref_input[1] = useRef(null);
-  ref_input[2] = useRef(null);
   const { heightInfo, isOpenKeyboard } = useSelector((state: CommonState) => state.common);
+  const { userInfo } = useSelector((state: AuthState) => state.auth);
   const reservationInfo = useSelector((state: ReservationState) => state.reservation.reservationInfo);
 
-  const { userName, onChangeName, nameValidText, isNameValid, onClearName } = useInputName();
   const { phoneNumber, onChangePhoneNumber, isPhoneValid } = useInputPhoneNumber();
 
   useEffect(() => {
-    onChangeName(reservationInfo?.username || '');
     onChangePhoneNumber(reservationInfo?.mobile);
   }, []);
 
-  const onFocusNext = (currentFocusIndex: number) => {
-    if (ref_input[currentFocusIndex] && ref_input[currentFocusIndex + 1]) {
-      // ref_input[currentFocusIndex].current?.blur();
-      ref_input[currentFocusIndex + 1].current?.focus();
-    }
-  };
-
   const onBookerInfoEdit = () => {
-    if (isNameValid && isPhoneValid) {
+    if (isPhoneValid) {
       dispatch(
         ReservationActions.fetchReservationReducer({
           type: 'reservationInfoEdit',
-          data: { username: userName, mobile: phoneNumber },
+          data: { username: reservationInfo?.username, mobile: phoneNumber },
         }),
       );
       navigateGoBack();
@@ -62,25 +51,39 @@ const EditBookerScreen = () => {
             renderItem={() => (
               <View style={{}}>
                 <View style={{ marginTop: 48, paddingBottom: 32 - 18 }}>
-                  <InputName
-                    ref={ref_input[0]}
-                    nameValidText={nameValidText}
-                    onChangeText={onChangeName}
-                    value={userName}
-                    onSubmitEditing={() => {
-                      onFocusNext(0);
+                  <View>
+                    <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow500 }}>
+                      이름
+                    </CustomText>
+                  </View>
+
+                  <View
+                    style={{
+                      paddingVertical: Platform.OS === 'ios' ? 15 : 7.5,
+                      paddingLeft: 12,
+                      borderRadius: 3,
+                      borderColor: Color.Gray300,
+                      borderWidth: 1,
+                      marginTop: 8,
+                      flexDirection: 'row',
+                      paddingHorizontal: 12,
+                      alignItems: 'center',
                     }}
-                    onTextClear={onClearName}
-                  />
+                  >
+                    <CustomText
+                      style={{
+                        color: Color.Black1000,
+                        fontSize: 14,
+                        letterSpacing: -0.25,
+                      }}
+                    >
+                      {reservationInfo?.username}
+                    </CustomText>
+                  </View>
                 </View>
 
                 <View style={{ paddingBottom: 32 }}>
-                  <InputAuthPhone
-                    ref={ref_input[1]}
-                    onChangeText={onChangePhoneNumber}
-                    value={phoneNumber}
-                    isPhoneValid={isPhoneValid}
-                  />
+                  <InputAuthPhone onChangeText={onChangePhoneNumber} value={phoneNumber} isPhoneValid={isPhoneValid} />
                 </View>
               </View>
             )}
@@ -108,7 +111,7 @@ const EditBookerScreen = () => {
                         alignItems: 'center',
                         paddingVertical: 15,
                         borderRadius: 5,
-                        backgroundColor: isNameValid && isPhoneValid ? Color.Primary1000 : Color.Grayyellow200,
+                        backgroundColor: isPhoneValid ? Color.Primary1000 : Color.Grayyellow200,
                       }}
                     >
                       <CustomText
