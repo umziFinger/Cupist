@@ -2,7 +2,6 @@ import React, { createRef, useEffect, useState } from 'react';
 import { FlatList, NativeSyntheticEvent, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
-import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import MyActions from '@/Stores/My/Actions';
@@ -11,7 +10,7 @@ interface PropTypes {
   list: Array<any>;
 }
 const EventArea = (props: PropTypes) => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const flatRef = createRef<any>();
   const { list } = props;
@@ -21,75 +20,6 @@ const EventArea = (props: PropTypes) => {
   const [intervalToggle, setIntervalToggle] = useState(true);
   const [page, setPage] = useState<number>(0);
   const perPage = list?.length || 0;
-
-  const list2 = [
-    {
-      bannerFile: 'https://cdn.watple.co/event/2021/08/17/112308_239f1a07dadcac21b00698d94c4046d7.png',
-      category: 'event',
-      commentCnt: 0,
-      content: '이벤트 중입니다.',
-      deleteDate: null,
-      endFile: 'httn.watple.co/event/2021/08/17/112308_239f1a07dadcac21b00698d94c4046d7.png',
-      hashtag: '',
-      hitCnt: 0,
-      idx: 1,
-      ipAddr: '',
-      joinCnt: 0,
-      likeCnt: 0,
-      linkScreen: '',
-      linkType: '',
-      mainFile: 'https://cdn.watple.co/event/2021/08/17/112308_239f1a07dadcac21b00698d94c4046d7.png',
-      period: '',
-      regDate: '2021-11-02T11:34:16.977Z',
-      title: '테스트 이벤트',
-      type: 'ing',
-      updateDate: '2021-11-02T11:34:16.977Z',
-    },
-    {
-      bannerFile: 'https://cdn.watple.co/event/2021/08/17/112308_239f1a07dadcac21b00698d94c4046d7.png',
-      category: 'event',
-      commentCnt: 0,
-      content: '이벤트 중입니다.',
-      deleteDate: null,
-      endFile: 'httn.watple.co/event/2021/08/17/112308_239f1a07dadcac21b00698d94c4046d7.png',
-      hashtag: '',
-      hitCnt: 0,
-      idx: 1,
-      ipAddr: '',
-      joinCnt: 0,
-      likeCnt: 0,
-      linkScreen: '',
-      linkType: '',
-      mainFile: 'https://cdn.watple.co/event/2021/08/17/112308_239f1a07dadcac21b00698d94c4046d7.png',
-      period: '',
-      regDate: '2021-11-02T11:34:16.977Z',
-      title: '테스트 이벤트',
-      type: 'ing',
-      updateDate: '2021-11-02T11:34:16.977Z',
-    },
-    {
-      bannerFile: 'https://cdn.watple.co/event/2021/08/17/112308_239f1a07dadcac21b00698d94c4046d7.png',
-      category: 'event',
-      commentCnt: 0,
-      content: '이벤트 중입니다.',
-      deleteDate: null,
-      endFile: 'httn.watple.co/event/2021/08/17/112308_239f1a07dadcac21b00698d94c4046d7.png',
-      hashtag: '',
-      hitCnt: 0,
-      idx: 1,
-      ipAddr: '',
-      joinCnt: 0,
-      likeCnt: 0,
-      linkScreen: '',
-      linkType: '',
-      mainFile: 'https://cdn.watple.co/event/2021/08/17/112308_239f1a07dadcac21b00698d94c4046d7.png',
-      period: '',
-      regDate: '2021-11-02T11:34:16.977Z',
-      title: '테스트 이벤트',
-      type: 'ing',
-      updateDate: '2021-11-02T11:34:16.977Z',
-    },
-  ];
 
   useEffect(() => {
     updatePage();
