@@ -232,6 +232,11 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'couponSelectedTab': {
+        draft.couponSelectedTab = data;
+        break;
+      }
+
       default:
         return draft;
     }

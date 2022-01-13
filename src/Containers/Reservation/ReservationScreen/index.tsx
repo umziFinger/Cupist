@@ -22,6 +22,8 @@ import ReservationActions from '@/Stores/Reservation/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
+import AmountArea from '@/Containers/Reservation/ReservationScreen/AmountArea';
+import CouponArea from '@/Containers/Reservation/ReservationScreen/CouponArea';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'ReservationScreen'>;
@@ -142,6 +144,18 @@ const ReservationScreen = ({ route }: PropTypes) => {
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <View style={{ paddingHorizontal: 16, marginTop: 28 }}>
               <PriceArea item={reservationInfo} />
+            </View>
+
+            <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 28 }} />
+
+            <View style={{ paddingHorizontal: 16 }}>
+              <CouponArea item={reservationInfo} />
+            </View>
+
+            <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 28 }} />
+
+            <View style={{ paddingHorizontal: 16 }}>
+              <AmountArea item={reservationInfo} />
             </View>
           </View>
         );

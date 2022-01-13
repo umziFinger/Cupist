@@ -54,6 +54,7 @@ export const INITIAL_STATE: MyState['my'] = {
     files: '',
   }, // 작성 가능한 리뷰 데이터 담는 곳
   clickedReviewItem: null,
+  couponSelectedTab: { title: '사용가능', key: 'Y' },
 };
 export interface MyState {
   my: {
@@ -101,6 +102,7 @@ export interface MyState {
       files: any;
     };
     clickedReviewItem: any;
+    couponSelectedTab: CouponTabType;
   };
 }
 export type qnaType =
@@ -117,3 +119,4 @@ export type reservationTabType =
   | { title: '지난'; key: 'after' }
   | { title: '취소'; key: 'cancel' };
 export type reservationPageType = { before: 1; after: 1; cancel: 1 };
+export type CouponTabType = { title: '사용가능'; key: 'Y' } | { title: '지난쿠폰'; key: 'N' };

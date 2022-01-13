@@ -4,6 +4,7 @@ import NotificationTabMenu from '@/Components/TabMenu/NotificationTabMenu';
 import QnaTabMenu from '@/Components/TabMenu/QnaTabMenu';
 import MyTabMenu from '@/Components/TabMenu/MyTabMenu';
 import ReservationTabMenu from '@/Components/TabMenu/ReservationTabMenu';
+import CouponTabMenu from '@/Components/TabMenu/CouponTabMenu';
 
 interface TabMenuProps {
   type: string;
@@ -23,6 +24,8 @@ const TabMenu = (props: TabMenuProps) => {
       return <MyTabMenu type={type} data={data} />;
     case 'reservation':
       return <ReservationTabMenu type={type} data={data} />;
+    case 'coupon':
+      return <CouponTabMenu type={type} data={data} />;
     default:
       return null;
   }

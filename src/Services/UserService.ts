@@ -39,6 +39,7 @@ export const refreshAuthLogic = async (failedRequest?: any) => {
 
 async function getAccessToken() {
   const token = await AsyncStorage.getItem('accessToken');
+  // console.log('토큰: ', token);
   return token;
 }
 

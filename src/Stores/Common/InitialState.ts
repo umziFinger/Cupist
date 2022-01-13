@@ -6,6 +6,8 @@ export const INITIAL_STATE = {
   isOpenCalendarRBS: false,
   isOpenMyReviewMoreRBS: false,
   isOpenPlaceReviewMoreRBS: false,
+  isOpenCouponGuideRBS: false,
+  isOpenCouponSelectRBS: false,
   isLoading: false,
   isSkeleton: false,
   alertDialog: false,
@@ -63,6 +65,8 @@ export interface CommonState {
     isOpenCalendarRBS: boolean | false;
     isOpenMyReviewMoreRBS: boolean | false;
     isOpenPlaceReviewMoreRBS: boolean | false;
+    isOpenCouponGuideRBS: boolean | false;
+    isOpenCouponSelectRBS: boolean | false;
     isLoading: boolean | false;
     isSkeleton: boolean | false;
     alertDialog: AlertInfo['alertDialog'];

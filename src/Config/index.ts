@@ -1,7 +1,8 @@
 import dev from '@/Config/dev';
 import prod from '@/Config/prod';
 
-const type = 'production';
+// const type = 'production';
+const type = 'development';
 const ENV_CONFIG = {
   development: dev,
   production: prod,
