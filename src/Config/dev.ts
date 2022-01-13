@@ -31,7 +31,7 @@ const dev = {
 
   // market url
   MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/apple-store/id1596274166',
-  MARKET_URL_ANDROID: 'market://details?id=com.luxurynall',
+  MARKET_URL_ANDROID: 'market://details?id=kr.bolimi',
 
   // naver key
   NAVER_KEY: 'oRxO0Jqlo_XYVxcKk_1A',
