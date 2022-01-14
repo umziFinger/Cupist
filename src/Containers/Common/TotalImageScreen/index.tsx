@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Dimensions, Platform, StatusBar } from 'react-native';
+import { View, Platform, StatusBar, useWindowDimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
@@ -16,13 +16,12 @@ interface TotalImageProps {
   route: RouteProp<MainStackParamList, 'TotalImageScreen'>;
 }
 
-const { width } = Dimensions.get('window');
-
 const TotalImageScreen = ({ route }: TotalImageProps) => {
   const dispatch = useDispatch();
   const { startIdx } = route.params;
   const { totalImageList, heightInfo, totalImageType } = useSelector((state: CommonState) => state.common);
-
+  const { width } = useWindowDimensions();
+  // console.log(width);
   useEffect(() => {
     console.log('totalImageList', totalImageList);
     return () => {
@@ -41,7 +40,7 @@ const TotalImageScreen = ({ route }: TotalImageProps) => {
         idx: i,
         url: totalImageType === 'review' ? attach.url : attach,
         width,
-        height: width,
+        height: totalImageType === 'placeDetail' ? (9 / 16) * width : width,
       }));
       return (
         <ImageViewer

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { FlatList, useWindowDimensions, View } from 'react-native';
@@ -8,17 +8,55 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
+import { ReservationState } from '@/Stores/Reservation/InitialState';
+import { numberFormat } from '@/Components/Function';
+import ReservationActions from '@/Stores/Reservation/Actions';
 
 const CouponGuideRBS = () => {
   const dispatch = useDispatch();
   const RBSheetRef = useRef<any>();
   const { heightInfo, isOpenCouponSelectRBS } = useSelector((state: CommonState) => state.common);
+  const { reservationInfo, totalPrice, selectedCoupon } = useSelector((state: ReservationState) => state.reservation);
   const { height } = useWindowDimensions();
+  const [coupon, setCoupon] = useState<any>({ disableCoupon: [], usableCoupon: [] });
+
   useEffect(() => {
     if (isOpenCouponSelectRBS) {
       RBSheetRef?.current.open();
     }
   }, [isOpenCouponSelectRBS]);
+
+  useEffect(() => {
+    if (reservationInfo?.coupon && totalPrice) {
+      onCouponDivision(reservationInfo?.coupon);
+    }
+  }, [reservationInfo, totalPrice]);
+
+  const onCouponDivision = (couponList: any) => {
+    try {
+      const usableCoupon = couponList?.filter((value: any) => {
+        if (value.Coupon.usePrice < totalPrice) {
+          return value;
+        }
+        return false;
+      });
+
+      const disableCoupon = couponList?.filter((value: any) => {
+        if (value.Coupon.usePrice > totalPrice) {
+          return value;
+        }
+        return false;
+      });
+      setCoupon({ usableCoupon, disableCoupon });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onSelectCoupon = (couponItem: any) => {
+    dispatch(ReservationActions.fetchReservationReducer({ type: 'selectedCoupon', data: couponItem }));
+    RBSheetRef?.current.close();
+  };
 
   return (
     <RBSheet
@@ -54,7 +92,7 @@ const CouponGuideRBS = () => {
                 쿠폰 선택
               </CustomText>
 
-              <CustomButton>
+              <CustomButton onPress={() => onSelectCoupon(null)}>
                 <View
                   style={{
                     marginTop: 20,
@@ -80,9 +118,9 @@ const CouponGuideRBS = () => {
                     <FastImage
                       style={{ width: '100%', height: '100%' }}
                       source={
-                        true
-                          ? require('@/Assets/Images/Button/btnRadioOn.png')
-                          : require('@/Assets/Images/Button/btnRadioOff.png')
+                        selectedCoupon?.idx
+                          ? require('@/Assets/Images/Button/btnRadioOff.png')
+                          : require('@/Assets/Images/Button/btnRadioOn.png')
                       }
                       resizeMode={FastImage.resizeMode.cover}
                     />
@@ -92,14 +130,14 @@ const CouponGuideRBS = () => {
 
               <View style={{ marginTop: 28 }}>
                 <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.Grayyellow1000 }}>
-                  사용가능 쿠폰 2
+                  사용가능 쿠폰 {coupon?.usableCoupon?.length || 0}
                 </CustomText>
 
                 <FlatList
-                  data={[0, 1]}
+                  data={coupon?.usableCoupon || []}
                   listKey={'available'}
-                  renderItem={() => (
-                    <CustomButton>
+                  renderItem={({ item }) => (
+                    <CustomButton onPress={() => onSelectCoupon(item)}>
                       <View
                         style={{
                           marginTop: 12,
@@ -121,7 +159,7 @@ const CouponGuideRBS = () => {
                             <CustomText
                               style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}
                             >
-                              5,000원 할인
+                              {numberFormat(item?.Coupon?.price || 0)}원 할인
                             </CustomText>
                           </View>
 
@@ -129,7 +167,7 @@ const CouponGuideRBS = () => {
                             <FastImage
                               style={{ width: '100%', height: '100%' }}
                               source={
-                                true
+                                selectedCoupon?.idx === item.idx
                                   ? require('@/Assets/Images/Button/btnRadioOn.png')
                                   : require('@/Assets/Images/Button/btnRadioOff.png')
                               }
@@ -146,7 +184,7 @@ const CouponGuideRBS = () => {
                           </View>
                           <View style={{ marginLeft: 8 }}>
                             <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray800 }}>
-                              최초 예약 이용권
+                              {item?.Coupon?.title || ''}
                             </CustomText>
                           </View>
                         </View>
@@ -159,15 +197,15 @@ const CouponGuideRBS = () => {
                           </View>
                           <View style={{ marginLeft: 8 }}>
                             <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray800 }}>
-                              2022. 01. 22까지 (10일 10시간 9분 남음)
+                              {item?.useDateView || ''}
                             </CustomText>
                           </View>
                         </View>
                       </View>
                     </CustomButton>
                   )}
-                  initialNumToRender={3}
-                  maxToRenderPerBatch={7}
+                  initialNumToRender={7}
+                  maxToRenderPerBatch={10}
                   windowSize={7}
                   showsVerticalScrollIndicator={false}
                 />
@@ -175,13 +213,13 @@ const CouponGuideRBS = () => {
 
               <View style={{ marginTop: 28 }}>
                 <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.Grayyellow1000 }}>
-                  보유 쿠폰 3
+                  보유 쿠폰 {coupon?.disableCoupon?.length || 0}
                 </CustomText>
 
                 <FlatList
-                  data={[0, 1]}
+                  data={coupon?.disableCoupon || []}
                   listKey={'disable'}
-                  renderItem={() => (
+                  renderItem={({ item: disableItem }) => (
                     <CustomButton>
                       <View
                         style={{
@@ -204,20 +242,8 @@ const CouponGuideRBS = () => {
                             <CustomText
                               style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Gray400 }}
                             >
-                              5,000원 할인
+                              {numberFormat(disableItem?.Coupon?.price || 0)}원 할인
                             </CustomText>
-                          </View>
-
-                          <View style={{ width: 24, height: 24 }}>
-                            <FastImage
-                              style={{ width: '100%', height: '100%' }}
-                              source={
-                                true
-                                  ? require('@/Assets/Images/Button/btnRadioOn.png')
-                                  : require('@/Assets/Images/Button/btnRadioOff.png')
-                              }
-                              resizeMode={FastImage.resizeMode.cover}
-                            />
                           </View>
                         </View>
 
@@ -229,7 +255,7 @@ const CouponGuideRBS = () => {
                           </View>
                           <View style={{ marginLeft: 8 }}>
                             <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray400 }}>
-                              최초 예약 이용권
+                              {disableItem?.Coupon?.title || ''}
                             </CustomText>
                           </View>
                         </View>
@@ -242,23 +268,23 @@ const CouponGuideRBS = () => {
                           </View>
                           <View style={{ marginLeft: 8 }}>
                             <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray400 }}>
-                              2022. 01. 22까지 (10일 10시간 9분 남음)
+                              {disableItem?.useDateView || ''}
                             </CustomText>
                           </View>
                         </View>
                       </View>
                     </CustomButton>
                   )}
-                  initialNumToRender={1}
-                  maxToRenderPerBatch={1}
+                  initialNumToRender={7}
+                  maxToRenderPerBatch={10}
                   windowSize={7}
                   showsVerticalScrollIndicator={false}
                 />
               </View>
             </View>
           )}
-          initialNumToRender={3}
-          maxToRenderPerBatch={7}
+          initialNumToRender={7}
+          maxToRenderPerBatch={10}
           windowSize={7}
           showsVerticalScrollIndicator={false}
         />

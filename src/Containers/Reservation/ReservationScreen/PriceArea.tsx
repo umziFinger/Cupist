@@ -28,14 +28,14 @@ const PriceArea = (props: PropTypes) => {
     };
   }, []);
 
-  useEffect(() => {
-    onChangeTotalPrice();
-  }, [item, personCount, shoesCount]);
-
-  const onChangeTotalPrice = () => {
-    const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
-    dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
-  };
+  // useEffect(() => {
+  //   onChangeTotalPrice();
+  // }, [item, personCount, shoesCount]);
+  //
+  // const onChangeTotalPrice = () => {
+  //   const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
+  //   dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
+  // };
 
   const onPressPersonCount = (type: string) => {
     if (type === 'plus') {

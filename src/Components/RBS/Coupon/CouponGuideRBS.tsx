@@ -7,17 +7,25 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
+import { MyState } from '@/Stores/My/InitialState';
+import MyActions from '@/Stores/My/Actions';
 
 const CouponGuideRBS = () => {
   const dispatch = useDispatch();
   const RBSheetRef = useRef<any>();
   const { heightInfo, isOpenCouponGuideRBS } = useSelector((state: CommonState) => state.common);
-
+  const { selectedCouponGuide } = useSelector((state: MyState) => state.my);
   useEffect(() => {
     if (isOpenCouponGuideRBS) {
       RBSheetRef?.current.open();
     }
   }, [isOpenCouponGuideRBS]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(MyActions.fetchMyReducer({ type: 'selectedCouponGuide', data: null }));
+    };
+  }, []);
 
   return (
     <RBSheet
@@ -60,7 +68,7 @@ const CouponGuideRBS = () => {
 
               <View style={{ marginTop: 8 }}>
                 <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Gray800 }}>
-                  2022.01.10 10:00 ~ 2022.01.18 10:00까지 사용
+                  {selectedCouponGuide?.useDateView || ''}
                 </CustomText>
               </View>
 
@@ -72,7 +80,7 @@ const CouponGuideRBS = () => {
 
               <View style={{ marginTop: 8 }}>
                 <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Gray800 }}>
-                  {'회원가입 후 첫 예약시 사용 가능\n계정당 1회 사용 가능'}
+                  {selectedCouponGuide?.Coupon?.useTerms || ''}
                 </CustomText>
               </View>
 
@@ -84,7 +92,7 @@ const CouponGuideRBS = () => {
 
               <View style={{ marginTop: 8 }}>
                 <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Gray800 }}>
-                  중복 가입시 사용이 불가합니다.
+                  {selectedCouponGuide?.Coupon?.notice || ''}
                 </CustomText>
               </View>
             </View>

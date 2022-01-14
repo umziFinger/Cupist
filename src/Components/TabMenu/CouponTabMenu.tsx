@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
-import { MyState } from '@/Stores/My/InitialState';
+import { INITIAL_STATE, MyState } from '@/Stores/My/InitialState';
 import MyActions from '@/Stores/My/Actions';
 
 const CouponTabMenu = (props: any) => {
@@ -12,10 +12,16 @@ const CouponTabMenu = (props: any) => {
 
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { couponSelectedTab = { title: '사용가능', key: 'Y' } } = useSelector((state: MyState) => state.my);
+  const { couponSelectedTab = { title: '사용가능', key: 'usable' }, myCouponList = INITIAL_STATE.myCouponList } =
+    useSelector((state: MyState) => state.my);
 
   const onSelectMenu = (item: any): void => {
     dispatch(MyActions.fetchMyReducer({ type: 'couponSelectedTab', data: item }));
+    if (couponSelectedTab.key === 'usable') {
+      dispatch(MyActions.fetchMyReducer({ type: 'usableCouponPage', data: 1 }));
+    } else {
+      dispatch(MyActions.fetchMyReducer({ type: 'expiredCouponPage', data: 1 }));
+    }
   };
 
   return (
@@ -30,7 +36,7 @@ const CouponTabMenu = (props: any) => {
     >
       <FlatList
         data={data}
-        renderItem={({ item, index }) => {
+        renderItem={({ item }) => {
           let textColor = Color.Gray400;
           let bottomWidth = 0;
           if (couponSelectedTab.key === item.key) {
@@ -64,7 +70,10 @@ const CouponTabMenu = (props: any) => {
                       letterSpacing: -0.2,
                     }}
                   >
-                    {item.title} 0
+                    {item.title}
+                    {item?.key === 'usable'
+                      ? myCouponList?.metadata[0]?.usableCnt
+                      : myCouponList?.metadata[0]?.expiredCnt}
                   </CustomText>
                 </View>
               </View>

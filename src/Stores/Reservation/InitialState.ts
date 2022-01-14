@@ -18,6 +18,7 @@ export const INITIAL_STATE: ReservationState['reservation'] = {
     paymentPwd: '',
   },
   paymentPwd: '',
+  selectedCoupon: null,
 };
 
 export interface ReservationState {
@@ -41,5 +42,6 @@ export interface ReservationState {
       paymentPwd: string | '';
     };
     paymentPwd: string;
+    selectedCoupon: any;
   };
 }

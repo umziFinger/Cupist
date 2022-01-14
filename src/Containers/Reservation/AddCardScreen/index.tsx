@@ -112,19 +112,15 @@ const AddCardScreen = () => {
     console.log('validation : ', validation);
     if (validation) {
       // 기존 등록된 카드가 없을때 비밀번호 등록
-      if (myCardList?.length === 0) {
+      if (myCardList?.length === 0 || addCardInfo.paymentPwd === '') {
         console.log('간편 결제 비밀번호 등록 페이지 이동!');
         return navigate('RegisterPasswordScreen');
       }
-
-      // 기존 등록된 카드가 있을때 바로 카드 등록
-      if (myCardList?.length !== 0) {
+      if (myCardList?.length !== 0 && addCardInfo.paymentPwd !== '') {
         console.log('카드 등록 api 호출!');
         console.log('카드 등록 params :', addCardInfo);
-
         dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, ticketInfoIdx: selectedTicket?.idx }));
       }
-      return null;
     }
 
     return dispatch(

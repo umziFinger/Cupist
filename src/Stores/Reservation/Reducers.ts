@@ -14,8 +14,8 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
       }
 
       case 'reservationInfoInit': {
-        console.log('call reducer reservationInfoInit');
         draft.reservationInfo = null;
+        draft.selectedCoupon = null;
         break;
       }
 
@@ -54,13 +54,13 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
       }
 
       case 'personCount': {
-        console.log('personCount : ', data);
+        // console.log('personCount : ', data);
         draft.personCount = data;
         break;
       }
 
       case 'shoesCount': {
-        console.log('shoesCount : ', data);
+        // console.log('shoesCount : ', data);
         draft.shoesCount = data;
         break;
       }
@@ -109,6 +109,10 @@ export const fetchReservationReducer = (state = INITIAL_STATE, actions: any) => 
       case 'paymentPwd': {
         console.log('call reducer paymentPwd : ', data);
         draft.paymentPwd = data;
+        break;
+      }
+      case 'selectedCoupon': {
+        draft.selectedCoupon = data;
         break;
       }
 

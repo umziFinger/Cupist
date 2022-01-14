@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
@@ -8,6 +8,7 @@ import { ReservationState } from '@/Stores/Reservation/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
 import CommonActions from '@/Stores/Common/Actions';
+import { numberFormat } from '@/Components/Function';
 
 interface PropTypes {
   item: any;
@@ -16,8 +17,10 @@ interface PropTypes {
 const CouponArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { item } = props;
-  const { totalPrice, personCount, shoesCount } = useSelector((state: ReservationState) => state.reservation);
-
+  const { totalPrice, personCount, shoesCount, selectedCoupon } = useSelector(
+    (state: ReservationState) => state.reservation,
+  );
+  const [couponCount, setCouponCount] = useState(0);
   useEffect(() => {
     dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: 1 }));
     dispatch(ReservationActions.fetchReservationReducer({ type: 'shoesCount', data: 0 }));
@@ -28,16 +31,34 @@ const CouponArea = (props: PropTypes) => {
   }, []);
 
   useEffect(() => {
-    onChangeTotalPrice();
-  }, [item, personCount, shoesCount]);
+    // onChangeTotalPrice();
+    if (item?.coupon && totalPrice) {
+      onUsableCouponCount(item?.coupon);
+    }
+  }, [item, item?.coupon, personCount, shoesCount, totalPrice]);
 
-  const onChangeTotalPrice = () => {
-    const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
-    dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
-  };
+  // const onChangeTotalPrice = () => {
+  //   const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
+  //   dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
+  // };
 
   const onCouponSelect = () => {
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenCouponSelectRBS', data: true }));
+  };
+
+  const onUsableCouponCount = (coupon: any) => {
+    try {
+      const count = coupon?.filter((value: any) => {
+        if (value.Coupon.usePrice < totalPrice) {
+          return value;
+        }
+        return false;
+      });
+
+      setCouponCount(count?.length);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -52,7 +73,7 @@ const CouponArea = (props: PropTypes) => {
           style={{
             borderWidth: 1,
             borderColor: Color.Gray300,
-            backgroundColor: Color.Gray200,
+            backgroundColor: couponCount > 0 ? Color.White : Color.Gray200,
             borderRadius: 10,
             paddingVertical: 16,
             paddingHorizontal: 12,
@@ -62,8 +83,17 @@ const CouponArea = (props: PropTypes) => {
           }}
         >
           <View style={{ flex: 1 }}>
-            <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Gray400 }}>
-              사용 가능 쿠폰 0장 / 전체 0장
+            <CustomText
+              style={{
+                fontSize: 14,
+                letterSpacing: -0.25,
+                color: couponCount > 0 ? Color.Black1000 : Color.Gray400,
+                fontWeight: selectedCoupon?.idx ? 'bold' : 'normal',
+              }}
+            >
+              {selectedCoupon?.idx
+                ? `${numberFormat(selectedCoupon.Coupon.price)}원 할인 쿠폰`
+                : `사용 가능 쿠폰 ${couponCount}장 / 전체 ${item?.coupon?.length || 0}장`}
             </CustomText>
           </View>
 

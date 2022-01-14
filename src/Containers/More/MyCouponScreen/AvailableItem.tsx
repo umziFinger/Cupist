@@ -6,11 +6,19 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import CommonActions from '@/Stores/Common/Actions';
+import MyActions from '@/Stores/My/Actions';
+import { CouponItemType } from '@/Stores/My/InitialState';
+import { numberFormat } from '@/Components/Function';
 
-const AvailableItem = ({ item, index }: any) => {
+interface PropsType {
+  item: CouponItemType;
+  index: number;
+}
+const AvailableItem = ({ item, index }: PropsType) => {
   const dispatch = useDispatch();
 
   const onCouponGuide = () => {
+    dispatch(MyActions.fetchMyReducer({ type: 'selectedCouponGuide', data: item }));
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenCouponGuideRBS', data: true }));
   };
 
@@ -67,7 +75,7 @@ const AvailableItem = ({ item, index }: any) => {
               color: Color.CalendarRed,
             }}
           >
-            D-3
+            {item?.status || ''}
           </CustomText>
         </View>
         <View
@@ -99,24 +107,26 @@ const AvailableItem = ({ item, index }: any) => {
         }}
       >
         <View>
-          <CustomText style={{ fontSize: 20, fontWeight: 'bold', color: Color.Black1000 }}>5,000원</CustomText>
+          <CustomText style={{ fontSize: 20, fontWeight: 'bold', color: Color.Black1000 }}>
+            {numberFormat(item?.Coupon?.price || 0)}원
+          </CustomText>
         </View>
 
         <View style={{ marginTop: 2 }}>
           <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Black900 }}>
-            앱 첫결제 감사 쿠폰
+            {item?.Coupon?.title || ''}
           </CustomText>
         </View>
 
         <View style={{ marginTop: 16 }}>
           <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray700 }}>
-            회원가입 후 첫 예약 시 적용
+            {item?.Coupon?.useTerms || ''}
           </CustomText>
         </View>
 
         <View style={{ marginTop: 4 }}>
           <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray700 }}>
-            2021.01.12 23:50 까지
+            {item?.Coupon?.endDate || ''} 까지
           </CustomText>
         </View>
 

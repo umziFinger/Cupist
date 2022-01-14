@@ -47,6 +47,8 @@ const DirectReservationArea = (props: PropTypes) => {
       params = {
         date,
         areaCode,
+        lat: myLatitude,
+        lng: myLongitude,
         startTime,
         endTime,
       };

@@ -32,18 +32,23 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
-      case 'myCouponPage': {
-        draft.myCouponPage = data;
+      case 'myCouponList': {
+        if (actions.params.page === 1) {
+          draft.myCouponList = data;
+        } else {
+          draft.myCouponList.coupon =
+            data.coupon.length > 0 ? draft.myCouponList?.coupon.concat(data.coupon) : draft.myCouponList.coupon;
+        }
         break;
       }
 
-      case 'myCouponList': {
-        if (actions.params.page === 1) {
-          draft.myCouponList = data.promotion;
-        } else {
-          draft.myCouponList =
-            data.promotion.length > 0 ? draft.myCouponList.concat(data.promotion) : draft.myCouponList;
-        }
+      case 'usableCouponPage': {
+        draft.usableCouponPage = data;
+        break;
+      }
+
+      case 'expiredCouponPage': {
+        draft.expiredCouponPage = data;
         break;
       }
 
@@ -234,6 +239,10 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'couponSelectedTab': {
         draft.couponSelectedTab = data;
+        break;
+      }
+      case 'selectedCouponGuide': {
+        draft.selectedCouponGuide = data;
         break;
       }
 

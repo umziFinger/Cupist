@@ -6,6 +6,7 @@ import { numberFormat } from '@/Components/Function';
 import { Color } from '@/Assets/Color';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   item: any;
@@ -14,7 +15,9 @@ interface PropTypes {
 const AmountArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { item } = props;
-  const { totalPrice, personCount, shoesCount } = useSelector((state: ReservationState) => state.reservation);
+  const { totalPrice, personCount, shoesCount, selectedCoupon } = useSelector(
+    (state: ReservationState) => state.reservation,
+  );
 
   useEffect(() => {
     dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: 1 }));
@@ -27,11 +30,23 @@ const AmountArea = (props: PropTypes) => {
 
   useEffect(() => {
     onChangeTotalPrice();
-  }, [item, personCount, shoesCount]);
+  }, [item, personCount, shoesCount, selectedCoupon]);
 
   const onChangeTotalPrice = () => {
     const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
-    dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
+
+    if (tempPrice - (selectedCoupon?.Coupon?.price || 0) < 0) {
+      CommonActions.fetchCommonReducer({
+        type: 'alertToast',
+        data: {
+          alertToast: true,
+          alertToastPosition: 'top',
+          alertToastMessage: '0원 미만은 결제할 수 없습니다.',
+        },
+      });
+    } else {
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
+    }
   };
 
   return (
@@ -78,14 +93,14 @@ const AmountArea = (props: PropTypes) => {
           </View>
           <View style={{ justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: 'bold' }}>
-              - {numberFormat(item?.salePrice * personCount)}원
+              - {numberFormat(selectedCoupon?.Coupon?.price || 0)}원
             </CustomText>
           </View>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 24 }}>
           <View style={{ justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Point1000, fontSize: 18, fontWeight: 'bold' }}>
-              {numberFormat(totalPrice - item?.salePrice * personCount)}원
+              {numberFormat(totalPrice - (selectedCoupon?.Coupon?.price || 0))}원
             </CustomText>
           </View>
         </View>
