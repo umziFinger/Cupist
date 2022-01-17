@@ -35,8 +35,8 @@ const TicketSlider = (props: PropTypes) => {
   };
 
   const onPressTicket = (value: any) => {
-    console.log(value);
-    if (selectedTicket?.idx === value.idx) {
+    // console.log(value);
+    if (selectedTicket?.idx === value.idx || value.hasSoldOut) {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
     }
@@ -88,14 +88,34 @@ const TicketSlider = (props: PropTypes) => {
                               paddingRight: 21,
                               borderRadius: 5,
                               borderWidth: 1,
-                              borderColor: selectedTicket?.idx === time.idx ? Color.Primary1000 : Color.Gray300,
+                              borderColor:
+                                selectedTicket?.idx === time.idx
+                                  ? Color.Primary1000
+                                  : time?.hasSoldOut
+                                  ? 'transparent'
+                                  : Color.Gray300,
                               backgroundColor:
-                                selectedTicket?.idx === time.idx ? 'rgba(255, 185, 10, 0.05)' : Color.Grayyellow50,
+                                selectedTicket?.idx === time.idx
+                                  ? 'rgba(255, 185, 10, 0.05)'
+                                  : time?.hasSoldOut
+                                  ? Color.Gray100
+                                  : Color.Grayyellow50,
                               marginRight: 8,
                             }}
                           >
-                            <View style={{ justifyContent: 'center' }}>
-                              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 14, fontWeight: '500' }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                              <CustomText
+                                style={{
+                                  color:
+                                    selectedTicket?.idx === time.idx
+                                      ? Color.Grayyellow1000
+                                      : time?.hasSoldOut
+                                      ? Color.Gray400
+                                      : Color.Grayyellow1000,
+                                  fontSize: 14,
+                                  fontWeight: '500',
+                                }}
+                              >
                                 {time.startTime.substr(0, 5)} - {time.endTime.substr(0, 5)}
                               </CustomText>
                             </View>
@@ -106,13 +126,52 @@ const TicketSlider = (props: PropTypes) => {
                                 marginTop: 2,
                               }}
                             >
-                              <View style={{ justifyContent: 'center' }}>
-                                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
+                              <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                                {time?.hasSoldOut && (
+                                  <View
+                                    style={{
+                                      backgroundColor: Color.Gray300,
+                                      paddingVertical: 1,
+                                      paddingHorizontal: 2,
+                                      marginRight: 5,
+                                      borderRadius: 2,
+                                    }}
+                                  >
+                                    <CustomText style={{ color: Color.Gray400, fontSize: 11, fontWeight: 'bold' }}>
+                                      마감
+                                    </CustomText>
+                                  </View>
+                                )}
+
+                                <CustomText
+                                  style={{
+                                    color:
+                                      selectedTicket?.idx === time.idx
+                                        ? Color.Grayyellow1000
+                                        : time?.hasSoldOut
+                                        ? Color.Gray400
+                                        : Color.Grayyellow1000,
+                                    fontSize: 15,
+                                    fontWeight: '500',
+                                  }}
+                                >
                                   {numberFormat(time?.salePrice)}
                                 </CustomText>
                               </View>
                               <View style={{ justifyContent: 'center' }}>
-                                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15 }}>원</CustomText>
+                                <CustomText
+                                  style={{
+                                    color:
+                                      selectedTicket?.idx === time.idx
+                                        ? Color.Grayyellow1000
+                                        : time?.hasSoldOut
+                                        ? Color.Gray400
+                                        : Color.Grayyellow1000,
+                                    fontSize: 15,
+                                  }}
+                                >
+                                  원
+                                </CustomText>
                               </View>
                             </View>
                           </View>
