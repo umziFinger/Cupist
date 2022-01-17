@@ -1,8 +1,8 @@
 export const DATA_PERMISSION_PAYMENT_DETAILS = [
   {
     idx: 0,
-    title: '서비스 이용약관',
-    uri: 'https://bolimi.kr/policy/agree',
+    title: '전자금융거래 약관',
+    uri: 'https://bolimi.kr/policy/finance',
   },
   {
     idx: 1,
