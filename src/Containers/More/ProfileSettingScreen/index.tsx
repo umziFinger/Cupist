@@ -117,21 +117,22 @@ const ProfileSettingScreen = () => {
                 }}
               >
                 <CustomButton onPress={() => onPressEditProfile()}>
-                  <View style={{ width: 84, height: 84, borderRadius: 50 }}>
+                  <View style={{ width: 105, height: 84, borderRadius: 24 }}>
                     {attachFile?.length > 0 ? (
                       <FastImage
-                        style={{ width: '100%', height: '100%', borderRadius: 50 }}
+                        style={{ width: '100%', height: '100%', borderRadius: 24 }}
                         source={{ uri: attachFile[attachFileIdx]?.url }}
                         resizeMode={FastImage.resizeMode.cover}
                       />
                     ) : (
                       <FastImage
-                        style={{ width: '100%', height: '100%', borderRadius: 50 }}
+                        style={{ width: '100%', height: '100%', borderRadius: 24 }}
                         source={
                           userInfo?.profile
                             ? { uri: userInfo?.profile }
-                            : require('@/Assets/Images/More/emptyProfile.png')
+                            : require('@/Assets/Images/More/emptyProfile01.png')
                         }
+                        // source={require('@/Assets/Images/More/emptyProfile01.png')}
                         resizeMode={FastImage.resizeMode.cover}
                       />
                     )}

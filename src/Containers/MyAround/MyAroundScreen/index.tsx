@@ -171,17 +171,17 @@ const MyAroundScreen = () => {
                 alignItems: 'center',
               }}
             >
-              <View style={{ width: 60, height: 60, marginTop: 116 }}>
+              <View style={{ width: 72, height: 70, marginTop: 116 }}>
                 <FastImage
                   style={{ width: '100%', height: '100%' }}
-                  source={require('@/Assets/Images/MyAround/emptyMap.png')}
+                  source={require('@/Assets/Images/Common/emptyRingmiSad.png')}
                   resizeMode={FastImage.resizeMode.cover}
                 />
               </View>
 
               {activeFilter ? (
                 <>
-                  <View style={{ marginTop: 8 }}>
+                  <View style={{ marginTop: 28 }}>
                     <CustomText
                       style={{
                         fontSize: 14,
@@ -206,7 +206,7 @@ const MyAroundScreen = () => {
                 </>
               ) : (
                 <>
-                  <View style={{ marginTop: 8 }}>
+                  <View style={{ marginTop: 28 }}>
                     <CustomText
                       style={{
                         fontSize: 14,

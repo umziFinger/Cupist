@@ -135,14 +135,14 @@ const DibsScreen = () => {
                 ListEmptyComponent={
                   <View style={{ flex: 1, alignItems: 'center' }}>
                     <View style={{ width: '100%', height: 8, backgroundColor: Color.Gray200 }} />
-                    <View style={{ width: 60, height: 60, marginTop: 120 }}>
+                    <View style={{ width: 72, height: 70, marginTop: 120 }}>
                       <FastImage
                         style={{ width: '100%', height: '100%' }}
-                        source={require('@/Assets/Images/Common/emptyLike.png')}
+                        source={require('@/Assets/Images/Common/emptyRingmiSad.png')}
                         resizeMode={FastImage.resizeMode.cover}
                       />
                     </View>
-                    <View style={{ justifyContent: 'center', marginTop: 8 }}>
+                    <View style={{ justifyContent: 'center', marginTop: 28 }}>
                       <CustomText
                         style={{
                           color: Color.Gray400,

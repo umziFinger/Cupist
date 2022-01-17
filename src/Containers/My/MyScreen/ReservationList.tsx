@@ -14,8 +14,6 @@ import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import CommonActions from '@/Stores/Common/Actions';
 
-type typeYN = 'Y' | 'N';
-
 const ReservationList = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
@@ -365,14 +363,14 @@ const ReservationList = () => {
               alignItems: 'center',
             }}
           >
-            <View style={{ width: 60, height: 60, marginTop: 120 }}>
+            <View style={{ width: 72, height: 70, marginTop: 120 }}>
               <FastImage
                 style={{ width: '100%', height: '100%' }}
-                source={require('@/Assets/Images/Common/emptyBooking.png')}
+                source={require('@/Assets/Images/Common/emptyRingmiSad.png')}
                 resizeMode={FastImage.resizeMode.cover}
               />
             </View>
-            <View style={{ marginTop: 8 }}>
+            <View style={{ marginTop: 28 }}>
               <CustomText
                 style={{
                   fontSize: 14,

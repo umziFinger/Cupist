@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { View, Text } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
@@ -48,6 +49,14 @@ const HelloArea = () => {
   return (
     <View style={{ justifyContent: 'center' }}>
       <View>
+        <View style={{ height: 35, width: 64, marginBottom: 7 }}>
+          <FastImage
+            style={{ width: '100%', height: '100%', borderTopLeftRadius: 5, borderTopRightRadius: 5 }}
+            source={require('@/Assets/Images/Home/imgHomeRingmi.png')}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </View>
+
         <CustomText style={{ color: Color.Black1000, fontSize: 22, letterSpacing: -0.4 }}>
           {userIdx ? `${userInfo.nickname || ''}님, 반가워요.` : '반가워요.'}
         </CustomText>
