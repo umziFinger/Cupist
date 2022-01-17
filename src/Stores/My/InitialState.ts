@@ -6,8 +6,7 @@ export const INITIAL_STATE: MyState['my'] = {
     writeReview: [],
     writeableReview: [],
   },
-  myCouponPage: 1,
-  myCouponList: [],
+
   myPointList: [],
   myPointListPage: 1,
   total_mileage: 0,
@@ -54,6 +53,15 @@ export const INITIAL_STATE: MyState['my'] = {
     files: '',
   }, // 작성 가능한 리뷰 데이터 담는 곳
   clickedReviewItem: null,
+  couponSelectedTab: { title: '사용가능', key: 'usable' },
+
+  expiredCouponPage: 1,
+  usableCouponPage: 1,
+  myCouponList: {
+    coupon: [],
+    metadata: [],
+  },
+  selectedCouponGuide: null,
 };
 export interface MyState {
   my: {
@@ -62,8 +70,6 @@ export interface MyState {
       writeReview: any[];
       writeableReview: any[];
     };
-    myCouponPage: number;
-    myCouponList: any[];
     myPointList: any[];
     myPointListPage: number;
     total_mileage: number;
@@ -101,8 +107,49 @@ export interface MyState {
       files: any;
     };
     clickedReviewItem: any;
+    couponSelectedTab: CouponTabType;
+    myCouponList: CouponListType;
+    expiredCouponPage: number;
+    usableCouponPage: number;
+
+    selectedCouponGuide: CouponItemType | null;
   };
 }
+export interface CouponItemType {
+  idx: number;
+  expireDate: string;
+  useDate: string;
+  useYN: TypeYN;
+  regDate: string;
+  updateDate: string;
+  deleteDate: string;
+  Coupon: {
+    idx: number;
+    type: string;
+    startDate: string;
+    endDate: string;
+    title: string;
+    price: number;
+    period: number;
+    usePrice: number;
+    useTerms: string;
+    notice: string;
+    public: string;
+    regDate: string;
+    updateDate: string;
+    deleteDate: string;
+  };
+  useDateView: string;
+  status: string;
+}
+
+export interface CouponListType {
+  coupon: Array<CouponItemType>;
+  metadata: Array<{ expiredCnt: number; usableCnt: number }>;
+}
+
+type TypeYN = 'Y' | 'N';
+
 export type qnaType =
   | { key: '앱 사용 문의'; content: '앱 사용 문의' }
   | { key: '예약 문의'; content: '예약 문의' }
@@ -117,3 +164,4 @@ export type reservationTabType =
   | { title: '지난'; key: 'after' }
   | { title: '취소'; key: 'cancel' };
 export type reservationPageType = { before: 1; after: 1; cancel: 1 };
+export type CouponTabType = { title: '사용가능'; key: 'usable' } | { title: '지난쿠폰'; key: 'expired' };

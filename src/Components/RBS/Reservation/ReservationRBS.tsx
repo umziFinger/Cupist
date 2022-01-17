@@ -24,9 +24,8 @@ const ReservationRBS = () => {
   const { heightInfo, isOpenReservationRBS } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { placeDetail, selectedTicket } = useSelector((state: PlaceState) => state.place);
-  const { paymentInfo, paymentType, paymentMethod, myCardList, selcetedCardIdx } = useSelector(
-    (state: ReservationState) => state.reservation,
-  );
+  const { paymentInfo, paymentType, paymentMethod, myCardList, selcetedCardIdx, totalPrice, selectedCoupon } =
+    useSelector((state: ReservationState) => state.reservation);
   const reservationInfo = useSelector((state: ReservationState) => state.reservation.reservationInfo);
   const place: any = placeDetail?.place || {};
   const cancelLimit = reservationInfo?.cancelLimit || moment().format('YYYY년 MM월 DD일 HH시 mm분');
@@ -97,7 +96,7 @@ const ReservationRBS = () => {
         >
           <FlatList
             data={[0]}
-            renderItem={({ item, index }) => (
+            renderItem={() => (
               <>
                 <View style={{ paddingHorizontal: 24 }}>
                   <View style={{ justifyContent: 'center', marginTop: 28 }}>
@@ -160,7 +159,7 @@ const ReservationRBS = () => {
                       </View>
                       <View style={{ justifyContent: 'center' }}>
                         <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, fontWeight: '500' }}>
-                          {numberFormat(selectedTicket?.salePrice)}원
+                          {numberFormat(totalPrice - (selectedCoupon?.Coupon?.price || 0))}원
                         </CustomText>
                       </View>
                     </View>

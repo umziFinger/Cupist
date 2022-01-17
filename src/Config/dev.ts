@@ -64,7 +64,6 @@ const dev = {
   MY_URL: 'my',
   MY_PUSH_YN_URL: 'my/pushYN',
   MY_REVIEW: 'my/review',
-  MY_PROMOTION_URL: 'my/promotion',
   MY_CERT_GET_URL: 'my/cert/get',
   MY_PROFILE_URL: 'my/profile',
   MY_VIEW_URL: 'my/view',
@@ -79,6 +78,7 @@ const dev = {
   MY_RESERVATION_URL: 'my/reservation',
   MY_DIBS_URL: 'my/dibs',
   MY_PASSWORD_URL: 'my/password',
+  MY_COUPON_URL: 'my/coupon',
 
   NOTIFICATION_COUNT_URL: 'my/notification/count',
 

@@ -28,14 +28,14 @@ const PriceArea = (props: PropTypes) => {
     };
   }, []);
 
-  useEffect(() => {
-    onChangeTotalPrice();
-  }, [item, personCount, shoesCount]);
-
-  const onChangeTotalPrice = () => {
-    const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
-    dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
-  };
+  // useEffect(() => {
+  //   onChangeTotalPrice();
+  // }, [item, personCount, shoesCount]);
+  //
+  // const onChangeTotalPrice = () => {
+  //   const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
+  //   dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
+  // };
 
   const onPressPersonCount = (type: string) => {
     if (type === 'plus') {
@@ -229,60 +229,6 @@ const PriceArea = (props: PropTypes) => {
         />
         <View style={{ justifyContent: 'center' }}>
           <CustomText style={{ color: Color.Gray600, fontSize: 11 }}> 인원 1~4인당 1레인이 배치됩니다.</CustomText>
-        </View>
-      </View>
-      <View
-        style={{
-          borderWidth: 1,
-          borderColor: Color.Gray200,
-          borderRadius: 10,
-          paddingVertical: 24,
-          paddingHorizontal: 16,
-          marginTop: 28,
-        }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-              상품 금액
-            </CustomText>
-          </View>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: 'bold' }}>
-              {numberFormat(item?.salePrice * personCount)}원
-            </CustomText>
-          </View>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 12 }}>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-              옵션 금액
-            </CustomText>
-          </View>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: 'bold' }}>
-              {numberFormat(item?.shoesPrice * shoesCount)}원
-            </CustomText>
-          </View>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 12 }}>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-              결제 금액
-            </CustomText>
-          </View>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: 'bold' }}>
-              {numberFormat(totalPrice)}원
-            </CustomText>
-          </View>
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 24 }}>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Point1000, fontSize: 18, fontWeight: 'bold' }}>
-              {numberFormat(totalPrice)}원
-            </CustomText>
-          </View>
         </View>
       </View>
     </View>

@@ -3,7 +3,7 @@ import { Text, Platform, TextStyle, TextProps } from 'react-native';
 
 interface PropsType {
   children: ReactChild | Array<ReactChild> | ReactNode;
-  style: TextStyle;
+  style?: TextStyle;
 }
 
 const CustomText = (props: PropsType & TextProps) => {

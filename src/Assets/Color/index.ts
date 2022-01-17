@@ -1,5 +1,6 @@
 export const Color = {
   Black1000: '#151515',
+  Black900: '#1c1c1c',
   White: '#fff',
   Gray100: '#fafafa',
   Gray200: '#f7f7f7',
@@ -20,6 +21,7 @@ export const Color = {
   Point1000: '#6F00FF',
   Error: '#FF1616',
   Valid: '#16A5FF',
+  CalendarRed: '#ff6242',
 };
 
 export const Opacity = {

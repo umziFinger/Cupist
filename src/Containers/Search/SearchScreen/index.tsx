@@ -175,7 +175,7 @@ const SearchScreen = () => {
                     >
                       <View style={{ flex: 1 }}>
                         <CustomButton onPress={() => onPressQuery(item.query)}>
-                          <CustomText>{item.query}</CustomText>
+                          <CustomText>{item?.query || ''}</CustomText>
                         </CustomButton>
                       </View>
                       <CustomButton onPress={() => onDelete(item)}>

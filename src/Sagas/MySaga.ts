@@ -60,34 +60,6 @@ export function* fetchMyPushYN(data: any): any {
   }
 }
 
-export function* fetchMyCouponList(data: any): any {
-  try {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
-    const payload = {
-      ...data,
-      url: Config.MY_PROMOTION_URL,
-    };
-    const response = yield call(Axios.GET, payload);
-    // console.log('마이 마일리지 데이터: ', data.mileage.data);
-    if (response.result === true && response.code === null) {
-      yield put(
-        MyActions.fetchMyReducer({
-          type: 'myCouponList',
-          data: response.data,
-          page: data.params.page,
-        }),
-      );
-      yield put(MyActions.fetchMyReducer({ type: 'myCouponPage', data: data.params.page + 1 }));
-      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-    console.log('occurred Error...fetchMyCouponList : ', e);
-  }
-}
-
 export function* fetchMySmsSend(data: any): any {
   try {
     const payload = {
@@ -865,5 +837,86 @@ export function* fetchMyPasswordModify(data: any): any {
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchMyPasswordModify : ', e);
+  }
+}
+
+export function* fetchMyCouponAdd(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const url = `${Config.MY_COUPON_URL}`;
+
+    const payload = {
+      ...data,
+      url,
+    };
+
+    const response = yield call(Axios.POST, payload);
+    if (response.result === true && response.code === null) {
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'bottom',
+            alertToastMessage: response.data.message,
+          },
+        }),
+      );
+      const params = {
+        page: 1,
+        perPage: 10,
+        type: 'usable',
+      };
+      yield put(MyActions.fetchMyCouponList(params));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      // yield put(CommonActions.fetchErrorHandler(response));
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'bottom',
+            alertToastMessage: response.data.message,
+          },
+        }),
+      );
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyCouponAdd : ', e);
+  }
+}
+
+export function* fetchMyCouponList(data: any): any {
+  try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: Config.MY_COUPON_URL,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'myCouponList',
+          data: response.data,
+          page: data.params.page,
+        }),
+      );
+      if (data.params.type === 'usable')
+        yield put(MyActions.fetchMyReducer({ type: 'usableCouponPage', data: data.params.page + 1 }));
+      if (data.params.type === 'expired')
+        yield put(MyActions.fetchMyReducer({ type: 'expiredCouponPage', data: data.params.page + 1 }));
+
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyCouponList : ', e);
   }
 }

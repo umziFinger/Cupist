@@ -17,11 +17,12 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CancelInfoArea from '@/Containers/Reservation/ReservationScreen/CancelInfoArea';
 import PermissionArea from '@/Containers/Reservation/ReservationScreen/PermissionArea';
 import CustomButton from '@/Components/CustomButton';
-import PlaceActions from '@/Stores/Place/Actions';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
+import AmountArea from '@/Containers/Reservation/ReservationScreen/AmountArea';
+import CouponArea from '@/Containers/Reservation/ReservationScreen/CouponArea';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'ReservationScreen'>;
@@ -36,9 +37,16 @@ const ReservationScreen = ({ route }: PropTypes) => {
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { selectedPlaceIdx } = useSelector((state: PlaceState) => state.place);
-  const { myCardList, selcetedCardIdx, paymentMethod, paymentType, totalPrice, personCount, shoesCount } = useSelector(
-    (state: ReservationState) => state.reservation,
-  );
+  const {
+    myCardList,
+    selcetedCardIdx,
+    paymentMethod,
+    paymentType,
+    totalPrice,
+    personCount,
+    shoesCount,
+    selectedCoupon,
+  } = useSelector((state: ReservationState) => state.reservation);
   const reservationInfo = useSelector((state: ReservationState) => state.reservation.reservationInfo);
   const [validation, setValidation] = useState<boolean>(false);
 
@@ -108,9 +116,11 @@ const ReservationScreen = ({ route }: PropTypes) => {
         price: reservationInfo?.price,
         salePrice: reservationInfo?.salePrice,
         shoesPrice: reservationInfo?.shoesPrice,
-        totalPrice,
+        totalPrice: totalPrice - (selectedCoupon?.Coupon?.price || 0),
         username: reservationInfo?.username,
         mobile: reservationInfo?.mobile,
+        couponPrice: selectedCoupon?.Coupon?.price,
+        couponIdx: selectedCoupon?.idx,
       };
       console.log('params : ', params);
       dispatch(ReservationActions.fetchReservation(params));
@@ -142,6 +152,18 @@ const ReservationScreen = ({ route }: PropTypes) => {
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <View style={{ paddingHorizontal: 16, marginTop: 28 }}>
               <PriceArea item={reservationInfo} />
+            </View>
+
+            <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 28 }} />
+
+            <View style={{ paddingHorizontal: 16 }}>
+              <CouponArea item={reservationInfo} />
+            </View>
+
+            <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 28 }} />
+
+            <View style={{ paddingHorizontal: 16 }}>
+              <AmountArea item={reservationInfo} />
             </View>
           </View>
         );
