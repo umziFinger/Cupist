@@ -1,5 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { Platform } from 'react-native';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import BadgeAndroid from 'react-native-android-badge';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import CommonActions from '@/Stores/Common/Actions';
@@ -53,12 +55,13 @@ export function* fetchNotificationRead(data: any): any {
     const response = yield call(Axios.PATCH, payload);
     console.log('알림 읽음: ', response);
     if (response.result === true && response.code === null) {
-      // const params = {
-      //   page: 1,
-      // };
-      // yield put(NotificationActions.fetchNotificationList(params));
+      // 알림 뱃지 업데이트
+      if (Platform.OS === 'android') {
+        BadgeAndroid.setBadge(Number(response?.data?.badgeCnt));
+      } else if (Platform.OS === 'ios') {
+        PushNotificationIOS.setApplicationIconBadgeNumber(Number(response?.data?.badgeCnt));
+      }
       yield put(NotificationActions.fetchNotificationDetailNavigate(data.params));
-      // yield put(NotificationActions.fetchNotificationCount());
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }
@@ -128,32 +131,4 @@ export function* fetchNotificationDetailNavigate(data: any): any {
   } catch (e) {
     console.log('occurred Error...fetchNotificationDetailNavigate : ', e);
   }
-}
-
-function* moveScreen(item: any) {
-  console.log('category! : ', item);
-  const { type, category } = item;
-  if (category) {
-    if (category === 'reservation') {
-      if (type === 'done')
-        // yield put(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '지난', key: 'after' } }));
-        yield put(
-          MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '진행중', key: 'before' } }),
-        );
-      if (type === 'cancel')
-        yield put(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '취소', key: 'cancel' } }));
-      if (type === 'wait')
-        yield put(
-          MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '진행중', key: 'before' } }),
-        );
-      console.log('스크린 이동2 : ', category);
-      return navigate('MyScreen');
-    }
-    if (category === 'review') {
-      yield put(MyActions.fetchMyReducer({ type: 'mySelectedTab', data: { title: '리뷰', selectKey: 'review' } }));
-      console.log('스크린 이동2 : ', category);
-      return navigate('MyScreen');
-    }
-  }
-  return navigate('HomeScreen');
 }
