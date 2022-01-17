@@ -15,7 +15,11 @@ import { DATA_PERMISSION_PAYMENT_DETAILS } from '@/Components/Data/DATA_PERMISSI
 
 const AgreeArea = () => {
   const dispatch = useDispatch();
-  const [checkedArr, setCheckedArr] = useState<Array<boolean>>([false, false, false, false, false]);
+  // Todo 약관 임시로 1개만 노출 추후 약관 추가 시 주석 해제
+  // const [checkedArr, setCheckedArr] = useState<Array<boolean>>([false, false, false, false, false]);
+
+  // Todo 약관 임시로 1개만 노출 추후 약관 추가 시 제거
+  const [checkedArr, setCheckedArr] = useState<Array<boolean>>([false, false]);
 
   const onCheck = (value: any) => {
     produce(checkedArr, (draft) => {
@@ -42,7 +46,13 @@ const AgreeArea = () => {
         draft[0] = false;
       }
 
-      if (draft[1] && draft[2] && draft[3] && draft[4]) {
+      // Todo 약관 임시로 1개만 노출 - 추후 약관 추가 갯수에 맞춰서 수정할것
+      // if (draft[1] && draft[2] && draft[3] && draft[4]) {
+      //   draft[0] = true;
+      // }
+
+      // Todo 약관 임시로 1개만 노출 - 추후 약관 추가 시 제거
+      if (draft[1]) {
         draft[0] = true;
       }
       dispatch(ReservationActions.fetchReservationReducer({ type: 'agreeCheckedArr', data: [...draft] }));
