@@ -24,8 +24,15 @@ const ReservationRBS = () => {
   const { heightInfo, isOpenReservationRBS } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { placeDetail, selectedTicket } = useSelector((state: PlaceState) => state.place);
-  const { paymentInfo, paymentType, paymentMethod, myCardList, selcetedCardIdx, totalPrice, selectedCoupon } =
-    useSelector((state: ReservationState) => state.reservation);
+  const {
+    paymentInfo,
+    paymentType,
+    paymentMethod = 0,
+    myCardList,
+    selcetedCardIdx,
+    totalPrice,
+    selectedCoupon,
+  } = useSelector((state: ReservationState) => state.reservation);
   const reservationInfo = useSelector((state: ReservationState) => state.reservation.reservationInfo);
   const place: any = placeDetail?.place || {};
   const cancelLimit = reservationInfo?.cancelLimit || moment().format('YYYY년 MM월 DD일 HH시 mm분');
@@ -65,10 +72,12 @@ const ReservationRBS = () => {
           buyer_name: reservationInfo?.username || '', // 구매자 이름
           buyer_tel: reservationInfo?.mobile, // 구매자 전화번호
           buyer_email: '', // 구매자 이메일
+          app_scheme: 'bolimi',
+          niceMobileV2: true,
           // buyer_addr: '신사동 661-16', // 구매자 주소
           // buyer_postcode: '06018', // 구매자 우편번호
         };
-        console.log('paymentMethod : ', DATA_PAYMENT_METHOD[paymentMethod].key);
+        console.log('paymentMethod : ', DATA_PAYMENT_METHOD[paymentMethod]?.key);
         navigate('PaymentScreen', { userCode, data });
       }
     }

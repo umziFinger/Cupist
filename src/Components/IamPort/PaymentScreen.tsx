@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
-import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { navigateGoBack } from '@/Services/NavigationService';
 import Loading from '@/Components/Loading';
 import { CommonState } from '@/Stores/Common/InitialState';
 import ReservationActions from '@/Stores/Reservation/Actions';
@@ -69,7 +69,6 @@ function PaymentScreen({ route }: PropTypes) {
         loading={<Loading />}
         data={{
           ...data,
-          app_scheme: 'test',
         }}
         callback={callback}
       />
