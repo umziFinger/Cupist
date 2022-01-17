@@ -56,7 +56,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   useEffect(() => {
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeDetailInit' }));
-      dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
+      // dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
     };
   }, []);
 

@@ -36,7 +36,6 @@ const ReservationScreen = ({ route }: PropTypes) => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { selectedPlaceIdx } = useSelector((state: PlaceState) => state.place);
   const {
     myCardList,
     selcetedCardIdx,

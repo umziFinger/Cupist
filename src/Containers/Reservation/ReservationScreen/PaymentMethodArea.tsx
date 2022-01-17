@@ -10,6 +10,7 @@ import CustomButton from '@/Components/CustomButton';
 import { DATA_PAYMENT_METHOD } from './data';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { navigate, navigateAndReset } from '@/Services/NavigationService';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 interface PropTypes {
   list: Array<any>;
@@ -21,6 +22,8 @@ const PaymentMethodArea = (props: PropTypes) => {
   const { width } = useWindowDimensions();
   const { list } = props;
   const { paymentType, paymentMethod } = useSelector((state: ReservationState) => state.reservation);
+  const { selectedTicket } = useSelector((state: PlaceState) => state.place);
+
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
 
   useEffect(() => {
@@ -65,6 +68,7 @@ const PaymentMethodArea = (props: PropTypes) => {
   };
 
   const onPressAddCard = () => {
+    // console.log(selectedTicket);
     navigate('CertificationScreen');
   };
 

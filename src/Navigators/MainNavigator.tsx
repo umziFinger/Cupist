@@ -62,6 +62,7 @@ import PaymentScreen from '@/Components/IamPort/PaymentScreen';
 import CertificationScreen from '@/Components/IamPort/CertificationScreen';
 import SocialJoinScreen from '@/Containers/Auth/SocialJoinScreen';
 import MyCouponScreen from '@/Containers/More/MyCouponScreen';
+import AddCardCheckPasswordScreen from '@/Containers/Reservation/AddCardCheckPasswordScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -118,6 +119,7 @@ export type MainStackParamList = {
   AddCardScreen: undefined;
   RegisterPasswordScreen: undefined;
   CheckPasswordScreen: { paymentIdx: number; billingIdx: number };
+  AddCardCheckPasswordScreen: { cardInfo: any };
   ReservationCancelPopupScreen: { cancelLimit: string; totalPrice: number };
   RegisterPasswordModifyScreen: undefined;
   BasicInfoDetailScreen: undefined;
@@ -207,6 +209,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="CheckPasswordScreen" component={CheckPasswordScreen} />
       <MainStack.Screen name="ReservationCancelPopupScreen" component={ReservationCancelPopupScreen} />
       <MainStack.Screen name="RegisterPasswordModifyScreen" component={RegisterPasswordModifyScreen} />
+      <MainStack.Screen name="AddCardCheckPasswordScreen" component={AddCardCheckPasswordScreen} />
 
       {/* Review */}
       <MainStack.Screen name="ReviewModifyScreen" component={ReviewModifyScreen} />

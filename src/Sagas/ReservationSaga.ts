@@ -153,6 +153,7 @@ export function* fetchReservationCard(data: any): any {
         }),
       );
       navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: data.params.ticketInfoIdx });
+      navigateAndReset('ReservationScreen');
     } else {
       navigateGoBack();
       yield put(CommonActions.fetchErrorHandler(response));

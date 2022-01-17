@@ -109,30 +109,30 @@ const AddCardScreen = () => {
   };
 
   const onPressAdd = () => {
-    console.log('validation : ', validation);
     if (validation) {
       // 기존 등록된 카드가 없을때 비밀번호 등록
-      if (myCardList?.length === 0 || addCardInfo.paymentPwd === '') {
+      if (myCardList?.length === 0) {
         console.log('간편 결제 비밀번호 등록 페이지 이동!');
-        return navigate('RegisterPasswordScreen');
+        navigate('RegisterPasswordScreen');
       }
-      if (myCardList?.length !== 0 && addCardInfo.paymentPwd !== '') {
-        console.log('카드 등록 api 호출!');
+      if (myCardList?.length > 0) {
+        // console.log('카드 등록 api 호출!');
         console.log('카드 등록 params :', addCardInfo);
-        dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, ticketInfoIdx: selectedTicket?.idx }));
+        navigate('AddCardCheckPasswordScreen', { cardInfo: { ...addCardInfo, ticketInfoIdx: selectedTicket?.idx } });
+        // dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, ticketInfoIdx: selectedTicket?.idx }));
       }
+    } else {
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertDialog',
+          data: {
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogMessage: '카드 정보 및 약관동의를 확인해주세요',
+          },
+        }),
+      );
     }
-
-    return dispatch(
-      CommonActions.fetchCommonReducer({
-        type: 'alertDialog',
-        data: {
-          alertDialog: true,
-          alertDialogType: 'confirm',
-          alertDialogMessage: '카드 정보 및 약관동의를 확인해주세요',
-        },
-      }),
-    );
   };
 
   return (

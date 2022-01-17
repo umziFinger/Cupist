@@ -35,6 +35,7 @@ const TicketSlider = (props: PropTypes) => {
   };
 
   const onPressTicket = (value: any) => {
+    console.log(value);
     if (selectedTicket?.idx === value.idx) {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
