@@ -1,7 +1,7 @@
-import { View } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { Linking, Platform, View } from 'react-native';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getVersion } from 'react-native-device-info';
 import CustomButton from '@/Components/CustomButton';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
@@ -10,6 +10,8 @@ import ToggleItem from '@/Containers/More/ServiceSettingScreen/ToggleItem';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import TermsItem from '@/Containers/More/ServiceSettingScreen/TermsItem';
 import { navigate } from '@/Services/NavigationService';
+import { CommonState } from '@/Stores/Common/InitialState';
+import Config from '@/Config';
 
 enum enumYN {
   Y = 'Y',
@@ -18,12 +20,38 @@ enum enumYN {
 
 const SettingList = ({ index }: any) => {
   const { userInfo } = useSelector((state: AuthState) => state.auth);
-
-  console.log('userInfo : ', userInfo);
+  const appVersion = getVersion();
+  const { versionInfo } = useSelector((state: CommonState) => state.common);
 
   const onWithdrawal = () => {
     navigate('WithdrawScreen');
   };
+
+  const compareVersionCheck = () => {
+    // console.log('==========', versionInfo.currentVersion > appVersion.toString());
+    return versionInfo.currentVersion > appVersion.toString();
+  };
+
+  const onPressVersionUpdate = () => {
+    if (Platform.OS === 'ios') {
+      Linking.openURL(Config.MARKET_URL_IOS)
+        .then((result) => {
+          console.log('result', result);
+        })
+        .catch((e) => {
+          console.log('error', e);
+        });
+    } else {
+      Linking.openURL(Config.MARKET_URL_ANDROID)
+        .then((result) => {
+          console.log('result', result);
+        })
+        .catch((e) => {
+          console.log('error', e);
+        });
+    }
+  };
+
   switch (index) {
     case 0: {
       return (
@@ -120,13 +148,17 @@ const SettingList = ({ index }: any) => {
                   color: Color.Black1000,
                 }}
               >
-                버전 정보 ( V 0.1 )
+                버전 정보 ( V {appVersion?.toString()} )
               </CustomText>
             </View>
             <View>
-              <CustomText style={{ fontSize: 13, fontWeight: '500', letterSpacing: -0.2, color: Color.Point1000 }}>
-                업데이트
-              </CustomText>
+              {compareVersionCheck() && (
+                <CustomButton hitSlop={{ left: 7, top: 7, right: 7, bottom: 7 }} onPress={() => onPressVersionUpdate()}>
+                  <CustomText style={{ fontSize: 13, fontWeight: '500', letterSpacing: -0.2, color: Color.Point1000 }}>
+                    업데이트
+                  </CustomText>
+                </CustomButton>
+              )}
             </View>
           </View>
         </>

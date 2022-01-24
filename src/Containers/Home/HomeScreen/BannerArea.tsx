@@ -81,13 +81,13 @@ const BannerArea = (props: PropTypes) => {
           break;
       }
     } else if (item.linkType === 'kakao') {
-      onOpenKaKaoChat(item?.linkUrl);
+      onOpenKaKaoChat(item?.linkUrl || 'http://pf.kakao.com/_nbhwb/chat');
     }
   };
 
   const onOpenKaKaoChat = (url: string) => {
     if (url) {
-      Linking.openURL(url)
+      Linking.openURL('url')
         .then((r) => console.log('문의하기 성공', r))
         .catch((e) => {
           console.log('문의하기 에러', e);
