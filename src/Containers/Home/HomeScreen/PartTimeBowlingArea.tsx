@@ -12,13 +12,13 @@ import DateFilter from '@/Components/FilterSilder/DateFilter';
 interface PropTypes {
   list: Array<any>;
 }
-const PrepaymentPriceArea = (props: PropTypes) => {
+const PartTimeBowlingArea = (props: PropTypes) => {
   const { list } = props;
   const { width } = useWindowDimensions();
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');
-    navigate('PlaceListScreen', { type: 'early' });
+    navigate('PlaceListScreen', { type: 'normal' });
   };
 
   return (
@@ -27,7 +27,7 @@ const PrepaymentPriceArea = (props: PropTypes) => {
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end' }}>
           <View style={{ marginRight: 4 }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 20, fontWeight: 'bold', letterSpacing: -0.35 }}>
-              할인 특가
+              시간제 볼링
             </CustomText>
           </View>
           <View style={{ width: 5, height: 5, marginBottom: 5 }}>
@@ -105,4 +105,4 @@ const PrepaymentPriceArea = (props: PropTypes) => {
   );
 };
 
-export default PrepaymentPriceArea;
+export default PartTimeBowlingArea;

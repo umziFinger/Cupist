@@ -42,9 +42,9 @@ const prod = {
   // home
   HOME_URL: 'home',
   HOME_PLACE_URL: 'home/place',
-  HOME_EARLY_URL: 'home/early',
+  HOME_FREE_URL: 'home/free',
   HOME_CHECK_URL: 'home/check',
-  HOME_CHECK_EARLY_URL: 'home/check/early',
+  HOME_CHECK_FREE_URL: 'home/check/free',
 
   // auth
   AUTH_LOGIN_URL: 'auth/login',
@@ -117,7 +117,7 @@ const prod = {
   PLACE_URL: 'place',
   PLACE_AROUND_LIST_URL: 'place/around',
   PLACE_SEARCH_LIST_URL: 'place/search', // 내주변/지역별 예약 가능한 볼링장 찾기
-
+  EVENT_HOT_URL: 'home/event',
   // reservation
   RESERVATION_URL: 'reservation',
   RESERVATION_CARD_URL: 'reservation/card',

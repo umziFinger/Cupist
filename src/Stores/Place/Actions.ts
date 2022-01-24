@@ -9,7 +9,8 @@ const { Types, Creators } = createActions({
   fetchPlaceRecentList: ['params'],
   fetchPlaceReviewList: ['params'],
   fetchPlaceList: ['params'],
-  fetchPlaceHotList: ['params'],
+  fetchPlaceEventHotList: ['params'],
+  fetchPlaceEventHotDetail: ['params'],
   fetchPlaceDibsList: ['params'],
 });
 

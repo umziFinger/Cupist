@@ -14,6 +14,7 @@ export function* fetchHomeList(data: any): any {
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
+      // console.log('=======', response.data);
       yield put(HomeActions.fetchHomeReducer({ type: 'homeList', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
@@ -47,21 +48,21 @@ export function* fetchHomeDirectReservationList(data: any): any {
   }
 }
 
-export function* fetchHomePrepaymentPriceList(data: any): any {
+export function* fetchHomeFreeBowlingPlaceList(data: any): any {
   try {
     const payload = {
       ...data,
-      url: Config.HOME_EARLY_URL,
+      url: Config.HOME_FREE_URL,
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
       yield put(HomeActions.fetchHomeReducer({ type: 'prepaymentPriceList', data: response.data }));
     } else {
-      console.log('fetchHomePrepaymentPriceList : ', response);
+      console.log('fetchHomeFreeBowlingPlaceList : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
-    console.log('occurred Error...fetchHomePrepaymentPriceList : ', e);
+    console.log('occurred Error...fetchHomeFreeBowlingPlaceList : ', e);
   }
 }
 
@@ -90,7 +91,7 @@ export function* fetchHomeCheckEarly(data: any): any {
   try {
     const payload = {
       ...data,
-      url: Config.HOME_CHECK_EARLY_URL,
+      url: Config.HOME_CHECK_FREE_URL,
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {

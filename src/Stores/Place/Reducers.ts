@@ -93,9 +93,8 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'placeTicketList': {
-        draft.placeTicketList.morning = data.morning;
-        draft.placeTicketList.afternoon = data.afternoon;
-        draft.placeTicketList.night = data.night;
+        draft.placeTicketList.normal = data.normal;
+        draft.placeTicketList.free = data.free;
         break;
       }
 
@@ -305,16 +304,20 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       case 'hotPlaceList': {
         // console.log('call reducer hotPlaceList : ', data);
         if (actions.params.page === 1) {
-          draft.hotPlaceList = data.PlaceResult;
+          draft.hotPlaceList = data.event;
         } else {
-          draft.hotPlaceList =
-            data.PlaceResult?.length > 0 ? draft.hotPlaceList.concat(data.PlaceResult) : draft.hotPlaceList;
+          draft.hotPlaceList = data.event?.length > 0 ? draft.hotPlaceList.concat(data.event) : draft.hotPlaceList;
         }
         break;
       }
 
       case 'hotPlaceListPage': {
         draft.hotPlaceListPage = data;
+        break;
+      }
+
+      case 'eventHotDetail': {
+        draft.eventHotDetail = data.event;
         break;
       }
 

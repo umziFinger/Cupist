@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
-import { FlatList, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Animated, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
-import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
-import HotPlaceCard from '@/Components/Card/Home/HotPlaceCard';
+import QuickPriceCard from '@/Components/Card/Home/QuickPriceCard';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
-import PlaceActions from '@/Stores/Place/Actions';
 
 interface PropTypes {
   list: Array<any>;
 }
-const HotArea = (props: PropTypes) => {
+const FreeBowlingArea = (props: PropTypes) => {
   const { width, height } = useWindowDimensions();
   const { list } = props;
+  const animatedFlatRef = useRef<any>();
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
 
   const onViewableItemsChanged = React.useRef(
     (info: { viewableItems: Array<ViewToken>; changed: Array<ViewToken> }) => {
       if (info.viewableItems) {
         const tempViewableIndex = info.viewableItems[0]?.key;
-
         let changeViewableIndex = 0;
         if (tempViewableIndex !== undefined) {
           changeViewableIndex = parseInt(tempViewableIndex);
@@ -33,7 +31,7 @@ const HotArea = (props: PropTypes) => {
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');
-    navigate('HotPlaceListScreen');
+    navigate('PlaceListScreen', { type: 'free' });
   };
 
   return (
@@ -42,7 +40,7 @@ const HotArea = (props: PropTypes) => {
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end' }}>
           <View style={{ marginRight: 4 }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 20, fontWeight: 'bold', letterSpacing: -0.35 }}>
-              이벤트 HOT
+              자유 볼링
             </CustomText>
           </View>
           <View style={{ width: 5, height: 5, marginBottom: 5 }}>
@@ -56,7 +54,7 @@ const HotArea = (props: PropTypes) => {
         <View style={{ flexDirection: 'row', marginTop: 6 }}>
           <View style={{ flex: 1 }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-              캡슐, 솔로 각종 이벤트 볼링장
+              1인 2 ~ 4시간 무제한 상품
             </CustomText>
           </View>
           <CustomButton onPress={() => onPressViewAll()} hitSlop={7}>
@@ -77,37 +75,49 @@ const HotArea = (props: PropTypes) => {
           </CustomButton>
         </View>
       </View>
-      <View style={{ flex: 1 }}>
-        <FlatList
-          data={list}
-          renderItem={({ item, index }) => (
-            <View style={{ marginRight: index === list.length - 1 ? 20 : 9 }}>
-              <HotPlaceCard item={item} width={(width - 40) * 0.7} />
+      <Animated.FlatList
+        data={list}
+        ref={animatedFlatRef}
+        renderItem={({ item }) => {
+          return (
+            <View style={{ marginHorizontal: 4 }}>
+              <QuickPriceCard item={item} />
             </View>
-          )}
-          pagingEnabled
-          horizontal
-          disableIntervalMomentum
-          decelerationRate="fast"
-          snapToInterval={(width - 40 + 18) * 0.7}
-          snapToAlignment={'start'}
-          keyExtractor={(item, index) => index.toString()}
-          initialNumToRender={2}
-          maxToRenderPerBatch={5}
-          windowSize={7}
-          showsHorizontalScrollIndicator={false}
-          onViewableItemsChanged={onViewableItemsChanged?.current}
-          viewabilityConfig={{
-            itemVisiblePercentThreshold: 50,
-          }}
-          contentContainerStyle={{
-            paddingLeft: 20,
-            marginTop: 25,
-          }}
-        />
-      </View>
+          );
+        }}
+        keyExtractor={(item, index) => index.toString()}
+        scrollEventThrottle={16}
+        initialNumToRender={2}
+        maxToRenderPerBatch={5}
+        windowSize={7}
+        snapToInterval={width - 32}
+        snapToAlignment={'start'}
+        showsHorizontalScrollIndicator={false}
+        decelerationRate={'fast'}
+        disableIntervalMomentum
+        renderToHardwareTextureAndroid
+        horizontal
+        // onEndReached={() => onMore()}
+        // onEndReachedThreshold={1}
+        removeClippedSubviews
+        onViewableItemsChanged={onViewableItemsChanged.current}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 50,
+        }}
+        contentContainerStyle={{ marginTop: 24 }}
+        ListHeaderComponent={
+          <View style={{ width: list?.length - 1 === viewableIndex && list?.length !== 1 ? 0 : 16 }} />
+        }
+        ListFooterComponent={
+          <View
+            style={{
+              width: list?.length - 1 === viewableIndex && list?.length !== 1 ? 12 : 0,
+            }}
+          />
+        }
+      />
     </View>
   );
 };
 
-export default HotArea;
+export default FreeBowlingArea;

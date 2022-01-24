@@ -63,6 +63,7 @@ import CertificationScreen from '@/Components/IamPort/CertificationScreen';
 import SocialJoinScreen from '@/Containers/Auth/SocialJoinScreen';
 import MyCouponScreen from '@/Containers/More/MyCouponScreen';
 import AddCardCheckPasswordScreen from '@/Containers/Reservation/AddCardCheckPasswordScreen';
+import EventHotDetailScreen from '@/Containers/Place/EventHotDetailScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -126,6 +127,7 @@ export type MainStackParamList = {
   PaymentScreen: { userCode: any; data: any };
   CertificationScreen: undefined;
   MyCouponScreen: undefined;
+  EventHotDetailScreen: { eventIdx: number };
 };
 
 const Tab = createBottomTabNavigator();
@@ -172,6 +174,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="PlaceListScreen" component={PlaceListScreen} />
       <MainStack.Screen name="HotPlaceListScreen" component={HotPlaceListScreen} />
       <MainStack.Screen name="BasicInfoDetailScreen" component={BasicInfoDetailScreen} />
+      <MainStack.Screen name="EventHotDetailScreen" component={EventHotDetailScreen} />
 
       {/*  Setting */}
       <MainStack.Screen name="LocationSettingScreen" component={LocationSettingScreen} />

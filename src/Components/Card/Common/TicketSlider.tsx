@@ -20,18 +20,15 @@ const TicketSlider = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { allowedTimeArr, item, showDivider = false } = props;
-  const morning = item?.morning || [];
-  const afternoon = item?.afternoon || [];
-  const night = item?.night || [];
+  const normal = item?.normal || [];
+  const free = item?.free || [];
 
   const isShowFunc = (value: number) => {
-    if (value === 0 && morning.length > 0) {
+    if (value === 0 && normal.length > 0) {
       return true;
     }
-    if (value === 1 && afternoon.length > 0) {
-      return true;
-    }
-    return value === 2 && night.length > 0;
+    return value === 1 && free.length > 0;
+    // return value === 2 && night.length > 0;
   };
 
   const onPressTicket = (value: any) => {
@@ -46,7 +43,7 @@ const TicketSlider = (props: PropTypes) => {
 
   return (
     <View>
-      {morning.length > 0 || afternoon.length > 0 || night.length > 0 ? (
+      {normal.length > 0 || free.length > 0 ? (
         <FlatList
           data={allowedTimeArr}
           renderItem={({ item: allowedTime, index }) => {
@@ -69,15 +66,15 @@ const TicketSlider = (props: PropTypes) => {
                           {DATA_TICKET_TIME[index].type}
                         </CustomText>
                       </View>
-                      <View style={{ backgroundColor: Color.Gray300, width: 1, height: 11, marginRight: 6 }} />
-                      <View style={{ justifyContent: 'center' }}>
-                        <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>
-                          {DATA_TICKET_TIME[index].time}
-                        </CustomText>
-                      </View>
+                      {/* <View style={{ backgroundColor: Color.Gray300, width: 1, height: 11, marginRight: 6 }} /> */}
+                      {/* <View style={{ justifyContent: 'center' }}> */}
+                      {/*  <CustomText style={{ color: Color.Gray800, fontSize: 13 }}> */}
+                      {/*    {DATA_TICKET_TIME[index].time} */}
+                      {/*  </CustomText> */}
+                      {/* </View> */}
                     </View>
                     <FlatList
-                      data={allowedTime === 0 ? morning : allowedTime === 1 ? afternoon : night}
+                      data={allowedTime === 0 ? normal : free}
                       renderItem={({ item: time }) => (
                         <CustomButton onPress={() => onPressTicket(time)}>
                           <View
@@ -127,6 +124,21 @@ const TicketSlider = (props: PropTypes) => {
                               }}
                             >
                               <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                                {allowedTime === 1 && !time?.hasSoldOut && (
+                                  <View
+                                    style={{
+                                      backgroundColor: Color.Gray300,
+                                      paddingVertical: 1,
+                                      paddingHorizontal: 2,
+                                      marginRight: 5,
+                                      borderRadius: 2,
+                                    }}
+                                  >
+                                    <CustomText style={{ color: Color.Gray400, fontSize: 11, fontWeight: 'bold' }}>
+                                      {time?.count}자리 보유
+                                    </CustomText>
+                                  </View>
+                                )}
                                 {time?.hasSoldOut && (
                                   <View
                                     style={{

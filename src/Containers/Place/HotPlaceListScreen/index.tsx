@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList, useWindowDimensions, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
@@ -8,52 +8,46 @@ import { HomeState } from '@/Stores/Home/InitialState';
 import PlaceActions from '@/Stores/Place/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
-import HotPlaceCard from './HotPlaceCard';
+import EventHotCard from '@/Components/Card/Home/EventHotCard';
 
 const HotPlaceListScreen = () => {
   const dispatch = useDispatch();
-  const { width } = useWindowDimensions();
   const { myLatitude, myLongitude, heightInfo } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { hotPlaceList, hotPlaceListPage } = useSelector((state: PlaceState) => state.place);
 
   useEffect(() => {
     const params = {
-      type: 'hot',
       lat: myLatitude,
       lng: myLongitude,
       page: 1,
       perPage: 10,
       date: calendarDate,
     };
-    dispatch(PlaceActions.fetchPlaceHotList(params));
+    dispatch(PlaceActions.fetchPlaceEventHotList(params));
   }, []);
 
   const onRefresh = () => {
-    console.log('onRefresh');
     const params = {
-      type: 'hot',
       lat: myLatitude,
       lng: myLongitude,
       page: 1,
       perPage: 10,
       date: calendarDate,
     };
-    dispatch(PlaceActions.fetchPlaceHotList(params));
+    dispatch(PlaceActions.fetchPlaceEventHotList(params));
   };
 
   const onMore = () => {
-    console.log('onMore');
     if (hotPlaceListPage > 1) {
       const params = {
-        type: 'hot',
         lat: myLatitude,
         lng: myLongitude,
         page: hotPlaceListPage || 1,
         perPage: 10,
         date: calendarDate,
       };
-      dispatch(PlaceActions.fetchPlaceHotList(params));
+      dispatch(PlaceActions.fetchPlaceEventHotList(params));
     }
   };
 
@@ -84,19 +78,19 @@ const HotPlaceListScreen = () => {
                   캡슐, 솔로 각종 이벤트 볼링장
                 </CustomText>
               </View>
-              <View style={{ flex: 1, marginTop: 24 }}>
+              <View style={{ flex: 1, marginTop: 5 }}>
                 <FlatList
                   data={hotPlaceList || []}
                   renderItem={({ item: place }) => {
                     return (
-                      <View style={{ width: width - 32 }}>
-                        <HotPlaceCard item={place} type={'hot'} parentWidth={width - 32} />
+                      <View style={{ marginTop: 20 }}>
+                        <EventHotCard item={place} />
                       </View>
                     );
                   }}
                   keyExtractor={(item, index) => index.toString()}
-                  initialNumToRender={2}
-                  maxToRenderPerBatch={5}
+                  initialNumToRender={7}
+                  maxToRenderPerBatch={10}
                   windowSize={7}
                   onEndReached={() => onMore()}
                   onEndReachedThreshold={0.8}

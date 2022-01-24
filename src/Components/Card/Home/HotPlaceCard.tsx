@@ -18,15 +18,15 @@ const HotPlaceCard = ({ item, width }: PropTypes) => {
   const { handlerPlaceDibs } = usePlaceDibs();
 
   return (
-    <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
+    <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item?.Place?.idx })}>
       <View style={{ borderRadius: 5, borderWidth: 1, borderColor: Color.Gray200, backgroundColor: Color.White }}>
         <View style={{ width, height: 145 }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderTopLeftRadius: 5, borderTopRightRadius: 5 }}
             source={
-              !item?.placePhotoArr[0] || isError
+              !item?.Place?.placePhotoArr[0] || isError
                 ? require('@/Assets/Images/Common/icNoImage.png')
-                : { uri: item?.placePhotoArr[0] }
+                : { uri: item?.Place?.placePhotoArr[0] }
             }
             resizeMode={FastImage.resizeMode.cover}
             onError={() => {

@@ -50,13 +50,13 @@ const PlaceListScreen = ({ route }: PropTypes) => {
     let title = '';
     let content = '';
     let date = calendarDate;
-    if (type === 'special') {
-      title = '자유 볼링';
+    if (type === 'free') {
+      title = '자유볼링';
       content = '1인 2 ~ 4시간 무제한 상품';
       date = calendarDate;
     }
-    if (type === 'early') {
-      title = '할인 특가';
+    if (type === 'normal') {
+      title = '시간제볼링';
       content = '선착순 할인특가로 즐기는 볼링장';
       date = prepaymentDate;
     }
@@ -83,7 +83,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: 1,
       perPage: 10,
-      date: type === 'special' ? calendarDate : prepaymentDate,
+      date: type === 'free' ? calendarDate : prepaymentDate,
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   }, [calendarDate, prepaymentDate]);
@@ -96,7 +96,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: placeListPage || 1,
       perPage: 10,
-      date: type === 'special' ? calendarDate : prepaymentDate,
+      date: type === 'free' ? calendarDate : prepaymentDate,
     };
     if (placeListPage > 1) dispatch(PlaceActions.fetchPlaceList(params));
   };
@@ -109,7 +109,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: 1,
       perPage: 10,
-      date: type === 'special' ? calendarDate : prepaymentDate,
+      date: type === 'free' ? calendarDate : prepaymentDate,
+      // startTime: '10:00:00',
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   };
@@ -160,8 +161,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 </CustomText>
               </View>
             </View>
-            <View style={{ paddingLeft: 16, paddingRight: type === 'special' ? 16 : 0 }}>
-              {type === 'special' ? (
+            <View style={{ paddingLeft: 16, paddingRight: type === 'free' ? 16 : 0 }}>
+              {type === 'free' ? (
                 <CustomButton onPress={() => onPressDate()} style={{ marginTop: 16 }}>
                   <View
                     style={{
@@ -231,7 +232,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                       <CustomText
                         style={{ color: Color.Gray400, fontSize: 14, fontWeight: '500', letterSpacing: -0.25 }}
                       >
-                        {`해당날짜에 ${type === 'special' ? '특가' : '선결제'} 상품이 없습니다.`}
+                        {`해당날짜에 ${type === 'free' ? '자유볼링' : '시간제'} 상품이 없습니다.`}
                       </CustomText>
                     </View>
                   </View>

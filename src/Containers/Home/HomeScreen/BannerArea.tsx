@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useState } from 'react';
-import { FlatList, NativeSyntheticEvent, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
+import { FlatList, Linking, NativeSyntheticEvent, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
 import { Color } from '@/Assets/Color';
@@ -9,7 +9,7 @@ import MyActions from '@/Stores/My/Actions';
 interface PropTypes {
   list: Array<any>;
 }
-const EventArea = (props: PropTypes) => {
+const BannerArea = (props: PropTypes) => {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const flatRef = createRef<any>();
@@ -61,15 +61,39 @@ const EventArea = (props: PropTypes) => {
   };
 
   const getItemLayout = (data: any, index: any) => {
-    return { length: width - 48, offset: (width - 48) * index, index };
+    return { length: width - 32, offset: (width - 32) * index, index };
   };
 
   const onMoveEventDetail = (item: any) => {
-    console.log('onPressPop: ', item.idx);
-    const params = {
-      eventIdx: item.idx,
-    };
-    dispatch(MyActions.fetchMyEventDetailInfo(params));
+    // console.log('onPressPop: ', item.idx);
+
+    if (item.linkType === 'screen') {
+      switch (item.linkScreen) {
+        case 'EventDetailScreen': {
+          const params = {
+            eventIdx: item.idx,
+          };
+          dispatch(MyActions.fetchMyEventDetailInfo(params));
+          break;
+        }
+
+        default:
+          break;
+      }
+    } else if (item.linkType === 'kakao') {
+      onOpenKaKaoChat(item?.linkUrl);
+    }
+  };
+
+  const onOpenKaKaoChat = (url: string) => {
+    if (url) {
+      Linking.openURL(url)
+        .then((r) => console.log('문의하기 성공', r))
+        .catch((e) => {
+          console.log('문의하기 에러', e);
+          Linking.openURL(url).then(() => console.log('문의하기 링크 실패, 웹뷰 던지기'));
+        });
+    }
   };
 
   const onViewableItemsChanged = React.useRef(
@@ -85,16 +109,16 @@ const EventArea = (props: PropTypes) => {
     },
   );
   return (
-    <View style={{ flex: 1, marginTop: 40, paddingHorizontal: 20 }}>
+    <View style={{ flex: 1, marginTop: 40, paddingHorizontal: 16 }}>
       <FlatList
         ref={flatRef}
         data={list}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <CustomButton onPress={() => onMoveEventDetail(item)}>
             <View
               style={{
-                width: width - 40,
-                height: (width - 40) * 0.75,
+                width: width - 32,
+                height: (width - 32) * 0.75,
                 backgroundColor: Color.White,
               }}
             >
@@ -112,10 +136,8 @@ const EventArea = (props: PropTypes) => {
         windowSize={7}
         pagingEnabled
         horizontal
-        onScrollBeginDrag={() => console.log('start')}
         onScrollEndDrag={(event: NativeSyntheticEvent<any>) => {
           if (viewableIndex === list?.length - 1) {
-            console.log('마지막이다');
             if (Platform.OS === 'android') {
               if (event?.nativeEvent?.velocity.x < 0) {
                 flatRef?.current?.scrollToIndex({ index: 0, animated: true });
@@ -133,7 +155,7 @@ const EventArea = (props: PropTypes) => {
         ]}
         disableIntervalMomentum
         decelerationRate="fast"
-        snapToInterval={width - 40}
+        snapToInterval={width - 32}
         showsHorizontalScrollIndicator={false}
         snapToAlignment={'start'}
         getItemLayout={getItemLayout}
@@ -152,22 +174,24 @@ const EventArea = (props: PropTypes) => {
       >
         <FlatList
           data={list}
-          renderItem={({ index }) =>
-            viewableIndex === index ? (
-              <View style={{ width: 6, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: Color.White }} />
-            ) : (
-              <View
-                style={{
-                  width: 6,
-                  height: 6,
-                  marginRight: 4,
-                  borderRadius: 50,
-                  backgroundColor: 'rgba(255,255,255,0.4)',
-                  // backgroundColor: 'red',
-                }}
-              />
-            )
-          }
+          renderItem={({ index }) => (
+            <View>
+              {viewableIndex === index ? (
+                <View style={{ width: 6, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: Color.White }} />
+              ) : (
+                <View
+                  style={{
+                    width: 6,
+                    height: 6,
+                    marginRight: 4,
+                    borderRadius: 50,
+                    backgroundColor: 'rgba(255,255,255,0.4)',
+                    // backgroundColor: 'red',
+                  }}
+                />
+              )}
+            </View>
+          )}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(zItem, index) => index.toString()}
           horizontal
@@ -181,4 +205,4 @@ const EventArea = (props: PropTypes) => {
   );
 };
 
-export default EventArea;
+export default BannerArea;

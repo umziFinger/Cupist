@@ -5,7 +5,7 @@ const { Types, Creators } = createActions({
   fetchCheckLoginYN: ['params'],
   fetchHomeList: ['params'],
   fetchHomeDirectReservationList: ['params'],
-  fetchHomePrepaymentPriceList: ['params'],
+  fetchHomeFreeBowlingPlaceList: ['params'],
   fetchHomePossibleDate: ['params'],
   fetchHomeCheckEarly: ['params'],
 });

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteProp } from '@react-navigation/native';
@@ -19,17 +19,15 @@ import SearchActions from '@/Stores/Search/Actions';
 import CommonActions from '@/Stores/Common/Actions';
 import LocationMyPosition from '@/Components/Permission/Location/LocationMyPosition';
 import HelloArea from '@/Containers/Home/HomeScreen/HelloArea';
-import QuickPriceArea from '@/Containers/Home/HomeScreen/QuickPriceArea';
-import PrepaymentPriceArea from '@/Containers/Home/HomeScreen/PrepaymentPriceArea';
-import HotArea from '@/Containers/Home/HomeScreen/HotArea';
-import EventArea from '@/Containers/Home/HomeScreen/EventArea';
+import FreeBowlingArea from '@/Containers/Home/HomeScreen/FreeBowlingArea';
+import PartTimeBowlingArea from '@/Containers/Home/HomeScreen/PartTimeBowlingArea';
+import EventHotArea from '@/Containers/Home/HomeScreen/EventHotArea';
+import BannerArea from '@/Containers/Home/HomeScreen/BannerArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import { scrollHomeHandler } from '@/Components/Function';
 import { SearchState } from '@/Stores/Search/InitialState';
 import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
-import CustomButton from '@/Components/CustomButton';
-import CustomText from '@/Components/CustomText';
-import { navigate } from '@/Services/NavigationService';
+
 import { LocationCheck } from '@/Components/Permission/Location';
 
 interface HomeProps {
@@ -84,11 +82,9 @@ const HomeScreen = ({ route }: HomeProps) => {
 
   // 선결제 특가 필터 날짜 변경
   useEffect(() => {
-    console.log('선결제 특가  날짜 변경 : ', prepaymentDate);
-    // positionUpdate().then();
-    // 홈 선결제 특가 호출
+    // 홈 자유 볼링 호출
     dispatch(
-      HomeActions.fetchHomePrepaymentPriceList({
+      HomeActions.fetchHomeFreeBowlingPlaceList({
         date: prepaymentDate,
         lat: parseFloat(myLatitude?.toString()) || 37.56561,
         lng: parseFloat(myLongitude?.toString()) || 126.97804,
@@ -139,9 +135,9 @@ const HomeScreen = ({ route }: HomeProps) => {
       }),
     );
 
-    // 홈 선결제 특가 호출
+    // 홈 자유 볼링 호출
     dispatch(
-      HomeActions.fetchHomePrepaymentPriceList({
+      HomeActions.fetchHomeFreeBowlingPlaceList({
         date: prepaymentDate,
         lat: parseFloat(myLatitude?.toString()) || 37.56561,
         lng: parseFloat(myLongitude?.toString()) || 126.97804,
@@ -165,7 +161,7 @@ const HomeScreen = ({ route }: HomeProps) => {
   };
 
   const handleScroll = (event: any) => {
-    const result = scrollHomeHandler(event, 230, 1200);
+    const result = scrollHomeHandler(event, 230, 1800);
     setIsShow(result.isShow);
   };
 
@@ -210,43 +206,48 @@ const HomeScreen = ({ route }: HomeProps) => {
           </View>
         );
       }
+
       case 3: {
         return (
-          // 자유 볼링 (없으면 영역 숨김)
-          homeList['special']?.length > 0 && (
+          // 배너
+          homeList['banner']?.length > 0 && (
             <View style={{ flex: 1 }}>
               <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-              <QuickPriceArea list={homeList['special'] || []} />
+              <BannerArea list={homeList['banner'] || []} />
             </View>
           )
         );
       }
+
       case 4: {
         return (
-          // 이벤트
-          homeList['event']?.length > 0 && (
-            <View style={{ flex: 1 }}>
-              <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-              <EventArea list={homeList['event'] || []} />
-            </View>
-          )
-        );
-      }
-      case 5: {
-        return (
-          // 할인 특가
+          // 시간제 볼링
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <PrepaymentPriceArea list={homeList['early'] || []} />
+            <PartTimeBowlingArea list={homeList['normal'] || []} />
           </View>
         );
       }
+
+      case 5: {
+        return (
+          // 자유 볼링 (없으면 영역 숨김)
+          homeList['free']?.length > 0 && (
+            <View style={{ flex: 1 }}>
+              <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
+              <FreeBowlingArea list={homeList['free'] || []} />
+            </View>
+          )
+        );
+      }
+
       case 6: {
         return (
-          // 볼리미 HOT
+          // 이벤트 HOT
           <View style={{ flex: 1 }}>
             <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <HotArea list={homeList['hotPlace'] || []} />
+            <EventHotArea list={homeList['event'] || []} />
+            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
           </View>
         );
       }

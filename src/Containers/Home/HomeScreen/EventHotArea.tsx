@@ -1,25 +1,25 @@
-import React, { useRef, useState } from 'react';
-import { Animated, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
-import QuickPriceCard from '@/Components/Card/Home/QuickPriceCard';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import EventHotCard from '@/Components/Card/Home/EventHotCard';
 
 interface PropTypes {
   list: Array<any>;
 }
-const QuickPriceArea = (props: PropTypes) => {
-  const { width, height } = useWindowDimensions();
+const EventHotArea = (props: PropTypes) => {
+  const { width } = useWindowDimensions();
   const { list } = props;
-  const animatedFlatRef = useRef<any>();
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
 
   const onViewableItemsChanged = React.useRef(
     (info: { viewableItems: Array<ViewToken>; changed: Array<ViewToken> }) => {
       if (info.viewableItems) {
         const tempViewableIndex = info.viewableItems[0]?.key;
+
         let changeViewableIndex = 0;
         if (tempViewableIndex !== undefined) {
           changeViewableIndex = parseInt(tempViewableIndex);
@@ -31,7 +31,7 @@ const QuickPriceArea = (props: PropTypes) => {
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');
-    navigate('PlaceListScreen', { type: 'special' });
+    navigate('HotPlaceListScreen');
   };
 
   return (
@@ -40,7 +40,7 @@ const QuickPriceArea = (props: PropTypes) => {
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end' }}>
           <View style={{ marginRight: 4 }}>
             <CustomText style={{ color: Color.Black1000, fontSize: 20, fontWeight: 'bold', letterSpacing: -0.35 }}>
-              자유 볼링
+              이벤트 HOT
             </CustomText>
           </View>
           <View style={{ width: 5, height: 5, marginBottom: 5 }}>
@@ -54,7 +54,7 @@ const QuickPriceArea = (props: PropTypes) => {
         <View style={{ flexDirection: 'row', marginTop: 6 }}>
           <View style={{ flex: 1 }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-              1인 2 ~ 4시간 무제한 상품
+              캡슐, 솔로 각종 이벤트 볼링장
             </CustomText>
           </View>
           <CustomButton onPress={() => onPressViewAll()} hitSlop={7}>
@@ -75,49 +75,23 @@ const QuickPriceArea = (props: PropTypes) => {
           </CustomButton>
         </View>
       </View>
-      <Animated.FlatList
-        data={list}
-        ref={animatedFlatRef}
-        renderItem={({ item, index }) => {
-          return (
-            <View style={{ marginHorizontal: 4 }}>
-              <QuickPriceCard item={item} />
+      <View style={{ flex: 1, paddingHorizontal: 20, marginTop: 5 }}>
+        <FlatList
+          data={list}
+          renderItem={({ item }) => (
+            <View style={{ marginTop: 20 }}>
+              <EventHotCard item={item} />
             </View>
-          );
-        }}
-        keyExtractor={(item, index) => index.toString()}
-        scrollEventThrottle={16}
-        initialNumToRender={2}
-        maxToRenderPerBatch={5}
-        windowSize={7}
-        snapToInterval={width - 32}
-        snapToAlignment={'start'}
-        showsHorizontalScrollIndicator={false}
-        decelerationRate={'fast'}
-        disableIntervalMomentum
-        renderToHardwareTextureAndroid
-        horizontal
-        // onEndReached={() => onMore()}
-        // onEndReachedThreshold={1}
-        removeClippedSubviews
-        onViewableItemsChanged={onViewableItemsChanged.current}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 50,
-        }}
-        contentContainerStyle={{ marginTop: 24 }}
-        ListHeaderComponent={
-          <View style={{ width: list?.length - 1 === viewableIndex && list?.length !== 1 ? 0 : 16 }} />
-        }
-        ListFooterComponent={
-          <View
-            style={{
-              width: list?.length - 1 === viewableIndex && list?.length !== 1 ? 12 : 0,
-            }}
-          />
-        }
-      />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          initialNumToRender={5}
+          maxToRenderPerBatch={8}
+          windowSize={7}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </View>
   );
 };
 
-export default QuickPriceArea;
+export default EventHotArea;

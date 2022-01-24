@@ -25,9 +25,8 @@ export const INITIAL_STATE: PlaceState['place'] = {
   },
   placeDetailIdx: -1,
   placeTicketList: {
-    morning: [],
-    afternoon: [],
-    night: [],
+    normal: [],
+    free: [],
   },
   recentList: [],
   recentListPage: 1,
@@ -51,6 +50,7 @@ export const INITIAL_STATE: PlaceState['place'] = {
   hotPlaceListPage: 1,
   dibsList: [],
   dibsListPage: 1,
+  eventHotDetail: null,
 };
 
 export interface PlaceState {
@@ -83,6 +83,7 @@ export interface PlaceState {
     hotPlaceListPage: number | 1;
     dibsList: Array<any>;
     dibsListPage: 1;
+    eventHotDetail: EventHotType | null;
   };
 }
 
@@ -109,7 +110,24 @@ interface PlaceDetail {
 }
 
 interface PlaceTicketList {
-  morning: Array<any> | [];
-  afternoon: Array<any> | [];
-  night: Array<any> | [];
+  normal: Array<any> | [];
+  free: Array<any> | [];
+}
+
+interface EventHotType {
+  idx: number;
+  type: string;
+  startDate: string;
+  endDate: string;
+  title: string;
+  content: string;
+  hitCnt: number;
+  regDate: string;
+  updateDate: string;
+  deleteDate: null;
+  PlaceEventPhoto: any[];
+  placeIdx: number;
+  placeName: string;
+  placePhoto: string;
+  area: string;
 }

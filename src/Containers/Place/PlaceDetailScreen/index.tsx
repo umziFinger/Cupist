@@ -79,11 +79,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       if (selectedTicket?.idx) {
         navigate('ReservationScreen', { placeIdx: idx, ticketInfoIdx: selectedTicket?.idx });
       }
-    } else if (
-      placeTicketList?.morning.length < 1 &&
-      placeTicketList?.afternoon.length < 1 &&
-      placeTicketList?.night.length < 1
-    ) {
+    } else if (placeTicketList?.normal.length < 1 && placeTicketList?.free.length < 1) {
       dispatch(
         CommonActions.fetchCommonReducer({
           type: 'alertToast',

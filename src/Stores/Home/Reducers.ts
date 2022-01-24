@@ -13,10 +13,10 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'homeList': {
-        // draft.homeList.early = data.early;
-        draft.homeList.special = data.special;
-        draft.homeList.hotPlace = data.hotPlace;
+        draft.homeList.free = data.free;
+        draft.homeList.normal = data.normal;
         draft.homeList.event = data.event;
+        draft.homeList.banner = data.banner;
         draft.isHomeLoaded = true;
         break;
       }
@@ -43,7 +43,7 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'prepaymentPriceList': {
-        draft.homeList.early = data.early;
+        draft.homeList.free = data.free;
         break;
       }
 
@@ -100,16 +100,16 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'quickPriceDibsHandler': {
         try {
-          const copyQuickPriceList: any = state.homeList.special;
+          const copyQuickPriceList: any = state.homeList.free;
           if (data.type === 'dibs') {
             const FIND_IDX = copyQuickPriceList?.findIndex((v: any) => v?.idx === data.placeIdx);
             if (FIND_IDX !== undefined && FIND_IDX !== -1) {
-              draft.homeList.special[FIND_IDX].isPlaceDibs = true;
+              draft.homeList.free[FIND_IDX].isPlaceDibs = true;
             }
           } else if (data.type === 'unDibs') {
             const FIND_IDX = copyQuickPriceList?.findIndex((v: any) => v?.idx === data.placeIdx);
             if (FIND_IDX !== undefined && FIND_IDX !== -1) {
-              draft.homeList.special[FIND_IDX].isPlaceDibs = false;
+              draft.homeList.free[FIND_IDX].isPlaceDibs = false;
             }
           }
         } catch (e) {
@@ -120,16 +120,16 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'hotPlaceDibsHandler': {
         try {
-          const copyHotPlaceList: any = state.homeList.hotPlace;
+          const copyHotPlaceList: any = state.homeList.event;
           if (data.type === 'dibs') {
             const FIND_IDX = copyHotPlaceList?.findIndex((v: any) => v?.idx === data.placeIdx);
             if (FIND_IDX !== undefined && FIND_IDX !== -1) {
-              draft.homeList.hotPlace[FIND_IDX].isPlaceDibs = true;
+              draft.homeList.event[FIND_IDX].isPlaceDibs = true;
             }
           } else if (data.type === 'unDibs') {
             const FIND_IDX = copyHotPlaceList?.findIndex((v: any) => v?.idx === data.placeIdx);
             if (FIND_IDX !== undefined && FIND_IDX !== -1) {
-              draft.homeList.hotPlace[FIND_IDX].isPlaceDibs = false;
+              draft.homeList.event[FIND_IDX].isPlaceDibs = false;
             }
           }
         } catch (e) {

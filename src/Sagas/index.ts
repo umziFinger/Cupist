@@ -33,7 +33,7 @@ import {
 import {
   fetchHomeList,
   fetchHomeDirectReservationList,
-  fetchHomePrepaymentPriceList,
+  fetchHomeFreeBowlingPlaceList,
   fetchHomePossibleDate,
   fetchHomeCheckEarly,
 } from './HomeSaga';
@@ -98,8 +98,9 @@ import {
   fetchPlaceSearchList,
   fetchPlaceTicketList,
   fetchPlaceList,
-  fetchPlaceHotList,
+  fetchPlaceEventHotList,
   fetchPlaceDibsList,
+  fetchPlaceEventHotDetail,
 } from '@/Sagas/PlaceSaga';
 
 import {
@@ -128,7 +129,7 @@ export default function* root() {
     // home
     takeLatest(HomeTypes.FETCH_HOME_LIST, fetchHomeList),
     takeLatest(HomeTypes.FETCH_HOME_DIRECT_RESERVATION_LIST, fetchHomeDirectReservationList),
-    takeLatest(HomeTypes.FETCH_HOME_PREPAYMENT_PRICE_LIST, fetchHomePrepaymentPriceList),
+    takeLatest(HomeTypes.FETCH_HOME_FREE_BOWLING_PLACE_LIST, fetchHomeFreeBowlingPlaceList),
     takeEvery(HomeTypes.FETCH_HOME_POSSIBLE_DATE, fetchHomePossibleDate),
     takeEvery(HomeTypes.FETCH_HOME_CHECK_EARLY, fetchHomeCheckEarly),
 
@@ -195,8 +196,9 @@ export default function* root() {
     takeLatest(PlaceTypes.FETCH_PLACE_RECENT_LIST, fetchPlaceRecentList),
     takeLatest(PlaceTypes.FETCH_PLACE_REVIEW_LIST, fetchPlaceReviewList),
     takeLatest(PlaceTypes.FETCH_PLACE_LIST, fetchPlaceList),
-    takeLatest(PlaceTypes.FETCH_PLACE_HOT_LIST, fetchPlaceHotList),
+    takeLatest(PlaceTypes.FETCH_PLACE_EVENT_HOT_LIST, fetchPlaceEventHotList),
     takeLatest(PlaceTypes.FETCH_PLACE_DIBS_LIST, fetchPlaceDibsList),
+    takeLatest(PlaceTypes.FETCH_PLACE_EVENT_HOT_DETAIL, fetchPlaceEventHotDetail),
 
     // reservation
     takeLatest(ReservationTypes.FETCH_RESERVATION_INFO, fetchReservationInfo),

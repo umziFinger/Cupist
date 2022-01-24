@@ -1,12 +1,8 @@
-import { put, call, select } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import PlaceActions from '@/Stores/Place/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
-import AuthAction from '@/Stores/Auth/Actions';
-import { AuthState } from '@/Stores/Auth/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
-import MyActions from '@/Stores/My/Actions';
-import { navigate } from '@/Services/NavigationService';
 
 export function* fetchPlaceAroundList(data: any): any {
   try {
@@ -164,7 +160,7 @@ export function* fetchPlaceList(data: any): any {
   try {
     const payload = {
       ...data,
-      url: Config.PLACE_URL,
+      url: `${Config.PLACE_URL}`,
     };
 
     const response = yield call(Axios.GET, payload);
@@ -180,11 +176,11 @@ export function* fetchPlaceList(data: any): any {
   }
 }
 
-export function* fetchPlaceHotList(data: any): any {
+export function* fetchPlaceEventHotList(data: any): any {
   try {
     const payload = {
       ...data,
-      url: Config.PLACE_URL,
+      url: Config.EVENT_HOT_URL,
     };
 
     const response = yield call(Axios.GET, payload);
@@ -196,7 +192,25 @@ export function* fetchPlaceHotList(data: any): any {
       yield put(PlaceActions.fetchErrorHandler(response));
     }
   } catch (e) {
-    console.log('occurred Error...fetchPlaceHotList : ', e);
+    console.log('occurred Error...fetchPlaceEventHotList : ', e);
+  }
+}
+export function* fetchPlaceEventHotDetail(data: any): any {
+  try {
+    const payload = {
+      url: `${Config.EVENT_HOT_URL}/${data.params.eventIdx}`,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log(response.data);
+      yield put(PlaceActions.fetchPlaceReducer({ type: 'eventHotDetail', data: response.data }));
+    } else {
+      yield put(PlaceActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchPlaceEventHotDetail : ', e);
   }
 }
 

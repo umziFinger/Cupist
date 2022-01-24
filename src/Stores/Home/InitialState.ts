@@ -1,11 +1,11 @@
 export const INITIAL_STATE: HomeState['home'] = {
   loginCheckYN: 'N',
   homeList: {
-    place: [],
-    special: [],
-    early: [],
-    hotPlace: [],
+    normal: [],
+    free: [],
     event: [],
+    place: [],
+    banner: [],
   },
   isHomeLoaded: false,
   calendarDate: '',
@@ -35,9 +35,9 @@ export interface HomeState {
 }
 
 interface HomeList {
-  place: Array<any>;
-  special: Array<any>;
-  early: Array<any>;
-  hotPlace: Array<any>;
+  normal: Array<any>;
+  free: Array<any>;
   event: Array<any>;
+  banner: Array<any>;
+  place: Array<any>;
 }
