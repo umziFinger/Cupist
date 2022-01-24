@@ -80,7 +80,7 @@ const TicketSlider = (props: PropTypes) => {
                           <View
                             style={{
                               marginTop: 13,
-                              paddingVertical: 20,
+                              paddingVertical: allowedTime === 0 ? 20 : 16,
                               paddingLeft: 12,
                               paddingRight: 21,
                               borderRadius: 5,
@@ -100,6 +100,47 @@ const TicketSlider = (props: PropTypes) => {
                               marginRight: 8,
                             }}
                           >
+                            {allowedTime === 1 && !time?.hasSoldOut && (
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    backgroundColor:
+                                      selectedTicket?.idx === time.idx
+                                        ? Color.Primary1000
+                                        : time?.hasSoldOut
+                                        ? Color.Gray300
+                                        : Color.Grayyellow500,
+                                    paddingVertical: 1,
+                                    paddingHorizontal: 4,
+                                    borderRadius: 2,
+                                    marginBottom: 8,
+                                  }}
+                                >
+                                  <CustomText
+                                    style={{
+                                      color:
+                                        selectedTicket?.idx === time.idx
+                                          ? Color.White
+                                          : time?.hasSoldOut
+                                          ? Color.Gray400
+                                          : Color.White,
+                                      fontSize: 11,
+                                      fontWeight: 'bold',
+                                    }}
+                                  >
+                                    {selectedTicket?.idx === time.idx
+                                      ? `잔여에약 ${time?.count}`
+                                      : time?.hasSoldOut
+                                      ? '마감'
+                                      : `잔여에약 ${time?.count}`}
+                                  </CustomText>
+                                </View>
+                              </View>
+                            )}
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                               <CustomText
                                 style={{
@@ -124,22 +165,7 @@ const TicketSlider = (props: PropTypes) => {
                               }}
                             >
                               <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                                {allowedTime === 1 && !time?.hasSoldOut && (
-                                  <View
-                                    style={{
-                                      backgroundColor: Color.Gray300,
-                                      paddingVertical: 1,
-                                      paddingHorizontal: 2,
-                                      marginRight: 5,
-                                      borderRadius: 2,
-                                    }}
-                                  >
-                                    <CustomText style={{ color: Color.Gray400, fontSize: 11, fontWeight: 'bold' }}>
-                                      {time?.count}자리 보유
-                                    </CustomText>
-                                  </View>
-                                )}
-                                {time?.hasSoldOut && (
+                                {allowedTime === 0 && time?.hasSoldOut && (
                                   <View
                                     style={{
                                       backgroundColor: Color.Gray300,

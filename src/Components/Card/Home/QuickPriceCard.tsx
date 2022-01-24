@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
-import { AuthState } from '@/Stores/Auth/InitialState';
-import { placeDibsDataType } from '@/Sagas/CommonSaga';
-import CommonActions from '@/Stores/Common/Actions';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
 
 interface PropTypes {

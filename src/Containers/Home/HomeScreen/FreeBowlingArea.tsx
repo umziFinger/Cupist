@@ -6,6 +6,7 @@ import { Color } from '@/Assets/Color';
 import QuickPriceCard from '@/Components/Card/Home/QuickPriceCard';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import DateFilter from '@/Components/FilterSilder/DateFilter';
 
 interface PropTypes {
   list: Array<any>;
@@ -54,7 +55,7 @@ const FreeBowlingArea = (props: PropTypes) => {
         <View style={{ flexDirection: 'row', marginTop: 6 }}>
           <View style={{ flex: 1 }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-              1인 2 ~ 4시간 무제한 상품
+              선착순 할인 특가로 즐기는 볼링장
             </CustomText>
           </View>
           <CustomButton onPress={() => onPressViewAll()} hitSlop={7}>
@@ -73,6 +74,11 @@ const FreeBowlingArea = (props: PropTypes) => {
               </View>
             </View>
           </CustomButton>
+        </View>
+      </View>
+      <View style={{ paddingLeft: 20 }}>
+        <View style={{ marginTop: 20 }}>
+          <DateFilter />
         </View>
       </View>
       <Animated.FlatList
@@ -104,7 +110,7 @@ const FreeBowlingArea = (props: PropTypes) => {
         viewabilityConfig={{
           itemVisiblePercentThreshold: 50,
         }}
-        contentContainerStyle={{ marginTop: 24 }}
+        contentContainerStyle={{ marginTop: 25 }}
         ListHeaderComponent={
           <View style={{ width: list?.length - 1 === viewableIndex && list?.length !== 1 ? 0 : 16 }} />
         }

@@ -109,7 +109,7 @@ const BannerArea = (props: PropTypes) => {
     },
   );
   return (
-    <View style={{ flex: 1, marginTop: 40, paddingHorizontal: 16 }}>
+    <View style={{ flex: 1, marginTop: 60, paddingHorizontal: 16 }}>
       <FlatList
         ref={flatRef}
         data={list}

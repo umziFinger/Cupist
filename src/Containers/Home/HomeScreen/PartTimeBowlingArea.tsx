@@ -22,7 +22,7 @@ const PartTimeBowlingArea = (props: PropTypes) => {
   };
 
   return (
-    <View style={{ flex: 1, marginTop: 40 }}>
+    <View style={{ flex: 1, marginTop: 60 }}>
       <View style={{ paddingHorizontal: 20 }}>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end' }}>
           <View style={{ marginRight: 4 }}>
@@ -41,7 +41,7 @@ const PartTimeBowlingArea = (props: PropTypes) => {
         <View style={{ flexDirection: 'row', marginTop: 6 }}>
           <View style={{ flex: 1 }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-              선착순 할인특가로 즐기는 볼링장
+              인원제한 없이 즐기는 볼링
             </CustomText>
           </View>
 
@@ -63,11 +63,7 @@ const PartTimeBowlingArea = (props: PropTypes) => {
           </CustomButton>
         </View>
       </View>
-      <View style={{ paddingLeft: 20 }}>
-        <View style={{ marginTop: 20 }}>
-          <DateFilter />
-        </View>
-      </View>
+
       <View style={{ flex: 1, paddingHorizontal: 20, marginTop: 25 }}>
         <FlatList
           data={list}
@@ -93,7 +89,7 @@ const PartTimeBowlingArea = (props: PropTypes) => {
               <View style={{ marginTop: 16, alignItems: 'center' }}>
                 <View style={{ justifyContent: 'center' }}>
                   <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: '500', letterSpacing: -0.25 }}>
-                    해당날짜에 선결제 특가 상품이 없습니다.
+                    해당날짜에 시간제 상품이 없습니다.
                   </CustomText>
                 </View>
               </View>

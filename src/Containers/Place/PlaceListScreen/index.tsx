@@ -52,12 +52,12 @@ const PlaceListScreen = ({ route }: PropTypes) => {
     let date = calendarDate;
     if (type === 'free') {
       title = '자유볼링';
-      content = '1인 2 ~ 4시간 무제한 상품';
+      content = '선착순 할인 특가로 즐기는 볼링장';
       date = calendarDate;
     }
     if (type === 'normal') {
-      title = '시간제볼링';
-      content = '선착순 할인특가로 즐기는 볼링장';
+      title = '시간제 볼링';
+      content = '인원제한 없이 즐기는 볼링';
       date = prepaymentDate;
     }
     setScreenTitle(title);

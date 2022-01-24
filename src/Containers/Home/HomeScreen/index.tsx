@@ -212,7 +212,6 @@ const HomeScreen = ({ route }: HomeProps) => {
           // 배너
           homeList['banner']?.length > 0 && (
             <View style={{ flex: 1 }}>
-              <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
               <BannerArea list={homeList['banner'] || []} />
             </View>
           )
@@ -223,7 +222,6 @@ const HomeScreen = ({ route }: HomeProps) => {
         return (
           // 시간제 볼링
           <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
             <PartTimeBowlingArea list={homeList['normal'] || []} />
           </View>
         );
