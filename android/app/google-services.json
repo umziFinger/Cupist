@@ -23,6 +23,22 @@
           }
         },
         {
+          "client_id": "812978165702-9pgd2vmr0duloed6q6ff04ssco5cd6cd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.bolimi",
+            "certificate_hash": "36353547356bf6449bd012349abd95d0750642f4"
+          }
+        },
+        {
+          "client_id": "812978165702-b0bprihbvqravah5071opo3robhj15q1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.bolimi",
+            "certificate_hash": "dee089c8738037ff3474c3980d9745116e902c23"
+          }
+        },
+        {
           "client_id": "812978165702-i0kouh631omi4go6cbinuipoh3o77i23.apps.googleusercontent.com",
           "client_type": 3
         }
