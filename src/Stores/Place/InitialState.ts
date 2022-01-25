@@ -51,6 +51,7 @@ export const INITIAL_STATE: PlaceState['place'] = {
   dibsList: [],
   dibsListPage: 1,
   eventHotDetail: null,
+  selectedEventHotTab: null,
 };
 
 export interface PlaceState {
@@ -84,6 +85,7 @@ export interface PlaceState {
     dibsList: Array<any>;
     dibsListPage: 1;
     eventHotDetail: EventHotType | null;
+    selectedEventHotTab: EventHotSortType | null;
   };
 }
 
@@ -125,9 +127,14 @@ interface EventHotType {
   regDate: string;
   updateDate: string;
   deleteDate: null;
-  PlaceEventPhoto: any[];
+  PlaceEventPhoto: any;
   placeIdx: number;
   placeName: string;
   placePhoto: string;
   area: string;
 }
+
+export type EventHotSortType =
+  | { name: '최신순'; category: 'latest' }
+  | { name: '인기순'; category: 'hit' }
+  | { name: '추천순'; category: 'recommend' };

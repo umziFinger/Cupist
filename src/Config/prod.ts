@@ -20,8 +20,9 @@ const prod = {
   TMAP_MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/tmap-내비게이션-지도/id431589174',
   TMAP_MARKET_URL_ANDROID: 'market://details?id=com.skt.tmap.ku',
 
-  // API_URL: 'http://192.168.0.59:5000/',
+  // API_URL: 'http://192.168.0.12:5000/',
   API_URL: 'https://api.bolimi.kr/',
+  // API_URL: 'http://192.168.0.13:5005/', // duople_oil
 
   // dynamicLink URL
   DYNAMIC_URL: 'https://link.bolimi.kr',
@@ -64,7 +65,6 @@ const prod = {
   MY_URL: 'my',
   MY_PUSH_YN_URL: 'my/pushYN',
   MY_REVIEW: 'my/review',
-  MY_PROMOTION_URL: 'my/promotion',
   MY_CERT_GET_URL: 'my/cert/get',
   MY_PROFILE_URL: 'my/profile',
   MY_VIEW_URL: 'my/view',
@@ -79,6 +79,7 @@ const prod = {
   MY_RESERVATION_URL: 'my/reservation',
   MY_DIBS_URL: 'my/dibs',
   MY_PASSWORD_URL: 'my/password',
+  MY_COUPON_URL: 'my/coupon',
 
   NOTIFICATION_COUNT_URL: 'my/notification/count',
 
@@ -118,6 +119,7 @@ const prod = {
   PLACE_AROUND_LIST_URL: 'place/around',
   PLACE_SEARCH_LIST_URL: 'place/search', // 내주변/지역별 예약 가능한 볼링장 찾기
   EVENT_HOT_URL: 'home/event',
+
   // reservation
   RESERVATION_URL: 'reservation',
   RESERVATION_CARD_URL: 'reservation/card',

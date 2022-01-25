@@ -5,6 +5,7 @@ import QnaTabMenu from '@/Components/TabMenu/QnaTabMenu';
 import MyTabMenu from '@/Components/TabMenu/MyTabMenu';
 import ReservationTabMenu from '@/Components/TabMenu/ReservationTabMenu';
 import CouponTabMenu from '@/Components/TabMenu/CouponTabMenu';
+import EventHotTabMenu from '@/Components/TabMenu/EventHotTabMenu';
 
 interface TabMenuProps {
   type: string;
@@ -26,6 +27,8 @@ const TabMenu = (props: TabMenuProps) => {
       return <ReservationTabMenu type={type} data={data} />;
     case 'coupon':
       return <CouponTabMenu type={type} data={data} />;
+    case 'eventHot':
+      return <EventHotTabMenu type={type} data={data} />;
     default:
       return null;
   }

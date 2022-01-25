@@ -133,10 +133,10 @@ const TicketSlider = (props: PropTypes) => {
                                     }}
                                   >
                                     {selectedTicket?.idx === time.idx
-                                      ? `잔여에약 ${time?.count}`
+                                      ? `잔여에약 ${time?.remainingCnt}`
                                       : time?.hasSoldOut
                                       ? '마감'
-                                      : `잔여에약 ${time?.count}`}
+                                      : `잔여에약 ${time?.remainingCnt}`}
                                   </CustomText>
                                 </View>
                               </View>

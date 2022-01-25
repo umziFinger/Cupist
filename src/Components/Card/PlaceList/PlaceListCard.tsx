@@ -73,7 +73,7 @@ const PlaceListCard = (props: PropTypes) => {
                 </CustomText>
               </View>
             </View>
-            {(type === 'special' || type === 'early') &&
+            {(type === 'normal' || type === 'free') &&
               (item?.PlaceTicketInfo?.length !== 0 ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 9 }}>
                   <View style={{ justifyContent: 'center', marginRight: 4 }}>

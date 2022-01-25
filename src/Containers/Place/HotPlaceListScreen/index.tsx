@@ -9,12 +9,18 @@ import PlaceActions from '@/Stores/Place/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import EventHotCard from '@/Components/Card/Home/EventHotCard';
+import TabMenu from '@/Components/TabMenu';
+import { EVENT_HOT_TAB_MENU } from '@/Containers/Place/HotPlaceListScreen/data';
 
 const HotPlaceListScreen = () => {
   const dispatch = useDispatch();
   const { myLatitude, myLongitude, heightInfo } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { hotPlaceList, hotPlaceListPage } = useSelector((state: PlaceState) => state.place);
+  const {
+    hotPlaceList,
+    hotPlaceListPage,
+    selectedEventHotTab = { name: '최신순', category: 'latest' },
+  } = useSelector((state: PlaceState) => state.place);
 
   useEffect(() => {
     const params = {
@@ -23,8 +29,14 @@ const HotPlaceListScreen = () => {
       page: 1,
       perPage: 10,
       date: calendarDate,
+      sort: selectedEventHotTab?.category,
     };
     dispatch(PlaceActions.fetchPlaceEventHotList(params));
+
+    return () => {
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'hotPlaceListPage', data: 1 }));
+      // dispatch(PlaceActions.fetchPlaceReducer({ type: 'hotPlaceListInit' }));
+    };
   }, []);
 
   const onRefresh = () => {
@@ -78,7 +90,12 @@ const HotPlaceListScreen = () => {
                   캡슐, 솔로 각종 이벤트 볼링장
                 </CustomText>
               </View>
-              <View style={{ flex: 1, marginTop: 5 }}>
+
+              <View style={{ marginTop: 16 }}>
+                <TabMenu type={'eventHot'} data={EVENT_HOT_TAB_MENU} />
+              </View>
+
+              <View style={{ flex: 1, marginTop: 8 }}>
                 <FlatList
                   data={hotPlaceList || []}
                   renderItem={({ item: place }) => {
@@ -99,8 +116,8 @@ const HotPlaceListScreen = () => {
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
-          initialNumToRender={4}
-          maxToRenderPerBatch={7}
+          initialNumToRender={7}
+          maxToRenderPerBatch={10}
           windowSize={7}
           showsVerticalScrollIndicator={false}
           refreshing={false}

@@ -316,6 +316,11 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'hotPlaceListInit': {
+        draft.hotPlaceList = [];
+        break;
+      }
+
       case 'eventHotDetail': {
         draft.eventHotDetail = data.event;
         break;
@@ -343,6 +348,11 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'dibsListPage': {
         draft.dibsListPage = data;
+        break;
+      }
+
+      case 'selectedEventHotTab': {
+        draft.selectedEventHotTab = data;
         break;
       }
 

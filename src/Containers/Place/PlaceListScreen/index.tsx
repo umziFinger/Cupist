@@ -53,12 +53,13 @@ const PlaceListScreen = ({ route }: PropTypes) => {
     if (type === 'free') {
       title = '자유볼링';
       content = '선착순 할인 특가로 즐기는 볼링장';
-      date = calendarDate;
+      date = prepaymentDate;
     }
+
     if (type === 'normal') {
       title = '시간제 볼링';
       content = '인원제한 없이 즐기는 볼링';
-      date = prepaymentDate;
+      date = calendarDate;
     }
     setScreenTitle(title);
     setScreenContent(content);
@@ -70,6 +71,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       page: 1,
       perPage: 5,
       date,
+      startTime: '10:00:00',
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   }, [type]);
@@ -83,7 +85,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: 1,
       perPage: 10,
-      date: type === 'free' ? calendarDate : prepaymentDate,
+      date: type === 'normal' ? calendarDate : prepaymentDate,
+      startTime: '10:00:00',
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   }, [calendarDate, prepaymentDate]);
@@ -96,7 +99,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: placeListPage || 1,
       perPage: 10,
-      date: type === 'free' ? calendarDate : prepaymentDate,
+      date: type === 'normal' ? calendarDate : prepaymentDate,
+      startTime: '10:00:00',
     };
     if (placeListPage > 1) dispatch(PlaceActions.fetchPlaceList(params));
   };
@@ -109,7 +113,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: 1,
       perPage: 10,
-      date: type === 'free' ? calendarDate : prepaymentDate,
+      date: type === 'normal' ? calendarDate : prepaymentDate,
+      startTime: '10:00:00',
       // startTime: '10:00:00',
     };
     dispatch(PlaceActions.fetchPlaceList(params));
@@ -162,7 +167,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
               </View>
             </View>
             <View style={{ paddingLeft: 16, paddingRight: type === 'free' ? 16 : 0 }}>
-              {type === 'free' ? (
+              {type === 'normal' ? (
                 <CustomButton onPress={() => onPressDate()} style={{ marginTop: 16 }}>
                   <View
                     style={{

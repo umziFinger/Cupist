@@ -178,6 +178,8 @@ export function* fetchPlaceList(data: any): any {
 
 export function* fetchPlaceEventHotList(data: any): any {
   try {
+    if (data.params.page === 1) yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
     const payload = {
       ...data,
       url: Config.EVENT_HOT_URL,
@@ -188,11 +190,14 @@ export function* fetchPlaceEventHotList(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(PlaceActions.fetchPlaceReducer({ type: 'hotPlaceList', data: response.data, page: data.params.page }));
       yield put(PlaceActions.fetchPlaceReducer({ type: 'hotPlaceListPage', data: data.params.page + 1 }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       yield put(PlaceActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     }
   } catch (e) {
     console.log('occurred Error...fetchPlaceEventHotList : ', e);
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
   }
 }
 export function* fetchPlaceEventHotDetail(data: any): any {
