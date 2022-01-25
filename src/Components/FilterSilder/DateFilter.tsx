@@ -23,6 +23,7 @@ const DateFilter = () => {
         listKey={'filter'}
         renderItem={({ item: filterDate, index }) => {
           const date = moment(filterDate).format('YYYY-MM-D');
+
           return (
             <CustomButton onPress={() => onPressFilter(index)}>
               <View

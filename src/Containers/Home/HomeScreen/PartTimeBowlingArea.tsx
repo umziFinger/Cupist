@@ -41,7 +41,7 @@ const PartTimeBowlingArea = (props: PropTypes) => {
         <View style={{ flexDirection: 'row', marginTop: 6 }}>
           <View style={{ flex: 1 }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-              인원제한 없이 즐기는 볼링
+              1시간 단위 레인 대여 예약
             </CustomText>
           </View>
 

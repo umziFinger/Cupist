@@ -52,13 +52,13 @@ const PlaceListScreen = ({ route }: PropTypes) => {
     let date = calendarDate;
     if (type === 'free') {
       title = '자유볼링';
-      content = '선착순 할인 특가로 즐기는 볼링장';
+      content = '공유 레인 무제한 게임 예약';
       date = prepaymentDate;
     }
 
     if (type === 'normal') {
       title = '시간제 볼링';
-      content = '인원제한 없이 즐기는 볼링';
+      content = ' 1시간 단위 레인 대여 예약';
       date = calendarDate;
     }
     setScreenTitle(title);
@@ -71,7 +71,6 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       page: 1,
       perPage: 5,
       date,
-      startTime: '10:00:00',
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   }, [type]);
@@ -86,7 +85,6 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       page: 1,
       perPage: 10,
       date: type === 'normal' ? calendarDate : prepaymentDate,
-      startTime: '10:00:00',
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   }, [calendarDate, prepaymentDate]);
@@ -100,7 +98,6 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       page: placeListPage || 1,
       perPage: 10,
       date: type === 'normal' ? calendarDate : prepaymentDate,
-      startTime: '10:00:00',
     };
     if (placeListPage > 1) dispatch(PlaceActions.fetchPlaceList(params));
   };
@@ -114,8 +111,6 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       page: 1,
       perPage: 10,
       date: type === 'normal' ? calendarDate : prepaymentDate,
-      startTime: '10:00:00',
-      // startTime: '10:00:00',
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   };
@@ -166,7 +161,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 </CustomText>
               </View>
             </View>
-            <View style={{ paddingLeft: 16, paddingRight: type === 'free' ? 16 : 0 }}>
+            <View style={{ paddingLeft: 16, paddingRight: type === 'normal' ? 16 : 0 }}>
               {type === 'normal' ? (
                 <CustomButton onPress={() => onPressDate()} style={{ marginTop: 16 }}>
                   <View
