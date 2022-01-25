@@ -8,6 +8,7 @@ import PlaceDetailHeader from './PlaceDetailHeader';
 
 import PlaceReviewHeader from '@/Components/Header/PlaceReviewHeader';
 import PlaceListHeader from '@/Components/Header/PlaceListHeader';
+import InviteFriendHeader from '@/Components/Header/InviteFirendHeader';
 
 export interface HeaderProps {
   type?: string;
@@ -45,7 +46,8 @@ const Header = (props: HeaderProps) => {
 
     case 'placeList':
       return <PlaceListHeader text={text} isShow={isShow} />;
-
+    case 'inviteFriend':
+      return <InviteFriendHeader text={text} />;
     default:
       return null;
   }

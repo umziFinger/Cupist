@@ -11,7 +11,6 @@ import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthActions from '@/Stores/Auth/Actions';
-import CommonActions from '@/Stores/Common/Actions';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 
 const MoreScreen = () => {
@@ -37,82 +36,112 @@ const MoreScreen = () => {
 
   const renderItem = (item: { title: string; icon?: any; screen: keyof MainStackParamList }, index: number) => {
     return (
-      <CustomButton onPress={() => onMove(item?.screen)}>
-        <View
-          style={{
-            backgroundColor: Color.White,
-            marginBottom: index === 2 || index === 4 ? 8 : undefined,
-          }}
-        >
+      <>
+        {/* TODO// 친구초대 이벤트시 주석 제거 */}
+        {/* {index === 4 && ( */}
+        {/*  <View */}
+        {/*    style={{ */}
+        {/*      backgroundColor: Color.White, */}
+        {/*    }} */}
+        {/*  > */}
+        {/*    <CustomButton onPress={() => navigate('InviteFriendScreen')}> */}
+        {/*      <View */}
+        {/*        style={{ */}
+        {/*          paddingTop: 16, */}
+        {/*          paddingBottom: 8, */}
+        {/*          marginHorizontal: 20, */}
+        {/*          flexDirection: 'row', */}
+        {/*          alignItems: 'center', */}
+        {/*        }} */}
+        {/*      > */}
+        {/*        <View style={{ width: '100%', height: 48, borderRadius: 8 }}> */}
+        {/*          <FastImage */}
+        {/*            style={{ width: '100%', height: '100%', borderRadius: 8 }} */}
+        {/*            source={require('@/Assets/Images/Common/bannerPlusshort.png')} */}
+        {/*            resizeMode={FastImage.resizeMode.cover} */}
+        {/*          /> */}
+        {/*        </View> */}
+        {/*      </View> */}
+        {/*    </CustomButton> */}
+        {/*  </View> */}
+        {/* )} */}
+        <CustomButton onPress={() => onMove(item?.screen)}>
           <View
             style={{
-              paddingVertical: 16,
-              marginHorizontal: 24,
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderBottomWidth: index === 2 || index === 4 || moreScreenRenderItem?.length - 1 === index ? 0 : 1,
-              borderBottomColor: Color.Gray300,
+              backgroundColor: Color.White,
+              marginBottom: index === 3 || index === 5 ? 8 : undefined,
             }}
           >
-            <View style={{ flex: 1 }}>
-              <CustomText style={{ fontSize: 15, letterSpacing: -0.2, color: Color.Black1000 }}>
-                {item?.title}
-              </CustomText>
+            <View
+              style={{
+                paddingVertical: 16,
+                marginHorizontal: 24,
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderBottomWidth: index === 3 || index === 5 || moreScreenRenderItem?.length - 1 === index ? 0 : 1,
+                borderBottomColor: Color.Gray300,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <CustomText style={{ fontSize: 15, letterSpacing: -0.2, color: Color.Black1000 }}>
+                  {item?.title}
+                </CustomText>
+              </View>
+              {item?.screen === 'NotificationScreen' && (
+                <View
+                  style={{
+                    width: 28,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <CustomText
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                      letterSpacing: -0.2,
+                      color: userInfo?.notificationCnt === 0 ? Color.Grayyellow200 : Color.Grayyellow1000,
+                    }}
+                  >
+                    {(userInfo?.notificationCnt as number) > 100 ? 100 : userInfo?.notificationCnt || 0}
+                  </CustomText>
+                </View>
+              )}
+
+              {item?.screen === 'RecentPlaceScreen' && (
+                <View
+                  style={{
+                    width: 28,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <CustomText
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                      letterSpacing: -0.2,
+                      color: userInfo?.placeViewCnt === 0 ? Color.Grayyellow200 : Color.Grayyellow1000,
+                    }}
+                  >
+                    {(userInfo?.placeViewCnt as number) > 100 ? 100 : userInfo?.placeViewCnt || 0}
+                  </CustomText>
+                </View>
+              )}
+
+              {item?.icon && (
+                <View style={{ width: 28, height: 28 }}>
+                  <FastImage
+                    style={{ width: '100%', height: '100%' }}
+                    source={item.icon}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                </View>
+              )}
             </View>
-            {item?.screen === 'NotificationScreen' && (
-              <View
-                style={{
-                  width: 28,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <CustomText
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 'bold',
-                    letterSpacing: -0.2,
-                    color: userInfo?.notificationCnt === 0 ? Color.Grayyellow200 : Color.Grayyellow1000,
-                  }}
-                >
-                  {(userInfo?.notificationCnt as number) > 100 ? 100 : userInfo?.notificationCnt || 0}
-                </CustomText>
-              </View>
-            )}
-
-            {item?.screen === 'RecentPlaceScreen' && (
-              <View
-                style={{
-                  width: 28,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <CustomText
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 'bold',
-                    letterSpacing: -0.2,
-                    color: userInfo?.placeViewCnt === 0 ? Color.Grayyellow200 : Color.Grayyellow1000,
-                  }}
-                >
-                  {(userInfo?.placeViewCnt as number) > 100 ? 100 : userInfo?.placeViewCnt || 0}
-                </CustomText>
-              </View>
-            )}
-
-            {item?.icon && (
-              <View style={{ width: 28, height: 28 }}>
-                <FastImage
-                  style={{ width: '100%', height: '100%' }}
-                  source={item.icon}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              </View>
-            )}
           </View>
-        </View>
-      </CustomButton>
+        </CustomButton>
+      </>
     );
   };
 

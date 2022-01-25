@@ -64,6 +64,7 @@ import SocialJoinScreen from '@/Containers/Auth/SocialJoinScreen';
 import MyCouponScreen from '@/Containers/More/MyCouponScreen';
 import AddCardCheckPasswordScreen from '@/Containers/Reservation/AddCardCheckPasswordScreen';
 import EventHotDetailScreen from '@/Containers/Place/EventHotDetailScreen';
+import InviteFriendScreen from '@/Containers/More/InviteFriendScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -128,6 +129,7 @@ export type MainStackParamList = {
   CertificationScreen: undefined;
   MyCouponScreen: undefined;
   EventHotDetailScreen: { eventIdx: number };
+  InviteFriendScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -195,6 +197,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="ServiceSettingScreen" component={ServiceSettingScreen} />
       <MainStack.Screen name="WithdrawScreen" component={WithdrawScreen} />
       <MainStack.Screen name="PasswordEditScreen" component={PasswordEditScreen} />
+      <MainStack.Screen name="InviteFriendScreen" component={InviteFriendScreen} />
 
       {/*  My */}
       <MainStack.Screen name="ReservationDetailScreen" component={ReservationDetailScreen} />
