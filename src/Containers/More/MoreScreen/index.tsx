@@ -11,7 +11,6 @@ import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import AuthActions from '@/Stores/Auth/Actions';
-import CommonActions from '@/Stores/Common/Actions';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 
 const MoreScreen = () => {

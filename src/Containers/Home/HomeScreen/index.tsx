@@ -116,8 +116,9 @@ const HomeScreen = ({ route }: HomeProps) => {
     // 홈 리스트 호출
     dispatch(HomeActions.fetchHomeList(params));
 
-    const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
-    const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
+    // const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
+    // const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
+    const type = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].key : 'all';
     let areaCode;
 
     if (areaFilterIdx > 1) {
@@ -129,9 +130,10 @@ const HomeScreen = ({ route }: HomeProps) => {
     dispatch(
       HomeActions.fetchHomeDirectReservationList({
         ...params,
-        startTime,
-        endTime,
+        // startTime,
+        // endTime,
         areaCode,
+        type,
       }),
     );
 
