@@ -18,10 +18,12 @@ import { AuthState } from '@/Stores/Auth/InitialState';
 
 const DirectReservationRBS = () => {
   const dispatch = useDispatch();
-  const { width, height } = useWindowDimensions();
+  const { height } = useWindowDimensions();
   const { heightInfo, isOpenDirectReservationRBS } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const { calendarDate, selectedDirectIdx, selectedDirectName } = useSelector((state: HomeState) => state.home);
+  const { calendarDate, selectedDirectIdx, selectedDirectName, timeFilterIdx } = useSelector(
+    (state: HomeState) => state.home,
+  );
   const { placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const RBSheetRef = useRef<any>();
 
@@ -77,11 +79,15 @@ const DirectReservationRBS = () => {
         </View>
         <FlatList
           data={[0]}
-          renderItem={({ item, index }) => (
+          renderItem={() => (
             <View>
               <View style={{ flex: 1 }}>
                 <View style={{}}>
-                  <TicketSlider allowedTimeArr={[0, 1, 2]} item={placeTicketList || {}} showDivider />
+                  <TicketSlider
+                    allowedTimeArr={timeFilterIdx ? [timeFilterIdx] : [1, 2]}
+                    item={placeTicketList || {}}
+                    showDivider
+                  />
                 </View>
               </View>
             </View>

@@ -30,8 +30,9 @@ const DirectReservationArea = (props: PropTypes) => {
   const getDirectReservationList = (idx: number) => {
     const date = moment(calendarDate).format('YYYY/MM/DD');
     const areaCode = areaFilter()[idx].key;
-    const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
-    const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
+    // const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
+    // const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
+    const type = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].key : 'all';
 
     let params = {};
     if (idx === 1) {
@@ -39,8 +40,7 @@ const DirectReservationArea = (props: PropTypes) => {
         date,
         lat: myLatitude,
         lng: myLongitude,
-        startTime,
-        endTime,
+        type,
       };
     }
     if (idx > 1) {
@@ -49,8 +49,7 @@ const DirectReservationArea = (props: PropTypes) => {
         areaCode,
         lat: myLatitude,
         lng: myLongitude,
-        startTime,
-        endTime,
+        type,
       };
     }
 

@@ -24,10 +24,9 @@ const TicketSlider = (props: PropTypes) => {
   const free = item?.free || [];
 
   const isShowFunc = (value: number) => {
-    if (value === 0 && normal.length > 0) {
-      return true;
-    }
-    return value === 1 && free.length > 0;
+    console.log('=========', value);
+    return (value === 1 && normal.length > 0) || (value === 2 && free.length > 0);
+
     // return value === 2 && night.length > 0;
   };
 
@@ -63,7 +62,7 @@ const TicketSlider = (props: PropTypes) => {
                         <CustomText
                           style={{ color: Color.Primary1000, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}
                         >
-                          {DATA_TICKET_TIME[index].type}
+                          {DATA_TICKET_TIME[allowedTime - 1].type}
                         </CustomText>
                       </View>
                       {/* <View style={{ backgroundColor: Color.Gray300, width: 1, height: 11, marginRight: 6 }} /> */}
@@ -74,13 +73,13 @@ const TicketSlider = (props: PropTypes) => {
                       {/* </View> */}
                     </View>
                     <FlatList
-                      data={allowedTime === 0 ? normal : free}
+                      data={allowedTime === 1 ? normal : free}
                       renderItem={({ item: time }) => (
                         <CustomButton onPress={() => onPressTicket(time)}>
                           <View
                             style={{
                               marginTop: 13,
-                              paddingVertical: allowedTime === 0 ? 20 : 16,
+                              paddingVertical: allowedTime === 1 ? 20 : 16,
                               paddingLeft: 12,
                               paddingRight: 21,
                               borderRadius: 5,
@@ -100,7 +99,7 @@ const TicketSlider = (props: PropTypes) => {
                               marginRight: 8,
                             }}
                           >
-                            {allowedTime === 1 && !time?.hasSoldOut && (
+                            {allowedTime === 2 && time?.hasSoldOut && (
                               <View
                                 style={{
                                   flexDirection: 'row',
@@ -165,7 +164,7 @@ const TicketSlider = (props: PropTypes) => {
                               }}
                             >
                               <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                                {allowedTime === 0 && time?.hasSoldOut && (
+                                {allowedTime === 1 && time?.hasSoldOut && (
                                   <View
                                     style={{
                                       backgroundColor: Color.Gray300,
@@ -223,7 +222,7 @@ const TicketSlider = (props: PropTypes) => {
                       showsHorizontalScrollIndicator={false}
                       contentContainerStyle={{ paddingLeft: 24 }}
                     />
-                    {showDivider && (allowedTime === 0 || allowedTime === 1) && (
+                    {showDivider && allowedTime === 1 && (
                       <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 24 }} />
                     )}
                   </View>
