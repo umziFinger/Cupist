@@ -204,7 +204,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       />
       <View
         style={{
-          paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,
+          paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
         }}
       >
         <View
@@ -246,7 +246,14 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
             </View>
           </View>
         )}
-        <View style={{ paddingHorizontal: 24, flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
+        <View
+          style={{
+            paddingHorizontal: 24,
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 12,
+          }}
+        >
           {selectedTicket && (
             <CustomButton onPress={() => onPressCancel()}>
               <View

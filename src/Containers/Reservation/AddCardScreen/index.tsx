@@ -239,7 +239,7 @@ const AddCardScreen = () => {
           showsVerticalScrollIndicator={false}
         />
         <CustomButton onPress={() => onPressAdd()}>
-          <View style={{ marginHorizontal: 24, marginBottom: heightInfo.fixBottomHeight + 8 }}>
+          <View style={{ marginHorizontal: 24, marginBottom: heightInfo.statusHeight + 8 }}>
             <View
               style={{
                 borderRadius: 3,

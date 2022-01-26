@@ -207,7 +207,7 @@ const CalendarRBS = () => {
           flexDirection: 'row',
           alignItems: 'center',
           marginTop: 12,
-          paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,
+          paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
         }}
       >
         <CustomButton

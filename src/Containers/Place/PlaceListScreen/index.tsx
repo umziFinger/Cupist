@@ -253,7 +253,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       />
       <View
         style={{
-          paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,
+          paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
         }}
       >
         <View
