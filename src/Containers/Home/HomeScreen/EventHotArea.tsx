@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FlatList, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
+import React from 'react';
+import { FlatList, Platform, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
@@ -11,23 +11,7 @@ interface PropTypes {
   list: Array<any>;
 }
 const EventHotArea = (props: PropTypes) => {
-  const { width } = useWindowDimensions();
   const { list } = props;
-  const [viewableIndex, setViewableIndex] = useState<number | null>(0);
-
-  const onViewableItemsChanged = React.useRef(
-    (info: { viewableItems: Array<ViewToken>; changed: Array<ViewToken> }) => {
-      if (info.viewableItems) {
-        const tempViewableIndex = info.viewableItems[0]?.key;
-
-        let changeViewableIndex = 0;
-        if (tempViewableIndex !== undefined) {
-          changeViewableIndex = parseInt(tempViewableIndex);
-        }
-        setViewableIndex(changeViewableIndex);
-      }
-    },
-  );
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');
