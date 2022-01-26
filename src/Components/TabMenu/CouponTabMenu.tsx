@@ -71,7 +71,7 @@ const CouponTabMenu = (props: any) => {
                     }}
                   >
                     {item.title}
-                    {item?.key === 'usable'
+                    {item?.key === 'usable' && myCouponList !== undefined
                       ? myCouponList?.metadata[0]?.usableCnt
                       : myCouponList?.metadata[0]?.expiredCnt}
                   </CustomText>
