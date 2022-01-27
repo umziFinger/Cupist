@@ -60,8 +60,7 @@ const MyCouponScreen = () => {
 
   const onAddCoupon = () => {
     const params = {
-      // code: coupon,
-      code: 'RITEAS7',
+      code: coupon,
     };
     dispatch(MyActions.fetchMyCouponAdd(params));
     setCoupon('');
@@ -160,7 +159,7 @@ const MyCouponScreen = () => {
                 />
               </View>
               <CustomText style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Gray400 }}>
-                {couponSelectedTab.key === 'usable' ? '보유한 쿠폰이 없습니다.' : '만료한 쿠폰이 없습니다.'}
+                {couponSelectedTab.key === 'usable' ? '보유한 쿠폰이 없습니다.' : '만료된 쿠폰이 없습니다.'}
               </CustomText>
             </View>
           )}

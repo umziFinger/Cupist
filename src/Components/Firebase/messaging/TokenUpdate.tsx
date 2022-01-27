@@ -38,7 +38,6 @@ export default async function TokenUpdate() {
         authorization: `Bearer ${token}`,
       },
     };
-    console.log('@@@@@@@@@@@@@@@ call auth/fcmToken API');
     const payload = {
       params,
       url,

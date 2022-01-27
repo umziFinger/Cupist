@@ -241,7 +241,6 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'placeList': {
-        console.log('length@@@ : ', data.PlaceResult.length);
         if (actions.params.page === 1) {
           draft.placeList = data.PlaceResult;
           draft.placeList.map((item: any, index: number) => {
@@ -296,13 +295,11 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'selectedPlaceIdx': {
-        console.log('@@@@ selectedPlaceIdx : ', data);
         draft.selectedPlaceIdx = data;
         break;
       }
 
       case 'hotPlaceList': {
-        // console.log('call reducer hotPlaceList : ', data);
         if (actions.params.page === 1) {
           draft.hotPlaceList = data.event;
         } else {

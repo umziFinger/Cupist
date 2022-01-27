@@ -70,7 +70,7 @@ const CouponTabMenu = (props: any) => {
                       letterSpacing: -0.2,
                     }}
                   >
-                    {item.title}
+                    {item.title}{' '}
                     {item?.key === 'usable' && myCouponList !== undefined
                       ? myCouponList?.metadata[0]?.usableCnt
                       : myCouponList?.metadata[0]?.expiredCnt}
