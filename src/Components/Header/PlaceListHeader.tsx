@@ -21,13 +21,9 @@ const PlaceDetailHeader = (props: HeaderProps) => {
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
 
-  // console.log('isShow : ', isShow);
-
   const bgColor = Color.White;
 
-  useEffect(() => {
-    // console.log('headerHeight : ', headerHeight);
-  }, [headerHeight]);
+  useEffect(() => {}, [headerHeight]);
 
   const onLayout = (e: Layout) => {
     setHeaderHeight(e.height);
@@ -77,7 +73,7 @@ const PlaceDetailHeader = (props: HeaderProps) => {
         <View style={{ width: 24 }} />
       </View>
 
-      {placeListType === 'special' && isShow && (
+      {isShow && (
         <View
           style={{
             position: 'absolute',
@@ -97,7 +93,7 @@ const PlaceDetailHeader = (props: HeaderProps) => {
         </View>
       )}
 
-      {placeListType === 'early' && isShow && (
+      {/* {placeListType === 'early' && isShow && (
         <View
           style={{
             position: 'absolute',
@@ -116,7 +112,7 @@ const PlaceDetailHeader = (props: HeaderProps) => {
             <DateFilter />
           </View>
         </View>
-      )}
+      )} */}
     </>
   );
 };

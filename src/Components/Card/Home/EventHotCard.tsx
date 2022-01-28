@@ -42,7 +42,7 @@ const EventHotCard = ({ item }: PropTypes) => {
           <View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow1000 }} numberOfLines={1}>
-                일시: {item?.startDate || ''}
+                일시: {item?.dateView || ''}
               </CustomText>
             </View>
 

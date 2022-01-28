@@ -27,6 +27,7 @@ import {
   fetchSkeletonNavigateReplace,
   fetchCommonPlaceDibsHandler,
   fetchCommonReport,
+  fetchCommonCode,
 } from './CommonSaga';
 
 // home
@@ -88,6 +89,7 @@ import {
   fetchMyReviewDelete,
   fetchMyPasswordModify,
   fetchMyCouponAdd,
+  fetchMyProfileRingme,
 } from '@/Sagas/MySaga';
 
 import {
@@ -125,6 +127,7 @@ export default function* root() {
     takeLatest(CommonTypes.FETCH_SKELETON_NAVIGATE_REPLACE, fetchSkeletonNavigateReplace),
     takeLatest(CommonTypes.FETCH_COMMON_PLACE_DIBS_HANDLER, fetchCommonPlaceDibsHandler),
     takeLatest(CommonTypes.FETCH_COMMON_REPORT, fetchCommonReport),
+    takeLatest(CommonTypes.FETCH_COMMON_CODE, fetchCommonCode),
 
     // home
     takeLatest(HomeTypes.FETCH_HOME_LIST, fetchHomeList),
@@ -187,6 +190,7 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_REVIEW_DELETE, fetchMyReviewDelete),
     takeLatest(MyTypes.FETCH_MY_PASSWORD_MODIFY, fetchMyPasswordModify),
     takeLatest(MyTypes.FETCH_MY_COUPON_ADD, fetchMyCouponAdd),
+    takeLatest(MyTypes.FETCH_MY_PROFILE_RINGME, fetchMyProfileRingme),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

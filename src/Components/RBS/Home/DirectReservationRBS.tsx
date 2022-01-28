@@ -7,7 +7,7 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 import CustomText from '@/Components/CustomText';
 import PlaceActions from '@/Stores/Place/Actions';
-import { HomeState } from '@/Stores/Home/InitialState';
+import { HomeState, TICKET_TYPE } from '@/Stores/Home/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import { Color } from '@/Assets/Color';
 import TicketSlider from '@/Components/Card/Common/TicketSlider';
@@ -84,9 +84,10 @@ const DirectReservationRBS = () => {
               <View style={{ flex: 1 }}>
                 <View style={{}}>
                   <TicketSlider
-                    allowedTimeArr={timeFilterIdx ? [timeFilterIdx] : [1, 2]}
+                    allowedTimeArr={timeFilterIdx ? [timeFilterIdx] : [0, 1]}
                     item={placeTicketList || {}}
                     showDivider
+                    focusType={TICKET_TYPE.ALL}
                   />
                 </View>
               </View>
@@ -102,6 +103,7 @@ const DirectReservationRBS = () => {
         <View
           style={{
             paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
+            backgroundColor: Color.Gray100,
           }}
         >
           <View
@@ -112,7 +114,7 @@ const DirectReservationRBS = () => {
                 width: 0,
                 height: -2,
               },
-              shadowColor: 'rgba(107, 107, 107, 0.1)',
+              shadowColor: 'rgba(107, 107, 107, 0.2)',
               shadowOpacity: 1,
               shadowRadius: 4,
               elevation: 1,
@@ -149,13 +151,13 @@ const DirectReservationRBS = () => {
                 style={{
                   borderRadius: 3,
                   borderWidth: 1,
-                  borderColor: Color.Gray300,
+                  borderColor: Color.Gray400,
                   paddingVertical: 15,
                   paddingHorizontal: 22,
                   marginRight: 8,
                 }}
               >
-                <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
+                <CustomText style={{ color: Color.Gray600, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
                   취소
                 </CustomText>
               </View>
@@ -166,6 +168,8 @@ const DirectReservationRBS = () => {
                 flex: 1,
                 alignItems: 'center',
                 borderRadius: 3,
+                borderWidth: 1,
+                borderColor: selectedTicket ? Color.Primary1000 : Color.Grayyellow200,
                 paddingVertical: 15,
                 backgroundColor: selectedTicket ? Color.Primary1000 : Color.Grayyellow200,
               }}

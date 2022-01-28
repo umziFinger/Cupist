@@ -249,6 +249,11 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'ringmeList': {
+        draft.ringmeList = data.commonCode;
+        break;
+      }
+
       default:
         return draft;
     }

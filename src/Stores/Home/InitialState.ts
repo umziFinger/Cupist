@@ -41,3 +41,9 @@ interface HomeList {
   banner: Array<any>;
   place: Array<any>;
 }
+
+export enum TICKET_TYPE {
+  ALL = 'all',
+  NORMAL = 'normal',
+  FREE = 'free',
+}

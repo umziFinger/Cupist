@@ -7,6 +7,7 @@ import CustomButton from '@/Components/CustomButton';
 
 import { navigate } from '@/Services/NavigationService';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   item: any;
@@ -20,7 +21,7 @@ const HotPlaceCard = (props: PropTypes) => {
   const [isError, setIsError] = useState(false);
 
   const onPlaceDetail = (place: any) => {
-    navigate('PlaceDetailScreen', { idx: place.idx });
+    navigate('PlaceDetailScreen', { idx: place.idx, ticketType: TICKET_TYPE.ALL });
   };
 
   return (

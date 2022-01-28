@@ -5,20 +5,20 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
 import CustomButton from '@/Components/CustomButton';
-
 import { navigate } from '@/Services/NavigationService';
-import DateFilter from '@/Components/FilterSilder/DateFilter';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   list: Array<any>;
 }
+
 const PartTimeBowlingArea = (props: PropTypes) => {
   const { list } = props;
   const { width } = useWindowDimensions();
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');
-    navigate('PlaceListScreen', { type: 'normal' });
+    navigate('PlaceListScreen', { type: TICKET_TYPE.NORMAL });
   };
 
   return (
@@ -69,7 +69,13 @@ const PartTimeBowlingArea = (props: PropTypes) => {
           data={list}
           renderItem={({ item, index }) => (
             <View style={{ marginRight: 11, marginBottom: index < 2 ? 13 : 0 }}>
-              <PlaceSmallCard item={item} width={(width - 42 - 11) / 2} showRate showTicketName={false} />
+              <PlaceSmallCard
+                item={item}
+                width={(width - 42 - 11) / 2}
+                showRate
+                showTicketName={false}
+                ticketType={TICKET_TYPE.NORMAL}
+              />
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}

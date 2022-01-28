@@ -11,13 +11,15 @@ import CustomButton from '@/Components/CustomButton';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
 import { navigate } from '@/Services/NavigationService';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   type: string;
   item: any;
+  ticketType: TICKET_TYPE;
 }
 const PlaceListCard = (props: PropTypes) => {
-  const { type, item = {} } = props;
+  const { type, item = {}, ticketType } = props;
   const dispatch = useDispatch();
   const { handlerPlaceDibs } = usePlaceDibs();
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
@@ -32,7 +34,6 @@ const PlaceListCard = (props: PropTypes) => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
     }
-    // console.log(ticket);
     dispatch(
       PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: { ...ticket, ticketName: place.ticketName } }),
     );
@@ -40,7 +41,7 @@ const PlaceListCard = (props: PropTypes) => {
   };
 
   const onPlaceDetail = (place: any) => {
-    navigate('PlaceDetailScreen', { idx: place.idx });
+    navigate('PlaceDetailScreen', { idx: place.idx, ticketType });
   };
 
   return (
@@ -73,14 +74,14 @@ const PlaceListCard = (props: PropTypes) => {
                 </CustomText>
               </View>
             </View>
-            {(type === 'normal' || type === 'free') &&
+            {(type === TICKET_TYPE.NORMAL || type === TICKET_TYPE.FREE) &&
               (item?.PlaceTicketInfo?.length !== 0 ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 9 }}>
-                  <View style={{ justifyContent: 'center', marginRight: 4 }}>
-                    <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>
-                      {item?.rate}%
-                    </CustomText>
-                  </View>
+                  {/* <View style={{ justifyContent: 'center', marginRight: 4 }}> */}
+                  {/*  <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}> */}
+                  {/*    {item?.rate}% */}
+                  {/*  </CustomText> */}
+                  {/* </View> */}
                   <View style={{ justifyContent: 'center' }}>
                     <CustomText style={{ color: Color.Black1000, fontSize: 16 }}>
                       <CustomText style={{ fontWeight: 'bold' }}>{numberFormat(item?.minPrice || 0)}</CustomText>

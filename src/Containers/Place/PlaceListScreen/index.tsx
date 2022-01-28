@@ -9,7 +9,7 @@ import { MainStackParamList } from '@/Navigators/MainNavigator';
 import Header from '@/Components/Header';
 import { Color } from '@/Assets/Color';
 import { numberFormat, scrollCalendarHandler } from '@/Components/Function';
-import { HomeState } from '@/Stores/Home/InitialState';
+import { HomeState, TICKET_TYPE } from '@/Stores/Home/InitialState';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
@@ -37,6 +37,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
   const [screenTitle, setScreenTitle] = useState<string>('');
   const [screenContent, setScreenContent] = useState<string>('');
 
+  console.log('placeList : ', placeList[0].PlaceTicketInfo);
+
   useEffect(() => {
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
@@ -50,13 +52,13 @@ const PlaceListScreen = ({ route }: PropTypes) => {
     let title = '';
     let content = '';
     let date = calendarDate;
-    if (type === 'free') {
+    if (type === TICKET_TYPE.FREE) {
       title = '자유볼링';
       content = '공유 레인 무제한 게임 예약';
       date = prepaymentDate;
     }
 
-    if (type === 'normal') {
+    if (type === TICKET_TYPE.NORMAL) {
       title = '시간제 볼링';
       content = ' 1시간 단위 레인 대여 예약';
       date = calendarDate;
@@ -76,15 +78,13 @@ const PlaceListScreen = ({ route }: PropTypes) => {
   }, [type]);
 
   useEffect(() => {
-    console.log('날짜 변경');
-
     const params = {
       type,
       lat: myLatitude,
       lng: myLongitude,
       page: 1,
       perPage: 10,
-      date: type === 'normal' ? calendarDate : prepaymentDate,
+      date: type === TICKET_TYPE.NORMAL ? calendarDate : prepaymentDate,
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   }, [calendarDate, prepaymentDate]);
@@ -97,7 +97,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: placeListPage || 1,
       perPage: 10,
-      date: type === 'normal' ? calendarDate : prepaymentDate,
+      date: type === TICKET_TYPE.NORMAL ? calendarDate : prepaymentDate,
     };
     if (placeListPage > 1) dispatch(PlaceActions.fetchPlaceList(params));
   };
@@ -110,7 +110,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: 1,
       perPage: 10,
-      date: type === 'normal' ? calendarDate : prepaymentDate,
+      date: type === TICKET_TYPE.NORMAL ? calendarDate : prepaymentDate,
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   };
@@ -138,10 +138,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
         navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: selectedTicket?.idx });
       }
     }
-    // return animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
   };
 
-  console.log('selectedTicket : ', selectedTicket);
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'placeList'} text={screenTitle} isShow={isShowTopCalendar} />
@@ -161,8 +159,42 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 </CustomText>
               </View>
             </View>
-            <View style={{ paddingLeft: 16, paddingRight: type === 'normal' ? 16 : 0 }}>
-              {type === 'normal' ? (
+            <View style={{ paddingHorizontal: 16 }}>
+              <CustomButton onPress={() => onPressDate()} style={{ marginTop: 16 }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    backgroundColor: Color.Gray200,
+                    borderWidth: 1,
+                    borderColor: Color.Gray300,
+                    paddingVertical: 12,
+                    paddingLeft: 12,
+                    paddingRight: 8,
+                  }}
+                >
+                  <View style={{ width: 16, height: 16, marginRight: 9 }}>
+                    <FastImage
+                      style={{ width: '100%', height: '100%' }}
+                      source={require('@/Assets/Images/Common/icCalendar.png')}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </View>
+                  <View style={{ justifyContent: 'center', flex: 1 }}>
+                    <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13 }}>
+                      {moment(calendarDate).format('YYYY.MM.DD(dd)')}
+                    </CustomText>
+                  </View>
+                  <View style={{ width: 24, height: 24 }}>
+                    <FastImage
+                      style={{ width: '100%', height: '100%' }}
+                      source={require('@/Assets/Images/Arrow/icArrowDw.png')}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </View>
+                </View>
+              </CustomButton>
+              {/* {type === TICKET_TYPE.NORMAL ? (
                 <CustomButton onPress={() => onPressDate()} style={{ marginTop: 16 }}>
                   <View
                     style={{
@@ -201,7 +233,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 <View style={{ flex: 1, marginTop: 16 }}>
                   <DateFilter />
                 </View>
-              )}
+              )} */}
             </View>
             <View style={{ flex: 1, marginTop: 16 }}>
               <FlatList
@@ -209,7 +241,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 renderItem={({ item }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-                    <PlaceListCard item={item} type={type} />
+                    <PlaceListCard item={item} type={type} ticketType={type} />
                   </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
@@ -254,6 +286,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       <View
         style={{
           paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
+          backgroundColor: Color.Gray100,
         }}
       >
         <View
@@ -264,7 +297,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
               width: 0,
               height: -2,
             },
-            shadowColor: 'rgba(107, 107, 107, 0.1)',
+            shadowColor: 'rgba(107, 107, 107, 0.2)',
             shadowOpacity: 1,
             shadowRadius: 4,
             elevation: 1,
@@ -304,7 +337,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                 style={{
                   borderRadius: 3,
                   borderWidth: 1,
-                  borderColor: Color.Gray300,
+                  borderColor: Color.Gray400,
                   paddingVertical: 15,
                   paddingHorizontal: 22,
                   marginRight: 8,
@@ -322,6 +355,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
               flex: 1,
               alignItems: 'center',
               borderRadius: 3,
+              borderWidth: 1,
+              borderColor: Color.Primary1000,
               paddingVertical: 15,
               backgroundColor: Color.Primary1000,
             }}

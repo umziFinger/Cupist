@@ -8,6 +8,7 @@ const { Types, Creators } = createActions({
   fetchSkeletonNavigateReplace: ['params'],
   fetchCommonPlaceDibsHandler: ['params'],
   fetchCommonReport: ['params'],
+  fetchCommonCode: ['params'],
 });
 
 export const CommonTypes = Types;

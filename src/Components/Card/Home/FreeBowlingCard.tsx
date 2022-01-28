@@ -6,11 +6,12 @@ import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   item: any;
 }
-const QuickPriceCard = (props: PropTypes) => {
+const FreeBowlingCard = (props: PropTypes) => {
   const { width } = useWindowDimensions();
   const { item } = props;
   const { handlerPlaceDibs } = usePlaceDibs();
@@ -18,7 +19,7 @@ const QuickPriceCard = (props: PropTypes) => {
   const [isError, setIsError] = useState(false);
 
   return (
-    <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
+    <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx, ticketType: TICKET_TYPE.FREE })}>
       <View style={{ borderRadius: 5, borderWidth: 1, borderColor: Color.Grayyellow200, backgroundColor: Color.White }}>
         <View style={{ width: width - 40, height: (width - 40) * (149 / 333) }}>
           <FastImage
@@ -92,9 +93,9 @@ const QuickPriceCard = (props: PropTypes) => {
             </CustomText>
           </View>
           <View style={{ flexDirection: 'row', marginTop: 4 }}>
-            <View style={{ marginRight: 4 }}>
-              <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>{item.rate}%</CustomText>
-            </View>
+            {/* <View style={{ marginRight: 4 }}> */}
+            {/*  <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>{item.rate}%</CustomText> */}
+            {/* </View> */}
             <View style={{ flexDirection: 'row' }}>
               <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold' }}>
                 {item?.minPrice}
@@ -131,4 +132,4 @@ const QuickPriceCard = (props: PropTypes) => {
   );
 };
 
-export default QuickPriceCard;
+export default FreeBowlingCard;

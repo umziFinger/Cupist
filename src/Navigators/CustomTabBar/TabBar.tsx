@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BackHandler, Platform, ToastAndroid, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { getBottomSpace, isIphoneX } from 'react-native-iphone-x-helper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import RNBootSplash from 'react-native-bootsplash';
 import { useFocusEffect } from '@react-navigation/native';
@@ -10,19 +10,15 @@ import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { DATA_MENUS } from '@/Navigators/CustomTabBar/data';
 import CustomText from '@/Components/CustomText';
-import CommonActions from '@/Stores/Common/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { Color } from '@/Assets/Color';
 
 interface TabBarProps {
   state: any;
-  descriptors: any;
-  navigation: any;
 }
 
 const TabBar = (props: TabBarProps) => {
-  const dispatch = useDispatch();
-  const { state, descriptors, navigation } = props;
+  const { state } = props;
   const { userIdx } = useSelector((authState: AuthState) => authState.auth);
   const [backHandlerClickCount, setBackHandlerClickCount] = useState(0);
 

@@ -14,6 +14,7 @@ import CustomButton from '@/Components/CustomButton';
 import { navigateGoBack } from '@/Services/NavigationService';
 import { CommonState } from '@/Stores/Common/InitialState';
 import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 const SearchScreen = () => {
   const dispatch = useDispatch();
@@ -220,7 +221,13 @@ const SearchScreen = () => {
                 data={popularList}
                 renderItem={({ item }) => (
                   <View style={{ marginRight: 11 }}>
-                    <PlaceSmallCard item={item} width={(width - 48 - 12) / 2} showRate={false} showTicketName />
+                    <PlaceSmallCard
+                      item={item}
+                      width={(width - 48 - 12) / 2}
+                      showRate={false}
+                      showTicketName
+                      ticketType={TICKET_TYPE.ALL}
+                    />
                   </View>
                 )}
                 keyExtractor={(item, popularIndex) => popularIndex.toString()}
@@ -339,7 +346,13 @@ const SearchScreen = () => {
                   data={bowlingList?.place}
                   renderItem={({ item }) => (
                     <View style={{ marginRight: 10, marginBottom: 13 }}>
-                      <PlaceSmallCard item={item} width={(width - 40 - 10) / 2} showRate showTicketName={false} />
+                      <PlaceSmallCard
+                        item={item}
+                        width={(width - 40 - 10) / 2}
+                        showRate
+                        showTicketName={false}
+                        ticketType={TICKET_TYPE.ALL}
+                      />
                     </View>
                   )}
                   numColumns={2}

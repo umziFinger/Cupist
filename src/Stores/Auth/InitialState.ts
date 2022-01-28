@@ -31,6 +31,7 @@ export const INITIAL_STATE: AuthState['auth'] = {
     notificationPushYN: enumYN.Y,
     marketingPushYN: enumYN.Y,
     eventPushYN: enumYN.Y,
+    ringme: '',
   },
   tokenInfo: {
     token: '',
@@ -94,6 +95,7 @@ interface userInfo {
   notificationPushYN: enumYN;
   marketingPushYN: enumYN;
   eventPushYN: enumYN;
+  ringme: string | '';
 }
 
 interface tokenInfo {

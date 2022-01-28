@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,29 +9,50 @@ import { numberFormat } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
 import PlaceActions from '@/Stores/Place/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   allowedTimeArr: Array<any>;
   item: any;
   showDivider: boolean;
+  focusType: TICKET_TYPE;
 }
 
 const TicketSlider = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
-  const { allowedTimeArr, item, showDivider = false } = props;
+  const { allowedTimeArr, item, showDivider = false, focusType = TICKET_TYPE.ALL } = props;
   const normal = item?.normal || [];
   const free = item?.free || [];
 
-  const isShowFunc = (value: number) => {
-    console.log('=========', value);
-    return (value === 1 && normal.length > 0) || (value === 2 && free.length > 0);
+  useMemo(() => {
+    console.log('@@@ didmount : ', focusType);
 
-    // return value === 2 && night.length > 0;
+    let findIdx = -1;
+    if (focusType === TICKET_TYPE.NORMAL) {
+      for (let i = 0; i < normal.length; i++) {
+        if (!normal[i].hasSoldOut) {
+          findIdx = i;
+          break;
+        }
+      }
+      if (findIdx > -1) dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: normal[findIdx] }));
+    } else if (focusType === TICKET_TYPE.FREE) {
+      for (let i = 0; i < free.length; i++) {
+        if (!free[i].hasSoldOut) {
+          findIdx = i;
+          break;
+        }
+      }
+      if (findIdx > -1) dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: free[findIdx] }));
+    }
+  }, [item]);
+
+  const isShowFunc = (value: number) => {
+    return (value === 0 && normal.length > 0) || (value === 1 && free.length > 0);
   };
 
   const onPressTicket = (value: any) => {
-    // console.log(value);
     if (selectedTicket?.idx === value.idx || value.hasSoldOut) {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
@@ -62,7 +83,7 @@ const TicketSlider = (props: PropTypes) => {
                         <CustomText
                           style={{ color: Color.Primary1000, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}
                         >
-                          {DATA_TICKET_TIME[allowedTime - 1].type}
+                          {DATA_TICKET_TIME[allowedTime].type}
                         </CustomText>
                       </View>
                       {/* <View style={{ backgroundColor: Color.Gray300, width: 1, height: 11, marginRight: 6 }} /> */}
@@ -73,7 +94,7 @@ const TicketSlider = (props: PropTypes) => {
                       {/* </View> */}
                     </View>
                     <FlatList
-                      data={allowedTime === 1 ? normal : free}
+                      data={allowedTime === 0 ? normal : free}
                       renderItem={({ item: time }) => (
                         <CustomButton onPress={() => onPressTicket(time)}>
                           <View

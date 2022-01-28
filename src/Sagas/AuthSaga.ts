@@ -343,8 +343,6 @@ export function* fetchSmsAuth(data: any): any {
 
 export function* fetchAuthFindPassword(data: any): any {
   try {
-    // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
-
     const payload = {
       ...data,
       url: Config.AUTH_FIND_PASSWORD_URL,
@@ -353,8 +351,6 @@ export function* fetchAuthFindPassword(data: any): any {
     const response = yield call(Axios.POST, payload);
 
     if (response.result === true && response.code === null) {
-      // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      console.log('fetchAuthFindsPassword response : ', response.data);
       yield put(
         CommonActions.fetchCommonReducer({
           type: 'alertDialog',
@@ -362,14 +358,10 @@ export function* fetchAuthFindPassword(data: any): any {
             alertDialog: true,
             alertDialogType: 'confirm',
             alertDialogDataType: 'findPassword',
-            alertDialogTitle: `발급된 임시 비밀번호로 로그인해주세요.${
-              Config.APP_MODE === 'dev' && response.data.password
-            }`,
+            alertDialogTitle: `발급된 임시 비밀번호로 로그인해주세요.`,
           },
         }),
       );
-      // yield put(AuthActions.fetchAuthReducer({ type: 'foundPw', data: response.data.tmp_pw }));
-      // navigate('LoginScreen');
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }

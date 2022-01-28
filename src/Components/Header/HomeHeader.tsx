@@ -57,15 +57,13 @@ const HomeHeader = (props: HeaderProps) => {
           // backgroundColor: 'yellow',
         }}
       >
-        <CustomButton onPress={() => navigateGoBack()} hitSlop={20}>
-          <View style={{ width: 84, height: 29 }}>
-            <FastImage
-              style={{ width: '100%', height: '100%' }}
-              source={require('@/Assets/Images/Common/logoHome.png')}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-          </View>
-        </CustomButton>
+        <View style={{ width: 84, height: 29 }}>
+          <FastImage
+            style={{ width: '100%', height: '100%' }}
+            source={require('@/Assets/Images/Common/logoHome.png')}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </View>
         <View style={{ flex: 1 }} />
         <CustomButton onPress={() => onMoveSearchScreen()}>
           <View style={{ width: 24, height: 24, marginRight: 12 }}>

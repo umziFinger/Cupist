@@ -5,18 +5,26 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   item: any;
   showRate: boolean;
   showTicketName: boolean;
   width: number;
+  ticketType: TICKET_TYPE;
 }
-const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width }: PropTypes) => {
+const PlaceSmallCard = ({
+  item,
+  showRate = false,
+  showTicketName = false,
+  width,
+  ticketType = TICKET_TYPE.ALL,
+}: PropTypes) => {
   const [isError, setIsError] = useState(false);
 
   const onPlaceDetail = () => {
-    navigate('PlaceDetailScreen', { idx: item?.idx });
+    navigate('PlaceDetailScreen', { idx: item?.idx, ticketType });
   };
 
   return (
@@ -82,13 +90,13 @@ const PlaceSmallCard = ({ item, showRate = false, showTicketName = false, width 
               </View>
             )}
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {showRate && (
+              {/* {showRate && (
                 <View style={{ marginRight: 4 }}>
                   <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}>
                     {item?.rate}%
                   </CustomText>
                 </View>
-              )}
+              )} */}
               <View style={{ flexDirection: 'row' }}>
                 <CustomText style={{ color: Color.Black1000, fontSize: 16, fontWeight: 'bold' }}>
                   {item?.minPrice}

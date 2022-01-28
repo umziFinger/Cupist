@@ -7,7 +7,7 @@ import { useIsFocused } from '@react-navigation/native';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { numberFormat, scrollCalendarHandler } from '@/Components/Function';
-import { HomeState } from '@/Stores/Home/InitialState';
+import { HomeState, TICKET_TYPE } from '@/Stores/Home/InitialState';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { CommonState } from '@/Stores/Common/InitialState';
 import CustomButton from '@/Components/CustomButton';
@@ -28,6 +28,8 @@ const DibsScreen = () => {
 
   const [isShowTopCalendar, setIsShowTopCalendar] = useState<boolean>(false);
 
+  // console.log('dibsList : ', dibsList[0]);
+
   useEffect(() => {
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
@@ -35,7 +37,6 @@ const DibsScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log('======딥딥딥딥딥======!!');
     const params = {
       lat: myLatitude,
       lng: myLongitude,
@@ -123,7 +124,7 @@ const DibsScreen = () => {
                 renderItem={({ item }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-                    <PlaceListCard item={item} type={'dibs'} />
+                    <PlaceListCard item={item} type={'dibs'} ticketType={TICKET_TYPE.ALL} />
                   </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
@@ -183,7 +184,7 @@ const DibsScreen = () => {
         contentContainerStyle={{ flexGrow: 1, paddingBottom: heightInfo.fixBottomHeight }}
       />
       {selectedTicket && (
-        <View>
+        <View style={{ backgroundColor: Color.Gray100 }}>
           <View
             style={{
               height: 1,
@@ -192,7 +193,7 @@ const DibsScreen = () => {
                 width: 0,
                 height: -2,
               },
-              shadowColor: 'rgba(107, 107, 107, 0.1)',
+              shadowColor: 'rgba(107, 107, 107, 0.2)',
               shadowOpacity: 1,
               shadowRadius: 4,
               elevation: 1,
@@ -229,7 +230,7 @@ const DibsScreen = () => {
                 style={{
                   borderRadius: 3,
                   borderWidth: 1,
-                  borderColor: Color.Gray300,
+                  borderColor: Color.Gray400,
                   paddingVertical: 15,
                   paddingHorizontal: 22,
                   marginRight: 8,
@@ -246,6 +247,8 @@ const DibsScreen = () => {
                 flex: 1,
                 alignItems: 'center',
                 borderRadius: 3,
+                borderWidth: 1,
+                borderColor: Color.Primary1000,
                 paddingVertical: 15,
                 backgroundColor: Color.Primary1000,
               }}

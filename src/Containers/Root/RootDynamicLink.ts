@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CommonActions from '@/Stores/Common/Actions';
-import { HomeState } from '@/Stores/Home/InitialState';
+import { HomeState, TICKET_TYPE } from '@/Stores/Home/InitialState';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { URLParser } from '@/Components/Function';
 import { navigate } from '@/Services/NavigationService';
-import PickActions from '@/Stores/Pick/Actions';
-import MyActions from '@/Stores/My/Actions';
-import SectionActions from '@/Stores/Section/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
-import CollectionActions from '@/Stores/Collection/Actions';
 
 /** ****************
  *
@@ -22,9 +18,7 @@ function RootDynamicLink() {
   const dispatch = useDispatch();
   const { isHomeLoaded } = useSelector((state: HomeState) => state.home);
 
-  const { dynamicLinkFlag, dynamicLinkUrl, myLatitude, myLongitude } = useSelector(
-    (state: CommonState) => state.common,
-  );
+  const { dynamicLinkFlag, dynamicLinkUrl } = useSelector((state: CommonState) => state.common);
 
   useEffect(() => {
     // 앱 실행상태
@@ -59,7 +53,7 @@ function RootDynamicLink() {
       if (path === 'placeDetail') {
         if (idx) {
           dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeDetailIdx', data: idx }));
-          navigate('PlaceDetailScreen', { idx });
+          navigate('PlaceDetailScreen', { idx: Number(idx), ticketType: TICKET_TYPE.ALL });
         }
       }
       dispatch(CommonActions.fetchCommonReducer({ type: 'dynamicLinkInfoInit' }));

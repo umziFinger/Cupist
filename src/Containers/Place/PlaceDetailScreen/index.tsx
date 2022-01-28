@@ -14,7 +14,7 @@ import ImageArea from '@/Containers/Place/PlaceDetailScreen/ImageArea';
 import TitleArea from '@/Containers/Place/PlaceDetailScreen/TitleArea';
 import MapArea from '@/Containers/Place/PlaceDetailScreen/MapArea';
 import ReviewArea from '@/Containers/Place/PlaceDetailScreen/ReviewArea';
-import { HomeState } from '@/Stores/Home/InitialState';
+import { HomeState, TICKET_TYPE } from '@/Stores/Home/InitialState';
 import PlaceActions from '@/Stores/Place/Actions';
 import { numberFormat, scrollCalendarHandler } from '@/Components/Function';
 import CustomText from '@/Components/CustomText';
@@ -32,7 +32,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const PlaceDetailScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
-  const { idx } = route.params;
+  const { idx, ticketType = TICKET_TYPE.ALL } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { placeDetail, placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
@@ -48,10 +48,10 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const together = placeDetail?.together || [];
 
   useEffect(() => {
-    console.log('PlaceDetailScreen Idx : ', calendarDate);
+    console.log('$$$$$$ PlaceDetailScreen Idx : ', idx);
     dispatch(PlaceActions.fetchPlaceDetail({ idx }));
     animatedFlatRef.current?.scrollToIndex({ index: 0, animated: true });
-  }, [idx]);
+  }, [route]);
 
   useEffect(() => {
     return () => {
@@ -139,7 +139,12 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         return (
           <View style={{ flex: 1, marginTop: 20 }}>
             <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
-            <TicketSlider allowedTimeArr={[0, 1, 2]} item={placeTicketList || {}} showDivider={false} />
+            <TicketSlider
+              allowedTimeArr={[0, 1]}
+              item={placeTicketList || {}}
+              showDivider={false}
+              focusType={ticketType}
+            />
           </View>
         );
       }
@@ -205,6 +210,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       <View
         style={{
           paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
+          backgroundColor: Color.Gray100,
         }}
       >
         <View
@@ -215,7 +221,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
               width: 0,
               height: -2,
             },
-            shadowColor: 'rgba(107, 107, 107, 0.1)',
+            shadowColor: 'rgba(107, 107, 107, 0.2)',
             shadowOpacity: 1,
             shadowRadius: 4,
             elevation: 1,
@@ -260,13 +266,13 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
                 style={{
                   borderRadius: 3,
                   borderWidth: 1,
-                  borderColor: Color.Gray300,
+                  borderColor: Color.Gray400,
                   paddingVertical: 15,
                   paddingHorizontal: 22,
                   marginRight: 8,
                 }}
               >
-                <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
+                <CustomText style={{ color: Color.Gray600, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
                   취소
                 </CustomText>
               </View>
@@ -278,6 +284,8 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
               flex: 1,
               alignItems: 'center',
               borderRadius: 3,
+              borderWidth: 1,
+              borderColor: Color.Primary1000,
               paddingVertical: 15,
               backgroundColor: Color.Primary1000,
             }}

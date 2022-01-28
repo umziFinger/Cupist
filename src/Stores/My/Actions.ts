@@ -28,6 +28,7 @@ const { Types, Creators } = createActions({
   fetchMyReviewDelete: ['params'],
   fetchMyPasswordModify: ['params'],
   fetchMyCouponAdd: ['params'],
+  fetchMyProfileRingme: ['params'],
 });
 
 export const MyTypes = Types;

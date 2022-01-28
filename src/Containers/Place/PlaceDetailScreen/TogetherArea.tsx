@@ -3,6 +3,7 @@ import { FlatList, useWindowDimensions, View } from 'react-native';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   list: Array<any>;
@@ -24,7 +25,13 @@ const TogetherArea = (props: PropTypes) => {
           data={list}
           renderItem={({ item }) => (
             <View style={{ marginRight: 11 }}>
-              <PlaceSmallCard item={item} width={(width - 48 - 12) / 2} showRate={false} showTicketName />
+              <PlaceSmallCard
+                item={item}
+                width={(width - 48 - 12) / 2}
+                showRate={false}
+                showTicketName
+                ticketType={TICKET_TYPE.ALL}
+              />
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}

@@ -40,6 +40,9 @@ const dev = {
   NAVER_APP_NAME: '볼리미',
   NAVER_APP_URL_SCHEME: 'kr.bolimi', // only for iOS
 
+  // common
+  COMMON_URL: 'common',
+
   // home
   HOME_URL: 'home',
   HOME_PLACE_URL: 'home/place',
@@ -80,6 +83,7 @@ const dev = {
   MY_DIBS_URL: 'my/dibs',
   MY_PASSWORD_URL: 'my/password',
   MY_COUPON_URL: 'my/coupon',
+  MY_PROFILE_RINGME_URL: 'my/profile/ringme',
 
   NOTIFICATION_COUNT_URL: 'my/notification/count',
 

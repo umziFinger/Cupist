@@ -13,6 +13,7 @@ import { MyState, reservationTabType } from '@/Stores/My/InitialState';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import CommonActions from '@/Stores/Common/Actions';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 const ReservationList = () => {
   const dispatch = useDispatch();
@@ -78,7 +79,7 @@ const ReservationList = () => {
   };
 
   const onPlaceDetail = (item: any) => {
-    navigate('PlaceDetailScreen', { idx: item.placeIdx });
+    navigate('PlaceDetailScreen', { idx: item.placeIdx, ticketType: TICKET_TYPE.ALL });
   };
 
   const onCancel = (item: any) => {

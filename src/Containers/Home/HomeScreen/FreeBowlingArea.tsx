@@ -3,10 +3,11 @@ import { Animated, Platform, useWindowDimensions, View, ViewToken } from 'react-
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
-import QuickPriceCard from '@/Components/Card/Home/QuickPriceCard';
+import FreeBowlingCard from '@/Components/Card/Home/FreeBowlingCard';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import DateFilter from '@/Components/FilterSilder/DateFilter';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   list: Array<any>;
@@ -32,7 +33,7 @@ const FreeBowlingArea = (props: PropTypes) => {
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');
-    navigate('PlaceListScreen', { type: 'free' });
+    navigate('PlaceListScreen', { type: TICKET_TYPE.FREE });
   };
 
   return (
@@ -76,18 +77,18 @@ const FreeBowlingArea = (props: PropTypes) => {
           </CustomButton>
         </View>
       </View>
-      <View style={{ paddingLeft: 20 }}>
-        <View style={{ marginTop: 20 }}>
-          <DateFilter />
-        </View>
-      </View>
+      {/* <View style={{ paddingLeft: 20 }}> */}
+      {/*  <View style={{ marginTop: 20 }}> */}
+      {/*    <DateFilter /> */}
+      {/*  </View> */}
+      {/* </View> */}
       <Animated.FlatList
         data={list}
         ref={animatedFlatRef}
         renderItem={({ item }) => {
           return (
             <View style={{ marginHorizontal: 4 }}>
-              <QuickPriceCard item={item} />
+              <FreeBowlingCard item={item} />
             </View>
           );
         }}

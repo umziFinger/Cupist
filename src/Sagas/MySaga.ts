@@ -920,3 +920,40 @@ export function* fetchMyCouponList(data: any): any {
     console.log('occurred Error...fetchMyCouponList : ', e);
   }
 }
+
+export function* fetchMyProfileRingme(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.MY_PROFILE_RINGME_URL,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+
+    if (response.result === true && response.code === null) {
+      yield put(
+        AuthActions.fetchAuthReducer({
+          type: 'profileRingme',
+          data: { code: data.params.code, profile: response.data.user.profile },
+        }),
+      );
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'bottom',
+            alertToastMessage: '프로필 이미지가 변경되었습니다.',
+          },
+        }),
+      );
+      navigateGoBack();
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyProfileRingme : ', e);
+  }
+}

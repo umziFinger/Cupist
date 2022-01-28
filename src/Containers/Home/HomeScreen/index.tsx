@@ -240,7 +240,6 @@ const HomeScreen = ({ route }: HomeProps) => {
           )
         );
       }
-
       case 6: {
         return (
           // 이벤트 HOT

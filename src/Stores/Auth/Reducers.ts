@@ -175,6 +175,12 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'profileRingme': {
+        draft.userInfo.ringme = data.code;
+        draft.userInfo.profile = data.profile;
+        break;
+      }
+
       default:
         return draft;
     }

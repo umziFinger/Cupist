@@ -12,11 +12,9 @@ function InputView() {
   const dispatch = useDispatch();
 
   const { email, onChangeEmail, emailValidText, isEmailValid } = useInputEmail();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentFocus, setCurrentFocus] = useState<string>('email');
 
   const onPressFindPassword = () => {
-    console.log('비밀번호 찾기 버튼 클릭');
     const params = {
       email,
     };

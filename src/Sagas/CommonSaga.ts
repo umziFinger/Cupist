@@ -334,3 +334,21 @@ export function* fetchCommonReport(data: any): any {
   }
   return false;
 }
+
+export function* fetchCommonCode(data: any): any {
+  try {
+    const payload = {
+      url: `${Config.COMMON_URL}/${data.params.path}`,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      if (data.params.path === 'ringme') {
+        yield put(MyActions.fetchMyReducer({ type: 'ringmeList', data: response.data }));
+      }
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    console.log('occurred Error...fetchCommonCode : ', e);
+  }
+}

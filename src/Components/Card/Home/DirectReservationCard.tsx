@@ -10,6 +10,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import HomeActions from '@/Stores/Home/Actions';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
 import PlaceActions from '@/Stores/Place/Actions';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   item: any;
@@ -30,7 +31,7 @@ const DirectReservationCard = (props: PropTypes) => {
   };
 
   return (
-    <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx })}>
+    <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx, ticketType: TICKET_TYPE.ALL })}>
       <View style={{ flex: 1, borderWidth: 1, borderRadius: 5, borderColor: Color.Grayyellow200 }}>
         <View style={{ flexDirection: 'row', marginLeft: 12, marginTop: 8, marginRight: 8, marginBottom: 12 }}>
           <View style={{ width: 72, height: 72, borderRadius: 5, marginTop: 4, marginRight: 12 }}>

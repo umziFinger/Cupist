@@ -65,6 +65,8 @@ import MyCouponScreen from '@/Containers/More/MyCouponScreen';
 import AddCardCheckPasswordScreen from '@/Containers/Reservation/AddCardCheckPasswordScreen';
 import EventHotDetailScreen from '@/Containers/Place/EventHotDetailScreen';
 import InviteFriendScreen from '@/Containers/More/InviteFriendScreen';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
+import RingmeProfileScreen from '@/Containers/More/RingmeProfileScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -85,7 +87,7 @@ export type MainStackParamList = {
   JoinStepThreeScreen: undefined;
   SocialJoinScreen: undefined;
   ResidentSearchScreen: { type: SCREEN_TYPE };
-  PlaceDetailScreen: { idx: number };
+  PlaceDetailScreen: { idx: number; ticketType?: TICKET_TYPE };
   LocationSettingScreen: undefined;
   PermissionScreen: undefined;
   ProfileSettingScreen: undefined;
@@ -114,7 +116,7 @@ export type MainStackParamList = {
   WalkThroughScreen: undefined;
   ReportScreen: { mainIdx: number; subIdx: number; reportType: string };
   PlaceReviewScreen: { placeIdx: number; placeName: string };
-  PlaceListScreen: { type: string };
+  PlaceListScreen: { type: TICKET_TYPE };
   PermissionDetailScreen: { agreeIdx: number; detailArr: Array<any> };
   HotPlaceListScreen: undefined;
   PasswordEditScreen: undefined;
@@ -130,6 +132,7 @@ export type MainStackParamList = {
   MyCouponScreen: undefined;
   EventHotDetailScreen: { eventIdx: number };
   InviteFriendScreen: undefined;
+  RingmeProfileScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -198,6 +201,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="WithdrawScreen" component={WithdrawScreen} />
       <MainStack.Screen name="PasswordEditScreen" component={PasswordEditScreen} />
       <MainStack.Screen name="InviteFriendScreen" component={InviteFriendScreen} />
+      <MainStack.Screen name="RingmeProfileScreen" component={RingmeProfileScreen} />
 
       {/*  My */}
       <MainStack.Screen name="ReservationDetailScreen" component={ReservationDetailScreen} />

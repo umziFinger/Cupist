@@ -13,6 +13,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import Config from '@/Config';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { navigate } from '@/Services/NavigationService';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 const PlaceInfo = () => {
   const { width } = useWindowDimensions();
@@ -170,7 +171,7 @@ const PlaceInfo = () => {
   };
 
   const onPlaceDetail = () => {
-    navigate('PlaceDetailScreen', { idx: reservationDetail?.Place?.idx });
+    navigate('PlaceDetailScreen', { idx: reservationDetail?.Place?.idx, ticketType: TICKET_TYPE.ALL });
   };
 
   return (

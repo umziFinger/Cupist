@@ -11,6 +11,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import MyActions from '@/Stores/My/Actions';
 import { navigate } from '@/Services/NavigationService';
 import CustomShowMore from '@/Components/CustomShowMore';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 const WriteReviewItem = () => {
   const dispatch = useDispatch();
@@ -80,7 +81,9 @@ const WriteReviewItem = () => {
               }}
             >
               <View style={{ paddingHorizontal: 24 }}>
-                <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.placeIdx })}>
+                <CustomButton
+                  onPress={() => navigate('PlaceDetailScreen', { idx: item.placeIdx, ticketType: TICKET_TYPE.ALL })}
+                >
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <CustomText
                       style={{ fontSize: 15, fontWeight: '500', letterSpacing: -0.2, color: Color.Black1000 }}

@@ -62,6 +62,7 @@ export const INITIAL_STATE: MyState['my'] = {
     metadata: [],
   },
   selectedCouponGuide: null,
+  ringmeList: [],
 };
 export interface MyState {
   my: {
@@ -113,6 +114,7 @@ export interface MyState {
     usableCouponPage: number;
 
     selectedCouponGuide: CouponItemType | null;
+    ringmeList: any[];
   };
 }
 export interface CouponItemType {
