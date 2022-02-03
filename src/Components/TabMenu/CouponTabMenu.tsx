@@ -24,6 +24,7 @@ const CouponTabMenu = (props: any) => {
     }
   };
 
+  console.log('========', myCouponList?.metadata);
   return (
     <View
       style={{
@@ -71,9 +72,11 @@ const CouponTabMenu = (props: any) => {
                     }}
                   >
                     {item.title}{' '}
-                    {item?.key === 'usable' && myCouponList !== undefined
-                      ? myCouponList?.metadata[0]?.usableCnt
-                      : myCouponList?.metadata[0]?.expiredCnt}
+                    {myCouponList?.metadata !== undefined
+                      ? item?.key === 'usable'
+                        ? myCouponList?.metadata[0]?.usableCnt
+                        : myCouponList?.metadata[0]?.expiredCnt
+                      : null}
                   </CustomText>
                 </View>
               </View>

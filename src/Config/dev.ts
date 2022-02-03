@@ -21,8 +21,8 @@ const dev = {
   TMAP_MARKET_URL_ANDROID: 'market://details?id=com.skt.tmap.ku',
 
   // API_URL: 'http://192.168.0.12:5000/',
-  // API_URL: 'https://api.bolimi.kr/',
-  API_URL: 'http://192.168.0.13:5005/', // duople_oil
+  API_URL: 'https://api.bolimi.kr/',
+  // API_URL: 'http://192.168.0.13:5005/', // duople_oil
 
   // dynamicLink URL
   DYNAMIC_URL: 'https://link.bolimi.kr',
