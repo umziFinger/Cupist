@@ -21,7 +21,6 @@ interface PropsType {
 }
 
 const PlaceReviewScreen = ({ route }: PropsType) => {
-  // console.log('======', route?.params?.place);
   const placeIdx = route?.params?.placeIdx || 0;
   const placeName = route?.params?.placeName || '';
   const dispatch = useDispatch();
@@ -30,6 +29,7 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
   const { placeReview, reviewListPage = 1 } = useSelector((state: PlaceState) => state.place);
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const [filter, setFilter] = useState<string>('latest');
+
   useEffect(() => {
     const params = {
       perPage: 10,
@@ -94,7 +94,6 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
   };
 
   const onTotalImage = (reviewIdx: number, value: number) => {
-    console.log('totalImage : ', reviewIdx, value);
     const idx = placeReview.review.findIndex((review: any) => review.idx === reviewIdx);
     if (idx > -1) {
       dispatch(
@@ -298,66 +297,68 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
               />
             )}
             {/* 사장님 댓글 */}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'flex-start',
-                paddingRight: 20,
-                paddingLeft: 25,
-                marginTop: 16,
-              }}
-            >
-              <View style={{ width: 30, height: 30, marginRight: 8 }}>
-                <FastImage
-                  style={{ width: '100%', height: '100%', borderRadius: 50 }}
-                  source={require('@/Assets/Images/Common/imgReviewPrfoile.png')}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              </View>
-              <View style={{ width: 9, height: 15, marginTop: 6 }}>
-                <FastImage
-                  style={{ width: '100%', height: '100%' }}
-                  source={require('@/Assets/Images/Common/imgSpeach.png')}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              </View>
+            {reviewItem?.reviewCommentYN === 'Y' && (
               <View
                 style={{
-                  flex: 1,
-                  marginTop: 6,
-                  backgroundColor: Color.Grayyellow50,
-                  borderTopRightRadius: 8,
-                  borderBottomRightRadius: 8,
-                  borderBottomLeftRadius: 8,
-                  padding: 15,
+                  flexDirection: 'row',
+                  alignItems: 'flex-start',
+                  paddingRight: 20,
+                  paddingLeft: 25,
+                  marginTop: 16,
                 }}
               >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <View style={{ justifyContent: 'center', marginRight: 4 }}>
-                    <CustomText
-                      style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2, fontWeight: 'bold' }}
-                    >
-                      사장님
-                    </CustomText>
-                  </View>
-                  <View style={{ justifyContent: 'center' }}>
-                    <CustomText style={{ color: Color.Gray600, fontSize: 10 }}>
-                      {reviewItem?.PlaceReviewComment[0]?.regDateView || '0일 전'}
-                    </CustomText>
-                  </View>
-                </View>
-
-                <View style={{ justifyContent: 'center', marginTop: 6 }}>
-                  <CustomShowMore
-                    text={reviewItem?.PlaceReviewComment[0]?.content}
-                    targetLines={2}
-                    backgroundColor={'transparent'}
-                    textColor={Color.Grayyellow1000}
-                    buttonColor={Color.Primary1000}
+                <View style={{ width: 30, height: 30, marginRight: 8 }}>
+                  <FastImage
+                    style={{ width: '100%', height: '100%', borderRadius: 50 }}
+                    source={require('@/Assets/Images/Common/imgReviewPrfoile.png')}
+                    resizeMode={FastImage.resizeMode.cover}
                   />
                 </View>
+                <View style={{ width: 9, height: 15, marginTop: 6 }}>
+                  <FastImage
+                    style={{ width: '100%', height: '100%' }}
+                    source={require('@/Assets/Images/Common/imgSpeach.png')}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    marginTop: 6,
+                    backgroundColor: Color.Grayyellow50,
+                    borderTopRightRadius: 8,
+                    borderBottomRightRadius: 8,
+                    borderBottomLeftRadius: 8,
+                    padding: 15,
+                  }}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ justifyContent: 'center', marginRight: 4 }}>
+                      <CustomText
+                        style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2, fontWeight: 'bold' }}
+                      >
+                        사장님
+                      </CustomText>
+                    </View>
+                    <View style={{ justifyContent: 'center' }}>
+                      <CustomText style={{ color: Color.Gray600, fontSize: 10 }}>
+                        {reviewItem?.PlaceReviewComment[0]?.regDateView || '0일 전'}
+                      </CustomText>
+                    </View>
+                  </View>
+
+                  <View style={{ justifyContent: 'center', marginTop: 6 }}>
+                    <CustomShowMore
+                      text={reviewItem?.PlaceReviewComment[0]?.content}
+                      targetLines={2}
+                      backgroundColor={'transparent'}
+                      textColor={Color.Grayyellow1000}
+                      buttonColor={Color.Primary1000}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
+            )}
             <View
               style={{
                 alignItems: 'center',

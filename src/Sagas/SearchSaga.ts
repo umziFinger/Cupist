@@ -45,6 +45,7 @@ export function* fetchSearchBowlingClubList(data: any): any {
     const response = yield call(Axios.GET, payload);
 
     if (response.result === true && response.code === null) {
+      console.log('검색결과 : ', response.data);
       yield put(SearchActions.fetchSearchReducer({ type: 'bowlingList', data: response.data, page: data.params.page }));
       yield put(SearchActions.fetchSearchReducer({ type: 'bowlingListPage', data: data.params.page + 1 }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));

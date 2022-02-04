@@ -14,6 +14,7 @@ interface CustomCheckBox {
 function CustomCheckBox(props: CustomCheckBox) {
   const { value, onValueChange, type, disableIcon, enableIcon } = props;
   // console.log('oncheck', onCheck);
+
   const onClick = () => {
     const returnValue = {
       checkType: type,

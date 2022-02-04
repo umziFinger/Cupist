@@ -12,7 +12,6 @@ export function* fetchPlaceAroundList(data: any): any {
     };
 
     const response = yield call(Axios.GET, payload);
-    // console.log(response.data.placeResult);
     if (response.result === true && response.code === null) {
       yield put(
         PlaceActions.fetchPlaceReducer({ type: 'aroundList', data: response.data.placeResult, page: data.params.page }),
@@ -34,9 +33,7 @@ export function* fetchPlaceSearchList(data: any): any {
     };
 
     const response = yield call(Axios.GET, payload);
-    //
     if (response.result === true && response.code === null) {
-      // console.log('fetchPlaceSearchList:', response.data);
       yield put(
         PlaceActions.fetchPlaceReducer({
           type: 'myAroundList',
@@ -200,6 +197,7 @@ export function* fetchPlaceEventHotList(data: any): any {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
   }
 }
+
 export function* fetchPlaceEventHotDetail(data: any): any {
   try {
     const payload = {
@@ -237,12 +235,10 @@ export function* fetchPlaceDibsList(data: any): any {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       console.log(' Error...fetchPlaceDibsList : ', response);
-
       yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-
     console.log('occurred Error...fetchPlaceDibsList : ', e);
   }
 }

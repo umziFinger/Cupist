@@ -48,12 +48,6 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const together = placeDetail?.together || [];
 
   useEffect(() => {
-    console.log('$$$$$$ PlaceDetailScreen Idx : ', idx);
-    dispatch(PlaceActions.fetchPlaceDetail({ idx }));
-    animatedFlatRef.current?.scrollToIndex({ index: 0, animated: true });
-  }, [route]);
-
-  useEffect(() => {
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeDetailInit' }));
       // dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
@@ -61,9 +55,15 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   }, []);
 
   useEffect(() => {
+    dispatch(PlaceActions.fetchPlaceDetail({ idx }));
+    animatedFlatRef.current?.scrollToIndex({ index: 0, animated: true });
+  }, [route]);
+
+  useEffect(() => {
+    console.log('didupdate');
     dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
-  }, [calendarDate]);
+  }, [route, calendarDate]);
 
   const handleScroll = (event: any) => {
     const result = scrollCalendarHandler(event, 540);
@@ -77,7 +77,10 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       }
 
       if (selectedTicket?.idx) {
-        navigate('ReservationScreen', { placeIdx: idx, ticketInfoIdx: selectedTicket?.idx });
+        navigate('ReservationScreen', {
+          placeIdx: idx,
+          ticketInfoIdx: selectedTicket?.idx,
+        });
       }
     } else if (placeTicketList?.normal.length < 1 && placeTicketList?.free.length < 1) {
       dispatch(

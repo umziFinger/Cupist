@@ -63,7 +63,6 @@ const PartTimeBowlingArea = (props: PropTypes) => {
           </CustomButton>
         </View>
       </View>
-
       <View style={{ flex: 1, paddingHorizontal: 20, marginTop: 25 }}>
         <FlatList
           data={list}

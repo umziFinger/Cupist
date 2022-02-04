@@ -28,8 +28,6 @@ const DibsScreen = () => {
 
   const [isShowTopCalendar, setIsShowTopCalendar] = useState<boolean>(false);
 
-  // console.log('dibsList : ', dibsList[0]);
-
   useEffect(() => {
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
@@ -38,10 +36,10 @@ const DibsScreen = () => {
 
   useEffect(() => {
     const params = {
-      lat: myLatitude,
-      lng: myLongitude,
+      lat: myLatitude?.toString() || '37.56561',
+      lng: myLongitude?.toString() || '126.97804',
       page: 1,
-      perPage: 5,
+      perPage: 10,
       date: calendarDate,
     };
     dispatch(PlaceActions.fetchPlaceDibsList(params));
@@ -50,6 +48,8 @@ const DibsScreen = () => {
   useEffect(() => {
     if (isFocused) {
       const params = {
+        lat: myLatitude?.toString() || '37.56561',
+        lng: myLongitude?.toString() || '126.97804',
         page: 1,
         perPage: 10,
         date: calendarDate,
@@ -61,6 +61,8 @@ const DibsScreen = () => {
   const onMore = () => {
     console.log('onMore');
     const params = {
+      lat: myLatitude?.toString() || '37.56561',
+      lng: myLongitude?.toString() || '126.97804',
       page: dibsListPage || 1,
       perPage: 10,
       date: calendarDate,
@@ -69,8 +71,9 @@ const DibsScreen = () => {
   };
 
   const onRefresh = () => {
-    console.log('onRefresh');
     const params = {
+      lat: myLatitude?.toString() || '37.56561',
+      lng: myLongitude?.toString() || '126.97804',
       page: 1,
       perPage: 10,
       date: calendarDate,

@@ -2,6 +2,7 @@ import { createReducer } from 'reduxsauce';
 import produce from 'immer';
 import { INITIAL_STATE } from '@/Stores/Place/InitialState';
 import { PlaceTypes } from './Actions';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
   return produce(state, (draft) => {
@@ -244,16 +245,21 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         if (actions.params.page === 1) {
           draft.placeList = data.PlaceResult;
           draft.placeList.map((item: any, index: number) => {
-            draft.placeList[index].isSelected = false;
+            draft.placeList[index].isSelectedNormal = false;
+            draft.placeList[index].isSelectedFree = false;
             return null;
           });
         } else {
           draft.placeList = data.PlaceResult?.length > 0 ? draft.placeList.concat(data.PlaceResult) : draft.placeList;
           draft.placeList.map((item: any, index: number) => {
-            if (draft.placeList[index].isSelected) {
+            if (draft.placeList[index].isSelectedNormal) {
               return null;
             }
-            draft.placeList[index].isSelected = false;
+            if (draft.placeList[index].isSelectedFree) {
+              return null;
+            }
+            draft.placeList[index].isSelectedNormal = false;
+            draft.placeList[index].isSelectedFree = false;
             return null;
           });
         }
@@ -289,7 +295,18 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         }
         const idx = list.findIndex((item) => item.idx === data.idx);
         if (idx > -1) {
-          list[idx].isSelected = !list[idx].isSelected;
+          if (data.ticketType === TICKET_TYPE.NORMAL) {
+            if (list[idx].isSelectedFree) {
+              list[idx].isSelectedFree = false;
+            }
+            list[idx].isSelectedNormal = !list[idx].isSelectedNormal;
+          }
+          if (data.ticketType === TICKET_TYPE.FREE) {
+            if (list[idx].isSelectedNormal) {
+              list[idx].isSelectedNormal = false;
+            }
+            list[idx].isSelectedFree = !list[idx].isSelectedFree;
+          }
         }
         break;
       }
@@ -327,16 +344,21 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         if (actions.params.page === 1) {
           draft.dibsList = data.dibsResult;
           draft.dibsList.map((item: any, index: number) => {
-            draft.dibsList[index].isSelected = false;
+            draft.dibsList[index].isSelectedNormal = false;
+            draft.dibsList[index].isSelectedFree = false;
             return null;
           });
         } else {
           draft.dibsList = data.dibsResult?.length > 0 ? draft.dibsList.concat(data.dibsResult) : draft.dibsList;
           draft.dibsList.map((item: any, index: number) => {
-            if (draft.dibsList[index].isSelected) {
+            if (draft.dibsList[index].isSelectedNormal) {
               return null;
             }
-            draft.dibsList[index].isSelected = false;
+            if (draft.dibsList[index].isSelectedFree) {
+              return null;
+            }
+            draft.dibsList[index].isSelectedNormal = false;
+            draft.dibsList[index].isSelectedFree = false;
             return null;
           });
         }

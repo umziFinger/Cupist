@@ -26,8 +26,6 @@ const TicketSlider = (props: PropTypes) => {
   const free = item?.free || [];
 
   useMemo(() => {
-    console.log('@@@ didmount : ', focusType);
-
     let findIdx = -1;
     if (focusType === TICKET_TYPE.NORMAL) {
       for (let i = 0; i < normal.length; i++) {
@@ -66,7 +64,7 @@ const TicketSlider = (props: PropTypes) => {
       {normal.length > 0 || free.length > 0 ? (
         <FlatList
           data={allowedTimeArr}
-          renderItem={({ item: allowedTime, index }) => {
+          renderItem={({ item: allowedTime }) => {
             return (
               <>
                 {isShowFunc(allowedTime) && (
@@ -100,7 +98,7 @@ const TicketSlider = (props: PropTypes) => {
                           <View
                             style={{
                               marginTop: 13,
-                              paddingVertical: allowedTime === 1 ? 20 : 16,
+                              paddingVertical: allowedTime === 0 ? 20 : 16,
                               paddingLeft: 12,
                               paddingRight: 21,
                               borderRadius: 5,
@@ -120,7 +118,8 @@ const TicketSlider = (props: PropTypes) => {
                               marginRight: 8,
                             }}
                           >
-                            {allowedTime === 2 && time?.hasSoldOut && (
+                            {/* 자유볼링 티켓 */}
+                            {allowedTime === 1 && (
                               <View
                                 style={{
                                   flexDirection: 'row',
@@ -185,7 +184,7 @@ const TicketSlider = (props: PropTypes) => {
                               }}
                             >
                               <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                                {allowedTime === 1 && time?.hasSoldOut && (
+                                {allowedTime === 0 && time?.hasSoldOut && (
                                   <View
                                     style={{
                                       backgroundColor: Color.Gray300,

@@ -19,10 +19,10 @@ import PermissionArea from '@/Containers/Reservation/ReservationScreen/Permissio
 import CustomButton from '@/Components/CustomButton';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
-import { PlaceState } from '@/Stores/Place/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 import AmountArea from '@/Containers/Reservation/ReservationScreen/AmountArea';
 import CouponArea from '@/Containers/Reservation/ReservationScreen/CouponArea';
+import WarningArea from '@/Containers/Reservation/ReservationScreen/WarningArea';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'ReservationScreen'>;
@@ -182,7 +182,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <View style={{ marginTop: 28, paddingHorizontal: 16 }}>
-              <CancelInfoArea />
+              <WarningArea />
             </View>
           </View>
         );
@@ -192,12 +192,22 @@ const ReservationScreen = ({ route }: PropTypes) => {
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <View style={{ marginTop: 28, paddingHorizontal: 16 }}>
-              <PermissionArea />
+              <CancelInfoArea />
             </View>
           </View>
         );
       }
       case 6: {
+        return (
+          <View style={{ flex: 1, marginTop: 28 }}>
+            <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
+            <View style={{ marginTop: 28, paddingHorizontal: 16 }}>
+              <PermissionArea />
+            </View>
+          </View>
+        );
+      }
+      case 7: {
         return (
           <CustomButton onPress={() => onCreateTempReservation()}>
             <View style={{ flex: 1, marginTop: 28, paddingHorizontal: 16, marginBottom: 48 }}>
@@ -228,7 +238,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
       <Header type={'back'} />
       <FlatList
         ref={flatRef}
-        data={[0, 1, 2, 3, 4, 5, 6]}
+        data={[0, 1, 2, 3, 4, 5, 6, 7]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={2}

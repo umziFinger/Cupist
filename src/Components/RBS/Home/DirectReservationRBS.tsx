@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
@@ -18,6 +18,7 @@ import { AuthState } from '@/Stores/Auth/InitialState';
 
 const DirectReservationRBS = () => {
   const dispatch = useDispatch();
+  const RBSheetRef = useRef<any>();
   const { height } = useWindowDimensions();
   const { heightInfo, isOpenDirectReservationRBS } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
@@ -25,7 +26,6 @@ const DirectReservationRBS = () => {
     (state: HomeState) => state.home,
   );
   const { placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
-  const RBSheetRef = useRef<any>();
 
   useEffect(() => {
     if (isOpenDirectReservationRBS) {
@@ -84,7 +84,7 @@ const DirectReservationRBS = () => {
               <View style={{ flex: 1 }}>
                 <View style={{}}>
                   <TicketSlider
-                    allowedTimeArr={timeFilterIdx ? [timeFilterIdx] : [0, 1]}
+                    allowedTimeArr={timeFilterIdx ? [timeFilterIdx - 1] : [0, 1]}
                     item={placeTicketList || {}}
                     showDivider
                     focusType={TICKET_TYPE.ALL}

@@ -82,12 +82,12 @@ export function* fetchInitialHandler() {
   yield put(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() }));
 
   // 선결제 특가 날짜 필터 초기화
-  yield put(
-    HomeActions.fetchHomeReducer({
-      type: 'prepaymentDate',
-      data: moment().add('days', 1).format('YYYY-MM-D').toString(),
-    }),
-  );
+  // yield put(
+  //   HomeActions.fetchHomeReducer({
+  //     type: 'prepaymentDate',
+  //     data: moment().add('days', 1).format('YYYY-MM-D').toString(),
+  //   }),
+  // );
 
   // 홈 바로예약 필터 초기화
   yield put(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: 1 }));
@@ -107,7 +107,7 @@ export function* fetchInitialHandler() {
   yield put(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
 
   // 선결제 특가 예약 가능일 목록 조회
-  yield put(HomeActions.fetchHomeCheckEarly());
+  // yield put(HomeActions.fetchHomeCheckEarly());
 
   // 마이스크린 탭 초기화
   yield put(MyActions.fetchMyReducer({ type: 'myTabInit' }));

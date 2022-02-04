@@ -37,8 +37,6 @@ const PlaceListScreen = ({ route }: PropTypes) => {
   const [screenTitle, setScreenTitle] = useState<string>('');
   const [screenContent, setScreenContent] = useState<string>('');
 
-  console.log('placeList : ', placeList[0].PlaceTicketInfo);
-
   useEffect(() => {
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
@@ -48,20 +46,17 @@ const PlaceListScreen = ({ route }: PropTypes) => {
 
   useEffect(() => {
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeListType', data: type }));
-
+    console.log('@@@@@@@ calendarDate : ', calendarDate);
     let title = '';
     let content = '';
-    let date = calendarDate;
     if (type === TICKET_TYPE.FREE) {
       title = '자유볼링';
       content = '공유 레인 무제한 게임 예약';
-      date = prepaymentDate;
     }
 
     if (type === TICKET_TYPE.NORMAL) {
       title = '시간제 볼링';
       content = ' 1시간 단위 레인 대여 예약';
-      date = calendarDate;
     }
     setScreenTitle(title);
     setScreenContent(content);
@@ -71,23 +66,24 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lat: myLatitude,
       lng: myLongitude,
       page: 1,
-      perPage: 5,
-      date,
+      perPage: 10,
+      date: calendarDate,
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   }, [type]);
 
   useEffect(() => {
+    console.log('###########');
     const params = {
       type,
       lat: myLatitude,
       lng: myLongitude,
       page: 1,
       perPage: 10,
-      date: type === TICKET_TYPE.NORMAL ? calendarDate : prepaymentDate,
+      date: calendarDate,
     };
     dispatch(PlaceActions.fetchPlaceList(params));
-  }, [calendarDate, prepaymentDate]);
+  }, [calendarDate]);
 
   const onMore = () => {
     console.log('onMore');
@@ -97,7 +93,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: placeListPage || 1,
       perPage: 10,
-      date: type === TICKET_TYPE.NORMAL ? calendarDate : prepaymentDate,
+      date: calendarDate,
     };
     if (placeListPage > 1) dispatch(PlaceActions.fetchPlaceList(params));
   };
@@ -110,7 +106,7 @@ const PlaceListScreen = ({ route }: PropTypes) => {
       lng: myLongitude,
       page: 1,
       perPage: 10,
-      date: type === TICKET_TYPE.NORMAL ? calendarDate : prepaymentDate,
+      date: calendarDate,
     };
     dispatch(PlaceActions.fetchPlaceList(params));
   };
@@ -194,46 +190,6 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                   </View>
                 </View>
               </CustomButton>
-              {/* {type === TICKET_TYPE.NORMAL ? (
-                <CustomButton onPress={() => onPressDate()} style={{ marginTop: 16 }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      backgroundColor: Color.Gray200,
-                      borderWidth: 1,
-                      borderColor: Color.Gray300,
-                      paddingVertical: 12,
-                      paddingLeft: 12,
-                      paddingRight: 8,
-                    }}
-                  >
-                    <View style={{ width: 16, height: 16, marginRight: 9 }}>
-                      <FastImage
-                        style={{ width: '100%', height: '100%' }}
-                        source={require('@/Assets/Images/Common/icCalendar.png')}
-                        resizeMode={FastImage.resizeMode.cover}
-                      />
-                    </View>
-                    <View style={{ justifyContent: 'center', flex: 1 }}>
-                      <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13 }}>
-                        {moment(calendarDate).format('YYYY.MM.DD(dd)')}
-                      </CustomText>
-                    </View>
-                    <View style={{ width: 24, height: 24 }}>
-                      <FastImage
-                        style={{ width: '100%', height: '100%' }}
-                        source={require('@/Assets/Images/Arrow/icArrowDw.png')}
-                        resizeMode={FastImage.resizeMode.cover}
-                      />
-                    </View>
-                  </View>
-                </CustomButton>
-              ) : (
-                <View style={{ flex: 1, marginTop: 16 }}>
-                  <DateFilter />
-                </View>
-              )} */}
             </View>
             <View style={{ flex: 1, marginTop: 16 }}>
               <FlatList
@@ -245,8 +201,8 @@ const PlaceListScreen = ({ route }: PropTypes) => {
                   </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
-                initialNumToRender={5}
-                maxToRenderPerBatch={8}
+                initialNumToRender={10}
+                maxToRenderPerBatch={13}
                 windowSize={7}
                 onEndReached={() => onMore()}
                 onEndReachedThreshold={0.8}

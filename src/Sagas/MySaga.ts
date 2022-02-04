@@ -4,13 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { unlink } from '@react-native-seoul/kakao-login';
 import { NaverLogin } from '@react-native-seoul/naver-login';
 import CommonActions from '@/Stores/Common/Actions';
-import AuthActions from '@/Stores/Auth/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
 import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import AuthActions from '@/Stores/Auth/Actions';
 import MyActions from '@/Stores/My/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
-import AuthAction from '@/Stores/Auth/Actions';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 import PlaceActions from '@/Stores/Place/Actions';
 
@@ -22,7 +21,7 @@ export function* fetchMyPushYN(data: any): any {
     };
 
     const response = yield call(Axios.PATCH, payload);
-    const date = new Date();
+
     if (response.result === true && response.code === null) {
       yield put(AuthActions.fetchAuthReducer({ type: 'pushYN', data: data.params.push_yn }));
       if (data.params.push_yn === 'Y') {
@@ -70,8 +69,6 @@ export function* fetchMySmsSend(data: any): any {
     const response = yield call(Axios.POST, payload);
 
     if (response.result === true && response.code === null) {
-      console.log('call saga log_cert');
-
       yield put(AuthActions.fetchAuthReducer({ type: 'isReceived', data: true }));
       yield put(AuthActions.fetchAuthReducer({ type: 'log_cert', data: response.data.data }));
     } else {
@@ -107,7 +104,7 @@ export function* fetchMyPlacePatch(data: any): any {
       );
 
       const { userIdx } = yield select((state: AuthState) => state.auth);
-      yield put(AuthAction.fetchUserInfo({ idx: userIdx }));
+      yield put(AuthActions.fetchUserInfo({ idx: userIdx }));
       if (data.params.type === SCREEN_TYPE.JOIN) {
         navigate('HomeScreen');
       } else {
@@ -185,7 +182,7 @@ export function* fetchMyProfilePatch(data: any): any {
         }),
       );
       const { userIdx } = yield select((state: AuthState) => state.auth);
-      yield put(AuthAction.fetchUserInfo({ idx: userIdx }));
+      yield put(AuthActions.fetchUserInfo({ idx: userIdx }));
       navigateGoBack();
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
@@ -207,7 +204,6 @@ export function* fetchMyNoticeList(data: any): any {
     const response = yield call(Axios.GET, payload);
 
     if (response.result === true && response.code === null) {
-      console.log('공지사항: ', response.data.notice);
       yield put(
         MyActions.fetchMyReducer({
           type: 'myNoticeList',
@@ -238,7 +234,6 @@ export function* fetchMyNoticeDetailInfo(data: any): any {
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
-      console.log('공지사항 상세: ', response.data);
       yield put(
         MyActions.fetchMyReducer({
           type: 'myNoticeDetail',

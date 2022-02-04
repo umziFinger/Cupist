@@ -51,13 +51,13 @@ const HomeScreen = ({ route }: HomeProps) => {
     console.log('============홈 초기화');
     // 첫 홈 화면 현재 위치값 갱신
     // 홈 리스트 조회
-    positionUpdate().then();
+    // positionUpdate().then();
 
     // 바로예약 지역 필터 조회
     dispatch(SearchActions.fetchSearchAreaList());
 
-    dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: 1 }));
-    dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: DATA_TIME_FILTER[0].idx }));
+    // dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: 1 }));
+    // dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: DATA_TIME_FILTER[0].idx }));
   }, [userIdx]);
 
   useEffect(() => {
@@ -80,18 +80,6 @@ const HomeScreen = ({ route }: HomeProps) => {
     positionUpdate().then();
   }, [calendarDate]);
 
-  // 선결제 특가 필터 날짜 변경
-  useEffect(() => {
-    // 홈 자유 볼링 호출
-    dispatch(
-      HomeActions.fetchHomeFreeBowlingPlaceList({
-        date: prepaymentDate,
-        lat: parseFloat(myLatitude?.toString()) || 37.56561,
-        lng: parseFloat(myLongitude?.toString()) || 126.97804,
-      }),
-    );
-  }, [prepaymentDate]);
-
   const positionUpdate = async () => {
     const LocationCheckResult = await LocationCheck();
     if (LocationCheckResult) {
@@ -99,13 +87,6 @@ const HomeScreen = ({ route }: HomeProps) => {
       const myPosition = await LocationMyPosition();
       dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
     }
-    /* const myPosition: any = await LocationMyPosition();
-    console.log('myPosition is ', myPosition);
-    const params = {
-      date: moment(calendarDate).format('YYYY/MM/DD'),
-      lat: parseFloat(myPosition?.myLatitude?.toString()) || 37.56561,
-      lng: parseFloat(myPosition?.myLongitude?.toString()) || 126.97804,
-    }; */
 
     const params = {
       date: moment(calendarDate).format('YYYY/MM/DD'),
@@ -116,8 +97,6 @@ const HomeScreen = ({ route }: HomeProps) => {
     // 홈 리스트 호출
     dispatch(HomeActions.fetchHomeList(params));
 
-    // const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
-    // const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
     const type = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].key : 'all';
     let areaCode;
 
@@ -140,7 +119,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     // 홈 자유 볼링 호출
     dispatch(
       HomeActions.fetchHomeFreeBowlingPlaceList({
-        date: prepaymentDate,
+        date: calendarDate,
         lat: parseFloat(myLatitude?.toString()) || 37.56561,
         lng: parseFloat(myLongitude?.toString()) || 126.97804,
       }),
@@ -172,22 +151,6 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 0: {
         return (
           <View style={{ flex: 1, marginTop: 40, paddingLeft: 20 }}>
-            {/* <CustomButton */}
-            {/*  onPress={() => { */}
-            {/*    console.log('제거'); */}
-
-            {/*    AsyncStorage.setItem('userIdx', ''); */}
-            {/*    AsyncStorage.setItem('accessToken', ''); */}
-            {/*    AsyncStorage.setItem('refreshToken', ''); */}
-
-            {/*    // navigate('HomeScreen', { expired: true }); */}
-            {/*  }} */}
-            {/* > */}
-            {/*  <View style={{ paddingVertical: 20 }}> */}
-            {/*    <CustomText>리프레시 토큰 제거</CustomText> */}
-            {/*  </View> */}
-            {/* </CustomButton> */}
-
             <HelloArea />
           </View>
         );
@@ -223,9 +186,11 @@ const HomeScreen = ({ route }: HomeProps) => {
       case 4: {
         return (
           // 시간제 볼링
-          <View style={{ flex: 1 }}>
-            <PartTimeBowlingArea list={homeList['normal'] || []} />
-          </View>
+          homeList['normal']?.length > 0 && (
+            <View style={{ flex: 1 }}>
+              <PartTimeBowlingArea list={homeList['normal'] || []} />
+            </View>
+          )
         );
       }
 

@@ -1,36 +1,43 @@
 import React, { useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { numberFormat } from '@/Components/Function';
-import CustomCheckBox from '@/Components/Card/CustomCheckBox';
 import PlaceActions from '@/Stores/Place/Actions';
 import CustomButton from '@/Components/CustomButton';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
 import { navigate } from '@/Services/NavigationService';
 import { TICKET_TYPE } from '@/Stores/Home/InitialState';
+import TicketTypeBox from '@/Components/Card/PlaceList/TicketTypeBox';
 
 interface PropTypes {
   type: string;
   item: any;
   ticketType: TICKET_TYPE;
 }
+
 const PlaceListCard = (props: PropTypes) => {
-  const { type, item = {}, ticketType } = props;
   const dispatch = useDispatch();
   const { handlerPlaceDibs } = usePlaceDibs();
+  const { width } = useWindowDimensions();
+  const { type, item = {}, ticketType } = props;
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
   const [isError, setIsError] = useState(false);
 
   const onValueChange = (data: any) => {
-    dispatch(PlaceActions.fetchPlaceReducer({ type: 'isOpenTicketSlider', data: { type, idx: data.checkType } }));
+    dispatch(
+      PlaceActions.fetchPlaceReducer({
+        type: 'isOpenTicketSlider',
+        data: { type, idx: data.checkType, ticketType: data.ticketType },
+      }),
+    );
   };
 
   const onPressTicket = (place: any, ticket: any) => {
-    if (selectedTicket?.idx === ticket.idx) {
+    if (selectedTicket?.idx === ticket.idx || ticket.hasSoldOut) {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
     }
@@ -77,11 +84,6 @@ const PlaceListCard = (props: PropTypes) => {
             {(type === TICKET_TYPE.NORMAL || type === TICKET_TYPE.FREE) &&
               (item?.PlaceTicketInfo?.length !== 0 ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 9 }}>
-                  {/* <View style={{ justifyContent: 'center', marginRight: 4 }}> */}
-                  {/*  <CustomText style={{ color: Color.Point1000, fontSize: 16, fontWeight: 'bold' }}> */}
-                  {/*    {item?.rate}% */}
-                  {/*  </CustomText> */}
-                  {/* </View> */}
                   <View style={{ justifyContent: 'center' }}>
                     <CustomText style={{ color: Color.Black1000, fontSize: 16 }}>
                       <CustomText style={{ fontWeight: 'bold' }}>{numberFormat(item?.minPrice || 0)}</CustomText>
@@ -155,63 +157,133 @@ const PlaceListCard = (props: PropTypes) => {
         </View>
       </CustomButton>
 
+      {/* 티켓 타입별 selectBox */}
       {item?.PlaceTicketInfo?.length !== 0 && (
         <View
-          style={{ borderWidth: 1, borderColor: Color.Gray300, borderRadius: 5, marginTop: 14, marginHorizontal: 16 }}
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: 14,
+            marginHorizontal: 16,
+          }}
         >
-          <CustomButton onPress={() => onValueChange({ checkType: item?.idx })}>
+          {(ticketType === TICKET_TYPE.ALL || ticketType === TICKET_TYPE.NORMAL) && (
             <View
               style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingLeft: 12,
-                paddingRight: 8,
-                paddingVertical: 8,
+                width: (width - 40) / 2,
+                borderWidth: 1,
+                borderColor: item?.isSelectedNormal ? Color.Primary1000 : Color.Gray300,
+                borderRadius: 5,
               }}
             >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ justifyContent: 'center', marginRight: 3 }}>
-                  <CustomText style={{ color: Color.Black1000, fontSize: 13, letterSpacing: -0.2 }}>상품</CustomText>
-                </View>
-                <View style={{ justifyContent: 'center', marginRight: 3 }}>
-                  <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}>
-                    {item?.PlaceTicketInfo?.length || 0}개
-                  </CustomText>
-                </View>
-              </View>
-              <CustomCheckBox
-                type={item?.idx}
-                value={item?.isSelected}
+              <TicketTypeBox
+                idx={item?.idx}
+                ticketType={TICKET_TYPE.NORMAL}
+                item={item}
                 onValueChange={onValueChange}
-                enableIcon={require('@/Assets/Images/Button/icArrowPdUp.png')}
-                disableIcon={require('@/Assets/Images/Button/icArrowPdDw.png')}
               />
             </View>
-          </CustomButton>
+          )}
+          {(ticketType === TICKET_TYPE.ALL || ticketType === TICKET_TYPE.FREE) && (
+            <View
+              style={{
+                width: (width - 40) / 2,
+                borderWidth: 1,
+                borderColor: item?.isSelectedFree ? Color.Primary1000 : Color.Gray300,
+                borderRadius: 5,
+              }}
+            >
+              <TicketTypeBox idx={item?.idx} ticketType={TICKET_TYPE.FREE} item={item} onValueChange={onValueChange} />
+            </View>
+          )}
         </View>
       )}
-      {item?.isSelected && (
+
+      {/* 티켓 아이템 */}
+      {(item?.isSelectedNormal || item?.isSelectedFree) && (
         <View style={{ flex: 1, paddingLeft: 16, marginTop: 16 }}>
           <FlatList
-            data={item?.PlaceTicketInfo || []}
+            data={item?.isSelectedNormal ? item?.normal : item?.isSelectedFree ? item?.free : []}
             renderItem={({ item: ticket }) => (
               <CustomButton onPress={() => onPressTicket(item, ticket)}>
                 <View
                   style={{
                     borderWidth: 1,
-                    borderColor: selectedTicket?.idx === ticket.idx ? Color.Primary1000 : Color.Gray300,
                     borderRadius: 5,
+                    borderColor:
+                      selectedTicket?.idx === ticket.idx
+                        ? Color.Primary1000
+                        : ticket?.hasSoldOut
+                        ? 'transparent'
+                        : Color.Gray300,
                     backgroundColor:
-                      selectedTicket?.idx === ticket.idx ? 'rgba(255, 185, 10, 0.05)' : Color.Grayyellow50,
+                      selectedTicket?.idx === ticket.idx
+                        ? 'rgba(255, 185, 10, 0.05)'
+                        : ticket?.hasSoldOut
+                        ? Color.Gray100
+                        : Color.Grayyellow50,
                     paddingLeft: 12,
                     paddingRight: 21,
-                    paddingVertical: 20,
+                    paddingVertical: item?.isSelectedNormal ? 20 : 16,
                     marginRight: 8,
                   }}
                 >
+                  {/* 자유볼링 티켓 */}
+                  {item?.isSelectedFree && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                      }}
+                    >
+                      <View
+                        style={{
+                          backgroundColor:
+                            selectedTicket?.idx === ticket.idx
+                              ? Color.Primary1000
+                              : ticket?.hasSoldOut
+                              ? Color.Gray300
+                              : Color.Grayyellow500,
+                          paddingVertical: 1,
+                          paddingHorizontal: 4,
+                          borderRadius: 2,
+                          marginBottom: 8,
+                        }}
+                      >
+                        <CustomText
+                          style={{
+                            color:
+                              selectedTicket?.idx === ticket.idx
+                                ? Color.White
+                                : ticket?.hasSoldOut
+                                ? Color.Gray400
+                                : Color.White,
+                            fontSize: 11,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {selectedTicket?.idx === ticket.idx
+                            ? `잔여에약 ${ticket?.remainingCnt}`
+                            : ticket?.hasSoldOut
+                            ? '마감'
+                            : `잔여에약 ${ticket?.remainingCnt}`}
+                        </CustomText>
+                      </View>
+                    </View>
+                  )}
                   <View style={{ justifyContent: 'center' }}>
-                    <CustomText style={{ color: Color.Grayyellow1000, fontSize: 14, fontWeight: '500' }}>
+                    <CustomText
+                      style={{
+                        color:
+                          selectedTicket?.idx === ticket.idx
+                            ? Color.Grayyellow1000
+                            : ticket?.hasSoldOut
+                            ? Color.Gray400
+                            : Color.Grayyellow1000,
+                        fontSize: 14,
+                        fontWeight: '500',
+                      }}
+                    >
                       {ticket.startTime.substr(0, 5)} - {ticket.endTime.substr(0, 5)}
                     </CustomText>
                   </View>
@@ -222,13 +294,49 @@ const PlaceListCard = (props: PropTypes) => {
                       marginTop: 2,
                     }}
                   >
+                    {item?.isSelectedNormal && ticket?.hasSoldOut && (
+                      <View
+                        style={{
+                          backgroundColor: Color.Gray300,
+                          paddingVertical: 1,
+                          paddingHorizontal: 2,
+                          marginRight: 5,
+                          borderRadius: 2,
+                        }}
+                      >
+                        <CustomText style={{ color: Color.Gray400, fontSize: 11, fontWeight: 'bold' }}>마감</CustomText>
+                      </View>
+                    )}
                     <View style={{ justifyContent: 'center' }}>
-                      <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
+                      <CustomText
+                        style={{
+                          color:
+                            selectedTicket?.idx === ticket.idx
+                              ? Color.Grayyellow1000
+                              : ticket?.hasSoldOut
+                              ? Color.Gray400
+                              : Color.Grayyellow1000,
+                          fontSize: 15,
+                          fontWeight: '500',
+                        }}
+                      >
                         {numberFormat(ticket?.salePrice)}
                       </CustomText>
                     </View>
                     <View style={{ justifyContent: 'center' }}>
-                      <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15 }}>원</CustomText>
+                      <CustomText
+                        style={{
+                          color:
+                            selectedTicket?.idx === ticket.idx
+                              ? Color.Grayyellow1000
+                              : ticket?.hasSoldOut
+                              ? Color.Gray400
+                              : Color.Grayyellow1000,
+                          fontSize: 15,
+                        }}
+                      >
+                        원
+                      </CustomText>
                     </View>
                   </View>
                 </View>

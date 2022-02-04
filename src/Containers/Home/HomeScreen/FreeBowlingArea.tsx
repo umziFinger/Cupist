@@ -82,47 +82,74 @@ const FreeBowlingArea = (props: PropTypes) => {
       {/*    <DateFilter /> */}
       {/*  </View> */}
       {/* </View> */}
-      <Animated.FlatList
-        data={list}
-        ref={animatedFlatRef}
-        renderItem={({ item }) => {
-          return (
-            <View style={{ marginHorizontal: 4 }}>
-              <FreeBowlingCard item={item} />
-            </View>
-          );
-        }}
-        keyExtractor={(item, index) => index.toString()}
-        scrollEventThrottle={16}
-        initialNumToRender={2}
-        maxToRenderPerBatch={5}
-        windowSize={7}
-        snapToInterval={width - 32}
-        snapToAlignment={'start'}
-        showsHorizontalScrollIndicator={false}
-        decelerationRate={'fast'}
-        disableIntervalMomentum
-        renderToHardwareTextureAndroid
-        horizontal
-        // onEndReached={() => onMore()}
-        // onEndReachedThreshold={1}
-        removeClippedSubviews
-        onViewableItemsChanged={onViewableItemsChanged.current}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 50,
-        }}
-        contentContainerStyle={{ marginTop: 25 }}
-        ListHeaderComponent={
-          <View style={{ width: list?.length - 1 === viewableIndex && list?.length !== 1 ? 0 : 16 }} />
-        }
-        ListFooterComponent={
+      <View style={{ flex: 1 }}>
+        <Animated.FlatList
+          data={list}
+          ref={animatedFlatRef}
+          renderItem={({ item }) => {
+            return (
+              <View style={{ marginHorizontal: 4 }}>
+                <FreeBowlingCard item={item} />
+              </View>
+            );
+          }}
+          keyExtractor={(item, index) => index.toString()}
+          scrollEventThrottle={16}
+          initialNumToRender={2}
+          maxToRenderPerBatch={5}
+          windowSize={7}
+          snapToInterval={width - 32}
+          snapToAlignment={'start'}
+          showsHorizontalScrollIndicator={false}
+          decelerationRate={'fast'}
+          disableIntervalMomentum
+          renderToHardwareTextureAndroid
+          horizontal
+          // onEndReached={() => onMore()}
+          // onEndReachedThreshold={1}
+          removeClippedSubviews
+          onViewableItemsChanged={onViewableItemsChanged.current}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50,
+          }}
+          contentContainerStyle={{ marginTop: 25 }}
+          ListHeaderComponent={
+            <View style={{ width: list?.length - 1 === viewableIndex && list?.length !== 1 ? 0 : 16 }} />
+          }
+          ListFooterComponent={
+            <View
+              style={{
+                width: list?.length - 1 === viewableIndex && list?.length !== 1 ? 12 : 0,
+              }}
+            />
+          }
+        />
+        {list?.length === 0 && (
           <View
             style={{
-              width: list?.length - 1 === viewableIndex && list?.length !== 1 ? 12 : 0,
+              paddingHorizontal: 20,
+              marginTop: 80,
+              marginBottom: 50,
+              alignItems: 'center',
             }}
-          />
-        }
-      />
+          >
+            <View style={{ width: 60, height: 60 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Home/emptyList.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
+            <View style={{ marginTop: 16, alignItems: 'center' }}>
+              <View style={{ justifyContent: 'center' }}>
+                <CustomText style={{ color: Color.Gray400, fontSize: 14, fontWeight: '500', letterSpacing: -0.25 }}>
+                  해당날짜에 자유볼링 상품이 없습니다.
+                </CustomText>
+              </View>
+            </View>
+          </View>
+        )}
+      </View>
     </View>
   );
 };
