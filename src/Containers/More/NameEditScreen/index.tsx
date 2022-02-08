@@ -76,7 +76,7 @@ const NameEditScreen = () => {
 
         <View
           style={[
-            { paddingBottom: heightInfo.fixBottomHeight },
+            { paddingBottom: heightInfo.statusHeight },
             {
               transform: [{ translateY: isOpenKeyboard ? -8 : 0 }],
             },

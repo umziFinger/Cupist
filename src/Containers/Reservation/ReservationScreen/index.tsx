@@ -105,7 +105,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
 
   // 결제 임시 데이터 생성
   const onCreateTempReservation = () => {
-    if (checkMobile()) {
+    if (checkMobile() && validation) {
       const params = {
         placeIdx,
         placeTicketIdx: ticketInfoIdx,

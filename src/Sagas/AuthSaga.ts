@@ -12,7 +12,7 @@ import Config from '@/Config';
 import CommonActions from '@/Stores/Common/Actions';
 import MyActions from '@/Stores/My/Actions';
 import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
-import { navigate, navigateAndJoinReset, navigateAndReset } from '@/Services/NavigationService';
+import { navigate, navigateAndJoinReset, navigateAndReset, navigateAndSimpleReset } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 
 export function* fetchUserLogin(data: any): any {
@@ -197,6 +197,7 @@ export function* fetchUserJoin(data: any): any {
         }),
       );
       navigate('JoinStepThreeScreen');
+      navigateAndReset('JoinStepThreeScreen');
     } else {
       yield put(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
       yield put(CommonActions.fetchErrorHandler(response));

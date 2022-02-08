@@ -75,14 +75,31 @@ const PriceArea = (props: PropTypes) => {
   };
 
   const onPressShoesCount = (type: string) => {
-    if (type === 'plus')
+    if (type === 'plus') {
+      const maxPeople = item?.maxPeople;
+      if (maxPeople) {
+        if (maxPeople === shoesCount) {
+          return dispatch(
+            CommonActions.fetchCommonReducer({
+              type: 'alertToast',
+              data: {
+                alertToast: true,
+                alertToastPosition: 'bottom',
+                alertToastMessage: '대여가능한 수량을 초과하였습니다. 1인당 1개까지 가능합니다',
+              },
+            }),
+          );
+        }
+      }
       dispatch(ReservationActions.fetchReservationReducer({ type: 'shoesCount', data: shoesCount + 1 }));
+    }
     if (type === 'minus') {
       if (shoesCount === 0) {
-        return;
+        return null;
       }
       dispatch(ReservationActions.fetchReservationReducer({ type: 'shoesCount', data: shoesCount - 1 }));
     }
+    return null;
   };
 
   return (
@@ -202,11 +219,21 @@ const PriceArea = (props: PropTypes) => {
             </CustomText>
           </View>
           <CustomButton onPress={() => onPressShoesCount('plus')}>
-            <View style={{ backgroundColor: Color.Gray300, borderRadius: 50, padding: 12 }}>
+            <View
+              style={{
+                backgroundColor: item?.maxPeople !== shoesCount ? Color.Gray300 : Color.Gray100,
+                borderRadius: 50,
+                padding: 12,
+              }}
+            >
               <View style={{ width: 16, height: 16 }}>
                 <FastImage
                   style={{ width: '100%', height: '100%' }}
-                  source={require('@/Assets/Images/Button/icNumPlusOn.png')}
+                  source={
+                    item?.maxPeople !== shoesCount
+                      ? require('@/Assets/Images/Button/icNumPlusOn.png')
+                      : require('@/Assets/Images/Button/icNumPlusOff.png')
+                  }
                   resizeMode={FastImage.resizeMode.cover}
                 />
               </View>

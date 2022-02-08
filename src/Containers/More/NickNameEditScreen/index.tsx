@@ -71,7 +71,7 @@ const NickNameEditScreen = () => {
           ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
         />
 
-        <View style={{ paddingBottom: heightInfo.fixBottomHeight, marginBottom: Platform.OS === 'android' ? 8 : 0 }}>
+        <View style={{ paddingBottom: heightInfo.statusHeight }}>
           <CustomButton onPress={() => onPressSave()}>
             <View
               style={{

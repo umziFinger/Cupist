@@ -173,7 +173,7 @@ const JoinStepThreeScreen = () => {
             position: 'absolute',
             left: 0,
             right: 0,
-            bottom: heightInfo.fixBottomHeight + 8,
+            bottom: heightInfo.statusHeight,
             alignItems: 'center',
           }}
         >

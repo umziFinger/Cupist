@@ -80,7 +80,7 @@ const CouponGuideRBS = () => {
           backgroundColor: Color.White,
           paddingTop: 35,
           paddingHorizontal: 24,
-          paddingBottom: heightInfo.fixBottomHeight,
+          paddingBottom: 0,
         }}
       >
         <FlatList
@@ -296,7 +296,7 @@ const CouponGuideRBS = () => {
               backgroundColor: Color.White,
               borderRadius: 3,
               alignItems: 'center',
-              marginBottom: 10,
+              marginBottom: heightInfo.statusHeight,
               borderColor: Color.Gray300,
               borderWidth: 1,
               marginTop: 14,

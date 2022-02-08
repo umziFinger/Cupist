@@ -71,10 +71,10 @@ const RBSheetAttachFile = (props: any) => {
       closeDuration={100}
       customStyles={{
         container: {
+          flex: 1,
           borderTopRightRadius: 24,
           borderTopLeftRadius: 24,
-          paddingBottom: heightInfo.fixBottomHeight,
-          // flex: 1,
+          paddingBottom: heightInfo.statusHeight,
         },
       }}
       onClose={() => setCallAttachFile(false)}

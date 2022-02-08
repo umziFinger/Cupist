@@ -141,6 +141,7 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
       case 'email': {
+        console.log('call reducer email : ', data);
         draft.email = data.email;
         break;
       }

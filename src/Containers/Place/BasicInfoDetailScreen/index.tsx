@@ -141,7 +141,7 @@ const BasicInfoDetailScreen = () => {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'flex-end',
-          paddingBottom: heightInfo.fixBottomHeight,
+          paddingBottom: heightInfo.statusHeight,
           // backgroundColor: 'red',
           paddingHorizontal: 20,
         }}
