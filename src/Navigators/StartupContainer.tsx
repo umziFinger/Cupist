@@ -36,7 +36,6 @@ const StartupContainer = () => {
         // 초기에 앱에서 체크용 storage
         AsyncStorage.setItem('splashStatus', 'end').then(() => console.log('splashStatus end'));
 
-        dispatch(CommonActions.fetchCommonReducer({ type: 'splashStart', data: 'end' }));
         // 코드푸시에서 체크용
         if (!appCodePushVersion) {
           if (codePushVersion > 'v0') {

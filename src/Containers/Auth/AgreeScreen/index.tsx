@@ -118,7 +118,14 @@ const AgreeScreen = () => {
   return (
     <>
       <Header type="back" />
-      <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: Color.White }}>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 24,
+          backgroundColor: Color.White,
+          // paddingBottom: heightInfo.statusHeight,
+        }}
+      >
         <FlatList
           data={[0]}
           renderItem={() => (
@@ -211,7 +218,7 @@ const AgreeScreen = () => {
         />
         <View
           style={{
-            paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+            paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.statusHeight,
           }}
         >
           {/* <CustomButton onPress={() => onPressNext()}> */}

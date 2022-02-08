@@ -126,7 +126,7 @@ const AvailableItem = ({ item, index }: PropsType) => {
 
         <View style={{ marginTop: 4 }}>
           <CustomText style={{ fontSize: 11, letterSpacing: -0.2, color: Color.Gray700 }}>
-            {item?.Coupon?.endDate || ''} 까지
+            {item?.expireDate || ''} 까지
           </CustomText>
         </View>
 

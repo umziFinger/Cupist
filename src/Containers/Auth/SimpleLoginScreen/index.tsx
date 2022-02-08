@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, FlatList, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Google from '@/Components/Login/SocialLogin/Google';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
@@ -159,6 +160,10 @@ const SimpleLoginScreen = () => {
         try {
           const appleTokenInfo: any = await Apple();
           const username = appleTokenInfo.fullName.familyName + appleTokenInfo.fullName.givenName;
+          if (username) {
+            console.log('Apple 최초 가입 username 저장!');
+            await AsyncStorage.setItem('appleUserName', username);
+          }
           params = { ...params, token: appleTokenInfo.identityToken, username };
 
           console.log('accessToken : ', appleTokenInfo.identityToken);

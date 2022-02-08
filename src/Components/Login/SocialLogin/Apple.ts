@@ -1,4 +1,5 @@
 import { appleAuth } from '@invertase/react-native-apple-authentication';
+import jwt_decode from 'jwt-decode';
 
 export default async function () {
   const accessToken = await appleLogin();
@@ -19,8 +20,8 @@ const appleLogin = async () => {
             reject(errorMsg);
           }
 
-          const { identityToken, fullName } = appleAuthRequestResponse;
-          // console.log('Apple login Success identityToken : ', identityToken);
+          const { identityToken, fullName }: any = appleAuthRequestResponse;
+
           const result = {
             identityToken,
             fullName,

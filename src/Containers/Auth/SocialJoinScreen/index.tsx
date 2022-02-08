@@ -180,7 +180,7 @@ const SocialJoinScreen = () => {
 
         <View
           style={{
-            paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+            paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.statusHeight,
           }}
         >
           <CustomButton onPress={() => setTouchCnt(touchCnt + 1)}>

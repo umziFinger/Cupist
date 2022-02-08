@@ -6,7 +6,7 @@ import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { SearchState } from '@/Stores/Search/InitialState';
 
-type PlaceholderType = '구명으로 검색(ex.금천구)' | '볼링장을 검색해보세요.';
+type PlaceholderType = '지역명으로 검색(ex.금천구)' | '볼링장을 검색해보세요.';
 type Props = {
   onChangeText: (value: string) => void;
   onClear: () => void;
@@ -16,7 +16,13 @@ type Props = {
 };
 
 const InputLocationSearch = forwardRef<TextInput, Props>((props: Props) => {
-  const { onChangeText, onClear, placeHolder = '구명으로 검색(ex.금천구)', onSubmitEditing, autoFocus = true } = props;
+  const {
+    onChangeText,
+    onClear,
+    placeHolder = '지역명으로 검색(ex.금천구)',
+    onSubmitEditing,
+    autoFocus = true,
+  } = props;
   const { searchQuery } = useSelector((state: SearchState) => state.search);
 
   let clearBox = null;

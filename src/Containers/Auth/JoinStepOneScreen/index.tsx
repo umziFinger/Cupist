@@ -160,7 +160,7 @@ const JoinStepOneScreen = () => {
         <View
           style={{
             // justifyContent: 'flex-end',
-            paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.fixBottomHeight,
+            paddingBottom: Platform.OS === 'android' ? heightInfo.fixBottomHeight + 8 : heightInfo.statusHeight,
           }}
         >
           <CustomButton onPress={() => onPressNext()}>
