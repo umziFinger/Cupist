@@ -23,12 +23,6 @@ const AgreeScreen = () => {
   const { checkedArr } = agreeInfo;
 
   useEffect(() => {
-    return () => {
-      dispatch(AuthActions.fetchAuthReducer({ type: 'socialType', data: '' }));
-    };
-  }, []);
-
-  useEffect(() => {
     console.log('agreeInfo.checkedArr : ', agreeInfo.checkedArr);
     // 모두 체크 되었을때
     if (!checkedArr[0]) {
