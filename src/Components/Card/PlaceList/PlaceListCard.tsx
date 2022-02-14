@@ -263,10 +263,10 @@ const PlaceListCard = (props: PropTypes) => {
                           }}
                         >
                           {selectedTicket?.idx === ticket.idx
-                            ? `잔여에약 ${ticket?.remainingCnt}`
+                            ? `잔여예약 ${ticket?.remainingCnt}`
                             : ticket?.hasSoldOut
                             ? '마감'
-                            : `잔여에약 ${ticket?.remainingCnt}`}
+                            : `잔여예약 ${ticket?.remainingCnt}`}
                         </CustomText>
                       </View>
                     </View>
