@@ -3,6 +3,7 @@ import { View, FlatList, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getProfile } from '@react-native-seoul/kakao-login';
 import Google from '@/Components/Login/SocialLogin/Google';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
@@ -139,6 +140,7 @@ const SimpleLoginScreen = () => {
                 };
 
           const naverToken = await Naver({ initials });
+
           params = { ...params, token: naverToken };
           console.log('accessToken : ', naverToken);
           if (naverToken) dispatch(AuthActions.fetchUserLogin(params));

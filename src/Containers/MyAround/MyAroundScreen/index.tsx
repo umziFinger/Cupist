@@ -50,50 +50,30 @@ const MyAroundScreen = () => {
     // 위치 권한 체크
     if (LocationCheckResult) {
       const myPosition: any = await LocationMyPosition();
-      console.log('myPosition1 : ', myPosition);
+
       dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
+
       if (location?.areaName === '') {
         setHeaderText('내주변');
       } else {
         setHeaderText(location?.areaName);
       }
+
       setActiveFilter(true);
-      dispatch(
-        PlaceActions.fetchPlaceReducer({
-          type: 'location',
-          data: {
-            areaCode: undefined,
-            lat: myPosition?.myLatitude || '37',
-            lng: myPosition?.myLongitude || '126',
-            areaName: '',
-          },
-        }),
-      );
-      // getSearchList();
     } else {
       const LocationRequestResult = await LocationRequest();
       if (LocationRequestResult) {
         const myPosition: any = await LocationMyPosition();
-        console.log('myPosition2 : ', myPosition);
+
         dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
+
         if (location?.areaName === '') {
           setHeaderText('내주변');
         } else {
           setHeaderText(location?.areaName);
         }
+
         setActiveFilter(true);
-        dispatch(
-          PlaceActions.fetchPlaceReducer({
-            type: 'location',
-            data: {
-              areaCode: undefined,
-              lat: myPosition?.myLatitude || '37.56561',
-              lng: myPosition?.myLongitude || '126.97804',
-              areaName: '',
-            },
-          }),
-        );
-        // getSearchList();
       } else {
         setHeaderText('위치정보 없음');
         setActiveFilter(false);
@@ -137,7 +117,6 @@ const MyAroundScreen = () => {
 
   useEffect(() => {
     console.log('내주변 볼링장 위치 변경: ', location.lat, location.areaCode, location.lng);
-    // reqMyPosition().then();
     getSearchList();
   }, [location.lat, location.areaCode, location.lng, myAroundSort.key]);
 

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import Tooltip from 'react-native-walkthrough-tooltip';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import PlaceSmallCard from '@/Components/Card/Common/PlaceSmallCard';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { TICKET_TYPE } from '@/Stores/Home/InitialState';
+import CustomTooltip from '@/Components/CustomTooltip';
+import { DATA_HOME_TOOLTIP } from '@/Containers/Home/HomeScreen/data';
 
 interface PropTypes {
   list: Array<any>;
@@ -15,6 +18,7 @@ interface PropTypes {
 const PartTimeBowlingArea = (props: PropTypes) => {
   const { list } = props;
   const { width } = useWindowDimensions();
+  const [tipVisible, setTipVisible] = useState<boolean>(false);
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');
@@ -24,25 +28,32 @@ const PartTimeBowlingArea = (props: PropTypes) => {
   return (
     <View style={{ flex: 1, marginTop: 60 }}>
       <View style={{ paddingHorizontal: 20 }}>
-        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end' }}>
-          <View style={{ marginRight: 4 }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 20, fontWeight: 'bold', letterSpacing: -0.35 }}>
-              시간제 볼링
-            </CustomText>
-          </View>
-          <View style={{ width: 5, height: 5, marginBottom: 5 }}>
-            <FastImage
-              style={{ width: '100%', height: '100%' }}
-              source={require('@/Assets/Images/Common/icPeriod.png')}
-              resizeMode={FastImage.resizeMode.cover}
-            />
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+            <View style={{ marginRight: 4 }}>
+              <CustomText style={{ color: Color.Black1000, fontSize: 20, fontWeight: 'bold', letterSpacing: -0.35 }}>
+                시간제 볼링
+              </CustomText>
+            </View>
+            <View style={{ width: 5, height: 5, marginBottom: 5 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Common/icPeriod.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
           </View>
         </View>
         <View style={{ flexDirection: 'row', marginTop: 6 }}>
-          <View style={{ flex: 1 }}>
-            <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-              1시간 단위 레인 대여 예약
-            </CustomText>
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+            <View>
+              <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
+                1시간 단위 레인 대여 예약
+              </CustomText>
+            </View>
+            <View style={{ paddingLeft: 5, paddingBottom: 1 }}>
+              <CustomTooltip isVisible={tipVisible} toggleOpen={setTipVisible} item={DATA_HOME_TOOLTIP['normal']} />
+            </View>
           </View>
 
           <CustomButton onPress={() => onPressViewAll()} hitSlop={7}>

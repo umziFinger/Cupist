@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList, Platform, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomText from '@/Components/CustomText';
@@ -6,12 +6,15 @@ import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import EventHotCard from '@/Components/Card/Home/EventHotCard';
+import CustomTooltip from '@/Components/CustomTooltip';
+import { DATA_HOME_TOOLTIP } from '@/Containers/Home/HomeScreen/data';
 
 interface PropTypes {
   list: Array<any>;
 }
 const EventHotArea = (props: PropTypes) => {
   const { list } = props;
+  const [tipVisible, setTipVisible] = useState<boolean>(false);
 
   const onPressViewAll = () => {
     console.log('onPressViewAll');
@@ -36,10 +39,15 @@ const EventHotArea = (props: PropTypes) => {
           </View>
         </View>
         <View style={{ flexDirection: 'row', marginTop: 6 }}>
-          <View style={{ flex: 1 }}>
-            <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
-              캡슐, 솔로 각종 이벤트 볼링장
-            </CustomText>
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+            <View>
+              <CustomText style={{ color: Color.Gray800, fontSize: 15, letterSpacing: -0.2 }}>
+                캡슐, 솔로 각종 이벤트 볼링장
+              </CustomText>
+            </View>
+            <View style={{ paddingLeft: 5, paddingBottom: 1 }}>
+              <CustomTooltip isVisible={tipVisible} toggleOpen={setTipVisible} item={DATA_HOME_TOOLTIP['event']} />
+            </View>
           </View>
           <CustomButton onPress={() => onPressViewAll()} hitSlop={7}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

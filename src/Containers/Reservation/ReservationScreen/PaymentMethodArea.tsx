@@ -11,6 +11,7 @@ import { DATA_PAYMENT_METHOD } from './data';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { navigate, navigateAndReset } from '@/Services/NavigationService';
 import { PlaceState } from '@/Stores/Place/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   list: Array<any>;
@@ -35,7 +36,8 @@ const PaymentMethodArea = (props: PropTypes) => {
 
   useEffect(() => {
     if (list?.length !== 0) {
-      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'simple' }));
+      // dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'simple' }));
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'normal' }));
     } else {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'normal' }));
     }
@@ -62,14 +64,45 @@ const PaymentMethodArea = (props: PropTypes) => {
     },
   );
 
-  const onPressMethod = (value: number) => {
-    console.log('onPressMethod value : ', value);
+  const onPressNormalMethodDetail = (value: number) => {
+    console.log('onPressNormalMethodDetail idx : ', value);
     dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentMethod', data: value }));
   };
 
+  const onPressMethodType = (type: string) => {
+    console.log('onPressMethodType');
+
+    // Todo 02/17 나이스페이먼츠 계약 지연으로 간편결제(simple) 서비스 준비중 팝업
+    if (type === 'simple') {
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertDialog',
+          data: {
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogTitle: '서비스 준비중입니다.',
+          },
+        }),
+      );
+      return;
+    }
+
+    dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: type }));
+  };
+
   const onPressAddCard = () => {
-    // console.log(selectedTicket);
-    navigate('CertificationScreen');
+    dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'alertDialog',
+        data: {
+          alertDialog: true,
+          alertDialogType: 'confirm',
+          alertDialogTitle: '서비스 준비중입니다.',
+        },
+      }),
+    );
+    // Todo 02/17 나이스페이먼츠 계약 지연으로 간편결제 임시 주석
+    // navigate('CertificationScreen');
   };
 
   return (
@@ -92,9 +125,7 @@ const PaymentMethodArea = (props: PropTypes) => {
           marginTop: 16,
         }}
       >
-        <CustomButton
-          onPress={() => dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'simple' }))}
-        >
+        <CustomButton onPress={() => onPressMethodType('simple')}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ width: 24, height: 24, marginRight: 4 }}>
               <FastImage
@@ -211,9 +242,7 @@ const PaymentMethodArea = (props: PropTypes) => {
           marginHorizontal: 16,
         }}
       />
-      <CustomButton
-        onPress={() => dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'normal' }))}
-      >
+      <CustomButton onPress={() => onPressMethodType('normal')}>
         <View
           style={{
             flexDirection: 'row',
@@ -245,7 +274,7 @@ const PaymentMethodArea = (props: PropTypes) => {
           <FlatList
             data={DATA_PAYMENT_METHOD}
             renderItem={({ item }) => (
-              <CustomButton onPress={() => onPressMethod(item.idx)}>
+              <CustomButton onPress={() => onPressNormalMethodDetail(item.idx)}>
                 <View
                   style={{
                     width: (width - 32 - 12) / 3,

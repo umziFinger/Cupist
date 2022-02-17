@@ -17,7 +17,7 @@ interface PropTypes {
 const PriceArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { item } = props;
-  const { totalPrice, personCount, shoesCount } = useSelector((state: ReservationState) => state.reservation);
+  const { personCount, shoesCount } = useSelector((state: ReservationState) => state.reservation);
 
   useEffect(() => {
     dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: 1 }));
@@ -28,30 +28,16 @@ const PriceArea = (props: PropTypes) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   onChangeTotalPrice();
-  // }, [item, personCount, shoesCount]);
-  //
-  // const onChangeTotalPrice = () => {
-  //   const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
-  //   dispatch(ReservationActions.fetchReservationReducer({ type: 'totalPrice', data: tempPrice }));
-  // };
+  useEffect(() => {
+    dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: item?.minPeople || 1 }));
+  }, [item]);
 
   const onPressPersonCount = (type: string) => {
     if (type === 'plus') {
-      console.log(personCount);
       const maxPeople = item?.maxPeople;
       if (maxPeople) {
         if (maxPeople === personCount) {
           return dispatch(
-            // CommonActions.fetchCommonReducer({
-            //   type: 'alertDialog',
-            //   data: {
-            //     alertDialog: true,
-            //     alertDialogType: 'confirm',
-            //     alertDialogMessage: '예약가능한 인원수를 초과했습니다.\n\u2022 인원 1~4인당 1레인이 배치됩니다.',
-            //   },
-            // }),
             CommonActions.fetchCommonReducer({
               type: 'alertToast',
               data: {
@@ -66,7 +52,8 @@ const PriceArea = (props: PropTypes) => {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: personCount + 1 }));
     }
     if (type === 'minus') {
-      if (personCount === 1) {
+      const minPeople = item?.minPeople;
+      if (personCount === minPeople) {
         return null;
       }
       dispatch(ReservationActions.fetchReservationReducer({ type: 'personCount', data: personCount - 1 }));
@@ -126,7 +113,7 @@ const PriceArea = (props: PropTypes) => {
           <CustomButton onPress={() => onPressPersonCount('minus')}>
             <View
               style={{
-                backgroundColor: personCount === 1 ? Color.Gray100 : Color.Gray300,
+                backgroundColor: personCount === item?.minPeople ? Color.Gray100 : Color.Gray300,
                 borderRadius: 50,
                 padding: 12,
               }}
@@ -135,7 +122,7 @@ const PriceArea = (props: PropTypes) => {
                 <FastImage
                   style={{ width: '100%', height: '100%' }}
                   source={
-                    Number(personCount) === 1
+                    Number(personCount) === item?.minPeople
                       ? require('@/Assets/Images/Button/icNumMinusOff.png')
                       : require('@/Assets/Images/Button/icNumMinusOn.png')
                   }
