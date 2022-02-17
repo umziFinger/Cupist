@@ -113,7 +113,7 @@ const ReservationInfo = () => {
               color: Color.Black1000,
             }}
           >
-            -{numberFormat(reservationDetail?.salePrice)}원
+            -{numberFormat(reservationDetail?.couponPrice)}원
           </CustomText>
         </View>
       </View>
@@ -167,7 +167,7 @@ const ReservationInfo = () => {
               color: Color.Black1000,
             }}
           >
-            {reservationDetail?.totalPrice?.type || ''}
+            {reservationDetail?.type || ''}
           </CustomText>
         </View>
       </View>
@@ -175,8 +175,7 @@ const ReservationInfo = () => {
       <View style={{ marginTop: 28, paddingBottom: heightInfo.subBottomHeight }}>
         <CustomText
           style={{ fontSize: 10, letterSpacing: 0, color: Color.Gray400 }}
-        >{`(주)볼링플러스는 통신판매중개자로서 통신판매의 당사자가 아니며,
-상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.`}</CustomText>
+        >{`(주)볼링플러스는 통신판매중개자로서 통신판매의 당사자가 아니며,\n상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.`}</CustomText>
       </View>
     </View>
   );
