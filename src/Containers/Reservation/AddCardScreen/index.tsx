@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { FlatList, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
@@ -27,6 +27,16 @@ const AddCardScreen = () => {
   const [cardNum2, setCardNum2] = useState<string>('');
   const [cardNum3, setCardNum3] = useState<string>('');
   const [cardNum4, setCardNum4] = useState<string>('');
+
+  const ref_input: any = {
+    ref_card1: useRef<any>(),
+    ref_card2: useRef<any>(),
+    ref_card3: useRef<any>(),
+    ref_card4: useRef<any>(),
+    ref_expiry: useRef<any>(),
+    ref_password: useRef<any>(),
+    ref_birth: useRef<any>(),
+  };
 
   useEffect(() => {
     dispatch(
@@ -75,6 +85,26 @@ const AddCardScreen = () => {
   }, [cardNum1, cardNum2, cardNum3, cardNum4]);
 
   const onChangeCardNumber = (text: string, index: number) => {
+    switch (index) {
+      case 1: {
+        if (text.length > 3) ref_input['ref_card2']?.current.focus();
+        break;
+      }
+      case 2: {
+        if (text.length > 3) ref_input['ref_card3']?.current.focus();
+        break;
+      }
+      case 3: {
+        if (text.length > 3) ref_input['ref_card4']?.current.focus();
+        break;
+      }
+      case 4: {
+        if (text.length > 3) ref_input['ref_expiry']?.current.focus();
+        break;
+      }
+      default:
+        break;
+    }
     if (index === 1) setCardNum1(text);
     if (index === 2) setCardNum2(text);
     if (index === 3) setCardNum3(text);
@@ -82,6 +112,10 @@ const AddCardScreen = () => {
   };
 
   const onChangeExpiry = (text: string) => {
+    if (text.length > 3) {
+      ref_input['ref_password']?.current.focus();
+    }
+
     dispatch(
       ReservationActions.fetchReservationReducer({
         type: 'addCardInfo',
@@ -91,6 +125,9 @@ const AddCardScreen = () => {
   };
 
   const onChangePassword = (text: string) => {
+    if (text.length > 1) {
+      ref_input['ref_password']?.current.blur();
+    }
     dispatch(
       ReservationActions.fetchReservationReducer({
         type: 'addCardInfo',
@@ -116,7 +153,6 @@ const AddCardScreen = () => {
         navigate('RegisterPasswordScreen');
       }
       if (myCardList?.length > 0) {
-        // console.log('카드 등록 api 호출!');
         console.log('카드 등록 params :', addCardInfo);
         navigate('AddCardCheckPasswordScreen', { cardInfo: { ...addCardInfo, ticketInfoIdx: selectedTicket?.idx } });
         // dispatch(ReservationActions.fetchReservationCard({ ...addCardInfo, ticketInfoIdx: selectedTicket?.idx }));
@@ -164,6 +200,7 @@ const AddCardScreen = () => {
                   </View>
                   <View style={{ justifyContent: 'center', marginTop: 8 }}>
                     <CardNumberInput
+                      refObject={ref_input}
                       placeHolder={'0000'}
                       maxLength={4}
                       value={{ cardNum1, cardNum2, cardNum3, cardNum4 }}
@@ -186,6 +223,7 @@ const AddCardScreen = () => {
                     </View>
                     <View style={{ marginTop: 8 }}>
                       <CardDefaultInput
+                        refObject={ref_input['ref_expiry']}
                         placeHolder={'MMYY'}
                         maxLength={4}
                         value={addCardInfo?.expiry}
@@ -201,6 +239,7 @@ const AddCardScreen = () => {
                     </View>
                     <View style={{ marginTop: 8 }}>
                       <CardPasswordInput
+                        refObject={ref_input['ref_password']}
                         placeHolder={'비밀번호 앞 2자리'}
                         maxLength={2}
                         value={addCardInfo?.pwd2Digit}
@@ -217,6 +256,7 @@ const AddCardScreen = () => {
                   </View>
                   <View style={{ justifyContent: 'center', marginTop: 8 }}>
                     <CardDefaultInput
+                      refObject={ref_input['ref_birth']}
                       placeHolder={'생년월일 6자리'}
                       maxLength={6}
                       value={addCardInfo?.birth}

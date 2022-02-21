@@ -2,7 +2,7 @@ const prod = {
   APP_MODE: 'prod',
 
   CS_COMPANY_NAME: '(주)볼링플러스',
-  CS_ADDRESS: '경기도 광명시 일직로 12번길 22, 5층',
+  CS_ADDRESS: '경기도 광명시 일직로 43, C동 2202호 (일직동, GIDC)',
   CS_PRIVACY: '유재수',
   CS_COMPANY: '892-88-01731',
   CS_SELL_REPORT: '2021-경기광명-0188',

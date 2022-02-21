@@ -8,8 +8,9 @@ type PropTypes = {
   maxLength: number;
   value: string;
   onChangeText: (text: string) => void;
+  refObject: any;
 };
-const CardPasswordInput = ({ placeHolder, maxLength, value, onChangeText }: PropTypes) => {
+const CardPasswordInput = ({ placeHolder, maxLength, value, onChangeText, refObject }: PropTypes) => {
   return (
     <View
       style={{
@@ -21,6 +22,7 @@ const CardPasswordInput = ({ placeHolder, maxLength, value, onChangeText }: Prop
       }}
     >
       <TextInput
+        ref={refObject}
         autoCompleteType="off"
         placeholder={placeHolder}
         placeholderTextColor={Color.Gray300}

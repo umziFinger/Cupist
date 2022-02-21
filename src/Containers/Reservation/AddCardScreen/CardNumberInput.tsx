@@ -7,9 +7,10 @@ type PropTypes = {
   maxLength: number;
   value: any;
   onChangeText: (text: string, index: number) => void;
+  refObject: any;
 };
 const CardNumberInput = forwardRef<TextInput, PropTypes>(
-  ({ placeHolder, maxLength, value, onChangeText }: PropTypes, ref) => {
+  ({ placeHolder, maxLength, value, onChangeText, refObject }: PropTypes) => {
     return (
       <View
         style={{
@@ -24,7 +25,7 @@ const CardNumberInput = forwardRef<TextInput, PropTypes>(
         }}
       >
         <TextInput
-          ref={ref}
+          ref={refObject['ref_card1']}
           autoCompleteType="off"
           placeholder={placeHolder}
           placeholderTextColor={Color.Gray300}
@@ -44,7 +45,7 @@ const CardNumberInput = forwardRef<TextInput, PropTypes>(
         />
         <View style={{ width: 5, height: 1, backgroundColor: Color.Gray700 }} />
         <TextInput
-          ref={ref}
+          ref={refObject['ref_card2']}
           autoCompleteType="off"
           placeholder="0000"
           placeholderTextColor={Color.Gray300}
@@ -64,7 +65,7 @@ const CardNumberInput = forwardRef<TextInput, PropTypes>(
         />
         <View style={{ width: 5, height: 1, backgroundColor: Color.Gray700 }} />
         <TextInput
-          ref={ref}
+          ref={refObject['ref_card3']}
           autoCompleteType="off"
           placeholder="0000"
           placeholderTextColor={Color.Gray300}
@@ -84,7 +85,7 @@ const CardNumberInput = forwardRef<TextInput, PropTypes>(
         />
         <View style={{ width: 5, height: 1, backgroundColor: Color.Gray700 }} />
         <TextInput
-          ref={ref}
+          ref={refObject['ref_card4']}
           autoCompleteType="off"
           placeholder="0000"
           placeholderTextColor={Color.Gray300}
