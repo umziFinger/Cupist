@@ -9,9 +9,11 @@ import CustomButton from '@/Components/CustomButton';
 import { MyState } from '@/Stores/My/InitialState';
 import { numberFormat } from '@/Components/Function';
 import ReservationActions from '@/Stores/Reservation/Actions';
+import { CommonState } from '@/Stores/Common/InitialState';
 
 const ReservationCancelDetailScreen = () => {
   const dispatch = useDispatch();
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { reservationCancelDetail } = useSelector((state: MyState) => state.my);
 
   const onProgressCancel = () => {
@@ -22,10 +24,29 @@ const ReservationCancelDetailScreen = () => {
     };
     dispatch(ReservationActions.fetchReservationCancel(params));
   };
+
+  const renderCancelPercentNotice = (percent: number) => {
+    return (
+      <View
+        style={{
+          borderRadius: 3,
+          backgroundColor: Color.Gray800,
+          marginTop: 28,
+          paddingVertical: 12,
+          alignItems: 'center',
+        }}
+      >
+        <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.White }}>
+          {`환불 규정에 따라 예약금액의 ${percent}%가 차감됩니다.`}
+        </CustomText>
+      </View>
+    );
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'close'} />
-      <View style={{ backgroundColor: Color.White, flex: 1, paddingTop: 28, paddingHorizontal: 24 }}>
+      <View style={{ backgroundColor: Color.White, flex: 1, paddingHorizontal: 24 }}>
         <FlatList
           data={[0]}
           renderItem={({ index }) => (
@@ -33,6 +54,7 @@ const ReservationCancelDetailScreen = () => {
               <View>
                 <CustomText
                   style={{
+                    paddingTop: 28,
                     fontSize: 22,
                     fontWeight: 'bold',
                     letterSpacing: -0.4,
@@ -72,21 +94,11 @@ const ReservationCancelDetailScreen = () => {
 
               <View style={{ borderStyle: 'dashed', borderWidth: 0.5, borderColor: Color.Gray350 }} />
 
-              {reservationCancelDetail?.cancelType === '당일취소' && (
-                <View
-                  style={{
-                    borderRadius: 3,
-                    backgroundColor: Color.Gray800,
-                    marginTop: 28,
-                    paddingVertical: 12,
-                    alignItems: 'center',
-                  }}
-                >
-                  <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: 0, color: Color.White }}>
-                    환불 규정에 따라 예약금액의 90%가 차감됩니다.
-                  </CustomText>
-                </View>
-              )}
+              {/* {reservationCancelDetail?.cancelType === '당일취소' && ( */}
+              {/*  */}
+              {/* )} */}
+              {reservationCancelDetail?.cancelPercent !== 0 &&
+                renderCancelPercentNotice(reservationCancelDetail?.cancelPercent)}
 
               <View style={{ marginTop: 28, flexDirection: 'row', alignItems: 'center' }}>
                 <RowItem
@@ -104,7 +116,7 @@ const ReservationCancelDetailScreen = () => {
               <View style={{ marginTop: 13, flexDirection: 'row', alignItems: 'center', marginBottom: 28 }}>
                 <RowItem
                   title={'취소수수료 차감'}
-                  content={`-${numberFormat(reservationCancelDetail?.cancelPrice || '')}원`}
+                  content={`-${numberFormat(reservationCancelDetail?.fees || '')}원`}
                   contentStyle={{
                     fontSize: 15,
                     fontWeight: '500',
@@ -120,7 +132,7 @@ const ReservationCancelDetailScreen = () => {
               <View style={{ marginTop: 13, flexDirection: 'row', alignItems: 'center', marginBottom: 28 }}>
                 <RowItem
                   title={'환불 예정 금액'}
-                  content={`${numberFormat(reservationCancelDetail?.fees || '')}원`}
+                  content={`${numberFormat(reservationCancelDetail?.cancelPrice || '')}원`}
                   contentStyle={{ fontSize: 18, fontWeight: 'bold', letterSpacing: -0.24, color: Color.Error }}
                 />
               </View>
@@ -150,6 +162,7 @@ const ReservationCancelDetailScreen = () => {
           maxToRenderPerBatch={7}
           windowSize={7}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: heightInfo.statusHeight }}
         />
       </View>
     </View>

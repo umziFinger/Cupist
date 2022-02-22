@@ -49,6 +49,8 @@ const ReservationScreen = ({ route }: PropTypes) => {
   const reservationInfo = useSelector((state: ReservationState) => state.reservation.reservationInfo);
   const [validation, setValidation] = useState<boolean>(false);
 
+  console.log('reservationInfo : ', reservationInfo?.simplePaymentYN);
+
   const checkMobile = () => {
     if (!reservationInfo?.mobile) {
       flatRef?.current?.scrollToIndex({ index: 1, animated: true });

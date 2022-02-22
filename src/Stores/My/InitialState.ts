@@ -63,6 +63,7 @@ export const INITIAL_STATE: MyState['my'] = {
   },
   selectedCouponGuide: null,
   ringmeList: [],
+  isCheckedReservationDetail: false,
 };
 export interface MyState {
   my: {
@@ -115,6 +116,7 @@ export interface MyState {
 
     selectedCouponGuide: CouponItemType | null;
     ringmeList: any[];
+    isCheckedReservationDetail: boolean | false;
   };
 }
 export interface CouponItemType {

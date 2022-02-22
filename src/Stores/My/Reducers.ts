@@ -254,6 +254,12 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'isCheckedReservationDetail': {
+        console.log('call reduer isCheckedReservationDetail : ', data);
+        draft.isCheckedReservationDetail = data;
+        break;
+      }
+
       default:
         return draft;
     }

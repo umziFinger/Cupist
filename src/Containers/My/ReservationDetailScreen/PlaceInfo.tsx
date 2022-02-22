@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FlatList, Linking, Platform, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Clipboard from '@react-native-clipboard/clipboard';
+import { first } from 'lodash';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
@@ -14,14 +15,24 @@ import Config from '@/Config';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { navigate } from '@/Services/NavigationService';
 import { TICKET_TYPE } from '@/Stores/Home/InitialState';
+import MyActions from '@/Stores/My/Actions';
 
 const PlaceInfo = () => {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { reservationDetail } = useSelector((state: MyState) => state.my);
+  const { reservationDetail, isCheckedReservationDetail } = useSelector((state: MyState) => state.my);
   const { myLongitude, myLatitude } = useSelector((state: CommonState) => state.common);
 
-  const onCancel = () => {
+  useEffect(() => {
+    if (isCheckedReservationDetail) {
+      dispatch(MyActions.fetchMyReducer({ type: 'isCheckedReservationDetail', data: false }));
+      if (reservationDetail) {
+        onCancel(reservationDetail);
+      }
+    }
+  }, [isCheckedReservationDetail]);
+
+  const onCancel = (item: any) => {
     dispatch(
       CommonActions.fetchCommonReducer({
         type: 'alertDialog',
@@ -32,25 +43,8 @@ const PlaceInfo = () => {
           alertDialogMessage() {
             return (
               <>
-                {reservationDetail?.cancelType === '당일취소' ? (
-                  <CustomText
-                    style={{
-                      fontSize: 15,
-                      letterSpacing: -0.38,
-                      textAlign: 'center',
-                      color: Color.Black1000,
-                    }}
-                  >
-                    이용일 당일 취소로 환불규정에 따라
-                    <CustomText
-                      style={{
-                        color: Color.Error,
-                      }}
-                    >
-                      예약금액의 90%만 환불이 진행됩니다.
-                    </CustomText>
-                    예약을 취소하시겠습니까?
-                  </CustomText>
+                {item?.cancelPercent !== 0 ? (
+                  renderCancelNotice(item?.cancelPercent)
                 ) : (
                   <CustomText
                     style={{
@@ -66,10 +60,19 @@ const PlaceInfo = () => {
               </>
             );
           },
-          alertDialogParams: { reservationIdx: reservationDetail.idx },
+          alertDialogParams: { reservationIdx: item?.idx },
         },
       }),
     );
+  };
+
+  const onPressCheckDetail = () => {
+    if (reservationDetail) {
+      const params = {
+        reservationIdx: reservationDetail?.idx,
+      };
+      dispatch(MyActions.fetchMyReservationCheckDetail(params));
+    }
   };
 
   const onPressButton = (type: InfoItemButtonType) => {
@@ -174,6 +177,48 @@ const PlaceInfo = () => {
     navigate('PlaceDetailScreen', { idx: reservationDetail?.Place?.idx, ticketType: TICKET_TYPE.ALL });
   };
 
+  const renderCancelNotice = (percent: number) => {
+    let firstText, secondText;
+    switch (percent) {
+      case 0: {
+        firstText = '사용 예정 시간 환불 규정에 따라\n';
+        secondText = '해당 예약건은 전체 환불이 진행됩니다.\n';
+        break;
+      }
+      case 10: {
+        firstText = '사용 예정 시간 1시간전 환불 규정에 따라\n';
+        secondText = '예약금액의 10%이 차감되어 환불이 진행됩니다.\n';
+        break;
+      }
+      case 50: {
+        firstText = '사용 예정 시간 30분전 환불 규정에 따라\n';
+        secondText = '예약금액의 50%이 차감되어 환불이 진행됩니다.\n';
+        break;
+      }
+      case 100: {
+        firstText = '사용 예정 시간 10분전 환불 규정에 따라\n';
+        secondText = '예약금액의 100%이 차감되어 환불이 진행됩니다.\n';
+        break;
+      }
+      default:
+        break;
+    }
+    return (
+      <CustomText
+        style={{
+          fontSize: 13,
+          letterSpacing: -0.2,
+          textAlign: 'center',
+          color: Color.Gray800,
+        }}
+      >
+        {firstText}
+        <CustomText style={{ color: Color.Error }}>{secondText}</CustomText>
+        예약을 취소하시겠습니까?
+      </CustomText>
+    );
+  };
+
   return (
     <View>
       <View
@@ -190,8 +235,8 @@ const PlaceInfo = () => {
             {reservationDetail?.stateText}
           </CustomText>
         </View>
-        {(reservationDetail?.cancelType === '당일취소' || reservationDetail?.cancelType === '취소가능') && ( // TODO: 이용완료 -> 이용전으로 변경
-          <CustomButton onPress={() => onCancel()}>
+        {reservationDetail?.stateText === '이용전' && ( // TODO: 이용완료 -> 이용전으로 변경
+          <CustomButton onPress={() => onPressCheckDetail()}>
             <View style={{ paddingVertical: 5, paddingHorizontal: 8, borderRadius: 3, backgroundColor: Color.Gray300 }}>
               <CustomText
                 style={{

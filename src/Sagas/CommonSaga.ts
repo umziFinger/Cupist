@@ -25,6 +25,19 @@ export function* fetchInitialHandler() {
   //     type: 'logout',
   //   }),
   // );
+  // 토스트 초기화
+  yield put(
+    CommonActions.fetchCommonReducer({
+      type: 'alertToastInit',
+    }),
+  );
+
+  // 다이얼로그 초기화
+  yield put(
+    CommonActions.fetchCommonReducer({
+      type: 'alertDialogInit',
+    }),
+  );
 
   // 로딩 초기화
   yield put(
@@ -39,20 +52,6 @@ export function* fetchInitialHandler() {
     CommonActions.fetchCommonReducer({
       type: 'isSkeleton',
       data: true,
-    }),
-  );
-
-  // 토스트 초기화
-  yield put(
-    CommonActions.fetchCommonReducer({
-      type: 'alertToastInit',
-    }),
-  );
-
-  // 다이얼로그 초기화
-  yield put(
-    CommonActions.fetchCommonReducer({
-      type: 'alertDialogInit',
     }),
   );
 
@@ -111,6 +110,9 @@ export function* fetchInitialHandler() {
 
   // 마이스크린 탭 초기화
   yield put(MyActions.fetchMyReducer({ type: 'myTabInit' }));
+
+  // 마이볼리 > 진행중 예약 목록 예약 취소 시 데이터(예약상세) 정합성 위하여 check로직에 사용되는 Flag
+  yield put(MyActions.fetchMyReducer({ type: 'isCheckedReservationDetail', data: false }));
 }
 
 export function* fetchErrorHandler(data: any) {
@@ -173,6 +175,20 @@ export function* fetchErrorHandler(data: any) {
           },
         }),
       );
+    } else if (data.params.data.message === '존재하지 않은 결제입니다.') {
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'bottom',
+            alertToastMessage: data.params.data.message,
+          },
+        }),
+      );
+      yield put(MyActions.fetchMyReducer({ type: 'reservationListPageInit' }));
+      yield put(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '취소', key: 'cancel' } }));
+      navigate('MyScreen');
     } else {
       yield put(
         CommonActions.fetchCommonReducer({

@@ -28,6 +28,7 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
   const dispatch = useDispatch();
   const { versionInfo, alertDialogParams } = useSelector((state: CommonState) => state.common);
   const { reservationDetail } = useSelector((state: MyState) => state.my);
+
   const onCancel = () => {
     switch (dataType) {
       case 'closeRBS': {
@@ -125,6 +126,7 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
           backgroundColor: Color.White,
           alignItems: 'center',
           justifyContent: 'center',
+          paddingHorizontal: 40,
         }}
       >
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>

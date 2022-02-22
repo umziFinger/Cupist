@@ -21,7 +21,7 @@ const CancelInfoArea = () => {
       </View>
       <View style={{ justifyContent: 'center', marginTop: 20 }}>
         <CustomText style={{ color: Color.Black1000, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
-          {moment(cancelLimit).format('YYYY년 MM월 DD일 HH시 mm분')}까지 취소가 가능합니다.
+          {moment(cancelLimit).format('YYYY년 MM월 DD일 HH시 mm분')}까지 무료 취소가 가능합니다.
         </CustomText>
       </View>
       <View style={{ justifyContent: 'center', marginTop: 8 }}>

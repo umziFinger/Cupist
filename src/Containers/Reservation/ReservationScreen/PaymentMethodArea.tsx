@@ -22,10 +22,12 @@ const PaymentMethodArea = (props: PropTypes) => {
   const animatedFlatRef = useRef<any>();
   const { width } = useWindowDimensions();
   const { list } = props;
-  const { paymentType, paymentMethod } = useSelector((state: ReservationState) => state.reservation);
+  const { paymentType, paymentMethod, reservationInfo } = useSelector((state: ReservationState) => state.reservation);
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
 
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
+
+  console.log('reservationInfo?.simplePaymentYN : ', reservationInfo?.simplePaymentYN);
 
   useEffect(() => {
     return () => {
@@ -72,8 +74,8 @@ const PaymentMethodArea = (props: PropTypes) => {
   const onPressMethodType = (type: string) => {
     console.log('onPressMethodType');
 
-    // Todo 02/17 나이스페이먼츠 계약 지연으로 간편결제(simple) 서비스 준비중 팝업
-    if (type === 'simple') {
+    // Todo 02/17 나이스페이먼츠 간편결제 승인 시 아래 if문 제거
+    if (reservationInfo?.simplePaymentYN === 'N') {
       dispatch(
         CommonActions.fetchCommonReducer({
           type: 'alertDialog',
@@ -91,18 +93,22 @@ const PaymentMethodArea = (props: PropTypes) => {
   };
 
   const onPressAddCard = () => {
-    dispatch(
-      CommonActions.fetchCommonReducer({
-        type: 'alertDialog',
-        data: {
-          alertDialog: true,
-          alertDialogType: 'confirm',
-          alertDialogTitle: '서비스 준비중입니다.',
-        },
-      }),
-    );
-    // Todo 02/17 나이스페이먼츠 계약 지연으로 간편결제 임시 주석
-    // navigate('CertificationScreen');
+    // Todo 02/22 나이스페이먼츠 간편결제 승인 시 아래 if문 제거
+    if (reservationInfo?.simplePaymentYN === 'N') {
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertDialog',
+          data: {
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogTitle: '서비스 준비중입니다.',
+          },
+        }),
+      );
+      return;
+    }
+
+    navigate('CertificationScreen');
   };
 
   return (

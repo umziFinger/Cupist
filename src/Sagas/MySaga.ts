@@ -562,7 +562,6 @@ export function* fetchMyReservationList(data: any): any {
     const response = yield call(Axios.GET, payload);
 
     if (response.result === true && response.code === null) {
-      // console.log('마이 예약 리스트: ', response.data);
       yield put(
         MyActions.fetchMyReducer({
           type: 'reservationList',
@@ -853,7 +852,7 @@ export function* fetchMyCouponAdd(data: any): any {
           type: 'alertToast',
           data: {
             alertToast: true,
-            alertToastPosition: 'bottom',
+            alertToastPosition: 'top',
             alertToastMessage: response.data.message,
           },
         }),
@@ -950,5 +949,39 @@ export function* fetchMyProfileRingme(data: any): any {
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchMyProfileRingme : ', e);
+  }
+}
+
+export function* fetchMyReservationCheckDetail(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: `${Config.MY_RESERVATION_URL}/${data.params.reservationIdx}`,
+    };
+    const response = yield call(Axios.GET, payload);
+    if (response.result === true && response.code === null) {
+      console.log('예약 상세: ', response.data);
+      yield put(
+        MyActions.fetchMyReducer({
+          type: 'reservationDetail',
+          data: response.data.payment,
+        }),
+      );
+      if (response?.data?.payment) {
+        yield put(MyActions.fetchMyReducer({ type: 'isCheckedReservationDetail', data: true }));
+      } else {
+        yield put(MyActions.fetchMyReducer({ type: 'isCheckedReservationDetail', data: false }));
+      }
+
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+
+    console.log('occurred Error...fetchMyReservationCheckDetail : ', e);
   }
 }

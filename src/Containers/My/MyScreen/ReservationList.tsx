@@ -22,6 +22,8 @@ const ReservationList = () => {
     reservationSelectedTab = { title: '진행중', key: 'before' },
     reservationList,
     reservationListPage,
+    isCheckedReservationDetail,
+    reservationDetail,
   } = useSelector((state: MyState) => state.my);
 
   const emptyText = (key: reservationTabType['key']) => {
@@ -39,9 +41,24 @@ const ReservationList = () => {
         return false;
     }
   };
+
   useEffect(() => {
+    console.log('예약 리스트 페이지 didmount!!!');
     dispatch(MyActions.fetchMyReducer({ type: 'reservationListPageInit' }));
   }, []);
+
+  useEffect(() => {
+    console.log('예약 리스트 목록 업데이트 didupdate!!!!');
+  }, [reservationList]);
+
+  useEffect(() => {
+    if (isCheckedReservationDetail) {
+      dispatch(MyActions.fetchMyReducer({ type: 'isCheckedReservationDetail', data: false }));
+      if (reservationDetail) {
+        onCancel(reservationDetail);
+      }
+    }
+  }, [isCheckedReservationDetail]);
 
   const onRefresh = () => {
     console.log('onRefresh');
@@ -86,25 +103,8 @@ const ReservationList = () => {
     const customAlertDialogMessage = () => {
       return (
         <>
-          {item?.cancelType === '당일취소' ? (
-            <CustomText
-              style={{
-                fontSize: 13,
-                letterSpacing: -0.2,
-                textAlign: 'center',
-                color: Color.Gray800,
-              }}
-            >
-              이용일 당일 취소로 환불규정에 따라
-              <CustomText
-                style={{
-                  color: Color.Error,
-                }}
-              >
-                예약금액의 90%만 환불이 진행됩니다.
-              </CustomText>
-              예약을 취소하시겠습니까?
-            </CustomText>
+          {item?.cancelPercent !== 0 ? (
+            renderCancelNotice(item?.cancelPercent)
           ) : (
             <CustomText
               style={{
@@ -129,10 +129,18 @@ const ReservationList = () => {
           alertDialogType: 'choice',
           alertDialogDataType: 'reservationCancel',
           alertDialogMessage: customAlertDialogMessage(),
-          alertDialogParams: { reservationIdx: item.idx },
+          alertDialogParams: { reservationIdx: item?.idx },
         },
       }),
     );
+  };
+
+  const onPressCheckDetail = (item: any) => {
+    console.log(item.idx);
+    const params = {
+      reservationIdx: item.idx,
+    };
+    dispatch(MyActions.fetchMyReservationCheckDetail(params));
   };
 
   const onReviewButtonHandler = (item: any) => {
@@ -159,6 +167,48 @@ const ReservationList = () => {
       }),
     );
     navigate('WriteReviewScreen');
+  };
+
+  const renderCancelNotice = (percent: number) => {
+    let firstText, secondText;
+    switch (percent) {
+      case 0: {
+        firstText = '사용 예정 시간 환불 규정에 따라\n';
+        secondText = '해당 예약건은 전체 환불이 진행됩니다.\n';
+        break;
+      }
+      case 10: {
+        firstText = '사용 예정 시간 1시간전 환불 규정에 따라\n';
+        secondText = '예약금액의 10%이 차감되어 환불이 진행됩니다.\n';
+        break;
+      }
+      case 50: {
+        firstText = '사용 예정 시간 30분전 환불 규정에 따라\n';
+        secondText = '예약금액의 50%이 차감되어 환불이 진행됩니다.\n';
+        break;
+      }
+      case 100: {
+        firstText = '사용 예정 시간 10분전 환불 규정에 따라\n';
+        secondText = '예약금액의 100%이 차감되어 환불이 진행됩니다.\n';
+        break;
+      }
+      default:
+        break;
+    }
+    return (
+      <CustomText
+        style={{
+          fontSize: 13,
+          letterSpacing: -0.2,
+          textAlign: 'center',
+          color: Color.Gray800,
+        }}
+      >
+        {firstText}
+        <CustomText style={{ color: Color.Error }}>{secondText}</CustomText>
+        예약을 취소하시겠습니까?
+      </CustomText>
+    );
   };
 
   return (
@@ -240,7 +290,7 @@ const ReservationList = () => {
 
               <View style={{ marginTop: 16 }}>
                 {reservationSelectedTab.key === 'before' && item?.cancelType !== '취소불가' && (
-                  <CustomButton onPress={() => onCancel(item)}>
+                  <CustomButton onPress={() => onPressCheckDetail(item)}>
                     <View
                       style={{ paddingTop: 12, paddingBottom: 11, backgroundColor: Color.Gray200, borderRadius: 5 }}
                     >

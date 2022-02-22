@@ -25,6 +25,7 @@ const MyScreen = () => {
   const paddingTop = Platform.OS === 'android' ? 0 : heightInfo.statusHeight;
 
   useEffect(() => {
+    console.log('@@@@@@@ reservationListPage : ', reservationListPage);
     if (mySelectedTab.selectKey === 'reservation') {
       const params = {
         perPage: 10,
@@ -43,7 +44,7 @@ const MyScreen = () => {
 
   // 다른 탭 이동시 예약 서브 탭 상태값 초기화
   useEffect(() => {
-    if (!isFocused && navigationRef.current.getCurrentRoute().name !== 'WriteReviewScreen') {
+    if (!isFocused && navigationRef?.current?.getCurrentRoute()?.name !== 'WriteReviewScreen') {
       dispatch(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '진행중', key: 'before' } }));
     }
   }, [isFocused]);

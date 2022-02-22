@@ -51,7 +51,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                         color: Color.Grayyellow1000,
                       }}
                     >
-                      {moment(cancelLimit).subtract(4, 'hours').format('YYYY년 MM월 DD일 HH시 mm분')}까지
+                      {moment(cancelLimit).format('YYYY년 MM월 DD일 HH시 mm분')}까지 무료 취소
                     </CustomText>
                   </View>
                 </View>
@@ -79,7 +79,8 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                         color: Color.Grayyellow1000,
                       }}
                     >
-                      취소 위약금 : {totalPrice * 0.1}원 (10%)
+                      {/* {moment(cancelLimit).subtract(1, 'minute').format('YYYY년 MM월 DD일 HH시 mm분')}까지 */}
+                      사용 예정 시간 1시간 이내 취소 시
                     </CustomText>
                     <CustomText
                       style={{
@@ -89,7 +90,47 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                         color: Color.Grayyellow1000,
                       }}
                     >
-                      {moment(cancelLimit).subtract(2, 'hours').format('YYYY년 MM월 DD일 HH시 mm분')}까지
+                      취소 위약금 : {totalPrice * 0.1}원 (10%)
+                    </CustomText>
+                  </View>
+                </View>
+              </View>
+
+              {/* 취소시 일부 환불 (50%) */}
+              <View style={{ flexDirection: 'row' }}>
+                <View style={{ alignItems: 'center' }}>
+                  <CustomText style={{ color: Color.Point1000 }}>{'\u2022'}</CustomText>
+                  <View style={{ height: 78, width: 1, backgroundColor: '#f0f0f0' }} />
+                </View>
+                <View style={{ flex: 1, marginLeft: 12 }}>
+                  <View>
+                    <CustomText
+                      style={{ fontSize: 14, fontWeight: '500', letterSpacing: -0.25, color: Color.Point1000 }}
+                    >
+                      취소시 일부 환불
+                    </CustomText>
+                  </View>
+                  <View style={{ marginTop: 6 }}>
+                    <CustomText
+                      style={{
+                        fontSize: 13,
+                        fontWeight: '500',
+                        letterSpacing: -0.2,
+                        color: Color.Grayyellow1000,
+                      }}
+                    >
+                      {/* {moment(cancelLimit).subtract(1, 'minute').format('YYYY년 MM월 DD일 HH시 mm분')}까지 */}
+                      사용 예정 시간 30분 이내 취소 시
+                    </CustomText>
+                    <CustomText
+                      style={{
+                        fontSize: 13,
+                        fontWeight: '500',
+                        letterSpacing: -0.2,
+                        color: Color.Grayyellow1000,
+                      }}
+                    >
+                      취소 위약금 : {totalPrice * 0.5}원 (50%)
                     </CustomText>
                   </View>
                 </View>
@@ -118,7 +159,8 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                         color: Color.Grayyellow1000,
                       }}
                     >
-                      취소 위약금 : {totalPrice}원 (100%)
+                      {/* {moment(cancelLimit).add(50, 'minute').format('YYYY년 MM월 DD일 HH시 mm분')}까지 */}
+                      사용 예정 시간 10분전 이내 취소 또는 미 방문 시
                     </CustomText>
                     <CustomText
                       style={{
@@ -128,7 +170,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                         color: Color.Grayyellow1000,
                       }}
                     >
-                      {moment(cancelLimit).format('YYYY년 MM월 DD일 HH시 mm분')}까지
+                      취소 위약금 : {totalPrice}원 (100%)
                     </CustomText>
                   </View>
                 </View>

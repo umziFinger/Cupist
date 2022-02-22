@@ -15,7 +15,7 @@ import MyActions from '@/Stores/My/Actions';
 
 const PaymentResultScreen = () => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { paymentResult, reservationInfo } = useSelector((state: ReservationState) => state.reservation);
+  const { paymentResult } = useSelector((state: ReservationState) => state.reservation);
   const place = paymentResult?.Place || {};
   const dispatch = useDispatch();
   const onMyScreen = () => {
@@ -28,7 +28,9 @@ const PaymentResultScreen = () => {
     navigate('MyScreen');
   };
 
-  const cancelLimit = reservationInfo?.cancelLimit || moment().format('YYYY년 MM월 DD일 HH시 mm분');
+  console.log('paymentResult : ', paymentResult);
+
+  const cancelLimit = paymentResult?.cancelLimit || moment().format('YYYY년 MM월 DD일 HH시 mm분');
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White, paddingBottom: heightInfo.fixBottomHeight + 48 }}>
@@ -104,7 +106,7 @@ const PaymentResultScreen = () => {
               </CustomText>
             </View>
             <View style={{ justifyContent: 'center' }}>
-              <CustomText style={{ color: Color.Black1000, fontSize: 13 }}>{place?.name}</CustomText>
+              <CustomText style={{ color: Color.Black1000, fontSize: 13 }}>{paymentResult?.ticketName}</CustomText>
             </View>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12 }}>

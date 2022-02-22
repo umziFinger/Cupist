@@ -136,17 +136,17 @@ const BannerArea = (props: PropTypes) => {
         windowSize={7}
         pagingEnabled
         horizontal
-        onScrollEndDrag={(event: NativeSyntheticEvent<any>) => {
-          if (viewableIndex === list?.length - 1) {
-            if (Platform.OS === 'android') {
-              if (event?.nativeEvent?.velocity.x < 0) {
-                flatRef?.current?.scrollToIndex({ index: 0, animated: true });
-              }
-            } else if (event?.nativeEvent.velocity.x > 0) {
-              flatRef?.current?.scrollToIndex({ index: 0, animated: true });
-            }
-          }
-        }}
+        // onScrollEndDrag={(event: NativeSyntheticEvent<any>) => {
+        //   if (viewableIndex === [...list, ...list, ...list]?.length - 1) {
+        //     if (Platform.OS === 'android') {
+        //       if (event?.nativeEvent?.velocity.x < 0) {
+        //         flatRef?.current?.scrollToIndex({ index: 0, animated: true });
+        //       }
+        //     } else if (event?.nativeEvent.velocity.x > 0) {
+        //       flatRef?.current?.scrollToIndex({ index: 0, animated: true });
+        //     }
+        //   }
+        // }}
         onTouchMove={() => [
           setIntervalToggle(false),
           setTimeout(() => {

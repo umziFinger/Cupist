@@ -36,7 +36,6 @@ function PaymentScreen({ route }: PropTypes) {
       console.log('########## Success IAMPORT paymentInfo 정보 : ', paymentInfo);
 
       if (paymentInfo) {
-        // Todo 결제 검증 api 호출
         const { imp_uid } = params;
         dispatch(
           ReservationActions.fetchReservationPaymentVerify({

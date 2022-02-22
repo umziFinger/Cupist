@@ -75,7 +75,7 @@ export function* fetchReservationCancel(data: any): any {
     };
 
     const response = yield call(Axios.POST, payload);
-    console.log('에약 취소: ', response.data);
+    console.log('예약 취소: ', response.data);
     if (response.result === true && response.code === null) {
       yield put(
         CommonActions.fetchCommonReducer({
@@ -88,13 +88,19 @@ export function* fetchReservationCancel(data: any): any {
         }),
       );
 
+      yield put(MyActions.fetchMyReducer({ type: 'reservationListPageInit' })); // 예약 취소 후 마이볼리>예약탭>취소탭 이동 시 목록 업데이트 안되는 이슈때문에 추가함
+
       const params = {
         perPage: 10,
         page: 1,
         state: 'cancel',
       };
       yield put(MyActions.fetchMyReservationList(params));
+
       navigate('MyScreen');
+
+      yield put(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '취소', key: 'cancel' } }));
+
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
