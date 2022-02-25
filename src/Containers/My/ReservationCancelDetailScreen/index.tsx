@@ -77,10 +77,10 @@ const ReservationCancelDetailScreen = () => {
                 <RowItem title={'상품명'} content={reservationCancelDetail?.ticketName || ''} />
               </View>
               <View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center' }}>
-                <RowItem title={'예약인원'} content={`${reservationCancelDetail?.memberCnt || ''}명`} />
+                <RowItem title={'예약인원'} content={`${reservationCancelDetail?.memberCnt || 0}명`} />
               </View>
               <View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center', paddingBottom: 28 }}>
-                <RowItem title={'추가옵션'} content={`볼링화 ${reservationCancelDetail?.shoesCnt || ''}켤레`} />
+                <RowItem title={'추가옵션'} content={`볼링화 ${reservationCancelDetail?.shoesCnt || 0}켤레`} />
               </View>
 
               <View style={{ borderStyle: 'dashed', borderWidth: 0.5, borderColor: Color.Gray350 }} />

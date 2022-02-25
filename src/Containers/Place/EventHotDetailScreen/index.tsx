@@ -121,7 +121,7 @@ const EventHotDetailScreen = ({ route }: PropTypes) => {
                         style={{
                           width: '100%',
                           height: width,
-                          backgroundColor: Color.White,
+                          backgroundColor: Color.Black1000,
                           alignItems: 'center',
                           justifyContent: 'center',
                         }}
@@ -129,9 +129,9 @@ const EventHotDetailScreen = ({ route }: PropTypes) => {
                         <FastImage
                           style={{ width: '100%', height: '100%' }}
                           source={{
-                            uri: 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/event/imgBannerDetail211228%403x.png',
+                            uri: image?.url || '',
                           }}
-                          resizeMode={FastImage.resizeMode.cover}
+                          resizeMode={FastImage.resizeMode.contain}
                         />
                       </View>
                     </View>
