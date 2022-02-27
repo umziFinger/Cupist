@@ -10,16 +10,17 @@ interface PropTypes {
   list: Array<any>;
 }
 const BannerArea = (props: PropTypes) => {
-  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const flatRef = createRef<any>();
+  const { width } = useWindowDimensions();
   const { list } = props;
   let intervalId: any;
 
-  const [viewableIndex, setViewableIndex] = useState<number | null>(0);
+  const [transList, setTransList] = useState<Array<any>>(list);
+  // const [viewableIndex, setViewableIndex] = useState<number | 0>(0);
   const [intervalToggle, setIntervalToggle] = useState(true);
   const [page, setPage] = useState<number>(0);
-  const perPage = list?.length || 0;
+  const perPage = transList?.length || 0;
 
   useEffect(() => {
     updatePage();
@@ -30,6 +31,10 @@ const BannerArea = (props: PropTypes) => {
 
   useEffect(() => {
     if (intervalToggle && flatRef) {
+      if (page === transList.length - 1) {
+        const arr = [...transList, ...list];
+        setTransList(arr);
+      }
       if (page >= perPage) {
         setPage(0);
       } else if (Platform.OS === 'android') {
@@ -56,7 +61,9 @@ const BannerArea = (props: PropTypes) => {
 
   const tick = () => {
     if (intervalToggle && flatRef) {
-      setPage((state) => 1 + state);
+      setPage((state) => {
+        return state + 1;
+      });
     }
   };
 
@@ -98,21 +105,28 @@ const BannerArea = (props: PropTypes) => {
 
   const onViewableItemsChanged = React.useRef(
     (info: { viewableItems: Array<ViewToken>; changed: Array<ViewToken> }) => {
-      if (info.viewableItems) {
-        const tempViewableIndex = info.viewableItems[0]?.key;
-        let changeViewableIndex = 0;
-        if (tempViewableIndex !== undefined) {
-          changeViewableIndex = parseInt(tempViewableIndex);
-        }
-        setViewableIndex(changeViewableIndex);
+      // console.log('info : ', info);
+      // if (info.viewableItems) {
+      //   const tempViewableIndex = info.viewableItems[0]?.key;
+      //   let changeViewableIndex = 0;
+      //   if (tempViewableIndex !== undefined) {
+      //     changeViewableIndex = parseInt(page);
+      //   }
+      //   setViewableIndex(changeViewableIndex);
+      // }
+      if (info.changed) {
+        const tempIdx: number = info.changed[0]?.index || page;
+        setPage(tempIdx);
+        setIntervalToggle(true);
       }
     },
   );
+
   return (
     <View style={{ flex: 1, marginTop: 60, paddingHorizontal: 16 }}>
       <FlatList
         ref={flatRef}
-        data={list}
+        data={transList}
         renderItem={({ item }) => (
           <CustomButton onPress={() => onMoveEventDetail(item)}>
             <View
@@ -147,12 +161,14 @@ const BannerArea = (props: PropTypes) => {
         //     }
         //   }
         // }}
-        onTouchMove={() => [
-          setIntervalToggle(false),
-          setTimeout(() => {
-            setIntervalToggle(true);
-          }, 5000),
-        ]}
+        // onTouchMove={() => {
+        //   return [
+        //     setIntervalToggle(false),
+        //     setTimeout(() => {
+        //       setIntervalToggle(true);
+        //     }, 5000),
+        //   ];
+        // }}
         disableIntervalMomentum
         decelerationRate="fast"
         snapToInterval={width - 32}
@@ -174,24 +190,28 @@ const BannerArea = (props: PropTypes) => {
       >
         <FlatList
           data={list}
-          renderItem={({ index }) => (
-            <View>
-              {viewableIndex === index ? (
-                <View style={{ width: 6, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: Color.White }} />
-              ) : (
-                <View
-                  style={{
-                    width: 6,
-                    height: 6,
-                    marginRight: 4,
-                    borderRadius: 50,
-                    backgroundColor: 'rgba(255,255,255,0.4)',
-                    // backgroundColor: 'red',
-                  }}
-                />
-              )}
-            </View>
-          )}
+          renderItem={({ index }) => {
+            return (
+              <View>
+                {page % 2 === index ? (
+                  <View
+                    style={{ width: 6, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: Color.White }}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      width: 6,
+                      height: 6,
+                      marginRight: 4,
+                      borderRadius: 50,
+                      backgroundColor: 'rgba(255,255,255,0.4)',
+                      // backgroundColor: 'red',
+                    }}
+                  />
+                )}
+              </View>
+            );
+          }}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(zItem, index) => index.toString()}
           horizontal
