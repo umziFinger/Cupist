@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
@@ -44,6 +44,20 @@ const DibsScreen = () => {
     };
     dispatch(PlaceActions.fetchPlaceDibsList(params));
   }, []);
+
+  useLayoutEffect(() => {
+    if (isFocused) {
+      const params = {
+        lat: myLatitude?.toString() || '37.56561',
+        lng: myLongitude?.toString() || '126.97804',
+        page: 1,
+        perPage: 10,
+        date: calendarDate,
+      };
+      dispatch(PlaceActions.fetchPlaceDibsList(params));
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (isFocused) {
