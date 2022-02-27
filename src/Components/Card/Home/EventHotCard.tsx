@@ -19,9 +19,10 @@ const EventHotCard = ({ item }: PropTypes) => {
         <View style={{ width: 80, height: 80, borderRadius: 5 }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderRadius: 5 }}
-            source={
-              !item?.placePhoto || isError ? require('@/Assets/Images/Common/icNoImage.png') : { uri: item?.placePhoto }
-            }
+            // source={
+            //   !item?.placePhoto || isError ? require('@/Assets/Images/Common/icNoImage.png') : { uri: item?.placePhoto }
+            // }
+            source={item?.placePhoto ? { uri: item?.placePhoto } : require('@/Assets/Images/Common/icNoImage.png')}
             resizeMode={FastImage.resizeMode.cover}
             onError={() => {
               setIsError(true);
