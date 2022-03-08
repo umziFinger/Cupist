@@ -39,8 +39,11 @@ const PlaceListScreen = ({ route }: PropTypes) => {
 
   useEffect(() => {
     return () => {
+      console.log('UNMOUNT');
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeListType', data: null }));
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeList', data: [] }));
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeListPage', data: 1 }));
     };
   }, []);
 
