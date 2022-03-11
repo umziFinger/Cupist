@@ -49,8 +49,6 @@ const ReservationScreen = ({ route }: PropTypes) => {
   const reservationInfo = useSelector((state: ReservationState) => state.reservation.reservationInfo);
   const [validation, setValidation] = useState<boolean>(false);
 
-  console.log('reservationInfo : ', reservationInfo?.simplePaymentYN);
-
   const checkMobile = () => {
     if (!reservationInfo?.mobile) {
       flatRef?.current?.scrollToIndex({ index: 1, animated: true });
@@ -164,7 +162,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
             <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 28 }} />
 
             <View style={{ paddingHorizontal: 16 }}>
-              <AmountArea item={reservationInfo} />
+              <AmountArea item={reservationInfo} ticketType={reservationInfo?.eventType} />
             </View>
           </View>
         );

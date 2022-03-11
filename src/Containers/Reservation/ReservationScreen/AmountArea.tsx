@@ -7,14 +7,16 @@ import { Color } from '@/Assets/Color';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   item: any;
+  ticketType: TICKET_TYPE;
 }
 
 const AmountArea = (props: PropTypes) => {
   const dispatch = useDispatch();
-  const { item } = props;
+  const { item, ticketType } = props;
   const { totalPrice, personCount, shoesCount, selectedCoupon } = useSelector(
     (state: ReservationState) => state.reservation,
   );
@@ -33,7 +35,12 @@ const AmountArea = (props: PropTypes) => {
   }, [item, personCount, shoesCount, selectedCoupon]);
 
   const onChangeTotalPrice = () => {
-    const tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
+    let tempPrice = 0;
+    if (ticketType === TICKET_TYPE.NORMAL) {
+      tempPrice = item?.salePrice + item?.shoesPrice * shoesCount;
+    } else {
+      tempPrice = item?.salePrice * personCount + item?.shoesPrice * shoesCount;
+    }
 
     if (tempPrice - (selectedCoupon?.Coupon?.price || 0) < 0) {
       CommonActions.fetchCommonReducer({

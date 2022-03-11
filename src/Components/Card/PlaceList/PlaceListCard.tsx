@@ -41,9 +41,7 @@ const PlaceListCard = (props: PropTypes) => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
       return;
     }
-    dispatch(
-      PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: { ...ticket, ticketName: place.ticketName } }),
-    );
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: { ...ticket } }));
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedPlaceIdx', data: place.idx }));
   };
 

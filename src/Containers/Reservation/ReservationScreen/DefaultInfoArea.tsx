@@ -7,7 +7,7 @@ import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import { numberFormat } from '@/Components/Function';
-import { HomeState } from '@/Stores/Home/InitialState';
+import { HomeState, TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   item: any;
@@ -17,6 +17,8 @@ const DefaultInfoArea = (props: PropTypes) => {
   const { item } = props;
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
+  const ticketType = item?.eventType;
+  const priceType = item?.ticketName.split(' ')[0];
 
   return (
     <View style={{ flex: 1 }}>
@@ -48,28 +50,30 @@ const DefaultInfoArea = (props: PropTypes) => {
       </View>
       <View style={{ backgroundColor: Color.Gray100, marginTop: 16, borderRadius: 3, padding: 16 }}>
         <View style={{ flexDirection: 'row' }}>
-          <View style={{ justifyContent: 'center', marginRight: 16 }}>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2 }}>
-              일시 및 시간
-            </CustomText>
+          <View style={{ marginRight: 16 }}>
+            <View style={{ justifyContent: 'center' }}>
+              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2 }}>
+                일시 및 시간
+              </CustomText>
+            </View>
+            <View style={{ justifyContent: 'center', marginTop: 6 }}>
+              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2 }}>
+                {ticketType === TICKET_TYPE.NORMAL ? `${priceType} 금액` : '1인 금액'}
+              </CustomText>
+            </View>
           </View>
-          <View style={{ flexDirection: 'row' }}>
+          <View>
             <View style={{ justifyContent: 'center' }}>
               <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, fontWeight: '500' }}>
                 {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
                 {selectedTicket?.endTime.substr(0, 5)}
               </CustomText>
             </View>
-          </View>
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: 6 }}>
-          <View style={{ justifyContent: 'center', marginRight: 35 }}>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, letterSpacing: -0.2 }}>1인 금액</CustomText>
-          </View>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, fontWeight: '500' }}>
-              {numberFormat(selectedTicket?.salePrice)}원
-            </CustomText>
+            <View style={{ justifyContent: 'center', marginTop: 6 }}>
+              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, fontWeight: '500' }}>
+                {numberFormat(item?.salePrice)}원
+              </CustomText>
+            </View>
           </View>
         </View>
       </View>

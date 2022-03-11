@@ -113,8 +113,9 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
   };
 
-  const renderItem = ({ item }: { item: any }) => {
-    switch (item) {
+  const renderItem = (index: number) => {
+    console.log('index : ', index);
+    switch (index) {
       case 0: {
         return (
           <View style={{ flex: 1 }}>
@@ -210,7 +211,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       <AnimatedFlatList
         data={[0, 1, 2, 3, 4, 5, 6, 7]}
         ref={animatedFlatRef}
-        renderItem={renderItem}
+        renderItem={({ item, index }: any) => renderItem(index)}
         keyExtractor={(item, index) => index.toString()}
         initialNumToRender={4}
         maxToRenderPerBatch={7}

@@ -61,7 +61,7 @@ const TicketSlider = (props: PropTypes) => {
 
   return (
     <View>
-      {normal.length > 0 || free.length > 0 ? (
+      {normal?.length !== 0 || free?.length !== 0 ? (
         <FlatList
           data={allowedTimeArr}
           renderItem={({ item: allowedTime }) => {
