@@ -66,8 +66,8 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
   }, [route, calendarDate]);
 
-  const handleScroll = (event: any) => {
-    const result = scrollCalendarHandler(event, 540);
+  const handleScroll = (e: any) => {
+    const result = scrollCalendarHandler(e, 540);
     setIsShowTopCalendar(result.isShow);
   };
 
