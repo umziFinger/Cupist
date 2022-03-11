@@ -77,6 +77,7 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         draft.placeDetail.latestReview = data.latestReview;
         draft.placeDetail.starReview = data.starReview;
         draft.placeDetail.together = data.together;
+        draft.placeDetail.event = data.event;
         break;
       }
 

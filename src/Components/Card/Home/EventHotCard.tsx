@@ -11,22 +11,14 @@ interface PropTypes {
 }
 
 const EventHotCard = ({ item }: PropTypes) => {
-  const [isError, setIsError] = useState(false);
-
   return (
     <CustomButton onPress={() => navigate('EventHotDetailScreen', { eventIdx: item?.idx })}>
       <View style={{ backgroundColor: Color.White, flexDirection: 'row' }}>
         <View style={{ width: 80, height: 80, borderRadius: 5 }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderRadius: 5 }}
-            // source={
-            //   !item?.placePhoto || isError ? require('@/Assets/Images/Common/icNoImage.png') : { uri: item?.placePhoto }
-            // }
             source={item?.placePhoto ? { uri: item?.placePhoto } : require('@/Assets/Images/Common/icNoImage.png')}
             resizeMode={FastImage.resizeMode.cover}
-            onError={() => {
-              setIsError(true);
-            }}
           />
         </View>
 
@@ -41,17 +33,16 @@ const EventHotCard = ({ item }: PropTypes) => {
           </View>
 
           <View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow1000 }} numberOfLines={1}>
-                일시: {item?.dateView || ''}
-              </CustomText>
-            </View>
-
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
-              <CustomText style={{ color: Color.Gray700, fontSize: 12 }} numberOfLines={1}>
+              <CustomText style={{ fontSize: 12, fontWeight: '500', color: Color.Grayyellow1000 }} numberOfLines={1}>
                 {item?.area || '지역정보없음'}
                 <CustomText style={{ color: Color.Gray300, fontSize: 12 }}>{'  |  '}</CustomText>
                 {item?.placeName || ''}
+              </CustomText>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <CustomText style={{ color: Color.Gray700, fontSize: 12 }} numberOfLines={1}>
+                일시: {item?.dateView || ''}
               </CustomText>
             </View>
           </View>

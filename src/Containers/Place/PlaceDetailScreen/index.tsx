@@ -23,6 +23,7 @@ import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import TogetherArea from '@/Containers/Place/PlaceDetailScreen/TogetherArea';
 import CommonActions from '@/Stores/Common/Actions';
+import EventHotArea from '@/Containers/Place/PlaceDetailScreen/EventHotArea';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
@@ -46,6 +47,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const latestReview = placeDetail?.latestReview || [];
   const starReview = placeDetail?.starReview || [];
   const together = placeDetail?.together || [];
+  const event = placeDetail?.event || [];
 
   useEffect(() => {
     return () => {
@@ -60,7 +62,6 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   }, [route]);
 
   useEffect(() => {
-    console.log('didupdate');
     dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
   }, [route, calendarDate]);
@@ -163,6 +164,18 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       }
       case 5: {
         return (
+          event?.length !== 0 && (
+            <View style={{ flex: 1, marginTop: 28 }}>
+              <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
+              <View style={{ marginTop: 28 }}>
+                <EventHotArea item={event} />
+              </View>
+            </View>
+          )
+        );
+      }
+      case 6: {
+        return (
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <View style={{ marginTop: 28 }}>
@@ -171,7 +184,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
           </View>
         );
       }
-      case 6: {
+      case 7: {
         // 다른 유저들이 함께 본 볼링장
         return (
           <View style={{ flex: 1, marginTop: 16 }}>
@@ -195,7 +208,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'placeDetail'} isShow={isShowTopCalendar} />
       <AnimatedFlatList
-        data={[0, 1, 2, 3, 4, 5, 6]}
+        data={[0, 1, 2, 3, 4, 5, 6, 7]}
         ref={animatedFlatRef}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
@@ -205,7 +218,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         showsVerticalScrollIndicator={false}
         refreshing={false}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-          listener: (event) => handleScroll(event),
+          listener: (e) => handleScroll(e),
           useNativeDriver: true,
         })}
         contentContainerStyle={{ backgroundColor: Color.White, paddingBottom: 40 }}
