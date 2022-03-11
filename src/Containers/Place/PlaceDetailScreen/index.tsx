@@ -114,7 +114,6 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   };
 
   const renderItem = (index: number) => {
-    console.log('index : ', index);
     switch (index) {
       case 0: {
         return (
