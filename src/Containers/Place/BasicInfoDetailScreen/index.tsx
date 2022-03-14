@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import FastImage from 'react-native-fast-image';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
-import PlaceActions from '@/Stores/Place/Actions';
-import PlaceLargeCard from '@/Components/Card/Common/PlaceLargeCard';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
-import { navigate, navigateGoBack } from '@/Services/NavigationService';
+import { navigateGoBack } from '@/Services/NavigationService';
 
 const BasicInfoDetailScreen = () => {
   const dispatch = useDispatch();
@@ -24,7 +21,6 @@ const BasicInfoDetailScreen = () => {
 
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 41 }}>
         <FlatList
-          // data={[]}
           data={[0]}
           renderItem={({ item }) => (
             <>

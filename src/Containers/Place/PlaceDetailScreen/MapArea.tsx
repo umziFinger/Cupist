@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useMemo, useState } from 'react';
 import { FlatList, Linking, Platform, useWindowDimensions, View } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import NaverMapView, { Marker } from 'react-native-nmap';
@@ -8,20 +8,21 @@ import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CommonActions from '@/Stores/Common/Actions';
 import CustomButton from '@/Components/CustomButton';
-import { inputMobileNumber, renderFacilityIcon } from '@/Components/Function';
+import { renderFacilityIcon } from '@/Components/Function';
 import Config from '@/Config';
 import { InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data';
 import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   item: any;
+  isRenderMap: boolean;
 }
 const MapArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { width, height } = useWindowDimensions();
-  const { item } = props;
+  const { item, isRenderMap } = props;
   const position = { latitude: parseFloat(item?.lat) || 37.553881, longitude: parseFloat(item?.lng) || 126.970488 };
-  // console.log('========', item?.shoeCost);
+
   const onPressButton = (type: InfoItemButtonType) => {
     switch (type) {
       case 'addressCopy':
@@ -171,6 +172,18 @@ const MapArea = (props: PropTypes) => {
     return null;
   };
 
+  const renderMarker = () => {
+    return (
+      <Marker
+        key={'marker1'}
+        coordinate={position}
+        image={require('@/Assets/Images/Common/icMapPin.png')}
+        width={30}
+        height={30}
+      />
+    );
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ justifyContent: 'center', paddingHorizontal: 20 }}>
@@ -193,7 +206,13 @@ const MapArea = (props: PropTypes) => {
           {renderDefaultInfo('laneDivision')}
         </View>
         <View
-          style={{ height: width * 0.41, width: '100%', backgroundColor: Color.White, marginTop: 16, borderRadius: 5 }}
+          style={{
+            height: width * 0.41,
+            width: '100%',
+            backgroundColor: Color.White,
+            marginTop: 16,
+            borderRadius: 5,
+          }}
         >
           <NaverMapView
             style={{ width: '100%', height: '100%' }}
@@ -202,12 +221,8 @@ const MapArea = (props: PropTypes) => {
             zoomControl={false}
             scrollGesturesEnabled={false}
           >
-            <Marker
-              coordinate={position}
-              image={require('@/Assets/Images/Common/icMapPin.png')}
-              width={28}
-              height={28}
-            />
+            {Platform.OS === 'ios' && renderMarker()}
+            {Platform.OS === 'android' && isRenderMap && renderMarker()}
           </NaverMapView>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 16 }}>

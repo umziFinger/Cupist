@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, FlatList, Platform, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,6 +42,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const animatedFlatRef = useRef<any>();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [isShowTopCalendar, setIsShowTopCalendar] = useState<boolean>(false);
+  const [isRenderMap, setIsRenderMap] = useState<boolean>(false); // 맵 마커 랜더 안되는 이슈때문에 추가
 
   const place = placeDetail?.place || {};
   const latestReview = placeDetail?.latestReview || [];
@@ -67,6 +68,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   }, [route, calendarDate]);
 
   const handleScroll = (e: any) => {
+    setIsRenderMap(e?.nativeEvent.contentOffset.y > 500 && e?.nativeEvent.contentOffset.y < 1500);
     const result = scrollCalendarHandler(e, 540);
     setIsShowTopCalendar(result.isShow);
   };
@@ -113,8 +115,8 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
   };
 
-  const renderItem = (index: number) => {
-    switch (index) {
+  const renderItem = (item: number) => {
+    switch (item) {
       case 0: {
         return (
           <View style={{ flex: 1 }}>
@@ -157,7 +159,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <View style={{ marginTop: 28 }}>
-              <MapArea item={place} />
+              <MapArea item={place} isRenderMap={isRenderMap} />
             </View>
           </View>
         );
@@ -209,11 +211,12 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       <Header type={'placeDetail'} isShow={isShowTopCalendar} />
       <AnimatedFlatList
         data={[0, 1, 2, 3, 4, 5, 6, 7]}
+        // data={[4, 5, 6, 7]}
         ref={animatedFlatRef}
-        renderItem={({ item, index }: any) => renderItem(index)}
+        renderItem={({ item }: any) => renderItem(item)}
         keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={4}
-        maxToRenderPerBatch={7}
+        initialNumToRender={20}
+        maxToRenderPerBatch={24}
         windowSize={7}
         showsVerticalScrollIndicator={false}
         refreshing={false}
