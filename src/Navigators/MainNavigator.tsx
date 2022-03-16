@@ -67,6 +67,7 @@ import EventHotDetailScreen from '@/Containers/Place/EventHotDetailScreen';
 import InviteFriendScreen from '@/Containers/More/InviteFriendScreen';
 import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 import RingmeProfileScreen from '@/Containers/More/RingmeProfileScreen';
+import OptimizationScreen from '@/Containers/Common/OptimizationScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -133,6 +134,8 @@ export type MainStackParamList = {
   EventHotDetailScreen: { eventIdx: number };
   InviteFriendScreen: undefined;
   RingmeProfileScreen: undefined;
+
+  OptimizationScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -230,6 +233,8 @@ const MainNavigator = () => {
       {/* iamport */}
       <MainStack.Screen name="PaymentScreen" component={PaymentScreen} />
       <MainStack.Screen name="CertificationScreen" component={CertificationScreen} />
+
+      <MainStack.Screen name="OptimizationScreen" component={OptimizationScreen} />
     </MainStack.Navigator>
   );
 };

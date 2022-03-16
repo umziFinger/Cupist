@@ -140,7 +140,8 @@ const CodePushContainer = () => {
         if (result === 0) {
           dispatch(HomeActions.fetchHomeReducer({ type: 'isHomeLoaded', data: true }));
           RNBootSplash.hide();
-          navigateAndSimpleReset('Main');
+          if (permissionYN === 'Y') navigateAndSimpleReset('Main');
+          else navigateAndSimpleReset('Permission');
         } else {
           // 코드푸쉬 완료시 재부팅하기때문에 다시 스플래시 show
           RNBootSplash.show();

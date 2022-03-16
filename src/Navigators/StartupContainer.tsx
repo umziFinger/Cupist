@@ -39,24 +39,48 @@ const StartupContainer = () => {
         // 코드푸시에서 체크용
         if (!appCodePushVersion) {
           if (codePushVersion > 'v0') {
-            console.log('최초 코드푸시 업데이트 있음 코드푸시 컨테이너 이동', appCodePushVersion, codePushVersion);
+            console.log(
+              '최초 코드푸시 업데이트 있음 코드푸시 컨테이너 이동',
+              appCodePushVersion,
+              codePushVersion,
+              '\n permissionYN : ',
+              permissionYN,
+            );
             dispatch(HomeActions.fetchHomeReducer({ type: 'isHomeLoaded', data: false }));
             dispatch(CommonActions.fetchCommonReducer({ type: 'appCodePushVersion', data: codePushVersion }));
             navigateAndSimpleReset('CodePush');
           } else {
-            console.log('최초 코드푸시 업데이트 없음 메인 이동', appCodePushVersion, codePushVersion);
+            console.log(
+              '최초 코드푸시 업데이트 없음 메인 이동',
+              appCodePushVersion,
+              codePushVersion,
+              '\n permissionYN : ',
+              permissionYN,
+            );
             dispatch(HomeActions.fetchHomeReducer({ type: 'isHomeLoaded', data: true }));
             RNBootSplash.hide();
             if (permissionYN === 'Y') navigateAndSimpleReset('Main');
             else navigateAndSimpleReset('Permission');
           }
         } else if (appCodePushVersion < codePushVersion) {
-          console.log('코드푸시 업데이트 있음 코드푸시 컨테이너 이동', appCodePushVersion, codePushVersion);
+          console.log(
+            '코드푸시 업데이트 있음 코드푸시 컨테이너 이동',
+            appCodePushVersion,
+            codePushVersion,
+            '\n permissionYN : ',
+            permissionYN,
+          );
           dispatch(HomeActions.fetchHomeReducer({ type: 'isHomeLoaded', data: false }));
           dispatch(CommonActions.fetchCommonReducer({ type: 'appCodePushVersion', data: codePushVersion }));
           navigateAndSimpleReset('CodePush');
         } else {
-          console.log('코드푸시 업데이트 없음 메인 이동', appCodePushVersion, codePushVersion);
+          console.log(
+            '코드푸시 업데이트 없음 메인 이동',
+            appCodePushVersion,
+            codePushVersion,
+            '\n permissionYN : ',
+            permissionYN,
+          );
           dispatch(HomeActions.fetchHomeReducer({ type: 'isHomeLoaded', data: true }));
           RNBootSplash.hide();
           if (permissionYN === 'Y') navigateAndSimpleReset('Main');

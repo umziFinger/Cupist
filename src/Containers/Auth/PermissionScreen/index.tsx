@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
+import RNBootSplash from 'react-native-bootsplash';
 import CustomText from '@/Components/CustomText';
 import { DATA_PERMISSIONS } from '@/Containers/Auth/PermissionScreen/data';
 import CommonActions from '@/Stores/Common/Actions';
@@ -16,6 +17,10 @@ import { navigateAndSimpleReset } from '@/Services/NavigationService';
 
 const PermissionScreen = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    RNBootSplash.hide();
+  }, []);
 
   const onConfirm = async () => {
     // dispatch(CommonActions.fetchCommonReducer({ type: 'permissionYN', data: 'Y' }));

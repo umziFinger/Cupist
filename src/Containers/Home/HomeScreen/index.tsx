@@ -27,7 +27,6 @@ import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import { scrollHomeHandler } from '@/Components/Function';
 import { SearchState } from '@/Stores/Search/InitialState';
 import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
-
 import { LocationCheck } from '@/Components/Permission/Location';
 
 interface HomeProps {
@@ -127,7 +126,6 @@ const HomeScreen = ({ route }: HomeProps) => {
   };
 
   const onRefresh = () => {
-    console.log('새로고침');
     positionUpdate().then();
 
     // 선결제 필터 선택시 데이터가 없는경우 선결제 특가 영역 자체가 사라지며, 날짜 필터를 선택할 수 없는 경우 발생하여 추가
