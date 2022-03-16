@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { Platform, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
@@ -34,9 +34,15 @@ const PlaceLargeCard = (props: PropTypes) => {
           marginBottom: 17,
         }}
       >
-        <View style={{ width, height: width * 0.42 }}>
+        <View
+          style={{
+            height: width * 0.42,
+            alignItems: 'center',
+            borderRadius: 5,
+          }}
+        >
           <FastImage
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', borderRadius: 5 }}
             source={
               !item?.placePhotoArr[0] || isError
                 ? require('@/Assets/Images/Common/icNoImage.png')
@@ -110,6 +116,7 @@ const PlaceLargeCard = (props: PropTypes) => {
         {item?.event !== '' && (
           <View
             style={{
+              // width: width - 40,
               backgroundColor: Color.Gray100,
               paddingVertical: 10,
               borderRadius: 5,
@@ -123,7 +130,7 @@ const PlaceLargeCard = (props: PropTypes) => {
                 EVENT
               </CustomText>
             </View>
-            <View>
+            <View style={{ flex: 1, paddingRight: 15, justifyContent: 'center' }}>
               <CustomText style={{ fontSize: 12, letterSpacing: 0, color: Color.Grayyellow500 }}>
                 {item?.event || ''}
               </CustomText>

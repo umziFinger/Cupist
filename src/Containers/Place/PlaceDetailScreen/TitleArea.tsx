@@ -85,7 +85,7 @@ const TitleArea = (props: PropTypes) => {
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>
-        <View style={{ justifyContent: 'center', marginRight: 8 }}>
+        <View style={{ justifyContent: 'center', marginRight: 8, flex: 1 }}>
           <CustomText style={{ color: Color.Black1000, fontSize: 13, letterSpacing: -0.2 }}>
             {item?.newAddress || '주소 정보 없음'}
           </CustomText>

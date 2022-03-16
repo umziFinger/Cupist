@@ -16,7 +16,7 @@ const RecentPlaceScreen = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { recentListPage, recentList } = useSelector((state: PlaceState) => state.place);
-  // console.log('아아아:', recentList);
+
   useEffect(() => {
     const params = {
       perPage: 10,
