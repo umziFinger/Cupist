@@ -14,6 +14,7 @@ import { HomeState } from '@/Stores/Home/InitialState';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import HomeActions from '@/Stores/Home/Actions';
 import CommonActions from '@/Stores/Common/Actions';
+import { navigate } from '@/Services/NavigationService';
 
 interface PropTypes {
   list: Array<any>;
@@ -88,7 +89,7 @@ const DirectReservationArea = (props: PropTypes) => {
     {
       index: 1,
       key: 'around',
-      value: '가까운',
+      value: '내주변',
       color: Color.Grayyellow1000,
       backgroundColor: 'transparent',
     },
@@ -161,8 +162,6 @@ const DirectReservationArea = (props: PropTypes) => {
       </View>
     );
   }, [possibleDirectDate]);
-
-  // const test = [];
 
   return (
     <View style={{ flex: 1, marginTop: 40 }}>
@@ -292,6 +291,41 @@ const DirectReservationArea = (props: PropTypes) => {
           </View>
         }
       />
+      {areaFilterIdx === 1 && (
+        <CustomButton
+          onPress={() => navigate('MyAroundScreen')}
+          style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}
+        >
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+              backgroundColor: 'rgba(246, 245, 242, 0.5)',
+              borderWidth: 1,
+              borderRadius: 21,
+              borderColor: Color.Grayyellow100,
+              paddingVertical: 12,
+              paddingLeft: 20,
+              paddingRight: 16,
+            }}
+          >
+            <CustomText style={{ color: Color.Grayyellow500, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}>
+              내 주변{' '}
+            </CustomText>
+            <CustomText style={{ color: Color.Grayyellow500, fontSize: 13, letterSpacing: -0.2 }}>
+              볼링장 모두보기
+            </CustomText>
+            <View style={{ width: 15, height: 15 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Home/icArrowRiPurple.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
+          </View>
+        </CustomButton>
+      )}
     </View>
   );
 };
