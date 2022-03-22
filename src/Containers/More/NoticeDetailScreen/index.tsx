@@ -48,10 +48,6 @@ const NoticeDetailScreen = () => {
                 {/* <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Black1000 }}> */}
                 {/*  {myNoticeDetail?.content || ''} */}
                 {/* </CustomText> */}
-
-                {/* <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Black1000 }}> */}
-                {/*  {myNoticeDetail?.content || ''} */}
-                {/* </CustomText> */}
                 {/* <WebView */}
                 {/*  originWhitelist={['*']} */}
                 {/*  onError={(event: any) => { */}
