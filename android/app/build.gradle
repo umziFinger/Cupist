@@ -136,8 +136,8 @@ android {
         applicationId "kr.bolimi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 26
-        versionName "1.0.9"
+        versionCode 28
+        versionName "1.1.0"
         vectorDrawables.useSupportLibrary = true
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
         missingDimensionStrategy 'react-native-camera', 'general'
@@ -190,6 +190,8 @@ android {
 }
 
 dependencies {
+    implementation "com.facebook.soloader:soloader:0.10.3+"
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
