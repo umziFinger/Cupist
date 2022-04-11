@@ -28,6 +28,7 @@ import { scrollHomeHandler } from '@/Components/Function';
 import { SearchState } from '@/Stores/Search/InitialState';
 import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
 import { LocationCheck } from '@/Components/Permission/Location';
+import AlbamonBanner from '@/Containers/Home/HomeScreen/AlbamonBanner';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -148,9 +149,12 @@ const HomeScreen = ({ route }: HomeProps) => {
     switch (item) {
       case 0: {
         return (
-          <View style={{ flex: 1, marginTop: 40, paddingLeft: 20 }}>
-            <HelloArea />
-          </View>
+          <>
+            <View style={{ flex: 1, marginTop: 40, paddingLeft: 20 }}>
+              <HelloArea />
+            </View>
+            <AlbamonBanner />
+          </>
         );
       }
       case 1: {

@@ -6,6 +6,7 @@ import MyTabMenu from '@/Components/TabMenu/MyTabMenu';
 import ReservationTabMenu from '@/Components/TabMenu/ReservationTabMenu';
 import CouponTabMenu from '@/Components/TabMenu/CouponTabMenu';
 import EventHotTabMenu from '@/Components/TabMenu/EventHotTabMenu';
+import AlbamonTabMenu from '@/Components/TabMenu/AlbamonTabMenu';
 
 interface TabMenuProps {
   type: string;
@@ -29,6 +30,8 @@ const TabMenu = (props: TabMenuProps) => {
       return <CouponTabMenu type={type} data={data} />;
     case 'eventHot':
       return <EventHotTabMenu type={type} data={data} />;
+    case 'albamon':
+      return <AlbamonTabMenu type={type} data={data} />;
     default:
       return null;
   }

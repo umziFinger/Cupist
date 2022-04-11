@@ -68,6 +68,7 @@ import InviteFriendScreen from '@/Containers/More/InviteFriendScreen';
 import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 import RingmeProfileScreen from '@/Containers/More/RingmeProfileScreen';
 import OptimizationScreen from '@/Containers/Common/OptimizationScreen';
+import RegistScreen from '@/Containers/Albamon/RegistScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -134,6 +135,7 @@ export type MainStackParamList = {
   EventHotDetailScreen: { eventIdx: number };
   InviteFriendScreen: undefined;
   RingmeProfileScreen: undefined;
+  RegistScreen: undefined;
 
   OptimizationScreen: undefined;
 };
@@ -223,6 +225,9 @@ const MainNavigator = () => {
       <MainStack.Screen name="ReservationCancelPopupScreen" component={ReservationCancelPopupScreen} />
       <MainStack.Screen name="RegisterPasswordModifyScreen" component={RegisterPasswordModifyScreen} />
       <MainStack.Screen name="AddCardCheckPasswordScreen" component={AddCardCheckPasswordScreen} />
+
+      {/* ALBAMON */}
+      <MainStack.Screen name="RegistScreen" component={RegistScreen} />
 
       {/* Review */}
       <MainStack.Screen name="ReviewModifyScreen" component={ReviewModifyScreen} />
