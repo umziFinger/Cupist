@@ -275,17 +275,24 @@ const RegistScreen = () => {
                     {
                       width: width - 48,
                       left: 24,
-                      top: 113,
-                      borderWidth: 1,
+                      top: 125  ,
+                      // borderWidth: 1,
+                      borderBottomWidth:1,
+                      borderLeftWidth:1,
+                      borderRightWidth:1,
                       borderColor:Color.Gray300,
                       paddingTop: 31,
                       paddingBottom: 18,
                       paddingHorizontal: 10,
-                      borderRadius: 3,
+                      borderBottomRightRadius:3,
+                      borderBottomLeftRadius:3,
+
+                      // borderRadius: 3,
                       backgroundColor: 'white',
                       position: 'absolute',
                       zIndex: 9
                     },
+
                     Platform.OS === 'android'
                       ? {}
                       : {
@@ -318,7 +325,7 @@ const RegistScreen = () => {
                 >
                   참가신청서
                 </CustomText>
-                <View style={{ paddingHorizontal: 24, marginTop: 29 }}>
+                <View style={{ paddingHorizontal: 24, marginTop: 29 , zIndex: 10}}>
                   <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
                     클럽명
                   </CustomText>
