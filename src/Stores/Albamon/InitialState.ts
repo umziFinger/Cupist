@@ -3,12 +3,14 @@ export const INITIAL_STATE = {
     title: '시간제/자유볼링',
     key: 'default',
   },
+  albamonDate: '',
 };
 
 export interface AlbamonState {
   albamon: {
     placeDetailSelectedTab: PlaceDetailTabType;
     placeAlbamonTicketList: PlaceAlbamonTicketList;
+    albamonDate: string | null;
   };
 }
 

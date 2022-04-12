@@ -4,23 +4,39 @@ import { View } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
+import { put } from 'redux-saga/effects';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
 import CommonActions from '@/Stores/Common/Actions';
 import HomeActions from '@/Stores/Home/Actions';
+import AlbamonActions from '@/Stores/Albamon/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
+import { AlbamonState } from '@/Stores/Albamon/InitialState';
 
 const CalendarSlider = () => {
   const dispatch = useDispatch();
   const calendarRef = useRef<any>();
 
   const { calendarDate } = useSelector((state: HomeState) => state.home);
+  const { albamonDate, placeDetailSelectedTab } = useSelector((state: AlbamonState) => state.albamon);
   const [headerDate, setHeaderDate] = useState<string>(moment().format('MM월 YYYY').toString());
 
   useEffect(() => {
-    setHeaderDate(moment(calendarDate).format('MM월 YYYY'));
-  }, [calendarDate]);
+    return (
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'albamonDate', data: '' })),
+      dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() })),
+      setHeaderDate(moment(calendarDate).format('MM월 YYYY'))
+    );
+  }, []);
+
+  useEffect(() => {
+    if (placeDetailSelectedTab.key === 'default') {
+      setHeaderDate(moment(calendarDate).format('MM월 YYYY'));
+    } else {
+      setHeaderDate(moment(albamonDate).format('MM') === '04' ? '04월 2022' : '05월 2022');
+    }
+  }, [calendarDate, placeDetailSelectedTab, albamonDate]);
 
   // 선택 가능 날짜 범위
   const datesWhitelist = (date: any) => {
@@ -31,7 +47,11 @@ const CalendarSlider = () => {
   const onPressDate = (date: any) => {
     // console.log('onPressDate : ', calendarDate);
     setHeaderDate(date.format('MM월 YYYY'));
-    dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(date).toString() }));
+    if (placeDetailSelectedTab.key === 'default') {
+      dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(date).toString() }));
+    } else {
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'albamonDate', data: moment(date).toString() }));
+    }
   };
 
   const onPressHeader = () => {
@@ -115,25 +135,26 @@ const CalendarSlider = () => {
           }}
           shouldAllowFontScaling={false}
           style={{ flex: 1, marginTop: 5, marginBottom: -7 }}
-          startingDate={moment(calendarDate)}
+          startingDate={placeDetailSelectedTab.key === 'default' ? moment(calendarDate) : new Date('2022-04-30')}
           scrollable
           numDaysInWeek={8}
-          selectedDate={moment(calendarDate)}
+          selectedDate={placeDetailSelectedTab.key === 'default' ? moment(calendarDate) : moment(albamonDate)}
           datesWhitelist={datesWhitelist}
           leftSelector={[]}
           rightSelector={[]}
-          minDate={moment()}
-          maxDate={moment().add(2, 'month')}
+          minDate={placeDetailSelectedTab.key === 'default' ? moment() : new Date('2022-04-30')}
+          maxDate={placeDetailSelectedTab.key === 'default' ? moment().add(2, 'month') : new Date('2022-05-06')}
           calendarHeaderContainerStyle={{ display: 'none' }}
           dayComponentHeight={56}
           onDateSelected={(e) => {
             onPressDate(moment(e));
           }}
           dayComponent={(e) => renderDayComponent(e)}
+          useIsoWeekday={placeDetailSelectedTab.key === 'default'}
         />
       );
     },
-    [calendarDate],
+    [calendarDate, placeDetailSelectedTab, albamonDate],
   );
   return (
     <View style={{ flex: 1 }}>

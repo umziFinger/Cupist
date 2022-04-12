@@ -44,7 +44,9 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { placeDetail, placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { placeAlbamonTicketList, placeDetailSelectedTab } = useSelector((state: AlbamonState) => state.albamon);
+  const { placeAlbamonTicketList, placeDetailSelectedTab, albamonDate } = useSelector(
+    (state: AlbamonState) => state.albamon,
+  );
 
   const animatedFlatRef = useRef<any>();
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -67,13 +69,18 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
 
   useEffect(() => {
     dispatch(PlaceActions.fetchPlaceDetail({ idx }));
-    animatedFlatRef.current?.scrollToIndex({ index: 0, animated: true });
+    animatedFlatRef?.current?.scrollToIndex({ index: 0, animated: true });
   }, [route]);
 
   useEffect(() => {
-    dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
+    console.log(calendarDate, albamonDate);
+    if (placeDetailSelectedTab.key === 'default') {
+      dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
+    } else {
+      dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(albamonDate).format('YYYY-MM-DD') }));
+    }
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
-  }, [route, calendarDate]);
+  }, [route, calendarDate, albamonDate]);
 
   const handleScroll = (e: any) => {
     setIsRenderMap(e?.nativeEvent.contentOffset.y > 500 && e?.nativeEvent.contentOffset.y < 1500);
@@ -115,7 +122,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
           },
         }),
       );
-      animatedFlatRef.current?.scrollToIndex({ index: 2, animated: true });
+      animatedFlatRef?.current?.scrollToIndex({ index: 2, animated: true });
     }
   };
 
@@ -155,21 +162,12 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         return (
           <View style={{ flex: 1, marginTop: 20 }}>
             <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
-            {placeDetailSelectedTab.key === 'default' ? (
-              <TicketSlider
-                allowedTimeArr={[0, 1]}
-                item={placeTicketList || {}}
-                showDivider={false}
-                focusType={ticketType}
-              />
-            ) : (
-              <AlbamonTicketSlider
-                allowedTimeArr={[0, 1, 2]}
-                item={placeAlbamonTicketList || {}}
-                showDivider={false}
-                focusType={ticketType}
-              />
-            )}
+            <TicketSlider
+              allowedTimeArr={[0, 1]}
+              item={placeTicketList || {}}
+              showDivider={false}
+              focusType={ticketType}
+            />
           </View>
         );
       }

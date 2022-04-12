@@ -8,14 +8,20 @@ import { useSelector } from 'react-redux';
 import { CommonState } from '@/Stores/Common/InitialState';
 import FastImage from 'react-native-fast-image';
 import useInputPhoneNumber from '@/Hooks/useInputPhoneNumber';
+import { navigate } from '@/Services/NavigationService';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const RegistScreen = () => {
-  const InputRef = useRef<any>();
+  const ref_input: Array<React.RefObject<TextInput>> = [];
+  ref_input[0] = useRef(null);
+  ref_input[1] = useRef(null);
+  ref_input[2] = useRef(null);
+  ref_input[3] = useRef(null);
   const { phoneNumber, onChangePhoneNumber, isPhoneValid } = useInputPhoneNumber();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const {width} = useWindowDimensions()
-  const [gender, setGender] = useState('')
-  const [agreement, setAgreement] = useState<boolean>()
+  const [gender, setGender] = useState('F')
+  const [agreement, setAgreement] = useState<boolean>(true)
   const [clubName, setClubName] = useState('')
   const [placeName, setPlaceName] = useState('')
   const [name, setName] = useState('')
@@ -43,6 +49,12 @@ const RegistScreen = () => {
     setFocusIndex(index)
   }
 
+  const onFocusNext = (index: number) => {
+    if (ref_input[index]) {
+      ref_input[index].current?.focus();
+    }
+  };
+
   // 클럽명 클리어버튼
   const onClearClubName = () => {
     setClubName('')
@@ -52,7 +64,7 @@ const RegistScreen = () => {
   if (clubName !== '' && focusIndex === 0) {
     clubNameClearBox = (
       <CustomButton onPress={() => onClearClubName()} hitSlop={7}>
-        <View style={{ width: 16, height: 16 }}>
+        <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
             source={require('@/Assets/Images/Search/icTxtDel.png')}
@@ -72,7 +84,7 @@ const RegistScreen = () => {
   if (placeName !== '' && focusIndex === 1) {
     placeNameClearBox = (
       <CustomButton onPress={() => onClearPlaceName()} hitSlop={7} >
-        <View style={{ width: 16, height: 16 }}>
+        <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
             source={require('@/Assets/Images/Search/icTxtDel.png')}
@@ -92,7 +104,7 @@ const RegistScreen = () => {
   if (name !== '' && focusIndex === 2) {
     nameClearBox = (
       <CustomButton onPress={() => onClearName()} hitSlop={7} >
-        <View style={{ width: 16, height: 16 }}>
+        <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
             source={require('@/Assets/Images/Search/icTxtDel.png')}
@@ -112,13 +124,14 @@ const RegistScreen = () => {
   if (phoneNumber !== '' && focusIndex === 3) {
     phoneNumberClearBox = (
       <CustomButton onPress={() => onClearPhoneNumber()} hitSlop={7} >
-        <View style={{ width: 16, height: 16 }}>
+        <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
             source={require('@/Assets/Images/Search/icTxtDel.png')}
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>
+
       </CustomButton>
     );
   }
@@ -260,6 +273,39 @@ const RegistScreen = () => {
                   </CustomText>
                 </View>
               </View>
+              <View
+                style={{
+                  height: 1,
+                  backgroundColor: 'rgb(244,244,244)',
+                  marginTop: 20,
+                  marginLeft: 19,
+                  marginRight: 13,
+                }}
+              />
+              <View style={{ marginHorizontal: 29, marginTop: 17 }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.41 }}>참가신청 금액 안내</CustomText>
+                </View>
+                <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                  <View
+                    style={{
+                      backgroundColor: 'rgba(184,184,184,0.1)',
+                      borderRadius: 2,
+                      paddingHorizontal: 5,
+                      paddingVertical: 2,
+                    }}
+                  >
+                    <CustomText
+                      style={{ color: Color.Grayyellow500, fontSize: 11, fontWeight: 'bold', letterSpacing: -0.38 }}
+                    >
+                      금액안내
+                    </CustomText>
+                  </View>
+                  <CustomText style={{ fontSize: 14, letterSpacing: -0.11, fontWeight: '500', marginLeft: 11 }}>
+                    10,000원
+                  </CustomText>
+                </View>
+              </View>
             </View>
           </View>
         );
@@ -275,13 +321,64 @@ const RegistScreen = () => {
                     {
                       width: width - 48,
                       left: 24,
-                      top: 125  ,
+                      top: 122,
                       // borderWidth: 1,
                       borderBottomWidth:1,
                       borderLeftWidth:1,
                       borderRightWidth:1,
                       borderColor:Color.Gray300,
-                      paddingTop: 31,
+                      paddingTop: 22,
+                      paddingBottom: 18,
+                      paddingHorizontal: 10,
+                      borderBottomRightRadius:3,
+                      borderBottomLeftRadius:3,
+
+                      // borderRadius: 3,
+                      backgroundColor: 'white',
+                      position: 'absolute',
+                      zIndex: 9
+                    },
+
+                    Platform.OS === 'android'
+                      ? {elevation: 1}
+                      : {
+                        shadowOffset: {
+                          width: 0,
+                          height: 4,
+                        },
+                        shadowColor: 'rgba(176, 176, 176, 0.1)',
+                        shadowOpacity: 10,
+                      },
+                  ]}>
+                    <FlatList
+                      data={[0, 1, 2]}
+                      renderItem={({ item, index }: any)=> (
+                        <View>
+                          <CustomButton style={{marginTop: index === 0 ? 0 : 17}}>
+                            <CustomText style={{fontSize: 13, lineHeight: -0.15 }}>볼리미 볼링장</CustomText>
+                          </CustomButton>
+                        </View>
+                      )}
+                      keyExtractor={(item, index) => index.toString()}
+                      initialNumToRender={3}
+                      maxToRenderPerBatch={7}
+                      windowSize={7}
+                      showsVerticalScrollIndicator={false}
+                    />
+                  </View>
+                }
+                {focusIndex === 1 &&
+                  <View style={[
+                    {
+                      width: width - 48,
+                      left: 24,
+                      top: 221,
+                      // borderWidth: 1,
+                      borderBottomWidth:1,
+                      borderLeftWidth:1,
+                      borderRightWidth:1,
+                      borderColor:Color.Gray300,
+                      paddingTop: 28,
                       paddingBottom: 18,
                       paddingHorizontal: 10,
                       borderBottomRightRadius:3,
@@ -307,10 +404,17 @@ const RegistScreen = () => {
                     <FlatList
                       data={[0, 1, 2]}
                       renderItem={({ item, index }: any)=> (
-                        <CustomButton style={{marginTop: index === 0 ? 0 : 17}}>
-                          <CustomText style={{fontSize: 13, lineHeight: -0.15 }}>볼리미 볼링장</CustomText>
-                        </CustomButton>
+                        <View>
+                          <CustomButton style={{marginTop: index === 0 ? 0 : 17}}>
+                            <CustomText style={{fontSize: 13, lineHeight: -0.15 }}>볼리미 볼링장</CustomText>
+                          </CustomButton>
+                        </View>
                       )}
+                      keyExtractor={(item, index) => index.toString()}
+                      initialNumToRender={3}
+                      maxToRenderPerBatch={7}
+                      windowSize={7}
+                      showsVerticalScrollIndicator={false}
                     />
                   </View>
                 }
@@ -339,12 +443,11 @@ const RegistScreen = () => {
                       paddingVertical: Platform.OS === 'ios' ? 15 : 7.5,
                       marginTop: 8,
                       flexDirection: 'row',
-                      backgroundColor: 'white',
                       zIndex: 999
                     }}
                   >
                     <TextInput
-                      ref={InputRef}
+                      ref={ref_input[0]}
                       autoCompleteType="off"
                       placeholder={'클럽명을 입력해주세요'}
                       placeholderTextColor={Color.Gray400}
@@ -367,7 +470,7 @@ const RegistScreen = () => {
                     {clubNameClearBox}
                   </View>
                 </View>
-                <View style={{ paddingHorizontal: 24, marginTop: 32 }}>
+                <View style={{ paddingHorizontal: 24, marginTop: 32 , zIndex: focusIndex === 1 ? 10 : 0 }}>
                   <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
                     참가 볼링장(변경불가)
                   </CustomText>
@@ -384,7 +487,7 @@ const RegistScreen = () => {
                     }}
                   >
                     <TextInput
-                      ref={InputRef}
+                      ref={ref_input[1]}
                       autoCompleteType="off"
                       placeholder={'볼링장명을 입력해주세요'}
                       placeholderTextColor={Color.Gray400}
@@ -424,7 +527,7 @@ const RegistScreen = () => {
                     }}
                   >
                     <TextInput
-                      ref={InputRef}
+                      ref={ref_input[2]}
                       autoCompleteType="off"
                       placeholder={'이름을 입력해주세요'}
                       placeholderTextColor={Color.Gray400}
@@ -464,7 +567,7 @@ const RegistScreen = () => {
                     }}
                   >
                     <TextInput
-                      ref={InputRef}
+                      ref={ref_input[3]}
                       autoCompleteType="off"
                       placeholder={'휴대폰번호를 입력해주세요'}
                       placeholderTextColor={Color.Gray400}
@@ -580,8 +683,11 @@ const RegistScreen = () => {
             <View style={{alignItems: 'center'}}>
               <CustomText style={{color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>위 내용은 사실과 다름이 없으며 본 대회 참가를 신청합니다.</CustomText>
             </View>
-            <CustomButton style={{paddingVertical: 15, backgroundColor: validCheck() ? Color.Primary1000 : Color.Grayyellow200, borderRadius: 3, alignItems: 'center', marginTop: 14}}>
-              <CustomText style={{color:Color.White, fontSize: 14, fontWeight: 'bold'}}>제출하기</CustomText>
+            <CustomButton
+              style={{paddingVertical: 15, backgroundColor: validCheck() ? Color.Primary1000 : Color.Grayyellow200, borderRadius: 3, alignItems: 'center', marginTop: 14}}
+              onPress={() => navigate('RegistCompleteScreen')}
+            >
+              <CustomText style={{color:Color.White, fontSize: 14, fontWeight: 'bold'}}>참가 신청하기</CustomText>
             </CustomButton>
           </View>
         )
@@ -598,7 +704,27 @@ const RegistScreen = () => {
         data={[0, 1, 2]}
         renderItem={({ item }: any) => renderItem(item)}
         ListFooterComponent={<View style={{height: heightInfo.fixBottomHeight}}/>}
-        keyboardShouldPersistTaps={'handled'}/>
+        keyboardShouldPersistTaps={'handled'}
+      />
+      {focusIndex !== -1 &&
+        <View
+          style={{paddingTop: 7, paddingBottom: 8}}
+        >
+          <CustomButton
+            onPress={() => onFocusNext(focusIndex + 1)}
+            style={{
+              marginHorizontal: 24,
+              paddingVertical: 15,
+              backgroundColor: Color.Primary1000,
+              alignItems: 'center',
+              borderRadius: 3,
+            }}
+          >
+            <CustomText style={{fontSize: 14, color: Color.White, fontWeight: 'bold', letterSpacing: -0.25}}>다음</CustomText>
+          </CustomButton>
+        </View>
+      }
+      {Platform.OS === 'ios' && <KeyboardSpacer />}
     </View>
   );
 };

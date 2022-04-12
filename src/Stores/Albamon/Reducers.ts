@@ -15,6 +15,10 @@ export const fetchAlbamonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.placeDetailSelectedTab = INITIAL_STATE.placeDetailSelectedTab;
         break;
       }
+      case 'albamonDate': {
+        draft.albamonDate = data;
+        break;
+      }
       default:
         return draft;
     }
