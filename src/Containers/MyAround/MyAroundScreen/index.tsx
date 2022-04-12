@@ -54,7 +54,13 @@ const MyAroundScreen = () => {
       dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
 
       if (location?.areaName === '') {
-        setHeaderText('내주변');
+        if (myAroundSort?.key === 'albamon') {
+          setHeaderText('알바몬 코리아 볼링왕');
+        } else {
+          setHeaderText('내주변');
+        }
+      } else if (myAroundSort?.key === 'albamon') {
+        setHeaderText('알바몬 코리아 볼링왕');
       } else {
         setHeaderText(location?.areaName);
       }
@@ -68,7 +74,13 @@ const MyAroundScreen = () => {
         dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
 
         if (location?.areaName === '') {
-          setHeaderText('내주변');
+          if (myAroundSort?.key === 'albamon') {
+            setHeaderText('알바몬 코리아 볼링왕');
+          } else {
+            setHeaderText('내주변');
+          }
+        } else if (myAroundSort?.key === 'albamon') {
+          setHeaderText('알바몬 코리아 볼링왕');
         } else {
           setHeaderText(location?.areaName);
         }
@@ -113,7 +125,7 @@ const MyAroundScreen = () => {
       console.log('DELETE handler');
       handler.remove();
     }
-  }, [isFocused]);
+  }, [isFocused, myAroundSort]);
 
   useEffect(() => {
     console.log('내주변 볼링장 위치 변경: ', location.lat, location.areaCode, location.lng);

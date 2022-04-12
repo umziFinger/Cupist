@@ -1,13 +1,32 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { useDispatch } from 'react-redux';
 import Header from '@/Components/Header';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CustomDashed from '@/Components/CustomDashed';
 import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
+import PlaceActions from '@/Stores/Place/Actions';
 
 const RegistCompleteScreen = () => {
+  const dispatch = useDispatch();
+
+  const onGoMyAroundAlbamon = () => {
+    dispatch(
+      PlaceActions.fetchPlaceReducer({
+        type: 'myAroundSort',
+        data: {
+          index: 3,
+          key: 'albamon',
+          value: '알코볼',
+        },
+      }),
+    );
+    navigate('MyAroundScreen');
+  };
+
   return (
     <View style={{ backgroundColor: Color.White, flex: 1 }}>
       <Header type={'back'} />
@@ -93,6 +112,7 @@ const RegistCompleteScreen = () => {
               <CustomDashed dashLength={2.7} dashColor={Color.Gray350} style={{ height: '100%' }} />
             </View>
             <CustomButton
+              onPress={() => onGoMyAroundAlbamon()}
               style={{
                 borderWidth: 1,
                 borderColor: Color.Grayyellow200,
@@ -106,7 +126,7 @@ const RegistCompleteScreen = () => {
             </CustomButton>
             <View style={{ alignItems: 'center', marginTop: 12 }}>
               <CustomText style={{ fontSize: 13, color: Color.Point1000, letterSpacing: -0.2 }}>
-                2022년 09월 17일 07시 59분까지 취소가 가능합니다.
+                변경 및 취소문의는 고객센터에 문의해주세요.
               </CustomText>
             </View>
           </View>

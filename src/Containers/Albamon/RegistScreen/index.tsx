@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Platform, TextInput, useWindowDimensions, View } from 'react-native';
+import { FlatList, Platform, ScrollView, TextInput, useWindowDimensions, View } from 'react-native';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { Color } from '@/Assets/Color';
@@ -10,6 +10,7 @@ import FastImage from 'react-native-fast-image';
 import useInputPhoneNumber from '@/Hooks/useInputPhoneNumber';
 import { navigate } from '@/Services/NavigationService';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import HTML from 'react-native-render-html';
 
 const RegistScreen = () => {
   const ref_input: Array<React.RefObject<TextInput>> = [];
@@ -46,6 +47,7 @@ const RegistScreen = () => {
   }
 
   const onFocus = (index: number) => {
+
     setFocusIndex(index)
   }
 
@@ -136,6 +138,7 @@ const RegistScreen = () => {
     );
   }
 
+  const list = [0,1,2]
   const renderItem = (item: number) => {
     switch (item) {
       case 0: {
@@ -322,12 +325,67 @@ const RegistScreen = () => {
                       width: width - 48,
                       left: 24,
                       top: 122,
+                      height: 134,
                       // borderWidth: 1,
                       borderBottomWidth:1,
                       borderLeftWidth:1,
                       borderRightWidth:1,
                       borderColor:Color.Gray300,
                       paddingTop: 22,
+                      paddingBottom: 18,
+                      paddingHorizontal: 10,
+                      borderBottomRightRadius:3,
+                      borderBottomLeftRadius:3,
+                      // borderRadius: 3,
+                      backgroundColor: 'white',
+                      position: 'absolute',
+                      zIndex: 9
+                    },
+
+                    Platform.OS === 'android'
+                      ? {elevation: 1}
+                      : {
+                        shadowOffset: {
+                          width: 0,
+                          height: 4,
+                        },
+                        shadowColor: 'rgba(176, 176, 176, 0.1)',
+                        shadowOpacity: 10,
+                      },
+                  ]}>
+                    <ScrollView
+                      style={{ height: 134 }}
+                      showsVerticalScrollIndicator={true}
+                      nestedScrollEnabled={true}
+                    >
+                      {[0,1,2,3,4,5].map((v, index) => {
+                        // 검색어 하이라이트 처리
+                        return (
+                          <CustomButton key={index.toString()}>
+                            <View style={{ marginTop: index === 0 ? 0 : 17 }}>
+                              <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>
+                                볼리볼리 볼링장
+                              </CustomText>
+                            </View>
+                          </CustomButton>
+                        );
+                      })}
+                    </ScrollView>
+                  </View>
+                }
+                {focusIndex === 1 &&
+                  <View style={[
+                    {
+                      width: width - 48,
+                      height: 134,
+                      left: 24,
+                      top: 222,
+                      // borderWidth: 1,
+                      borderBottomWidth:1,
+                      borderLeftWidth:1,
+                      borderRightWidth:1,
+                      borderColor:Color.Gray300,
+                      paddingTop: 30,
                       paddingBottom: 18,
                       paddingHorizontal: 10,
                       borderBottomRightRadius:3,
@@ -350,72 +408,24 @@ const RegistScreen = () => {
                         shadowOpacity: 10,
                       },
                   ]}>
-                    <FlatList
-                      data={[0, 1, 2]}
-                      renderItem={({ item, index }: any)=> (
-                        <View>
-                          <CustomButton style={{marginTop: index === 0 ? 0 : 17}}>
-                            <CustomText style={{fontSize: 13, lineHeight: -0.15 }}>볼리미 볼링장</CustomText>
+                    <ScrollView
+                      style={{ zIndex: 99, height: 142 }}
+                      showsVerticalScrollIndicator={true}
+                      nestedScrollEnabled={true}
+                    >
+                      {[0,1,2,3,4,5].map((v, index) => {
+                        // 검색어 하이라이트 처리
+                        return (
+                          <CustomButton key={index.toString()}>
+                              <View style={{ marginTop: index === 0 ? 0 : 17 }}>
+                                <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>
+                                  볼리볼리 볼링장
+                                </CustomText>
+                              </View>
                           </CustomButton>
-                        </View>
-                      )}
-                      keyExtractor={(item, index) => index.toString()}
-                      initialNumToRender={3}
-                      maxToRenderPerBatch={7}
-                      windowSize={7}
-                      showsVerticalScrollIndicator={false}
-                    />
-                  </View>
-                }
-                {focusIndex === 1 &&
-                  <View style={[
-                    {
-                      width: width - 48,
-                      left: 24,
-                      top: 221,
-                      // borderWidth: 1,
-                      borderBottomWidth:1,
-                      borderLeftWidth:1,
-                      borderRightWidth:1,
-                      borderColor:Color.Gray300,
-                      paddingTop: 28,
-                      paddingBottom: 18,
-                      paddingHorizontal: 10,
-                      borderBottomRightRadius:3,
-                      borderBottomLeftRadius:3,
-
-                      // borderRadius: 3,
-                      backgroundColor: 'white',
-                      position: 'absolute',
-                      zIndex: 9
-                    },
-
-                    Platform.OS === 'android'
-                      ? {}
-                      : {
-                        shadowOffset: {
-                          width: 0,
-                          height: 4,
-                        },
-                        shadowColor: 'rgba(176, 176, 176, 0.1)',
-                        shadowOpacity: 10,
-                      },
-                  ]}>
-                    <FlatList
-                      data={[0, 1, 2]}
-                      renderItem={({ item, index }: any)=> (
-                        <View>
-                          <CustomButton style={{marginTop: index === 0 ? 0 : 17}}>
-                            <CustomText style={{fontSize: 13, lineHeight: -0.15 }}>볼리미 볼링장</CustomText>
-                          </CustomButton>
-                        </View>
-                      )}
-                      keyExtractor={(item, index) => index.toString()}
-                      initialNumToRender={3}
-                      maxToRenderPerBatch={7}
-                      windowSize={7}
-                      showsVerticalScrollIndicator={false}
-                    />
+                        );
+                      })}
+                    </ScrollView>
                   </View>
                 }
                 <CustomText
@@ -679,13 +689,13 @@ const RegistScreen = () => {
       }
       case 2: {
         return(
-          <View style={{marginHorizontal: 24, marginTop: 36}}>
+          <View style={{marginHorizontal: 24, marginTop: 36, paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,}}>
             <View style={{alignItems: 'center'}}>
               <CustomText style={{color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>위 내용은 사실과 다름이 없으며 본 대회 참가를 신청합니다.</CustomText>
             </View>
             <CustomButton
               style={{paddingVertical: 15, backgroundColor: validCheck() ? Color.Primary1000 : Color.Grayyellow200, borderRadius: 3, alignItems: 'center', marginTop: 14}}
-              onPress={() => navigate('RegistCompleteScreen')}
+              onPress={() => validCheck() && navigate('RegistCompleteScreen')}
             >
               <CustomText style={{color:Color.White, fontSize: 14, fontWeight: 'bold'}}>참가 신청하기</CustomText>
             </CustomButton>
@@ -704,7 +714,7 @@ const RegistScreen = () => {
         data={[0, 1, 2]}
         renderItem={({ item }: any) => renderItem(item)}
         ListFooterComponent={<View style={{height: heightInfo.fixBottomHeight}}/>}
-        keyboardShouldPersistTaps={'handled'}
+        keyboardShouldPersistTaps={focusIndex === 0 || focusIndex === 1 ? 'always' : 'handled'}
       />
       {focusIndex !== -1 &&
         <View

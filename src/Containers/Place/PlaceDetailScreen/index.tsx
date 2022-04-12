@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, FlatList, Platform, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,7 +29,7 @@ import PlaceDetailAlbamonBanner from '@/Containers/Place/PlaceDetailScreen/Place
 import TabMenu from '@/Components/TabMenu';
 import { PLACE_DETAIL_TAB_DATA } from '@/Containers/Place/PlaceDetailScreen/data';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
-import AlbamonTicketSlider from '@/Components/Card/Common/AlbamonTicketSlider';
+import UnsupportAlbamon from '@/Containers/Place/PlaceDetailScreen/UnsupportAlbamon';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
@@ -44,9 +44,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { placeDetail, placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { placeAlbamonTicketList, placeDetailSelectedTab, albamonDate } = useSelector(
-    (state: AlbamonState) => state.albamon,
-  );
+  const { placeDetailSelectedTab, albamonDate } = useSelector((state: AlbamonState) => state.albamon);
 
   const animatedFlatRef = useRef<any>();
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -76,11 +74,13 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     console.log(calendarDate, albamonDate);
     if (placeDetailSelectedTab.key === 'default') {
       dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
+    } else if (!albamonDate) {
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeTicketList', data: '' }));
     } else {
       dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(albamonDate).format('YYYY-MM-DD') }));
     }
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
-  }, [route, calendarDate, albamonDate]);
+  }, [route, calendarDate, albamonDate, placeDetailSelectedTab]);
 
   const handleScroll = (e: any) => {
     setIsRenderMap(e?.nativeEvent.contentOffset.y > 500 && e?.nativeEvent.contentOffset.y < 1500);
@@ -152,23 +152,28 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <TabMenu type={'albamon'} data={PLACE_DETAIL_TAB_DATA} />
-            <View style={{ marginTop: 30, paddingLeft: 20 }}>
-              <CalendarSlider />
-            </View>
+            {(placeDetailSelectedTab.key === 'default' || place?.albamonYn === 'Y') && (
+              <View style={{ marginTop: 30, paddingLeft: 20 }}>
+                <CalendarSlider />
+              </View>
+            )}
+            {placeDetailSelectedTab.key === 'albamon' && place?.albamonYn === 'N' && <UnsupportAlbamon />}
           </View>
         );
       }
       case 3: {
         return (
-          <View style={{ flex: 1, marginTop: 20 }}>
-            <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
-            <TicketSlider
-              allowedTimeArr={[0, 1]}
-              item={placeTicketList || {}}
-              showDivider={false}
-              focusType={ticketType}
-            />
-          </View>
+          (placeDetailSelectedTab.key === 'default' || place?.albamonYn === 'Y') && (
+            <View style={{ flex: 1, marginTop: 20 }}>
+              <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
+              <TicketSlider
+                allowedTimeArr={[0, 1]}
+                item={placeTicketList || {}}
+                showDivider={false}
+                focusType={ticketType}
+              />
+            </View>
+          )
         );
       }
       case 4: {
@@ -296,7 +301,8 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
                   <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
-                    {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.start}
+                    {moment(albamonDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
+                    {selectedTicket?.endTime.substr(0, 5)}
                   </CustomText>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>

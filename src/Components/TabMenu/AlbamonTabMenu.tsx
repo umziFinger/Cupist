@@ -20,20 +20,6 @@ const AlbamonTabMenu = (props: any) => {
   );
 
   const onSelectMenu = (item: any): void => {
-    if (item.key === 'albamon' && placeDetail?.place?.albamonYn === 'Y') {
-      dispatch(
-        CommonActions.fetchCommonReducer({
-          type: 'alertDialog',
-          data: {
-            alertDialog: true,
-            alertDialogType: 'confirm',
-            alertDialogDataType: '',
-            alertDialogTitle: '예약이 불가능한 볼링장입니다.',
-          },
-        }),
-      );
-      return;
-    }
     dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'placeDetailSelectedTab', data: item }));
   };
 
@@ -41,24 +27,17 @@ const AlbamonTabMenu = (props: any) => {
     <View
       style={{
         backgroundColor: Color.White,
-        // backgroundColor: Color.Primary1000,
-        // borderBottomColor: Color.Gray200,
-        borderBottomColor: 'red',
-        // borderBottomWidth: 1,
-        // paddingHorizontal: 16,
       }}
     >
       <FlatList
         data={data}
         renderItem={({ item, index }) => {
           let textColor = Color.Gray400;
-          let bottomWidth = 0;
           if (placeDetailSelectedTab.key === item.key) {
             textColor = Color.Black900;
-            bottomWidth = 2;
           }
           return (
-            <CustomButton onPress={() => onSelectMenu(item)} style={{ marginLeft: index === 1 ? 60 : 0 }}>
+            <CustomButton onPress={() => onSelectMenu(item)} style={{ paddingLeft: 40, paddingRight: 40 }}>
               <View>
                 <View
                   style={{

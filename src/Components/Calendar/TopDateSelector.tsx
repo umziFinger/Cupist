@@ -8,6 +8,7 @@ import CustomText from '../CustomText';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import CommonActions from '@/Stores/Common/Actions';
+import { AlbamonState } from '@/Stores/Albamon/InitialState';
 
 interface PropTypes {
   calendarDate: any;
@@ -16,7 +17,7 @@ const TopDateSelector = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = props;
-
+  const { placeDetailSelectedTab, albamonDate } = useSelector((state: AlbamonState) => state.albamon);
   const onPressDate = () => {
     console.log('onPressDate');
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenCalendarRBS', data: true }));
@@ -60,7 +61,11 @@ const TopDateSelector = (props: PropTypes) => {
         </View>
         <View style={{ justifyContent: 'center', flex: 1 }}>
           <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13 }}>
-            {moment(calendarDate).format('YYYY.MM.DD(dd)')}
+            {placeDetailSelectedTab.key === 'default'
+              ? moment(calendarDate).format('YYYY.MM.DD(dd)')
+              : albamonDate
+              ? moment(calendarDate).format('YYYY.MM.DD(dd)')
+              : '날짜를 선택해주세요'}
           </CustomText>
         </View>
         <View style={{ width: 24, height: 24 }}>

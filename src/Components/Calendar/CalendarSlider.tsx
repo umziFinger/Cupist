@@ -25,7 +25,7 @@ const CalendarSlider = () => {
   useEffect(() => {
     return (
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'albamonDate', data: '' })),
-      dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() })),
+      // dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() })),
       setHeaderDate(moment(calendarDate).format('MM월 YYYY'))
     );
   }, []);
@@ -73,9 +73,9 @@ const CalendarSlider = () => {
     if (day === '토') fontColor = Color.Calendar_Blue;
     if (day === '일') fontColor = Color.Calendar_Red;
 
-    if (current.format('YYYYMMDD') < moment().format('YYYYMMDD')) {
-      return null;
-    }
+    // if (current.format('YYYYMMDD') < moment().format('YYYYMMDD')) {
+    //   return null;
+    // }
     return (
       <CustomButton
         onPress={() => {
@@ -125,6 +125,7 @@ const CalendarSlider = () => {
             if (moment(date).format('YYYYMMDD') < moment().format('YYYYMMDD')) {
               console.log('스크롤 시작', moment(date));
               calendarRef?.current.updateWeekView(date);
+              console.log(date);
             }
           }}
           onWeekScrollEnd={(date) => {
@@ -150,7 +151,7 @@ const CalendarSlider = () => {
             onPressDate(moment(e));
           }}
           dayComponent={(e) => renderDayComponent(e)}
-          useIsoWeekday={placeDetailSelectedTab.key === 'default'}
+          useIsoWeekday={false}
         />
       );
     },

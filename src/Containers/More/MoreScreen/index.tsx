@@ -27,6 +27,7 @@ const MoreScreen = () => {
     }
   }, [isFocused]);
 
+  console.log(userInfo);
   const onMove = (screen: keyof MainStackParamList) => {
     // if (screen === 'NotificationScreen') {
     //   dispatch(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));

@@ -28,6 +28,11 @@ const SORT_TAG = [
     key: 'dibs',
     value: '추천순',
   },
+  {
+    index: 3,
+    key: 'albamon',
+    value: '알코볼',
+  },
 ];
 
 const MyAroundHeader = (props: HeaderProps) => {
