@@ -29,6 +29,7 @@ import { SearchState } from '@/Stores/Search/InitialState';
 import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
 import { LocationCheck } from '@/Components/Permission/Location';
 import AlbamonBanner from '@/Containers/Home/HomeScreen/AlbamonBanner';
+import AlbamonActions from '@/Stores/Albamon/Actions';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -73,6 +74,11 @@ const HomeScreen = ({ route }: HomeProps) => {
       onRefresh();
     }
   }, [homeTabRefreshYN]);
+
+  // 홈화면 진입시 캘린더 초기화
+  useEffect(() => {
+    dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'placeDetailSelectedTabInit' }));
+  }, []);
 
   // 캘린더 날짜 선택 시 홈 갱신
   useEffect(() => {

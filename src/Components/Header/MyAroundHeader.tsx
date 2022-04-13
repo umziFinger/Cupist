@@ -153,7 +153,7 @@ const MyAroundHeader = (props: HeaderProps) => {
                 </CustomButton>
               )}
               keyExtractor={(item, index) => index.toString()}
-              initialNumToRender={3}
+              initialNumToRender={4}
               maxToRenderPerBatch={6}
               windowSize={7}
               scrollEnabled

@@ -150,7 +150,7 @@ const MyAroundScreen = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <Header type={'myAround'} text={headerText} activeFilter={activeFilter} />
+      <Header type={'myAround'} text={headerText} activeFilter={activeFilter} isScroll={isScroll} />
       <View style={{ flex: 1, backgroundColor: Color.White, paddingHorizontal: 20 }}>
         <FlatList
           data={activeFilter ? myAroundList : []}

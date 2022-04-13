@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Platform, ScrollView, TextInput, useWindowDimensions, View } from 'react-native';
+import { FlatList, Keyboard, Platform, ScrollView, TextInput, useWindowDimensions, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import FastImage from 'react-native-fast-image';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
-import { useSelector } from 'react-redux';
 import { CommonState } from '@/Stores/Common/InitialState';
-import FastImage from 'react-native-fast-image';
 import useInputPhoneNumber from '@/Hooks/useInputPhoneNumber';
 import { navigate } from '@/Services/NavigationService';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
-import HTML from 'react-native-render-html';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 const RegistScreen = () => {
   const ref_input: Array<React.RefObject<TextInput>> = [];
@@ -20,36 +20,40 @@ const RegistScreen = () => {
   ref_input[3] = useRef(null);
   const { phoneNumber, onChangePhoneNumber, isPhoneValid } = useInputPhoneNumber();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const {width} = useWindowDimensions()
-  const [gender, setGender] = useState('F')
-  const [agreement, setAgreement] = useState<boolean>(true)
-  const [clubName, setClubName] = useState('')
-  const [placeName, setPlaceName] = useState('')
-  const [name, setName] = useState('')
-  const [focusIndex, setFocusIndex] = useState(-1)
+  const { width } = useWindowDimensions();
+  const { userInfo } = useSelector((state: AuthState) => state.auth);
 
-  const selectGender = (gender: string) => {
-    setGender(gender)
-  }
+  const [gender, setGender] = useState('F');
+  const [agreement, setAgreement] = useState<boolean>(true);
+  const [clubName, setClubName] = useState('');
+  const [placeName, setPlaceName] = useState('');
+  const [name, setName] = useState('');
+  const [focusIndex, setFocusIndex] = useState(-1);
 
-  const selectAgreement = (agreement: boolean) => {
-    setAgreement(agreement)
-  }
+  const selectGender = (params: string) => {
+    setGender(params);
+  };
+
+  const selectAgreement = (params: boolean) => {
+    setAgreement(params);
+  };
 
   useEffect(() => {
-    validCheck()
-  }, [gender, agreement, clubName, placeName, name, phoneNumber])
+    setName(userInfo?.username || '');
+    onChangePhoneNumber(userInfo?.mobile || '');
+  }, []);
+
+  useEffect(() => {
+    validCheck();
+  }, [gender, agreement, clubName, placeName, name, phoneNumber]);
 
   const validCheck = () => {
-    return(
-      gender && agreement && clubName && placeName && name && isPhoneValid && phoneNumber
-    )
-  }
+    return gender && agreement && clubName && placeName && name && isPhoneValid && phoneNumber;
+  };
 
   const onFocus = (index: number) => {
-
-    setFocusIndex(index)
-  }
+    setFocusIndex(index);
+  };
 
   const onFocusNext = (index: number) => {
     if (ref_input[index]) {
@@ -59,8 +63,8 @@ const RegistScreen = () => {
 
   // 클럽명 클리어버튼
   const onClearClubName = () => {
-    setClubName('')
-  }
+    setClubName('');
+  };
 
   let clubNameClearBox: any = null;
   if (clubName !== '' && focusIndex === 0) {
@@ -79,13 +83,13 @@ const RegistScreen = () => {
 
   // 참가 볼링장 클리어버튼
   const onClearPlaceName = () => {
-    setPlaceName('')
-  }
+    setPlaceName('');
+  };
 
   let placeNameClearBox: any = null;
   if (placeName !== '' && focusIndex === 1) {
     placeNameClearBox = (
-      <CustomButton onPress={() => onClearPlaceName()} hitSlop={7} >
+      <CustomButton onPress={() => onClearPlaceName()} hitSlop={7}>
         <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
@@ -99,13 +103,13 @@ const RegistScreen = () => {
 
   // 선수이름 클리어 버튼
   const onClearName = () => {
-    setName('')
-  }
+    setName('');
+  };
 
   let nameClearBox: any = null;
   if (name !== '' && focusIndex === 2) {
     nameClearBox = (
-      <CustomButton onPress={() => onClearName()} hitSlop={7} >
+      <CustomButton onPress={() => onClearName()} hitSlop={7}>
         <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
@@ -119,13 +123,13 @@ const RegistScreen = () => {
 
   // 전화번호 클리어 버튼
   const onClearPhoneNumber = () => {
-    onChangePhoneNumber('')
-  }
+    onChangePhoneNumber('');
+  };
 
   let phoneNumberClearBox: any = null;
   if (phoneNumber !== '' && focusIndex === 3) {
     phoneNumberClearBox = (
-      <CustomButton onPress={() => onClearPhoneNumber()} hitSlop={7} >
+      <CustomButton onPress={() => onClearPhoneNumber()} hitSlop={7}>
         <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
@@ -133,12 +137,20 @@ const RegistScreen = () => {
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>
-
       </CustomButton>
     );
   }
 
-  const list = [0,1,2]
+  const selectClubName = () => {
+    setClubName('볼리볼리 볼리미');
+    Keyboard.dismiss();
+  };
+
+  const selectPlaceName = () => {
+    setPlaceName('볼리볼리 볼리미');
+    Keyboard.dismiss();
+  };
+
   const renderItem = (item: number) => {
     switch (item) {
       case 0: {
@@ -287,7 +299,9 @@ const RegistScreen = () => {
               />
               <View style={{ marginHorizontal: 29, marginTop: 17 }}>
                 <View style={{ flexDirection: 'row' }}>
-                  <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.41 }}>참가신청 금액 안내</CustomText>
+                  <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.41 }}>
+                    참가신청 금액 안내
+                  </CustomText>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 15 }}>
                   <View
@@ -319,115 +333,117 @@ const RegistScreen = () => {
             <View style={{ height: 8, backgroundColor: 'rgb(243,243,243)' }} />
             <View style={{ marginTop: 25 }}>
               <View>
-                {focusIndex === 0 &&
-                  <View style={[
-                    {
-                      width: width - 48,
-                      left: 24,
-                      top: 122,
-                      height: 134,
-                      // borderWidth: 1,
-                      borderBottomWidth:1,
-                      borderLeftWidth:1,
-                      borderRightWidth:1,
-                      borderColor:Color.Gray300,
-                      paddingTop: 22,
-                      paddingBottom: 18,
-                      paddingHorizontal: 10,
-                      borderBottomRightRadius:3,
-                      borderBottomLeftRadius:3,
-                      // borderRadius: 3,
-                      backgroundColor: 'white',
-                      position: 'absolute',
-                      zIndex: 9
-                    },
-
-                    Platform.OS === 'android'
-                      ? {elevation: 1}
-                      : {
-                        shadowOffset: {
-                          width: 0,
-                          height: 4,
-                        },
-                        shadowColor: 'rgba(176, 176, 176, 0.1)',
-                        shadowOpacity: 10,
+                {focusIndex === 0 && (
+                  <View
+                    style={[
+                      {
+                        width: width - 48,
+                        left: 24,
+                        top: 122,
+                        height: 134,
+                        // borderWidth: 1,
+                        borderBottomWidth: 1,
+                        borderLeftWidth: 1,
+                        borderRightWidth: 1,
+                        borderColor: Color.Gray300,
+                        paddingTop: 22,
+                        paddingBottom: 18,
+                        paddingHorizontal: 10,
+                        borderBottomRightRadius: 3,
+                        borderBottomLeftRadius: 3,
+                        // borderRadius: 3,
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        zIndex: 9,
                       },
-                  ]}>
+
+                      Platform.OS === 'android'
+                        ? { elevation: 1 }
+                        : {
+                            shadowOffset: {
+                              width: 0,
+                              height: 4,
+                            },
+                            shadowColor: 'rgba(176, 176, 176, 0.1)',
+                            shadowOpacity: 10,
+                          },
+                    ]}
+                  >
                     <ScrollView
                       style={{ height: 134 }}
-                      showsVerticalScrollIndicator={true}
-                      nestedScrollEnabled={true}
+                      showsVerticalScrollIndicator
+                      nestedScrollEnabled
+                      keyboardShouldPersistTaps={'handled'}
                     >
-                      {[0,1,2,3,4,5].map((v, index) => {
+                      {[0, 1, 2, 3, 4, 5].map((v, index) => {
                         // 검색어 하이라이트 처리
                         return (
-                          <CustomButton key={index.toString()}>
+                          <CustomButton key={index.toString()} onPress={() => selectClubName()}>
                             <View style={{ marginTop: index === 0 ? 0 : 17 }}>
-                              <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>
-                                볼리볼리 볼링장
-                              </CustomText>
+                              <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>볼리볼리 볼링장</CustomText>
                             </View>
                           </CustomButton>
                         );
                       })}
                     </ScrollView>
                   </View>
-                }
-                {focusIndex === 1 &&
-                  <View style={[
-                    {
-                      width: width - 48,
-                      height: 134,
-                      left: 24,
-                      top: 222,
-                      // borderWidth: 1,
-                      borderBottomWidth:1,
-                      borderLeftWidth:1,
-                      borderRightWidth:1,
-                      borderColor:Color.Gray300,
-                      paddingTop: 30,
-                      paddingBottom: 18,
-                      paddingHorizontal: 10,
-                      borderBottomRightRadius:3,
-                      borderBottomLeftRadius:3,
+                )}
+                {focusIndex === 1 && (
+                  <View
+                    style={[
+                      {
+                        width: width - 48,
+                        height: 134,
+                        left: 24,
+                        top: 222,
+                        // borderWidth: 1,
+                        borderBottomWidth: 1,
+                        borderLeftWidth: 1,
+                        borderRightWidth: 1,
+                        borderColor: Color.Gray300,
+                        paddingTop: 30,
+                        paddingBottom: 18,
+                        paddingHorizontal: 10,
+                        borderBottomRightRadius: 3,
+                        borderBottomLeftRadius: 3,
 
-                      // borderRadius: 3,
-                      backgroundColor: 'white',
-                      position: 'absolute',
-                      zIndex: 9
-                    },
-
-                    Platform.OS === 'android'
-                      ? {elevation: 1}
-                      : {
-                        shadowOffset: {
-                          width: 0,
-                          height: 4,
-                        },
-                        shadowColor: 'rgba(176, 176, 176, 0.1)',
-                        shadowOpacity: 10,
+                        // borderRadius: 3,
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        zIndex: 9,
                       },
-                  ]}>
+
+                      Platform.OS === 'android'
+                        ? { elevation: 1 }
+                        : {
+                            shadowOffset: {
+                              width: 0,
+                              height: 4,
+                            },
+                            shadowColor: 'rgba(176, 176, 176, 0.1)',
+                            shadowOpacity: 10,
+                          },
+                    ]}
+                  >
                     <ScrollView
                       style={{ zIndex: 99, height: 142 }}
-                      showsVerticalScrollIndicator={true}
-                      nestedScrollEnabled={true}
+                      showsVerticalScrollIndicator
+                      nestedScrollEnabled
+                      keyboardShouldPersistTaps={'handled'}
                     >
-                      {[0,1,2,3,4,5].map((v, index) => {
+                      {[0, 1, 2, 3, 4, 5].map((v, index) => {
                         // 검색어 하이라이트 처리
                         return (
-                          <CustomButton key={index.toString()}>
-                              <View style={{ marginTop: index === 0 ? 0 : 17 }}>
-                                <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>
-                                  볼리볼리 볼링장
-                                </CustomText>
-                              </View>
+                          <CustomButton key={index.toString()} onPress={() => selectPlaceName()}>
+                            <View style={{ marginTop: index === 0 ? 0 : 17 }}>
+                              <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>볼리볼리 볼링장</CustomText>
+                            </View>
                           </CustomButton>
                         );
                       })}
                     </ScrollView>
                   </View>
-                }
+                )}
                 <CustomText
                   style={{
                     color: Color.Black1000,
@@ -439,7 +455,7 @@ const RegistScreen = () => {
                 >
                   참가신청서
                 </CustomText>
-                <View style={{ paddingHorizontal: 24, marginTop: 29 , zIndex: 10}}>
+                <View style={{ paddingHorizontal: 24, marginTop: 29, zIndex: 10 }}>
                   <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
                     클럽명
                   </CustomText>
@@ -453,7 +469,7 @@ const RegistScreen = () => {
                       paddingVertical: Platform.OS === 'ios' ? 15 : 7.5,
                       marginTop: 8,
                       flexDirection: 'row',
-                      zIndex: 999
+                      zIndex: 999,
                     }}
                   >
                     <TextInput
@@ -467,7 +483,7 @@ const RegistScreen = () => {
                         fontWeight: '500',
                         letterSpacing: -0.25,
                         padding: 0,
-                        flex: 1
+                        flex: 1,
                       }}
                       autoFocus={false}
                       autoCorrect={false}
@@ -480,7 +496,7 @@ const RegistScreen = () => {
                     {clubNameClearBox}
                   </View>
                 </View>
-                <View style={{ paddingHorizontal: 24, marginTop: 32 , zIndex: focusIndex === 1 ? 10 : 0 }}>
+                <View style={{ paddingHorizontal: 24, marginTop: 32, zIndex: focusIndex === 1 ? 10 : 0 }}>
                   <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
                     참가 볼링장(변경불가)
                   </CustomText>
@@ -617,7 +633,14 @@ const RegistScreen = () => {
                     }}
                     onPress={() => selectGender('M')}
                   >
-                    <CustomText style={{ color: gender === 'M' ? Color.White : Color.Gray400, fontWeight: '500', fontSize: 14, letterSpacing: -0.25 }}>
+                    <CustomText
+                      style={{
+                        color: gender === 'M' ? Color.White : Color.Gray400,
+                        fontWeight: '500',
+                        fontSize: 14,
+                        letterSpacing: -0.25,
+                      }}
+                    >
                       남자
                     </CustomText>
                   </CustomButton>
@@ -626,7 +649,7 @@ const RegistScreen = () => {
                       marginLeft: 10,
                       paddingVertical: 11,
                       backgroundColor: gender === 'F' ? Color.Primary1000 : Color.White,
-                      borderWidth: gender === 'F' ?  0 : 1,
+                      borderWidth: gender === 'F' ? 0 : 1,
                       borderColor: Color.Gray300,
                       alignItems: 'center',
                       borderRadius: 3,
@@ -634,7 +657,14 @@ const RegistScreen = () => {
                     }}
                     onPress={() => selectGender('F')}
                   >
-                    <CustomText style={{  color: gender === 'F' ? Color.White : Color.Gray400, fontWeight: '500', fontSize: 14, letterSpacing: -0.25 }}>
+                    <CustomText
+                      style={{
+                        color: gender === 'F' ? Color.White : Color.Gray400,
+                        fontWeight: '500',
+                        fontSize: 14,
+                        letterSpacing: -0.25,
+                      }}
+                    >
                       여자
                     </CustomText>
                   </CustomButton>
@@ -657,7 +687,14 @@ const RegistScreen = () => {
                     }}
                     onPress={() => selectAgreement(true)}
                   >
-                    <CustomText style={{ color: agreement ? Color.White : Color.Gray400, fontWeight: '500', fontSize: 14, letterSpacing: -0.25 }}>
+                    <CustomText
+                      style={{
+                        color: agreement ? Color.White : Color.Gray400,
+                        fontWeight: '500',
+                        fontSize: 14,
+                        letterSpacing: -0.25,
+                      }}
+                    >
                       동의
                     </CustomText>
                   </CustomButton>
@@ -674,33 +711,54 @@ const RegistScreen = () => {
                     }}
                     onPress={() => selectAgreement(false)}
                   >
-                    <CustomText style={{ color: !agreement ? Color.White : Color.Gray400, fontWeight: '500', fontSize: 14, letterSpacing: -0.25 }}>
+                    <CustomText
+                      style={{
+                        color: !agreement ? Color.White : Color.Gray400,
+                        fontWeight: '500',
+                        fontSize: 14,
+                        letterSpacing: -0.25,
+                      }}
+                    >
                       미동의
                     </CustomText>
                   </CustomButton>
                 </View>
               </View>
-              <CustomText style={{color: Color.Gray400, fontSize: 10, marginLeft: 24, marginTop: 12}}>
-                *본 대회에 대한 자세한 내용은 볼리미 홈화면 > 더보기 > 공지사항을 확인해 주세요.
+              <CustomText style={{ color: Color.Gray400, fontSize: 10, marginLeft: 24, marginTop: 12 }}>
+                {'*본 대회에 대한 자세한 내용은 볼리미 홈화면 > 더보기 > 공지사항을 확인해 주세요.'}
               </CustomText>
             </View>
           </>
         );
       }
       case 2: {
-        return(
-          <View style={{marginHorizontal: 24, marginTop: 36, paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,}}>
-            <View style={{alignItems: 'center'}}>
-              <CustomText style={{color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>위 내용은 사실과 다름이 없으며 본 대회 참가를 신청합니다.</CustomText>
+        return (
+          <View
+            style={{
+              marginHorizontal: 24,
+              marginTop: 36,
+              paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,
+            }}
+          >
+            <View style={{ alignItems: 'center' }}>
+              <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>
+                위 내용은 사실과 다름이 없으며 본 대회 참가를 신청합니다.
+              </CustomText>
             </View>
             <CustomButton
-              style={{paddingVertical: 15, backgroundColor: validCheck() ? Color.Primary1000 : Color.Grayyellow200, borderRadius: 3, alignItems: 'center', marginTop: 14}}
+              style={{
+                paddingVertical: 15,
+                backgroundColor: validCheck() ? Color.Primary1000 : Color.Grayyellow200,
+                borderRadius: 3,
+                alignItems: 'center',
+                marginTop: 14,
+              }}
               onPress={() => validCheck() && navigate('RegistCompleteScreen')}
             >
-              <CustomText style={{color:Color.White, fontSize: 14, fontWeight: 'bold'}}>참가 신청하기</CustomText>
+              <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold' }}>참가 신청하기</CustomText>
             </CustomButton>
           </View>
-        )
+        );
       }
       default:
         return null;
@@ -713,13 +771,11 @@ const RegistScreen = () => {
       <FlatList
         data={[0, 1, 2]}
         renderItem={({ item }: any) => renderItem(item)}
-        ListFooterComponent={<View style={{height: heightInfo.fixBottomHeight}}/>}
+        ListFooterComponent={<View style={{ height: heightInfo.fixBottomHeight }} />}
         keyboardShouldPersistTaps={focusIndex === 0 || focusIndex === 1 ? 'always' : 'handled'}
       />
-      {focusIndex !== -1 &&
-        <View
-          style={{paddingTop: 7, paddingBottom: 8}}
-        >
+      {focusIndex !== -1 && (
+        <View style={{ paddingTop: 7, paddingBottom: 8 }}>
           <CustomButton
             onPress={() => onFocusNext(focusIndex + 1)}
             style={{
@@ -730,10 +786,12 @@ const RegistScreen = () => {
               borderRadius: 3,
             }}
           >
-            <CustomText style={{fontSize: 14, color: Color.White, fontWeight: 'bold', letterSpacing: -0.25}}>다음</CustomText>
+            <CustomText style={{ fontSize: 14, color: Color.White, fontWeight: 'bold', letterSpacing: -0.25 }}>
+              다음
+            </CustomText>
           </CustomButton>
         </View>
-      }
+      )}
       {Platform.OS === 'ios' && <KeyboardSpacer />}
     </View>
   );
