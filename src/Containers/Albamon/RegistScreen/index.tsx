@@ -44,6 +44,16 @@ const RegistScreen = () => {
   }, []);
 
   useEffect(() => {
+    // Keyboard.addListener('keyboardDidShow', () => console.log('show'));
+    Keyboard.addListener('keyboardDidHide', () => focusOut());
+  }, [Keyboard.addListener]);
+
+  const focusOut = () => {
+    setFocusIndex(-1);
+    ref_input.map((el) => el.current?.blur());
+  };
+
+  useEffect(() => {
     validCheck();
   }, [gender, agreement, clubName, placeName, name, phoneNumber]);
 
@@ -772,7 +782,7 @@ const RegistScreen = () => {
         data={[0, 1, 2]}
         renderItem={({ item }: any) => renderItem(item)}
         ListFooterComponent={<View style={{ height: heightInfo.fixBottomHeight }} />}
-        keyboardShouldPersistTaps={focusIndex === 0 || focusIndex === 1 ? 'always' : 'handled'}
+        keyboardShouldPersistTaps={'handled'}
       />
       {focusIndex !== -1 && (
         <View style={{ paddingTop: 7, paddingBottom: 8 }}>
