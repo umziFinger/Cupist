@@ -38,6 +38,16 @@ function AlbamonPaymentScreen({ route }: PropTypes) {
       if (competitionsPaymentInfo) {
         const { imp_uid } = params;
         dispatch(
+          AlbamonActions.fetchAlbamonReducer({
+            type: 'paymentVerifyData',
+            data: {
+              impUid: imp_uid,
+              merchantUid: competitionsPaymentInfo?.merchantUid,
+              competitionJoinIdx: competitionsPaymentInfo?.idx,
+            },
+          }),
+        );
+        dispatch(
           AlbamonActions.fetchCompetitionsPaymentVerify({
             impUid: imp_uid,
             merchantUid: competitionsPaymentInfo?.merchantUid,

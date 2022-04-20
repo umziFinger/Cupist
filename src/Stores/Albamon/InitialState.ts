@@ -9,6 +9,11 @@ export const INITIAL_STATE = {
   competitionsPaymentResult: '',
   competitionPlaceSearchList: [],
   competitionClubSearchList: [],
+  paymentVerifyData: {
+    impUid: '',
+    merchantUid: '',
+    competitionJoinIdx: -1,
+  },
 };
 
 export interface AlbamonState {
@@ -21,7 +26,14 @@ export interface AlbamonState {
     competitionsPaymentResult: any;
     competitionPlaceSearchList: any;
     competitionClubSearchList: any;
+    paymentVerifyData: PaymentVerifyDataType;
   };
+}
+
+interface PaymentVerifyDataType {
+  impUid: string;
+  merchantUid: string;
+  competitionJoinIdx: number;
 }
 
 interface PlaceAlbamonTicketList {

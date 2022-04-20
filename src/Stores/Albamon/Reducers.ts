@@ -39,6 +39,10 @@ export const fetchAlbamonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.competitionClubSearchList = data;
         break;
       }
+      case 'paymentVerifyData': {
+        draft.paymentVerifyData = data;
+        break;
+      }
       default:
         return draft;
     }

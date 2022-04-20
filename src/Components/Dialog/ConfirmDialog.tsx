@@ -7,7 +7,7 @@ import CustomText from '@/Components/CustomText';
 import { Color, Opacity } from '@/Assets/Color';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { onAppUpdate } from '@/Components/Function';
-import { navigateGoBack } from '@/Services/NavigationService';
+import { navigate, navigateGoBack } from '@/Services/NavigationService';
 
 interface ConfirmDialogProps {
   item: {
@@ -39,6 +39,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
       }
       case 'findPassword': {
         navigateGoBack();
+        break;
+      }
+      case 'beforeCompetitionPay': {
+        navigate('RegistCompleteScreen');
         break;
       }
       default:

@@ -41,7 +41,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
   const { idx, ticketType = TICKET_TYPE.ALL } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { userIdx } = useSelector((state: AuthState) => state.auth);
+  const { userIdx, userInfo } = useSelector((state: AuthState) => state.auth);
   const { placeDetail, placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const { placeDetailSelectedTab, albamonDate } = useSelector((state: AlbamonState) => state.albamon);
@@ -90,25 +90,29 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
 
   const onPressReservation = () => {
     console.log('placeTicketList', placeTicketList);
-    if (placeDetailSelectedTab?.key === 'albamon') {
-      if (place?.albamonYn === 'N') {
-        dispatch(
-          CommonActions.fetchCommonReducer({
-            type: 'alertDialog',
-            data: {
-              alertDialog: true,
-              alertDialogType: 'confirm',
-              alertDialogDataType: '',
-              alertDialogTitle: '해당 볼링장은 알.코.볼을 지원하지 않습니다.',
-            },
-          }),
-        );
-        return;
-      }
-    }
     if (selectedTicket) {
       if (!userIdx) {
         navigate('SimpleLoginScreen');
+      }
+      if (placeDetailSelectedTab?.key === 'albamon') {
+        if (userInfo?.competitionsYn === 'N') {
+          navigate('RegistScreen', { placeDetailName: place?.name });
+          return;
+        }
+        if (userInfo?.competitionStatus !== '참가완료' && userInfo?.competitionStatus !== '참가불가') {
+          dispatch(
+            CommonActions.fetchCommonReducer({
+              type: 'alertDialog',
+              data: {
+                alertDialog: true,
+                alertDialogType: 'confirm',
+                alertDialogDataType: 'beforeCompetitionPay',
+                alertDialogTitle: '예선전 예약은 참가신청금액이\n입금된 후 예약이 가능합니다.',
+              },
+            }),
+          );
+          return;
+        }
       }
       if (selectedTicket?.idx) {
         navigate('ReservationScreen', {
@@ -361,22 +365,24 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
               </View>
             </CustomButton>
           )}
-          <CustomButton
-            onPress={() => onPressReservation()}
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              borderRadius: 3,
-              borderWidth: 1,
-              borderColor: Color.Primary1000,
-              paddingVertical: 15,
-              backgroundColor: Color.Primary1000,
-            }}
-          >
-            <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
-              예약하기
-            </CustomText>
-          </CustomButton>
+          {(placeDetailSelectedTab?.key === 'default' || place?.albamonYn === 'Y') && (
+            <CustomButton
+              onPress={() => onPressReservation()}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                borderRadius: 3,
+                borderWidth: 1,
+                borderColor: Color.Primary1000,
+                paddingVertical: 15,
+                backgroundColor: Color.Primary1000,
+              }}
+            >
+              <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
+                예약하기
+              </CustomText>
+            </CustomButton>
+          )}
         </View>
       </View>
     </View>

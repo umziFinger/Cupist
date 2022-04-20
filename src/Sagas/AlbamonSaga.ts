@@ -4,6 +4,7 @@ import { Axios } from '@/Services/Axios';
 import CommonActions from '@/Stores/Common/Actions';
 import AlbamonActions from '@/Stores/Albamon/Actions';
 import { navigate, navigateAndReset } from '@/Services/NavigationService';
+import AuthActions from '@/Stores/Auth/Actions';
 
 // 알코볼 신청서 안내내용 가져오기
 export function* fetchCompetitionsRegistInfo(data: any): any {

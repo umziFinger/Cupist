@@ -8,9 +8,11 @@ import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { navigate } from '@/Services/NavigationService';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 const AlbamonDetailScreen = () => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
+  const { userInfo } = useSelector((state: AuthState) => state.auth);
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
@@ -34,22 +36,41 @@ const AlbamonDetailScreen = () => {
           marginBottom: heightInfo.fixBottomHeight,
         }}
       >
-        <CustomButton
-          onPress={() => navigate('RegistScreen', { placeDetailName: '' })}
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            borderRadius: 3,
-            borderWidth: 1,
-            borderColor: Color.Primary1000,
-            paddingVertical: 15,
-            backgroundColor: Color.Primary1000,
-          }}
-        >
-          <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
-            예선 신청하기
-          </CustomText>
-        </CustomButton>
+        {userInfo?.competitionsYn === 'N' ? (
+          <CustomButton
+            onPress={() => navigate('RegistScreen', { placeDetailName: '' })}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              borderRadius: 3,
+              borderWidth: 1,
+              borderColor: Color.Primary1000,
+              paddingVertical: 15,
+              backgroundColor: Color.Primary1000,
+            }}
+          >
+            <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
+              예선 신청하기
+            </CustomText>
+          </CustomButton>
+        ) : (
+          <CustomButton
+            onPress={() => navigate('RegistCompleteScreen')}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              borderRadius: 3,
+              borderWidth: 1,
+              borderColor: Color.Primary1000,
+              paddingVertical: 15,
+              backgroundColor: Color.Primary1000,
+            }}
+          >
+            <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
+              예선 신청내역 보기
+            </CustomText>
+          </CustomButton>
+        )}
       </View>
     </View>
   );

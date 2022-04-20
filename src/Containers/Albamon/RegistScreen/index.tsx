@@ -80,6 +80,9 @@ const RegistScreen = ({ route }: PropTypes) => {
 
   const onFocus = (index: number) => {
     setFocusIndex(index);
+    if (index === 0 && !clubName) {
+      debounceFuncClub.current('');
+    }
   };
 
   const onFocusNext = (index: number) => {
@@ -89,14 +92,10 @@ const RegistScreen = ({ route }: PropTypes) => {
   };
 
   // 클럽명 클리어버튼
-  const onClearClubName = () => {
-    setClubName('');
-  };
-
   let clubNameClearBox: any = null;
   if (clubName !== '' && focusIndex === 0) {
     clubNameClearBox = (
-      <CustomButton onPress={() => onClearClubName()} hitSlop={7}>
+      <CustomButton onPress={() => onChangeClubName('')} hitSlop={7}>
         <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
@@ -109,14 +108,10 @@ const RegistScreen = ({ route }: PropTypes) => {
   }
 
   // 참가 볼링장 클리어버튼
-  const onClearPlaceName = () => {
-    setPlaceName('');
-  };
-
   let placeNameClearBox: any = null;
   if (placeName !== '' && focusIndex === 1) {
     placeNameClearBox = (
-      <CustomButton onPress={() => onClearPlaceName()} hitSlop={7}>
+      <CustomButton onPress={() => onChangePlaceName('')} hitSlop={7}>
         <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
@@ -195,33 +190,35 @@ const RegistScreen = ({ route }: PropTypes) => {
     }
   };
 
-  const onChangePlaceName = (text: string) => {
-    setPlaceName(text);
-    debounceFuncPlace.current(text);
-  };
   const onChangeClubName = (text: string) => {
     setClubName(text);
     debounceFuncClub.current(text);
   };
 
-  const debounceFuncPlace = useRef(
-    _.debounce((text: any) => {
-      const params = {
-        query: text,
-      };
-      if (text !== '') dispatch(AlbamonActions.fetchCompetitionsPlaceSearch(params));
-    }, 500),
-  );
+  const onChangePlaceName = (text: string) => {
+    console.log('blanblalbalbl');
+    setPlaceName(text);
+    debounceFuncPlace.current(text);
+  };
 
   const debounceFuncClub = useRef(
     _.debounce((text: any) => {
       const params = {
         query: text,
       };
-      if (text !== '') dispatch(AlbamonActions.fetchCompetitionsClubSearch(params));
+      dispatch(AlbamonActions.fetchCompetitionsClubSearch(params));
     }, 500),
   );
   console.log(competitionClubSearchList);
+
+  const debounceFuncPlace = useRef(
+    _.debounce((text: any) => {
+      const params = {
+        query: text,
+      };
+      dispatch(AlbamonActions.fetchCompetitionsPlaceSearch(params));
+    }, 500),
+  );
 
   return (
     <View style={{ backgroundColor: Color.White, flex: 1 }}>
@@ -443,8 +440,8 @@ const RegistScreen = ({ route }: PropTypes) => {
                               borderLeftWidth: 1,
                               borderRightWidth: 1,
                               borderColor: Color.Gray300,
-                              paddingTop: 22,
-                              paddingBottom: 18,
+                              // paddingTop: 22,
+                              // paddingBottom: 18,
                               paddingHorizontal: 10,
                               borderBottomRightRadius: 3,
                               borderBottomLeftRadius: 3,
@@ -476,7 +473,12 @@ const RegistScreen = ({ route }: PropTypes) => {
                               console.log(v?.name);
                               return (
                                 <CustomButton key={index.toString()} onPress={() => selectClubName(v?.name)}>
-                                  <View style={{ marginTop: index === 0 ? 0 : 17 }}>
+                                  <View
+                                    style={{
+                                      paddingTop: index === 0 ? 22 : 8,
+                                      paddingBottom: 8,
+                                    }}
+                                  >
                                     <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>
                                       {v?.name || ''}
                                     </CustomText>
@@ -500,8 +502,8 @@ const RegistScreen = ({ route }: PropTypes) => {
                               borderLeftWidth: 1,
                               borderRightWidth: 1,
                               borderColor: Color.Gray300,
-                              paddingTop: 30,
-                              paddingBottom: 18,
+                              // paddingTop: 30,
+                              // paddingBottom: 18,
                               paddingHorizontal: 10,
                               borderBottomRightRadius: 3,
                               borderBottomLeftRadius: 3,
@@ -534,7 +536,13 @@ const RegistScreen = ({ route }: PropTypes) => {
                               console.log(v?.name);
                               return (
                                 <CustomButton key={index.toString()} onPress={() => selectPlaceName(v?.name)}>
-                                  <View style={{ marginTop: index === 0 ? 0 : 17 }}>
+                                  <View
+                                    style={{
+                                      paddingTop: index === 0 ? 30 : 8,
+                                      paddingBottom: 8,
+                                      // backgroundColor: 'red',
+                                    }}
+                                  >
                                     <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>
                                       {v?.name || ''}
                                     </CustomText>
@@ -572,6 +580,7 @@ const RegistScreen = ({ route }: PropTypes) => {
                             marginTop: 8,
                             flexDirection: 'row',
                             zIndex: 999,
+                            backgroundColor: 'white',
                           }}
                         >
                           <TextInput
@@ -612,6 +621,7 @@ const RegistScreen = ({ route }: PropTypes) => {
                             paddingVertical: Platform.OS === 'ios' ? 15 : 7.5,
                             marginTop: 8,
                             flexDirection: 'row',
+                            backgroundColor: 'white',
                           }}
                         >
                           <TextInput
