@@ -75,7 +75,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     if (placeDetailSelectedTab.key === 'default') {
       dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
     } else if (!albamonDate) {
-      dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeTicketList', data: '' }));
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeTicketList', data: { free: [], normal: [] } }));
     } else {
       dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(albamonDate).format('YYYY-MM-DD') }));
     }
@@ -89,11 +89,27 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   };
 
   const onPressReservation = () => {
+    console.log('placeTicketList', placeTicketList);
+    if (placeDetailSelectedTab?.key === 'albamon') {
+      if (place?.albamonYn === 'N') {
+        dispatch(
+          CommonActions.fetchCommonReducer({
+            type: 'alertDialog',
+            data: {
+              alertDialog: true,
+              alertDialogType: 'confirm',
+              alertDialogDataType: '',
+              alertDialogTitle: '해당 볼링장은 알.코.볼을 지원하지 않습니다.',
+            },
+          }),
+        );
+        return;
+      }
+    }
     if (selectedTicket) {
       if (!userIdx) {
         navigate('SimpleLoginScreen');
       }
-
       if (selectedTicket?.idx) {
         navigate('ReservationScreen', {
           placeIdx: idx,

@@ -19,6 +19,26 @@ export const fetchAlbamonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.albamonDate = data;
         break;
       }
+      case 'competitionsRegistInfo': {
+        draft.competitionsRegistInfo = data;
+        break;
+      }
+      case 'competitionsPaymentInfo': {
+        draft.competitionsPaymentInfo = data;
+        break;
+      }
+      case 'competitionsPaymentResult': {
+        draft.competitionsPaymentResult = data;
+        break;
+      }
+      case 'competitionPlaceSearchList': {
+        draft.competitionPlaceSearchList = data;
+        break;
+      }
+      case 'competitionClubSearchList': {
+        draft.competitionClubSearchList = data;
+        break;
+      }
       default:
         return draft;
     }

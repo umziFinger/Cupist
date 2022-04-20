@@ -22,6 +22,10 @@ export const Color = {
   Error: '#FF1616',
   Valid: '#16A5FF',
   CalendarRed: '#ff6242',
+  veryLightPink: '#ffefeb',
+  paleLavender: '#f3eaff',
+  bluePurple: '#7107ff',
+  pinkishOrange: '#ff6343',
 };
 
 export const Opacity = {

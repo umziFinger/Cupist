@@ -2,13 +2,14 @@ import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CustomButton from '@/Components/CustomButton';
+import { navigate } from '@/Services/NavigationService';
 
 const AlbamonBanner = () => {
   const { width } = useWindowDimensions();
 
   return (
     <View style={{ flex: 1, marginTop: 17, alignItems: 'center' }}>
-      <CustomButton style={{ height: (width / 375) * 186, width }}>
+      <CustomButton style={{ height: (width / 375) * 186, width }} onPress={() => navigate('AlbamonDetailScreen')}>
         <FastImage
           style={{ width: '100%', height: '100%', borderRadius: 5 }}
           source={require('@/Assets/Images/Albamon/homeBanner.png')}

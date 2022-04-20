@@ -4,6 +4,11 @@ export const INITIAL_STATE = {
     key: 'default',
   },
   albamonDate: '',
+  competitionsRegistInfo: '',
+  competitionsPaymentInfo: '',
+  competitionsPaymentResult: '',
+  competitionPlaceSearchList: [],
+  competitionClubSearchList: [],
 };
 
 export interface AlbamonState {
@@ -11,6 +16,11 @@ export interface AlbamonState {
     placeDetailSelectedTab: PlaceDetailTabType;
     placeAlbamonTicketList: PlaceAlbamonTicketList;
     albamonDate: string | null;
+    competitionsRegistInfo: any;
+    competitionsPaymentInfo: any;
+    competitionsPaymentResult: any;
+    competitionPlaceSearchList: any;
+    competitionClubSearchList: any;
   };
 }
 

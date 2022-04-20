@@ -70,6 +70,8 @@ import RingmeProfileScreen from '@/Containers/More/RingmeProfileScreen';
 import OptimizationScreen from '@/Containers/Common/OptimizationScreen';
 import RegistScreen from '@/Containers/Albamon/RegistScreen';
 import RegistCompleteScreen from '@/Containers/Albamon/RegistCompleteScreen';
+import AlbamonDetailScreen from '@/Containers/Albamon/AlbamonDetailScreen';
+import AlbamonPaymentScreen from '@/Components/IamPort/AlbamonPaymentScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -136,8 +138,10 @@ export type MainStackParamList = {
   EventHotDetailScreen: { eventIdx: number };
   InviteFriendScreen: undefined;
   RingmeProfileScreen: undefined;
-  RegistScreen: undefined;
+  RegistScreen: { placeDetailName?: string };
   RegistCompleteScreen: undefined;
+  AlbamonDetailScreen: undefined;
+  AlbamonPaymentScreen: { userCode: any; data: any };
 
   OptimizationScreen: undefined;
 };
@@ -231,6 +235,7 @@ const MainNavigator = () => {
       {/* ALBAMON */}
       <MainStack.Screen name="RegistScreen" component={RegistScreen} />
       <MainStack.Screen name="RegistCompleteScreen" component={RegistCompleteScreen} />
+      <MainStack.Screen name="AlbamonDetailScreen" component={AlbamonDetailScreen} />
 
       {/* Review */}
       <MainStack.Screen name="ReviewModifyScreen" component={ReviewModifyScreen} />
@@ -241,6 +246,7 @@ const MainNavigator = () => {
       {/* iamport */}
       <MainStack.Screen name="PaymentScreen" component={PaymentScreen} />
       <MainStack.Screen name="CertificationScreen" component={CertificationScreen} />
+      <MainStack.Screen name="AlbamonPaymentScreen" component={AlbamonPaymentScreen} />
 
       <MainStack.Screen name="OptimizationScreen" component={OptimizationScreen} />
     </MainStack.Navigator>

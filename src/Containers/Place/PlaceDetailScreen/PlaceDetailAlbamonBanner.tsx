@@ -1,18 +1,21 @@
 import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import CommonActions from '@/Stores/Common/Actions';
+import { AuthState } from '@/Stores/Auth/InitialState';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 const PlaceDetailAlbamonBanner = () => {
   const { width } = useWindowDimensions();
+  const { userInfo } = useSelector((state: AuthState) => state.auth);
+  const { placeDetail } = useSelector((state: PlaceState) => state.place);
   const dispatch = useDispatch();
-  const alreadyRegist = false;
-
+  const place = placeDetail?.place;
   const onPressBanner = () => {
-    if (alreadyRegist) {
+    if (userInfo?.competitionsYn === 'Y') {
       dispatch(
         CommonActions.fetchCommonReducer({
           type: 'alertDialog',
@@ -26,7 +29,11 @@ const PlaceDetailAlbamonBanner = () => {
       );
       return;
     }
-    navigate('RegistScreen');
+    if (place?.albamonYn === 'Y') {
+      navigate('RegistScreen', { placeDetailName: place?.name });
+    } else if (place?.albamonYn === 'N') {
+      navigate('AlbamonDetailScreen');
+    }
   };
 
   return (

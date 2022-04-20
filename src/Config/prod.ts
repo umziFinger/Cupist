@@ -136,6 +136,12 @@ const prod = {
   RESERVATION_PAYMENT_SIGN_URL: 'reservation/payment/sign',
   RESERVATION_PAYMENT_VERIFY_URL: 'reservation/payment/verify',
   RESERVATION_CERTIFICATION_URL: 'reservation/certification',
+
+  // albamon
+  COMPETITION_REGIST_INFO_URL: 'competitions',
+  COMPETITION_REGIST_PAYMENT_VERIFY_URL: 'competitions/pg/verify',
+  COMPETITION_PLACE_URL: 'competitions/place',
+  COMPETITION_CLUB_URL: 'competitions/club',
 };
 
 export default prod;

@@ -32,6 +32,7 @@ export const INITIAL_STATE: AuthState['auth'] = {
     marketingPushYN: enumYN.Y,
     eventPushYN: enumYN.Y,
     ringme: '',
+    competitionsYn: enumYN.Y,
   },
   tokenInfo: {
     token: '',
@@ -96,6 +97,7 @@ interface userInfo {
   marketingPushYN: enumYN;
   eventPushYN: enumYN;
   ringme: string | '';
+  competitionsYn: enumYN;
 }
 
 interface tokenInfo {

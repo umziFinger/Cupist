@@ -94,36 +94,6 @@ const NoticeDetailScreen = () => {
           showsVerticalScrollIndicator={false}
           ListFooterComponent={<View style={{ marginBottom: heightInfo.fixBottomHeight }} />}
         />
-        {noticeType === 'Albamon' && (
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              paddingHorizontal: 24,
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 12,
-              marginBottom: heightInfo.fixBottomHeight,
-            }}
-          >
-            <CustomButton
-              // onPress={() => onPressReservation()}
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                borderRadius: 3,
-                borderWidth: 1,
-                borderColor: Color.Primary1000,
-                paddingVertical: 15,
-                backgroundColor: Color.Primary1000,
-              }}
-            >
-              <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
-                예선 신청하기
-              </CustomText>
-            </CustomButton>
-          </View>
-        )}
       </View>
     </View>
   );
