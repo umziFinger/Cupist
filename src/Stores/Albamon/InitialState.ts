@@ -4,6 +4,16 @@ export const INITIAL_STATE = {
     key: 'default',
   },
   albamonDate: '',
+  competitionsRegistInfo: '',
+  competitionsPaymentInfo: '',
+  competitionsPaymentResult: '',
+  competitionPlaceSearchList: [],
+  competitionClubSearchList: [],
+  paymentVerifyData: {
+    impUid: '',
+    merchantUid: '',
+    competitionJoinIdx: -1,
+  },
 };
 
 export interface AlbamonState {
@@ -11,7 +21,19 @@ export interface AlbamonState {
     placeDetailSelectedTab: PlaceDetailTabType;
     placeAlbamonTicketList: PlaceAlbamonTicketList;
     albamonDate: string | null;
+    competitionsRegistInfo: any;
+    competitionsPaymentInfo: any;
+    competitionsPaymentResult: any;
+    competitionPlaceSearchList: any;
+    competitionClubSearchList: any;
+    paymentVerifyData: PaymentVerifyDataType;
   };
+}
+
+interface PaymentVerifyDataType {
+  impUid: string;
+  merchantUid: string;
+  competitionJoinIdx: number;
 }
 
 interface PlaceAlbamonTicketList {

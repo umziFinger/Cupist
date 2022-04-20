@@ -7,6 +7,7 @@ import { NotificationTypes } from '@/Stores/Notification/Actions';
 import { MyTypes } from '@/Stores/My/Actions';
 import { PlaceTypes } from '@/Stores/Place/Actions';
 import { ReservationTypes } from '@/Stores/Reservation/Actions';
+import { AlbamonTypes } from '@/Stores/Albamon/Actions';
 
 // search
 import {
@@ -119,6 +120,15 @@ import {
   fetchReservationCertification,
 } from '@/Sagas/ReservationSaga';
 
+// albamon
+import {
+  fetchCompetitionsClubSearch,
+  fetchCompetitionsPaymentVerify,
+  fetchCompetitionsPlaceSearch,
+  fetchCompetitionsRegist,
+  fetchCompetitionsRegistInfo,
+} from '@/Sagas/AlbamonSaga';
+
 export default function* root() {
   yield all([
     // common
@@ -217,5 +227,12 @@ export default function* root() {
     takeLatest(ReservationTypes.FETCH_RESERVATION_PAYMENT_SIGN, fetchReservationPaymentSign),
     takeLatest(ReservationTypes.FETCH_RESERVATION_PAYMENT_VERIFY, fetchReservationPaymentVerify),
     takeLatest(ReservationTypes.FETCH_RESERVATION_CERTIFICATION, fetchReservationCertification),
+
+    // albamon
+    takeLatest(AlbamonTypes.FETCH_COMPETITIONS_REGIST_INFO, fetchCompetitionsRegistInfo),
+    takeLatest(AlbamonTypes.FETCH_COMPETITIONS_REGIST, fetchCompetitionsRegist),
+    takeLatest(AlbamonTypes.FETCH_COMPETITIONS_PAYMENT_VERIFY, fetchCompetitionsPaymentVerify),
+    takeLatest(AlbamonTypes.FETCH_COMPETITIONS_PLACE_SEARCH, fetchCompetitionsPlaceSearch),
+    takeLatest(AlbamonTypes.FETCH_COMPETITIONS_CLUB_SEARCH, fetchCompetitionsClubSearch),
   ]);
 }

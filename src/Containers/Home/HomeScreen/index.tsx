@@ -30,6 +30,7 @@ import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
 import { LocationCheck } from '@/Components/Permission/Location';
 import AlbamonBanner from '@/Containers/Home/HomeScreen/AlbamonBanner';
 import AlbamonActions from '@/Stores/Albamon/Actions';
+import { navigate } from '@/Services/NavigationService';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -50,6 +51,7 @@ const HomeScreen = ({ route }: HomeProps) => {
 
   useEffect(() => {
     console.log('============홈 초기화');
+    // navigate('RegistCompleteScreen');
     // 첫 홈 화면 현재 위치값 갱신
     // 홈 리스트 조회
     // positionUpdate().then();

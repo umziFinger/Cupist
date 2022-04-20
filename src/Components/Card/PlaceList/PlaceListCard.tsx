@@ -84,7 +84,7 @@ const PlaceListCard = (props: PropTypes) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 9 }}>
                   <View style={{ justifyContent: 'center' }}>
                     <CustomText style={{ color: Color.Black1000, fontSize: 16 }}>
-                      <CustomText style={{ fontWeight: 'bold' }}>{numberFormat(item?.minPrice || 0)}</CustomText>
+                      <CustomText style={{ fontWeight: 'bold' }}>원</CustomText>
                       <CustomText>원~</CustomText>
                     </CustomText>
                   </View>
