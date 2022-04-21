@@ -31,6 +31,8 @@ const AlbamonDetailScreen = () => {
     navigate('RegistScreen', { placeDetailName: '' });
   };
 
+  console.log('userInfo?.competitionsYn : ', userInfo);
+
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <Header type={'back'} text={'알바몬 코리아 볼링왕'} />
@@ -50,7 +52,7 @@ const AlbamonDetailScreen = () => {
           flexDirection: 'row',
           alignItems: 'center',
           marginTop: 12,
-          marginBottom: heightInfo.fixBottomHeight,
+          marginBottom: heightInfo.statusHeight,
         }}
       >
         {userInfo?.competitionsYn === 'Y' || !userIdx ? (
