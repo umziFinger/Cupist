@@ -47,6 +47,10 @@ export const fetchAlbamonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.permissionCheck = data;
         break;
       }
+      case 'competitionVerifyData': {
+        draft.competitionVerifyData = data;
+        break;
+      }
       default:
         return draft;
     }

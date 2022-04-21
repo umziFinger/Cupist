@@ -148,3 +148,25 @@ export function* fetchCompetitionsClubSearch(data: any): any {
     console.log('occurred Error...fetchCompetitionsClubSearch : ', e);
   }
 }
+
+export function* fetchCompetitionsVerify(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: `${Config.COMPETITION_VERIFY_URL}`,
+    };
+    const response = yield call(Axios.GET, payload);
+    console.log(response.data);
+    if (response.result === true && response.code === null) {
+      yield put(AlbamonActions.fetchAlbamonReducer({ type: 'competitionVerifyData', data: response.data.result }));
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    } else {
+      console.log('fetchCompetitionsVerify : ', response);
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchCompetitionsVerify : ', e);
+  }
+}

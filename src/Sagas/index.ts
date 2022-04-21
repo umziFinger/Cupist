@@ -127,6 +127,7 @@ import {
   fetchCompetitionsPlaceSearch,
   fetchCompetitionsRegist,
   fetchCompetitionsRegistInfo,
+  fetchCompetitionsVerify,
 } from '@/Sagas/AlbamonSaga';
 
 export default function* root() {
@@ -234,5 +235,6 @@ export default function* root() {
     takeLatest(AlbamonTypes.FETCH_COMPETITIONS_PAYMENT_VERIFY, fetchCompetitionsPaymentVerify),
     takeLatest(AlbamonTypes.FETCH_COMPETITIONS_PLACE_SEARCH, fetchCompetitionsPlaceSearch),
     takeLatest(AlbamonTypes.FETCH_COMPETITIONS_CLUB_SEARCH, fetchCompetitionsClubSearch),
+    takeLatest(AlbamonTypes.FETCH_COMPETITIONS_VERIFY, fetchCompetitionsVerify),
   ]);
 }

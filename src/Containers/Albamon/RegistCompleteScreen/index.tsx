@@ -18,16 +18,22 @@ import AlbamonActions from '@/Stores/Albamon/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { CommonState } from '@/Stores/Common/InitialState';
+import { fetchCompetitionsVerify } from '@/Sagas/AlbamonSaga';
 
 const RegistCompleteScreen = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { competitionsPaymentResult, paymentVerifyData } = useSelector((state: AlbamonState) => state.albamon);
+  const { competitionsPaymentResult, paymentVerifyData, competitionVerifyData } = useSelector(
+    (state: AlbamonState) => state.albamon,
+  );
   const { userIdx } = useSelector((state: AuthState) => state.auth);
 
   useEffect(() => {
-    dispatch(AlbamonActions.fetchCompetitionsPaymentVerify(paymentVerifyData));
+    console.log('paymentVerifyData : ', paymentVerifyData);
+    // dispatch(AlbamonActions.fetchCompetitionsPaymentVerify(paymentVerifyData));
+    dispatch(AlbamonActions.fetchCompetitionsVerify());
     dispatch(AuthActions.fetchUserInfo({ idx: userIdx }));
+    console.log('competitionVerifyData : ', competitionVerifyData);
   }, []);
 
   const onGoMyAroundAlbamon = () => {
@@ -104,7 +110,7 @@ const RegistCompleteScreen = () => {
                 >
                   클럽명
                 </CustomText>
-                <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.Club?.name || ''}</CustomText>
+                <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.Club?.name || ''}</CustomText>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
                 <CustomText
@@ -112,7 +118,7 @@ const RegistCompleteScreen = () => {
                 >
                   참가볼링장명
                 </CustomText>
-                <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.Place?.name || ''}</CustomText>
+                <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.Place?.name || ''}</CustomText>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
                 <CustomText
@@ -120,7 +126,7 @@ const RegistCompleteScreen = () => {
                 >
                   선수이름
                 </CustomText>
-                <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.username || ''}</CustomText>
+                <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.username || ''}</CustomText>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
                 <CustomText
@@ -136,7 +142,7 @@ const RegistCompleteScreen = () => {
                 >
                   입금은행
                 </CustomText>
-                <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.vbankName || ''}</CustomText>
+                <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.vbankName || ''}</CustomText>
               </View>
               <View
                 style={{
@@ -152,7 +158,7 @@ const RegistCompleteScreen = () => {
                   계좌번호
                 </CustomText>
                 <CustomButton
-                  onPress={() => onPressCopy(competitionsPaymentResult?.vbankNo)}
+                  onPress={() => onPressCopy(competitionVerifyData?.vbankNo)}
                   style={{ flexDirection: 'row', alignItems: 'center' }}
                 >
                   <View style={{ width: 24, height: 24 }}>
@@ -162,7 +168,7 @@ const RegistCompleteScreen = () => {
                       resizeMode={FastImage.resizeMode.cover}
                     />
                   </View>
-                  <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.vbankNo || ''}</CustomText>
+                  <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.vbankNo || ''}</CustomText>
                 </CustomButton>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
@@ -172,11 +178,11 @@ const RegistCompleteScreen = () => {
                   입금기한
                 </CustomText>
                 <CustomText style={{ fontSize: 13 }}>
-                  {competitionsPaymentResult?.paymentYn === 'Y' && competitionsPaymentResult?.confirmYn === 'N'
+                  {competitionVerifyData?.paymentYn === 'Y' && competitionVerifyData?.confirmYn === 'N'
                     ? '승인대기중'
-                    : competitionsPaymentResult?.confirmYn === 'Y'
+                    : competitionVerifyData?.confirmYn === 'Y'
                     ? '참가 신청완료'
-                    : moment(competitionsPaymentResult?.vbankDate?.split(' ')[0]).format('YYYY년 MM월 DD일') || ''}
+                    : moment(competitionVerifyData?.vbankDate?.split(' ')[0]).format('YYYY년 MM월 DD일') || ''}
                 </CustomText>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -185,9 +191,7 @@ const RegistCompleteScreen = () => {
                 >
                   결제금액
                 </CustomText>
-                <CustomText style={{ fontSize: 13 }}>
-                  {numberFormat(competitionsPaymentResult?.price) || ''}원
-                </CustomText>
+                <CustomText style={{ fontSize: 13 }}>{numberFormat(competitionVerifyData?.price) || ''}원</CustomText>
               </View>
             </View>
             <View style={{ height: 0.5, marginHorizontal: 24, marginVertical: 36 }}>

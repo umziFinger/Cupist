@@ -7,6 +7,7 @@ const { Types, Creators } = createActions({
   fetchCompetitionsPaymentVerify: ['params'],
   fetchCompetitionsPlaceSearch: ['params'],
   fetchCompetitionsClubSearch: ['params'],
+  fetchCompetitionsVerify: ['params'],
 });
 
 export const AlbamonTypes = Types;
