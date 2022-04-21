@@ -56,7 +56,7 @@ const RegistCompleteScreen = () => {
                 />
               </View>
               <View style={{ alignItems: 'center', marginTop: 20 }}>
-                <CustomText style={{ fontSize: 20, letterSpacing: -0.35 }}>알바몬 코리아 볼링왕</CustomText>
+                <CustomText style={{ fontSize: 20, letterSpacing: -0.35 }}>2022 알바몬 코리아 볼링왕</CustomText>
                 <CustomText style={{ fontSize: 22, letterSpacing: -0.4, fontWeight: 'bold', marginTop: 4 }}>
                   참가신청완료
                 </CustomText>
@@ -78,7 +78,7 @@ const RegistCompleteScreen = () => {
                 >
                   대회명
                 </CustomText>
-                <CustomText style={{ fontSize: 13 }}>알바몬 코리아 볼링왕</CustomText>
+                <CustomText style={{ fontSize: 13 }}>2022 알바몬 코리아 볼링왕</CustomText>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
                 <CustomText

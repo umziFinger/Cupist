@@ -30,7 +30,7 @@ const AlbamonPermissionDetailScreen = ({ route }: PropTypes) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White, paddingBottom: heightInfo.fixBottomHeight - 1 }}>
-      <Header type={'back'} text={headerTitle} />
+      <Header type={'back'} text={'개인정보 수집 및 이용동의서'} />
       <View style={{ flex: 1, borderTopWidth: 1, borderColor: Color.Gray200 }}>
         <WebView
           style={{ flex: 1 }}

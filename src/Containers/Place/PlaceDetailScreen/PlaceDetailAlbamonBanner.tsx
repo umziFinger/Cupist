@@ -38,10 +38,12 @@ const PlaceDetailAlbamonBanner = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <CustomButton style={{ width: width - 48, height: ((width - 48) / 327) * 92 }} onPress={() => onPressBanner()}>
+      <CustomButton style={{ width: width - 48, height: ((width - 48) / 327) * 103 }} onPress={() => onPressBanner()}>
         <FastImage
           style={{ width: '100%', height: '100%' }}
-          source={require('@/Assets/Images/Albamon/albamonBanner.png')}
+          source={{
+            uri: 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/albamonBanner%403x.png',
+          }}
           resizeMode={FastImage.resizeMode.cover}
         />
       </CustomButton>

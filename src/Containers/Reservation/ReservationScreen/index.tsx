@@ -139,7 +139,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
               mobile: reservationInfo?.mobile,
               couponPrice: selectedCoupon?.Coupon?.price,
               couponIdx: selectedCoupon?.idx,
-              competitionsJoinsIdx: reservationInfo?.competitionsJoinsIdx,
+              competitionJoinsIdx: reservationInfo?.competitionJoinsIdx,
             };
       console.log('params : ', params);
       dispatch(ReservationActions.fetchReservation(params));

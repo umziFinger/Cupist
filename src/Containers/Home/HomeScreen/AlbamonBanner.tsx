@@ -12,7 +12,9 @@ const AlbamonBanner = () => {
       <CustomButton style={{ height: (width / 375) * 186, width }} onPress={() => navigate('AlbamonDetailScreen')}>
         <FastImage
           style={{ width: '100%', height: '100%', borderRadius: 5 }}
-          source={require('@/Assets/Images/Albamon/homeBanner.png')}
+          source={{
+            uri: 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/homeBanner%403x.png',
+          }}
           resizeMode={FastImage.resizeMode.cover}
         />
       </CustomButton>

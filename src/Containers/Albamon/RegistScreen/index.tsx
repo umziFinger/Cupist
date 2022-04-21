@@ -42,8 +42,7 @@ const RegistScreen = ({ route }: PropTypes) => {
     permissionCheck = false,
   } = useSelector((state: AlbamonState) => state.albamon);
 
-  const [gender, setGender] = useState('F');
-  // const [agreement, setAgreement] = useState<boolean>(false);
+  const [gender, setGender] = useState('');
   const [clubName, setClubName] = useState('');
   const [placeName, setPlaceName] = useState('');
   const [name, setName] = useState('');
@@ -65,12 +64,13 @@ const RegistScreen = ({ route }: PropTypes) => {
     setPlaceName(placeDetailName || '');
     setName(userInfo?.username || '');
     onChangePhoneNumber(userInfo?.mobile || '');
+    return () => {
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'permissionCheck', data: false }));
+    };
   }, []);
 
   useEffect(() => {
-    // Keyboard.addListener('keyboardDidShow', () => console.log('show'));
     Keyboard.addListener('keyboardDidHide', () => focusOut());
-    dispatch(AlbamonActions.fetchCompetitionsClubSearch({ query: '' }));
     dispatch(AlbamonActions.fetchCompetitionsPlaceSearch({ query: '' }));
   }, []);
 
@@ -102,7 +102,6 @@ const RegistScreen = ({ route }: PropTypes) => {
       ref_input[index].current?.focus();
     }
   };
-
   // 클럽명 클리어버튼
   let clubNameClearBox: any = null;
   if (clubName !== '' && focusIndex === 0) {
@@ -121,19 +120,33 @@ const RegistScreen = ({ route }: PropTypes) => {
 
   // 참가 볼링장 클리어버튼
   let placeNameClearBox: any = null;
-  if (placeName !== '' && focusIndex === 1) {
-    placeNameClearBox = (
-      <CustomButton onPress={() => onChangePlaceName('')} hitSlop={7}>
-        <View style={{ width: 16, height: 16, marginTop: Platform.OS === 'android' ? 7.5 : 0 }}>
-          <FastImage
-            style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/Search/icTxtDel.png')}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-        </View>
-      </CustomButton>
-    );
-  }
+
+  placeNameClearBox = (
+    <CustomButton
+      onPress={() => {
+        if (focusIndex === 1) {
+          focusOut();
+        } else {
+          onFocus(1);
+        }
+      }}
+      hitSlop={7}
+    >
+      <View style={{ width: 24, height: 24 }}>
+        <FastImage
+          style={{ width: '100%', height: '100%' }}
+          source={
+            focusIndex === 1
+              ? require('@/Assets/Images/Arrow/icArrowUp.png')
+              : placeName === ''
+              ? require('@/Assets/Images/Arrow/icArrowDwGray.png')
+              : require('@/Assets/Images/Arrow/icArrowDw.png')
+          }
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </View>
+    </CustomButton>
+  );
 
   // 선수이름 클리어 버튼
   const onClearName = () => {
@@ -182,6 +195,7 @@ const RegistScreen = ({ route }: PropTypes) => {
 
   const selectPlaceName = (item: string) => {
     setPlaceName(item);
+    focusOut();
     Keyboard.dismiss();
   };
 
@@ -205,6 +219,10 @@ const RegistScreen = ({ route }: PropTypes) => {
   const onChangeClubName = (text: string) => {
     setClubName(text);
     debounceFuncClub.current(text);
+    console.log('aklshvhasdv;asd', text);
+    if (text === '') {
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'competitionClubSearchList', data: [] }));
+    }
   };
 
   const onChangePlaceName = (text: string) => {
@@ -218,7 +236,7 @@ const RegistScreen = ({ route }: PropTypes) => {
       const params = {
         query: text,
       };
-      dispatch(AlbamonActions.fetchCompetitionsClubSearch(params));
+      if (text !== '') dispatch(AlbamonActions.fetchCompetitionsClubSearch(params));
     }, 500),
   );
   console.log(competitionClubSearchList);
@@ -508,7 +526,7 @@ const RegistScreen = ({ route }: PropTypes) => {
                               width: width - 48,
                               height: 134,
                               left: 24,
-                              top: 222,
+                              top: 225,
                               // borderWidth: 1,
                               borderBottomWidth: 1,
                               borderLeftWidth: 1,
@@ -630,7 +648,9 @@ const RegistScreen = ({ route }: PropTypes) => {
                             borderColor: focusIndex === 1 ? Color.Primary1000 : Color.Gray300,
                             borderRadius: 3,
                             paddingHorizontal: 12,
-                            paddingVertical: Platform.OS === 'ios' ? 15 : 7.5,
+                            // paddingVertical: Platform.OS === 'ios' ? 14 : 7,
+                            height: 48,
+                            alignItems: 'center',
                             marginTop: 8,
                             flexDirection: 'row',
                             backgroundColor: 'white',
@@ -976,5 +996,4 @@ const RegistScreen = ({ route }: PropTypes) => {
     </View>
   );
 };
-
 export default RegistScreen;
