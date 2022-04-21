@@ -48,7 +48,7 @@ export function* fetchCompetitionsRegist(data: any): any {
         merchant_uid: response?.data?.merchantUid || '', // 주문번호 (백엔드에서 임시 예약시 생성된 주문번호 넣어줄것)
         amount: response?.data?.price || 0, // 결제금액
         name: response?.data?.Place?.name || '', // 주문명
-        buyer_name: response?.data?.User?.username || '', // 구매자 이름
+        buyer_name: response?.data?.username || '', // 구매자 이름
         buyer_tel: data?.params?.mobile || '', // 구매자 전화번호
         buyer_email: '', // 구매자 이메일
         app_scheme: 'bolimi',

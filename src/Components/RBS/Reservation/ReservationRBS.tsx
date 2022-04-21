@@ -16,6 +16,7 @@ import { HomeState } from '@/Stores/Home/InitialState';
 import { DATA_PAYMENT_METHOD } from '@/Containers/Reservation/ReservationScreen/data';
 import { navigate } from '@/Services/NavigationService';
 import Config from '@/Config';
+import { AlbamonState } from '@/Stores/Albamon/InitialState';
 
 const ReservationRBS = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const ReservationRBS = () => {
   const { height } = useWindowDimensions();
   const { heightInfo, isOpenReservationRBS } = useSelector((state: CommonState) => state.common);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
+  const { placeDetailSelectedTab, albamonDate } = useSelector((state: AlbamonState) => state.albamon);
   const { placeDetail, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const {
     paymentInfo,
@@ -154,8 +156,10 @@ const ReservationRBS = () => {
                       <View style={{ flexDirection: 'row' }}>
                         <View style={{ justifyContent: 'center' }}>
                           <CustomText style={{ color: Color.Grayyellow1000, fontSize: 13, fontWeight: '500' }}>
-                            {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
-                            {selectedTicket?.endTime.substr(0, 5)}
+                            {moment(placeDetailSelectedTab.key === 'default' ? calendarDate : albamonDate).format(
+                              'MM월 DD일(dd)',
+                            )}{' '}
+                            {selectedTicket?.startTime.substr(0, 5)} ~ {selectedTicket?.endTime.substr(0, 5)}
                           </CustomText>
                         </View>
                       </View>

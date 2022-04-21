@@ -23,6 +23,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import AmountArea from '@/Containers/Reservation/ReservationScreen/AmountArea';
 import CouponArea from '@/Containers/Reservation/ReservationScreen/CouponArea';
 import WarningArea from '@/Containers/Reservation/ReservationScreen/WarningArea';
+import { AlbamonState } from '@/Stores/Albamon/InitialState';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'ReservationScreen'>;
@@ -32,6 +33,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
   const flatRef = useRef<any>();
   const { placeIdx, ticketInfoIdx } = route.params;
+  const { placeDetailSelectedTab, albamonDate } = useSelector((state: AlbamonState) => state.albamon);
 
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
@@ -106,21 +108,39 @@ const ReservationScreen = ({ route }: PropTypes) => {
   // 결제 임시 데이터 생성
   const onCreateTempReservation = () => {
     if (checkMobile() && validation) {
-      const params = {
-        placeIdx,
-        placeTicketIdx: ticketInfoIdx,
-        useDate: calendarDate,
-        memberCnt: personCount,
-        shoesCnt: shoesCount,
-        price: reservationInfo?.price,
-        salePrice: reservationInfo?.salePrice,
-        shoesPrice: reservationInfo?.shoesPrice,
-        totalPrice: totalPrice - (selectedCoupon?.Coupon?.price || 0),
-        username: reservationInfo?.username,
-        mobile: reservationInfo?.mobile,
-        couponPrice: selectedCoupon?.Coupon?.price,
-        couponIdx: selectedCoupon?.idx,
-      };
+      const params =
+        placeDetailSelectedTab.key === 'default'
+          ? {
+              placeIdx,
+              placeTicketIdx: ticketInfoIdx,
+              useDate: calendarDate,
+              memberCnt: personCount,
+              shoesCnt: shoesCount,
+              price: reservationInfo?.price,
+              salePrice: reservationInfo?.salePrice,
+              shoesPrice: reservationInfo?.shoesPrice,
+              totalPrice: totalPrice - (selectedCoupon?.Coupon?.price || 0),
+              username: reservationInfo?.username,
+              mobile: reservationInfo?.mobile,
+              couponPrice: selectedCoupon?.Coupon?.price,
+              couponIdx: selectedCoupon?.idx,
+            }
+          : {
+              placeIdx,
+              placeTicketIdx: ticketInfoIdx,
+              useDate: albamonDate,
+              memberCnt: personCount,
+              shoesCnt: shoesCount,
+              price: reservationInfo?.price,
+              salePrice: reservationInfo?.salePrice,
+              shoesPrice: reservationInfo?.shoesPrice,
+              totalPrice: totalPrice - (selectedCoupon?.Coupon?.price || 0),
+              username: reservationInfo?.username,
+              mobile: reservationInfo?.mobile,
+              couponPrice: selectedCoupon?.Coupon?.price,
+              couponIdx: selectedCoupon?.idx,
+              competitionsJoinsIdx: reservationInfo?.competitionsJoinsIdx,
+            };
       console.log('params : ', params);
       dispatch(ReservationActions.fetchReservation(params));
     }

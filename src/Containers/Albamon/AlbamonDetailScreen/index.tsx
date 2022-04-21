@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { Color } from '@/Assets/Color';
@@ -9,10 +9,27 @@ import CustomButton from '@/Components/CustomButton';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { navigate } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
+import AlbamonActions from '@/Stores/Albamon/Actions';
+import AuthActions from '@/Stores/Auth/Actions';
 
 const AlbamonDetailScreen = () => {
+  const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { userInfo } = useSelector((state: AuthState) => state.auth);
+  const { userInfo, userIdx } = useSelector((state: AuthState) => state.auth);
+
+  useEffect(() => {
+    if (userIdx) {
+      dispatch(AuthActions.fetchUserInfo({ idx: userIdx }));
+    }
+  }, []);
+
+  const onPressRegist = () => {
+    if (!userIdx) {
+      navigate('SimpleLoginScreen');
+      return;
+    }
+    navigate('RegistScreen', { placeDetailName: '' });
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
@@ -36,9 +53,9 @@ const AlbamonDetailScreen = () => {
           marginBottom: heightInfo.fixBottomHeight,
         }}
       >
-        {userInfo?.competitionsYn === 'N' ? (
+        {userInfo?.competitionsYn === 'Y' || !userIdx ? (
           <CustomButton
-            onPress={() => navigate('RegistScreen', { placeDetailName: '' })}
+            onPress={() => onPressRegist()}
             style={{
               flex: 1,
               alignItems: 'center',

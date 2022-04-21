@@ -17,6 +17,7 @@ import AlbamonActions from '@/Stores/Albamon/Actions';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import { numberFormat } from '@/Components/Function';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
+import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'RegistScreen'>;
@@ -34,12 +35,15 @@ const RegistScreen = ({ route }: PropTypes) => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { width } = useWindowDimensions();
   const { userInfo } = useSelector((state: AuthState) => state.auth);
-  const { competitionsRegistInfo, competitionPlaceSearchList, competitionClubSearchList } = useSelector(
-    (state: AlbamonState) => state.albamon,
-  );
+  const {
+    competitionsRegistInfo,
+    competitionPlaceSearchList,
+    competitionClubSearchList,
+    permissionCheck = false,
+  } = useSelector((state: AlbamonState) => state.albamon);
 
   const [gender, setGender] = useState('F');
-  const [agreement, setAgreement] = useState('Y');
+  // const [agreement, setAgreement] = useState<boolean>(false);
   const [clubName, setClubName] = useState('');
   const [placeName, setPlaceName] = useState('');
   const [name, setName] = useState('');
@@ -49,8 +53,11 @@ const RegistScreen = ({ route }: PropTypes) => {
     setGender(params);
   };
 
-  const selectAgreement = (params: string) => {
-    setAgreement(params);
+  const onPressAgreement = () => {
+    if (!permissionCheck) {
+      navigate('AlbamonPermissionDetailScreen', { agreeIdx: 2, detailArr: DATA_PERMISSION_DETAILS });
+    }
+    dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'permissionCheck', data: false }));
   };
 
   useEffect(() => {
@@ -63,6 +70,8 @@ const RegistScreen = ({ route }: PropTypes) => {
   useEffect(() => {
     // Keyboard.addListener('keyboardDidShow', () => console.log('show'));
     Keyboard.addListener('keyboardDidHide', () => focusOut());
+    dispatch(AlbamonActions.fetchCompetitionsClubSearch({ query: '' }));
+    dispatch(AlbamonActions.fetchCompetitionsPlaceSearch({ query: '' }));
   }, []);
 
   const focusOut = () => {
@@ -72,10 +81,10 @@ const RegistScreen = ({ route }: PropTypes) => {
 
   useEffect(() => {
     validCheck();
-  }, [gender, agreement, clubName, placeName, name, phoneNumber]);
+  }, [gender, permissionCheck, clubName, placeName, name, phoneNumber]);
 
   const validCheck = () => {
-    return gender && agreement && clubName && placeName && name && isPhoneValid && phoneNumber;
+    return gender && permissionCheck && clubName && placeName && name && isPhoneValid && phoneNumber;
   };
 
   const onFocus = (index: number) => {
@@ -86,6 +95,9 @@ const RegistScreen = ({ route }: PropTypes) => {
   };
 
   const onFocusNext = (index: number) => {
+    if (focusIndex === 3) {
+      ref_input[3].current?.blur();
+    }
     if (ref_input[index]) {
       ref_input[index].current?.focus();
     }
@@ -180,7 +192,7 @@ const RegistScreen = ({ route }: PropTypes) => {
       name,
       mobile: phoneNumber.split('-').join(''),
       sex: gender,
-      agreeYn: agreement,
+      agreeYn: permissionCheck ? 'Y' : 'N',
       compChildrenIdx: competitionsRegistInfo?.competitions?.idx,
     };
     console.log(params);
@@ -316,7 +328,7 @@ const RegistScreen = ({ route }: PropTypes) => {
                           </CustomText>
                         </View>
                         <CustomText style={{ fontSize: 14, letterSpacing: -0.11, fontWeight: '500', marginLeft: 11 }}>
-                          {`${competitionsRegistInfo?.competitions?.qualifiersDateView}` || '22.05.06(금) - 05.16(일)'}
+                          {`${competitionsRegistInfo?.competitions?.qualifiersDateView}` || ''}
                         </CustomText>
                       </View>
                     </View>
@@ -787,62 +799,116 @@ const RegistScreen = ({ route }: PropTypes) => {
                         </CustomButton>
                       </View>
                     </View>
-                    <View style={{ marginHorizontal: 24, marginTop: 32 }}>
-                      <CustomText style={{ fontSize: 12, color: Color.Grayyellow500, fontWeight: '500' }}>
-                        개인정보 활용 동의
-                      </CustomText>
-                      <View style={{ flexDirection: 'row', marginTop: 8 }}>
-                        <CustomButton
-                          style={{
-                            paddingVertical: 11,
-                            backgroundColor: agreement === 'Y' ? Color.Primary1000 : Color.White,
-                            borderWidth: agreement === 'Y' ? 0 : 1,
-                            borderColor: Color.Gray300,
-                            alignItems: 'center',
-                            borderRadius: 3,
-                            flex: 1,
-                          }}
-                          onPress={() => selectAgreement('Y')}
-                        >
+                    {/* <View style={{ marginHorizontal: 24, marginTop: 32 }}> */}
+                    {/*  <CustomText style={{ fontSize: 12, color: Color.Grayyellow500, fontWeight: '500' }}> */}
+                    {/*    개인정보 활용 동의 */}
+                    {/*  </CustomText> */}
+                    {/*  <View style={{ flexDirection: 'row', marginTop: 8 }}> */}
+                    {/*    <CustomButton */}
+                    {/*      style={{ */}
+                    {/*        paddingVertical: 11, */}
+                    {/*        backgroundColor: agreement === 'Y' ? Color.Primary1000 : Color.White, */}
+                    {/*        borderWidth: agreement === 'Y' ? 0 : 1, */}
+                    {/*        borderColor: Color.Gray300, */}
+                    {/*        alignItems: 'center', */}
+                    {/*        borderRadius: 3, */}
+                    {/*        flex: 1, */}
+                    {/*      }} */}
+                    {/*      onPress={() => selectAgreement('Y')} */}
+                    {/*    > */}
+                    {/*      <CustomText */}
+                    {/*        style={{ */}
+                    {/*          color: agreement === 'Y' ? Color.White : Color.Gray400, */}
+                    {/*          fontWeight: '500', */}
+                    {/*          fontSize: 14, */}
+                    {/*          letterSpacing: -0.25, */}
+                    {/*        }} */}
+                    {/*      > */}
+                    {/*        동의 */}
+                    {/*      </CustomText> */}
+                    {/*    </CustomButton> */}
+                    {/*    <CustomButton */}
+                    {/*      style={{ */}
+                    {/*        marginLeft: 10, */}
+                    {/*        paddingVertical: 11, */}
+                    {/*        backgroundColor: agreement === 'N' ? Color.Primary1000 : Color.White, */}
+                    {/*        borderWidth: agreement === 'N' ? 0 : 1, */}
+                    {/*        borderColor: Color.Gray300, */}
+                    {/*        alignItems: 'center', */}
+                    {/*        borderRadius: 3, */}
+                    {/*        flex: 1, */}
+                    {/*      }} */}
+                    {/*      onPress={() => selectAgreement('N')} */}
+                    {/*    > */}
+                    {/*      <CustomText */}
+                    {/*        style={{ */}
+                    {/*          color: agreement === 'N' ? Color.White : Color.Gray400, */}
+                    {/*          fontWeight: '500', */}
+                    {/*          fontSize: 14, */}
+                    {/*          letterSpacing: -0.25, */}
+                    {/*        }} */}
+                    {/*      > */}
+                    {/*        미동의 */}
+                    {/*      </CustomText> */}
+                    {/*    </CustomButton> */}
+                    {/*  </View> */}
+                    {/* </View> */}
+                    <View
+                      style={{
+                        marginHorizontal: 24,
+                        marginTop: 41,
+                        borderColor: permissionCheck ? Color.Primary1000 : Color.Gray300,
+                        borderRadius: 3,
+                        borderWidth: 1,
+                        paddingVertical: 16,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <CustomButton
+                        style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
+                        onPress={() => onPressAgreement()}
+                      >
+                        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                          <View style={{ width: 24, height: 24, marginLeft: 12 }}>
+                            <FastImage
+                              style={{ width: '100%', height: '100%' }}
+                              source={
+                                permissionCheck
+                                  ? require('@/Assets/Images/Button/icCheckCircleOn.png')
+                                  : require('@/Assets/Images/Button/icCheckCircleOff.png')
+                              }
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                          </View>
                           <CustomText
                             style={{
-                              color: agreement === 'Y' ? Color.White : Color.Gray400,
-                              fontWeight: '500',
+                              marginLeft: 7,
+                              color: permissionCheck ? Color.Black1000 : Color.Gray400,
                               fontSize: 14,
-                              letterSpacing: -0.25,
+                              fontWeight: '500',
+                              letterSpacing: -0.19,
                             }}
                           >
-                            동의
+                            개인정보 수집 및 이용동의(필수)
                           </CustomText>
-                        </CustomButton>
-                        <CustomButton
-                          style={{
-                            marginLeft: 10,
-                            paddingVertical: 11,
-                            backgroundColor: agreement === 'N' ? Color.Primary1000 : Color.White,
-                            borderWidth: agreement === 'N' ? 0 : 1,
-                            borderColor: Color.Gray300,
-                            alignItems: 'center',
-                            borderRadius: 3,
-                            flex: 1,
-                          }}
-                          onPress={() => selectAgreement('N')}
-                        >
-                          <CustomText
-                            style={{
-                              color: agreement === 'N' ? Color.White : Color.Gray400,
-                              fontWeight: '500',
-                              fontSize: 14,
-                              letterSpacing: -0.25,
-                            }}
-                          >
-                            미동의
-                          </CustomText>
-                        </CustomButton>
-                      </View>
+                        </View>
+                        <View style={{ width: 24, height: 24, marginRight: 14 }}>
+                          <FastImage
+                            style={{ width: '100%', height: '100%' }}
+                            source={
+                              permissionCheck
+                                ? require('@/Assets/Images/Arrow/icArrowRightHeavy.png')
+                                : require('@/Assets/Images/Arrow/icArrowRiGray400.png')
+                            }
+                            // source={require('@/Assets/Images/Arrow/icArrowRiGray400.png')}
+                            resizeMode={FastImage.resizeMode.cover}
+                          />
+                        </View>
+                      </CustomButton>
                     </View>
                     <CustomText style={{ color: Color.Gray400, fontSize: 10, marginLeft: 24, marginTop: 12 }}>
-                      {'*본 대회에 대한 자세한 내용은 볼리미 홈화면 > 더보기 > 공지사항을 확인해 주세요.'}
+                      {'*본 대회에 대한 궁금사항은 1:1문의사항으로 문의해주세요.'}
                     </CustomText>
                   </View>
                 </View>

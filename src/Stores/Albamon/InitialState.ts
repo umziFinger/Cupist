@@ -14,6 +14,7 @@ export const INITIAL_STATE = {
     merchantUid: '',
     competitionJoinIdx: -1,
   },
+  permissionCheck: false,
 };
 
 export interface AlbamonState {
@@ -27,6 +28,7 @@ export interface AlbamonState {
     competitionPlaceSearchList: any;
     competitionClubSearchList: any;
     paymentVerifyData: PaymentVerifyDataType;
+    permissionCheck: boolean;
   };
 }
 

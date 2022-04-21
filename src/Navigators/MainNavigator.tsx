@@ -72,6 +72,7 @@ import RegistScreen from '@/Containers/Albamon/RegistScreen';
 import RegistCompleteScreen from '@/Containers/Albamon/RegistCompleteScreen';
 import AlbamonDetailScreen from '@/Containers/Albamon/AlbamonDetailScreen';
 import AlbamonPaymentScreen from '@/Components/IamPort/AlbamonPaymentScreen';
+import AlbamonPermissionDetailScreen from '@/Containers/Albamon/AlbamonPermissionDetailScreen';
 
 type ReviewModifyType = 'my' | 'placeDetail' | 'placeReview';
 export type MainStackParamList = {
@@ -142,6 +143,7 @@ export type MainStackParamList = {
   RegistCompleteScreen: undefined;
   AlbamonDetailScreen: undefined;
   AlbamonPaymentScreen: { userCode: any; data: any };
+  AlbamonPermissionDetailScreen: { agreeIdx: number; detailArr: Array<any> };
 
   OptimizationScreen: undefined;
 };
@@ -236,6 +238,7 @@ const MainNavigator = () => {
       <MainStack.Screen name="RegistScreen" component={RegistScreen} />
       <MainStack.Screen name="RegistCompleteScreen" component={RegistCompleteScreen} />
       <MainStack.Screen name="AlbamonDetailScreen" component={AlbamonDetailScreen} />
+      <MainStack.Screen name="AlbamonPermissionDetailScreen" component={AlbamonPermissionDetailScreen} />
 
       {/* Review */}
       <MainStack.Screen name="ReviewModifyScreen" component={ReviewModifyScreen} />

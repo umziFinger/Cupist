@@ -78,7 +78,7 @@ const RegistCompleteScreen = () => {
                 >
                   대회명
                 </CustomText>
-                <CustomText style={{ fontSize: 13 }}>알바몬 코리아 볼링장</CustomText>
+                <CustomText style={{ fontSize: 13 }}>알바몬 코리아 볼링왕</CustomText>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
                 <CustomText
@@ -102,7 +102,7 @@ const RegistCompleteScreen = () => {
                 >
                   선수이름
                 </CustomText>
-                <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.User?.username || ''}</CustomText>
+                <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.username || ''}</CustomText>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
                 <CustomText

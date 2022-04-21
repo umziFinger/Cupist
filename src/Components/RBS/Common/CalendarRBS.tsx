@@ -36,11 +36,13 @@ const CalendarRBS = () => {
     isOpenCalendarRBS,
     calendarMonthPosition = 0,
   } = useSelector((state: CommonState) => state.common);
-  const { placeDetailSelectedTab } = useSelector((state: AlbamonState) => state.albamon);
+  const { placeDetailSelectedTab, competitionsRegistInfo } = useSelector((state: AlbamonState) => state.albamon);
 
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const dayNamesShort = ['일', '월', '화', '수', '목', '금', '토'];
   const futureRange = [0, 1];
+  const competitionStartDate = competitionsRegistInfo?.competitions?.qualifiersStartDate;
+  const competitionEndDate = competitionsRegistInfo?.competitions?.qualifiersEndDate;
 
   useEffect(() => {
     if (isOpenCalendarRBS) {
@@ -92,10 +94,12 @@ const CalendarRBS = () => {
                 minDate={
                   placeDetailSelectedTab.key === 'default'
                     ? moment().format('YYYY-MM-DD')
-                    : moment(new Date('2022-04-30')).format('YYYY-MM-DD')
+                    : moment(new Date(competitionStartDate)).format('YYYY-MM-DD')
                 }
                 maxDate={
-                  placeDetailSelectedTab.key === 'default' ? '' : moment(new Date('2022-05-06')).format('YYYY-MM-DD')
+                  placeDetailSelectedTab.key === 'default'
+                    ? ''
+                    : moment(new Date(competitionEndDate)).format('YYYY-MM-DD')
                 }
                 customHeader={(data) => {
                   const date = moment(data.month.toString()).format('MM').toString();

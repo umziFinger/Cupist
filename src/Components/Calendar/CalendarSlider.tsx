@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
-import { put } from 'redux-saga/effects';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
@@ -19,10 +18,15 @@ const CalendarSlider = () => {
   const calendarRef = useRef<any>();
 
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { albamonDate, placeDetailSelectedTab } = useSelector((state: AlbamonState) => state.albamon);
+  const { albamonDate, placeDetailSelectedTab, competitionsRegistInfo } = useSelector(
+    (state: AlbamonState) => state.albamon,
+  );
   const [headerDate, setHeaderDate] = useState<string>(moment().format('MM월 YYYY').toString());
+  const competitionStartDate = competitionsRegistInfo?.competitions?.qualifiersStartDate;
+  const competitionEndDate = competitionsRegistInfo?.competitions?.qualifiersEndDate;
 
   useEffect(() => {
+    dispatch(AlbamonActions.fetchCompetitionsRegistInfo());
     return (
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'albamonDate', data: '' })),
       // dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() })),
@@ -31,10 +35,29 @@ const CalendarSlider = () => {
   }, []);
 
   useEffect(() => {
+    if (placeDetailSelectedTab.key === 'albamon') {
+      dispatch(
+        AlbamonActions.fetchAlbamonReducer({
+          type: 'albamonDate',
+          data: checkStartDate() ? moment(competitionStartDate).toString() : moment(new Date()).toString(),
+        }),
+      );
+    } else {
+      dispatch(
+        AlbamonActions.fetchAlbamonReducer({
+          type: 'albamonDate',
+          data: '',
+        }),
+      );
+    }
+  }, [placeDetailSelectedTab]);
+
+  useEffect(() => {
+    console.log('=-=-==-=-==-=-=-=-=-', albamonDate);
     if (placeDetailSelectedTab.key === 'default') {
       setHeaderDate(moment(calendarDate).format('MM월 YYYY'));
     } else {
-      setHeaderDate(moment(albamonDate).format('MM') === '04' ? '04월 2022' : '05월 2022');
+      setHeaderDate(moment(albamonDate).format('MM월 YYYY'));
     }
   }, [calendarDate, placeDetailSelectedTab, albamonDate]);
 
@@ -57,6 +80,10 @@ const CalendarSlider = () => {
   const onPressHeader = () => {
     console.log('onPressHeader');
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenCalendarRBS', data: true }));
+  };
+
+  const checkStartDate = () => {
+    return moment(competitionStartDate).format('YYYYMMDD') > moment().format('YYYYMMDD');
   };
 
   const renderDayComponent = (value: any) => {
@@ -136,15 +163,23 @@ const CalendarSlider = () => {
           }}
           shouldAllowFontScaling={false}
           style={{ flex: 1, marginTop: 5, marginBottom: -7 }}
-          startingDate={placeDetailSelectedTab.key === 'default' ? moment(calendarDate) : new Date('2022-04-30')}
+          startingDate={
+            placeDetailSelectedTab.key === 'default'
+              ? moment(calendarDate)
+              : new Date(checkStartDate() ? competitionStartDate : moment())
+          }
           scrollable
           numDaysInWeek={8}
           selectedDate={placeDetailSelectedTab.key === 'default' ? moment(calendarDate) : moment(albamonDate)}
           datesWhitelist={datesWhitelist}
           leftSelector={[]}
           rightSelector={[]}
-          minDate={placeDetailSelectedTab.key === 'default' ? moment() : new Date('2022-04-30')}
-          maxDate={placeDetailSelectedTab.key === 'default' ? moment().add(2, 'month') : new Date('2022-05-06')}
+          minDate={
+            placeDetailSelectedTab.key === 'default'
+              ? moment()
+              : new Date(checkStartDate() ? competitionStartDate : moment())
+          }
+          maxDate={placeDetailSelectedTab.key === 'default' ? moment().add(2, 'month') : new Date(competitionEndDate)}
           calendarHeaderContainerStyle={{ display: 'none' }}
           dayComponentHeight={56}
           onDateSelected={(e) => {
