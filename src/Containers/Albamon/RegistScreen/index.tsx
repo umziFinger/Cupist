@@ -841,8 +841,10 @@ const RegistScreen = ({ route }: PropTypes) => {
                         </CustomButton>
                       </View>
                     </View>
-                    <CustomText style={{ color: Color.Gray400, fontSize: 10, marginLeft: 24, marginTop: 12 }}>
-                      {'*본 대회에 대한 자세한 내용은 볼리미 홈화면 > 더보기 > 공지사항을 확인해 주세요.'}
+                    <CustomText style={{ color: Color.Gray400, fontSize: 10, paddingHorizontal: 24, marginTop: 12 }}>
+                      {
+                        '*본 대회에 대한 자세한 내용은 볼리미 홈화면 > 더보기 > 공지사항을 확인해 주세요 공지사항을 확인해 주세요.'
+                      }
                     </CustomText>
                   </View>
                 </View>
@@ -853,7 +855,7 @@ const RegistScreen = ({ route }: PropTypes) => {
                   style={{
                     marginHorizontal: 24,
                     marginTop: 36,
-                    paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,
+                    paddingBottom: heightInfo.statusHeight,
                   }}
                 >
                   <View style={{ alignItems: 'center' }}>
