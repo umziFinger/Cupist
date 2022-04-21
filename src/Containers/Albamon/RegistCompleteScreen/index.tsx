@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import Clipboard from '@react-native-clipboard/clipboard';
 import Header from '@/Components/Header';
 import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
@@ -10,14 +11,17 @@ import CustomDashed from '@/Components/CustomDashed';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import PlaceActions from '@/Stores/Place/Actions';
+import CommonActions from '@/Stores/Common/Actions';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import { numberFormat } from '@/Components/Function';
 import AlbamonActions from '@/Stores/Albamon/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
+import { CommonState } from '@/Stores/Common/InitialState';
 
 const RegistCompleteScreen = () => {
   const dispatch = useDispatch();
+  const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { competitionsPaymentResult, paymentVerifyData } = useSelector((state: AlbamonState) => state.albamon);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
 
@@ -38,6 +42,20 @@ const RegistCompleteScreen = () => {
       }),
     );
     navigate('MyAroundScreen');
+  };
+
+  const onPressCopy = (text: string) => {
+    Clipboard.setString(text || '');
+    dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'alertToast',
+        data: {
+          alertToast: true,
+          alertToastPosition: 'bottom',
+          alertToastMessage: '계좌번호가 복사 되었습니다.',
+        },
+      }),
+    );
   };
 
   return (
@@ -120,13 +138,32 @@ const RegistCompleteScreen = () => {
                 </CustomText>
                 <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.vbankName || ''}</CustomText>
               </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: 12,
+                }}
+              >
                 <CustomText
                   style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
                 >
                   계좌번호
                 </CustomText>
-                <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.vbankNo || ''}</CustomText>
+                <CustomButton
+                  onPress={() => onPressCopy(competitionsPaymentResult?.vbankNo)}
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
+                >
+                  <View style={{ width: 24, height: 24 }}>
+                    <FastImage
+                      style={{ width: '100%', height: '100%' }}
+                      source={require('@/Assets/Images/Albamon/icCopy.png')}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </View>
+                  <CustomText style={{ fontSize: 13 }}>{competitionsPaymentResult?.vbankNo || ''}</CustomText>
+                </CustomButton>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
                 <CustomText
@@ -176,6 +213,11 @@ const RegistCompleteScreen = () => {
             </View>
           </View>
         )}
+        keyExtractor={(item, index) => index.toString()}
+        initialNumToRender={1}
+        maxToRenderPerBatch={4}
+        windowSize={7}
+        contentContainerStyle={{ paddingBottom: heightInfo.statusHeight }}
       />
     </View>
   );

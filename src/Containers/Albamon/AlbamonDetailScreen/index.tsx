@@ -32,7 +32,9 @@ const AlbamonDetailScreen = () => {
       navigate('SimpleLoginScreen');
       return;
     }
-    navigate('RegistScreen', { placeDetailName: '' });
+
+    dispatch(AlbamonActions.fetchCompetitionsRegistInfo({ isMoveScreen: true, placeIdx: -1, placeDetailName: '' }));
+    // navigate('RegistScreen', { placeIdx: -1, placeDetailName: '' });
   };
 
   console.log('userInfo?.competitionsYn : ', userInfo);

@@ -17,8 +17,15 @@ export function* fetchCompetitionsRegistInfo(data: any): any {
     const response = yield call(Axios.GET, payload);
     console.log(response.data);
     if (response.result === true && response.code === null) {
+      const isMoveScreen = data.params.isMoveScreen;
+      const placeIdx = data.params.placeIdx;
+      const placeDetailName = data.params.placeDetailName;
+
       yield put(AlbamonActions.fetchAlbamonReducer({ type: 'competitionsRegistInfo', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      if (isMoveScreen) {
+        navigate('RegistScreen', { placeIdx, placeDetailName });
+      }
     } else {
       console.log('fetchCompetitionsRegistInfo : ', response);
       yield put(CommonActions.fetchErrorHandler(response));

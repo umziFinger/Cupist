@@ -26,7 +26,7 @@ const CalendarSlider = () => {
   const competitionEndDate = competitionsRegistInfo?.competitions?.qualifiersEndDate;
 
   useEffect(() => {
-    dispatch(AlbamonActions.fetchCompetitionsRegistInfo());
+    // dispatch(AlbamonActions.fetchCompetitionsRegistInfo({ isMoveScreen: false, placeIdx: -1, placeDetailName: '' }));
     return (
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'albamonDate', data: '' })),
       // dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() })),
@@ -36,6 +36,7 @@ const CalendarSlider = () => {
 
   useEffect(() => {
     if (placeDetailSelectedTab.key === 'albamon') {
+      dispatch(AlbamonActions.fetchCompetitionsRegistInfo({ isMoveScreen: false, placeIdx: -1, placeDetailName: '' }));
       dispatch(
         AlbamonActions.fetchAlbamonReducer({
           type: 'albamonDate',

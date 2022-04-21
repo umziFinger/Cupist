@@ -96,7 +96,14 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       }
       if (placeDetailSelectedTab?.key === 'albamon') {
         if (userInfo?.competitionsYn === 'N') {
-          navigate('RegistScreen', { placeDetailName: place?.name });
+          dispatch(
+            AlbamonActions.fetchCompetitionsRegistInfo({
+              isMoveScreen: true,
+              placeIdx: place?.idx,
+              placeDetailName: place?.name,
+            }),
+          );
+          // navigate('RegistScreen', { placeIdx: place?.idx, placeDetailName: place?.name });
           return;
         }
         if (userInfo?.competitionStatus !== '참가완료' && userInfo?.competitionStatus !== '참가불가') {
@@ -268,60 +275,37 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         })}
         contentContainerStyle={{ backgroundColor: Color.White, paddingBottom: 40 }}
       />
-      <View
-        style={{
-          paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
-          backgroundColor: Color.Gray100,
-        }}
-      >
+
+      {(placeDetailSelectedTab?.key === 'default' || place?.albamonYn === 'Y') && (
         <View
           style={{
-            height: 1,
-            backgroundColor: Color.Gray300,
-            shadowOffset: {
-              width: 0,
-              height: -2,
-            },
-            shadowColor: 'rgba(107, 107, 107, 0.2)',
-            shadowOpacity: 1,
-            shadowRadius: 4,
-            elevation: 1,
+            paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
+            backgroundColor: Color.Gray100,
           }}
-        />
-        {selectedTicket && placeDetailSelectedTab.key === 'default' ? (
-          <View style={{ paddingHorizontal: 24, paddingTop: 18, paddingBottom: 9 }}>
-            <View style={{ justifyContent: 'center' }}>
-              <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>{selectedTicket?.ticketName}</CustomText>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
-                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
-                  {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
-                  {selectedTicket?.endTime.substr(0, 5)}
-                </CustomText>
-              </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ justifyContent: 'center' }}>
-                  <CustomText style={{ color: Color.Black1000, fontSize: 17, fontWeight: 'bold' }}>
-                    {numberFormat(selectedTicket?.salePrice)}
-                  </CustomText>
-                </View>
-                <View style={{ justifyContent: 'center' }}>
-                  <CustomText style={{ color: Color.Black1000, fontSize: 17 }}>원</CustomText>
-                </View>
-              </View>
-            </View>
-          </View>
-        ) : (
-          selectedTicket && (
+        >
+          <View
+            style={{
+              height: 1,
+              backgroundColor: Color.Gray300,
+              shadowOffset: {
+                width: 0,
+                height: -2,
+              },
+              shadowColor: 'rgba(107, 107, 107, 0.2)',
+              shadowOpacity: 1,
+              shadowRadius: 4,
+              elevation: 1,
+            }}
+          />
+          {selectedTicket && placeDetailSelectedTab.key === 'default' ? (
             <View style={{ paddingHorizontal: 24, paddingTop: 18, paddingBottom: 9 }}>
               <View style={{ justifyContent: 'center' }}>
-                <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>알.코.볼 예선전</CustomText>
+                <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>{selectedTicket?.ticketName}</CustomText>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
                   <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
-                    {moment(albamonDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
+                    {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
                     {selectedTicket?.endTime.substr(0, 5)}
                   </CustomText>
                 </View>
@@ -337,35 +321,60 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
                 </View>
               </View>
             </View>
-          )
-        )}
-        <View
-          style={{
-            paddingHorizontal: 24,
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 12,
-          }}
-        >
-          {selectedTicket && (
-            <CustomButton onPress={() => onPressCancel()}>
-              <View
-                style={{
-                  borderRadius: 3,
-                  borderWidth: 1,
-                  borderColor: Color.Gray400,
-                  paddingVertical: 15,
-                  paddingHorizontal: 22,
-                  marginRight: 8,
-                }}
-              >
-                <CustomText style={{ color: Color.Gray600, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
-                  취소
-                </CustomText>
+          ) : (
+            selectedTicket && (
+              <View style={{ paddingHorizontal: 24, paddingTop: 18, paddingBottom: 9 }}>
+                <View style={{ justifyContent: 'center' }}>
+                  <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>알.코.볼 예선전</CustomText>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
+                    <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
+                      {moment(albamonDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
+                      {selectedTicket?.endTime.substr(0, 5)}
+                    </CustomText>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ justifyContent: 'center' }}>
+                      <CustomText style={{ color: Color.Black1000, fontSize: 17, fontWeight: 'bold' }}>
+                        {numberFormat(selectedTicket?.salePrice)}
+                      </CustomText>
+                    </View>
+                    <View style={{ justifyContent: 'center' }}>
+                      <CustomText style={{ color: Color.Black1000, fontSize: 17 }}>원</CustomText>
+                    </View>
+                  </View>
+                </View>
               </View>
-            </CustomButton>
+            )
           )}
-          {(placeDetailSelectedTab?.key === 'default' || place?.albamonYn === 'Y') && (
+          <View
+            style={{
+              paddingHorizontal: 24,
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 12,
+            }}
+          >
+            {selectedTicket && (
+              <CustomButton onPress={() => onPressCancel()}>
+                <View
+                  style={{
+                    borderRadius: 3,
+                    borderWidth: 1,
+                    borderColor: Color.Gray400,
+                    paddingVertical: 15,
+                    paddingHorizontal: 22,
+                    marginRight: 8,
+                  }}
+                >
+                  <CustomText style={{ color: Color.Gray600, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
+                    취소
+                  </CustomText>
+                </View>
+              </CustomButton>
+            )}
+
             <CustomButton
               onPress={() => onPressReservation()}
               style={{
@@ -382,9 +391,9 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
                 예약하기
               </CustomText>
             </CustomButton>
-          )}
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };

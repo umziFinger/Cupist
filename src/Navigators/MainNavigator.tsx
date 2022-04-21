@@ -139,7 +139,7 @@ export type MainStackParamList = {
   EventHotDetailScreen: { eventIdx: number };
   InviteFriendScreen: undefined;
   RingmeProfileScreen: undefined;
-  RegistScreen: { placeDetailName?: string };
+  RegistScreen: { placeIdx: number; placeDetailName: string };
   RegistCompleteScreen: undefined;
   AlbamonDetailScreen: undefined;
   AlbamonPaymentScreen: { userCode: any; data: any };

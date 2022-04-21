@@ -452,3 +452,7 @@ export function useDebouncedFunction(handler: Function, watchedValue: any, delay
     };
   }, [watchedValue, delay]);
 }
+
+export const JsonForm = (json: any) => {
+  return JSON.stringify(json, null, 2);
+};

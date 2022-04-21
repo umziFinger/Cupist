@@ -31,8 +31,9 @@ const AlbamonPermissionDetailScreen = ({ route }: PropTypes) => {
   return (
     <View style={{ flex: 1, backgroundColor: Color.White, paddingBottom: heightInfo.fixBottomHeight - 1 }}>
       <Header type={'back'} text={'개인정보 수집 및 이용동의서'} />
-      <View style={{ flex: 1, borderTopWidth: 1, borderColor: Color.Gray200 }}>
+      <View style={{ flex: 1, borderTopWidth: 1, borderColor: Color.Gray200, backgroundColor: 'red' }}>
         <WebView
+          showsVerticalScrollIndicator={false}
           style={{ flex: 1 }}
           onError={(event) => {
             console.log('웹뷰 에러', event);
@@ -43,13 +44,12 @@ const AlbamonPermissionDetailScreen = ({ route }: PropTypes) => {
       </View>
       <View
         style={{
-          position: 'absolute',
-          bottom: 0,
+          // position: 'absolute',
+          // bottom: 0,
           paddingHorizontal: 24,
           flexDirection: 'row',
           alignItems: 'center',
-          marginTop: 12,
-          marginBottom: heightInfo.fixBottomHeight,
+          marginBottom: heightInfo.statusHeight,
         }}
       >
         <CustomButton

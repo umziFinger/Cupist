@@ -18,6 +18,7 @@ import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import { numberFormat } from '@/Components/Function';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'RegistScreen'>;
@@ -30,7 +31,7 @@ const RegistScreen = ({ route }: PropTypes) => {
   ref_input[1] = useRef(null);
   ref_input[2] = useRef(null);
   ref_input[3] = useRef(null);
-  const { placeDetailName } = route?.params;
+  const { placeDetailName = '', placeIdx = -1 } = route?.params;
   const { phoneNumber, onChangePhoneNumber, isPhoneValid } = useInputPhoneNumber();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { width } = useWindowDimensions();
@@ -42,11 +43,33 @@ const RegistScreen = ({ route }: PropTypes) => {
     permissionCheck = false,
   } = useSelector((state: AlbamonState) => state.albamon);
 
+  console.log('competitionPlaceSearchList : ', competitionPlaceSearchList);
+
   const [gender, setGender] = useState('');
   const [clubName, setClubName] = useState('');
   const [placeName, setPlaceName] = useState('');
+  const [selectedPlaceIdx, setSelectedPlaceIdx] = useState<number>(placeIdx);
   const [name, setName] = useState('');
   const [focusIndex, setFocusIndex] = useState(-1);
+
+  useEffect(() => {
+    // dispatch(AlbamonActions.fetchCompetitionsRegistInfo());
+    setPlaceName(placeDetailName || '');
+    setName(userInfo?.username || '');
+    onChangePhoneNumber(userInfo?.mobile || '');
+    dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'competitionClubSearchList', data: [] }));
+
+    Keyboard.addListener('keyboardDidHide', () => focusOut());
+    dispatch(AlbamonActions.fetchCompetitionsPlaceSearch({ query: '' }));
+
+    return () => {
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'permissionCheck', data: false }));
+    };
+  }, []);
+
+  useEffect(() => {
+    validCheck();
+  }, [gender, permissionCheck, clubName, placeName, name, phoneNumber]);
 
   const selectGender = (params: string) => {
     setGender(params);
@@ -59,30 +82,12 @@ const RegistScreen = ({ route }: PropTypes) => {
     dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'permissionCheck', data: false }));
   };
 
-  useEffect(() => {
-    dispatch(AlbamonActions.fetchCompetitionsRegistInfo());
-    setPlaceName(placeDetailName || '');
-    setName(userInfo?.username || '');
-    onChangePhoneNumber(userInfo?.mobile || '');
-    return () => {
-      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'permissionCheck', data: false }));
-    };
-  }, []);
-
-  useEffect(() => {
-    Keyboard.addListener('keyboardDidHide', () => focusOut());
-    dispatch(AlbamonActions.fetchCompetitionsPlaceSearch({ query: '' }));
-  }, []);
-
   const focusOut = () => {
     setFocusIndex(-1);
-    ref_input.map((el) => el.current?.isFocused() && el.current?.blur());
+    ref_input.map((el, index) => {
+      return el.current?.isFocused() && el.current?.blur();
+    });
   };
-
-  useEffect(() => {
-    validCheck();
-  }, [gender, permissionCheck, clubName, placeName, name, phoneNumber]);
-
   const validCheck = () => {
     return gender && permissionCheck && clubName && placeName && name && isPhoneValid && phoneNumber;
   };
@@ -124,6 +129,7 @@ const RegistScreen = ({ route }: PropTypes) => {
   placeNameClearBox = (
     <CustomButton
       onPress={() => {
+        console.log('@@@@@@@focusIndex : ', focusIndex);
         if (focusIndex === 1) {
           focusOut();
         } else {
@@ -193,9 +199,14 @@ const RegistScreen = ({ route }: PropTypes) => {
     Keyboard.dismiss();
   };
 
-  const selectPlaceName = (item: string) => {
-    setPlaceName(item);
+  const selectPlaceName = (item: any) => {
+    console.log('onPress selectPlaceName item : ', item);
+    setPlaceName(item.name);
+    setSelectedPlaceIdx(item.idx);
+
+    // 키보드가 닫혀있는데 볼링장 선택을 하면 selectBox가 닫히지 않는 현상때문에 추가함
     focusOut();
+
     Keyboard.dismiss();
   };
 
@@ -495,7 +506,7 @@ const RegistScreen = ({ route }: PropTypes) => {
                         >
                           <ScrollView
                             style={{ height: 134 }}
-                            showsVerticalScrollIndicator
+                            showsVerticalScrollIndicator={false}
                             nestedScrollEnabled
                             keyboardShouldPersistTaps={'handled'}
                           >
@@ -565,7 +576,7 @@ const RegistScreen = ({ route }: PropTypes) => {
                             {competitionPlaceSearchList?.map((v: any, index: number) => {
                               console.log(v?.name);
                               return (
-                                <CustomButton key={index.toString()} onPress={() => selectPlaceName(v?.name)}>
+                                <CustomButton key={index.toString()} onPress={() => selectPlaceName(v)}>
                                   <View
                                     style={{
                                       paddingTop: index === 0 ? 30 : 8,
@@ -671,11 +682,29 @@ const RegistScreen = ({ route }: PropTypes) => {
                             }}
                             autoFocus={false}
                             autoCorrect={false}
-                            onChangeText={(text) => onChangePlaceName(text)}
+                            onChangeText={(text) => {
+                              setSelectedPlaceIdx(-1);
+                              onChangePlaceName(text);
+                            }}
                             value={placeName}
                             allowFontScaling={false}
                             onFocus={() => onFocus(1)}
-                            onBlur={() => onFocus(-1)}
+                            onBlur={() => {
+                              if (selectedPlaceIdx === -1) {
+                                dispatch(
+                                  CommonActions.fetchCommonReducer({
+                                    type: 'alertToast',
+                                    data: {
+                                      alertToast: true,
+                                      alertToastPosition: 'top',
+                                      alertToastMessage: '볼링장은 필수 선택 사항입니다.',
+                                    },
+                                  }),
+                                );
+                                setPlaceName('');
+                              }
+                              onFocus(-1);
+                            }}
                           />
                           {placeNameClearBox}
                         </View>
@@ -939,7 +968,7 @@ const RegistScreen = ({ route }: PropTypes) => {
                   style={{
                     marginHorizontal: 24,
                     marginTop: 36,
-                    paddingBottom: Platform.OS === 'ios' ? heightInfo.fixBottomHeight : heightInfo.fixBottomHeight + 12,
+                    paddingBottom: heightInfo.statusHeight,
                   }}
                 >
                   <View style={{ alignItems: 'center' }}>

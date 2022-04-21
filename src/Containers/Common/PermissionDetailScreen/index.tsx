@@ -22,6 +22,7 @@ const PermissionDetailScreen = ({ route }: PropTypes) => {
       <Header type={'back'} text={headerTitle} />
       <View style={{ flex: 1, borderTopWidth: 1, borderColor: Color.Gray200 }}>
         <WebView
+          showsVerticalScrollIndicator={false}
           style={{ flex: 1 }}
           onError={(event) => {
             console.log('웹뷰 에러', event);

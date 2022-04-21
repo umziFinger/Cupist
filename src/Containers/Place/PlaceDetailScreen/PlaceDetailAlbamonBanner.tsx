@@ -30,7 +30,8 @@ const PlaceDetailAlbamonBanner = () => {
       return;
     }
     if (place?.albamonYn === 'Y') {
-      navigate('RegistScreen', { placeDetailName: place?.name });
+      console.log('#### place : ', place.idx);
+      navigate('RegistScreen', { placeIdx: place?.idx, placeDetailName: place?.name });
     } else if (place?.albamonYn === 'N') {
       navigate('AlbamonDetailScreen');
     }

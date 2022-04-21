@@ -40,7 +40,7 @@ const UnsupportAlbamon = () => {
           marginHorizontal: 24,
           paddingVertical: 12,
           marginTop: 80,
-          marginBottom: 256,
+          marginBottom: 20,
         }}
       >
         <CustomText>알.코.볼 볼링장 리스트 바로가기</CustomText>

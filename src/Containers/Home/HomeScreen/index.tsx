@@ -24,7 +24,7 @@ import PartTimeBowlingArea from '@/Containers/Home/HomeScreen/PartTimeBowlingAre
 import EventHotArea from '@/Containers/Home/HomeScreen/EventHotArea';
 import BannerArea from '@/Containers/Home/HomeScreen/BannerArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
-import { scrollHomeHandler } from '@/Components/Function';
+import { JsonForm, scrollHomeHandler } from '@/Components/Function';
 import { SearchState } from '@/Stores/Search/InitialState';
 import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
 import { LocationCheck } from '@/Components/Permission/Location';
@@ -244,8 +244,8 @@ const HomeScreen = ({ route }: HomeProps) => {
         data={[0, 1, 2, 3, 4, 5, 6, 7]}
         renderItem={({ item }): any => renderItem(item)}
         keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={4}
-        maxToRenderPerBatch={7}
+        initialNumToRender={8}
+        maxToRenderPerBatch={11}
         windowSize={7}
         showsVerticalScrollIndicator={false}
         refreshing={false}
