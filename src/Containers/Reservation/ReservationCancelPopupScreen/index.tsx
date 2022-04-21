@@ -57,7 +57,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                 </View>
               </View>
               {/* 취소시 일부 환불 */}
-              <View style={{ flexDirection: 'row' }}>
+              {/* <View style={{ flexDirection: 'row' }}>
                 <View style={{ alignItems: 'center' }}>
                   <CustomText style={{ color: Color.Point1000 }}>{'\u2022'}</CustomText>
                   <View style={{ height: 78, width: 1, backgroundColor: '#f0f0f0' }} />
@@ -79,7 +79,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                         color: Color.Grayyellow1000,
                       }}
                     >
-                      {/* {moment(cancelLimit).subtract(1, 'minute').format('YYYY년 MM월 DD일 HH시 mm분')}까지 */}
+                       {moment(cancelLimit).subtract(1, 'minute').format('YYYY년 MM월 DD일 HH시 mm분')}까지
                       사용 예정 시간 1시간 이내 취소 시
                     </CustomText>
                     <CustomText
@@ -94,7 +94,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                     </CustomText>
                   </View>
                 </View>
-              </View>
+              </View> */}
 
               {/* 취소시 일부 환불 (50%) */}
               <View style={{ flexDirection: 'row' }}>
@@ -120,7 +120,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                       }}
                     >
                       {/* {moment(cancelLimit).subtract(1, 'minute').format('YYYY년 MM월 DD일 HH시 mm분')}까지 */}
-                      사용 예정 시간 30분 이내 취소 시
+                      사용 예정 시간 2시간 ~ 1시간 이내 취소 시
                     </CustomText>
                     <CustomText
                       style={{
@@ -160,7 +160,7 @@ const ReservationCancelPopupScreen = ({ route }: Props) => {
                       }}
                     >
                       {/* {moment(cancelLimit).add(50, 'minute').format('YYYY년 MM월 DD일 HH시 mm분')}까지 */}
-                      사용 예정 시간 10분전 이내 취소 또는 미 방문 시
+                      사용 예정 시간 1시간 이내 취소 시
                     </CustomText>
                     <CustomText
                       style={{
