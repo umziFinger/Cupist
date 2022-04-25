@@ -28,6 +28,11 @@ const SORT_TAG = [
     key: 'dibs',
     value: '추천순',
   },
+  {
+    index: 3,
+    key: 'albamon',
+    value: '알코볼',
+  },
 ];
 
 const MyAroundHeader = (props: HeaderProps) => {
@@ -148,7 +153,7 @@ const MyAroundHeader = (props: HeaderProps) => {
                 </CustomButton>
               )}
               keyExtractor={(item, index) => index.toString()}
-              initialNumToRender={3}
+              initialNumToRender={4}
               maxToRenderPerBatch={6}
               windowSize={7}
               scrollEnabled

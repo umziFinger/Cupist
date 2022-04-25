@@ -15,6 +15,7 @@ import { HomeState } from '@/Stores/Home/InitialState';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
 import CreateDynamicLink from '@/Components/Share/CreateDynamicLink';
 import CommonShare from '@/Components/Share/CommonShare';
+import { AlbamonState } from '@/Stores/Albamon/InitialState';
 
 const PlaceDetailHeader = (props: HeaderProps) => {
   const { text, isShow } = props;
@@ -23,6 +24,7 @@ const PlaceDetailHeader = (props: HeaderProps) => {
   const { placeDetail } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
+  const { placeDetailSelectedTab, albamonDate } = useSelector((state: AlbamonState) => state.albamon);
 
   const bgColor = Color.White;
 
@@ -126,7 +128,7 @@ const PlaceDetailHeader = (props: HeaderProps) => {
             borderBottomColor: 'rgb(240,240,240)',
           }}
         >
-          <TopDateSelector calendarDate={calendarDate} />
+          <TopDateSelector calendarDate={placeDetailSelectedTab.key === 'default' ? calendarDate : albamonDate} />
         </View>
       )}
     </>

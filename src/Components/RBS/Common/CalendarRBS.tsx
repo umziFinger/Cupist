@@ -12,6 +12,8 @@ import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import HomeActions from '@/Stores/Home/Actions';
 import { DATA_HOLIDAYS } from '@/Components/RBS/Common/data';
+import { AlbamonState } from '@/Stores/Albamon/InitialState';
+import AlbamonActions from '@/Stores/Albamon/Actions';
 
 LocaleConfig.locales['kr'] = {
   monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -34,10 +36,13 @@ const CalendarRBS = () => {
     isOpenCalendarRBS,
     calendarMonthPosition = 0,
   } = useSelector((state: CommonState) => state.common);
+  const { placeDetailSelectedTab, competitionsRegistInfo } = useSelector((state: AlbamonState) => state.albamon);
 
   const { calendarDate } = useSelector((state: HomeState) => state.home);
   const dayNamesShort = ['일', '월', '화', '수', '목', '금', '토'];
   const futureRange = [0, 1];
+  const competitionStartDate = competitionsRegistInfo?.competitions?.qualifiersStartDate;
+  const competitionEndDate = competitionsRegistInfo?.competitions?.qualifiersEndDate;
 
   useEffect(() => {
     if (isOpenCalendarRBS) {
@@ -55,7 +60,11 @@ const CalendarRBS = () => {
 
   const onPressDate = (day: DateObject, monthPosition: number) => {
     dispatch(CommonActions.fetchCommonReducer({ type: 'calendarMonthPosition', data: monthPosition }));
-    dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(day.dateString).toString() }));
+    if (placeDetailSelectedTab.key === 'default') {
+      dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(day.dateString).toString() }));
+    } else {
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'albamonDate', data: moment(day.dateString).toString() }));
+    }
     RBSheetRef?.current.close();
   };
 
@@ -82,7 +91,16 @@ const CalendarRBS = () => {
               <Calendar
                 style={{ paddingLeft: 24, paddingRight: 24 }}
                 current={moment().add(item.index, 'month').format('YYYY-MM-DD')}
-                minDate={moment().format('YYYY-MM-DD')}
+                minDate={
+                  placeDetailSelectedTab.key === 'default'
+                    ? moment().format('YYYY-MM-DD')
+                    : moment(new Date(competitionStartDate)).format('YYYY-MM-DD')
+                }
+                maxDate={
+                  placeDetailSelectedTab.key === 'default'
+                    ? ''
+                    : moment(new Date(competitionEndDate)).format('YYYY-MM-DD')
+                }
                 customHeader={(data) => {
                   const date = moment(data.month.toString()).format('MM').toString();
                   return (

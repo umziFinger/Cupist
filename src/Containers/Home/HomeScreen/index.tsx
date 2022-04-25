@@ -24,11 +24,13 @@ import PartTimeBowlingArea from '@/Containers/Home/HomeScreen/PartTimeBowlingAre
 import EventHotArea from '@/Containers/Home/HomeScreen/EventHotArea';
 import BannerArea from '@/Containers/Home/HomeScreen/BannerArea';
 import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
-import { scrollHomeHandler } from '@/Components/Function';
+import { JsonForm, scrollHomeHandler } from '@/Components/Function';
 import { SearchState } from '@/Stores/Search/InitialState';
 import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
 import { LocationCheck } from '@/Components/Permission/Location';
 import AlbamonBanner from '@/Containers/Home/HomeScreen/AlbamonBanner';
+import AlbamonActions from '@/Stores/Albamon/Actions';
+import { navigate } from '@/Services/NavigationService';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -49,6 +51,7 @@ const HomeScreen = ({ route }: HomeProps) => {
 
   useEffect(() => {
     console.log('============홈 초기화');
+    // navigate('RegistCompleteScreen');
     // 첫 홈 화면 현재 위치값 갱신
     // 홈 리스트 조회
     // positionUpdate().then();
@@ -73,6 +76,11 @@ const HomeScreen = ({ route }: HomeProps) => {
       onRefresh();
     }
   }, [homeTabRefreshYN]);
+
+  // 홈화면 진입시 캘린더 초기화
+  useEffect(() => {
+    dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'placeDetailSelectedTabInit' }));
+  }, []);
 
   // 캘린더 날짜 선택 시 홈 갱신
   useEffect(() => {
@@ -236,8 +244,8 @@ const HomeScreen = ({ route }: HomeProps) => {
         data={[0, 1, 2, 3, 4, 5, 6, 7]}
         renderItem={({ item }): any => renderItem(item)}
         keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={4}
-        maxToRenderPerBatch={7}
+        initialNumToRender={8}
+        maxToRenderPerBatch={11}
         windowSize={7}
         showsVerticalScrollIndicator={false}
         refreshing={false}

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, FlatList, Platform, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,7 +29,7 @@ import PlaceDetailAlbamonBanner from '@/Containers/Place/PlaceDetailScreen/Place
 import TabMenu from '@/Components/TabMenu';
 import { PLACE_DETAIL_TAB_DATA } from '@/Containers/Place/PlaceDetailScreen/data';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
-import AlbamonTicketSlider from '@/Components/Card/Common/AlbamonTicketSlider';
+import UnsupportAlbamon from '@/Containers/Place/PlaceDetailScreen/UnsupportAlbamon';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
@@ -41,12 +41,10 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
   const { idx, ticketType = TICKET_TYPE.ALL } = route.params;
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { userIdx } = useSelector((state: AuthState) => state.auth);
+  const { userIdx, userInfo } = useSelector((state: AuthState) => state.auth);
   const { placeDetail, placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { placeAlbamonTicketList, placeDetailSelectedTab, albamonDate } = useSelector(
-    (state: AlbamonState) => state.albamon,
-  );
+  const { placeDetailSelectedTab, albamonDate } = useSelector((state: AlbamonState) => state.albamon);
 
   const animatedFlatRef = useRef<any>();
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -76,11 +74,13 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     console.log(calendarDate, albamonDate);
     if (placeDetailSelectedTab.key === 'default') {
       dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(calendarDate).format('YYYY-MM-DD') }));
+    } else if (!albamonDate) {
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeTicketList', data: { free: [], normal: [] } }));
     } else {
       dispatch(PlaceActions.fetchPlaceTicketList({ idx, date: moment(albamonDate).format('YYYY-MM-DD') }));
     }
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
-  }, [route, calendarDate, albamonDate]);
+  }, [route, calendarDate, albamonDate, placeDetailSelectedTab]);
 
   const handleScroll = (e: any) => {
     setIsRenderMap(e?.nativeEvent.contentOffset.y > 500 && e?.nativeEvent.contentOffset.y < 1500);
@@ -89,11 +89,38 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   };
 
   const onPressReservation = () => {
+    console.log('placeTicketList', placeTicketList);
     if (selectedTicket) {
       if (!userIdx) {
         navigate('SimpleLoginScreen');
       }
-
+      if (placeDetailSelectedTab?.key === 'albamon') {
+        if (userInfo?.competitionsYn === 'N') {
+          dispatch(
+            AlbamonActions.fetchCompetitionsRegistInfo({
+              isMoveScreen: true,
+              placeIdx: place?.idx,
+              placeDetailName: place?.name,
+            }),
+          );
+          // navigate('RegistScreen', { placeIdx: place?.idx, placeDetailName: place?.name });
+          return;
+        }
+        if (userInfo?.competitionStatus !== '참가완료' && userInfo?.competitionStatus !== '참가불가') {
+          dispatch(
+            CommonActions.fetchCommonReducer({
+              type: 'alertDialog',
+              data: {
+                alertDialog: true,
+                alertDialogType: 'confirm',
+                alertDialogDataType: 'beforeCompetitionPay',
+                alertDialogTitle: '예선전 예약은 참가신청금액이\n입금된 후 예약이 가능합니다.',
+              },
+            }),
+          );
+          return;
+        }
+      }
       if (selectedTicket?.idx) {
         navigate('ReservationScreen', {
           placeIdx: idx,
@@ -152,23 +179,28 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <TabMenu type={'albamon'} data={PLACE_DETAIL_TAB_DATA} />
-            <View style={{ marginTop: 30, paddingLeft: 20 }}>
-              <CalendarSlider />
-            </View>
+            {(placeDetailSelectedTab.key === 'default' || place?.albamonYn === 'Y') && (
+              <View style={{ marginTop: 30, paddingLeft: 20 }}>
+                <CalendarSlider />
+              </View>
+            )}
+            {placeDetailSelectedTab.key === 'albamon' && place?.albamonYn === 'N' && <UnsupportAlbamon />}
           </View>
         );
       }
       case 3: {
         return (
-          <View style={{ flex: 1, marginTop: 20 }}>
-            <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
-            <TicketSlider
-              allowedTimeArr={[0, 1]}
-              item={placeTicketList || {}}
-              showDivider={false}
-              focusType={ticketType}
-            />
-          </View>
+          (placeDetailSelectedTab.key === 'default' || place?.albamonYn === 'Y') && (
+            <View style={{ flex: 1, marginTop: 20 }}>
+              <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
+              <TicketSlider
+                allowedTimeArr={[0, 1]}
+                item={placeTicketList || {}}
+                showDivider={false}
+                focusType={ticketType}
+              />
+            </View>
+          )
         );
       }
       case 4: {
@@ -243,60 +275,38 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         })}
         contentContainerStyle={{ backgroundColor: Color.White, paddingBottom: 40 }}
       />
-      <View
-        style={{
-          paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
-          backgroundColor: Color.Gray100,
-        }}
-      >
+
+      {(placeDetailSelectedTab?.key === 'default' || place?.albamonYn === 'Y') && (
         <View
           style={{
-            height: 1,
-            backgroundColor: Color.Gray300,
-            shadowOffset: {
-              width: 0,
-              height: -2,
-            },
-            shadowColor: 'rgba(107, 107, 107, 0.2)',
-            shadowOpacity: 1,
-            shadowRadius: 4,
-            elevation: 1,
+            paddingBottom: Platform.OS === 'ios' ? heightInfo.statusHeight : heightInfo.fixBottomHeight + 12,
+            backgroundColor: Color.Gray100,
           }}
-        />
-        {selectedTicket && placeDetailSelectedTab.key === 'default' ? (
-          <View style={{ paddingHorizontal: 24, paddingTop: 18, paddingBottom: 9 }}>
-            <View style={{ justifyContent: 'center' }}>
-              <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>{selectedTicket?.ticketName}</CustomText>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
-                <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
-                  {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
-                  {selectedTicket?.endTime.substr(0, 5)}
-                </CustomText>
-              </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ justifyContent: 'center' }}>
-                  <CustomText style={{ color: Color.Black1000, fontSize: 17, fontWeight: 'bold' }}>
-                    {numberFormat(selectedTicket?.salePrice)}
-                  </CustomText>
-                </View>
-                <View style={{ justifyContent: 'center' }}>
-                  <CustomText style={{ color: Color.Black1000, fontSize: 17 }}>원</CustomText>
-                </View>
-              </View>
-            </View>
-          </View>
-        ) : (
-          selectedTicket && (
+        >
+          <View
+            style={{
+              height: 1,
+              backgroundColor: Color.Gray300,
+              shadowOffset: {
+                width: 0,
+                height: -2,
+              },
+              shadowColor: 'rgba(107, 107, 107, 0.2)',
+              shadowOpacity: 1,
+              shadowRadius: 4,
+              elevation: 1,
+            }}
+          />
+          {selectedTicket && placeDetailSelectedTab.key === 'default' ? (
             <View style={{ paddingHorizontal: 24, paddingTop: 18, paddingBottom: 9 }}>
               <View style={{ justifyContent: 'center' }}>
-                <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>알.코.볼 예선전</CustomText>
+                <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>{selectedTicket?.ticketName}</CustomText>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
                   <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
-                    {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.start}
+                    {moment(calendarDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
+                    {selectedTicket?.endTime.substr(0, 5)}
                   </CustomText>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -311,52 +321,79 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
                 </View>
               </View>
             </View>
-          )
-        )}
-        <View
-          style={{
-            paddingHorizontal: 24,
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 12,
-          }}
-        >
-          {selectedTicket && (
-            <CustomButton onPress={() => onPressCancel()}>
-              <View
-                style={{
-                  borderRadius: 3,
-                  borderWidth: 1,
-                  borderColor: Color.Gray400,
-                  paddingVertical: 15,
-                  paddingHorizontal: 22,
-                  marginRight: 8,
-                }}
-              >
-                <CustomText style={{ color: Color.Gray600, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
-                  취소
-                </CustomText>
+          ) : (
+            selectedTicket && (
+              <View style={{ paddingHorizontal: 24, paddingTop: 18, paddingBottom: 9 }}>
+                <View style={{ justifyContent: 'center' }}>
+                  <CustomText style={{ color: Color.Gray800, fontSize: 13 }}>알.코.볼 예선전</CustomText>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 6 }}>
+                    <CustomText style={{ color: Color.Grayyellow1000, fontSize: 15, fontWeight: '500' }}>
+                      {moment(albamonDate).format('MM월 DD일(dd)')} {selectedTicket?.startTime.substr(0, 5)} ~{' '}
+                      {selectedTicket?.endTime.substr(0, 5)}
+                    </CustomText>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ justifyContent: 'center' }}>
+                      <CustomText style={{ color: Color.Black1000, fontSize: 17, fontWeight: 'bold' }}>
+                        {numberFormat(selectedTicket?.salePrice)}
+                      </CustomText>
+                    </View>
+                    <View style={{ justifyContent: 'center' }}>
+                      <CustomText style={{ color: Color.Black1000, fontSize: 17 }}>원</CustomText>
+                    </View>
+                  </View>
+                </View>
               </View>
-            </CustomButton>
+            )
           )}
-          <CustomButton
-            onPress={() => onPressReservation()}
+          <View
             style={{
-              flex: 1,
+              paddingHorizontal: 24,
+              flexDirection: 'row',
               alignItems: 'center',
-              borderRadius: 3,
-              borderWidth: 1,
-              borderColor: Color.Primary1000,
-              paddingVertical: 15,
-              backgroundColor: Color.Primary1000,
+              marginTop: 12,
             }}
           >
-            <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
-              예약하기
-            </CustomText>
-          </CustomButton>
+            {selectedTicket && (
+              <CustomButton onPress={() => onPressCancel()}>
+                <View
+                  style={{
+                    borderRadius: 3,
+                    borderWidth: 1,
+                    borderColor: Color.Gray400,
+                    paddingVertical: 15,
+                    paddingHorizontal: 22,
+                    marginRight: 8,
+                  }}
+                >
+                  <CustomText style={{ color: Color.Gray600, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.25 }}>
+                    취소
+                  </CustomText>
+                </View>
+              </CustomButton>
+            )}
+
+            <CustomButton
+              onPress={() => onPressReservation()}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                borderRadius: 3,
+                borderWidth: 1,
+                borderColor: Color.Primary1000,
+                paddingVertical: 15,
+                backgroundColor: Color.Primary1000,
+              }}
+            >
+              <CustomText style={{ color: Color.White, fontSize: 14, fontWeight: 'bold', letterSpacing: -0.12 }}>
+                예약하기
+              </CustomText>
+            </CustomButton>
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };

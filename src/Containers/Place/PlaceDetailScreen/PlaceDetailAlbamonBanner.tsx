@@ -1,18 +1,21 @@
 import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import CommonActions from '@/Stores/Common/Actions';
+import { AuthState } from '@/Stores/Auth/InitialState';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 const PlaceDetailAlbamonBanner = () => {
   const { width } = useWindowDimensions();
+  const { userInfo } = useSelector((state: AuthState) => state.auth);
+  const { placeDetail } = useSelector((state: PlaceState) => state.place);
   const dispatch = useDispatch();
-  const alreadyRegist = false;
-
+  const place = placeDetail?.place;
   const onPressBanner = () => {
-    if (alreadyRegist) {
+    if (userInfo?.competitionsYn === 'Y') {
       dispatch(
         CommonActions.fetchCommonReducer({
           type: 'alertDialog',
@@ -26,15 +29,22 @@ const PlaceDetailAlbamonBanner = () => {
       );
       return;
     }
-    navigate('RegistScreen');
+    if (place?.albamonYn === 'Y') {
+      console.log('#### place : ', place.idx);
+      navigate('RegistScreen', { placeIdx: place?.idx, placeDetailName: place?.name });
+    } else if (place?.albamonYn === 'N') {
+      navigate('AlbamonDetailScreen');
+    }
   };
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <CustomButton style={{ width: width - 48, height: ((width - 48) / 327) * 92 }} onPress={() => onPressBanner()}>
+      <CustomButton style={{ width: width - 48, height: ((width - 48) / 327) * 103 }} onPress={() => onPressBanner()}>
         <FastImage
           style={{ width: '100%', height: '100%' }}
-          source={require('@/Assets/Images/Albamon/albamonBanner.png')}
+          source={{
+            uri: 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/albamonBanner%403x.png',
+          }}
           resizeMode={FastImage.resizeMode.cover}
         />
       </CustomButton>
