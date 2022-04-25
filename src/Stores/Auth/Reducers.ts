@@ -95,6 +95,7 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
       case 'userInfo': {
+        console.log('call reducer userInfo : ', data.me);
         draft.userInfo = data.me;
         break;
       }
@@ -151,17 +152,23 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
       }
 
       case 'notificationPushYN': {
+        console.log('call reducer notificationPushYN : ', data);
         draft.userInfo.notificationPushYN = data;
+        console.log('draft : ', draft.userInfo);
         break;
       }
 
       case 'marketingPushYN': {
+        console.log('call reducer marketingPushYN : ', data);
         draft.userInfo.marketingPushYN = data;
+        console.log('draft : ', draft.userInfo);
         break;
       }
 
-      case 'eventPushYN': {
-        draft.userInfo.eventPushYN = data;
+      case 'eventYN': {
+        console.log('call reducer eventYN : ', data);
+        draft.userInfo.eventYN = data;
+        console.log('draft : ', draft.userInfo);
         break;
       }
 

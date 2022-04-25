@@ -10,9 +10,10 @@ import { Color } from '@/Assets/Color';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { navigate } from '@/Services/NavigationService';
 
-const RBSheetAttachFile = (props: any) => {
-  const { isOpen, setCallAttachFile, attachFileIdx, setAttachFileIdx } = props;
+const CallAttachFile = (props: any) => {
+  const { isOpen, setCallAttachFile, attachFileIdx, setAttachFileIdx, parentScreen = '' } = props;
   // console.log('attatchidxxxx', attachFileIdx);
+  console.log('parentScreen : ', parentScreen);
   const { heightInfo, attachFile } = useSelector((state: CommonState) => state.common);
   const dispatch = useDispatch();
   const { height } = useWindowDimensions();
@@ -131,28 +132,30 @@ const RBSheetAttachFile = (props: any) => {
               </View>
             </View>
           </CustomButton>
-          <CustomButton onPress={() => onRingmeImage()}>
-            <View
-              style={{
-                flexDirection: 'row',
-                paddingVertical: 16,
-                borderBottomColor: Color.Gray200,
-                borderBottomWidth: 1,
-              }}
-            >
-              <View style={{ justifyContent: 'center', flex: 1 }}>
-                <CustomText
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: -0.25,
-                    color: Color.Grayyellow1000,
-                  }}
-                >
-                  링미로 선택하기
-                </CustomText>
+          {parentScreen === 'profile' && (
+            <CustomButton onPress={() => onRingmeImage()}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingVertical: 16,
+                  borderBottomColor: Color.Gray200,
+                  borderBottomWidth: 1,
+                }}
+              >
+                <View style={{ justifyContent: 'center', flex: 1 }}>
+                  <CustomText
+                    style={{
+                      fontSize: 14,
+                      letterSpacing: -0.25,
+                      color: Color.Grayyellow1000,
+                    }}
+                  >
+                    링미로 선택하기
+                  </CustomText>
+                </View>
               </View>
-            </View>
-          </CustomButton>
+            </CustomButton>
+          )}
         </View>
 
         <CustomButton onPress={() => RBSheetRef.current.close()}>
@@ -182,4 +185,4 @@ const RBSheetAttachFile = (props: any) => {
   );
 };
 
-export default RBSheetAttachFile;
+export default CallAttachFile;

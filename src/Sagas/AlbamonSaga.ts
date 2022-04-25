@@ -105,7 +105,7 @@ export function* fetchCompetitionsPaymentVerify(data: any): any {
 // 볼링장 검색
 export function* fetchCompetitionsPlaceSearch(data: any): any {
   try {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
       ...data,
       url: `${Config.COMPETITION_PLACE_URL}`,
@@ -114,21 +114,21 @@ export function* fetchCompetitionsPlaceSearch(data: any): any {
     console.log(response.data);
     if (response.result === true && response.code === null) {
       yield put(AlbamonActions.fetchAlbamonReducer({ type: 'competitionPlaceSearchList', data: response.data }));
-      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       console.log('fetchCompetitionsPlaceSearch : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
-      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     }
   } catch (e) {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchCompetitionsPlaceSearch : ', e);
   }
 }
 
 export function* fetchCompetitionsClubSearch(data: any): any {
   try {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
       ...data,
       url: `${Config.COMPETITION_CLUB_URL}`,
@@ -137,14 +137,14 @@ export function* fetchCompetitionsClubSearch(data: any): any {
     console.log(response.data);
     if (response.result === true && response.code === null) {
       yield put(AlbamonActions.fetchAlbamonReducer({ type: 'competitionClubSearchList', data: response.data }));
-      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       console.log('fetchCompetitionsClubSearch : ', response);
       yield put(CommonActions.fetchErrorHandler(response));
-      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     }
   } catch (e) {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchCompetitionsClubSearch : ', e);
   }
 }

@@ -14,6 +14,7 @@ import MyActions from '@/Stores/My/Actions';
 import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 import { navigate, navigateAndJoinReset, navigateAndReset, navigateAndSimpleReset } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
+import { JsonForm } from '@/Components/Function';
 
 export function* fetchUserLogin(data: any): any {
   try {
@@ -217,7 +218,7 @@ export function* fetchUserInfo(data: any): any {
     };
 
     const response = yield call(Axios.GET, payload);
-    // console.log('call saga fetchUserInfo data : ', response.data);
+    console.log('call saga fetchUserInfo data : ', JsonForm(response.data));
     if (response.result === true && response.code === null) {
       yield put(AuthActions.fetchAuthReducer({ type: 'userInfo', data: response.data }));
     } else {

@@ -20,8 +20,8 @@ enum enumYN {
 
 const SettingList = ({ index }: any) => {
   const { userInfo } = useSelector((state: AuthState) => state.auth);
-  const appVersion = getVersion();
   const { versionInfo } = useSelector((state: CommonState) => state.common);
+  const appVersion = getVersion();
 
   const onWithdrawal = () => {
     navigate('WithdrawScreen');
@@ -51,6 +51,11 @@ const SettingList = ({ index }: any) => {
         });
     }
   };
+
+  console.log('$$$$$ userInfo : ', userInfo);
+  console.log('$$$$$ userInfo?.notificationPushYN : ', userInfo?.notificationPushYN);
+  console.log('$$$$$ userInfo?.marketingPushYN : ', userInfo?.marketingPushYN);
+  console.log('$$$$$ userInfo?.eventYN : ', userInfo?.eventYN);
 
   switch (index) {
     case 0: {
@@ -85,7 +90,7 @@ const SettingList = ({ index }: any) => {
             title={'이벤트 혜택 알림'}
             subTitle={'이벤트 및 마케팅 정보 알림'}
             type={'event'}
-            status={userInfo?.eventPushYN || enumYN.Y}
+            status={userInfo?.eventYN || enumYN.Y}
           />
         </>
       );

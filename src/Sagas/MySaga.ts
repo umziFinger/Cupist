@@ -466,7 +466,7 @@ export function* fetchMyEventPushYN(data: any): any {
 
     const response = yield call(Axios.PATCH, payload);
     if (response.result === true && response.code === null) {
-      yield put(AuthActions.fetchAuthReducer({ type: 'eventPushYN', data: data.params.pushYN }));
+      yield put(AuthActions.fetchAuthReducer({ type: 'eventYN', data: data.params.pushYN }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }

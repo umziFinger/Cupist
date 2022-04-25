@@ -48,6 +48,8 @@ const ToggleItem = ({ title, subTitle, status, type }: PropTypes) => {
     return false;
   };
 
+  console.log('###### status : ', status);
+
   return (
     <View
       style={{

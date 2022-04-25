@@ -30,7 +30,7 @@ export const INITIAL_STATE: AuthState['auth'] = {
     placeViewCnt: null,
     notificationPushYN: enumYN.Y,
     marketingPushYN: enumYN.Y,
-    eventPushYN: enumYN.Y,
+    eventYN: enumYN.Y,
     ringme: '',
     competitionsYn: enumYN.Y,
     competitionStatus: '',
@@ -96,7 +96,7 @@ interface userInfo {
   placeViewCnt: number | null;
   notificationPushYN: enumYN;
   marketingPushYN: enumYN;
-  eventPushYN: enumYN;
+  eventYN: enumYN;
   ringme: string | '';
   competitionsYn: enumYN;
   competitionStatus: string;

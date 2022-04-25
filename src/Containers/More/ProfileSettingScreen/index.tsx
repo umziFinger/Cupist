@@ -493,6 +493,7 @@ const ProfileSettingScreen = () => {
               </CustomButton>
 
               <CallAttachFile
+                parentScreen={'profile'}
                 setCallAttachFile={setCallAttachFile}
                 isOpen={callAttachFile}
                 setAttachFileIdx={setAttachFileIdx}

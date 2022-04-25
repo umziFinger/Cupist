@@ -182,7 +182,10 @@ const MoreScreen = () => {
           initialNumToRender={7}
           windowSize={7}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ backgroundColor: Color.Gray200, flex: 1 }}
+          contentContainerStyle={{
+            backgroundColor: Color.Gray200,
+            // flex: 1,
+          }}
         />
       </View>
     </View>
