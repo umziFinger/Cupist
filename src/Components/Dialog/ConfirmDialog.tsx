@@ -82,6 +82,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                     borderTopRightRadius: 3,
                     alignItems: 'center',
                     justifyContent: 'center',
+                    paddingHorizontal: 16,
                     // alignItems: 'center',
                   }}
                 >
