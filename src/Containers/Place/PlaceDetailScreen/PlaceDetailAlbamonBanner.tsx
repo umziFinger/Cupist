@@ -7,6 +7,7 @@ import { navigate } from '@/Services/NavigationService';
 import CommonActions from '@/Stores/Common/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
+import AlbamonActions from '@/Stores/Albamon/Actions';
 
 const PlaceDetailAlbamonBanner = () => {
   const { width } = useWindowDimensions();
@@ -31,6 +32,7 @@ const PlaceDetailAlbamonBanner = () => {
     }
     if (place?.albamonYn === 'Y') {
       console.log('#### place : ', place.idx);
+      // dispatch(AlbamonActions.fetchCompetitionsRegistInfo({ isMoveScreen: true, placeIdx: -1, placeDetailName: '' }))
       navigate('RegistScreen', { placeIdx: place?.idx, placeDetailName: place?.name });
     } else if (place?.albamonYn === 'N') {
       navigate('AlbamonDetailScreen');

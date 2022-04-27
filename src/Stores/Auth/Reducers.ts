@@ -121,6 +121,21 @@ export const fetchAuthReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'refundBankCode': {
+        draft.userInfo.refundBankCode = data;
+        break;
+      }
+
+      case 'refundBankNum': {
+        draft.userInfo.refundBankNum = data;
+        break;
+      }
+
+      case 'refundUserName': {
+        draft.userInfo.refundUserName = data;
+        break;
+      }
+
       case 'emailValid': {
         draft.emailValid = data;
         break;

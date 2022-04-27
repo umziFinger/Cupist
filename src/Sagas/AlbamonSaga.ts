@@ -5,6 +5,7 @@ import CommonActions from '@/Stores/Common/Actions';
 import AlbamonActions from '@/Stores/Albamon/Actions';
 import { navigate, navigateAndReset } from '@/Services/NavigationService';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
+import { DATA_PAYMENT_METHOD } from '@/Containers/Reservation/ReservationScreen/data';
 
 // 알코볼 신청서 안내내용 가져오기
 export function* fetchCompetitionsRegistInfo(data: any): any {
@@ -60,7 +61,7 @@ export function* fetchCompetitionsRegist(data: any): any {
       const userCode = Config.USER_CODE;
       const paymentData = {
         pg: 'nice', // PG사
-        pay_method: paymentMethod, // 결제수단
+        pay_method: DATA_PAYMENT_METHOD[paymentMethod].key, // 결제수단
         merchant_uid: response?.data?.merchantUid || '', // 주문번호 (백엔드에서 임시 예약시 생성된 주문번호 넣어줄것)
         amount: response?.data?.price || 0, // 결제금액
         name: response?.data?.Place?.name || '', // 주문명

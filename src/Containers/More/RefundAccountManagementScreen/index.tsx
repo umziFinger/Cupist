@@ -29,10 +29,19 @@ const RefundAccountManagementScreen = () => {
   const [bank, setBank] = useState('');
   const [name, setName] = useState('');
   const [bankInfo, setBankInfo]: any = useState(null);
-  const { userInfo, userIdx } = useSelector((state: AuthState) => state.auth);
+  const { userInfo } = useSelector((state: AuthState) => state.auth);
+
   useEffect(() => {
-    dispatch(CommonActions.fetchCommonCode({ code: 'vBankCode' }));
+    dispatch(CommonActions.fetchCommonCode({ path: 'vBankCode' }));
+    setAccount(userInfo.refundBankNum || '');
+    setBank(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]?.value || '');
+    setBankInfo(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]);
+    setName(userInfo.refundUserName);
   }, []);
+
+  useEffect(() => {
+    validCheck();
+  }, [account, bank, name]);
 
   const onFocus = (index: number) => {
     setFocusIndex(index);
@@ -40,7 +49,14 @@ const RefundAccountManagementScreen = () => {
   console.log('userInfo?.competitionsYn : ', userInfo);
 
   const validCheck = () => {
-    return name && bankInfo && account;
+    return (
+      name &&
+      bank &&
+      account &&
+      (userInfo.refundUserName !== name ||
+        userInfo.refundBankNum !== account ||
+        userInfo?.refundBankCode !== bankList[bankList?.findIndex((el: any) => el.value === bank)].type)
+    );
   };
 
   const patchRefundBank = () => {
@@ -51,9 +67,6 @@ const RefundAccountManagementScreen = () => {
       refundUserName: name, // 추가
     };
     dispatch(MyActions.fetchMyRefundBank(params));
-    if (userIdx) {
-      dispatch(AuthActions.fetchUserInfo({ idx: userIdx }));
-    }
   };
 
   const openSelectBox = (
@@ -76,6 +89,42 @@ const RefundAccountManagementScreen = () => {
               ? require('@/Assets/Images/Arrow/icArrowUp.png')
               : require('@/Assets/Images/Arrow/icArrowDw.png')
           }
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </View>
+    </CustomButton>
+  );
+
+  const accountClearBox = (
+    <CustomButton
+      onPress={() => {
+        setAccount('');
+      }}
+      hitSlop={7}
+      style={{ marginRight: 4 }}
+    >
+      <View style={{ width: 16, height: 16 }}>
+        <FastImage
+          style={{ width: '100%', height: '100%' }}
+          source={require('@/Assets/Images/Search/icTxtDel.png')}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </View>
+    </CustomButton>
+  );
+
+  const nameClearBox = (
+    <CustomButton
+      onPress={() => {
+        setName('');
+      }}
+      hitSlop={7}
+      style={{ marginRight: 4 }}
+    >
+      <View style={{ width: 16, height: 16 }}>
+        <FastImage
+          style={{ width: '100%', height: '100%' }}
+          source={require('@/Assets/Images/Search/icTxtDel.png')}
           resizeMode={FastImage.resizeMode.cover}
         />
       </View>
@@ -129,15 +178,15 @@ const RefundAccountManagementScreen = () => {
                   ]}
                 >
                   <ScrollView
-                    style={{ height: 134 }}
+                    style={{ flex: 1 }}
                     showsVerticalScrollIndicator={false}
                     nestedScrollEnabled
-                    keyboardShouldPersistTaps={'handled'}
+                    // keyboardShouldPersistTaps={'handled'}
                   >
-                    {bankList?.map((v: any, index: number) => {
+                    {bankList?.map((v: any, vIndex: number) => {
                       return (
                         <CustomButton
-                          key={index.toString()}
+                          key={vIndex.toString()}
                           onPress={() => {
                             setBank(v?.value);
                             setBankInfo(v);
@@ -146,8 +195,9 @@ const RefundAccountManagementScreen = () => {
                         >
                           <View
                             style={{
-                              paddingTop: index === 0 ? 22 : 8,
+                              paddingTop: vIndex === 0 ? 22 : 8,
                               paddingBottom: 8,
+                              // backgroundColor: 'red',
                             }}
                           >
                             <CustomText style={{ fontSize: 13, letterSpacing: -0.15 }}>{v?.value || ''}</CustomText>
@@ -197,7 +247,7 @@ const RefundAccountManagementScreen = () => {
                     onBlur={() => onFocus(-1)}
                     keyboardType={'number-pad'}
                   />
-                  {/* {clubNameClearBox} */}
+                  {focusIndex === 0 && accountClearBox}
                 </View>
               </View>
               <View style={{ marginTop: 28, zIndex: focusIndex === 1 ? 10 : 0 }}>
@@ -269,7 +319,7 @@ const RefundAccountManagementScreen = () => {
                     onFocus={() => onFocus(2)}
                     onBlur={() => onFocus(-1)}
                   />
-                  {/* {nameClearBox} */}
+                  {focusIndex === 2 && nameClearBox}
                 </View>
               </View>
             </View>
@@ -278,7 +328,9 @@ const RefundAccountManagementScreen = () => {
           initialNumToRender={2}
           maxToRenderPerBatch={1}
           windowSize={7}
+          scrollEnabled={false}
           ListFooterComponent={<View style={{ height: heightInfo.mainBottomHeight }} />}
+          keyboardShouldPersistTaps={'handled'}
         />
         <CustomButton
           onPress={() => patchRefundBank()}

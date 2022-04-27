@@ -373,7 +373,7 @@ export function* fetchCommonCode(data: any): any {
         yield put(MyActions.fetchMyReducer({ type: 'bankList', data: response.data }));
       }
       if (code === 'alkorbol') {
-        yield put(CommonActions.fetchCommonReducer({ type: 'competitionInfo', data: response.data }));
+        yield put(CommonActions.fetchCommonReducer({ type: 'competitionInfo', data: response.data.commonCode }));
       }
     } else {
       yield put(CommonActions.fetchErrorHandler(response));

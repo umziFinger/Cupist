@@ -235,7 +235,7 @@ const PlaceInfo = () => {
             {reservationDetail?.stateText}
           </CustomText>
         </View>
-        {reservationDetail?.stateText === '이용전' && ( // TODO: 이용완료 -> 이용전으로 변경
+        {(reservationDetail?.stateText === '이용전' || reservationDetail?.stateText === '입금대기') && ( // TODO: 이용완료 -> 이용전으로 변경
           <CustomButton onPress={() => onPressCheckDetail()}>
             <View style={{ paddingVertical: 5, paddingHorizontal: 8, borderRadius: 3, backgroundColor: Color.Gray300 }}>
               <CustomText

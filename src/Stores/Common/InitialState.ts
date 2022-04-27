@@ -55,6 +55,7 @@ export const INITIAL_STATE = {
   appCodePushVersion: '',
   calendarMonthPosition: 0,
   competitionInfo: null,
+  registCardAfterScreen: '',
 };
 
 export interface CommonState {
@@ -108,6 +109,7 @@ export interface CommonState {
     currentLocationStatus: any;
     calendarMonthPosition: number | 0;
     competitionInfo: any;
+    registCardAfterScreen: string;
   };
 }
 

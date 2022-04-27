@@ -996,7 +996,10 @@ export function* fetchMyRefundBank(data: any): any {
     const response = yield call(Axios.PATCH, payload);
 
     if (response.result === true && response.code === null) {
-      console.log('@@@@@@@@@success@@@@@@@@');
+      console.log('@@@@@@@@@success@@@@@@@@', response.data);
+      yield put(AuthActions.fetchAuthReducer({ type: 'refundBankCode', data: response.data.refund.refundBankCode }));
+      yield put(AuthActions.fetchAuthReducer({ type: 'refundBankNum', data: response.data.refund.refundBankNum }));
+      yield put(AuthActions.fetchAuthReducer({ type: 'refundUserName', data: response.data.refund.refundUserName }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
       yield put(
         CommonActions.fetchCommonReducer({
@@ -1004,7 +1007,7 @@ export function* fetchMyRefundBank(data: any): any {
           data: {
             alertDialog: true,
             alertDialogType: 'confirm',
-            alertDialogDataType: '',
+            alertDialogDataType: 'settingRefundAccount',
             alertDialogTitle: '환불계좌 설정이 완료되었습니다.',
           },
         }),

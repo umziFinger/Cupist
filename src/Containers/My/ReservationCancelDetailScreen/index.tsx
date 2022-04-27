@@ -14,12 +14,14 @@ import CommonActions from '@/Stores/Common/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { fetchCommonCode } from '@/Sagas/CommonSaga';
 import CustomDashed from '@/Components/CustomDashed';
+import { AuthState } from '@/Stores/Auth/InitialState';
 
 const ReservationCancelDetailScreen = () => {
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { reservationCancelDetail, bankList } = useSelector((state: MyState) => state.my);
+  const { userInfo } = useSelector((state: AuthState) => state.auth);
 
   const [focusIndex, setFocusIndex] = useState(-1);
   const [account, setAccount] = useState('');
@@ -28,7 +30,11 @@ const ReservationCancelDetailScreen = () => {
   const [bankInfo, setBankInfo]: any = useState(null);
 
   useEffect(() => {
-    dispatch(CommonActions.fetchCommonCode({ code: 'vBankCode' }));
+    dispatch(CommonActions.fetchCommonCode({ path: 'vBankCode' }));
+    setAccount(userInfo.refundBankNum || '');
+    setBank(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]?.value || '');
+    setBankInfo(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]);
+    setName(userInfo.refundUserName);
   }, []);
 
   const onFocus = (index: number) => {
@@ -63,10 +69,20 @@ const ReservationCancelDetailScreen = () => {
 
   const onProgressCancel = () => {
     if (
-      reservationCancelDetail?.type === '가상계좌' &&
+      reservationCancelDetail?.type === '무통장입금' &&
       reservationCancelDetail?.stateText !== '입금대기' &&
       !(name && bankInfo && account)
     ) {
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertToast',
+          data: {
+            alertToast: true,
+            alertToastPosition: 'top',
+            alertToastMessage: '환불받을 계좌를 확인해주세요.',
+          },
+        }),
+      );
       return;
     }
     const params = {
@@ -79,6 +95,42 @@ const ReservationCancelDetailScreen = () => {
     };
     dispatch(ReservationActions.fetchReservationCancel(params));
   };
+
+  const accountClearBox = (
+    <CustomButton
+      onPress={() => {
+        setAccount('');
+      }}
+      hitSlop={7}
+      style={{ marginRight: 4 }}
+    >
+      <View style={{ width: 16, height: 16 }}>
+        <FastImage
+          style={{ width: '100%', height: '100%' }}
+          source={require('@/Assets/Images/Search/icTxtDel.png')}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </View>
+    </CustomButton>
+  );
+
+  const nameClearBox = (
+    <CustomButton
+      onPress={() => {
+        setName('');
+      }}
+      hitSlop={7}
+      style={{ marginRight: 4 }}
+    >
+      <View style={{ width: 16, height: 16 }}>
+        <FastImage
+          style={{ width: '100%', height: '100%' }}
+          source={require('@/Assets/Images/Search/icTxtDel.png')}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </View>
+    </CustomButton>
+  );
 
   const renderCancelPercentNotice = (percent: number) => {
     return (
@@ -150,18 +202,18 @@ const ReservationCancelDetailScreen = () => {
                   <RowItem title={'결제방법'} content={reservationCancelDetail?.type || ''} />
                 </View>
               </View>
-              {reservationCancelDetail?.type === '가상계좌' && reservationCancelDetail?.stateText !== '입금대기' && (
-                <>
+              {reservationCancelDetail?.type === '무통장입금' && reservationCancelDetail?.stateText !== '입금대기' && (
+                <View style={{ zIndex: 999 }}>
                   <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-                  <View style={{ paddingHorizontal: 24 }}>
+                  <View style={{}}>
                     {focusIndex === 1 && bankList?.length > 0 && (
                       <View
                         style={[
                           {
                             width: width - 48,
                             left: 24,
-                            top: 250,
-                            height: 120,
+                            top: 256,
+                            height: 250,
                             borderBottomWidth: 1,
                             borderLeftWidth: 1,
                             borderRightWidth: 1,
@@ -219,12 +271,12 @@ const ReservationCancelDetailScreen = () => {
                         </ScrollView>
                       </View>
                     )}
-                    <View style={{ marginTop: 28 }}>
+                    <View style={{ marginTop: 28, paddingHorizontal: 24 }}>
                       <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2 }}>
                         환불받을 계좌
                       </CustomText>
                     </View>
-                    <View style={{ marginTop: 41 }}>
+                    <View style={{ marginTop: 41, paddingHorizontal: 24 }}>
                       <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
                         예금주
                       </CustomText>
@@ -260,10 +312,10 @@ const ReservationCancelDetailScreen = () => {
                           onFocus={() => onFocus(2)}
                           onBlur={() => onFocus(-1)}
                         />
-                        {/* {nameClearBox} */}
+                        {focusIndex === 2 && nameClearBox}
                       </View>
                     </View>
-                    <View style={{ marginTop: 28, zIndex: focusIndex === 1 ? 10 : 0 }}>
+                    <View style={{ marginTop: 28, zIndex: focusIndex === 1 ? 10 : 0, paddingHorizontal: 24 }}>
                       <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
                         은행선택
                       </CustomText>
@@ -297,7 +349,7 @@ const ReservationCancelDetailScreen = () => {
                         {openSelectBox}
                       </CustomButton>
                     </View>
-                    <View style={{ marginTop: 28 }}>
+                    <View style={{ marginTop: 28, paddingHorizontal: 24 }}>
                       <CustomText style={{ color: Color.Grayyellow500, fontSize: 12, fontWeight: '500' }}>
                         계좌번호
                       </CustomText>
@@ -335,17 +387,18 @@ const ReservationCancelDetailScreen = () => {
                           onBlur={() => onFocus(-1)}
                           keyboardType={'number-pad'}
                         />
-                        {/* {clubNameClearBox} */}
+                        {focusIndex === 0 && accountClearBox}
                       </View>
                     </View>
+                    <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 28, zIndex: 1 }} />
                   </View>
-                  <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 28 }} />
-                </>
+                </View>
               )}
               {/* {reservationCancelDetail?.cancelType === '당일취소' && ( */}
               {/*  */}
               {/* )} */}
-              {(reservationCancelDetail?.type !== '가상계좌' || reservationCancelDetail?.stateText === '입금대기') && (
+              {(reservationCancelDetail?.type !== '무통장입금' ||
+                reservationCancelDetail?.stateText === '입금대기') && (
                 <View style={{ height: 0.5, marginHorizontal: 24 }}>
                   <CustomDashed dashLength={2.7} dashColor={Color.Gray350} style={{ height: '100%' }} />
                 </View>
@@ -419,6 +472,7 @@ const ReservationCancelDetailScreen = () => {
           windowSize={7}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: heightInfo.statusHeight }}
+          keyboardShouldPersistTaps={'handled'}
         />
       </View>
     </View>

@@ -10,6 +10,7 @@ import CustomButton from '@/Components/CustomButton';
 import { DATA_PAYMENT_METHOD } from './data';
 import AlbamonActions from '@/Stores/Albamon/Actions';
 import { navigate } from '@/Services/NavigationService';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   list: Array<any>;
@@ -103,7 +104,7 @@ const PaymentMethodArea = (props: PropTypes) => {
     //   );
     //   return;
     // }
-
+    dispatch(CommonActions.fetchCommonReducer({ type: 'registCardAfterScreen', data: 'RegistScreen' }));
     navigate('CertificationScreen');
   };
 

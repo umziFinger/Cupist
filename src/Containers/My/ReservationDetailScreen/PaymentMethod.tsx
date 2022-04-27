@@ -66,6 +66,7 @@ const PaymentMethod = () => {
             style={{
               color: reservationDetail?.stateText === '입금대기' ? Color.Gray600 : Color.Point1000,
               fontSize: 13,
+              fontWeight: '500',
             }}
           >
             {reservationDetail?.stateText === '입금대기' ? '입금대기' : '입금완료'}

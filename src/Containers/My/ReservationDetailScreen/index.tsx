@@ -49,7 +49,7 @@ const ReservationDetailScreen = () => {
       // case 3은 무통장입금일때만 노출
       case 3: {
         return (
-          reservationDetail?.type === '가상계좌' && (
+          reservationDetail?.type === '무통장입금' && (
             <View style={{ marginTop: 28 }}>
               <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
               <PaymentMethod />

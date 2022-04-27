@@ -163,7 +163,7 @@ const PaymentResultScreen = () => {
           </View>
 
           {/* 무통장입금일때만 노출 */}
-          {paymentResult?.type === '가상계좌' && (
+          {paymentResult?.type === '무통장입금' && (
             <>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12 }}>
                 <CustomText

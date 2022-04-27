@@ -104,15 +104,15 @@ const RegistScreen = ({ route }: PropTypes) => {
       isPhoneValid,
       paymentType,
     );
-    return gender !== '' &&
+    return (
+      gender !== '' &&
       permissionCheck &&
       clubName !== '' &&
       placeName !== '' &&
       name !== '' &&
       isPhoneValid &&
-      paymentType === 'simple'
-      ? selcetedCardIdx !== -1
-      : paymentMethod !== -1;
+      (paymentType === 'simple' ? selcetedCardIdx !== -1 : paymentMethod !== -1)
+    );
   };
 
   const onFocus = (index: number) => {
@@ -236,7 +236,7 @@ const RegistScreen = ({ route }: PropTypes) => {
   const onGoRegist = () => {
     const params = {
       clubName,
-      placeIdx: 1,
+      placeIdx: selectedPlaceIdx,
       name,
       mobile: phoneNumber.split('-').join(''),
       sex: gender,

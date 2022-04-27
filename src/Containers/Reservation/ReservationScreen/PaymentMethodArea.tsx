@@ -107,7 +107,7 @@ const PaymentMethodArea = (props: PropTypes) => {
       );
       return;
     }
-
+    dispatch(CommonActions.fetchCommonReducer({ type: 'registCardAfterScreen', data: 'ReservationScreen' }));
     navigate('CertificationScreen');
   };
 

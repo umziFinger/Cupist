@@ -34,6 +34,9 @@ export const INITIAL_STATE: AuthState['auth'] = {
     ringme: '',
     competitionsYn: enumYN.Y,
     competitionStatus: '',
+    refundBankCode: '',
+    refundBankNum: '',
+    refundUserName: '',
   },
   tokenInfo: {
     token: '',
@@ -100,6 +103,9 @@ interface userInfo {
   ringme: string | '';
   competitionsYn: enumYN;
   competitionStatus: string;
+  refundBankCode: string;
+  refundBankNum: string;
+  refundUserName: string;
 }
 
 interface tokenInfo {

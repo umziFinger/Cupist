@@ -7,6 +7,8 @@ import { navigate, navigateAndReset, navigateGoBack } from '@/Services/Navigatio
 import MyActions from '@/Stores/My/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
+import { AlbamonState } from '@/Stores/Albamon/InitialState';
+import { CommonState } from '@/Stores/Common/InitialState';
 
 export function* fetchReservationInfo(data: any): any {
   try {
@@ -137,6 +139,7 @@ export function* fetchReservationSimplePayment(data: any): any {
 }
 
 export function* fetchReservationCard(data: any): any {
+  const { registCardAfterScreen } = yield select((state: CommonState) => state.common);
   try {
     const { selectedPlaceIdx } = yield select((state: PlaceState) => state.place);
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
@@ -158,8 +161,16 @@ export function* fetchReservationCard(data: any): any {
           },
         }),
       );
-      navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: data.params.ticketInfoIdx });
-      navigateAndReset('ReservationScreen');
+      if (registCardAfterScreen === 'ReservationScreen') {
+        navigate('ReservationScreen', { placeIdx: selectedPlaceIdx, ticketInfoIdx: data.params.ticketInfoIdx });
+        navigateAndReset('ReservationScreen');
+        yield put(CommonActions.fetchCommonReducer({ type: 'registCardAfterScreen', data: '' }));
+      }
+      if (registCardAfterScreen === 'RegistScreen') {
+        navigate('RegistScreen', { placeIdx: -1, placeDetailName: '' });
+        navigateAndReset('RegistScreen');
+        yield put(CommonActions.fetchCommonReducer({ type: 'registCardAfterScreen', data: '' }));
+      }
     } else {
       navigateGoBack();
       yield put(CommonActions.fetchErrorHandler(response));

@@ -45,6 +45,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         navigate('RegistCompleteScreen');
         break;
       }
+      case 'settingRefundAccount': {
+        navigateGoBack();
+        break;
+      }
       default:
         dispatch(
           CommonActions.fetchCommonReducer({

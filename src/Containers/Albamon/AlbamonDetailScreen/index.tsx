@@ -13,6 +13,7 @@ import AlbamonActions from '@/Stores/Albamon/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import { numberFormat } from '@/Components/Function';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
+import CommonActions from '@/Stores/Common/Actions';
 
 const AlbamonDetailScreen = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const AlbamonDetailScreen = () => {
   const { competitionsRegistInfo } = useSelector((state: AlbamonState) => state.albamon);
 
   useEffect(() => {
+    dispatch(CommonActions.fetchCommonCode({ parentCode: 'competition', code: 'alkorbol' }));
     if (userIdx) {
       dispatch(AuthActions.fetchUserInfo({ idx: userIdx }));
     }

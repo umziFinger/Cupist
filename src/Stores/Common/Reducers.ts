@@ -244,9 +244,13 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.calendarMonthPosition = data;
         break;
       }
+      case 'registCardAfterScreen': {
+        draft.registCardAfterScreen = data;
+        break;
+      }
 
       case 'competitionInfo': {
-        draft.competitionInfo = data.commonCode;
+        draft.competitionInfo = data;
         break;
       }
 
