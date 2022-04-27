@@ -51,7 +51,7 @@ const CalendarSlider = () => {
         }),
       );
     }
-  }, [placeDetailSelectedTab]);
+  }, [placeDetailSelectedTab, competitionStartDate]);
 
   useEffect(() => {
     console.log('=-=-==-=-==-=-=-=-=-', albamonDate);
