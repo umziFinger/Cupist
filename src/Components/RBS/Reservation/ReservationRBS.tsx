@@ -67,7 +67,7 @@ const ReservationRBS = () => {
         const userCode = Config.USER_CODE;
         const data = {
           pg: 'nice', // PG사
-          pay_method: 'card', // 결제수단
+          pay_method: DATA_PAYMENT_METHOD[paymentMethod].key, // 결제수단
           merchant_uid: paymentInfo?.merchantUid || '', // 주문번호 (백엔드에서 임시 예약시 생성된 주문번호 넣어줄것)
           amount: paymentInfo?.totalPrice || 0, // 결제금액
           name: reservationInfo?.placeName || '', // 주문명

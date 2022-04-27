@@ -1,18 +1,19 @@
 import React from 'react';
-import { useWindowDimensions, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { Color } from '@/Assets/Color';
+import { View, Text } from 'react-native';
+import FastImage from 'react-native-fast-image';
+import { connect, useSelector } from 'react-redux';
+import moment from 'moment';
 import CustomText from '@/Components/CustomText';
-import { MyState } from '@/Stores/My/InitialState';
+import { Color } from '@/Assets/Color';
 import { numberFormat } from '@/Components/Function';
-import { CommonState } from '@/Stores/Common/InitialState';
 import CustomDashed from '@/Components/CustomDashed';
+import { MyState } from '@/Stores/My/InitialState';
 
-const ReservationInfo = () => {
-  const { heightInfo } = useSelector((state: CommonState) => state.common);
+const PaymentMethod = () => {
   const { reservationDetail } = useSelector((state: MyState) => state.my);
+  console.log('@@@@@@@@@reservationDetail', reservationDetail);
   return (
-    <View style={{ paddingTop: 28 }}>
+    <View style={{ paddingTop: 28, paddingHorizontal: 24 }}>
       <View>
         <CustomText
           style={{
@@ -22,161 +23,163 @@ const ReservationInfo = () => {
             color: Color.Black1000,
           }}
         >
-          결제 정보
+          결제 수단
         </CustomText>
       </View>
-      <View style={{ marginTop: 6 }}>
-        <CustomText
-          style={{
-            fontSize: 12,
-            letterSpacing: 0,
-            color: Color.Gray600,
-          }}
-        >
-          결제일시 {reservationDetail?.paymentDate}
-        </CustomText>
-      </View>
-      <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ flex: 1 }}>
+      <View style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}>
+        <View>
           <CustomText
             style={{
               fontSize: 13,
               fontWeight: 'bold',
               letterSpacing: -0.2,
               color: Color.Grayyellow500,
+              width: 48,
             }}
           >
-            상품 금액
+            결제방식
           </CustomText>
         </View>
-        <View>
+        <View style={{ flex: 1 }}>
           <CustomText
             style={{
-              fontSize: 15,
-              fontWeight: '500',
-              letterSpacing: -0.2,
-              textAlign: 'right',
+              fontSize: 13,
               color: Color.Black1000,
+              marginLeft: 38,
             }}
           >
-            {numberFormat(reservationDetail?.price * reservationDetail?.memberCnt)}원
+            {reservationDetail?.type || ''}
+          </CustomText>
+        </View>
+        <View
+          style={{
+            backgroundColor: reservationDetail?.stateText === '입금대기' ? Color.Gray300 : Color.White,
+            borderRadius: 3,
+            width: 90,
+            paddingVertical: 5,
+            alignItems: 'center',
+            borderWidth: reservationDetail?.stateText === '입금대기' ? 0 : 1,
+            borderColor: Color.Point1000,
+          }}
+        >
+          <CustomText
+            style={{
+              color: reservationDetail?.stateText === '입금대기' ? Color.Gray600 : Color.Point1000,
+              fontSize: 13,
+            }}
+          >
+            {reservationDetail?.stateText === '입금대기' ? '입금대기' : '입금완료'}
           </CustomText>
         </View>
       </View>
 
       <View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ flex: 1 }}>
+        <View>
           <CustomText
             style={{
               fontSize: 13,
               fontWeight: 'bold',
               letterSpacing: -0.2,
               color: Color.Grayyellow500,
+              width: 48,
             }}
           >
-            옵션 금액
+            입금계좌
           </CustomText>
         </View>
         <View>
           <CustomText
             style={{
-              fontSize: 15,
-              fontWeight: '500',
-              letterSpacing: -0.2,
+              fontSize: 13,
               textAlign: 'right',
+              color: Color.Black1000,
+              marginLeft: 38,
+            }}
+          >
+            {reservationDetail?.vbankName || ''} {reservationDetail?.vbankNo || ''}
+          </CustomText>
+        </View>
+      </View>
+      <View style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}>
+        <View>
+          <CustomText
+            style={{
+              fontSize: 13,
+              fontWeight: 'bold',
+              letterSpacing: -0.2,
+              color: Color.Grayyellow500,
+              width: 48,
+            }}
+          >
+            예금주
+          </CustomText>
+        </View>
+        <View>
+          <CustomText
+            style={{
+              fontSize: 13,
+              textAlign: 'right',
+              color: Color.Black1000,
+              marginLeft: 38,
+            }}
+          >
+            (주)볼링플러스
+          </CustomText>
+        </View>
+      </View>
+      <View style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}>
+        <View>
+          <CustomText
+            style={{
+              fontSize: 13,
+              fontWeight: 'bold',
+              letterSpacing: -0.2,
+              color: Color.Grayyellow500,
+              width: 48,
+            }}
+          >
+            입금기한
+          </CustomText>
+        </View>
+        <View>
+          <CustomText
+            style={{
+              fontSize: 13,
+              marginLeft: 38,
               color: Color.Black1000,
             }}
           >
-            {numberFormat(reservationDetail?.shoesPrice * reservationDetail?.shoesCnt)}원
+            {moment(reservationDetail?.vbankDate).format('YYYY년 MM월 DD일 hh:mm:ss') || ''}
           </CustomText>
         </View>
       </View>
-      <View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ flex: 1 }}>
+      <View style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}>
+        <View>
           <CustomText
             style={{
               fontSize: 13,
               fontWeight: 'bold',
               letterSpacing: -0.2,
               color: Color.Grayyellow500,
+              width: 48,
             }}
           >
-            할인 금액
+            결제일시
           </CustomText>
         </View>
         <View>
           <CustomText
             style={{
-              fontSize: 15,
-              fontWeight: '500',
-              letterSpacing: -0.2,
-              textAlign: 'right',
+              fontSize: 13,
               color: Color.Black1000,
+              marginLeft: 38,
             }}
           >
-            -{numberFormat(reservationDetail?.couponPrice)}원
-          </CustomText>
-        </View>
-      </View>
-      {/* <View style={{ borderStyle: 'dotted', borderWidth: 1, borderColor: Color.Gray350, marginTop: 20 }} /> */}
-      <View style={{ height: 0.5, marginTop: 20 }}>
-        <CustomDashed dashLength={2.7} dashColor={Color.Gray350} style={{ height: '100%' }} />
-      </View>
-      <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ flex: 1 }}>
-          <CustomText
-            style={{
-              fontSize: 13,
-              fontWeight: 'bold',
-              letterSpacing: -0.2,
-              color: Color.Grayyellow500,
-            }}
-          >
-            실 결제 금액
-          </CustomText>
-        </View>
-        <View>
-          <CustomText
-            style={{
-              fontSize: 15,
-              fontWeight: 'bold',
-              letterSpacing: -0.2,
-              textAlign: 'right',
-              color: Color.Point1000,
-            }}
-          >
-            {numberFormat(reservationDetail?.totalPrice)}원
-          </CustomText>
-        </View>
-      </View>
-      <View style={{ marginTop: 13, flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ flex: 1 }}>
-          <CustomText
-            style={{
-              fontSize: 13,
-              fontWeight: 'bold',
-              letterSpacing: -0.2,
-              color: Color.Grayyellow500,
-            }}
-          >
-            결제 수단
-          </CustomText>
-        </View>
-        <View>
-          <CustomText
-            style={{
-              fontSize: 13,
-              letterSpacing: 0,
-              textAlign: 'right',
-              color: Color.Black1000,
-            }}
-          >
-            {reservationDetail?.type || ''}
+            {reservationDetail?.paymentDate || ''}
           </CustomText>
         </View>
       </View>
     </View>
   );
 };
-
-export default ReservationInfo;
+export default PaymentMethod;

@@ -985,3 +985,35 @@ export function* fetchMyReservationCheckDetail(data: any): any {
     console.log('occurred Error...fetchMyReservationCheckDetail : ', e);
   }
 }
+
+export function* fetchMyRefundBank(data: any): any {
+  try {
+    const payload = {
+      ...data,
+      url: Config.MY_REFUND_BANK_URL,
+    };
+
+    const response = yield call(Axios.PATCH, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('@@@@@@@@@success@@@@@@@@');
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertDialog',
+          data: {
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogDataType: '',
+            alertDialogTitle: '환불계좌 설정이 완료되었습니다.',
+          },
+        }),
+      );
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyRefundBank : ', e);
+  }
+}

@@ -19,6 +19,11 @@ export const INITIAL_STATE: MyState['my'] = {
     { title: '내 쿠폰함', screen: 'MyCouponScreen' },
     { title: '내 알림', screen: 'NotificationScreen' },
     { title: '최근 본 볼링장', screen: 'RecentPlaceScreen' },
+    {
+      title: '환불계좌관리',
+      icon: require('@/Assets/Images/Arrow/icArrowRi.png'),
+      screen: 'RefundAccountManagementScreen',
+    },
     { title: '공지사항', icon: require('@/Assets/Images/More/icPlusNotice.png'), screen: 'NoticeScreen' },
     { title: '이벤트', icon: require('@/Assets/Images/More/icPlusEvent.png'), screen: 'EventScreen' },
     { title: '고객센터', icon: require('@/Assets/Images/More/icPlusCustomer.png'), screen: 'QnaScreen' },
@@ -64,6 +69,7 @@ export const INITIAL_STATE: MyState['my'] = {
   selectedCouponGuide: null,
   ringmeList: [],
   isCheckedReservationDetail: false,
+  bankList: [],
 };
 export interface MyState {
   my: {
@@ -117,6 +123,7 @@ export interface MyState {
     selectedCouponGuide: CouponItemType | null;
     ringmeList: any[];
     isCheckedReservationDetail: boolean | false;
+    bankList: any;
   };
 }
 export interface CouponItemType {

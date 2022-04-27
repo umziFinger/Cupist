@@ -51,6 +51,27 @@ export const fetchAlbamonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.competitionVerifyData = data;
         break;
       }
+      // 간편결제 | 다른 결제수단
+      case 'paymentType': {
+        console.log('call reducer paymentType : ', data);
+        if (data === 'simple') {
+          draft.paymentMethod = -1;
+        }
+        draft.paymentType = data;
+        break;
+      }
+
+      case 'paymentMethod': {
+        console.log('call reducer paymentMethod : ', data);
+        draft.paymentMethod = data;
+        break;
+      }
+      case 'selcetedCardIdx': {
+        console.log('call reducer selcetedCardIdx : ', data);
+        draft.selcetedCardIdx = data;
+        break;
+      }
+
       default:
         return draft;
     }

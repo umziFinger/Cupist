@@ -92,6 +92,7 @@ import {
   fetchMyCouponAdd,
   fetchMyProfileRingme,
   fetchMyReservationCheckDetail,
+  fetchMyRefundBank,
 } from '@/Sagas/MySaga';
 
 import {
@@ -204,6 +205,7 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_COUPON_ADD, fetchMyCouponAdd),
     takeLatest(MyTypes.FETCH_MY_PROFILE_RINGME, fetchMyProfileRingme),
     takeLatest(MyTypes.FETCH_MY_RESERVATION_CHECK_DETAIL, fetchMyReservationCheckDetail),
+    takeLatest(MyTypes.FETCH_MY_REFUND_BANK, fetchMyRefundBank),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

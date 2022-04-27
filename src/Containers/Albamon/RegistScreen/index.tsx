@@ -19,6 +19,8 @@ import { numberFormat } from '@/Components/Function';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAILS';
 import CommonActions from '@/Stores/Common/Actions';
+import { ReservationState } from '@/Stores/Reservation/InitialState';
+import PaymentMethodArea from '@/Containers/Albamon/RegistScreen/PaymentMethodArea';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'RegistScreen'>;
@@ -36,15 +38,18 @@ const RegistScreen = ({ route }: PropTypes) => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { width } = useWindowDimensions();
   const { userInfo } = useSelector((state: AuthState) => state.auth);
+  const { myCardList } = useSelector((state: ReservationState) => state.reservation);
   const {
     competitionsRegistInfo,
     competitionPlaceSearchList,
     competitionClubSearchList,
     permissionCheck = false,
+    selcetedCardIdx,
+    paymentMethod,
+    paymentType,
   } = useSelector((state: AlbamonState) => state.albamon);
 
   console.log('competitionPlaceSearchList : ', competitionPlaceSearchList);
-
   const [gender, setGender] = useState('');
   const [clubName, setClubName] = useState('');
   const [placeName, setPlaceName] = useState('');
@@ -69,7 +74,7 @@ const RegistScreen = ({ route }: PropTypes) => {
 
   useEffect(() => {
     validCheck();
-  }, [gender, permissionCheck, clubName, placeName, name, phoneNumber]);
+  }, [gender, permissionCheck, clubName, placeName, name, isPhoneValid, paymentMethod, selcetedCardIdx, paymentType]);
 
   const selectGender = (params: string) => {
     setGender(params);
@@ -89,7 +94,25 @@ const RegistScreen = ({ route }: PropTypes) => {
     });
   };
   const validCheck = () => {
-    return gender && permissionCheck && clubName && placeName && name && isPhoneValid && phoneNumber;
+    console.log(
+      'gender, permissionCheck, clubName, placeName, name, isPhoneValid, paymentMethod, selcetedCardIdx, paymentType : ',
+      gender !== '',
+      permissionCheck,
+      clubName !== '',
+      placeName !== '',
+      name !== '',
+      isPhoneValid,
+      paymentType,
+    );
+    return gender !== '' &&
+      permissionCheck &&
+      clubName !== '' &&
+      placeName !== '' &&
+      name !== '' &&
+      isPhoneValid &&
+      paymentType === 'simple'
+      ? selcetedCardIdx !== -1
+      : paymentMethod !== -1;
   };
 
   const onFocus = (index: number) => {
@@ -220,7 +243,7 @@ const RegistScreen = ({ route }: PropTypes) => {
       agreeYn: permissionCheck ? 'Y' : 'N',
       compChildrenIdx: competitionsRegistInfo?.competitions?.idx,
     };
-    console.log(params);
+    console.log('params==========', params);
     if (validCheck()) {
       // navigate('PaymentScreen');
       dispatch(AlbamonActions.fetchCompetitionsRegist(params));
@@ -230,14 +253,12 @@ const RegistScreen = ({ route }: PropTypes) => {
   const onChangeClubName = (text: string) => {
     setClubName(text);
     debounceFuncClub.current(text);
-    console.log('aklshvhasdv;asd', text);
     if (text === '') {
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'competitionClubSearchList', data: [] }));
     }
   };
 
   const onChangePlaceName = (text: string) => {
-    console.log('blanblalbalbl');
     setPlaceName(text);
     debounceFuncPlace.current(text);
   };
@@ -284,9 +305,7 @@ const RegistScreen = ({ route }: PropTypes) => {
                         marginTop: 27,
                         backgroundColor: Color.White,
                         borderRadius: 5,
-                        // paddingTop: 24,
                         paddingBottom: 25,
-                        // shadowRadius: 10,
                       },
                       Platform.OS === 'android'
                         ? { elevation: 2.5 }
@@ -476,17 +495,13 @@ const RegistScreen = ({ route }: PropTypes) => {
                               left: 24,
                               top: 122,
                               height: 134,
-                              // borderWidth: 1,
                               borderBottomWidth: 1,
                               borderLeftWidth: 1,
                               borderRightWidth: 1,
                               borderColor: Color.Gray300,
-                              // paddingTop: 22,
-                              // paddingBottom: 18,
                               paddingHorizontal: 10,
                               borderBottomRightRadius: 3,
                               borderBottomLeftRadius: 3,
-                              // borderRadius: 3,
                               backgroundColor: 'white',
                               position: 'absolute',
                               zIndex: 9,
@@ -511,7 +526,6 @@ const RegistScreen = ({ route }: PropTypes) => {
                             keyboardShouldPersistTaps={'handled'}
                           >
                             {competitionClubSearchList?.map((v: any, index: number) => {
-                              console.log(v?.name);
                               return (
                                 <CustomButton key={index.toString()} onPress={() => selectClubName(v?.name)}>
                                   <View
@@ -538,18 +552,13 @@ const RegistScreen = ({ route }: PropTypes) => {
                               height: 134,
                               left: 24,
                               top: 225,
-                              // borderWidth: 1,
                               borderBottomWidth: 1,
                               borderLeftWidth: 1,
                               borderRightWidth: 1,
                               borderColor: Color.Gray300,
-                              // paddingTop: 30,
-                              // paddingBottom: 18,
                               paddingHorizontal: 10,
                               borderBottomRightRadius: 3,
                               borderBottomLeftRadius: 3,
-
-                              // borderRadius: 3,
                               backgroundColor: 'white',
                               position: 'absolute',
                               zIndex: 9,
@@ -574,7 +583,6 @@ const RegistScreen = ({ route }: PropTypes) => {
                             keyboardShouldPersistTaps={'handled'}
                           >
                             {competitionPlaceSearchList?.map((v: any, index: number) => {
-                              console.log(v?.name);
                               return (
                                 <CustomButton key={index.toString()} onPress={() => selectPlaceName(v)}>
                                   <View
@@ -848,64 +856,13 @@ const RegistScreen = ({ route }: PropTypes) => {
                         </CustomButton>
                       </View>
                     </View>
-                    {/* <View style={{ marginHorizontal: 24, marginTop: 32 }}> */}
-                    {/*  <CustomText style={{ fontSize: 12, color: Color.Grayyellow500, fontWeight: '500' }}> */}
-                    {/*    개인정보 활용 동의 */}
-                    {/*  </CustomText> */}
-                    {/*  <View style={{ flexDirection: 'row', marginTop: 8 }}> */}
-                    {/*    <CustomButton */}
-                    {/*      style={{ */}
-                    {/*        paddingVertical: 11, */}
-                    {/*        backgroundColor: agreement === 'Y' ? Color.Primary1000 : Color.White, */}
-                    {/*        borderWidth: agreement === 'Y' ? 0 : 1, */}
-                    {/*        borderColor: Color.Gray300, */}
-                    {/*        alignItems: 'center', */}
-                    {/*        borderRadius: 3, */}
-                    {/*        flex: 1, */}
-                    {/*      }} */}
-                    {/*      onPress={() => selectAgreement('Y')} */}
-                    {/*    > */}
-                    {/*      <CustomText */}
-                    {/*        style={{ */}
-                    {/*          color: agreement === 'Y' ? Color.White : Color.Gray400, */}
-                    {/*          fontWeight: '500', */}
-                    {/*          fontSize: 14, */}
-                    {/*          letterSpacing: -0.25, */}
-                    {/*        }} */}
-                    {/*      > */}
-                    {/*        동의 */}
-                    {/*      </CustomText> */}
-                    {/*    </CustomButton> */}
-                    {/*    <CustomButton */}
-                    {/*      style={{ */}
-                    {/*        marginLeft: 10, */}
-                    {/*        paddingVertical: 11, */}
-                    {/*        backgroundColor: agreement === 'N' ? Color.Primary1000 : Color.White, */}
-                    {/*        borderWidth: agreement === 'N' ? 0 : 1, */}
-                    {/*        borderColor: Color.Gray300, */}
-                    {/*        alignItems: 'center', */}
-                    {/*        borderRadius: 3, */}
-                    {/*        flex: 1, */}
-                    {/*      }} */}
-                    {/*      onPress={() => selectAgreement('N')} */}
-                    {/*    > */}
-                    {/*      <CustomText */}
-                    {/*        style={{ */}
-                    {/*          color: agreement === 'N' ? Color.White : Color.Gray400, */}
-                    {/*          fontWeight: '500', */}
-                    {/*          fontSize: 14, */}
-                    {/*          letterSpacing: -0.25, */}
-                    {/*        }} */}
-                    {/*      > */}
-                    {/*        미동의 */}
-                    {/*      </CustomText> */}
-                    {/*    </CustomButton> */}
-                    {/*  </View> */}
-                    {/* </View> */}
+                    <View style={{ height: 8, backgroundColor: '#f4f4f4', marginTop: 32 }} />
+                    <PaymentMethodArea list={myCardList} />
+                    <View style={{ height: 8, backgroundColor: '#f4f4f4', marginTop: 32 }} />
                     <View
                       style={{
                         marginHorizontal: 24,
-                        marginTop: 41,
+                        marginTop: 32,
                         borderColor: permissionCheck ? Color.Primary1000 : Color.Gray300,
                         borderRadius: 3,
                         borderWidth: 1,

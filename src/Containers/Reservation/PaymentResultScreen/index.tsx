@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
+import Clipboard from '@react-native-clipboard/clipboard';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
@@ -12,6 +13,7 @@ import { numberFormat } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import MyActions from '@/Stores/My/Actions';
+import CommonActions from '@/Stores/Common/Actions';
 
 const PaymentResultScreen = () => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
@@ -26,6 +28,20 @@ const PaymentResultScreen = () => {
     };
     dispatch(MyActions.fetchMyReservationList(params));
     navigate('MyScreen');
+  };
+
+  const onPressCopy = (text: string) => {
+    Clipboard.setString(text || '');
+    dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'alertToast',
+        data: {
+          alertToast: true,
+          alertToastPosition: 'bottom',
+          alertToastMessage: '계좌번호가 복사 되었습니다.',
+        },
+      }),
+    );
   };
 
   console.log('paymentResult : ', paymentResult);
@@ -145,6 +161,60 @@ const PaymentResultScreen = () => {
               <CustomText style={{ color: Color.Black1000, fontSize: 13 }}>{paymentResult?.type}</CustomText>
             </View>
           </View>
+
+          {/* 무통장입금일때만 노출 */}
+          {paymentResult?.type === '가상계좌' && (
+            <>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12 }}>
+                <CustomText
+                  style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
+                >
+                  입금은행
+                </CustomText>
+                <CustomText style={{ fontSize: 13 }}>{paymentResult?.vbankName || ''}</CustomText>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginTop: 12,
+                }}
+              >
+                <CustomText
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 'bold',
+                    letterSpacing: -0.2,
+                    color: Color.Grayyellow500,
+                  }}
+                >
+                  계좌번호
+                </CustomText>
+                <CustomButton
+                  onPress={() => onPressCopy(paymentResult?.vbankNo)}
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
+                >
+                  <View style={{ width: 24, height: 24 }}>
+                    <FastImage
+                      style={{ width: '100%', height: '100%' }}
+                      source={require('@/Assets/Images/Albamon/icCopy.png')}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </View>
+                  <CustomText style={{ fontSize: 13 }}>{paymentResult?.vbankNo || ''}</CustomText>
+                </CustomButton>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12 }}>
+                <CustomText
+                  style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
+                >
+                  입금기한
+                </CustomText>
+                <CustomText style={{ fontSize: 13 }}>{paymentResult?.vbankDate || ''}</CustomText>
+              </View>
+            </>
+          )}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12 }}>
             <View style={{ justifyContent: 'center' }}>
               <CustomText style={{ color: Color.Grayyellow500, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}>
