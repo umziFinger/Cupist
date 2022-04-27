@@ -88,6 +88,7 @@ const prod = {
   MY_PASSWORD_URL: 'my/password',
   MY_COUPON_URL: 'my/coupon',
   MY_PROFILE_RINGME_URL: 'my/profile/ringme',
+  MY_REFUND_BANK_URL: 'my/refund-bank',
 
   NOTIFICATION_COUNT_URL: 'my/notification/count',
 

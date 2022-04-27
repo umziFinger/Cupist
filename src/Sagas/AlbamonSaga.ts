@@ -1,10 +1,12 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
 import CommonActions from '@/Stores/Common/Actions';
 import AlbamonActions from '@/Stores/Albamon/Actions';
 import { navigate, navigateAndReset } from '@/Services/NavigationService';
 import AuthActions from '@/Stores/Auth/Actions';
+import { AuthState } from '@/Stores/Auth/InitialState';
+import { AlbamonState } from '@/Stores/Albamon/InitialState';
 
 // 알코볼 신청서 안내내용 가져오기
 export function* fetchCompetitionsRegistInfo(data: any): any {
@@ -39,6 +41,7 @@ export function* fetchCompetitionsRegistInfo(data: any): any {
 
 // 대회 신청하기
 export function* fetchCompetitionsRegist(data: any): any {
+  const { paymentMethod } = yield select((state: AlbamonState) => state.albamon);
   try {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
@@ -51,7 +54,7 @@ export function* fetchCompetitionsRegist(data: any): any {
       const userCode = Config.USER_CODE;
       const paymentData = {
         pg: 'nice', // PG사
-        pay_method: 'vbank', // 결제수단
+        pay_method: paymentMethod, // 결제수단
         merchant_uid: response?.data?.merchantUid || '', // 주문번호 (백엔드에서 임시 예약시 생성된 주문번호 넣어줄것)
         amount: response?.data?.price || 0, // 결제금액
         name: response?.data?.Place?.name || '', // 주문명

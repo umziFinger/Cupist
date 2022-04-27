@@ -16,6 +16,9 @@ export const INITIAL_STATE = {
   },
   permissionCheck: false,
   competitionVerifyData: {},
+  paymentType: '',
+  paymentMethod: -1,
+  selcetedCardIdx: -1,
 };
 
 export interface AlbamonState {
@@ -31,6 +34,9 @@ export interface AlbamonState {
     paymentVerifyData: PaymentVerifyDataType;
     permissionCheck: boolean;
     competitionVerifyData: any;
+    paymentType: string;
+    paymentMethod: number | -1;
+    selcetedCardIdx: number | -1;
   };
 }
 

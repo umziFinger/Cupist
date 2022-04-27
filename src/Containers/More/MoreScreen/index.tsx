@@ -27,7 +27,6 @@ const MoreScreen = () => {
     }
   }, [isFocused]);
 
-  console.log(userInfo);
   const onMove = (screen: keyof MainStackParamList) => {
     // if (screen === 'NotificationScreen') {
     //   dispatch(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
@@ -70,7 +69,7 @@ const MoreScreen = () => {
           <View
             style={{
               backgroundColor: Color.White,
-              marginBottom: index === 3 || index === 5 ? 8 : undefined,
+              marginBottom: index === 4 || index === 6 ? 8 : undefined,
             }}
           >
             <View
@@ -79,7 +78,7 @@ const MoreScreen = () => {
                 marginHorizontal: 24,
                 flexDirection: 'row',
                 alignItems: 'center',
-                borderBottomWidth: index === 3 || index === 5 || moreScreenRenderItem?.length - 1 === index ? 0 : 1,
+                borderBottomWidth: index === 4 || index === 6 || moreScreenRenderItem?.length - 1 === index ? 0 : 1,
                 borderBottomColor: Color.Gray300,
               }}
             >
@@ -131,7 +130,13 @@ const MoreScreen = () => {
               )}
 
               {item?.icon && (
-                <View style={{ width: 28, height: 28 }}>
+                <View
+                  style={{
+                    width: item.screen === 'RefundAccountManagementScreen' ? 16 : 28,
+                    height: item.screen === 'RefundAccountManagementScreen' ? 16 : 28,
+                    marginRight: item.screen === 'RefundAccountManagementScreen' ? 6 : 0,
+                  }}
+                >
                   <FastImage
                     style={{ width: '100%', height: '100%' }}
                     source={item.icon}

@@ -73,7 +73,7 @@ const AlbamonDetailScreen = () => {
           marginBottom: heightInfo.statusHeight,
         }}
       >
-        {userInfo?.competitionsYn === 'N' || !userIdx ? (
+        {userInfo?.competitionsYn === 'Y' || !userIdx ? (
           <CustomButton
             onPress={() => onPressRegist()}
             style={{

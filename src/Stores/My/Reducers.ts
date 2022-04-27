@@ -254,6 +254,11 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'bankList': {
+        draft.bankList = data.commonCode;
+        break;
+      }
+
       case 'isCheckedReservationDetail': {
         console.log('call reduer isCheckedReservationDetail : ', data);
         draft.isCheckedReservationDetail = data;

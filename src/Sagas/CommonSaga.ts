@@ -361,6 +361,9 @@ export function* fetchCommonCode(data: any): any {
       if (data.params.path === 'ringme') {
         yield put(MyActions.fetchMyReducer({ type: 'ringmeList', data: response.data }));
       }
+      if (data.params.path === 'vBankCode') {
+        yield put(MyActions.fetchMyReducer({ type: 'bankList', data: response.data }));
+      }
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
     }

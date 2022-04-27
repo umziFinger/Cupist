@@ -1,4 +1,5 @@
 import { createActions } from 'reduxsauce';
+import { fetchMyRefundBank } from '@/Sagas/MySaga';
 
 const { Types, Creators } = createActions({
   fetchMyReducer: ['params'],
@@ -30,6 +31,7 @@ const { Types, Creators } = createActions({
   fetchMyCouponAdd: ['params'],
   fetchMyProfileRingme: ['params'],
   fetchMyReservationCheckDetail: ['params'],
+  fetchMyRefundBank: ['params'],
 });
 
 export const MyTypes = Types;
