@@ -245,6 +245,11 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'competitionInfo': {
+        draft.competitionInfo = data.commonCode;
+        break;
+      }
+
       default:
         return draft;
     }

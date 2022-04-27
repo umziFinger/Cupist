@@ -40,7 +40,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const PlaceDetailScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
   const { idx, ticketType = TICKET_TYPE.ALL } = route.params;
-  const { heightInfo } = useSelector((state: CommonState) => state.common);
+  const { heightInfo, competitionInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx, userInfo } = useSelector((state: AuthState) => state.auth);
   const { placeDetail, placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
@@ -58,6 +58,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const event = placeDetail?.event || [];
 
   useEffect(() => {
+    dispatch(CommonActions.fetchCommonCode({ parentCode: 'competition', code: 'alkorbol' }));
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeDetailInit' }));
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'placeDetailSelectedTabInit' }));
@@ -98,12 +99,12 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         if (userInfo?.competitionsYn === 'N') {
           dispatch(
             AlbamonActions.fetchCompetitionsRegistInfo({
-              isMoveScreen: true,
+              currentScreen: 'PlaceDetailScreen',
               placeIdx: place?.idx,
               placeDetailName: place?.name,
+              competitionIdx: competitionInfo?.value,
             }),
           );
-          // navigate('RegistScreen', { placeIdx: place?.idx, placeDetailName: place?.name });
           return;
         }
         if (userInfo?.competitionStatus !== '참가완료' && userInfo?.competitionStatus !== '참가불가') {

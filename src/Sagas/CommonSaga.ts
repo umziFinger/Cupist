@@ -113,6 +113,9 @@ export function* fetchInitialHandler() {
 
   // 마이볼리 > 진행중 예약 목록 예약 취소 시 데이터(예약상세) 정합성 위하여 check로직에 사용되는 Flag
   yield put(MyActions.fetchMyReducer({ type: 'isCheckedReservationDetail', data: false }));
+
+  // 대회 정보 초기화
+  yield put(CommonActions.fetchCommonReducer({ type: 'competitionInfo', data: null }));
 }
 
 export function* fetchErrorHandler(data: any) {
@@ -353,16 +356,24 @@ export function* fetchCommonReport(data: any): any {
 
 export function* fetchCommonCode(data: any): any {
   try {
+    const parentCode = data.params.parentCode;
+    const code = data.params.code;
+    console.log('parentCode : ', parentCode);
+    console.log('code : ', code);
+    const url = parentCode ? `${Config.COMMON_URL}/${parentCode}/${data.params.code}` : `${Config.COMMON_URL}/${code}`;
     const payload = {
-      url: `${Config.COMMON_URL}/${data.params.path}`,
+      url,
     };
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
-      if (data.params.path === 'ringme') {
+      if (code === 'ringme') {
         yield put(MyActions.fetchMyReducer({ type: 'ringmeList', data: response.data }));
       }
-      if (data.params.path === 'vBankCode') {
+      if (code === 'vBankCode') {
         yield put(MyActions.fetchMyReducer({ type: 'bankList', data: response.data }));
+      }
+      if (code === 'alkorbol') {
+        yield put(CommonActions.fetchCommonReducer({ type: 'competitionInfo', data: response.data }));
       }
     } else {
       yield put(CommonActions.fetchErrorHandler(response));

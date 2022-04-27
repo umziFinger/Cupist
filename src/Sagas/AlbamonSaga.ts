@@ -4,28 +4,34 @@ import { Axios } from '@/Services/Axios';
 import CommonActions from '@/Stores/Common/Actions';
 import AlbamonActions from '@/Stores/Albamon/Actions';
 import { navigate, navigateAndReset } from '@/Services/NavigationService';
-import AuthActions from '@/Stores/Auth/Actions';
-import { AuthState } from '@/Stores/Auth/InitialState';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 
 // 알코볼 신청서 안내내용 가져오기
 export function* fetchCompetitionsRegistInfo(data: any): any {
   try {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+
+    const currentScreen = data.params.currentScreen;
+    console.log('currentScreen : ', currentScreen);
+    const url =
+      currentScreen === 'CalendarSlider'
+        ? `${Config.COMPETITION_REGIST_INFO_URL}/${data.params.competitionIdx}/qualifier`
+        : `${Config.COMPETITION_REGIST_INFO_URL}/${data.params.competitionIdx}`;
+
     const payload = {
       ...data,
-      url: `${Config.COMPETITION_REGIST_INFO_URL}/1`,
+      url,
     };
     const response = yield call(Axios.GET, payload);
     console.log(response.data);
     if (response.result === true && response.code === null) {
-      const isMoveScreen = data.params.isMoveScreen;
       const placeIdx = data.params.placeIdx;
       const placeDetailName = data.params.placeDetailName;
 
       yield put(AlbamonActions.fetchAlbamonReducer({ type: 'competitionsRegistInfo', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      if (isMoveScreen) {
+
+      if (currentScreen === 'AlbamonDetailScreen' || currentScreen === 'PlaceDetailScreen') {
         navigate('RegistScreen', { placeIdx, placeDetailName });
       }
     } else {

@@ -28,7 +28,7 @@ const ReservationCancelDetailScreen = () => {
   const [bankInfo, setBankInfo]: any = useState(null);
 
   useEffect(() => {
-    dispatch(CommonActions.fetchCommonCode({ path: 'vBankCode' }));
+    dispatch(CommonActions.fetchCommonCode({ code: 'vBankCode' }));
   }, []);
 
   const onFocus = (index: number) => {

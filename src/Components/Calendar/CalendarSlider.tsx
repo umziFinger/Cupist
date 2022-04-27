@@ -12,12 +12,14 @@ import HomeActions from '@/Stores/Home/Actions';
 import AlbamonActions from '@/Stores/Albamon/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
+import { CommonState } from '@/Stores/Common/InitialState';
 
 const CalendarSlider = () => {
   const dispatch = useDispatch();
   const calendarRef = useRef<any>();
 
   const { calendarDate } = useSelector((state: HomeState) => state.home);
+  const { competitionInfo } = useSelector((state: CommonState) => state.common);
   const { albamonDate, placeDetailSelectedTab, competitionsRegistInfo } = useSelector(
     (state: AlbamonState) => state.albamon,
   );
@@ -36,7 +38,14 @@ const CalendarSlider = () => {
 
   useEffect(() => {
     if (placeDetailSelectedTab.key === 'albamon') {
-      dispatch(AlbamonActions.fetchCompetitionsRegistInfo({ isMoveScreen: false, placeIdx: -1, placeDetailName: '' }));
+      dispatch(
+        AlbamonActions.fetchCompetitionsRegistInfo({
+          currentScreen: 'CalendarSlider',
+          placeIdx: -1,
+          placeDetailName: '',
+          competitionIdx: competitionInfo?.value,
+        }),
+      );
       dispatch(
         AlbamonActions.fetchAlbamonReducer({
           type: 'albamonDate',

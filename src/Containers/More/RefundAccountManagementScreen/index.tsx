@@ -31,7 +31,7 @@ const RefundAccountManagementScreen = () => {
   const [bankInfo, setBankInfo]: any = useState(null);
   const { userInfo, userIdx } = useSelector((state: AuthState) => state.auth);
   useEffect(() => {
-    dispatch(CommonActions.fetchCommonCode({ path: 'vBankCode' }));
+    dispatch(CommonActions.fetchCommonCode({ code: 'vBankCode' }));
   }, []);
 
   const onFocus = (index: number) => {

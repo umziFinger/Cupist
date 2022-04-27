@@ -17,7 +17,7 @@ import { AlbamonState } from '@/Stores/Albamon/InitialState';
 const AlbamonDetailScreen = () => {
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
-  const { heightInfo } = useSelector((state: CommonState) => state.common);
+  const { heightInfo, competitionInfo } = useSelector((state: CommonState) => state.common);
   const { userInfo, userIdx } = useSelector((state: AuthState) => state.auth);
   const { competitionsRegistInfo } = useSelector((state: AlbamonState) => state.albamon);
 
@@ -33,7 +33,14 @@ const AlbamonDetailScreen = () => {
       return;
     }
 
-    dispatch(AlbamonActions.fetchCompetitionsRegistInfo({ isMoveScreen: true, placeIdx: -1, placeDetailName: '' }));
+    dispatch(
+      AlbamonActions.fetchCompetitionsRegistInfo({
+        currentScreen: 'AlbamonDetailScreen',
+        placeIdx: -1,
+        placeDetailName: '',
+        competitionIdx: competitionInfo?.value,
+      }),
+    );
     // navigate('RegistScreen', { placeIdx: -1, placeDetailName: '' });
   };
 
@@ -73,7 +80,7 @@ const AlbamonDetailScreen = () => {
           marginBottom: heightInfo.statusHeight,
         }}
       >
-        {userInfo?.competitionsYn === 'Y' || !userIdx ? (
+        {userInfo?.competitionsYn === 'N' || !userIdx ? (
           <CustomButton
             onPress={() => onPressRegist()}
             style={{

@@ -54,6 +54,7 @@ export const INITIAL_STATE = {
   myTabRefreshYN: 'Y',
   appCodePushVersion: '',
   calendarMonthPosition: 0,
+  competitionInfo: null,
 };
 
 export interface CommonState {
@@ -106,6 +107,7 @@ export interface CommonState {
     isConnected: boolean | false;
     currentLocationStatus: any;
     calendarMonthPosition: number | 0;
+    competitionInfo: any;
   };
 }
 

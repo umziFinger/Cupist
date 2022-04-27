@@ -23,7 +23,7 @@ const RingmeProfileScreen = () => {
   const [selectedCode, setSelectedCode] = useState<string>(userInfo?.ringme || '');
 
   useEffect(() => {
-    dispatch(CommonActions.fetchCommonCode({ path: 'ringme' }));
+    dispatch(CommonActions.fetchCommonCode({ code: 'ringme' }));
   }, []);
 
   const onPressImage = (item: any) => {
