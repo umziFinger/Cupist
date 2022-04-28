@@ -3,12 +3,13 @@ import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
-import { numberFormat } from '@/Components/Function';
+import { JsonForm, numberFormat } from '@/Components/Function';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
+import { TICKET_TYPE } from '@/Stores/Home/InitialState';
 
 interface PropTypes {
   item: any;
@@ -92,13 +93,12 @@ const PriceArea = (props: PropTypes) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <View>
-          <View style={{ justifyContent: 'center' }}>
-            <CustomText style={{ color: Color.Black1000, fontSize: 15, fontWeight: '500', letterSpacing: -0.2 }}>
-              인원
-            </CustomText>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
+        <View style={{ justifyContent: 'center' }}>
+          <CustomText style={{ color: Color.Black1000, fontSize: 15, fontWeight: '500', letterSpacing: -0.2 }}>
+            인원
+          </CustomText>
+        </View>
+        {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
             <View style={{ justifyContent: 'center' }}>
               <CustomText style={{ color: Color.Gray600, fontSize: 12 }}>1인</CustomText>
             </View>
@@ -106,8 +106,7 @@ const PriceArea = (props: PropTypes) => {
             <View style={{ justifyContent: 'center' }}>
               <CustomText style={{ color: Color.Gray600, fontSize: 12 }}>{numberFormat(item?.salePrice)}원</CustomText>
             </View>
-          </View>
-        </View>
+          </View> */}
         {/* 인원수 count */}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <CustomButton onPress={() => onPressPersonCount('minus')}>
@@ -242,7 +241,12 @@ const PriceArea = (props: PropTypes) => {
           }}
         />
         <View style={{ justifyContent: 'center' }}>
-          <CustomText style={{ color: Color.Gray600, fontSize: 11 }}> 인원 1~4인당 1레인이 배치됩니다.</CustomText>
+          <CustomText style={{ color: Color.Gray600, fontSize: 11 }}>
+            {' '}
+            {item?.eventType === TICKET_TYPE.NORMAL
+              ? `시간제볼링은 레인을 대여하는 상품입니다.`
+              : `인원 1~4인당 1레인이 배치됩니다.`}
+          </CustomText>
         </View>
       </View>
     </View>

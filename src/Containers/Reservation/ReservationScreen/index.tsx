@@ -141,7 +141,6 @@ const ReservationScreen = ({ route }: PropTypes) => {
               couponIdx: selectedCoupon?.idx,
               competitionJoinsIdx: reservationInfo?.competitionJoinsIdx,
             };
-      console.log('params : ', params);
       dispatch(ReservationActions.fetchReservation(params));
     }
   };
