@@ -71,6 +71,22 @@ export const fetchAlbamonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.selcetedCardIdx = data;
         break;
       }
+      case 'isCompetitionProgress': {
+        draft.isCompetitionProgress = data;
+        break;
+      }
+      case 'registData': {
+        draft.registData = data;
+        break;
+      }
+      case 'registDataInit': {
+        draft.registData = INITIAL_STATE.registData;
+        break;
+      }
+      case 'isReturn': {
+        draft.isReturn = data;
+        break;
+      }
 
       default:
         return draft;

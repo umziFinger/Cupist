@@ -44,7 +44,9 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const { userIdx, userInfo } = useSelector((state: AuthState) => state.auth);
   const { placeDetail, placeTicketList, selectedTicket } = useSelector((state: PlaceState) => state.place);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { placeDetailSelectedTab, albamonDate } = useSelector((state: AlbamonState) => state.albamon);
+  const { placeDetailSelectedTab, albamonDate, competitionsRegistInfo, isCompetitionProgress } = useSelector(
+    (state: AlbamonState) => state.albamon,
+  );
 
   const animatedFlatRef = useRef<any>();
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -180,7 +182,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
             <TabMenu type={'albamon'} data={PLACE_DETAIL_TAB_DATA} />
-            {(placeDetailSelectedTab.key === 'default' || place?.albamonYn === 'Y') && (
+            {(placeDetailSelectedTab.key === 'default' || (place?.albamonYn === 'Y' && isCompetitionProgress)) && (
               <View style={{ marginTop: 30, paddingLeft: 20 }}>
                 <CalendarSlider />
               </View>
@@ -191,7 +193,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
       }
       case 3: {
         return (
-          (placeDetailSelectedTab.key === 'default' || place?.albamonYn === 'Y') && (
+          (placeDetailSelectedTab.key === 'default' || (place?.albamonYn === 'Y' && isCompetitionProgress)) && (
             <View style={{ flex: 1, marginTop: 20 }}>
               <View style={{ height: 1, backgroundColor: Color.Gray300 }} />
               <TicketSlider

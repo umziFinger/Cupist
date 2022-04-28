@@ -31,7 +31,12 @@ export function* fetchCompetitionsRegistInfo(data: any): any {
 
       yield put(AlbamonActions.fetchAlbamonReducer({ type: 'competitionsRegistInfo', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-
+      yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: true }));
+      // yield put(
+      //   AlbamonActions.fetchAlbamonReducer({
+      //     type: 'registDataInit',
+      //   }),
+      // );
       if (
         currentScreen === 'AlbamonDetailScreen' ||
         currentScreen === 'PlaceDetailScreen' ||
@@ -45,6 +50,7 @@ export function* fetchCompetitionsRegistInfo(data: any): any {
       }
     } else {
       console.log('fetchCompetitionsRegistInfo : ', response);
+      yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
       yield put(CommonActions.fetchErrorHandler(response));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     }

@@ -9,6 +9,7 @@ import { PlaceState } from '@/Stores/Place/InitialState';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import { CommonState } from '@/Stores/Common/InitialState';
+import AlbamonActions from '@/Stores/Albamon/Actions';
 
 export function* fetchReservationInfo(data: any): any {
   try {
@@ -167,6 +168,7 @@ export function* fetchReservationCard(data: any): any {
         yield put(CommonActions.fetchCommonReducer({ type: 'registCardAfterScreen', data: '' }));
       }
       if (registCardAfterScreen === 'RegistScreen') {
+        yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isReturn', data: true }));
         navigate('RegistScreen', { placeIdx: -1, placeDetailName: '' });
         navigateAndReset('RegistScreen');
         yield put(CommonActions.fetchCommonReducer({ type: 'registCardAfterScreen', data: '' }));
