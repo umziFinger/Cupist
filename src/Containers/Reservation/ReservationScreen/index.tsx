@@ -18,12 +18,14 @@ import CancelInfoArea from '@/Containers/Reservation/ReservationScreen/CancelInf
 import PermissionArea from '@/Containers/Reservation/ReservationScreen/PermissionArea';
 import CustomButton from '@/Components/CustomButton';
 import ReservationActions from '@/Stores/Reservation/Actions';
+import PlaceActions from '@/Stores/Place/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
 import CommonActions from '@/Stores/Common/Actions';
 import AmountArea from '@/Containers/Reservation/ReservationScreen/AmountArea';
 import CouponArea from '@/Containers/Reservation/ReservationScreen/CouponArea';
 import WarningArea from '@/Containers/Reservation/ReservationScreen/WarningArea';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'ReservationScreen'>;
@@ -38,6 +40,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
+  const { selectedPlaceIdx } = useSelector((state: PlaceState) => state.place);
   const {
     myCardList,
     selcetedCardIdx,
@@ -81,6 +84,7 @@ const ReservationScreen = ({ route }: PropTypes) => {
       navigate('SimpleLoginScreen');
       return;
     }
+    dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedPlaceIdx', data: placeIdx }));
     dispatch(ReservationActions.fetchReservationInfo({ placeIdx, ticketInfoIdx }));
     dispatch(ReservationActions.fetchReservationCardList());
   }, [route]);

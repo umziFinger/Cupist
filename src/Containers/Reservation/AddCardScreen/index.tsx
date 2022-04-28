@@ -20,7 +20,7 @@ const AddCardScreen = () => {
   const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { agreeCheckedArr, myCardList } = useSelector((state: ReservationState) => state.reservation);
-  const { selectedTicket } = useSelector((state: PlaceState) => state.place);
+  const { selectedTicket, selectedPlaceIdx } = useSelector((state: PlaceState) => state.place);
   const addCardInfo = useSelector((state: ReservationState) => state.reservation.addCardInfo);
   const [validation, setValidation] = useState<boolean>(false);
   const [cardNum1, setCardNum1] = useState<string>('');

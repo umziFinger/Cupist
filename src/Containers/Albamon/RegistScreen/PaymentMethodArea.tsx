@@ -35,8 +35,8 @@ const PaymentMethodArea = (props: PropTypes) => {
 
   useEffect(() => {
     if (list?.length !== 0) {
-      // dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'simple' }));
-      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentType', data: 'normal' }));
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentType', data: 'simple' }));
+      // dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentType', data: 'normal' }));
     } else {
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentType', data: 'normal' }));
     }

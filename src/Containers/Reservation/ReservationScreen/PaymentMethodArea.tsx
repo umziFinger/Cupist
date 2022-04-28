@@ -23,11 +23,7 @@ const PaymentMethodArea = (props: PropTypes) => {
   const { width } = useWindowDimensions();
   const { list } = props;
   const { paymentType, paymentMethod, reservationInfo } = useSelector((state: ReservationState) => state.reservation);
-  const { selectedTicket } = useSelector((state: PlaceState) => state.place);
-
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
-
-  console.log('reservationInfo?.simplePaymentYN : ', reservationInfo?.simplePaymentYN);
 
   useEffect(() => {
     return () => {
@@ -38,8 +34,7 @@ const PaymentMethodArea = (props: PropTypes) => {
 
   useEffect(() => {
     if (list?.length !== 0) {
-      // dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'simple' }));
-      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'normal' }));
+      dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'simple' }));
     } else {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: 'normal' }));
     }
@@ -72,41 +67,11 @@ const PaymentMethodArea = (props: PropTypes) => {
   };
 
   const onPressMethodType = (type: string) => {
-    console.log('onPressMethodType');
-
-    // Todo 02/17 나이스페이먼츠 간편결제 승인 시 아래 if문 제거
-    if (reservationInfo?.simplePaymentYN === 'N') {
-      dispatch(
-        CommonActions.fetchCommonReducer({
-          type: 'alertDialog',
-          data: {
-            alertDialog: true,
-            alertDialogType: 'confirm',
-            alertDialogTitle: '서비스 준비중입니다.',
-          },
-        }),
-      );
-      return;
-    }
-
+    console.log('onPressMethodType : ', reservationInfo?.simplePaymentYN);
     dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentType', data: type }));
   };
 
   const onPressAddCard = () => {
-    // Todo 02/22 나이스페이먼츠 간편결제 승인 시 아래 if문 제거
-    if (reservationInfo?.simplePaymentYN === 'N') {
-      dispatch(
-        CommonActions.fetchCommonReducer({
-          type: 'alertDialog',
-          data: {
-            alertDialog: true,
-            alertDialogType: 'confirm',
-            alertDialogTitle: '서비스 준비중입니다.',
-          },
-        }),
-      );
-      return;
-    }
     dispatch(CommonActions.fetchCommonReducer({ type: 'registCardAfterScreen', data: 'ReservationScreen' }));
     navigate('CertificationScreen');
   };
