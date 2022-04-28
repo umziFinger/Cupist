@@ -137,60 +137,62 @@ const RegistCompleteScreen = () => {
                 </CustomText>
                 <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.paymentTypeView}</CustomText>
               </View>
-              {competitionVerifyData?.paymentType === 'vbank' && (
-                <>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
-                    <CustomText
-                      style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
+              {competitionVerifyData?.paymentType === 'vbank' &&
+                competitionVerifyData?.paymentYn === 'N' &&
+                competitionVerifyData?.confirmYn === 'N' && (
+                  <>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
+                      <CustomText
+                        style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
+                      >
+                        입금은행
+                      </CustomText>
+                      <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.vbankName || ''}</CustomText>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: 12,
+                      }}
                     >
-                      입금은행
-                    </CustomText>
-                    <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.vbankName || ''}</CustomText>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      marginBottom: 12,
-                    }}
-                  >
-                    <CustomText
-                      style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
-                    >
-                      계좌번호
-                    </CustomText>
-                    <CustomButton
-                      onPress={() => onPressCopy(competitionVerifyData?.vbankNo)}
-                      style={{ flexDirection: 'row', alignItems: 'center' }}
-                    >
-                      <View style={{ width: 24, height: 24 }}>
-                        <FastImage
-                          style={{ width: '100%', height: '100%' }}
-                          source={require('@/Assets/Images/Albamon/icCopy.png')}
-                          resizeMode={FastImage.resizeMode.cover}
-                        />
-                      </View>
-                      <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.vbankNo || ''}</CustomText>
-                    </CustomButton>
-                  </View>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
-                    <CustomText
-                      style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
-                    >
-                      입금기한
-                    </CustomText>
-                    <CustomText style={{ fontSize: 13 }}>
-                      {competitionVerifyData?.paymentYn === 'Y' && competitionVerifyData?.confirmYn === 'N'
-                        ? '승인대기중'
-                        : competitionVerifyData?.confirmYn === 'Y'
-                        ? '참가 신청완료'
-                        : moment(competitionVerifyData?.vbankDate?.split(' ')[0]).format('YYYY년 MM월 DD일') || ''}
-                    </CustomText>
-                  </View>
-                </>
-              )}
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                      <CustomText
+                        style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
+                      >
+                        계좌번호
+                      </CustomText>
+                      <CustomButton
+                        onPress={() => onPressCopy(competitionVerifyData?.vbankNo)}
+                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                      >
+                        <View style={{ width: 24, height: 24 }}>
+                          <FastImage
+                            style={{ width: '100%', height: '100%' }}
+                            source={require('@/Assets/Images/Albamon/icCopy.png')}
+                            resizeMode={FastImage.resizeMode.cover}
+                          />
+                        </View>
+                        <CustomText style={{ fontSize: 13 }}>{competitionVerifyData?.vbankNo || ''}</CustomText>
+                      </CustomButton>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
+                      <CustomText
+                        style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
+                      >
+                        입금기한
+                      </CustomText>
+                      <CustomText style={{ fontSize: 13 }}>
+                        {competitionVerifyData?.paymentYn === 'Y' && competitionVerifyData?.confirmYn === 'N'
+                          ? '승인대기중'
+                          : competitionVerifyData?.confirmYn === 'Y'
+                          ? '참가 신청완료'
+                          : moment(competitionVerifyData?.vbankDate?.split(' ')[0]).format('YYYY년 MM월 DD일') || ''}
+                      </CustomText>
+                    </View>
+                  </>
+                )}
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
                 <CustomText
                   style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
                 >
@@ -198,6 +200,20 @@ const RegistCompleteScreen = () => {
                 </CustomText>
                 <CustomText style={{ fontSize: 13 }}>{numberFormat(competitionVerifyData?.price) || ''}원</CustomText>
               </View>
+              {competitionVerifyData?.paymentType === 'vbank' && competitionVerifyData?.paymentYn === 'Y' && (
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <CustomText
+                    style={{ fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2, color: Color.Grayyellow500 }}
+                  >
+                    입금여부
+                  </CustomText>
+                  <CustomText style={{ fontSize: 13 }}>
+                    {competitionVerifyData?.paymentYn === 'Y' && competitionVerifyData?.confirmYn === 'N'
+                      ? '승인대기중'
+                      : '입금완료'}
+                  </CustomText>
+                </View>
+              )}
             </View>
             <View style={{ height: 0.5, marginHorizontal: 24, marginVertical: 36 }}>
               <CustomDashed dashLength={2.7} dashColor={Color.Gray350} style={{ height: '100%' }} />

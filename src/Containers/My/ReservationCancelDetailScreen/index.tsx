@@ -297,6 +297,7 @@ const ReservationCancelDetailScreen = () => {
                           paddingVertical: Platform.OS === 'ios' ? 15 : 7.5,
                           marginTop: 8,
                           flexDirection: 'row',
+                          alignItems: 'center',
                         }}
                       >
                         <TextInput
@@ -371,6 +372,7 @@ const ReservationCancelDetailScreen = () => {
                           marginTop: 8,
                           flexDirection: 'row',
                           backgroundColor: 'white',
+                          alignItems: 'center',
                         }}
                       >
                         <TextInput

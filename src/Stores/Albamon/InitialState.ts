@@ -19,6 +19,16 @@ export const INITIAL_STATE = {
   paymentType: '',
   paymentMethod: -1,
   selcetedCardIdx: -1,
+  isCompetitionProgress: true,
+  registData: {
+    gender: '',
+    name: '',
+    phoneNumber: '',
+    placeIdx: -1,
+    clubName: '',
+    placeName: '',
+  },
+  isReturn: false,
 };
 
 export interface AlbamonState {
@@ -37,6 +47,16 @@ export interface AlbamonState {
     paymentType: string;
     paymentMethod: number | -1;
     selcetedCardIdx: number | -1;
+    isCompetitionProgress: boolean;
+    registData: {
+      gender: string;
+      name: string;
+      phoneNumber: string;
+      placeIdx: number;
+      clubName: string;
+      placeName: string;
+    };
+    isReturn: boolean;
   };
 }
 

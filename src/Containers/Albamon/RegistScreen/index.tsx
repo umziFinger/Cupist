@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { RouteProp } from '@react-navigation/native';
 import _ from 'lodash';
+import { put } from 'redux-saga/effects';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { Color, Opacity } from '@/Assets/Color';
@@ -21,6 +22,7 @@ import { DATA_PERMISSION_DETAILS } from '@/Components/Data/DATA_PERMISSION_DETAI
 import CommonActions from '@/Stores/Common/Actions';
 import { ReservationState } from '@/Stores/Reservation/InitialState';
 import PaymentMethodArea from '@/Containers/Albamon/RegistScreen/PaymentMethodArea';
+import ReservationActions from '@/Stores/Reservation/Actions';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'RegistScreen'>;
@@ -47,6 +49,8 @@ const RegistScreen = ({ route }: PropTypes) => {
     selcetedCardIdx,
     paymentMethod,
     paymentType,
+    registData,
+    isReturn,
   } = useSelector((state: AlbamonState) => state.albamon);
 
   console.log('competitionPlaceSearchList : ', competitionPlaceSearchList);
@@ -63,17 +67,34 @@ const RegistScreen = ({ route }: PropTypes) => {
     setName(userInfo?.username || '');
     onChangePhoneNumber(userInfo?.mobile || '');
     dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'competitionClubSearchList', data: [] }));
-
+    dispatch(ReservationActions.fetchReservationCardList());
     Keyboard.addListener('keyboardDidHide', () => focusOut());
     dispatch(AlbamonActions.fetchCompetitionsPlaceSearch({ query: '' }));
 
+    // isReturn : 카드추가하고 돌아온 상황인지 아닌지 구분
+    if (registData && isReturn) {
+      setClubName(registData?.clubName || '');
+      setName(registData?.name || '');
+      setPlaceName(registData?.placeName || '');
+      setSelectedPlaceIdx(registData?.placeIdx || -1);
+      onChangePhoneNumber(registData?.phoneNumber || '');
+      setGender(registData?.gender || '');
+    }
+
     return () => {
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'permissionCheck', data: false }));
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isReturn', data: false }));
     };
   }, []);
 
   useEffect(() => {
     validCheck();
+    dispatch(
+      AlbamonActions.fetchAlbamonReducer({
+        type: 'registData',
+        data: { gender, name, phoneNumber, placeIdx, clubName, placeName },
+      }),
+    );
   }, [gender, permissionCheck, clubName, placeName, name, isPhoneValid, paymentMethod, selcetedCardIdx, paymentType]);
 
   const selectGender = (params: string) => {
