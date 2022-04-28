@@ -32,12 +32,19 @@ const RefundAccountManagementScreen = () => {
   const { userInfo } = useSelector((state: AuthState) => state.auth);
 
   useEffect(() => {
-    dispatch(CommonActions.fetchCommonCode({ path: 'vBankCode' }));
-    setAccount(userInfo.refundBankNum || '');
-    setBank(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]?.value || '');
-    setBankInfo(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]);
-    setName(userInfo.refundUserName);
+    dispatch(CommonActions.fetchCommonCode({ code: 'vBankCode' }));
+    setAccount(userInfo?.refundBankNum || '');
+    setName(userInfo?.refundUserName);
   }, []);
+
+  useEffect(() => {
+    if (userInfo) {
+      if (bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode) > -1) {
+        setBank(bankList[bankList?.findIndex((el: any) => el?.type === userInfo?.refundBankCode)]?.value || '');
+        setBankInfo(bankList[bankList?.findIndex((el: any) => el?.type === userInfo?.refundBankCode)]);
+      }
+    }
+  }, [bankList]);
 
   useEffect(() => {
     validCheck();
@@ -55,7 +62,7 @@ const RefundAccountManagementScreen = () => {
       account &&
       (userInfo.refundUserName !== name ||
         userInfo.refundBankNum !== account ||
-        userInfo?.refundBankCode !== bankList[bankList?.findIndex((el: any) => el.value === bank)].type)
+        userInfo?.refundBankCode !== bankList[bankList?.findIndex((el: any) => el.value === bank)]?.type)
     );
   };
 
@@ -178,7 +185,7 @@ const RefundAccountManagementScreen = () => {
                   ]}
                 >
                   <ScrollView
-                    style={{ flex: 1 }}
+                    style={{ flex: 1, height: 150 }}
                     showsVerticalScrollIndicator={false}
                     nestedScrollEnabled
                     // keyboardShouldPersistTaps={'handled'}

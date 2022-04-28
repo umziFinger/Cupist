@@ -30,12 +30,19 @@ const ReservationCancelDetailScreen = () => {
   const [bankInfo, setBankInfo]: any = useState(null);
 
   useEffect(() => {
-    dispatch(CommonActions.fetchCommonCode({ path: 'vBankCode' }));
+    dispatch(CommonActions.fetchCommonCode({ code: 'vBankCode' }));
     setAccount(userInfo.refundBankNum || '');
-    setBank(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]?.value || '');
-    setBankInfo(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]);
     setName(userInfo.refundUserName);
   }, []);
+
+  useEffect(() => {
+    if (userInfo) {
+      if (bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode) > -1) {
+        setBank(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]?.value || '');
+        setBankInfo(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]);
+      }
+    }
+  }, [bankList]);
 
   const onFocus = (index: number) => {
     setFocusIndex(index);
