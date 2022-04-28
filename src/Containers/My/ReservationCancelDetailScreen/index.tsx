@@ -36,7 +36,7 @@ const ReservationCancelDetailScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && bankList) {
       if (bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode) > -1) {
         setBank(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]?.value || '');
         setBankInfo(bankList[bankList?.findIndex((el: any) => el.type === userInfo?.refundBankCode)]);
