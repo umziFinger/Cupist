@@ -8,6 +8,7 @@ import HomeActions from '@/Stores/Home/Actions';
 import PlaceActions from '@/Stores/Place/Actions';
 import MyActions from '@/Stores/My/Actions';
 import Config from '@/Config';
+import AlbamonActions from '@/Stores/Albamon/Actions';
 
 export type dibsType = 'dibs' | 'unDibs';
 
@@ -79,6 +80,9 @@ export function* fetchInitialHandler() {
 
   // 홈 캘린더 날짜 초기화
   yield put(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() }));
+
+  // 알바몬 탭 초기화
+  yield put(AlbamonActions.fetchAlbamonReducer({ type: 'placeDetailSelectedTabInit' }));
 
   // 선결제 특가 날짜 필터 초기화
   // yield put(
