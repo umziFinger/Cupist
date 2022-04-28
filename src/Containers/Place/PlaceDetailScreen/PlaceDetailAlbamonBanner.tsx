@@ -8,11 +8,13 @@ import CommonActions from '@/Stores/Common/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import AlbamonActions from '@/Stores/Albamon/Actions';
+import { CommonState } from '@/Stores/Common/InitialState';
 
 const PlaceDetailAlbamonBanner = () => {
   const { width } = useWindowDimensions();
   const { userInfo } = useSelector((state: AuthState) => state.auth);
   const { placeDetail } = useSelector((state: PlaceState) => state.place);
+  const { competitionInfo } = useSelector((state: CommonState) => state.common);
   const dispatch = useDispatch();
   const place = placeDetail?.place;
   const onPressBanner = () => {
@@ -33,9 +35,23 @@ const PlaceDetailAlbamonBanner = () => {
     if (place?.albamonYn === 'Y') {
       console.log('#### place : ', place.idx);
       // dispatch(AlbamonActions.fetchCompetitionsRegistInfo({ isMoveScreen: true, placeIdx: -1, placeDetailName: '' }))
-      navigate('RegistScreen', { placeIdx: place?.idx, placeDetailName: place?.name });
+      dispatch(
+        AlbamonActions.fetchCompetitionsRegistInfo({
+          currentScreen: 'SupportAlbamonBanner',
+          placeIdx: place?.idx,
+          placeDetailName: place?.name,
+          competitionIdx: competitionInfo?.value,
+        }),
+      );
     } else if (place?.albamonYn === 'N') {
-      navigate('AlbamonDetailScreen');
+      dispatch(
+        AlbamonActions.fetchCompetitionsRegistInfo({
+          currentScreen: 'UnSupportAlbamonBanner',
+          placeIdx: place?.idx,
+          placeDetailName: place?.name,
+          competitionIdx: competitionInfo?.value,
+        }),
+      );
     }
   };
 

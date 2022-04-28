@@ -32,8 +32,16 @@ export function* fetchCompetitionsRegistInfo(data: any): any {
       yield put(AlbamonActions.fetchAlbamonReducer({ type: 'competitionsRegistInfo', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
 
-      if (currentScreen === 'AlbamonDetailScreen' || currentScreen === 'PlaceDetailScreen') {
+      if (
+        currentScreen === 'AlbamonDetailScreen' ||
+        currentScreen === 'PlaceDetailScreen' ||
+        currentScreen === 'SupportAlbamonBanner'
+      ) {
         navigate('RegistScreen', { placeIdx, placeDetailName });
+      }
+
+      if (currentScreen === 'UnSupportAlbamonBanner') {
+        navigate('AlbamonDetailScreen');
       }
     } else {
       console.log('fetchCompetitionsRegistInfo : ', response);

@@ -38,7 +38,7 @@ const RefundAccountManagementScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (userInfo && bankList) {
+    if (userInfo && bankList?.length > 0) {
       if (bankList?.findIndex((el: any) => el?.type === userInfo?.refundBankCode) > -1) {
         setBank(bankList[bankList?.findIndex((el: any) => el?.type === userInfo?.refundBankCode)]?.value || '');
         setBankInfo(bankList[bankList?.findIndex((el: any) => el?.type === userInfo?.refundBankCode)]);
