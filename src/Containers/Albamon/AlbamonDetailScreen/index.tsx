@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, FlatList, Platform, useWindowDimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { connect, useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { Color, Opacity } from '@/Assets/Color';
@@ -21,6 +22,10 @@ const AlbamonDetailScreen = () => {
   const { heightInfo, competitionInfo } = useSelector((state: CommonState) => state.common);
   const { userInfo, userIdx } = useSelector((state: AuthState) => state.auth);
   const { competitionsRegistInfo } = useSelector((state: AlbamonState) => state.albamon);
+  const currentDate = moment().format('YYYYMMDD');
+  const secondQualifiersDate = '20220521';
+  const thirdQualifiersDate = '20220611';
+  const fourthQualifiersDate = '20220709';
 
   useEffect(() => {
     dispatch(CommonActions.fetchCommonCode({ parentCode: 'competition', code: 'alkorbol' }));
@@ -55,11 +60,18 @@ const AlbamonDetailScreen = () => {
         data={[0]}
         renderItem={({ item, index }) => (
           <View>
-            <View style={{ width, height: (width / 375) * 724 }}>
+            <View style={{ width, height: (width / 375) * 959 }}>
               <FastImage
                 style={{ width: '100%', height: '100%', borderRadius: 5 }}
                 source={{
-                  uri: 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/bannerDetail%403x.png',
+                  uri:
+                    currentDate > fourthQualifiersDate
+                      ? 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/imgBannerDetail4%403x.png'
+                      : currentDate > thirdQualifiersDate
+                      ? 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/imgBannerDetail3%403x.png'
+                      : currentDate > secondQualifiersDate
+                      ? 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/imgBannerDetail2%403x.png'
+                      : 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/imgBannerDetail1%403x.png',
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />

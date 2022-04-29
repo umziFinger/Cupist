@@ -9,7 +9,10 @@ const AlbamonBanner = () => {
 
   return (
     <View style={{ flex: 1, marginTop: 17, alignItems: 'center' }}>
-      <CustomButton style={{ height: (width / 375) * 186, width }} onPress={() => navigate('AlbamonDetailScreen')}>
+      <CustomButton
+        style={{ height: ((width - 40) / 336) * 186, width: width - 40 }}
+        onPress={() => navigate('AlbamonDetailScreen')}
+      >
         <FastImage
           style={{ width: '100%', height: '100%', borderRadius: 5 }}
           source={{
