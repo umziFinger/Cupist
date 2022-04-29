@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Platform, TextInput, FlatList, ScrollView, useWindowDimensions } from 'react-native';
+import { View, Text, Platform, TextInput, FlatList, ScrollView, useWindowDimensions, Keyboard } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
@@ -49,6 +49,15 @@ const RefundAccountManagementScreen = () => {
   useEffect(() => {
     validCheck();
   }, [account, bank, name]);
+
+  useEffect(() => {
+    if (focusIndex !== 0) {
+      ref_input[0].current?.blur();
+    }
+    if (focusIndex !== 2) {
+      ref_input[2].current?.blur();
+    }
+  }, [focusIndex]);
 
   const onFocus = (index: number) => {
     setFocusIndex(index);
@@ -252,7 +261,11 @@ const RefundAccountManagementScreen = () => {
                     value={account}
                     allowFontScaling={false}
                     onFocus={() => onFocus(0)}
-                    onBlur={() => onFocus(-1)}
+                    onBlur={() => {
+                      if (focusIndex !== 1) {
+                        onFocus(-1);
+                      }
+                    }}
                     keyboardType={'number-pad'}
                   />
                   {focusIndex === 0 && accountClearBox}
@@ -263,7 +276,9 @@ const RefundAccountManagementScreen = () => {
                   은행선택
                 </CustomText>
                 <CustomButton
-                  onPress={() => onFocus(focusIndex === 1 ? -1 : 1)}
+                  onPress={() => {
+                    onFocus(focusIndex === 1 ? -1 : 1);
+                  }}
                   style={{
                     flex: 1,
                     borderWidth: 1,
@@ -326,7 +341,11 @@ const RefundAccountManagementScreen = () => {
                     value={name}
                     allowFontScaling={false}
                     onFocus={() => onFocus(2)}
-                    onBlur={() => onFocus(-1)}
+                    onBlur={() => {
+                      if (focusIndex !== 1) {
+                        onFocus(-1);
+                      }
+                    }}
                   />
                   {focusIndex === 2 && nameClearBox}
                 </View>

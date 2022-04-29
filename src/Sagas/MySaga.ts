@@ -988,6 +988,7 @@ export function* fetchMyReservationCheckDetail(data: any): any {
 
 export function* fetchMyRefundBank(data: any): any {
   try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
       ...data,
       url: Config.MY_REFUND_BANK_URL,
