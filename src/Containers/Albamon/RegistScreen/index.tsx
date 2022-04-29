@@ -5,7 +5,6 @@ import FastImage from 'react-native-fast-image';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { RouteProp } from '@react-navigation/native';
 import _ from 'lodash';
-import { put } from 'redux-saga/effects';
 import CustomText from '@/Components/CustomText';
 import Header from '@/Components/Header';
 import { Color, Opacity } from '@/Assets/Color';
@@ -52,8 +51,7 @@ const RegistScreen = ({ route }: PropTypes) => {
     registData,
     isReturn,
   } = useSelector((state: AlbamonState) => state.albamon);
-
-  console.log('competitionPlaceSearchList : ', competitionPlaceSearchList);
+  console.log('@@@@@@@@@@@@@@@@@@@@', competitionsRegistInfo);
   const [gender, setGender] = useState('');
   const [clubName, setClubName] = useState('');
   const [placeName, setPlaceName] = useState('');
@@ -115,16 +113,6 @@ const RegistScreen = ({ route }: PropTypes) => {
     });
   };
   const validCheck = () => {
-    console.log(
-      'gender, permissionCheck, clubName, placeName, name, isPhoneValid, paymentMethod, selcetedCardIdx, paymentType : ',
-      gender !== '',
-      permissionCheck,
-      clubName !== '',
-      placeName !== '',
-      name !== '',
-      isPhoneValid,
-      paymentType,
-    );
     return (
       gender !== '' &&
       permissionCheck &&
@@ -173,7 +161,6 @@ const RegistScreen = ({ route }: PropTypes) => {
   placeNameClearBox = (
     <CustomButton
       onPress={() => {
-        console.log('@@@@@@@focusIndex : ', focusIndex);
         if (focusIndex === 1) {
           focusOut();
         } else {
@@ -247,10 +234,8 @@ const RegistScreen = ({ route }: PropTypes) => {
     console.log('onPress selectPlaceName item : ', item);
     setPlaceName(item.name);
     setSelectedPlaceIdx(item.idx);
-
     // 키보드가 닫혀있는데 볼링장 선택을 하면 selectBox가 닫히지 않는 현상때문에 추가함
     focusOut();
-
     Keyboard.dismiss();
   };
 
@@ -341,15 +326,15 @@ const RegistScreen = ({ route }: PropTypes) => {
                     ]}
                   >
                     <View style={{ marginHorizontal: 29 }}>
-                      <View style={{ flexDirection: 'row', marginTop: 25 }}>
+                      <View style={{ flexDirection: 'row', marginTop: 25, alignItems: 'center' }}>
                         <CustomText
                           style={{ color: Color.pinkishOrange, fontSize: 15, fontWeight: 'bold', letterSpacing: -0.41 }}
                         >
-                          예선
+                          {competitionsRegistInfo?.competitions?.order || ''}차 예선
                         </CustomText>
+                        <View style={{ width: 2, height: 13, backgroundColor: 'black', marginHorizontal: 6 }} />
                         <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.41 }}>
-                          {' '}
-                          일정 안내
+                          상위 8팀 본선 진출
                         </CustomText>
                       </View>
                       <View style={{ flexDirection: 'row', marginTop: 15 }}>
@@ -405,43 +390,24 @@ const RegistScreen = ({ route }: PropTypes) => {
                       style={{
                         height: 1,
                         backgroundColor: '#f4f4f4',
-                        marginTop: 20,
+                        marginTop: 25,
                         marginLeft: 19,
                         marginRight: 13,
                       }}
                     />
-                    <View style={{ marginHorizontal: 29, marginTop: 17 }}>
-                      <View style={{ flexDirection: 'row' }}>
+                    <View style={{ marginHorizontal: 29, marginTop: 25 }}>
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <CustomText
                           style={{ color: Color.bluePurple, fontSize: 15, fontWeight: 'bold', letterSpacing: -0.41 }}
                         >
-                          본선
+                          {competitionsRegistInfo?.competitions?.order || ''}차 본선
                         </CustomText>
+                        <View style={{ width: 2, height: 13, backgroundColor: 'black', marginHorizontal: 6 }} />
                         <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.41 }}>
-                          {' '}
-                          일정 안내
+                          상위 4팀 왕중왕전 진출
                         </CustomText>
                       </View>
                       <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                        <View
-                          style={{
-                            backgroundColor: Color.paleLavender,
-                            borderRadius: 2,
-                            paddingHorizontal: 5,
-                            paddingVertical: 2,
-                          }}
-                        >
-                          <CustomText
-                            style={{ color: Color.bluePurple, fontSize: 11, fontWeight: 'bold', letterSpacing: -0.38 }}
-                          >
-                            본선진출
-                          </CustomText>
-                        </View>
-                        <CustomText style={{ fontSize: 14, letterSpacing: -0.11, fontWeight: '500', marginLeft: 11 }}>
-                          {competitionsRegistInfo?.competitions?.roundInfo || ''}
-                        </CustomText>
-                      </View>
-                      <View style={{ flexDirection: 'row', marginTop: 9 }}>
                         <View
                           style={{
                             backgroundColor: Color.paleLavender,
@@ -460,17 +426,42 @@ const RegistScreen = ({ route }: PropTypes) => {
                           {competitionsRegistInfo?.competitions?.roundDateView || ''} 예정
                         </CustomText>
                       </View>
+                      <View style={{ flexDirection: 'row', marginTop: 9 }}>
+                        <View
+                          style={{
+                            backgroundColor: Color.paleLavender,
+                            borderRadius: 2,
+                            paddingHorizontal: 5,
+                            paddingVertical: 2,
+                          }}
+                        >
+                          <CustomText
+                            style={{ color: Color.bluePurple, fontSize: 11, fontWeight: 'bold', letterSpacing: -0.38 }}
+                          >
+                            대회장소
+                          </CustomText>
+                        </View>
+                        <CustomText style={{ fontSize: 14, letterSpacing: -0.11, fontWeight: '500', marginLeft: 11 }}>
+                          피에스타 볼링경기장(인천)
+                        </CustomText>
+                      </View>
+                      <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{ width: 4, height: 4, borderRadius: 2, backgroundColor: Color.Grayyellow1000 }} />
+                        <CustomText style={{ fontSize: 11, color: Color.Grayyellow1000, marginLeft: 4 }}>
+                          볼링플러스 TV 중계 방송 및 유튜브 라이브 스트리밍
+                        </CustomText>
+                      </View>
                     </View>
                     <View
                       style={{
                         height: 1,
                         backgroundColor: '#f4f4f4',
-                        marginTop: 20,
+                        marginTop: 25,
                         marginLeft: 19,
                         marginRight: 13,
                       }}
                     />
-                    <View style={{ marginHorizontal: 29, marginTop: 17 }}>
+                    <View style={{ marginHorizontal: 29, marginTop: 25 }}>
                       <View style={{ flexDirection: 'row' }}>
                         <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.41 }}>
                           참가신청 금액 안내

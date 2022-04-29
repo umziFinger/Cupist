@@ -51,7 +51,7 @@ const HomeScreen = ({ route }: HomeProps) => {
 
   useEffect(() => {
     console.log('============홈 초기화');
-    // navigate('RegistCompleteScreen');
+    // navigate('RegistScreen', { placeIdx: -1, placeDetailName: '' });
     // 첫 홈 화면 현재 위치값 갱신
     // 홈 리스트 조회
     // positionUpdate().then();
