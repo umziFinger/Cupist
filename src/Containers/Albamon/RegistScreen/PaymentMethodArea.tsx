@@ -24,8 +24,6 @@ const PaymentMethodArea = (props: PropTypes) => {
   const { paymentType, paymentMethod } = useSelector((state: AlbamonState) => state.albamon);
   const [viewableIndex, setViewableIndex] = useState<number | null>(0);
 
-  // console.log('reservationInfo?.simplePaymentYN : ', reservationInfo?.simplePaymentYN);
-
   useEffect(() => {
     return () => {
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'selcetedCardIdx', data: -1 }));
@@ -36,7 +34,6 @@ const PaymentMethodArea = (props: PropTypes) => {
   useEffect(() => {
     if (list?.length !== 0) {
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentType', data: 'simple' }));
-      // dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentType', data: 'normal' }));
     } else {
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentType', data: 'normal' }));
     }
@@ -62,7 +59,6 @@ const PaymentMethodArea = (props: PropTypes) => {
   );
 
   const onPressNormalMethodDetail = (value: number) => {
-    console.log('-=-=-==-=-=-=--==-', value);
     console.log('onPressNormalMethodDetail idx : ', value);
     dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentMethod', data: value }));
   };
@@ -70,40 +66,10 @@ const PaymentMethodArea = (props: PropTypes) => {
   const onPressMethodType = (type: string) => {
     console.log('onPressMethodType');
     dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentMethod', data: -1 }));
-
-    // Todo 02/17 나이스페이먼츠 간편결제 승인 시 아래 if문 제거
-    // if (reservationInfo?.simplePaymentYN === 'N') {
-    //   dispatch(
-    //     CommonActions.fetchCommonReducer({
-    //       type: 'alertDialog',
-    //       data: {
-    //         alertDialog: true,
-    //         alertDialogType: 'confirm',
-    //         alertDialogTitle: '서비스 준비중입니다.',
-    //       },
-    //     }),
-    //   );
-    //   return;
-    // }
-
     dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'paymentType', data: type }));
   };
 
   const onPressAddCard = () => {
-    // Todo 02/22 나이스페이먼츠 간편결제 승인 시 아래 if문 제거
-    // if (reservationInfo?.simplePaymentYN === 'N') {
-    //   dispatch(
-    //     CommonActions.fetchCommonReducer({
-    //       type: 'alertDialog',
-    //       data: {
-    //         alertDialog: true,
-    //         alertDialogType: 'confirm',
-    //         alertDialogTitle: '서비스 준비중입니다.',
-    //       },
-    //     }),
-    //   );
-    //   return;
-    // }
     dispatch(CommonActions.fetchCommonReducer({ type: 'registCardAfterScreen', data: 'RegistScreen' }));
     navigate('CertificationScreen');
   };

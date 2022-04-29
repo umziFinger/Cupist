@@ -52,11 +52,6 @@ const SettingList = ({ index }: any) => {
     }
   };
 
-  console.log('$$$$$ userInfo : ', userInfo);
-  console.log('$$$$$ userInfo?.notificationPushYN : ', userInfo?.notificationPushYN);
-  console.log('$$$$$ userInfo?.marketingPushYN : ', userInfo?.marketingPushYN);
-  console.log('$$$$$ userInfo?.eventYN : ', userInfo?.eventYN);
-
   switch (index) {
     case 0: {
       return (

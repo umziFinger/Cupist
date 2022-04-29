@@ -100,6 +100,7 @@ const ReservationList = () => {
   };
 
   const onCancel = (item: any) => {
+    console.log('#onCancel : ', item?.cancelPercent);
     const customAlertDialogMessage = () => {
       return (
         <>
@@ -183,12 +184,12 @@ const ReservationList = () => {
         break;
       }
       case 50: {
-        firstText = '사용 예정 시간 30분전 환불 규정에 따라\n';
+        firstText = '사용 예정 2시간 이내 취소 환불 규정에 따라\n';
         secondText = '예약금액의 50%이 차감되어 환불이 진행됩니다.\n';
         break;
       }
       case 100: {
-        firstText = '사용 예정 시간 10분전 환불 규정에 따라\n';
+        firstText = '사용 예정 1시간 이내 환불 규정에 따라\n';
         secondText = '예약금액의 100%이 차감되어 환불이 진행됩니다.\n';
         break;
       }
