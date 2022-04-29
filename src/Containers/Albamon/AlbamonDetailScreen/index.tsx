@@ -22,9 +22,13 @@ const AlbamonDetailScreen = () => {
   const { heightInfo, competitionInfo } = useSelector((state: CommonState) => state.common);
   const { userInfo, userIdx } = useSelector((state: AuthState) => state.auth);
   const { competitionsRegistInfo } = useSelector((state: AlbamonState) => state.albamon);
+  // 오늘날짜
   const currentDate = moment().format('YYYYMMDD');
+  // 2차예선 포스터 띄울 날짜
   const secondQualifiersDate = '20220521';
+  // 3차예선 포스터 띄울 날짜
   const thirdQualifiersDate = '20220611';
+  // 4차예선 포스터 띄울 날짜
   const fourthQualifiersDate = '20220709';
 
   useEffect(() => {

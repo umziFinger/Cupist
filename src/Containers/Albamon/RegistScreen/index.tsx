@@ -90,7 +90,7 @@ const RegistScreen = ({ route }: PropTypes) => {
     dispatch(
       AlbamonActions.fetchAlbamonReducer({
         type: 'registData',
-        data: { gender, name, phoneNumber, placeIdx, clubName, placeName },
+        data: { gender, name, phoneNumber, placeIdx: selectedPlaceIdx, clubName, placeName },
       }),
     );
   }, [gender, permissionCheck, clubName, placeName, name, isPhoneValid, paymentMethod, selcetedCardIdx, paymentType]);
