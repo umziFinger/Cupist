@@ -3,6 +3,7 @@ import { Animated, FlatList, Platform, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import { put } from 'redux-saga/effects';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
@@ -30,6 +31,7 @@ import TabMenu from '@/Components/TabMenu';
 import { PLACE_DETAIL_TAB_DATA } from '@/Containers/Place/PlaceDetailScreen/data';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import UnsupportAlbamon from '@/Containers/Place/PlaceDetailScreen/UnsupportAlbamon';
+import NonArticleAlbamon from '@/Containers/Place/PlaceDetailScreen/NonArticleAlbamon';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
@@ -48,6 +50,8 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     (state: AlbamonState) => state.albamon,
   );
 
+  console.log('competitionInfo : ', competitionInfo);
+
   const animatedFlatRef = useRef<any>();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [isShowTopCalendar, setIsShowTopCalendar] = useState<boolean>(false);
@@ -61,6 +65,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
 
   useEffect(() => {
     dispatch(CommonActions.fetchCommonCode({ parentCode: 'competition', code: 'alkorbol' }));
+    dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
     return () => {
       dispatch(PlaceActions.fetchPlaceReducer({ type: 'placeDetailInit' }));
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'placeDetailSelectedTabInit' }));
@@ -188,6 +193,9 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
               </View>
             )}
             {placeDetailSelectedTab.key === 'albamon' && place?.albamonYn === 'N' && <UnsupportAlbamon />}
+            {placeDetailSelectedTab.key === 'albamon' && place?.albamonYn === 'Y' && !isCompetitionProgress && (
+              <NonArticleAlbamon />
+            )}
           </View>
         );
       }
