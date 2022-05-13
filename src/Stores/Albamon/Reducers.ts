@@ -87,6 +87,10 @@ export const fetchAlbamonReducer = (state = INITIAL_STATE, actions: any) => {
         draft.isReturn = data;
         break;
       }
+      case 'isAlbamonPayment': {
+        draft.isAlbamonPayment = data;
+        break;
+      }
 
       default:
         return draft;

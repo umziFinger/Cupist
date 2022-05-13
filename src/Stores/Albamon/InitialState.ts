@@ -29,6 +29,7 @@ export const INITIAL_STATE = {
     placeName: '',
   },
   isReturn: false,
+  isAlbamonPayment: false,
 };
 
 export interface AlbamonState {
@@ -57,6 +58,7 @@ export interface AlbamonState {
       placeName: string;
     };
     isReturn: boolean;
+    isAlbamonPayment: boolean;
   };
 }
 

@@ -6,6 +6,7 @@ import AlbamonActions from '@/Stores/Albamon/Actions';
 import { navigate, navigateAndReset } from '@/Services/NavigationService';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import { DATA_PAYMENT_METHOD } from '@/Containers/Reservation/ReservationScreen/data';
+import { ReservationState } from '@/Stores/Reservation/InitialState';
 
 // 알코볼 신청서 안내내용 가져오기
 export function* fetchCompetitionsRegistInfo(data: any): any {
@@ -62,7 +63,8 @@ export function* fetchCompetitionsRegistInfo(data: any): any {
 
 // 대회 신청하기
 export function* fetchCompetitionsRegist(data: any): any {
-  const { paymentMethod } = yield select((state: AlbamonState) => state.albamon);
+  const { paymentMethod, paymentType, selcetedCardIdx } = yield select((state: AlbamonState) => state.albamon);
+  const { myCardList } = yield select((state: ReservationState) => state.reservation);
   try {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     const payload = {
@@ -70,9 +72,21 @@ export function* fetchCompetitionsRegist(data: any): any {
       url: `${Config.COMPETITION_REGIST_INFO_URL}/1`,
     };
     const response = yield call(Axios.POST, payload);
-    console.log(response.data);
+    console.log('shrdjgdjdtdy', response.data);
     if (response.result === true && response.code === null) {
       const userCode = Config.USER_CODE;
+
+      if (paymentType === 'simple') {
+        // console.log('간편결제 진행합니다. : ', selcetedCardIdx);
+        navigate('CheckPasswordScreen', {
+          paymentIdx: response.data.Club.idx,
+          billingIdx: myCardList[selcetedCardIdx - 1].idx,
+        });
+        yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: true }));
+        yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+        return;
+      }
+
       const paymentData = {
         pg: 'nice', // PG사
         pay_method: DATA_PAYMENT_METHOD[paymentMethod].key, // 결제수단
