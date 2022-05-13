@@ -13,6 +13,8 @@ import { ReservationState } from '@/Stores/Reservation/InitialState';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import ReservationActions from '@/Stores/Reservation/Actions';
 import { navigate } from '@/Services/NavigationService';
+import { AlbamonState } from '@/Stores/Albamon/InitialState';
+import AlbamonActions from '@/Stores/Albamon/Actions';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'CheckPasswordScreen'>;
@@ -22,6 +24,7 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
   const InputRef = useRef<any>();
   const dispatch = useDispatch();
   const { paymentIdx, billingIdx } = route.params;
+  const { registData, competitionsRegistInfo, isAlbamonPayment } = useSelector((state: AlbamonState) => state.albamon);
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { paymentPwd } = useSelector((state: ReservationState) => state.reservation);
   const [showArr, setShowArr] = useState<Array<boolean>>([false, false, false, false, false, false]);
@@ -50,12 +53,28 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
 
   useEffect(() => {
     if (validation) {
+      // const params = {
+      //   paymentIdx,
+      //   billingIdx,
+      //   paymentPwd,
+      // };
       const params = {
-        paymentIdx,
+        clubName: registData?.clubName,
+        placeIdx: registData?.placeIdx,
+        name: registData?.name,
+        mobile: registData?.phoneNumber.split('-').join(''),
+        sex: registData?.gender,
+        agreeYn: 'Y',
+        compChildrenIdx: competitionsRegistInfo?.competitions?.idx,
+        paymentType: 'simple',
         billingIdx,
         paymentPwd,
       };
-      dispatch(ReservationActions.fetchReservationSimplePayment({ paymentIdx, billingIdx, paymentPwd }));
+      if (isAlbamonPayment) {
+        dispatch(AlbamonActions.fetchCompetitionsRegist(params));
+      } else {
+        dispatch(ReservationActions.fetchReservationSimplePayment({ paymentIdx, billingIdx, paymentPwd }));
+      }
     }
   }, [validation]);
 

@@ -252,6 +252,14 @@ const RegistScreen = ({ route }: PropTypes) => {
     console.log('params==========', params);
     if (validCheck()) {
       // navigate('PaymentScreen');
+      if (paymentType === 'simple') {
+        dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: true }));
+        navigate('CheckPasswordScreen', {
+          paymentIdx: -1,
+          billingIdx: myCardList[selcetedCardIdx - 1].idx,
+        });
+        return;
+      }
       dispatch(AlbamonActions.fetchCompetitionsRegist(params));
     }
   };

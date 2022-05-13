@@ -79,12 +79,10 @@ export function* fetchCompetitionsRegist(data: any): any {
       const userCode = Config.USER_CODE;
 
       if (paymentType === 'simple') {
-        // console.log('간편결제 진행합니다. : ', selcetedCardIdx);
-        navigate('CheckPasswordScreen', {
-          paymentIdx: response.data.Club.idx,
-          billingIdx: myCardList[selcetedCardIdx - 1].idx,
-        });
-        yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: true }));
+        console.log('간편결제 진행합니다. : ', selcetedCardIdx);
+        yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
+        navigate('RegistCompleteScreen');
+        navigateAndReset('RegistCompleteScreen');
         yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
         return;
       }
