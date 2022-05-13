@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dimensions, FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import RNExitApp from 'react-native-exit-app';
 import CommonActions from '@/Stores/Common/Actions';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
@@ -35,6 +36,12 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
       }
       case 'goToStore': {
         onAppUpdate(versionInfo.minimumVersion);
+        break;
+      }
+      case 'emergency': {
+        dispatch(CommonActions.fetchCommonReducer({ type: 'alertDialogInit' }));
+        // 앱 종료
+        RNExitApp.exitApp();
         break;
       }
       case 'findPassword': {

@@ -55,6 +55,7 @@ export function* fetchCompetitionsRegistInfo(data: any): any {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     }
   } catch (e) {
+    yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchCompetitionsRegistInfo : ', e);
   }
@@ -72,6 +73,7 @@ export function* fetchCompetitionsRegist(data: any): any {
     const response = yield call(Axios.POST, payload);
     console.log(response.data);
     if (response.result === true && response.code === null) {
+      console.log('####### paymentMethod : ', paymentMethod);
       const userCode = Config.USER_CODE;
       const paymentData = {
         pg: 'nice', // PG사
