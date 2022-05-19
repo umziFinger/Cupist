@@ -40,7 +40,6 @@ const ReservationScreen = ({ route }: PropTypes) => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { userIdx } = useSelector((state: AuthState) => state.auth);
   const { calendarDate } = useSelector((state: HomeState) => state.home);
-  const { selectedPlaceIdx } = useSelector((state: PlaceState) => state.place);
   const {
     myCardList,
     selcetedCardIdx,
@@ -85,7 +84,13 @@ const ReservationScreen = ({ route }: PropTypes) => {
       return;
     }
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedPlaceIdx', data: placeIdx }));
-    dispatch(ReservationActions.fetchReservationInfo({ placeIdx, ticketInfoIdx }));
+    dispatch(
+      ReservationActions.fetchReservationInfo({
+        placeIdx,
+        ticketInfoIdx,
+        date: placeDetailSelectedTab.key === 'default' ? calendarDate : albamonDate,
+      }),
+    );
     dispatch(ReservationActions.fetchReservationCardList());
   }, [route]);
 
