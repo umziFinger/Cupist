@@ -12,12 +12,16 @@ import { CommonState } from '@/Stores/Common/InitialState';
 
 const PlaceDetailAlbamonBanner = () => {
   const { width } = useWindowDimensions();
-  const { userInfo } = useSelector((state: AuthState) => state.auth);
+  const { userInfo, userIdx } = useSelector((state: AuthState) => state.auth);
   const { placeDetail } = useSelector((state: PlaceState) => state.place);
   const { competitionInfo } = useSelector((state: CommonState) => state.common);
   const dispatch = useDispatch();
   const place = placeDetail?.place;
   const onPressBanner = () => {
+    if (!userIdx) {
+      navigate('AlbamonDetailScreen');
+      return;
+    }
     if (userInfo?.competitionsYn === 'Y') {
       dispatch(
         CommonActions.fetchCommonReducer({
