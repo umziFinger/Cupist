@@ -196,6 +196,18 @@ export function* fetchErrorHandler(data: any) {
       yield put(MyActions.fetchMyReducer({ type: 'reservationListPageInit' }));
       yield put(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '취소', key: 'cancel' } }));
       navigate('MyScreen');
+    } else if (data.params.data.message === '은행 영업시간이 아닙니다.') {
+      yield put(
+        CommonActions.fetchCommonReducer({
+          type: 'alertDialog',
+          data: {
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogDataType: 'goBack',
+            alertDialogTitle: data.params.data.message,
+          },
+        }),
+      );
     } else {
       yield put(
         CommonActions.fetchCommonReducer({

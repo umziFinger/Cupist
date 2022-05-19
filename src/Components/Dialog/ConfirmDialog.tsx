@@ -34,6 +34,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         // dispatch(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
         break;
       }
+      case 'goBack': {
+        navigateGoBack();
+        break;
+      }
       case 'goToStore': {
         onAppUpdate(versionInfo.minimumVersion);
         break;

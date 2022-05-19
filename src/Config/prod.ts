@@ -22,6 +22,7 @@ const prod = {
 
   // API_URL: 'http://192.168.0.12:5000/',
   API_URL: 'https://api.bolimi.kr/',
+  // API_URL: 'http://192.168.0.16:5000/', // peanut_local
   // API_URL: 'http://192.168.0.13:5005/', // duople_oil
 
   // dynamicLink URL
