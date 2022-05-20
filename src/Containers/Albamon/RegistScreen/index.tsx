@@ -232,8 +232,8 @@ const RegistScreen = ({ route }: PropTypes) => {
 
   const selectPlaceName = (item: any) => {
     console.log('onPress selectPlaceName item : ', item);
-    setPlaceName(item.name);
-    setSelectedPlaceIdx(item.idx);
+    setPlaceName(item?.name);
+    setSelectedPlaceIdx(item?.idx);
     // 키보드가 닫혀있는데 볼링장 선택을 하면 selectBox가 닫히지 않는 현상때문에 추가함
     focusOut();
     Keyboard.dismiss();
@@ -256,7 +256,7 @@ const RegistScreen = ({ route }: PropTypes) => {
         dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: true }));
         navigate('CheckPasswordScreen', {
           paymentIdx: -1,
-          billingIdx: myCardList[selcetedCardIdx - 1].idx,
+          billingIdx: myCardList[selcetedCardIdx - 1]?.idx,
         });
         return;
       }
