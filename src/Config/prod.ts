@@ -23,6 +23,7 @@ const prod = {
   // API_URL: 'http://192.168.0.12:5000/',
   API_URL: 'https://api.bolimi.kr/',
   // API_URL: 'http://192.168.0.16:5000/', // peanut_local
+  // API_URL: 'http://192.168.0.12:5002/', // koi_local
   // API_URL: 'http://192.168.0.13:5005/', // duople_oil
 
   // dynamicLink URL
@@ -92,7 +93,7 @@ const prod = {
   MY_REFUND_BANK_URL: 'my/refund-bank',
 
   NOTIFICATION_COUNT_URL: 'my/notification/count',
-
+  MY_COMPETITIONS_URL: 'my/competitions',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

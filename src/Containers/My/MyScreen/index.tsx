@@ -11,6 +11,7 @@ import { MyState } from '@/Stores/My/InitialState';
 import ReservationList from '@/Containers/My/MyScreen/ReservationList';
 import ReviewList from '@/Containers/My/MyScreen/ReviewList';
 import { navigationRef } from '@/Services/NavigationService';
+import CompetitionList from '@/Containers/My/MyScreen/CompetitionList';
 
 const MyScreen = () => {
   const isFocused = useIsFocused();
@@ -55,6 +56,7 @@ const MyScreen = () => {
 
       {mySelectedTab.selectKey === 'reservation' && <ReservationList />}
       {mySelectedTab.selectKey === 'review' && <ReviewList />}
+      {mySelectedTab.selectKey === 'competition' && <CompetitionList />}
     </View>
   );
 };

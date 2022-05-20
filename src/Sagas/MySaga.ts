@@ -1021,3 +1021,26 @@ export function* fetchMyRefundBank(data: any): any {
     console.log('occurred Error...fetchMyRefundBank : ', e);
   }
 }
+
+export function* fetchMyCompetitionsList(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: Config.MY_COMPETITIONS_URL,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('@@@@@@@@@@@@ COMPETION_LIST call success :', response.data);
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(MyActions.fetchMyReducer({ type: 'competitionList', data: response.data }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyCompetitionsList : ', e);
+  }
+}

@@ -40,9 +40,11 @@ const MyTabMenu = (props: any) => {
           return (
             <CustomButton onPress={() => onSelectMenu(item)}>
               <View
-                style={{
-                  marginRight: index === 0 ? 40 : 0,
-                }}
+                style={
+                  {
+                    // marginRight: index === 0 ? 40 : 0,
+                  }
+                }
               >
                 <View
                   style={{
@@ -69,7 +71,7 @@ const MyTabMenu = (props: any) => {
           );
         }}
         keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={2}
+        initialNumToRender={3}
         maxToRenderPerBatch={3}
         windowSize={7}
         horizontal
