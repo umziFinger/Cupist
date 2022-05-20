@@ -38,7 +38,7 @@ const StartupContainer = () => {
 
         // 코드푸시에서 체크용
         if (!appCodePushVersion) {
-          if (codePushVersion > 'v0') {
+          if (parseInt(codePushVersion.substring(1)) > 0) {
             console.log(
               '최초 코드푸시 업데이트 있음 코드푸시 컨테이너 이동',
               appCodePushVersion,
@@ -62,7 +62,7 @@ const StartupContainer = () => {
             if (permissionYN === 'Y') navigateAndSimpleReset('Main');
             else navigateAndSimpleReset('Permission');
           }
-        } else if (appCodePushVersion < codePushVersion) {
+        } else if (parseInt(appCodePushVersion.substring(1)) < parseInt(codePushVersion.substring(1))) {
           console.log(
             '코드푸시 업데이트 있음 코드푸시 컨테이너 이동',
             appCodePushVersion,
