@@ -25,11 +25,11 @@ const AlbamonDetailScreen = () => {
   // 오늘날짜
   const currentDate = moment().format('YYYYMMDD');
   // 2차예선 포스터 띄울 날짜
-  const secondQualifiersDate = '20220521';
+  const secondQualifiersDate = '20220520';
   // 3차예선 포스터 띄울 날짜
-  const thirdQualifiersDate = '20220611';
+  const thirdQualifiersDate = '20220610';
   // 4차예선 포스터 띄울 날짜
-  const fourthQualifiersDate = '20220709';
+  const fourthQualifiersDate = '20220708';
 
   useEffect(() => {
     dispatch(CommonActions.fetchCommonCode({ parentCode: 'competition', code: 'alkorbol' }));
