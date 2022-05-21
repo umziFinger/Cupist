@@ -50,6 +50,12 @@ const HomeScreen = ({ route }: HomeProps) => {
   const [isShow, setIsShow] = useState<boolean>(false);
 
   useEffect(() => {
+    if (userIdx) {
+      dispatch(AuthActions.fetchUserInfo({ idx: userIdx }));
+    }
+  }, []);
+
+  useEffect(() => {
     console.log('============홈 초기화');
     // navigate('RegistScreen', { placeIdx: -1, placeDetailName: '' });
     // 첫 홈 화면 현재 위치값 갱신
