@@ -46,6 +46,7 @@ export const INITIAL_STATE: MyState['my'] = {
   reservationList: { before: [], after: [], cancel: [] },
   reservationListPage: { before: 1, after: 1, cancel: 1 },
   reservationSelectedTab: { title: '진행중', key: 'before' },
+  competitionSelectedTab: { title: '진행중', key: 'doing' },
   reservationDetail: null,
   reservationCancelDetail: null,
   writeReviewInfo: {
@@ -70,6 +71,7 @@ export const INITIAL_STATE: MyState['my'] = {
   ringmeList: [],
   isCheckedReservationDetail: false,
   bankList: [],
+  competitionList: null,
 };
 export interface MyState {
   my: {
@@ -103,6 +105,7 @@ export interface MyState {
     };
     reservationListPage: reservationPageType;
     reservationSelectedTab: reservationTabType;
+    competitionSelectedTab: competitionTabType;
     reservationDetail: any;
     reservationCancelDetail: any;
     writeReviewInfo: {
@@ -124,6 +127,7 @@ export interface MyState {
     ringmeList: any[];
     isCheckedReservationDetail: boolean | false;
     bankList: any;
+    competitionList: any;
   };
 }
 export interface CouponItemType {
@@ -169,10 +173,14 @@ export type qnaType =
   | { key: '기타 문의'; content: '기타 문의' };
 
 export type qnaTabType = { name: '문의내역'; key: 'list' } | { name: '문의하기'; key: 'write' };
-export type myTabType = { title: '예약'; selectKey: 'reservation' } | { title: '리뷰'; selectKey: 'review' };
+export type myTabType =
+  | { title: '예약'; selectKey: 'reservation' }
+  | { title: '리뷰'; selectKey: 'review' }
+  | { title: '대회'; selectKey: 'competition' };
 export type reservationTabType =
   | { title: '진행중'; key: 'before' }
   | { title: '지난'; key: 'after' }
   | { title: '취소'; key: 'cancel' };
+export type competitionTabType = { title: '진행중'; key: 'doing' } | { title: '지난'; key: 'done' };
 export type reservationPageType = { before: 1; after: 1; cancel: 1 };
 export type CouponTabType = { title: '사용가능'; key: 'usable' } | { title: '지난쿠폰'; key: 'expired' };

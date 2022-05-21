@@ -15,6 +15,9 @@ import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import HomeActions from '@/Stores/Home/Actions';
 import CommonActions from '@/Stores/Common/Actions';
 import { navigate } from '@/Services/NavigationService';
+import Config from '@/Config';
+import PlaceActions from '@/Stores/Place/Actions';
+import { PlaceState } from '@/Stores/Place/InitialState';
 
 interface PropTypes {
   list: Array<any>;
@@ -22,6 +25,7 @@ interface PropTypes {
 const DirectReservationArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { list } = props;
+  const { homeAlbamonList } = useSelector((state: PlaceState) => state.place);
   const { myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
   const { calendarDate, areaFilterIdx, timeFilterIdx, possibleDirectDate } = useSelector(
     (state: HomeState) => state.home,
@@ -44,7 +48,19 @@ const DirectReservationArea = (props: PropTypes) => {
         type,
       };
     }
-    if (idx > 1) {
+    if (idx === 2) {
+      params = {
+        // areaCode: Config.APP_MODE === 'dev' ? location.areaCode || '1019' : location.areaCode,
+        lat: myLatitude || 37,
+        lng: myLongitude || 126,
+        sort: 'albamon',
+        perPage: 10,
+        page: 1,
+      };
+      dispatch(PlaceActions.fetchPlaceSearchList(params));
+      return;
+    }
+    if (idx > 2) {
       params = {
         date,
         areaCode,
@@ -69,6 +85,20 @@ const DirectReservationArea = (props: PropTypes) => {
     }
     // dispatch(HomeActions.fetchHomeReducer({ type: 'possibleDirectDate', data: '' }));
 
+    // 홈 필터에 알바몬 추가, 알바몬 눌렀을떄
+    if (value === 2) {
+      dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
+      const params = {
+        // areaCode: Config.APP_MODE === 'dev' ? location.areaCode || '1019' : location.areaCode,
+        lat: myLatitude || 37,
+        lng: myLongitude || 126,
+        sort: 'albamon',
+        perPage: 10,
+        page: 1,
+      };
+      dispatch(PlaceActions.fetchPlaceSearchList(params));
+      return;
+    }
     dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
     getDirectReservationList(value);
   };
@@ -93,6 +123,13 @@ const DirectReservationArea = (props: PropTypes) => {
       color: Color.Grayyellow1000,
       backgroundColor: 'transparent',
     },
+    {
+      index: 2,
+      key: 'albamon',
+      value: '알.코.볼',
+      color: Color.Grayyellow1000,
+      backgroundColor: 'transparent',
+    },
   ];
 
   // 필터 데이터 커스터마이징
@@ -102,7 +139,7 @@ const DirectReservationArea = (props: PropTypes) => {
         if (areaList?.length > 0) {
           areaList?.map((item: any, index: number) => {
             return draft.push({
-              index: index + 2,
+              index: index + 3,
               key: item.code,
               value: item.area,
               color: Color.Grayyellow1000,
@@ -267,7 +304,7 @@ const DirectReservationArea = (props: PropTypes) => {
         />
       </View>
       <FlatList
-        data={list}
+        data={areaFilterIdx === 2 ? homeAlbamonList?.slice(0, 4) : list}
         // data={test}
         renderItem={({ item }) => (
           <View style={{ paddingHorizontal: 20, marginTop: 16 }}>
@@ -312,6 +349,54 @@ const DirectReservationArea = (props: PropTypes) => {
           >
             <CustomText style={{ color: Color.Grayyellow500, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}>
               내 주변{' '}
+            </CustomText>
+            <CustomText style={{ color: Color.Grayyellow500, fontSize: 13, letterSpacing: -0.2 }}>
+              볼링장 모두보기
+            </CustomText>
+            <View style={{ width: 15, height: 15 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Home/icArrowRiPurple.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
+          </View>
+        </CustomButton>
+      )}
+      {areaFilterIdx === 2 && (
+        <CustomButton
+          onPress={() => {
+            // 알코볼로 필터 변경
+            dispatch(
+              PlaceActions.fetchPlaceReducer({
+                type: 'myAroundSort',
+                data: {
+                  index: 3,
+                  key: 'albamon',
+                  value: '알코볼',
+                },
+              }),
+            );
+            navigate('MyAroundScreen');
+          }}
+          style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}
+        >
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+              backgroundColor: 'rgba(246, 245, 242, 0.5)',
+              borderWidth: 1,
+              borderRadius: 21,
+              borderColor: Color.Grayyellow100,
+              paddingVertical: 12,
+              paddingLeft: 20,
+              paddingRight: 16,
+            }}
+          >
+            <CustomText style={{ color: Color.Grayyellow500, fontSize: 13, fontWeight: 'bold', letterSpacing: -0.2 }}>
+              알.코.볼{' '}
             </CustomText>
             <CustomText style={{ color: Color.Grayyellow500, fontSize: 13, letterSpacing: -0.2 }}>
               볼링장 모두보기

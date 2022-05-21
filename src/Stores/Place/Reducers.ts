@@ -376,6 +376,15 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'homeAlbamonList': {
+        if (actions.params.page === 1) {
+          draft.homeAlbamonList = data;
+        } else {
+          draft.homeAlbamonList = data?.length > 0 ? draft.homeAlbamonList.concat(data) : draft.homeAlbamonList;
+        }
+        break;
+      }
+
       default:
         return draft;
     }

@@ -18,6 +18,7 @@ const PlaceDetailAlbamonBanner = () => {
   const dispatch = useDispatch();
   const place = placeDetail?.place;
   const onPressBanner = () => {
+    console.log('@@@@@@@@@@@@@@@@@ USERINFO : ', userInfo);
     if (!userIdx) {
       navigate('AlbamonDetailScreen');
       return;

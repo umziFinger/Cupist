@@ -53,6 +53,7 @@ export const INITIAL_STATE: PlaceState['place'] = {
   dibsListPage: 1,
   eventHotDetail: null,
   selectedEventHotTab: null,
+  homeAlbamonList: [],
 };
 
 export interface PlaceState {
@@ -87,6 +88,7 @@ export interface PlaceState {
     dibsListPage: 1;
     eventHotDetail: EventHotType | null;
     selectedEventHotTab: EventHotSortType | null;
+    homeAlbamonList: Array<any>;
   };
 }
 

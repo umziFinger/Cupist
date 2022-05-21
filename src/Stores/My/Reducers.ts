@@ -172,6 +172,11 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'competitionSelectedTab': {
+        draft.competitionSelectedTab = data;
+        break;
+      }
+
       case 'reservationList': {
         try {
           const key: reservationTabType['key'] = actions.params.state;
@@ -256,6 +261,11 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'bankList': {
         draft.bankList = data.commonCode;
+        break;
+      }
+
+      case 'competitionList': {
+        draft.competitionList = data;
         break;
       }
 

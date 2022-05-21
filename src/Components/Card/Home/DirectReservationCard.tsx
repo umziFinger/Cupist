@@ -31,7 +31,7 @@ const DirectReservationCard = (props: PropTypes) => {
   };
 
   return (
-    <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx, ticketType: TICKET_TYPE.ALL })}>
+    <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item?.idx, ticketType: TICKET_TYPE.ALL })}>
       <View style={{ flex: 1, borderWidth: 1, borderRadius: 5, borderColor: Color.Grayyellow200 }}>
         <View style={{ flexDirection: 'row', marginLeft: 12, marginTop: 8, marginRight: 8, marginBottom: 12 }}>
           <View style={{ width: 72, height: 72, borderRadius: 5, marginTop: 4, marginRight: 12 }}>
@@ -59,24 +59,24 @@ const DirectReservationCard = (props: PropTypes) => {
               </View>
               <View>
                 <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, fontWeight: '500' }}>
-                  {item.averageStar}
+                  {item?.averageStar}
                 </CustomText>
               </View>
             </View>
             <View style={{ marginTop: 4 }}>
               <CustomText style={{ color: Color.Black1000, fontSize: 15, fontWeight: '500', letterSpacing: -0.2 }}>
-                {item.name}
+                {item?.name}
               </CustomText>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
               <View>
-                <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>{item.area || '지역정보없음'}</CustomText>
+                <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>{item?.area || '지역정보없음'}</CustomText>
               </View>
               <View
                 style={{ width: 3, height: 3, borderRadius: 1.5, backgroundColor: Color.Gray400, marginHorizontal: 4 }}
               />
               <View>
-                <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>{item.distance}</CustomText>
+                <CustomText style={{ color: Color.Gray700, fontSize: 12 }}>{item?.distance}</CustomText>
               </View>
             </View>
           </View>
@@ -85,7 +85,7 @@ const DirectReservationCard = (props: PropTypes) => {
               <FastImage
                 style={{ width: '100%', height: '100%' }}
                 source={
-                  item.isPlaceDibs
+                  item?.isPlaceDibs
                     ? require('@/Assets/Images/Button/icHeartOn.png')
                     : require('@/Assets/Images/Button/icHeartOff.png')
                 }
@@ -105,11 +105,11 @@ const DirectReservationCard = (props: PropTypes) => {
           }}
         >
           <View>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item.ticketName}</CustomText>
+            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item?.ticketName}</CustomText>
           </View>
           <View style={{ height: 9, width: 1, backgroundColor: Color.Gray400, marginHorizontal: 6 }} />
           <View style={{ flex: 1 }}>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item.minPrice}원 부터</CustomText>
+            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item?.minPrice}원 부터</CustomText>
           </View>
           <CustomButton onPress={() => onPressReservation()} hitSlop={10}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

@@ -91,7 +91,7 @@ const dev = {
   MY_REFUND_BANK_URL: 'my/refund-bank',
 
   NOTIFICATION_COUNT_URL: 'my/notification/count',
-
+  MY_COMPETITIONS_URL: 'my/competitions',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

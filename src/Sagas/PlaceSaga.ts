@@ -34,6 +34,16 @@ export function* fetchPlaceSearchList(data: any): any {
 
     const response = yield call(Axios.GET, payload);
     if (response.result === true && response.code === null) {
+      // 내주변 탭과 홈화면의 알코볼 리스트를 분리하기 위해 추가
+      if (data.params.sort === 'albamon') {
+        yield put(
+          PlaceActions.fetchPlaceReducer({
+            type: 'homeAlbamonList',
+            data: response.data.place,
+            page: data.params.page,
+          }),
+        );
+      }
       yield put(
         PlaceActions.fetchPlaceReducer({
           type: 'myAroundList',
