@@ -51,12 +51,12 @@ export function* fetchCompetitionsRegistInfo(data: any): any {
       }
     } else {
       console.log('fetchCompetitionsRegistInfo : ', response);
-      yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
+      // yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
       yield put(CommonActions.fetchErrorHandler(response));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     }
   } catch (e) {
-    yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
+    // yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchCompetitionsRegistInfo : ', e);
   }

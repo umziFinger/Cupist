@@ -37,6 +37,12 @@ const CalendarSlider = () => {
   }, []);
 
   useEffect(() => {
+    if (
+      moment(competitionEndDate).format('YYYYMMDD') < moment().format('YYYYMMDD') &&
+      moment(competitionStartDate).format('YYYYMMDD') < moment().format('YYYYMMDD')
+    ) {
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
+    }
     if (placeDetailSelectedTab.key === 'albamon') {
       dispatch(
         AlbamonActions.fetchCompetitionsRegistInfo({
@@ -60,7 +66,7 @@ const CalendarSlider = () => {
         }),
       );
     }
-  }, [placeDetailSelectedTab, competitionStartDate]);
+  }, [placeDetailSelectedTab, competitionStartDate, competitionEndDate]);
 
   useEffect(() => {
     console.log('=-=-==-=-==-=-=-=-=-', albamonDate);
