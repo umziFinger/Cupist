@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import MyActions from '@/Stores/My/Actions';
+import CommonActions from '@/Stores/Common/Actions';
 
 interface PropTypes {
   list: Array<any>;
@@ -72,9 +73,9 @@ const BannerArea = (props: PropTypes) => {
   };
 
   const onMoveEventDetail = (item: any) => {
-    // console.log('onPressPop: ', item.idx);
+    console.log('onMoveEventDetail: ', item);
 
-    if (item.linkType === 'screen') {
+    if (item?.linkType === 'screen') {
       switch (item.linkScreen) {
         case 'EventDetailScreen': {
           const params = {
@@ -87,8 +88,28 @@ const BannerArea = (props: PropTypes) => {
         default:
           break;
       }
-    } else if (item.linkType === 'kakao') {
+    } else if (item?.linkType === 'kakao') {
       onOpenKaKaoChat(item?.linkUrl || 'http://pf.kakao.com/_nbhwb/chat');
+    } else if (item?.linkType === 'link') {
+      if (item?.linkUrl) {
+        Linking.openURL('url')
+          .then((r) => console.log('이벤트 링크 열기 성공', r))
+          .catch((e) => {
+            console.log('이벤트 링크 열기 에러', e);
+            Linking.openURL(item?.linkUrl).then(() => console.log('이벤트 링크 열기 실패, 웹뷰 던지기'));
+          });
+      } else {
+        dispatch(
+          CommonActions.fetchCommonReducer({
+            type: 'alertToast',
+            data: {
+              alertToast: true,
+              alertToastPosition: 'top',
+              alertToastMessage: '링크가 존재하지 않습니다.',
+            },
+          }),
+        );
+      }
     }
   };
 
