@@ -32,7 +32,7 @@ export function* fetchCompetitionsRegistInfo(data: any): any {
 
       yield put(AlbamonActions.fetchAlbamonReducer({ type: 'competitionsRegistInfo', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: true }));
+      // yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: true }));
       // yield put(
       //   AlbamonActions.fetchAlbamonReducer({
       //     type: 'registDataInit',
