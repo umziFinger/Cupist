@@ -50,8 +50,6 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     (state: AlbamonState) => state.albamon,
   );
 
-  console.log('competitionInfo : ', competitionInfo);
-
   const animatedFlatRef = useRef<any>();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [isShowTopCalendar, setIsShowTopCalendar] = useState<boolean>(false);

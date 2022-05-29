@@ -42,6 +42,8 @@ const CalendarSlider = () => {
       moment(competitionStartDate).format('YYYYMMDD') < moment().format('YYYYMMDD')
     ) {
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
+    } else {
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: true }));
     }
     if (placeDetailSelectedTab.key === 'albamon') {
       dispatch(
