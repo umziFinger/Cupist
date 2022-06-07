@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Linking, Platform } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { AppState, Linking, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
 import database from '@react-native-firebase/database';
 import { getVersion } from 'react-native-device-info';
@@ -9,6 +9,7 @@ import Config from '@/Config';
 const RootCheckAppVersion = () => {
   const dispatch = useDispatch();
   const device = Platform.OS;
+  const appState = useRef(AppState.currentState);
 
   const path = Config.APP_MODE === 'prod' ? '/real/common/maintenance' : '/dev/common/maintenance';
   const [appActive, setAppActive] = useState(true); // 앱 활성화 여부 (점검)
@@ -64,13 +65,27 @@ const RootCheckAppVersion = () => {
   }, [appActive, marketVersion, currentVersion, minimumVersion]);
 
   useEffect(() => {
+    console.log('포그라운드 전환@@@@!');
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+        versionCheck();
+      }
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [marketVersion, minimumVersion]);
+
+  useEffect(() => {
     const appVersion = getVersion();
     console.log('현재 앱 버전: ', appVersion);
     setMarketVersion(appVersion);
 
     // 버전정보 표시를 위한 처리
 
-    database()
+    const onValueChange = database()
       .ref(path)
       .on('value', (snapshot) => {
         console.log('snapshot!!!!! : ', snapshot.val());
@@ -96,6 +111,10 @@ const RootCheckAppVersion = () => {
           );
         }
       });
+
+    return () => {
+      database().ref(path).off('value', onValueChange);
+    };
   }, []);
 
   return null;
