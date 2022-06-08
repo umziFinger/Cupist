@@ -154,7 +154,7 @@ const RefundAccountManagementScreen = () => {
         <FlatList
           data={[0]}
           renderItem={({ item, index }) => (
-            <View>
+            <View style={{ flex: 1, paddingBottom: 50 }}>
               <View style={{ marginTop: 16 }}>
                 <CustomText style={{ fontSize: 15, fontWeight: 'bold', letterSpacing: -0.2 }}>환불받을 계좌</CustomText>
                 <CustomText style={{ fontSize: 12, fontWeight: '500', letterSpacing: -0.18, marginTop: 9 }}>
