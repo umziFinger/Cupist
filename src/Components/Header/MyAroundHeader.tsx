@@ -11,6 +11,7 @@ import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import PlaceActions from '@/Stores/Place/Actions';
+import MyAroundCalendarSlider from '@/Components/Calendar/MyAroundCalendarSlider';
 
 const SORT_TAG = [
   {
@@ -57,7 +58,7 @@ const MyAroundHeader = (props: HeaderProps) => {
       {!isScroll ? (
         <View
           style={{
-            paddingHorizontal: 20,
+            paddingLeft: 20,
             paddingTop: Platform.OS === 'android' ? 24 : statusHeight + 24,
             backgroundColor: Color.White,
           }}
@@ -107,7 +108,7 @@ const MyAroundHeader = (props: HeaderProps) => {
               </View>
             </View>
           </CustomButton>
-          <View style={{ paddingBottom: 25 }}>
+          <View style={{ paddingBottom: 0 }}>
             <FlatList
               data={SORT_TAG}
               renderItem={({ item }) => (
@@ -160,6 +161,9 @@ const MyAroundHeader = (props: HeaderProps) => {
               showsHorizontalScrollIndicator={false}
               horizontal
             />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <MyAroundCalendarSlider />
           </View>
         </View>
       ) : (

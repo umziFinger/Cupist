@@ -120,6 +120,7 @@ const HomeScreen = ({ route }: HomeProps) => {
     }
 
     // 홈 바로 예약 호출
+    console.log('@@@@@@@@@@@@@@@ calendar 재설정시 홈화면 갱신 @@@@@@@@@@@@@@');
     dispatch(
       HomeActions.fetchHomeDirectReservationList({
         ...params,
@@ -155,7 +156,7 @@ const HomeScreen = ({ route }: HomeProps) => {
   };
 
   const handleScroll = (event: any) => {
-    const result = scrollHomeHandler(event, 230, 1800);
+    const result = scrollHomeHandler(event, 433, 2003);
     setIsShow(result.isShow);
   };
 

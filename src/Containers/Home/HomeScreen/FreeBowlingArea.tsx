@@ -108,7 +108,7 @@ const FreeBowlingArea = (props: PropTypes) => {
           initialNumToRender={2}
           maxToRenderPerBatch={5}
           windowSize={7}
-          snapToInterval={width - 32}
+          snapToInterval={width - 52}
           snapToAlignment={'start'}
           showsHorizontalScrollIndicator={false}
           decelerationRate={'fast'}

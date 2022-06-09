@@ -3,6 +3,7 @@ import { AppState, FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import { useIsFocused } from '@react-navigation/native';
+import moment from 'moment';
 import PlaceActions from '@/Stores/Place/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
@@ -16,6 +17,7 @@ import { navigate } from '@/Services/NavigationService';
 import LocationMyPosition from '@/Components/Permission/Location/LocationMyPosition';
 import CommonActions from '@/Stores/Common/Actions';
 import { LocationCheck, LocationRequest } from '@/Components/Permission/Location';
+import { HomeState } from '@/Stores/Home/InitialState';
 
 const MyAroundScreen = () => {
   const dispatch = useDispatch();
@@ -31,9 +33,13 @@ const MyAroundScreen = () => {
     myAroundListPage = 1,
     location = { areaCode: '', lat: '', lng: '', areaName: '' },
   } = useSelector((state: PlaceState) => state.place);
+  const { calendarDate } = useSelector((state: HomeState) => state.home);
+
+  const date = moment(calendarDate).format('YYYY/MM/DD');
 
   const getSearchList = () => {
     const params = {
+      date,
       areaCode: Config.APP_MODE === 'dev' ? location.areaCode || '1019' : location.areaCode,
       lat: location.lat || myLatitude || 37,
       lng: location.lng || myLongitude || 126,
@@ -130,7 +136,7 @@ const MyAroundScreen = () => {
   useEffect(() => {
     console.log('내주변 볼링장 위치 변경: ', location.lat, location.areaCode, location.lng);
     getSearchList();
-  }, [location.lat, location.areaCode, location.lng, myAroundSort.key]);
+  }, [location.lat, location.areaCode, location.lng, myAroundSort.key, date]);
 
   const onMore = () => {
     const params = {

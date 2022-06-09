@@ -21,7 +21,7 @@ const FreeBowlingCard = (props: PropTypes) => {
   return (
     <CustomButton onPress={() => navigate('PlaceDetailScreen', { idx: item.idx, ticketType: TICKET_TYPE.FREE })}>
       <View style={{ borderRadius: 5, borderWidth: 1, borderColor: Color.Grayyellow200, backgroundColor: Color.White }}>
-        <View style={{ width: width - 40, height: (width - 40) * (149 / 333) }}>
+        <View style={{ width: width - 60, height: (width - 60) * (149 / 313) }}>
           <FastImage
             style={{ width: '100%', height: '100%', borderTopLeftRadius: 4, borderTopRightRadius: 4 }}
             source={
