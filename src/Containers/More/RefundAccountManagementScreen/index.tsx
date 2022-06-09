@@ -154,7 +154,6 @@ const RefundAccountManagementScreen = () => {
         <View style={{ flex: 1 }}>
           <FlatList
             data={[0]}
-            style={{ flex: 1 }}
             renderItem={({ item, index }) => (
               <View style={{ height: '100%', width: '100%' }}>
                 <View style={{ marginTop: 16 }}>
@@ -359,8 +358,8 @@ const RefundAccountManagementScreen = () => {
               </View>
             )}
             keyExtractor={(item, index) => index.toString()}
-            initialNumToRender={2}
-            maxToRenderPerBatch={1}
+            initialNumToRender={1}
+            maxToRenderPerBatch={4}
             windowSize={7}
             // scrollEnabled={false}
             // ListFooterComponent={<View style={{ height: heightInfo.mainBottomHeight, backgroundColor: 'red' }} />}
