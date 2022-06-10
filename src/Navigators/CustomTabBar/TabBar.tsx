@@ -32,7 +32,6 @@ const TabBar = (props: BottomTabBarProps) => {
       const onBackButtonPressAndroid = () => {
         console.log(' back : ', state.history);
         if (appExit) {
-          console.log('dddd');
           BackHandler.exitApp();
           return false;
         } else if (state.history.length < 2) {
