@@ -68,7 +68,7 @@
     "@typescript-eslint/no-explicit-any": "off",  // typescript any 허용
     "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/ban-types": "off",
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": "warn",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "no-param-reassign": ["error", {

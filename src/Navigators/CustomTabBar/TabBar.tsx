@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line react-native/split-platform-components
 import { BackHandler, Platform, ToastAndroid, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { getBottomSpace, isIphoneX } from 'react-native-iphone-x-helper';
@@ -141,7 +142,7 @@ const TabBar = (props: TabBarProps) => {
     }
   };
 
-  const onPressMenu = (value: string) => {
+  const onPressMenu = (value: 'HomeScreen' | 'MyScreen' | 'MyAroundScreen' | 'DibsScreen' | 'MoreScreen') => {
     const authGuardScreen = ['MoreScreen', 'MyScreen', 'DibsScreen'];
     if (authGuardScreen.includes(value) && !userIdx) {
       navigate('SimpleLoginScreen');

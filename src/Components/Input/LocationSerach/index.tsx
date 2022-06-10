@@ -15,7 +15,7 @@ type Props = {
   autoFocus?: boolean;
 };
 
-const InputLocationSearch = forwardRef<TextInput, Props>((props: Props) => {
+const InputLocationSearch = forwardRef<TextInput, Props>((props: Props, ref) => {
   const {
     onChangeText,
     onClear,

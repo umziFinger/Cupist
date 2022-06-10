@@ -11,7 +11,7 @@ type PropTypes = {
   refObject: any;
 };
 const CardDefaultInput = forwardRef<TextInput, PropTypes>(
-  ({ placeHolder, maxLength, value, onChangeText, editable = true, refObject }: PropTypes) => {
+  ({ placeHolder, maxLength, value, onChangeText, editable = true, refObject }: PropTypes, ref) => {
     return (
       <View
         style={{
