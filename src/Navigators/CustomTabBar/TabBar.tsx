@@ -3,89 +3,57 @@ import React, { useEffect, useState } from 'react';
 import { BackHandler, Platform, ToastAndroid, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { getBottomSpace, isIphoneX } from 'react-native-iphone-x-helper';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import RNBootSplash from 'react-native-bootsplash';
-import { useFocusEffect } from '@react-navigation/native';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
 import { DATA_MENUS } from '@/Navigators/CustomTabBar/data';
 import CustomText from '@/Components/CustomText';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { Color } from '@/Assets/Color';
+import CommonActions from '@/Stores/Common/Actions';
 
-interface TabBarProps {
-  state: any;
-}
-
-const TabBar = (props: TabBarProps) => {
+const TabBar = (props: BottomTabBarProps) => {
   const { state } = props;
+  const dispatch = useDispatch();
   const { userIdx } = useSelector((authState: AuthState) => authState.auth);
+  const [appExit, setAppExit] = useState(false);
   const [backHandlerClickCount, setBackHandlerClickCount] = useState(0);
 
   useEffect(() => {
-    RNBootSplash.hide();
+    RNBootSplash.hide().then();
   }, []);
-
-  /* useEffect(() => {
-    // const onBackButtonPressAndroid = () => {
-    //   console.log('navigation : ', navigation);
-    //   console.log('state : ', state);
-    //   setBackHandlerClickCount(backHandlerClickCount + 1);
-    //   if (backHandlerClickCount < 1) {
-    //     ToastAndroid.show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 2000);
-    //   } else {
-    //     BackHandler.exitApp();
-    //   }
-    //
-    //   setTimeout(() => {
-    //     setBackHandlerClickCount(0);
-    //   }, 2000);
-    //
-    //   return true;
-    // };
-    //
-    // if (Platform.OS === 'android') {
-    //   BackHandler.addEventListener('hardwareBackPress', onBackButtonPressAndroid);
-    // }
-
-    // histroy[]의 최초 length = 1
-    if (state.history.length > 1) {
-      const prevMenu = state.history[state.history.length - 2].key.split('-')[0];
-      const currMenu = state.routeNames[state.index];
-      if (prevMenu !== currMenu) {
-        // if (backHandler) {
-        //   backHandler.remove();
-        // }
-      }
-      console.log('prev Menu : ', state.history[state.history.length - 2].key.split('-')[0]);
-      console.log('curr Menu : ', state.routeNames[state.index]);
-    }
-
-    return () => {
-      // if (backHandler) backHandler.remove();
-    };
-  }, [backHandlerClickCount, state.index, userIdx]); */
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackButtonPressAndroid = () => {
-        console.log('state : ', state);
-        setBackHandlerClickCount((prevState) => prevState + 1);
-        if (backHandlerClickCount < 1) {
-          ToastAndroid.show('뒤로 버튼을 한번 더 누르시면 종료됩니다.', 2000);
-        } else {
+        console.log(' back : ', state.history);
+        if (appExit) {
+          console.log('dddd');
           BackHandler.exitApp();
+          return false;
+        } else if (state.history.length < 2) {
+          dispatch(
+            CommonActions.fetchCommonReducer({
+              type: 'alertToast',
+              data: {
+                alertToast: true,
+                alertToastPosition: 'bottom',
+                alertToastMessage: '뒤로 버튼을 한번 더 누르시면 종료됩니다.',
+              },
+            }),
+          );
+          setAppExit(true);
+          navigate('HomeScreen');
+          return true;
         }
 
-        setTimeout(() => {
-          setBackHandlerClickCount(0);
-        }, 2000);
-
-        return true;
+        return false;
       };
       if (Platform.OS === 'android') {
-        console.log('state : ', state);
         BackHandler.addEventListener('hardwareBackPress', onBackButtonPressAndroid);
       }
       return () => {
@@ -93,7 +61,7 @@ const TabBar = (props: TabBarProps) => {
           BackHandler.removeEventListener('hardwareBackPress', onBackButtonPressAndroid);
         }
       };
-    }, [backHandlerClickCount]),
+    }, [state.history, appExit]),
   );
 
   const renderIcon = <T extends React.ReactNode>(type: T) => {

@@ -29,6 +29,7 @@ interface PropTypes {
 
 const RegistScreen = ({ route }: PropTypes) => {
   const dispatch = useDispatch();
+
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);

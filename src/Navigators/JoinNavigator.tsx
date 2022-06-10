@@ -9,7 +9,7 @@ const JoinStack = createStackNavigator();
 
 const JoinNavigator = () => {
   return (
-    <JoinStack.Navigator headerMode={'none'}>
+    <JoinStack.Navigator screenOptions={{ headerShown: false }}>
       <JoinStack.Screen name={'AgreeScreen'} component={AgreeScreen} />
       <JoinStack.Screen name={'JoinStepOneScreen'} component={JoinStepOneScreen} />
       <JoinStack.Screen name={'JoinStepTwoScreen'} component={JoinStepTwoScreen} />

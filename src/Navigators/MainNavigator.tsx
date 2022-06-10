@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View } from 'react-native';
+import { BackHandler, Platform, View } from 'react-native';
 import HomeScreen from '@/Containers/Home/HomeScreen';
 import TabBar from '@/Navigators/CustomTabBar/TabBar';
 import MyScreen from '@/Containers/My/MyScreen';
@@ -153,21 +153,27 @@ export type MainStackParamList = {
 const Tab = createBottomTabNavigator();
 const MainStack = createStackNavigator<MainStackParamList>();
 
-const BottomNavigator = () => (
-  <View style={{ flex: 1, backgroundColor: 'transparent' }}>
-    <Tab.Navigator backBehavior="none" tabBar={(props: BottomTabBarProps) => <TabBar {...props} />}>
-      <Tab.Screen name="HomeScreen" component={HomeScreen} initialParams={{}} />
-      <Tab.Screen name="MyScreen" component={MyScreen} initialParams={{}} />
-      <Tab.Screen name="MyAroundScreen" component={MyAroundScreen} initialParams={{}} />
-      <Tab.Screen name="DibsScreen" component={DibsScreen} initialParams={{}} />
-      <Tab.Screen name="MoreScreen" component={MoreScreen} initialParams={{}} />
-    </Tab.Navigator>
-  </View>
-);
+const BottomNavigator = () => {
+  return (
+    <View style={{ flex: 1, backgroundColor: 'transparent' }}>
+      <Tab.Navigator
+        backBehavior="history"
+        tabBar={(props) => <TabBar {...props} />}
+        screenOptions={{ headerShown: false }}
+      >
+        <Tab.Screen name="HomeScreen" component={HomeScreen} initialParams={{}} />
+        <Tab.Screen name="MyScreen" component={MyScreen} initialParams={{}} />
+        <Tab.Screen name="MyAroundScreen" component={MyAroundScreen} initialParams={{}} />
+        <Tab.Screen name="DibsScreen" component={DibsScreen} initialParams={{}} />
+        <Tab.Screen name="MoreScreen" component={MoreScreen} initialParams={{}} />
+      </Tab.Navigator>
+    </View>
+  );
+};
 
 const MainNavigator = () => {
   return (
-    <MainStack.Navigator headerMode={'none'}>
+    <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="Bottom" component={BottomNavigator} />
       {/* Common */}
       <MainStack.Screen name="TotalImageScreen" component={TotalImageScreen} />
