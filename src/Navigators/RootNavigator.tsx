@@ -20,7 +20,7 @@ const RootNavigator = () => {
       ref={navigationRef}
       onStateChange={(state: any) => {
         const previousRouteName = routeNameRef.current;
-        const currentRouteName = navigationRef?.current?.getCurrentRoute()?.name;
+        const currentRouteName: any = navigationRef?.current?.getCurrentRoute()?.name;
         console.log('previousRouteName : ', previousRouteName);
         console.log('currentRouteName : ', currentRouteName);
 

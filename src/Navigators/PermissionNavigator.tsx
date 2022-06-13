@@ -8,7 +8,7 @@ const PermissionStack = createStackNavigator();
 
 const PermissionNavigator = () => {
   return (
-    <PermissionStack.Navigator headerMode={'none'}>
+    <PermissionStack.Navigator screenOptions={{ headerShown: false }}>
       <PermissionStack.Screen name={'PermissionScreen'} component={PermissionScreen} />
       <PermissionStack.Screen name={'WalkThroughScreen'} component={WalkThroughScreen} />
     </PermissionStack.Navigator>

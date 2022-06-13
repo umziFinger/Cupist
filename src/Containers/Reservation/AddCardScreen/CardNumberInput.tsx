@@ -10,7 +10,7 @@ type PropTypes = {
   refObject: any;
 };
 const CardNumberInput = forwardRef<TextInput, PropTypes>(
-  ({ placeHolder, maxLength, value, onChangeText, refObject }: PropTypes) => {
+  ({ placeHolder, maxLength, value, onChangeText, refObject }: PropTypes, ref) => {
     return (
       <View
         style={{
