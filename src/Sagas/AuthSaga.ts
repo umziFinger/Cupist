@@ -15,6 +15,7 @@ import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
 import { navigate, navigateAndJoinReset, navigateAndReset, navigateAndSimpleReset } from '@/Services/NavigationService';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { JsonForm } from '@/Components/Function';
+import { fetchSkeletonNavigateReplace } from '@/Sagas/CommonSaga';
 
 export function* fetchUserLogin(data: any): any {
   try {
@@ -134,7 +135,12 @@ export function* fetchUserLogout(): any {
       );
 
       yield put(AuthActions.fetchAuthReducer({ type: 'logout' }));
-      yield put(CommonActions.fetchSkeletonNavigate({ routeName: 'HomeScreen', state: { expired: true } }));
+      yield put(
+        CommonActions.fetchSkeletonNavigateReplace({
+          routeName: 'Bottom',
+          state: { expired: true, screen: 'HomeScreen' },
+        }),
+      );
       // navigate('HomeScreen');
     } else {
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
