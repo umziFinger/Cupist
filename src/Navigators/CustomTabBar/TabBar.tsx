@@ -9,7 +9,7 @@ import RNBootSplash from 'react-native-bootsplash';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CustomButton from '@/Components/CustomButton';
-import { navigate } from '@/Services/NavigationService';
+import { navigate, navigateAndSimpleReset, navigateReplace } from '@/Services/NavigationService';
 import { DATA_MENUS } from '@/Navigators/CustomTabBar/data';
 import CustomText from '@/Components/CustomText';
 import { AuthState } from '@/Stores/Auth/InitialState';
@@ -21,33 +21,37 @@ const TabBar = (props: BottomTabBarProps) => {
   const dispatch = useDispatch();
   const { userIdx } = useSelector((authState: AuthState) => authState.auth);
   const [appExit, setAppExit] = useState(false);
-  const [backHandlerClickCount, setBackHandlerClickCount] = useState(0);
 
   useEffect(() => {
     RNBootSplash.hide().then();
   }, []);
-
   useFocusEffect(
     React.useCallback(() => {
       const onBackButtonPressAndroid = () => {
         console.log(' back : ', state.history);
-        if (appExit) {
+
+        if (!appExit) {
+          if (state.history.length < 2) {
+            dispatch(
+              CommonActions.fetchCommonReducer({
+                type: 'alertToast',
+                data: {
+                  alertToast: true,
+                  alertToastPosition: 'bottom',
+                  alertToastMessage: '뒤로 버튼을 한번 더 누르시면 종료됩니다.',
+                },
+              }),
+            );
+            setAppExit(true);
+            navigate('HomeScreen');
+            return true;
+          }
+        } else if (appExit && state.history.length > 1) {
+          setAppExit(false);
+          return true;
+        } else {
           BackHandler.exitApp();
           return false;
-        } else if (state.history.length < 2) {
-          dispatch(
-            CommonActions.fetchCommonReducer({
-              type: 'alertToast',
-              data: {
-                alertToast: true,
-                alertToastPosition: 'bottom',
-                alertToastMessage: '뒤로 버튼을 한번 더 누르시면 종료됩니다.',
-              },
-            }),
-          );
-          setAppExit(true);
-          navigate('HomeScreen');
-          return true;
         }
 
         return false;
