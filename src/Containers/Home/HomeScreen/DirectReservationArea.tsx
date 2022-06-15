@@ -32,8 +32,8 @@ const DirectReservationArea = (props: PropTypes) => {
   );
   const { areaList } = useSelector((state: SearchState) => state.search);
 
+  const date = calendarDate ? moment(calendarDate).format('YYYY/MM/DD') : moment().format('YYYY/MM/DD');
   const getDirectReservationList = (idx: number) => {
-    const date = moment(calendarDate).format('YYYY/MM/DD');
     const areaCode = areaFilter()[idx].key;
     // const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
     // const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
@@ -51,6 +51,7 @@ const DirectReservationArea = (props: PropTypes) => {
     if (idx === 2) {
       params = {
         // areaCode: Config.APP_MODE === 'dev' ? location.areaCode || '1019' : location.areaCode,
+        date,
         lat: myLatitude || 37,
         lng: myLongitude || 126,
         sort: 'albamon',
@@ -90,6 +91,7 @@ const DirectReservationArea = (props: PropTypes) => {
       dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
       const params = {
         // areaCode: Config.APP_MODE === 'dev' ? location.areaCode || '1019' : location.areaCode,
+        date,
         lat: myLatitude || 37,
         lng: myLongitude || 126,
         sort: 'albamon',
