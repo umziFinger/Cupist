@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { AppState, FlatList, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, AppState, FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import { useIsFocused } from '@react-navigation/native';
@@ -18,9 +18,13 @@ import LocationMyPosition from '@/Components/Permission/Location/LocationMyPosit
 import CommonActions from '@/Stores/Common/Actions';
 import { LocationCheck, LocationRequest } from '@/Components/Permission/Location';
 import { HomeState } from '@/Stores/Home/InitialState';
+import { scrollCalendarHandler } from '@/Components/Function';
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const MyAroundScreen = () => {
   const dispatch = useDispatch();
+  const scrollY = useRef(new Animated.Value(0)).current;
   const isFocused = useIsFocused();
   const [isScroll, setIsScroll] = useState(false);
   const [headerText, setHeaderText] = useState<string>('');
@@ -140,6 +144,7 @@ const MyAroundScreen = () => {
 
   const onMore = () => {
     const params = {
+      date,
       areaCode: Config.APP_MODE === 'dev' ? location.areaCode || '1019' : location.areaCode,
       lat: location.lat || myLatitude || 37,
       lng: location.lng || myLongitude || 126,
@@ -154,35 +159,45 @@ const MyAroundScreen = () => {
     getSearchList();
   };
 
+  const handleScroll = (e: any) => {
+    const result = scrollCalendarHandler(e, 170 + (isScroll ? 0 : 140));
+    setIsScroll(result.isShow);
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <Header type={'myAround'} text={headerText} activeFilter={activeFilter} isScroll={isScroll} />
-      <View style={{ flex: 1, backgroundColor: Color.White, paddingHorizontal: 20 }}>
-        <FlatList
+      <View style={{ flex: 1, backgroundColor: Color.White }}>
+        <Header type={'myAround'} text={headerText} activeFilter={activeFilter} isScroll={isScroll} />
+        <AnimatedFlatList
           data={activeFilter ? myAroundList : []}
-          // data={[0, 1, 2, 3, 4, 5]}
-          renderItem={({ item }) => (
+          renderItem={({ item }: any) => (
             <>
-              <PlaceLargeCard item={item} type={'myAround'} />
+              <View style={{ paddingHorizontal: 20 }}>
+                <PlaceLargeCard item={item} type={'myAround'} />
+              </View>
             </>
           )}
+          initialNumToRender={3}
           maxToRenderPerBatch={6}
           windowSize={7}
-          initialNumToRender={3}
           scrollEnabled
           showsVerticalScrollIndicator={false}
           onEndReached={() => onMore()}
           onEndReachedThreshold={0.8}
           refreshing={false}
           onRefresh={() => onRefresh()}
-          onScroll={(e) => {
-            // console.log(e.nativeEvent);
-            if (e.nativeEvent.contentOffset.y > 60 && myAroundList?.length > 2) {
-              setIsScroll(true);
-            } else {
-              setIsScroll(false);
-            }
-          }}
+          // onScroll={(e) => {
+          //   // console.log(e.nativeEvent);
+          //   if (e.nativeEvent.contentOffset.y > 60 && myAroundList?.length > 2) {
+          //     setIsScroll(true);
+          //   } else {
+          //     setIsScroll(false);
+          //   }
+          // }}
+          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+            listener: (e) => handleScroll(e),
+            useNativeDriver: true,
+          })}
           ListEmptyComponent={() => (
             <View
               style={{
