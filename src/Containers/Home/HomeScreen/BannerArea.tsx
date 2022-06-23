@@ -20,6 +20,7 @@ const BannerArea = (props: PropTypes) => {
   const [transList, setTransList] = useState<Array<any>>(list);
   // const [viewableIndex, setViewableIndex] = useState<number | 0>(0);
   const [intervalToggle, setIntervalToggle] = useState(true);
+  const [isScrolling, setIsScrolling] = useState(false);
   const [page, setPage] = useState<number>(0);
   const perPage = transList?.length || 0;
 
@@ -36,15 +37,23 @@ const BannerArea = (props: PropTypes) => {
         const arr = [...transList, ...list];
         setTransList(arr);
       }
-      if (page >= perPage) {
-        setPage(0);
-      } else if (Platform.OS === 'android') {
-        flatRef?.current?.scrollToIndex({ index: page, animated: true });
-      } else {
-        flatRef?.current?.scrollToIndex({ index: page, animated: true });
+      if (!isScrolling) {
+        if (page >= perPage) {
+          setPage(0);
+        } else if (Platform.OS === 'android') {
+          flatRef?.current?.scrollToIndex({ index: page, animated: true });
+        } else {
+          flatRef?.current?.scrollToIndex({ index: page, animated: true });
+        }
       }
     }
   }, [page]);
+
+  // useEffect(() => {
+  //   if (isScrolling) {
+  //     clearInterval(intervalId);
+  //   }
+  // }, [isScrolling]);
 
   useEffect(() => {
     if (intervalToggle && intervalId) {
@@ -61,7 +70,7 @@ const BannerArea = (props: PropTypes) => {
   };
 
   const tick = () => {
-    if (intervalToggle && flatRef) {
+    if (intervalToggle && flatRef && !isScrolling) {
       setPage((state) => {
         return state + 1;
       });
@@ -183,16 +192,28 @@ const BannerArea = (props: PropTypes) => {
         //   }
         // }}
         // onTouchMove={() => {
+        //   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
         //   return [
+        //     console.log('########################'),
         //     setIntervalToggle(false),
         //     setTimeout(() => {
         //       setIntervalToggle(true);
         //     }, 5000),
         //   ];
         // }}
+        onScrollBeginDrag={() => {
+          console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
+          setIsScrolling(true);
+          clearInterval(intervalId);
+        }}
+        onScrollEndDrag={() => {
+          console.log('#########################');
+          intervalId = setInterval(tick, 5000);
+          setIsScrolling(false);
+        }}
         disableIntervalMomentum
         decelerationRate="fast"
-        snapToInterval={width - 32}
+        // snapToInterval={width - 32}
         showsHorizontalScrollIndicator={false}
         snapToAlignment={'start'}
         getItemLayout={getItemLayout}
@@ -200,6 +221,8 @@ const BannerArea = (props: PropTypes) => {
         viewabilityConfig={{
           itemVisiblePercentThreshold: 50,
         }}
+        snapToOffsets={[...Array(transList.length)].map((x, i) => i * (width - 32))}
+        // snapToOffsets={[0, width - 32, (width - 32) * 2]}
       />
       <View
         style={{
@@ -214,10 +237,8 @@ const BannerArea = (props: PropTypes) => {
           renderItem={({ index }) => {
             return (
               <View>
-                {page % 2 === index ? (
-                  <View
-                    style={{ width: 6, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: Color.White }}
-                  />
+                {page % list?.length === index ? (
+                  <View style={{ width: 6, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: 'white' }} />
                 ) : (
                   <View
                     style={{
@@ -226,7 +247,7 @@ const BannerArea = (props: PropTypes) => {
                       marginRight: 4,
                       borderRadius: 50,
                       backgroundColor: 'rgba(255,255,255,0.4)',
-                      // backgroundColor: 'red',
+                      // backgroundColor: 'blue',
                     }}
                   />
                 )}

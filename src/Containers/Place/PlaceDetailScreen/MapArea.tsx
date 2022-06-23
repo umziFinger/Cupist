@@ -8,7 +8,7 @@ import { Color } from '@/Assets/Color';
 import CustomText from '@/Components/CustomText';
 import CommonActions from '@/Stores/Common/Actions';
 import CustomButton from '@/Components/CustomButton';
-import { renderFacilityIcon } from '@/Components/Function';
+import { JsonForm, renderFacilityIcon } from '@/Components/Function';
 import Config from '@/Config';
 import { InfoItemButtonType } from '@/Containers/My/ReservationDetailScreen/data';
 import { navigate } from '@/Services/NavigationService';
@@ -21,6 +21,9 @@ const MapArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { width, height } = useWindowDimensions();
   const { item, isRenderMap } = props;
+
+  const [chargeImageExpanded, setChargeImageExpanded] = useState<boolean>(false);
+
   const position = { latitude: parseFloat(item?.lat) || 37.553881, longitude: parseFloat(item?.lng) || 126.970488 };
 
   const onPressButton = (type: InfoItemButtonType) => {
@@ -259,7 +262,7 @@ const MapArea = (props: PropTypes) => {
             </CustomText>
           </View>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginTop: 10 }}>
           <View style={{ flex: 0.3, justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
               이용요금
@@ -267,8 +270,43 @@ const MapArea = (props: PropTypes) => {
           </View>
           <View style={{ flex: 1, justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>{item?.charge}</CustomText>
+            <CustomButton onPress={() => setChargeImageExpanded((prev) => !prev)} style={{ marginTop: 7 }}>
+              <View style={{ width: 131, height: 24 }}>
+                <FastImage
+                  style={{ width: '100%', height: '100%' }}
+                  source={
+                    chargeImageExpanded
+                      ? require('@/Assets/Images/Button/btn_up.png')
+                      : require('@/Assets/Images/Button/btn.png')
+                  }
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </View>
+            </CustomButton>
           </View>
         </View>
+        {chargeImageExpanded && (
+          <View style={{ marginTop: 10 }}>
+            <View
+              style={{
+                width: width - 40,
+                height: ((width - 40) / 335) * 158,
+                backgroundColor: Color.Gray200,
+                borderRadius: 5,
+              }}
+            >
+              {/* <FastImage */}
+              {/*  style={{ width: '100%', height: '100%' }} */}
+              {/*  source={ */}
+              {/*    chargeImageExpanded */}
+              {/*      ? require('@/Assets/Images/Button/btn_up.png') */}
+              {/*      : require('@/Assets/Images/Button/btn.png') */}
+              {/*  } */}
+              {/*  resizeMode={FastImage.resizeMode.cover} */}
+              {/* /> */}
+            </View>
+          </View>
+        )}
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
           <View style={{ flex: 0.3, justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 13, fontWeight: '500', letterSpacing: -0.2 }}>
