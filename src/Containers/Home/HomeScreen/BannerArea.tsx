@@ -1,11 +1,12 @@
-import React, { createRef, useEffect, useState } from 'react';
-import { FlatList, Linking, NativeSyntheticEvent, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
+import React, { createRef, useEffect, useRef, useState } from 'react';
+import { FlatList, Linking, Platform, useWindowDimensions, View, ViewToken } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch } from 'react-redux';
 import { Color } from '@/Assets/Color';
 import CustomButton from '@/Components/CustomButton';
 import MyActions from '@/Stores/My/Actions';
 import CommonActions from '@/Stores/Common/Actions';
+import { useIsFocused } from '@react-navigation/native';
 
 interface PropTypes {
   list: Array<any>;
@@ -13,69 +14,53 @@ interface PropTypes {
 const BannerArea = (props: PropTypes) => {
   const dispatch = useDispatch();
   const flatRef = createRef<any>();
+  const isFocused = useIsFocused();
   const { width } = useWindowDimensions();
   const { list } = props;
-  let intervalId: any;
 
   const [transList, setTransList] = useState<Array<any>>(list);
-  // const [viewableIndex, setViewableIndex] = useState<number | 0>(0);
-  const [intervalToggle, setIntervalToggle] = useState(true);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [page, setPage] = useState<number>(0);
+  const [bannerPage, setBannerPage] = useState<number>(1);
+  const [isBannerScroll, setIsBannerScroll] = useState(true);
+
   const perPage = transList?.length || 0;
+  const interval = useRef<any>();
 
   useEffect(() => {
-    updatePage();
     return () => {
-      clearInterval(intervalId);
+      clearInterval(interval.current);
     };
-  }, []);
+  }, [isBannerScroll]);
 
   useEffect(() => {
-    if (intervalToggle && flatRef) {
-      if (page === transList.length - 1) {
+    if (!isFocused) {
+      clearInterval(interval.current);
+    } else {
+      interval.current = setInterval(() => {
+        if (isBannerScroll) {
+          // console.log('인터벌::', isBannerScroll);
+          setBannerPage((state) => {
+            return state + 1;
+          });
+        }
+      }, 5000);
+    }
+  }, [isFocused, isBannerScroll]);
+
+  useEffect(() => {
+    if (flatRef) {
+      if (bannerPage === transList.length - 1) {
         const arr = [...transList, ...list];
         setTransList(arr);
       }
-      if (!isScrolling) {
-        if (page >= perPage) {
-          setPage(0);
-        } else if (Platform.OS === 'android') {
-          flatRef?.current?.scrollToIndex({ index: page, animated: true });
-        } else {
-          flatRef?.current?.scrollToIndex({ index: page, animated: true });
-        }
+      if (bannerPage >= perPage) {
+        setBannerPage(0);
+      } else if (Platform.OS === 'android') {
+        flatRef?.current?.scrollToIndex({ index: bannerPage, animated: true });
+      } else {
+        flatRef?.current?.scrollToIndex({ index: bannerPage, animated: true });
       }
     }
-  }, [page]);
-
-  // useEffect(() => {
-  //   if (isScrolling) {
-  //     clearInterval(intervalId);
-  //   }
-  // }, [isScrolling]);
-
-  useEffect(() => {
-    if (intervalToggle && intervalId) {
-      updatePage();
-    } else {
-      clearInterval(intervalId);
-    }
-  }, [intervalToggle]);
-
-  const updatePage = () => {
-    if (!intervalId) {
-      intervalId = setInterval(tick, 5000);
-    }
-  };
-
-  const tick = () => {
-    if (intervalToggle && flatRef && !isScrolling) {
-      setPage((state) => {
-        return state + 1;
-      });
-    }
-  };
+  }, [bannerPage]);
 
   const getItemLayout = (data: any, index: any) => {
     return { length: width - 32, offset: (width - 32) * index, index };
@@ -145,13 +130,22 @@ const BannerArea = (props: PropTypes) => {
       //   setViewableIndex(changeViewableIndex);
       // }
       if (info.changed) {
-        const tempIdx: number = info.changed[0]?.index || page;
-        setPage(tempIdx);
-        setIntervalToggle(true);
+        const tempIdx: number = info.changed[0]?.index || bannerPage;
+        // console.log('change:', tempIdx);
+        setBannerPage(tempIdx);
       }
     },
   );
 
+  const tickHandler = (key: 'on' | 'off') => {
+    if (key === 'on') {
+      // console.log('##############on#########');
+      setIsBannerScroll(true);
+    } else {
+      // console.log('@@@@@@@@@@@@@off@@@@@@@@@@');
+      setIsBannerScroll(false);
+    }
+  };
   return (
     <View style={{ flex: 1, marginTop: 60, paddingHorizontal: 16 }}>
       <FlatList
@@ -180,40 +174,14 @@ const BannerArea = (props: PropTypes) => {
         windowSize={7}
         pagingEnabled
         horizontal
-        // onScrollEndDrag={(event: NativeSyntheticEvent<any>) => {
-        //   if (viewableIndex === [...list, ...list, ...list]?.length - 1) {
-        //     if (Platform.OS === 'android') {
-        //       if (event?.nativeEvent?.velocity.x < 0) {
-        //         flatRef?.current?.scrollToIndex({ index: 0, animated: true });
-        //       }
-        //     } else if (event?.nativeEvent.velocity.x > 0) {
-        //       flatRef?.current?.scrollToIndex({ index: 0, animated: true });
-        //     }
-        //   }
-        // }}
-        // onTouchMove={() => {
-        //   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
-        //   return [
-        //     console.log('########################'),
-        //     setIntervalToggle(false),
-        //     setTimeout(() => {
-        //       setIntervalToggle(true);
-        //     }, 5000),
-        //   ];
-        // }}
         onScrollBeginDrag={() => {
-          console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
-          setIsScrolling(true);
-          clearInterval(intervalId);
+          tickHandler('off');
         }}
         onScrollEndDrag={() => {
-          console.log('#########################');
-          intervalId = setInterval(tick, 5000);
-          setIsScrolling(false);
+          tickHandler('on');
         }}
         disableIntervalMomentum
         decelerationRate="fast"
-        // snapToInterval={width - 32}
         showsHorizontalScrollIndicator={false}
         snapToAlignment={'start'}
         getItemLayout={getItemLayout}
@@ -222,7 +190,6 @@ const BannerArea = (props: PropTypes) => {
           itemVisiblePercentThreshold: 50,
         }}
         snapToOffsets={[...Array(transList.length)].map((x, i) => i * (width - 32))}
-        // snapToOffsets={[0, width - 32, (width - 32) * 2]}
       />
       <View
         style={{
@@ -237,7 +204,7 @@ const BannerArea = (props: PropTypes) => {
           renderItem={({ index }) => {
             return (
               <View>
-                {page % list?.length === index ? (
+                {bannerPage % list?.length === index ? (
                   <View style={{ width: 6, height: 6, marginRight: 4, borderRadius: 50, backgroundColor: 'white' }} />
                 ) : (
                   <View
@@ -247,7 +214,6 @@ const BannerArea = (props: PropTypes) => {
                       marginRight: 4,
                       borderRadius: 50,
                       backgroundColor: 'rgba(255,255,255,0.4)',
-                      // backgroundColor: 'blue',
                     }}
                   />
                 )}

@@ -22,9 +22,23 @@ const MapArea = (props: PropTypes) => {
   const { width, height } = useWindowDimensions();
   const { item, isRenderMap } = props;
 
-  const [chargeImageExpanded, setChargeImageExpanded] = useState<boolean>(false);
+  const [feeImageExpanded, setFeeImageExpanded] = useState<boolean>(false);
 
   const position = { latitude: parseFloat(item?.lat) || 37.553881, longitude: parseFloat(item?.lng) || 126.970488 };
+
+  const onTotalImage = (index: number) => {
+    dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'totalImage',
+        data: {
+          totalImageType: 'feeInfo',
+          totalImageList: [item?.menuImg],
+        },
+      }),
+    );
+
+    navigate('TotalImageScreen', { startIdx: index });
+  };
 
   const onPressButton = (type: InfoItemButtonType) => {
     switch (type) {
@@ -270,24 +284,27 @@ const MapArea = (props: PropTypes) => {
           </View>
           <View style={{ flex: 1, justifyContent: 'center' }}>
             <CustomText style={{ color: Color.Gray800, fontSize: 13, letterSpacing: -0.2 }}>{item?.charge}</CustomText>
-            <CustomButton onPress={() => setChargeImageExpanded((prev) => !prev)} style={{ marginTop: 7 }}>
-              <View style={{ width: 131, height: 24 }}>
-                <FastImage
-                  style={{ width: '100%', height: '100%' }}
-                  source={
-                    chargeImageExpanded
-                      ? require('@/Assets/Images/Button/btn_up.png')
-                      : require('@/Assets/Images/Button/btn.png')
-                  }
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              </View>
-            </CustomButton>
+            {item?.menuImg && (
+              <CustomButton onPress={() => setFeeImageExpanded((prev) => !prev)} style={{ marginTop: 7 }}>
+                <View style={{ width: 131, height: 24 }}>
+                  <FastImage
+                    style={{ width: '100%', height: '100%' }}
+                    source={
+                      feeImageExpanded
+                        ? require('@/Assets/Images/Button/btn_up.png')
+                        : require('@/Assets/Images/Button/btn.png')
+                    }
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                </View>
+              </CustomButton>
+            )}
           </View>
         </View>
-        {chargeImageExpanded && (
+        {feeImageExpanded && (
           <View style={{ marginTop: 10 }}>
-            <View
+            <CustomButton
+              onPress={() => onTotalImage(0)}
               style={{
                 width: width - 40,
                 height: ((width - 40) / 335) * 158,
@@ -295,16 +312,12 @@ const MapArea = (props: PropTypes) => {
                 borderRadius: 5,
               }}
             >
-              {/* <FastImage */}
-              {/*  style={{ width: '100%', height: '100%' }} */}
-              {/*  source={ */}
-              {/*    chargeImageExpanded */}
-              {/*      ? require('@/Assets/Images/Button/btn_up.png') */}
-              {/*      : require('@/Assets/Images/Button/btn.png') */}
-              {/*  } */}
-              {/*  resizeMode={FastImage.resizeMode.cover} */}
-              {/* /> */}
-            </View>
+              <FastImage
+                style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                source={{ uri: item?.menuImg || '' }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </CustomButton>
           </View>
         )}
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>

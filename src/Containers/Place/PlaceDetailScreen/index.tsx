@@ -17,7 +17,7 @@ import MapArea from '@/Containers/Place/PlaceDetailScreen/MapArea';
 import ReviewArea from '@/Containers/Place/PlaceDetailScreen/ReviewArea';
 import { HomeState, TICKET_TYPE } from '@/Stores/Home/InitialState';
 import PlaceActions from '@/Stores/Place/Actions';
-import { numberFormat, scrollCalendarHandler } from '@/Components/Function';
+import { JsonForm, numberFormat, scrollCalendarHandler } from '@/Components/Function';
 import CustomText from '@/Components/CustomText';
 import CustomButton from '@/Components/CustomButton';
 import { navigate } from '@/Services/NavigationService';
@@ -60,7 +60,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const starReview = placeDetail?.starReview || [];
   const together = placeDetail?.together || [];
   const event = placeDetail?.event || [];
-
+  console.log(JsonForm(place));
   useEffect(() => {
     dispatch(CommonActions.fetchCommonCode({ parentCode: 'competition', code: 'alkorbol' }));
     dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));
