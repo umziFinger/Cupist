@@ -3,7 +3,6 @@ import { Animated, FlatList, Platform, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { put } from 'redux-saga/effects';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { PlaceState } from '@/Stores/Place/InitialState';
