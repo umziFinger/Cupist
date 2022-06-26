@@ -302,12 +302,13 @@ const MapArea = (props: PropTypes) => {
           </View>
         </View>
         {feeImageExpanded && (
-          <View style={{ marginTop: 10 }}>
+          <View style={{ marginTop: 10, width: width - 40, height: width - 40 }}>
             <CustomButton
               onPress={() => onTotalImage(0)}
               style={{
-                width: width - 40,
-                height: ((width - 40) / 335) * 158,
+                // width: width - 40,
+                // height: ((width - 40) / 335) * 158,
+                // height: '100%',
                 backgroundColor: Color.Gray200,
                 borderRadius: 5,
               }}
