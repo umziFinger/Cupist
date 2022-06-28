@@ -1,8 +1,8 @@
 import { createReducer } from 'reduxsauce';
 import produce from 'immer';
 import { INITIAL_STATE } from '@/Stores/Place/InitialState';
-import { PlaceTypes } from './Actions';
 import { TICKET_TYPE } from '@/Stores/Home/InitialState';
+import { PlaceTypes } from './Actions';
 
 export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
   return produce(state, (draft) => {
@@ -382,6 +382,29 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
           draft.homeAlbamonList = data;
         } else {
           draft.homeAlbamonList = data?.length > 0 ? draft.homeAlbamonList.concat(data) : draft.homeAlbamonList;
+        }
+        break;
+      }
+
+      case 'removeReview': {
+        console.log('call reducer removeReview : ', data);
+        const idx = draft.placeReview.review.findIndex((review) => review.idx === data);
+        if (idx > -1) {
+          console.log('remove review 1 idx : ', idx);
+          draft.placeReview.review.splice(idx, 1);
+          draft.placeReview.reviewCnt -= 1;
+        }
+
+        draft.placeDetail.place.reviewCnt -= 1;
+        const latestReviewIdx = draft.placeDetail.latestReview.findIndex((review) => review.idx === data);
+        const starReviewIdx = draft.placeDetail.starReview.findIndex((review) => review.idx === data);
+        console.log('remove review 2 idx : ', latestReviewIdx);
+        console.log('remove review 3 idx : ', starReviewIdx);
+        if (latestReviewIdx > -1) {
+          draft.placeDetail.latestReview.splice(latestReviewIdx, 1);
+        }
+        if (latestReviewIdx > -1) {
+          draft.placeDetail.starReview.splice(starReviewIdx, 1);
         }
         break;
       }

@@ -59,7 +59,7 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
   const starReview = placeDetail?.starReview || [];
   const together = placeDetail?.together || [];
   const event = placeDetail?.event || [];
-  console.log(JsonForm(place));
+
   useEffect(() => {
     dispatch(CommonActions.fetchCommonCode({ parentCode: 'competition', code: 'alkorbol' }));
     dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isCompetitionProgress', data: false }));

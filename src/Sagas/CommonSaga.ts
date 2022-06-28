@@ -354,11 +354,13 @@ export function* fetchCommonReport(data: any): any {
 
       switch (reportType) {
         case 'placeReview': {
+          yield put(PlaceActions.fetchPlaceReducer({ type: 'removeReview', data: subIdx }));
           navigateGoBack();
           break;
         }
 
         default:
+          yield put(PlaceActions.fetchPlaceReducer({ type: 'removeReview', data: subIdx }));
           navigateGoBack();
       }
     } else {

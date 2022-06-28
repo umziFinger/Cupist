@@ -136,8 +136,8 @@ android {
         applicationId "kr.bolimi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 40
-        versionName "1.1.3"
+        versionCode 44
+        versionName "1.1.4"
         vectorDrawables.useSupportLibrary = true
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
         missingDimensionStrategy 'react-native-camera', 'general'

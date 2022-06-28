@@ -380,6 +380,29 @@ const PlaceReviewScreen = ({ route }: PropsType) => {
         onEndReachedThreshold={0.8}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={<View style={{ paddingBottom: heightInfo.statusHeight }} />}
+        ListEmptyComponent={
+          <View style={{ alignItems: 'center', paddingVertical: 60 }}>
+            <View style={{ width: 60, height: 60 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Common/emptyReview.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
+            <View style={{ justifyContent: 'center', marginTop: 8 }}>
+              <CustomText
+                style={{
+                  color: Color.Gray400,
+                  fontSize: 14,
+                  fontWeight: '500',
+                  fontStyle: 'normal',
+                  letterSpacing: -0.25,
+                  textAlign: 'center',
+                }}
+              >{`이 볼링장을 이용해보셨나요?\n볼링장에 대한 경험을 나눠주세요!`}</CustomText>
+            </View>
+          </View>
+        }
         onScroll={(e) => {
           if (e.nativeEvent.contentOffset.y > 60 && placeReview?.review?.length > 5) {
             setIsScroll(true);
