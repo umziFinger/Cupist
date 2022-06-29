@@ -100,7 +100,7 @@ const TicketSlider = (props: PropTypes) => {
                           <View
                             style={{
                               marginTop: 13,
-                              paddingVertical: allowedTime === 0 ? 20 : 16,
+                              paddingVertical: 16,
                               paddingLeft: 12,
                               paddingRight: time?.hasSoldOut ? 20 : allowedTime === 1 ? 12 : 44,
                               borderRadius: 5,

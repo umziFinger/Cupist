@@ -223,7 +223,7 @@ const PlaceListCard = (props: PropTypes) => {
                         : Color.Grayyellow50,
                     paddingLeft: 12,
                     paddingRight: ticket?.hasSoldOut ? 20 : item?.isSelectedFree ? 12 : 44,
-                    paddingVertical: item?.isSelectedNormal ? 20 : 16,
+                    paddingVertical: 16,
                     marginRight: 8,
                   }}
                 >
