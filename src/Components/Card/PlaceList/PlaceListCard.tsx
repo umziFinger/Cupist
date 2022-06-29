@@ -3,7 +3,7 @@ import { FlatList, useWindowDimensions, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
-import { Color } from '@/Assets/Color';
+import { Color, Opacity } from '@/Assets/Color';
 import { numberFormat } from '@/Components/Function';
 import PlaceActions from '@/Stores/Place/Actions';
 import CustomButton from '@/Components/CustomButton';
@@ -222,29 +222,33 @@ const PlaceListCard = (props: PropTypes) => {
                         ? Color.Gray100
                         : Color.Grayyellow50,
                     paddingLeft: 12,
-                    paddingRight: 21,
+                    paddingRight: ticket?.hasSoldOut ? 20 : item?.isSelectedFree ? 12 : 44,
                     paddingVertical: item?.isSelectedNormal ? 20 : 16,
                     marginRight: 8,
                   }}
                 >
                   {/* 자유볼링 티켓 */}
-                  {item?.isSelectedFree && (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                      }}
-                    >
+
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                    }}
+                  >
+                    {(item?.isSelectedFree || ticket?.hasSoldOut) && (
                       <View
                         style={{
                           backgroundColor:
                             selectedTicket?.idx === ticket.idx
                               ? Color.Primary1000
                               : ticket?.hasSoldOut
-                              ? Color.Gray300
+                              ? `${Color.Gray400}${Opacity._40}`
                               : Color.Grayyellow500,
                           paddingVertical: 1,
                           paddingHorizontal: 4,
-                          borderRadius: 2,
+                          borderTopLeftRadius: 2,
+                          borderBottomLeftRadius: 2,
+                          borderTopRightRadius: ticket?.hasSoldOut ? 2 : 0,
+                          borderBottomRightRadius: ticket?.hasSoldOut ? 2 : 0,
                           marginBottom: 8,
                         }}
                       >
@@ -254,7 +258,7 @@ const PlaceListCard = (props: PropTypes) => {
                               selectedTicket?.idx === ticket.idx
                                 ? Color.White
                                 : ticket?.hasSoldOut
-                                ? Color.Gray400
+                                ? Color.Gray600
                                 : Color.White,
                             fontSize: 11,
                             fontWeight: 'bold',
@@ -267,8 +271,37 @@ const PlaceListCard = (props: PropTypes) => {
                             : `잔여예약 ${ticket?.remainingCnt}`}
                         </CustomText>
                       </View>
-                    </View>
-                  )}
+                    )}
+                    {!ticket?.hasSoldOut && (
+                      <View
+                        style={{
+                          paddingVertical: 1,
+                          paddingHorizontal: 4,
+                          backgroundColor: ticket?.hasSoldOut
+                            ? Color.Gray300
+                            : selectedTicket?.idx === ticket?.idx
+                            ? `${Color.Primary1000}${Opacity._20}`
+                            : Color.Grayyellow200,
+                          borderTopLeftRadius: item?.isSelectedFree ? 0 : 2,
+                          borderBottomLeftRadius: item?.isSelectedFree ? 0 : 2,
+                          borderTopRightRadius: 2,
+                          borderBottomRightRadius: 2,
+                          marginBottom: 8,
+                        }}
+                      >
+                        <CustomText
+                          style={{
+                            fontSize: 11,
+                            fontWeight: '500',
+                            color: selectedTicket?.idx === ticket?.idx ? Color.Primary1000 : Color.Grayyellow500,
+                          }}
+                        >
+                          {ticket?.gameCnt === 0 ? '무제한 게임' : `${ticket?.gameCnt}게임 가능`}
+                        </CustomText>
+                      </View>
+                    )}
+                  </View>
+
                   <View style={{ justifyContent: 'center' }}>
                     <CustomText
                       style={{
@@ -292,19 +325,6 @@ const PlaceListCard = (props: PropTypes) => {
                       marginTop: 2,
                     }}
                   >
-                    {item?.isSelectedNormal && ticket?.hasSoldOut && (
-                      <View
-                        style={{
-                          backgroundColor: Color.Gray300,
-                          paddingVertical: 1,
-                          paddingHorizontal: 2,
-                          marginRight: 5,
-                          borderRadius: 2,
-                        }}
-                      >
-                        <CustomText style={{ color: Color.Gray400, fontSize: 11, fontWeight: 'bold' }}>마감</CustomText>
-                      </View>
-                    )}
                     <View style={{ justifyContent: 'center' }}>
                       <CustomText
                         style={{

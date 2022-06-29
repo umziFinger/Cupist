@@ -86,7 +86,7 @@ const DirectReservationRBS = () => {
                   <TicketSlider
                     allowedTimeArr={timeFilterIdx ? [timeFilterIdx - 1] : [0, 1]}
                     item={placeTicketList || {}}
-                    showDivider
+                    showDivider={timeFilterIdx === 0}
                     focusType={TICKET_TYPE.ALL}
                   />
                 </View>

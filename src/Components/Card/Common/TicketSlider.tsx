@@ -3,7 +3,7 @@ import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomText from '@/Components/CustomText';
-import { Color } from '@/Assets/Color';
+import { Color, Opacity } from '@/Assets/Color';
 import { DATA_TICKET_TIME } from '@/Components/Data/DATA_TICKET_TIME';
 import { numberFormat } from '@/Components/Function';
 import CustomButton from '@/Components/CustomButton';
@@ -25,6 +25,7 @@ const TicketSlider = (props: PropTypes) => {
   const normal = item?.normal || [];
   const free = item?.free || [];
 
+  console.log('@@@@@@@@@@@@@@@@@@@@', free);
   useMemo(() => {
     let findIdx = -1;
     if (focusType === TICKET_TYPE.NORMAL) {
@@ -101,7 +102,7 @@ const TicketSlider = (props: PropTypes) => {
                               marginTop: 13,
                               paddingVertical: allowedTime === 0 ? 20 : 16,
                               paddingLeft: 12,
-                              paddingRight: 21,
+                              paddingRight: time?.hasSoldOut ? 20 : allowedTime === 1 ? 12 : 44,
                               borderRadius: 5,
                               borderWidth: 1,
                               borderColor:
@@ -120,23 +121,28 @@ const TicketSlider = (props: PropTypes) => {
                             }}
                           >
                             {/* 자유볼링 티켓 */}
-                            {allowedTime === 1 && (
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                }}
-                              >
+
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                              }}
+                            >
+                              {(allowedTime === 1 || time?.hasSoldOut) && (
                                 <View
                                   style={{
                                     backgroundColor:
                                       selectedTicket?.idx === time.idx
                                         ? Color.Primary1000
                                         : time?.hasSoldOut
-                                        ? Color.Gray300
+                                        ? `${Color.Gray400}${Opacity._40}`
                                         : Color.Grayyellow500,
                                     paddingVertical: 1,
-                                    paddingHorizontal: 4,
-                                    borderRadius: 2,
+                                    paddingHorizontal: time?.hasSoldOut ? 2 : 4,
+                                    borderTopLeftRadius: 2,
+                                    borderBottomLeftRadius: 2,
+                                    borderTopRightRadius: time?.hasSoldOut ? 2 : 0,
+                                    borderBottomRightRadius: time?.hasSoldOut ? 2 : 0,
                                     marginBottom: 8,
                                   }}
                                 >
@@ -146,7 +152,7 @@ const TicketSlider = (props: PropTypes) => {
                                         selectedTicket?.idx === time.idx
                                           ? Color.White
                                           : time?.hasSoldOut
-                                          ? Color.Gray400
+                                          ? Color.Gray600
                                           : Color.White,
                                       fontSize: 11,
                                       fontWeight: 'bold',
@@ -159,8 +165,37 @@ const TicketSlider = (props: PropTypes) => {
                                       : `잔여예약 ${time?.remainingCnt}`}
                                   </CustomText>
                                 </View>
-                              </View>
-                            )}
+                              )}
+                              {!time?.hasSoldOut && (
+                                <View
+                                  style={{
+                                    paddingVertical: 1,
+                                    paddingHorizontal: 4,
+                                    backgroundColor: time?.hasSoldOut
+                                      ? Color.Gray300
+                                      : selectedTicket?.idx === time.idx
+                                      ? `${Color.Primary1000}${Opacity._20}`
+                                      : Color.Grayyellow200,
+                                    borderTopLeftRadius: allowedTime === 1 ? 0 : 2,
+                                    borderBottomLeftRadius: allowedTime === 1 ? 0 : 2,
+                                    borderTopRightRadius: 2,
+                                    borderBottomRightRadius: 2,
+                                    marginBottom: 8,
+                                  }}
+                                >
+                                  <CustomText
+                                    style={{
+                                      fontSize: 11,
+                                      fontWeight: '500',
+                                      color: selectedTicket?.idx === time.idx ? Color.Primary1000 : Color.Grayyellow500,
+                                    }}
+                                  >
+                                    {time?.gameCnt === 0 ? '무제한 게임' : `${time?.gameCnt}게임 가능`}
+                                  </CustomText>
+                                </View>
+                              )}
+                            </View>
+
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                               <CustomText
                                 style={{
@@ -185,21 +220,21 @@ const TicketSlider = (props: PropTypes) => {
                               }}
                             >
                               <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                                {allowedTime === 0 && time?.hasSoldOut && (
-                                  <View
-                                    style={{
-                                      backgroundColor: Color.Gray300,
-                                      paddingVertical: 1,
-                                      paddingHorizontal: 2,
-                                      marginRight: 5,
-                                      borderRadius: 2,
-                                    }}
-                                  >
-                                    <CustomText style={{ color: Color.Gray400, fontSize: 11, fontWeight: 'bold' }}>
-                                      마감
-                                    </CustomText>
-                                  </View>
-                                )}
+                                {/* {allowedTime === 0 && time?.hasSoldOut && ( */}
+                                {/*  <View */}
+                                {/*    style={{ */}
+                                {/*      backgroundColor: Color.Gray300, */}
+                                {/*      paddingVertical: 1, */}
+                                {/*      paddingHorizontal: 2, */}
+                                {/*      marginRight: 5, */}
+                                {/*      borderRadius: 2, */}
+                                {/*    }} */}
+                                {/*  > */}
+                                {/*    <CustomText style={{ color: Color.Gray400, fontSize: 11, fontWeight: 'bold' }}> */}
+                                {/*      마감 */}
+                                {/*    </CustomText> */}
+                                {/*  </View> */}
+                                {/* )} */}
 
                                 <CustomText
                                   style={{
@@ -243,7 +278,7 @@ const TicketSlider = (props: PropTypes) => {
                       showsHorizontalScrollIndicator={false}
                       contentContainerStyle={{ paddingLeft: 24 }}
                     />
-                    {showDivider && allowedTime === 1 && (
+                    {showDivider && allowedTime === 0 && free?.length > 0 && (
                       <View style={{ height: 8, backgroundColor: Color.Gray200, marginTop: 24 }} />
                     )}
                   </View>
