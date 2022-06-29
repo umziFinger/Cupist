@@ -4,37 +4,43 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from '@/Config';
 import { navigate } from '@/Services/NavigationService';
 
+let isTokenRefreshing = false;
+
 export const refreshAuthLogic = async (failedRequest?: any) => {
-  const token = await AsyncStorage.getItem('refreshToken');
-  if (token) {
-    console.log('토큰: ', token);
-    await axios
-      .post(Config.API_URL + Config.AUTH_RENEW_TOKEN_URL, { refreshToken: token })
-      .then((tokenRefreshResponse) => {
-        console.log('\n\n\n\n만료로 인한 리프레시 로직 start tokenRefreshResponse', tokenRefreshResponse.data);
-        console.log('\n\n\n');
-        const { accessToken, refreshToken } = tokenRefreshResponse.data.data;
-        AsyncStorage.setItem('accessToken', accessToken);
-        AsyncStorage.setItem('refreshToken', refreshToken);
-      })
-      .catch((e) => {
-        console.log('catch error refreshAuthLogic :', e);
+  if (!isTokenRefreshing) {
+    isTokenRefreshing = true;
+    const token = await AsyncStorage.getItem('refreshToken');
+    if (token) {
+      console.log('토큰: ', token);
+      await axios
+        .post(Config.API_URL + Config.AUTH_RENEW_TOKEN_URL, { refreshToken: token })
+        .then((tokenRefreshResponse) => {
+          console.log('\n\n\n\n만료로 인한 리프레시 로직 start tokenRefreshResponse', tokenRefreshResponse.data);
+          console.log('\n\n\n');
+          const { accessToken, refreshToken } = tokenRefreshResponse.data.data;
+          AsyncStorage.setItem('accessToken', accessToken);
+          AsyncStorage.setItem('refreshToken', refreshToken);
+        })
+        .catch((e) => {
+          console.log('catch error refreshAuthLogic :', e);
 
-        AsyncStorage.setItem('userIdx', '');
-        AsyncStorage.setItem('accessToken', '');
-        AsyncStorage.setItem('refreshToken', '');
+          AsyncStorage.setItem('userIdx', '');
+          AsyncStorage.setItem('accessToken', '');
+          AsyncStorage.setItem('refreshToken', '');
 
-        navigate('HomeScreen', { expired: true });
-        console.log('[refreshAuthLogic] error:', e);
-      });
-  } else {
-    AsyncStorage.setItem('userIdx', '');
-    AsyncStorage.setItem('accessToken', '');
-    AsyncStorage.setItem('refreshToken', '');
-    navigate('HomeScreen', { expired: true });
+          navigate('HomeScreen', { expired: true });
+          console.log('[refreshAuthLogic] error:', e);
+        });
+    } else {
+      AsyncStorage.setItem('userIdx', '');
+      AsyncStorage.setItem('accessToken', '');
+      AsyncStorage.setItem('refreshToken', '');
+      navigate('HomeScreen', { expired: true });
+    }
+
+    isTokenRefreshing = false;
+    return Promise.resolve();
   }
-
-  return Promise.resolve();
 };
 
 async function getAccessToken() {
