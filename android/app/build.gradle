@@ -136,7 +136,7 @@ android {
         applicationId "kr.bolimi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 44
+        versionCode 46
         versionName "1.1.4"
         vectorDrawables.useSupportLibrary = true
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
