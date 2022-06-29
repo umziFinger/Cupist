@@ -210,13 +210,13 @@ const PlaceListCard = (props: PropTypes) => {
                     borderWidth: 1,
                     borderRadius: 5,
                     borderColor:
-                      selectedTicket?.idx === ticket.idx
+                      selectedTicket?.idx === ticket?.idx
                         ? Color.Primary1000
                         : ticket?.hasSoldOut
                         ? 'transparent'
                         : Color.Gray300,
                     backgroundColor:
-                      selectedTicket?.idx === ticket.idx
+                      selectedTicket?.idx === ticket?.idx
                         ? 'rgba(255, 185, 10, 0.05)'
                         : ticket?.hasSoldOut
                         ? Color.Gray100
@@ -238,7 +238,7 @@ const PlaceListCard = (props: PropTypes) => {
                       <View
                         style={{
                           backgroundColor:
-                            selectedTicket?.idx === ticket.idx
+                            selectedTicket?.idx === ticket?.idx
                               ? Color.Primary1000
                               : ticket?.hasSoldOut
                               ? `${Color.Gray400}${Opacity._40}`
@@ -255,7 +255,7 @@ const PlaceListCard = (props: PropTypes) => {
                         <CustomText
                           style={{
                             color:
-                              selectedTicket?.idx === ticket.idx
+                              selectedTicket?.idx === ticket?.idx
                                 ? Color.White
                                 : ticket?.hasSoldOut
                                 ? Color.Gray600
@@ -264,7 +264,7 @@ const PlaceListCard = (props: PropTypes) => {
                             fontWeight: 'bold',
                           }}
                         >
-                          {selectedTicket?.idx === ticket.idx
+                          {selectedTicket?.idx === ticket?.idx
                             ? `잔여예약 ${ticket?.remainingCnt}`
                             : ticket?.hasSoldOut
                             ? '마감'
@@ -306,7 +306,7 @@ const PlaceListCard = (props: PropTypes) => {
                     <CustomText
                       style={{
                         color:
-                          selectedTicket?.idx === ticket.idx
+                          selectedTicket?.idx === ticket?.idx
                             ? Color.Grayyellow1000
                             : ticket?.hasSoldOut
                             ? Color.Gray400
@@ -329,7 +329,7 @@ const PlaceListCard = (props: PropTypes) => {
                       <CustomText
                         style={{
                           color:
-                            selectedTicket?.idx === ticket.idx
+                            selectedTicket?.idx === ticket?.idx
                               ? Color.Grayyellow1000
                               : ticket?.hasSoldOut
                               ? Color.Gray400

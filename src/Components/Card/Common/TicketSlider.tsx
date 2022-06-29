@@ -173,7 +173,7 @@ const TicketSlider = (props: PropTypes) => {
                                     paddingHorizontal: 4,
                                     backgroundColor: time?.hasSoldOut
                                       ? Color.Gray300
-                                      : selectedTicket?.idx === time.idx
+                                      : selectedTicket?.idx === time?.idx
                                       ? `${Color.Primary1000}${Opacity._20}`
                                       : Color.Grayyellow200,
                                     borderTopLeftRadius: allowedTime === 1 ? 0 : 2,
@@ -187,7 +187,8 @@ const TicketSlider = (props: PropTypes) => {
                                     style={{
                                       fontSize: 11,
                                       fontWeight: '500',
-                                      color: selectedTicket?.idx === time.idx ? Color.Primary1000 : Color.Grayyellow500,
+                                      color:
+                                        selectedTicket?.idx === time?.idx ? Color.Primary1000 : Color.Grayyellow500,
                                     }}
                                   >
                                     {time?.gameCnt === 0 ? '무제한 게임' : `${time?.gameCnt}게임 가능`}
@@ -200,7 +201,7 @@ const TicketSlider = (props: PropTypes) => {
                               <CustomText
                                 style={{
                                   color:
-                                    selectedTicket?.idx === time.idx
+                                    selectedTicket?.idx === time?.idx
                                       ? Color.Grayyellow1000
                                       : time?.hasSoldOut
                                       ? Color.Gray400
@@ -209,7 +210,7 @@ const TicketSlider = (props: PropTypes) => {
                                   fontWeight: '500',
                                 }}
                               >
-                                {time.startTime.substr(0, 5)} - {time.endTime.substr(0, 5)}
+                                {time?.startTime?.substr(0, 5)} - {time?.endTime?.substr(0, 5)}
                               </CustomText>
                             </View>
                             <View
