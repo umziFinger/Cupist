@@ -893,7 +893,6 @@ export function* fetchMyCouponList(data: any): any {
       url: Config.MY_COUPON_URL,
     };
     const response = yield call(Axios.GET, payload);
-    console.log('@@@@@@@@@@@@ COUPON 데이터 @@@@@@@@@@@@', JsonForm(response.data));
     if (response.result === true && response.code === null) {
       yield put(
         MyActions.fetchMyReducer({
