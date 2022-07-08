@@ -12,6 +12,7 @@ import MyActions from '@/Stores/My/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 import PlaceActions from '@/Stores/Place/Actions';
+import { JsonForm } from '@/Components/Function';
 
 export function* fetchMyPushYN(data: any): any {
   try {
@@ -892,6 +893,7 @@ export function* fetchMyCouponList(data: any): any {
       url: Config.MY_COUPON_URL,
     };
     const response = yield call(Axios.GET, payload);
+    console.log('@@@@@@@@@@@@ COUPON 데이터 @@@@@@@@@@@@', JsonForm(response.data));
     if (response.result === true && response.code === null) {
       yield put(
         MyActions.fetchMyReducer({

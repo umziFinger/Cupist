@@ -37,9 +37,7 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
           draft.myCouponList = data;
         } else {
           draft.myCouponList.coupon =
-            data.coupon.length > 0
-              ? draft.myCouponList?.coupon.concat(data.myCouponList.coupon)
-              : draft.myCouponList.coupon;
+            data.coupon.length > 0 ? draft.myCouponList?.coupon.concat(data.coupon) : draft.myCouponList.coupon;
         }
         break;
       }
