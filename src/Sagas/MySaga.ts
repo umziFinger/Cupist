@@ -12,6 +12,7 @@ import MyActions from '@/Stores/My/Actions';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import { SCREEN_TYPE } from '@/Components/Card/Common/PlaceXSmallCard';
 import PlaceActions from '@/Stores/Place/Actions';
+import { JsonForm } from '@/Components/Function';
 
 export function* fetchMyPushYN(data: any): any {
   try {
