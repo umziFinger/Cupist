@@ -14,7 +14,7 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
 
       case 'homeList': {
         draft.homeList.free = data.free;
-        draft.homeList.normal = data.normal;
+        draft.homeList.normal = data.normal?.slice(0, 4);
         draft.homeList.event = data.event;
         draft.homeList.banner = data.banner;
         draft.isHomeLoaded = true;

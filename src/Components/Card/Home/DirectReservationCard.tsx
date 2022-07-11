@@ -11,6 +11,7 @@ import HomeActions from '@/Stores/Home/Actions';
 import usePlaceDibs from '@/Hooks/usePlaceDibs';
 import PlaceActions from '@/Stores/Place/Actions';
 import { TICKET_TYPE } from '@/Stores/Home/InitialState';
+import { JsonForm } from '@/Components/Function';
 
 interface PropTypes {
   item: any;
@@ -104,8 +105,17 @@ const DirectReservationCard = (props: PropTypes) => {
             borderRadius: 5,
           }}
         >
+          <View
+            style={{ backgroundColor: Color.Primary1000, borderRadius: 4, paddingVertical: 4, paddingHorizontal: 7 }}
+          >
+            <CustomText style={{ color: Color.White, fontSize: 12 }}>
+              {item?.eventType === 'free' ? '자유볼링' : '시간제'}
+            </CustomText>
+          </View>
           <View>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item?.ticketName}</CustomText>
+            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12, marginLeft: 6 }}>
+              {item?.ticketName}
+            </CustomText>
           </View>
           <View style={{ height: 9, width: 1, backgroundColor: Color.Gray400, marginHorizontal: 6 }} />
           <View style={{ flex: 1 }}>

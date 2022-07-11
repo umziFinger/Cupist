@@ -9,12 +9,12 @@ import CustomDashed from '@/Components/CustomDashed';
 
 const WarningArea = () => {
   const { selectedTicket } = useSelector((state: PlaceState) => state.place);
+  // caution이 없는 경우 config에 하드코딩된 유의사항 넣어줌
   const warningItem = selectedTicket?.caution
     ? selectedTicket?.caution
     : selectedTicket?.eventType === 'normal'
     ? Config.NORMAL_CAUTION_INFO
     : Config.FREE_CAUTION_INFO;
-  console.log(warningItem?.split('\n'));
 
   return (
     <View style={{ flex: 1 }}>
@@ -24,17 +24,36 @@ const WarningArea = () => {
         </CustomText>
       </View>
       <View style={{ justifyContent: 'center', marginTop: 20 }}>
+        {selectedTicket?.eventType === 'free' && (
+          <CustomText
+            style={{
+              fontWeight: '500',
+              fontSize: 13,
+              letterSpacing: -0.2,
+              lineHeight: 18,
+              color: 'black',
+            }}
+          >
+            {`자유볼링은 정해진 시간동안 ${
+              selectedTicket?.gameCnt === 0
+                ? '무제한'
+                : selectedTicket?.gameCnt === 1
+                ? '1G'
+                : `1G ~ ${selectedTicket?.gameCnt}G`
+            }으로 즐길 수 있는 상품입니다.`}
+          </CustomText>
+        )}
         <FlatList
           data={warningItem?.split('\n')}
           renderItem={({ item, index }) => (
-            <View style={{ marginTop: index === 0 ? 0 : 8 }}>
+            <View style={{ marginTop: selectedTicket?.eventType === 'normal' && index === 0 ? 0 : 8 }}>
               <CustomText
                 style={{
-                  fontWeight: index === 0 ? '500' : 'normal',
-                  fontSize: index === 0 ? 13 : 12,
+                  fontWeight: selectedTicket?.eventType === 'normal' && index === 0 ? '500' : 'normal',
+                  fontSize: selectedTicket?.eventType === 'normal' && index === 0 ? 13 : 12,
                   letterSpacing: -0.2,
                   lineHeight: 18,
-                  color: index === 0 ? 'black' : Color.Gray600,
+                  color: selectedTicket?.eventType === 'normal' && index === 0 ? 'black' : Color.Gray600,
                 }}
               >
                 {item}

@@ -51,7 +51,8 @@ export function* fetchPlaceSearchList(data: any): any {
           page: data.params.page,
         }),
       );
-      yield put(PlaceActions.fetchPlaceReducer({ type: 'myAroundListPage', data: data.params.page + 1 }));
+      if (response.data.place?.length > 0)
+        yield put(PlaceActions.fetchPlaceReducer({ type: 'myAroundListPage', data: data.params.page + 1 }));
     } else {
       yield put(PlaceActions.fetchErrorHandler(response));
     }
