@@ -18,6 +18,7 @@ import { navigate } from '@/Services/NavigationService';
 import Config from '@/Config';
 import PlaceActions from '@/Stores/Place/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
+import { JsonForm } from '@/Components/Function';
 
 interface PropTypes {
   list: Array<any>;
