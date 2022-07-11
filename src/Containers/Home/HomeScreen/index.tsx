@@ -12,7 +12,6 @@ import { MainStackParamList } from '@/Navigators/MainNavigator';
 import { AuthState } from '@/Stores/Auth/InitialState';
 import 'moment/locale/ko';
 import CalendarSlider from '@/Components/Calendar/CalendarSlider';
-import DirectReservationArea from './DirectReservationArea';
 import HomeActions from '@/Stores/Home/Actions';
 import AuthActions from '@/Stores/Auth/Actions';
 import SearchActions from '@/Stores/Search/Actions';
@@ -31,6 +30,7 @@ import { LocationCheck } from '@/Components/Permission/Location';
 import AlbamonBanner from '@/Containers/Home/HomeScreen/AlbamonBanner';
 import AlbamonActions from '@/Stores/Albamon/Actions';
 import { navigate } from '@/Services/NavigationService';
+import DirectReservationArea from './DirectReservationArea';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -132,13 +132,14 @@ const HomeScreen = ({ route }: HomeProps) => {
     );
 
     // 홈 자유 볼링 호출
-    dispatch(
-      HomeActions.fetchHomeFreeBowlingPlaceList({
-        date: calendarDate,
-        lat: parseFloat(myLatitude?.toString()) || 37.56561,
-        lng: parseFloat(myLongitude?.toString()) || 126.97804,
-      }),
-    );
+    // 2022.07.11 미사용하는것으로 확인되어 주석처리
+    // dispatch(
+    //   HomeActions.fetchHomeFreeBowlingPlaceList({
+    //     date: calendarDate,
+    //     lat: parseFloat(myLatitude?.toString()) || 37.56561,
+    //     lng: parseFloat(myLongitude?.toString()) || 126.97804,
+    //   }),
+    // );
   };
 
   const onRefresh = () => {

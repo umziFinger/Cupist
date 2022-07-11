@@ -205,7 +205,7 @@ const SimpleLoginScreen = () => {
     //   pw: 'ghost323#',
     // };
     const params = {
-      email: 'koi@gmail.com',
+      email: 'koi@duople.com',
       password: 'seoha123!',
     };
     // const params = {
