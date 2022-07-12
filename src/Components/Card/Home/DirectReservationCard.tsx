@@ -117,9 +117,18 @@ const DirectReservationCard = (props: PropTypes) => {
               {item?.ticketName}
             </CustomText>
           </View>
-          <View style={{ height: 9, width: 1, backgroundColor: Color.Gray400, marginHorizontal: 6 }} />
+          <View
+            style={{
+              height: 9,
+              width: item?.minPrice === 0 ? 0 : 1,
+              backgroundColor: Color.Gray400,
+              marginHorizontal: 6,
+            }}
+          />
           <View style={{ flex: 1 }}>
-            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>{item?.minPrice}원 부터</CustomText>
+            <CustomText style={{ color: Color.Grayyellow1000, fontSize: 12 }}>
+              {item?.minPrice === 0 ? '' : `${item?.minPrice}원 부터`}
+            </CustomText>
           </View>
           <CustomButton onPress={() => onPressReservation()} hitSlop={10}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
