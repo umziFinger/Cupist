@@ -128,11 +128,11 @@ export function* fetchReservationSimplePayment(data: any): any {
     if (response.result === true && response.code === null) {
       yield put(ReservationActions.fetchReservationReducer({ type: 'paymentResult', data: response.data }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      if (isAlbamonPayment) {
-        navigate('RegistCompleteScreen');
-        navigateAndReset('RegistCompleteScreen');
-        yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
-      }
+      // if (isAlbamonPayment) {
+      //   navigate('RegistCompleteScreen');
+      //   navigateAndReset('RegistCompleteScreen');
+      //   yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
+      // }
       navigate('PaymentResultScreen');
       navigateAndReset('PaymentResultScreen');
     } else {

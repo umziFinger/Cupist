@@ -17,6 +17,7 @@ import { DATA_PAYMENT_METHOD } from '@/Containers/Reservation/ReservationScreen/
 import { navigate } from '@/Services/NavigationService';
 import Config from '@/Config';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
+import AlbamonActions from '@/Stores/Albamon/Actions';
 
 const ReservationRBS = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,8 @@ const ReservationRBS = () => {
   const onPressReservation = () => {
     console.log('최종결제 진행(RBS) : paymentInfo : ', paymentInfo);
     console.log('최종결제 진행(RBS) : reservationInfo : ', reservationInfo);
-
+    // 임의의 상황에 isAlbamonPayment가 true로 들어올 경우 대회신청이 되어버려서 방어코딩 적용
+    dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
     if (paymentInfo && reservationInfo) {
       if (paymentType === 'simple') {
         console.log('간편결제 진행합니다. : ', selcetedCardIdx);

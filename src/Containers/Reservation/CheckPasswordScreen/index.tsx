@@ -36,6 +36,8 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
 
     return () => {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentPwd', data: '' }));
+      // unMount될때 대회신청여부를 false로 리턴
+      dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
     };
   }, []);
 
@@ -119,7 +121,7 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
               {'비밀번호 확인'}
             </CustomText>
           </View>
-          <CustomButton onPress={() => onFocus()} style={{ paddingTop: 24 }}>
+          <CustomButton onPress={() => onFocus()} style={{ paddingVertical: 24, paddingHorizontal: 20 }}>
             <View style={{ flexDirection: 'row' }}>
               {showArr.map((item, index) => {
                 return (
@@ -138,7 +140,7 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
               })}
             </View>
           </CustomButton>
-          <CustomButton onPress={() => onPressReset()} style={{ marginTop: 60 }}>
+          <CustomButton onPress={() => onPressReset()} style={{ marginTop: 36 }}>
             <View>
               <CustomText
                 style={{

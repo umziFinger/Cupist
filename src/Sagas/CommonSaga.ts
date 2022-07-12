@@ -120,6 +120,9 @@ export function* fetchInitialHandler() {
 
   // 대회 정보 초기화
   yield put(CommonActions.fetchCommonReducer({ type: 'competitionInfo', data: null }));
+
+  // 대회신청 결제 플래그값 초기화
+  yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
 }
 
 export function* fetchErrorHandler(data: any) {
