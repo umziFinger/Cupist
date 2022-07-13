@@ -166,7 +166,7 @@ const TicketSlider = (props: PropTypes) => {
                                   </CustomText>
                                 </View>
                               )}
-                              {!time?.hasSoldOut && (
+                              {!time?.hasSoldOut && allowedTime === 1 && (
                                 <View
                                   style={{
                                     paddingVertical: 1,
