@@ -193,7 +193,7 @@ const TicketSlider = (props: PropTypes) => {
                                   >
                                     {time?.gameCnt === 0 || time?.eventType === 'normal'
                                       ? '무제한 게임'
-                                      : `${time?.gameCnt}게임 가능`}
+                                      : `최대 ${time?.gameCnt}게임`}
                                   </CustomText>
                                 </View>
                               )}

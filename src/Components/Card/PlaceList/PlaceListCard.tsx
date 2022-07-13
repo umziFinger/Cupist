@@ -298,7 +298,7 @@ const PlaceListCard = (props: PropTypes) => {
                         >
                           {ticket?.gameCnt === 0 || ticket?.eventType === 'normal'
                             ? '무제한 게임'
-                            : `${ticket?.gameCnt}게임 가능`}
+                            : `최대 ${ticket?.gameCnt}게임`}
                         </CustomText>
                       </View>
                     )}
