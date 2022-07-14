@@ -85,12 +85,6 @@ const TicketSlider = (props: PropTypes) => {
                           {DATA_TICKET_TIME[allowedTime].type}
                         </CustomText>
                       </View>
-                      {/* <View style={{ backgroundColor: Color.Gray300, width: 1, height: 11, marginRight: 6 }} /> */}
-                      {/* <View style={{ justifyContent: 'center' }}> */}
-                      {/*  <CustomText style={{ color: Color.Gray800, fontSize: 13 }}> */}
-                      {/*    {DATA_TICKET_TIME[index].time} */}
-                      {/*  </CustomText> */}
-                      {/* </View> */}
                     </View>
                     <FlatList
                       data={allowedTime === 0 ? normal : free}
@@ -120,7 +114,6 @@ const TicketSlider = (props: PropTypes) => {
                             }}
                           >
                             {/* 자유볼링 티켓 */}
-
                             <View
                               style={{
                                 flexDirection: 'row',
@@ -191,7 +184,7 @@ const TicketSlider = (props: PropTypes) => {
                                     }}
                                   >
                                     {time?.eventType === 'normal'
-                                      ? '예약가능'
+                                      ? `잔여레인 ${time?.remainingCnt || 0}`
                                       : time?.gameCnt === 0
                                       ? '무제한 게임'
                                       : `최대 ${time?.gameCnt}게임`}

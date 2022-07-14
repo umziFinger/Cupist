@@ -297,7 +297,7 @@ const PlaceListCard = (props: PropTypes) => {
                           }}
                         >
                           {ticket?.eventType === 'normal'
-                            ? '예약가능'
+                            ? `잔여레인 ${ticket?.remainingCnt || 0}`
                             : ticket?.gameCnt === 0
                             ? '무제한 게임'
                             : `최대 ${ticket?.gameCnt}게임`}
