@@ -25,7 +25,6 @@ const TicketSlider = (props: PropTypes) => {
   const normal = item?.normal || [];
   const free = item?.free || [];
 
-  console.log('@@@@@@@@@@@@@@@@@@@@', free);
   useMemo(() => {
     let findIdx = -1;
     if (focusType === TICKET_TYPE.NORMAL) {

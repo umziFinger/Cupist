@@ -52,7 +52,7 @@ const RegistScreen = ({ route }: PropTypes) => {
     registData,
     isReturn,
   } = useSelector((state: AlbamonState) => state.albamon);
-  console.log('@@@@@@@@@@@@@@@@@@@@', competitionsRegistInfo);
+
   const [gender, setGender] = useState('');
   const [clubName, setClubName] = useState('');
   const [placeName, setPlaceName] = useState('');
