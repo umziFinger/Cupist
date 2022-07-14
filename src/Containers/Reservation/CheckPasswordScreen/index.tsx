@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import produce from 'immer';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useFocusEffect, useIsFocused } from '@react-navigation/native';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
@@ -15,6 +15,7 @@ import ReservationActions from '@/Stores/Reservation/Actions';
 import { navigate } from '@/Services/NavigationService';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import AlbamonActions from '@/Stores/Albamon/Actions';
+import keyboard from '@/Components/Keyboard';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'CheckPasswordScreen'>;
@@ -23,6 +24,7 @@ interface PropTypes {
 const CheckPasswordScreen = ({ route }: PropTypes) => {
   const InputRef = useRef<any>();
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const { paymentIdx, billingIdx } = route.params;
   const { registData, competitionsRegistInfo, isAlbamonPayment } = useSelector((state: AlbamonState) => state.albamon);
   const { heightInfo } = useSelector((state: CommonState) => state.common);
@@ -31,15 +33,17 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
   const [validation, setValidation] = useState<boolean>(false);
 
   useEffect(() => {
-    // 간헐적으로 키보드 안열리는 현상때문에 didmount에서 처리하도록함 (안드로이드)
-    InputRef.current.focus();
-
     return () => {
       dispatch(ReservationActions.fetchReservationReducer({ type: 'paymentPwd', data: '' }));
       // unMount될때 대회신청여부를 false로 리턴
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
     };
   }, []);
+
+  useFocusEffect(() => {
+    // 간헐적으로 키보드 안열리는 현상때문에 didmount에서 처리하도록함 (안드로이드)
+    InputRef.current.focus();
+  });
 
   useEffect(() => {
     if (paymentPwd) {

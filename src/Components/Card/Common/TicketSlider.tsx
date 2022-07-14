@@ -190,9 +190,11 @@ const TicketSlider = (props: PropTypes) => {
                                         selectedTicket?.idx === time?.idx ? Color.Primary1000 : Color.Grayyellow500,
                                     }}
                                   >
-                                    {time?.gameCnt === 0 || time?.eventType === 'normal'
+                                    {time?.eventType === 'normal'
+                                      ? '예약가능'
+                                      : time?.gameCnt === 0
                                       ? '무제한 게임'
-                                      : `${time?.gameCnt}게임 가능`}
+                                      : `최대 ${time?.gameCnt}게임`}
                                   </CustomText>
                                 </View>
                               )}

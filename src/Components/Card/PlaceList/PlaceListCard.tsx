@@ -296,9 +296,11 @@ const PlaceListCard = (props: PropTypes) => {
                             color: selectedTicket?.idx === ticket?.idx ? Color.Primary1000 : Color.Grayyellow500,
                           }}
                         >
-                          {ticket?.gameCnt === 0 || ticket?.eventType === 'normal'
+                          {ticket?.eventType === 'normal'
+                            ? '예약가능'
+                            : ticket?.gameCnt === 0
                             ? '무제한 게임'
-                            : `${ticket?.gameCnt}게임 가능`}
+                            : `최대 ${ticket?.gameCnt}게임`}
                         </CustomText>
                       </View>
                     )}
