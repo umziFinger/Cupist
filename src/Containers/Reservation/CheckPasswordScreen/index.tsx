@@ -16,6 +16,7 @@ import { navigate } from '@/Services/NavigationService';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import AlbamonActions from '@/Stores/Albamon/Actions';
 import keyboard from '@/Components/Keyboard';
+import * as OS from 'os';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'CheckPasswordScreen'>;
@@ -169,9 +170,13 @@ const CheckPasswordScreen = ({ route }: PropTypes) => {
           fontSize: 0,
           padding: 0,
           position: 'absolute',
-          bottom: -100,
+          top: '45%',
+          left: -50,
+          right: 0,
+          height: 50,
+          display: Platform.OS === 'ios' ? 'none' : 'flex',
         }}
-        // autoFocus
+        autoFocus
         keyboardType="number-pad"
         autoCorrect={false}
         maxLength={6}

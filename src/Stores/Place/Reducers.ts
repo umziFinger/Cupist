@@ -92,6 +92,11 @@ export const fetchPlaceReducer = (state = INITIAL_STATE, actions: any) => {
         draft.placeDetail = INITIAL_STATE.placeDetail;
         draft.placeDetailIdx = INITIAL_STATE.placeDetailIdx;
         draft.placeTicketList = INITIAL_STATE.placeTicketList;
+
+        /*  MEMO 20220715
+            볼링장상세(티켓선택된상태) -> navi back -> 모두보기(시간제, 자유볼링)
+            페이지 이동했을때 하단에 상세에서 선택한 티켓 데이터 남는 현상있어서 초기화되도록함 */
+        draft.selectedTicket = null;
         break;
       }
 
