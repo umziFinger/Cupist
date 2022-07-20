@@ -17,7 +17,7 @@ const AlbamonBanner = () => {
         <FastImage
           style={{ width: '100%', height: '100%', borderRadius: 5 }}
           source={{
-            uri: `https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/homeBanner%403x.png?ver=${moment().unix()}`,
+            uri: `https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/homeBanner%403x.png`,
           }}
           resizeMode={FastImage.resizeMode.cover}
         />

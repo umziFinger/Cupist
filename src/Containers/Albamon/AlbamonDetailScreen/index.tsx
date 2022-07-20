@@ -70,7 +70,7 @@ const AlbamonDetailScreen = () => {
                 source={{
                   uri:
                     currentDate > fourthQualifiersDate
-                      ? 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/imgBannerDetail4%403x.png'
+                      ? `https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/imgBannerDetail4%403x.png?ver=${moment().unix()}`
                       : currentDate > thirdQualifiersDate
                       ? 'https://s3.ap-northeast-2.amazonaws.com/cdn.bolimi.kr/bolimi/static/event/albamon/imgBannerDetail3%403x.png'
                       : currentDate > secondQualifiersDate

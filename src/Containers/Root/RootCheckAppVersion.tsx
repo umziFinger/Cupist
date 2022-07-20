@@ -16,6 +16,8 @@ const RootCheckAppVersion = () => {
   const [marketVersion, setMarketVersion] = useState(''); // 앱 버전
   const [currentVersion, setCurrentVersion] = useState(''); // 현재 마켓 버전 (선택 업데이트)
   const [minimumVersion, setMinimumVersion] = useState(''); // 최소 마켓 버전 (강제 업데이트)
+  console.log('marketVersion : ', marketVersion);
+  console.log('minimumVersion : ', minimumVersion);
   const versionCheck = () => {
     if (marketVersion && currentVersion && minimumVersion) {
       let emergencyYN = 'N';
