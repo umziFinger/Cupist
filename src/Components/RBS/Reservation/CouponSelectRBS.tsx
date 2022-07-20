@@ -35,7 +35,7 @@ const CouponGuideRBS = () => {
   const onCouponDivision = (couponList: any) => {
     try {
       const usableCoupon = couponList?.filter((value: any) => {
-        if (value.Coupon.usePrice < totalPrice) {
+        if (value.Coupon.usePrice <= totalPrice) {
           return value;
         }
         return false;

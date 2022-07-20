@@ -18,6 +18,7 @@ import { navigate } from '@/Services/NavigationService';
 import Config from '@/Config';
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import AlbamonActions from '@/Stores/Albamon/Actions';
+import ReservationActions from '@/Stores/Reservation/Actions';
 
 const ReservationRBS = () => {
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ const ReservationRBS = () => {
           billingIdx: myCardList[selcetedCardIdx - 1].idx,
         });
         dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
-      } else {
+      } else if (paymentType !== 'simple' && paymentInfo?.totalPrice > 0) {
         console.log('일반결제 진행합니다. : ', DATA_PAYMENT_METHOD[paymentMethod]);
         dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
         const userCode = Config.USER_CODE;
@@ -83,6 +84,16 @@ const ReservationRBS = () => {
         };
         console.log('paymentMethod : ', DATA_PAYMENT_METHOD[paymentMethod]?.key);
         navigate('PaymentScreen', { userCode, data });
+      } else if (paymentInfo?.totalPrice === 0 && paymentInfo) {
+        // 일반결제[]이면서 결제금액이 0원인 경우 (쿠폰사용하여 결제금액 0인 경우)
+        dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenReservationRBS', data: false }));
+        dispatch(
+          ReservationActions.fetchReservationPaymentVerify({
+            impUid: '',
+            merchantUid: paymentInfo?.merchantUid,
+            paymentIdx: paymentInfo?.idx,
+          }),
+        );
       }
     }
   };
