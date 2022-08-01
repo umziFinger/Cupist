@@ -7,33 +7,65 @@ index 0000000..5ff383e
 +o/debug
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/BuildConfig.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/BuildConfig.dex
 new file mode 100644
-index 0000000..21689f8
-Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/BuildConfig.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.dex
 new file mode 100644
-index 0000000..6191912
-Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1.dex
 new file mode 100644
-index 0000000..75cf507
-Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule.dex
 new file mode 100644
-index 0000000..e9f6838
-Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginPackage.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginPackage.dex
 new file mode 100644
-index 0000000..f06a3e6
-Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginPackage.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/desugar_graph.bin b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/desugar_graph.bin
 new file mode 100644
-index 0000000..601f245
-Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/25ae03b5328312199787488a4949ec36/transformed/desugar_graph.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/4acaa0998cb6d80011535f4d049f0b2f/results.bin b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/4acaa0998cb6d80011535f4d049f0b2f/results.bin
 new file mode 100644
 index 0000000..1ed65e0
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/4acaa0998cb6d80011535f4d049f0b2f/results.bin
+@@ -0,0 +1 @@
++i/
+diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/results.bin b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/results.bin
+new file mode 100644
+index 0000000..5ff383e
+--- /dev/null
++++ b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/results.bin
+@@ -0,0 +1 @@
++o/debug
+diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/BuildConfig.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/BuildConfig.dex
+new file mode 100644
+index 0000000..21689f8
+Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/BuildConfig.dex differ
+diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.dex
+new file mode 100644
+index 0000000..206ebc5
+Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.dex differ
+diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1.dex
+new file mode 100644
+index 0000000..fdb9390
+Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1.dex differ
+diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule.dex
+new file mode 100644
+index 0000000..5c9cd36
+Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginModule.dex differ
+diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginPackage.dex b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginPackage.dex
+new file mode 100644
+index 0000000..f06a3e6
+Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/debug/com/dooboolab/naverlogin/RNNaverLoginPackage.dex differ
+diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/desugar_graph.bin b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/desugar_graph.bin
+new file mode 100644
+index 0000000..601f245
+Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/586e4ba62d0a6578a1ea8f282db83e51/transformed/desugar_graph.bin differ
+diff --git a/node_modules/@react-native-seoul/naver-login/android/build/.transforms/c20b725bffeebede79f56c09fd4126fe/results.bin b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/c20b725bffeebede79f56c09fd4126fe/results.bin
+new file mode 100644
+index 0000000..1ed65e0
+--- /dev/null
++++ b/node_modules/@react-native-seoul/naver-login/android/build/.transforms/c20b725bffeebede79f56c09fd4126fe/results.bin
 @@ -0,0 +1 @@
 +i/
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/generated/source/buildConfig/debug/com/dooboolab/naverlogin/BuildConfig.java b/node_modules/@react-native-seoul/naver-login/android/build/generated/source/buildConfig/debug/com/dooboolab/naverlogin/BuildConfig.java
@@ -54,17 +86,17 @@ index 0000000..440bae1
 +}
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
 new file mode 100644
-index 0000000..576c0de
+index 0000000..8907d6e
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,22 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +    package="com.dooboolab.naverlogin" >
 +
 +    <uses-sdk
 +        android:minSdkVersion="16"
-+        android:targetSdkVersion="26" />
++        android:targetSdkVersion="28" />
 +
 +    <uses-permission android:name="android.permission.INTERNET" />
 +    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -74,6 +106,9 @@ index 0000000..576c0de
 +            android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
 +            android:label="OAuth2.0 In-app"
 +            android:screenOrientation="portrait" />
++        <activity
++            android:name="com.nhn.android.naverlogin.ui.OAuthCustomTabActivity"
++            android:exported="true" />
 +    </application>
 +
 +</manifest>
@@ -119,18 +154,18 @@ index 0000000..9e26dfe
 \ No newline at end of file
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/compile_library_classes_jar/debug/classes.jar b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/compile_library_classes_jar/debug/classes.jar
 new file mode 100644
-index 0000000..49c039c
+index 0000000..9268c35
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/compile_library_classes_jar/debug/classes.jar differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/compile_r_class_jar/debug/R.jar b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/compile_r_class_jar/debug/R.jar
 new file mode 100644
-index 0000000..da1df70
+index 0000000..6592174
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/compile_r_class_jar/debug/R.jar differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/compile_symbol_list/debug/R.txt b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/compile_symbol_list/debug/R.txt
 new file mode 100644
-index 0000000..96c0188
+index 0000000..c0b162f
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/compile_symbol_list/debug/R.txt
-@@ -0,0 +1,1855 @@
+@@ -0,0 +1,2151 @@
 +int anim abc_fade_in 0x0
 +int anim abc_fade_out 0x0
 +int anim abc_grow_fade_in_from_bottom 0x0
@@ -208,6 +243,8 @@ index 0000000..96c0188
 +int attr backgroundTint 0x0
 +int attr backgroundTintMode 0x0
 +int attr barLength 0x0
++int attr barrierAllowsGoneWidgets 0x0
++int attr barrierDirection 0x0
 +int attr borderlessButtonStyle 0x0
 +int attr buttonBarButtonStyle 0x0
 +int attr buttonBarNegativeButtonStyle 0x0
@@ -221,6 +258,7 @@ index 0000000..96c0188
 +int attr buttonStyleSmall 0x0
 +int attr buttonTint 0x0
 +int attr buttonTintMode 0x0
++int attr chainUseRtl 0x0
 +int attr checkboxStyle 0x0
 +int attr checkedTextViewStyle 0x0
 +int attr closeIcon 0x0
@@ -239,6 +277,9 @@ index 0000000..96c0188
 +int attr colorPrimaryDark 0x0
 +int attr colorSwitchThumbNormal 0x0
 +int attr commitIcon 0x0
++int attr constraintSet 0x0
++int attr constraint_referenced_ids 0x0
++int attr content 0x0
 +int attr contentDescription 0x0
 +int attr contentInsetEnd 0x0
 +int attr contentInsetEndWithActions 0x0
@@ -266,6 +307,7 @@ index 0000000..96c0188
 +int attr editTextColor 0x0
 +int attr editTextStyle 0x0
 +int attr elevation 0x0
++int attr emptyVisibility 0x0
 +int attr expandActivityOverflowButtonDrawable 0x0
 +int attr fadeDuration 0x0
 +int attr failureImage 0x0
@@ -303,9 +345,59 @@ index 0000000..96c0188
 +int attr layout_anchor 0x0
 +int attr layout_anchorGravity 0x0
 +int attr layout_behavior 0x0
++int attr layout_constrainedHeight 0x0
++int attr layout_constrainedWidth 0x0
++int attr layout_constraintBaseline_creator 0x0
++int attr layout_constraintBaseline_toBaselineOf 0x0
++int attr layout_constraintBottom_creator 0x0
++int attr layout_constraintBottom_toBottomOf 0x0
++int attr layout_constraintBottom_toTopOf 0x0
++int attr layout_constraintCircle 0x0
++int attr layout_constraintCircleAngle 0x0
++int attr layout_constraintCircleRadius 0x0
++int attr layout_constraintDimensionRatio 0x0
++int attr layout_constraintEnd_toEndOf 0x0
++int attr layout_constraintEnd_toStartOf 0x0
++int attr layout_constraintGuide_begin 0x0
++int attr layout_constraintGuide_end 0x0
++int attr layout_constraintGuide_percent 0x0
++int attr layout_constraintHeight_default 0x0
++int attr layout_constraintHeight_max 0x0
++int attr layout_constraintHeight_min 0x0
++int attr layout_constraintHeight_percent 0x0
++int attr layout_constraintHorizontal_bias 0x0
++int attr layout_constraintHorizontal_chainStyle 0x0
++int attr layout_constraintHorizontal_weight 0x0
++int attr layout_constraintLeft_creator 0x0
++int attr layout_constraintLeft_toLeftOf 0x0
++int attr layout_constraintLeft_toRightOf 0x0
++int attr layout_constraintRight_creator 0x0
++int attr layout_constraintRight_toLeftOf 0x0
++int attr layout_constraintRight_toRightOf 0x0
++int attr layout_constraintStart_toEndOf 0x0
++int attr layout_constraintStart_toStartOf 0x0
++int attr layout_constraintTop_creator 0x0
++int attr layout_constraintTop_toBottomOf 0x0
++int attr layout_constraintTop_toTopOf 0x0
++int attr layout_constraintVertical_bias 0x0
++int attr layout_constraintVertical_chainStyle 0x0
++int attr layout_constraintVertical_weight 0x0
++int attr layout_constraintWidth_default 0x0
++int attr layout_constraintWidth_max 0x0
++int attr layout_constraintWidth_min 0x0
++int attr layout_constraintWidth_percent 0x0
 +int attr layout_dodgeInsetEdges 0x0
++int attr layout_editor_absoluteX 0x0
++int attr layout_editor_absoluteY 0x0
++int attr layout_goneMarginBottom 0x0
++int attr layout_goneMarginEnd 0x0
++int attr layout_goneMarginLeft 0x0
++int attr layout_goneMarginRight 0x0
++int attr layout_goneMarginStart 0x0
++int attr layout_goneMarginTop 0x0
 +int attr layout_insetEdge 0x0
 +int attr layout_keyline 0x0
++int attr layout_optimizationLevel 0x0
 +int attr lineHeight 0x0
 +int attr listChoiceBackgroundIndicator 0x0
 +int attr listDividerAlertDialog 0x0
@@ -320,6 +412,21 @@ index 0000000..96c0188
 +int attr listPreferredItemPaddingRight 0x0
 +int attr logo 0x0
 +int attr logoDescription 0x0
++int attr lottie_autoPlay 0x0
++int attr lottie_colorFilter 0x0
++int attr lottie_enableMergePathsForKitKatAndAbove 0x0
++int attr lottie_fallbackRes 0x0
++int attr lottie_fileName 0x0
++int attr lottie_imageAssetsFolder 0x0
++int attr lottie_loop 0x0
++int attr lottie_progress 0x0
++int attr lottie_rawRes 0x0
++int attr lottie_renderMode 0x0
++int attr lottie_repeatCount 0x0
++int attr lottie_repeatMode 0x0
++int attr lottie_scale 0x0
++int attr lottie_speed 0x0
++int attr lottie_url 0x0
 +int attr maxButtonHeight 0x0
 +int attr measureWithLargestChild 0x0
 +int attr multiChoiceItemLayout 0x0
@@ -481,6 +588,8 @@ index 0000000..96c0188
 +int color abc_tint_switch_track 0x0
 +int color accent_material_dark 0x0
 +int color accent_material_light 0x0
++int color androidx_core_ripple_material_light 0x0
++int color androidx_core_secondary_text_default_material_light 0x0
 +int color background_floating_material_dark 0x0
 +int color background_floating_material_light 0x0
 +int color background_material_dark 0x0
@@ -521,6 +630,8 @@ index 0000000..96c0188
 +int color material_grey_800 0x0
 +int color material_grey_850 0x0
 +int color material_grey_900 0x0
++int color nid_progress_dialog_background 0x0
++int color nid_progress_dialog_text 0x0
 +int color notification_action_color_filter 0x0
 +int color notification_icon_bg_color 0x0
 +int color notification_material_background_media_default_color 0x0
@@ -755,6 +866,7 @@ index 0000000..96c0188
 +int drawable close_btn_img_black 0x0
 +int drawable login_btn_img 0x0
 +int drawable naver_icon 0x0
++int drawable nid_progress_dialog_shape 0x0
 +int drawable notification_action_background 0x0
 +int drawable notification_bg 0x0
 +int drawable notification_bg_low 0x0
@@ -770,7 +882,40 @@ index 0000000..96c0188
 +int drawable redbox_top_border_background 0x0
 +int drawable tooltip_frame_dark 0x0
 +int drawable tooltip_frame_light 0x0
++int id accessibility_action_clickable_span 0x0
 +int id accessibility_actions 0x0
++int id accessibility_custom_action_0 0x0
++int id accessibility_custom_action_1 0x0
++int id accessibility_custom_action_10 0x0
++int id accessibility_custom_action_11 0x0
++int id accessibility_custom_action_12 0x0
++int id accessibility_custom_action_13 0x0
++int id accessibility_custom_action_14 0x0
++int id accessibility_custom_action_15 0x0
++int id accessibility_custom_action_16 0x0
++int id accessibility_custom_action_17 0x0
++int id accessibility_custom_action_18 0x0
++int id accessibility_custom_action_19 0x0
++int id accessibility_custom_action_2 0x0
++int id accessibility_custom_action_20 0x0
++int id accessibility_custom_action_21 0x0
++int id accessibility_custom_action_22 0x0
++int id accessibility_custom_action_23 0x0
++int id accessibility_custom_action_24 0x0
++int id accessibility_custom_action_25 0x0
++int id accessibility_custom_action_26 0x0
++int id accessibility_custom_action_27 0x0
++int id accessibility_custom_action_28 0x0
++int id accessibility_custom_action_29 0x0
++int id accessibility_custom_action_3 0x0
++int id accessibility_custom_action_30 0x0
++int id accessibility_custom_action_31 0x0
++int id accessibility_custom_action_4 0x0
++int id accessibility_custom_action_5 0x0
++int id accessibility_custom_action_6 0x0
++int id accessibility_custom_action_7 0x0
++int id accessibility_custom_action_8 0x0
++int id accessibility_custom_action_9 0x0
 +int id accessibility_hint 0x0
 +int id accessibility_label 0x0
 +int id accessibility_role 0x0
@@ -800,6 +945,7 @@ index 0000000..96c0188
 +int id alertTitle 0x0
 +int id app_download_banner 0x0
 +int id async 0x0
++int id automatic 0x0
 +int id blocking 0x0
 +int id bottom 0x0
 +int id browser_actions_header_text 0x0
@@ -821,6 +967,7 @@ index 0000000..96c0188
 +int id customPanel 0x0
 +int id decor_content_parent 0x0
 +int id default_activity_button 0x0
++int id dialog_button 0x0
 +int id edit_query 0x0
 +int id end 0x0
 +int id end_padder 0x0
@@ -834,35 +981,45 @@ index 0000000..96c0188
 +int id focusCrop 0x0
 +int id forever 0x0
 +int id fps_text 0x0
++int id gone 0x0
 +int id group_divider 0x0
++int id hardware 0x0
 +int id home 0x0
 +int id icon 0x0
 +int id icon_group 0x0
 +int id image 0x0
 +int id info 0x0
++int id invisible 0x0
 +int id italic 0x0
 +int id left 0x0
 +int id line1 0x0
 +int id line3 0x0
 +int id listMode 0x0
 +int id list_item 0x0
++int id lottie_layer_name 0x0
 +int id media_actions 0x0
 +int id message 0x0
 +int id multiply 0x0
++int id nid_progress_dialog_animation 0x0
++int id nid_progress_dialog_message 0x0
 +int id none 0x0
 +int id normal 0x0
 +int id notification_background 0x0
 +int id notification_main_column 0x0
 +int id notification_main_column_container 0x0
 +int id package_icon 0x0
-+int id package_list 0x0
 +int id package_name 0x0
++int id packed 0x0
++int id parent 0x0
 +int id parentPanel 0x0
++int id percent 0x0
 +int id progressBar 0x0
 +int id progress_circular 0x0
 +int id progress_horizontal 0x0
 +int id radio 0x0
 +int id react_test_id 0x0
++int id restart 0x0
++int id reverse 0x0
 +int id right 0x0
 +int id right_icon 0x0
 +int id right_side 0x0
@@ -891,8 +1048,11 @@ index 0000000..96c0188
 +int id search_voice_btn 0x0
 +int id select_dialog_listview 0x0
 +int id shortcut 0x0
++int id software 0x0
 +int id spacer 0x0
 +int id split_action_bar 0x0
++int id spread 0x0
++int id spread_inside 0x0
 +int id src_atop 0x0
 +int id src_in 0x0
 +int id src_over 0x0
@@ -901,6 +1061,11 @@ index 0000000..96c0188
 +int id submenuarrow 0x0
 +int id submit_area 0x0
 +int id tabMode 0x0
++int id tag_accessibility_actions 0x0
++int id tag_accessibility_clickable_spans 0x0
++int id tag_accessibility_heading 0x0
++int id tag_accessibility_pane_title 0x0
++int id tag_screen_reader_focusable 0x0
 +int id tag_transition_group 0x0
 +int id tag_unhandled_key_event_manager 0x0
 +int id tag_unhandled_key_listeners 0x0
@@ -922,6 +1087,7 @@ index 0000000..96c0188
 +int id webviewEndKey 0x0
 +int id webviewNaviBar 0x0
 +int id wholeView 0x0
++int id wrap 0x0
 +int id wrap_content 0x0
 +int integer abc_config_activityDefaultDur 0x0
 +int integer abc_config_activityShortDur 0x0
@@ -958,12 +1124,13 @@ index 0000000..96c0188
 +int layout abc_search_view 0x0
 +int layout abc_select_dialog_material 0x0
 +int layout abc_tooltip 0x0
++int layout activity_oauth_webview 0x0
 +int layout browser_actions_context_menu_page 0x0
 +int layout browser_actions_context_menu_row 0x0
++int layout custom_dialog 0x0
 +int layout dev_loading_view 0x0
 +int layout fps_view 0x0
-+int layout fragment_custom_tab_dialog 0x0
-+int layout nlogin_browser_view 0x0
++int layout nid_progress_dialog 0x0
 +int layout notification_action 0x0
 +int layout notification_action_tombstone 0x0
 +int layout notification_media_action 0x0
@@ -1380,6 +1547,7 @@ index 0000000..96c0188
 +int style Theme_AppCompat_Light_Dialog_MinWidth 0x0
 +int style Theme_AppCompat_Light_NoActionBar 0x0
 +int style Theme_AppCompat_NoActionBar 0x0
++int style Theme_AppCompat_Transparent_NoActionBar 0x0
 +int style Theme_Catalyst 0x0
 +int style Theme_Catalyst_LogBox 0x0
 +int style Theme_Catalyst_RedBox 0x0
@@ -1695,6 +1863,151 @@ index 0000000..96c0188
 +int styleable CompoundButton_android_button 0
 +int styleable CompoundButton_buttonTint 1
 +int styleable CompoundButton_buttonTintMode 2
++int[] styleable ConstraintLayout_Layout { 0x1010120, 0x101011f, 0x1010140, 0x101013f, 0x10100c4, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int styleable ConstraintLayout_Layout_android_maxHeight 0
++int styleable ConstraintLayout_Layout_android_maxWidth 1
++int styleable ConstraintLayout_Layout_android_minHeight 2
++int styleable ConstraintLayout_Layout_android_minWidth 3
++int styleable ConstraintLayout_Layout_android_orientation 4
++int styleable ConstraintLayout_Layout_barrierAllowsGoneWidgets 5
++int styleable ConstraintLayout_Layout_barrierDirection 6
++int styleable ConstraintLayout_Layout_chainUseRtl 7
++int styleable ConstraintLayout_Layout_constraintSet 8
++int styleable ConstraintLayout_Layout_constraint_referenced_ids 9
++int styleable ConstraintLayout_Layout_layout_constrainedHeight 10
++int styleable ConstraintLayout_Layout_layout_constrainedWidth 11
++int styleable ConstraintLayout_Layout_layout_constraintBaseline_creator 12
++int styleable ConstraintLayout_Layout_layout_constraintBaseline_toBaselineOf 13
++int styleable ConstraintLayout_Layout_layout_constraintBottom_creator 14
++int styleable ConstraintLayout_Layout_layout_constraintBottom_toBottomOf 15
++int styleable ConstraintLayout_Layout_layout_constraintBottom_toTopOf 16
++int styleable ConstraintLayout_Layout_layout_constraintCircle 17
++int styleable ConstraintLayout_Layout_layout_constraintCircleAngle 18
++int styleable ConstraintLayout_Layout_layout_constraintCircleRadius 19
++int styleable ConstraintLayout_Layout_layout_constraintDimensionRatio 20
++int styleable ConstraintLayout_Layout_layout_constraintEnd_toEndOf 21
++int styleable ConstraintLayout_Layout_layout_constraintEnd_toStartOf 22
++int styleable ConstraintLayout_Layout_layout_constraintGuide_begin 23
++int styleable ConstraintLayout_Layout_layout_constraintGuide_end 24
++int styleable ConstraintLayout_Layout_layout_constraintGuide_percent 25
++int styleable ConstraintLayout_Layout_layout_constraintHeight_default 26
++int styleable ConstraintLayout_Layout_layout_constraintHeight_max 27
++int styleable ConstraintLayout_Layout_layout_constraintHeight_min 28
++int styleable ConstraintLayout_Layout_layout_constraintHeight_percent 29
++int styleable ConstraintLayout_Layout_layout_constraintHorizontal_bias 30
++int styleable ConstraintLayout_Layout_layout_constraintHorizontal_chainStyle 31
++int styleable ConstraintLayout_Layout_layout_constraintHorizontal_weight 32
++int styleable ConstraintLayout_Layout_layout_constraintLeft_creator 33
++int styleable ConstraintLayout_Layout_layout_constraintLeft_toLeftOf 34
++int styleable ConstraintLayout_Layout_layout_constraintLeft_toRightOf 35
++int styleable ConstraintLayout_Layout_layout_constraintRight_creator 36
++int styleable ConstraintLayout_Layout_layout_constraintRight_toLeftOf 37
++int styleable ConstraintLayout_Layout_layout_constraintRight_toRightOf 38
++int styleable ConstraintLayout_Layout_layout_constraintStart_toEndOf 39
++int styleable ConstraintLayout_Layout_layout_constraintStart_toStartOf 40
++int styleable ConstraintLayout_Layout_layout_constraintTop_creator 41
++int styleable ConstraintLayout_Layout_layout_constraintTop_toBottomOf 42
++int styleable ConstraintLayout_Layout_layout_constraintTop_toTopOf 43
++int styleable ConstraintLayout_Layout_layout_constraintVertical_bias 44
++int styleable ConstraintLayout_Layout_layout_constraintVertical_chainStyle 45
++int styleable ConstraintLayout_Layout_layout_constraintVertical_weight 46
++int styleable ConstraintLayout_Layout_layout_constraintWidth_default 47
++int styleable ConstraintLayout_Layout_layout_constraintWidth_max 48
++int styleable ConstraintLayout_Layout_layout_constraintWidth_min 49
++int styleable ConstraintLayout_Layout_layout_constraintWidth_percent 50
++int styleable ConstraintLayout_Layout_layout_editor_absoluteX 51
++int styleable ConstraintLayout_Layout_layout_editor_absoluteY 52
++int styleable ConstraintLayout_Layout_layout_goneMarginBottom 53
++int styleable ConstraintLayout_Layout_layout_goneMarginEnd 54
++int styleable ConstraintLayout_Layout_layout_goneMarginLeft 55
++int styleable ConstraintLayout_Layout_layout_goneMarginRight 56
++int styleable ConstraintLayout_Layout_layout_goneMarginStart 57
++int styleable ConstraintLayout_Layout_layout_goneMarginTop 58
++int styleable ConstraintLayout_Layout_layout_optimizationLevel 59
++int[] styleable ConstraintLayout_placeholder { 0x0, 0x0 }
++int styleable ConstraintLayout_placeholder_content 0
++int styleable ConstraintLayout_placeholder_emptyVisibility 1
++int[] styleable ConstraintSet { 0x101031f, 0x1010440, 0x10100d0, 0x10100f5, 0x10100fa, 0x10103b6, 0x10100f7, 0x10100f9, 0x10103b5, 0x10100f8, 0x10100f4, 0x1010120, 0x101011f, 0x1010140, 0x101013f, 0x10100c4, 0x1010326, 0x1010327, 0x1010328, 0x1010324, 0x1010325, 0x1010320, 0x1010321, 0x1010322, 0x1010323, 0x10103fa, 0x10100dc, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int styleable ConstraintSet_android_alpha 0
++int styleable ConstraintSet_android_elevation 1
++int styleable ConstraintSet_android_id 2
++int styleable ConstraintSet_android_layout_height 3
++int styleable ConstraintSet_android_layout_marginBottom 4
++int styleable ConstraintSet_android_layout_marginEnd 5
++int styleable ConstraintSet_android_layout_marginLeft 6
++int styleable ConstraintSet_android_layout_marginRight 7
++int styleable ConstraintSet_android_layout_marginStart 8
++int styleable ConstraintSet_android_layout_marginTop 9
++int styleable ConstraintSet_android_layout_width 10
++int styleable ConstraintSet_android_maxHeight 11
++int styleable ConstraintSet_android_maxWidth 12
++int styleable ConstraintSet_android_minHeight 13
++int styleable ConstraintSet_android_minWidth 14
++int styleable ConstraintSet_android_orientation 15
++int styleable ConstraintSet_android_rotation 16
++int styleable ConstraintSet_android_rotationX 17
++int styleable ConstraintSet_android_rotationY 18
++int styleable ConstraintSet_android_scaleX 19
++int styleable ConstraintSet_android_scaleY 20
++int styleable ConstraintSet_android_transformPivotX 21
++int styleable ConstraintSet_android_transformPivotY 22
++int styleable ConstraintSet_android_translationX 23
++int styleable ConstraintSet_android_translationY 24
++int styleable ConstraintSet_android_translationZ 25
++int styleable ConstraintSet_android_visibility 26
++int styleable ConstraintSet_barrierAllowsGoneWidgets 27
++int styleable ConstraintSet_barrierDirection 28
++int styleable ConstraintSet_chainUseRtl 29
++int styleable ConstraintSet_constraint_referenced_ids 30
++int styleable ConstraintSet_layout_constrainedHeight 31
++int styleable ConstraintSet_layout_constrainedWidth 32
++int styleable ConstraintSet_layout_constraintBaseline_creator 33
++int styleable ConstraintSet_layout_constraintBaseline_toBaselineOf 34
++int styleable ConstraintSet_layout_constraintBottom_creator 35
++int styleable ConstraintSet_layout_constraintBottom_toBottomOf 36
++int styleable ConstraintSet_layout_constraintBottom_toTopOf 37
++int styleable ConstraintSet_layout_constraintCircle 38
++int styleable ConstraintSet_layout_constraintCircleAngle 39
++int styleable ConstraintSet_layout_constraintCircleRadius 40
++int styleable ConstraintSet_layout_constraintDimensionRatio 41
++int styleable ConstraintSet_layout_constraintEnd_toEndOf 42
++int styleable ConstraintSet_layout_constraintEnd_toStartOf 43
++int styleable ConstraintSet_layout_constraintGuide_begin 44
++int styleable ConstraintSet_layout_constraintGuide_end 45
++int styleable ConstraintSet_layout_constraintGuide_percent 46
++int styleable ConstraintSet_layout_constraintHeight_default 47
++int styleable ConstraintSet_layout_constraintHeight_max 48
++int styleable ConstraintSet_layout_constraintHeight_min 49
++int styleable ConstraintSet_layout_constraintHeight_percent 50
++int styleable ConstraintSet_layout_constraintHorizontal_bias 51
++int styleable ConstraintSet_layout_constraintHorizontal_chainStyle 52
++int styleable ConstraintSet_layout_constraintHorizontal_weight 53
++int styleable ConstraintSet_layout_constraintLeft_creator 54
++int styleable ConstraintSet_layout_constraintLeft_toLeftOf 55
++int styleable ConstraintSet_layout_constraintLeft_toRightOf 56
++int styleable ConstraintSet_layout_constraintRight_creator 57
++int styleable ConstraintSet_layout_constraintRight_toLeftOf 58
++int styleable ConstraintSet_layout_constraintRight_toRightOf 59
++int styleable ConstraintSet_layout_constraintStart_toEndOf 60
++int styleable ConstraintSet_layout_constraintStart_toStartOf 61
++int styleable ConstraintSet_layout_constraintTop_creator 62
++int styleable ConstraintSet_layout_constraintTop_toBottomOf 63
++int styleable ConstraintSet_layout_constraintTop_toTopOf 64
++int styleable ConstraintSet_layout_constraintVertical_bias 65
++int styleable ConstraintSet_layout_constraintVertical_chainStyle 66
++int styleable ConstraintSet_layout_constraintVertical_weight 67
++int styleable ConstraintSet_layout_constraintWidth_default 68
++int styleable ConstraintSet_layout_constraintWidth_max 69
++int styleable ConstraintSet_layout_constraintWidth_min 70
++int styleable ConstraintSet_layout_constraintWidth_percent 71
++int styleable ConstraintSet_layout_editor_absoluteX 72
++int styleable ConstraintSet_layout_editor_absoluteY 73
++int styleable ConstraintSet_layout_goneMarginBottom 74
++int styleable ConstraintSet_layout_goneMarginEnd 75
++int styleable ConstraintSet_layout_goneMarginLeft 76
++int styleable ConstraintSet_layout_goneMarginRight 77
++int styleable ConstraintSet_layout_goneMarginStart 78
++int styleable ConstraintSet_layout_goneMarginTop 79
 +int[] styleable CoordinatorLayout { 0x0, 0x0 }
 +int styleable CoordinatorLayout_keylines 0
 +int styleable CoordinatorLayout_statusBarBackground 1
@@ -1722,7 +2035,7 @@ index 0000000..96c0188
 +int styleable FontFamily_fontProviderFetchTimeout 3
 +int styleable FontFamily_fontProviderPackage 4
 +int styleable FontFamily_fontProviderQuery 5
-+int[] styleable FontFamilyFont { 0x1010532, 0x101053f, 0x0, 0x1010533, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int[] styleable FontFamilyFont { 0x1010532, 0x101053f, 0x1010570, 0x1010533, 0x101056f, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable FontFamilyFont_android_font 0
 +int styleable FontFamilyFont_android_fontStyle 1
 +int styleable FontFamilyFont_android_fontVariationSettings 2
@@ -1779,6 +2092,8 @@ index 0000000..96c0188
 +int[] styleable GradientColorItem { 0x10101a5, 0x1010514 }
 +int styleable GradientColorItem_android_color 0
 +int styleable GradientColorItem_android_offset 1
++int[] styleable LinearConstraintLayout { 0x10100c4 }
++int styleable LinearConstraintLayout_android_orientation 0
 +int[] styleable LinearLayoutCompat { 0x1010126, 0x1010127, 0x10100af, 0x10100c4, 0x1010128, 0x0, 0x0, 0x0, 0x0 }
 +int styleable LinearLayoutCompat_android_baselineAligned 0
 +int styleable LinearLayoutCompat_android_baselineAlignedChildIndex 1
@@ -1797,6 +2112,22 @@ index 0000000..96c0188
 +int[] styleable ListPopupWindow { 0x10102ac, 0x10102ad }
 +int styleable ListPopupWindow_android_dropDownHorizontalOffset 0
 +int styleable ListPopupWindow_android_dropDownVerticalOffset 1
++int[] styleable LottieAnimationView { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int styleable LottieAnimationView_lottie_autoPlay 0
++int styleable LottieAnimationView_lottie_colorFilter 1
++int styleable LottieAnimationView_lottie_enableMergePathsForKitKatAndAbove 2
++int styleable LottieAnimationView_lottie_fallbackRes 3
++int styleable LottieAnimationView_lottie_fileName 4
++int styleable LottieAnimationView_lottie_imageAssetsFolder 5
++int styleable LottieAnimationView_lottie_loop 6
++int styleable LottieAnimationView_lottie_progress 7
++int styleable LottieAnimationView_lottie_rawRes 8
++int styleable LottieAnimationView_lottie_renderMode 9
++int styleable LottieAnimationView_lottie_repeatCount 10
++int styleable LottieAnimationView_lottie_repeatMode 11
++int styleable LottieAnimationView_lottie_scale 12
++int styleable LottieAnimationView_lottie_speed 13
++int styleable LottieAnimationView_lottie_url 14
 +int[] styleable MenuGroup { 0x10101e0, 0x101000e, 0x10100d0, 0x10101de, 0x10101df, 0x1010194 }
 +int styleable MenuGroup_android_checkableBehavior 0
 +int styleable MenuGroup_android_enabled 1
@@ -1988,46 +2319,46 @@ index 0000000..96c0188
 +int xml rn_dev_preferences 0x0
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 new file mode 100644
-index 0000000..81ad695
+index 0000000..e9bbbb5
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/jniLibs"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/jniLibs"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 new file mode 100644
-index 0000000..132060d
+index 0000000..9b28df3
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/shaders"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/shaders"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 new file mode 100644
-index 0000000..2c84199
+index 0000000..ecbe498
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/assets"/><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/assets"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/assets"/><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/assets"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 new file mode 100644
-index 0000000..631a6e7
+index 0000000..68168c1
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 @@ -0,0 +1 @@
-+#Fri Nov 05 17:35:35 KST 2021
++#Sat Jul 30 14:05:20 KST 2022
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/packageDebugResources/merger.xml b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/packageDebugResources/merger.xml
 new file mode 100644
-index 0000000..2220151
+index 0000000..720b441
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/incremental/packageDebugResources/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/res"/><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/generated/res/rs/debug"/><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/res"/><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/generated/res/rs/debug"/><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/res"/></dataSet><mergedItems/></merger>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/res"/><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/generated/res/rs/debug"/><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/res"/><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/generated/res/rs/debug"/><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/debug/res"/></dataSet><mergedItems/></merger>
 \ No newline at end of file
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/BuildConfig.class b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/BuildConfig.class
 new file mode 100644
@@ -2035,15 +2366,15 @@ index 0000000..f07ba40
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/BuildConfig.class differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.class b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.class
 new file mode 100644
-index 0000000..60108ac
+index 0000000..e1b02c7
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.class differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginModule$1.class b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginModule$1.class
 new file mode 100644
-index 0000000..f108185
+index 0000000..d77d69b
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginModule$1.class differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginModule.class b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginModule.class
 new file mode 100644
-index 0000000..17a9695
+index 0000000..e635b4b
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginModule.class differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginPackage.class b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/javac/debug/classes/com/dooboolab/naverlogin/RNNaverLoginPackage.class
 new file mode 100644
@@ -2059,53 +2390,59 @@ index 0000000..78ac5b8
 +local
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
 new file mode 100644
-index 0000000..0b1f31e
+index 0000000..e02e538
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
-@@ -0,0 +1,30 @@
+@@ -0,0 +1,36 @@
 +1<?xml version="1.0" encoding="utf-8"?>
 +2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +3    package="com.dooboolab.naverlogin" >
 +4
 +5    <uses-sdk
 +6        android:minSdkVersion="16"
-+6-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
-+7        android:targetSdkVersion="26" />
-+7-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++6-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++7        android:targetSdkVersion="28" />
++7-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
 +8
 +9    <uses-permission android:name="android.permission.INTERNET" />
-+9-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:4:3-65
-+9-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:4:20-62
++9-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:4:3-65
++9-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:4:20-62
 +10    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-+10-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:5:3-77
-+10-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:5:20-74
++10-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:5:3-77
++10-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:5:20-74
 +11
 +12    <application>
-+12-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:6:3-11:17
++12-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:6:3-15:17
 +13        <activity
-+13-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:7:5-10:52
++13-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:7:5-11:17
 +14            android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
-+14-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:8:13-88
++14-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:8:13-88
 +15            android:label="OAuth2.0 In-app"
-+15-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:9:13-44
++15-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:9:13-44
 +16            android:screenOrientation="portrait" />
-+16-->/Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:10:13-49
-+17    </application>
-+18
-+19</manifest>
++16-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:10:13-49
++17        <activity
++17-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:13:5-109
++18            android:name="com.nhn.android.naverlogin.ui.OAuthCustomTabActivity"
++18-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:13:15-82
++19            android:exported="true" />
++19-->/Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:13:83-106
++20    </application>
++21
++22</manifest>
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml
 new file mode 100644
-index 0000000..576c0de
+index 0000000..8907d6e
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,22 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +    package="com.dooboolab.naverlogin" >
 +
 +    <uses-sdk
 +        android:minSdkVersion="16"
-+        android:targetSdkVersion="26" />
++        android:targetSdkVersion="28" />
 +
 +    <uses-permission android:name="android.permission.INTERNET" />
 +    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -2115,6 +2452,9 @@ index 0000000..576c0de
 +            android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
 +            android:label="OAuth2.0 In-app"
 +            android:screenOrientation="portrait" />
++        <activity
++            android:name="com.nhn.android.naverlogin.ui.OAuthCustomTabActivity"
++            android:exported="true" />
 +    </application>
 +
 +</manifest>
@@ -2156,15 +2496,15 @@ index 0000000..f07ba40
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/BuildConfig.class differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.class b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.class
 new file mode 100644
-index 0000000..60108ac
+index 0000000..e1b02c7
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1$1.class differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1.class b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1.class
 new file mode 100644
-index 0000000..f108185
+index 0000000..d77d69b
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginModule$1.class differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginModule.class b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginModule.class
 new file mode 100644
-index 0000000..17a9695
+index 0000000..e635b4b
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginModule.class differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginPackage.class b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginPackage.class
 new file mode 100644
@@ -2172,10 +2512,10 @@ index 0000000..ecfc4bd
 Binary files /dev/null and b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/runtime_library_classes_dir/debug/com/dooboolab/naverlogin/RNNaverLoginPackage.class differ
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
 new file mode 100644
-index 0000000..2082619
+index 0000000..c40dcc4
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
-@@ -0,0 +1,1381 @@
+@@ -0,0 +1,1519 @@
 +com.dooboolab.naverlogin
 +anim abc_fade_in
 +anim abc_fade_out
@@ -2254,6 +2594,8 @@ index 0000000..2082619
 +attr backgroundTint
 +attr backgroundTintMode
 +attr barLength
++attr barrierAllowsGoneWidgets
++attr barrierDirection
 +attr borderlessButtonStyle
 +attr buttonBarButtonStyle
 +attr buttonBarNegativeButtonStyle
@@ -2267,6 +2609,7 @@ index 0000000..2082619
 +attr buttonStyleSmall
 +attr buttonTint
 +attr buttonTintMode
++attr chainUseRtl
 +attr checkboxStyle
 +attr checkedTextViewStyle
 +attr closeIcon
@@ -2285,6 +2628,9 @@ index 0000000..2082619
 +attr colorPrimaryDark
 +attr colorSwitchThumbNormal
 +attr commitIcon
++attr constraintSet
++attr constraint_referenced_ids
++attr content
 +attr contentDescription
 +attr contentInsetEnd
 +attr contentInsetEndWithActions
@@ -2312,6 +2658,7 @@ index 0000000..2082619
 +attr editTextColor
 +attr editTextStyle
 +attr elevation
++attr emptyVisibility
 +attr expandActivityOverflowButtonDrawable
 +attr fadeDuration
 +attr failureImage
@@ -2349,9 +2696,59 @@ index 0000000..2082619
 +attr layout_anchor
 +attr layout_anchorGravity
 +attr layout_behavior
++attr layout_constrainedHeight
++attr layout_constrainedWidth
++attr layout_constraintBaseline_creator
++attr layout_constraintBaseline_toBaselineOf
++attr layout_constraintBottom_creator
++attr layout_constraintBottom_toBottomOf
++attr layout_constraintBottom_toTopOf
++attr layout_constraintCircle
++attr layout_constraintCircleAngle
++attr layout_constraintCircleRadius
++attr layout_constraintDimensionRatio
++attr layout_constraintEnd_toEndOf
++attr layout_constraintEnd_toStartOf
++attr layout_constraintGuide_begin
++attr layout_constraintGuide_end
++attr layout_constraintGuide_percent
++attr layout_constraintHeight_default
++attr layout_constraintHeight_max
++attr layout_constraintHeight_min
++attr layout_constraintHeight_percent
++attr layout_constraintHorizontal_bias
++attr layout_constraintHorizontal_chainStyle
++attr layout_constraintHorizontal_weight
++attr layout_constraintLeft_creator
++attr layout_constraintLeft_toLeftOf
++attr layout_constraintLeft_toRightOf
++attr layout_constraintRight_creator
++attr layout_constraintRight_toLeftOf
++attr layout_constraintRight_toRightOf
++attr layout_constraintStart_toEndOf
++attr layout_constraintStart_toStartOf
++attr layout_constraintTop_creator
++attr layout_constraintTop_toBottomOf
++attr layout_constraintTop_toTopOf
++attr layout_constraintVertical_bias
++attr layout_constraintVertical_chainStyle
++attr layout_constraintVertical_weight
++attr layout_constraintWidth_default
++attr layout_constraintWidth_max
++attr layout_constraintWidth_min
++attr layout_constraintWidth_percent
 +attr layout_dodgeInsetEdges
++attr layout_editor_absoluteX
++attr layout_editor_absoluteY
++attr layout_goneMarginBottom
++attr layout_goneMarginEnd
++attr layout_goneMarginLeft
++attr layout_goneMarginRight
++attr layout_goneMarginStart
++attr layout_goneMarginTop
 +attr layout_insetEdge
 +attr layout_keyline
++attr layout_optimizationLevel
 +attr lineHeight
 +attr listChoiceBackgroundIndicator
 +attr listDividerAlertDialog
@@ -2366,6 +2763,21 @@ index 0000000..2082619
 +attr listPreferredItemPaddingRight
 +attr logo
 +attr logoDescription
++attr lottie_autoPlay
++attr lottie_colorFilter
++attr lottie_enableMergePathsForKitKatAndAbove
++attr lottie_fallbackRes
++attr lottie_fileName
++attr lottie_imageAssetsFolder
++attr lottie_loop
++attr lottie_progress
++attr lottie_rawRes
++attr lottie_renderMode
++attr lottie_repeatCount
++attr lottie_repeatMode
++attr lottie_scale
++attr lottie_speed
++attr lottie_url
 +attr maxButtonHeight
 +attr measureWithLargestChild
 +attr multiChoiceItemLayout
@@ -2527,6 +2939,8 @@ index 0000000..2082619
 +color abc_tint_switch_track
 +color accent_material_dark
 +color accent_material_light
++color androidx_core_ripple_material_light
++color androidx_core_secondary_text_default_material_light
 +color background_floating_material_dark
 +color background_floating_material_light
 +color background_material_dark
@@ -2567,6 +2981,8 @@ index 0000000..2082619
 +color material_grey_800
 +color material_grey_850
 +color material_grey_900
++color nid_progress_dialog_background
++color nid_progress_dialog_text
 +color notification_action_color_filter
 +color notification_icon_bg_color
 +color notification_material_background_media_default_color
@@ -2801,6 +3217,7 @@ index 0000000..2082619
 +drawable close_btn_img_black
 +drawable login_btn_img
 +drawable naver_icon
++drawable nid_progress_dialog_shape
 +drawable notification_action_background
 +drawable notification_bg
 +drawable notification_bg_low
@@ -2816,7 +3233,40 @@ index 0000000..2082619
 +drawable redbox_top_border_background
 +drawable tooltip_frame_dark
 +drawable tooltip_frame_light
++id accessibility_action_clickable_span
 +id accessibility_actions
++id accessibility_custom_action_0
++id accessibility_custom_action_1
++id accessibility_custom_action_10
++id accessibility_custom_action_11
++id accessibility_custom_action_12
++id accessibility_custom_action_13
++id accessibility_custom_action_14
++id accessibility_custom_action_15
++id accessibility_custom_action_16
++id accessibility_custom_action_17
++id accessibility_custom_action_18
++id accessibility_custom_action_19
++id accessibility_custom_action_2
++id accessibility_custom_action_20
++id accessibility_custom_action_21
++id accessibility_custom_action_22
++id accessibility_custom_action_23
++id accessibility_custom_action_24
++id accessibility_custom_action_25
++id accessibility_custom_action_26
++id accessibility_custom_action_27
++id accessibility_custom_action_28
++id accessibility_custom_action_29
++id accessibility_custom_action_3
++id accessibility_custom_action_30
++id accessibility_custom_action_31
++id accessibility_custom_action_4
++id accessibility_custom_action_5
++id accessibility_custom_action_6
++id accessibility_custom_action_7
++id accessibility_custom_action_8
++id accessibility_custom_action_9
 +id accessibility_hint
 +id accessibility_label
 +id accessibility_role
@@ -2846,6 +3296,7 @@ index 0000000..2082619
 +id alertTitle
 +id app_download_banner
 +id async
++id automatic
 +id blocking
 +id bottom
 +id browser_actions_header_text
@@ -2867,6 +3318,7 @@ index 0000000..2082619
 +id customPanel
 +id decor_content_parent
 +id default_activity_button
++id dialog_button
 +id edit_query
 +id end
 +id end_padder
@@ -2880,35 +3332,45 @@ index 0000000..2082619
 +id focusCrop
 +id forever
 +id fps_text
++id gone
 +id group_divider
++id hardware
 +id home
 +id icon
 +id icon_group
 +id image
 +id info
++id invisible
 +id italic
 +id left
 +id line1
 +id line3
 +id listMode
 +id list_item
++id lottie_layer_name
 +id media_actions
 +id message
 +id multiply
++id nid_progress_dialog_animation
++id nid_progress_dialog_message
 +id none
 +id normal
 +id notification_background
 +id notification_main_column
 +id notification_main_column_container
 +id package_icon
-+id package_list
 +id package_name
++id packed
++id parent
 +id parentPanel
++id percent
 +id progressBar
 +id progress_circular
 +id progress_horizontal
 +id radio
 +id react_test_id
++id restart
++id reverse
 +id right
 +id right_icon
 +id right_side
@@ -2937,8 +3399,11 @@ index 0000000..2082619
 +id search_voice_btn
 +id select_dialog_listview
 +id shortcut
++id software
 +id spacer
 +id split_action_bar
++id spread
++id spread_inside
 +id src_atop
 +id src_in
 +id src_over
@@ -2947,6 +3412,11 @@ index 0000000..2082619
 +id submenuarrow
 +id submit_area
 +id tabMode
++id tag_accessibility_actions
++id tag_accessibility_clickable_spans
++id tag_accessibility_heading
++id tag_accessibility_pane_title
++id tag_screen_reader_focusable
 +id tag_transition_group
 +id tag_unhandled_key_event_manager
 +id tag_unhandled_key_listeners
@@ -2968,6 +3438,7 @@ index 0000000..2082619
 +id webviewEndKey
 +id webviewNaviBar
 +id wholeView
++id wrap
 +id wrap_content
 +integer abc_config_activityDefaultDur
 +integer abc_config_activityShortDur
@@ -3004,12 +3475,13 @@ index 0000000..2082619
 +layout abc_search_view
 +layout abc_select_dialog_material
 +layout abc_tooltip
++layout activity_oauth_webview
 +layout browser_actions_context_menu_page
 +layout browser_actions_context_menu_row
++layout custom_dialog
 +layout dev_loading_view
 +layout fps_view
-+layout fragment_custom_tab_dialog
-+layout nlogin_browser_view
++layout nid_progress_dialog
 +layout notification_action
 +layout notification_action_tombstone
 +layout notification_media_action
@@ -3426,6 +3898,7 @@ index 0000000..2082619
 +style Theme_AppCompat_Light_Dialog_MinWidth
 +style Theme_AppCompat_Light_NoActionBar
 +style Theme_AppCompat_NoActionBar
++style Theme_AppCompat_Transparent_NoActionBar
 +style Theme_Catalyst
 +style Theme_Catalyst_LogBox
 +style Theme_Catalyst_RedBox
@@ -3528,6 +4001,9 @@ index 0000000..2082619
 +styleable ButtonBarLayout allowStacking
 +styleable ColorStateListItem alpha android_alpha android_color
 +styleable CompoundButton android_button buttonTint buttonTintMode
++styleable ConstraintLayout_Layout android_maxHeight android_maxWidth android_minHeight android_minWidth android_orientation barrierAllowsGoneWidgets barrierDirection chainUseRtl constraintSet constraint_referenced_ids layout_constrainedHeight layout_constrainedWidth layout_constraintBaseline_creator layout_constraintBaseline_toBaselineOf layout_constraintBottom_creator layout_constraintBottom_toBottomOf layout_constraintBottom_toTopOf layout_constraintCircle layout_constraintCircleAngle layout_constraintCircleRadius layout_constraintDimensionRatio layout_constraintEnd_toEndOf layout_constraintEnd_toStartOf layout_constraintGuide_begin layout_constraintGuide_end layout_constraintGuide_percent layout_constraintHeight_default layout_constraintHeight_max layout_constraintHeight_min layout_constraintHeight_percent layout_constraintHorizontal_bias layout_constraintHorizontal_chainStyle layout_constraintHorizontal_weight layout_constraintLeft_creator layout_constraintLeft_toLeftOf layout_constraintLeft_toRightOf layout_constraintRight_creator layout_constraintRight_toLeftOf layout_constraintRight_toRightOf layout_constraintStart_toEndOf layout_constraintStart_toStartOf layout_constraintTop_creator layout_constraintTop_toBottomOf layout_constraintTop_toTopOf layout_constraintVertical_bias layout_constraintVertical_chainStyle layout_constraintVertical_weight layout_constraintWidth_default layout_constraintWidth_max layout_constraintWidth_min layout_constraintWidth_percent layout_editor_absoluteX layout_editor_absoluteY layout_goneMarginBottom layout_goneMarginEnd layout_goneMarginLeft layout_goneMarginRight layout_goneMarginStart layout_goneMarginTop layout_optimizationLevel
++styleable ConstraintLayout_placeholder content emptyVisibility
++styleable ConstraintSet android_alpha android_elevation android_id android_layout_height android_layout_marginBottom android_layout_marginEnd android_layout_marginLeft android_layout_marginRight android_layout_marginStart android_layout_marginTop android_layout_width android_maxHeight android_maxWidth android_minHeight android_minWidth android_orientation android_rotation android_rotationX android_rotationY android_scaleX android_scaleY android_transformPivotX android_transformPivotY android_translationX android_translationY android_translationZ android_visibility barrierAllowsGoneWidgets barrierDirection chainUseRtl constraint_referenced_ids layout_constrainedHeight layout_constrainedWidth layout_constraintBaseline_creator layout_constraintBaseline_toBaselineOf layout_constraintBottom_creator layout_constraintBottom_toBottomOf layout_constraintBottom_toTopOf layout_constraintCircle layout_constraintCircleAngle layout_constraintCircleRadius layout_constraintDimensionRatio layout_constraintEnd_toEndOf layout_constraintEnd_toStartOf layout_constraintGuide_begin layout_constraintGuide_end layout_constraintGuide_percent layout_constraintHeight_default layout_constraintHeight_max layout_constraintHeight_min layout_constraintHeight_percent layout_constraintHorizontal_bias layout_constraintHorizontal_chainStyle layout_constraintHorizontal_weight layout_constraintLeft_creator layout_constraintLeft_toLeftOf layout_constraintLeft_toRightOf layout_constraintRight_creator layout_constraintRight_toLeftOf layout_constraintRight_toRightOf layout_constraintStart_toEndOf layout_constraintStart_toStartOf layout_constraintTop_creator layout_constraintTop_toBottomOf layout_constraintTop_toTopOf layout_constraintVertical_bias layout_constraintVertical_chainStyle layout_constraintVertical_weight layout_constraintWidth_default layout_constraintWidth_max layout_constraintWidth_min layout_constraintWidth_percent layout_editor_absoluteX layout_editor_absoluteY layout_goneMarginBottom layout_goneMarginEnd layout_goneMarginLeft layout_goneMarginRight layout_goneMarginStart layout_goneMarginTop
 +styleable CoordinatorLayout keylines statusBarBackground
 +styleable CoordinatorLayout_Layout android_layout_gravity layout_anchor layout_anchorGravity layout_behavior layout_dodgeInsetEdges layout_insetEdge layout_keyline
 +styleable DrawerArrowToggle arrowHeadLength arrowShaftLength barLength color drawableSize gapBetweenBars spinBars thickness
@@ -3536,9 +4012,11 @@ index 0000000..2082619
 +styleable GenericDraweeHierarchy actualImageScaleType backgroundImage fadeDuration failureImage failureImageScaleType overlayImage placeholderImage placeholderImageScaleType pressedStateOverlayImage progressBarAutoRotateInterval progressBarImage progressBarImageScaleType retryImage retryImageScaleType roundAsCircle roundBottomEnd roundBottomLeft roundBottomRight roundBottomStart roundTopEnd roundTopLeft roundTopRight roundTopStart roundWithOverlayColor roundedCornerRadius roundingBorderColor roundingBorderPadding roundingBorderWidth viewAspectRatio
 +styleable GradientColor android_centerColor android_centerX android_centerY android_endColor android_endX android_endY android_gradientRadius android_startColor android_startX android_startY android_tileMode android_type
 +styleable GradientColorItem android_color android_offset
++styleable LinearConstraintLayout android_orientation
 +styleable LinearLayoutCompat android_baselineAligned android_baselineAlignedChildIndex android_gravity android_orientation android_weightSum divider dividerPadding measureWithLargestChild showDividers
 +styleable LinearLayoutCompat_Layout android_layout_gravity android_layout_height android_layout_weight android_layout_width
 +styleable ListPopupWindow android_dropDownHorizontalOffset android_dropDownVerticalOffset
++styleable LottieAnimationView lottie_autoPlay lottie_colorFilter lottie_enableMergePathsForKitKatAndAbove lottie_fallbackRes lottie_fileName lottie_imageAssetsFolder lottie_loop lottie_progress lottie_rawRes lottie_renderMode lottie_repeatCount lottie_repeatMode lottie_scale lottie_speed lottie_url
 +styleable MenuGroup android_checkableBehavior android_enabled android_id android_menuCategory android_orderInCategory android_visible
 +styleable MenuItem actionLayout actionProviderClass actionViewClass alphabeticModifiers android_alphabeticShortcut android_checkable android_checked android_enabled android_icon android_id android_menuCategory android_numericShortcut android_onClick android_orderInCategory android_title android_titleCondensed android_visible contentDescription iconTint iconTintMode numericModifiers showAsAction tooltipText
 +styleable MenuView android_headerBackground android_horizontalDivider android_itemBackground android_itemIconDisabledAlpha android_itemTextAppearance android_verticalDivider android_windowAnimationStyle preserveIconSpacing subMenuArrow
@@ -3559,53 +4037,59 @@ index 0000000..2082619
 +xml rn_dev_preferences
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/@react-native-seoul/naver-login/android/build/outputs/logs/manifest-merger-debug-report.txt
 new file mode 100644
-index 0000000..4429593
+index 0000000..5645f71
 --- /dev/null
 +++ b/node_modules/@react-native-seoul/naver-login/android/build/outputs/logs/manifest-merger-debug-report.txt
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,49 @@
 +-- Merging decision tree log ---
 +manifest
-+ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:2:1-12:12
-+INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:2:1-12:12
-+INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:2:1-12:12
++ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:2:1-16:12
++INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:2:1-16:12
++INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:2:1-16:12
 +	package
-+		ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:3:11-45
-+		INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:3:11-45
++		INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
 +	xmlns:android
-+		ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:2:11-69
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:2:11-69
 +uses-permission#android.permission.INTERNET
-+ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:4:3-65
++ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:4:3-65
 +	android:name
-+		ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:4:20-62
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:4:20-62
 +uses-permission#android.permission.ACCESS_NETWORK_STATE
-+ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:5:3-77
++ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:5:3-77
 +	android:name
-+		ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:5:20-74
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:5:20-74
 +application
-+ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:6:3-11:17
++ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:6:3-15:17
 +activity#com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity
-+ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:7:5-10:52
++ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:7:5-11:17
 +	android:screenOrientation
-+		ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:10:13-49
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:10:13-49
 +	android:label
-+		ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:9:13-44
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:9:13-44
 +	android:name
-+		ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:8:13-88
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:8:13-88
++activity#com.nhn.android.naverlogin.ui.OAuthCustomTabActivity
++ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:13:5-109
++	android:exported
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:13:83-106
++	android:name
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml:13:15-82
 +uses-sdk
-+INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
-+INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
 +	android:targetSdkVersion
-+		INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
 +	android:minSdkVersion
-+		INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/hyunjin/Desktop/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++		ADDED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/youngwuklee/Desktop/dev/bolimi-app/node_modules/@react-native-seoul/naver-login/android/src/main/AndroidManifest.xml
 diff --git a/node_modules/@react-native-seoul/naver-login/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt b/node_modules/@react-native-seoul/naver-login/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt
 new file mode 100644
 index 0000000..77d24c2
@@ -3624,7 +4108,7 @@ diff --git a/node_modules/@react-native-seoul/naver-login/ios/IosNaverLogin.m b/
 index ed3667c..c4d495c 100644
 --- a/node_modules/@react-native-seoul/naver-login/ios/IosNaverLogin.m
 +++ b/node_modules/@react-native-seoul/naver-login/ios/IosNaverLogin.m
-@@ -77,7 +77,7 @@ -(void)oauth20ConnectionDidFinishDeleteToken {
+@@ -77,7 +77,7 @@ RCT_EXPORT_METHOD(login:(NSDictionary *)key callback:(RCTResponseSenderBlock)cal
      [naverConn setAppName:[key objectForKey:@"kServiceAppName"]];
      [naverConn setServiceUrlScheme:[key objectForKey:@"kServiceAppUrlScheme"]];
  
