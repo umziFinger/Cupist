@@ -2,14 +2,13 @@ import React, { useEffect } from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import HTMLView from 'react-native-htmlview';
+import HTML from 'react-native-render-html';
 import { Color } from '@/Assets/Color';
 import Header from '@/Components/Header';
 import CustomText from '@/Components/CustomText';
 import { CommonState } from '@/Stores/Common/InitialState';
 import { MyState } from '@/Stores/My/InitialState';
 import MyActions from '@/Stores/My/Actions';
-import CustomButton from '@/Components/CustomButton';
 
 const NoticeDetailScreen = () => {
   const dispatch = useDispatch();
@@ -17,8 +16,6 @@ const NoticeDetailScreen = () => {
   const { heightInfo } = useSelector((state: CommonState) => state.common);
   const { myNoticeDetail } = useSelector((state: MyState) => state.my);
 
-  const noticeType = '';
-  console.log(myNoticeDetail?.content);
   useEffect(() => {
     return () => {
       dispatch(
@@ -38,32 +35,32 @@ const NoticeDetailScreen = () => {
           data={[0]}
           renderItem={() => (
             <View style={{ marginTop: 16 }}>
-              <View style={{ paddingHorizontal: 24 }}>
-                <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Gray600 }}>
-                  {myNoticeDetail?.regDateView || ''}
-                </CustomText>
-                <View style={{ marginTop: 8 }}>
-                  <CustomText style={{ fontSize: 16, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}>
-                    {myNoticeDetail?.title || ''}
+              <View style={{}}>
+                <View style={{ paddingHorizontal: 24 }}>
+                  <CustomText style={{ fontSize: 13, letterSpacing: -0.2, color: Color.Gray600 }}>
+                    {myNoticeDetail?.regDateView || ''}
                   </CustomText>
+                  <View style={{ marginTop: 8 }}>
+                    <CustomText
+                      style={{ fontSize: 16, fontWeight: '500', letterSpacing: -0.25, color: Color.Black1000 }}
+                    >
+                      {myNoticeDetail?.title || ''}
+                    </CustomText>
+                  </View>
+                  <View style={{ height: 1, backgroundColor: Color.Gray200, marginTop: 20, marginBottom: 10 }} />
                 </View>
-                <View style={{ height: 1, backgroundColor: Color.Gray200, marginVertical: 20 }} />
-                {/* <CustomText style={{ fontSize: 14, letterSpacing: -0.25, color: Color.Black1000 }}> */}
-                {/*  {myNoticeDetail?.content || ''} */}
-                {/* </CustomText> */}
-                {/* <WebView */}
-                {/*  originWhitelist={['*']} */}
-                {/*  onError={(event: any) => { */}
-                {/*    console.log('웹뷰 에러', event); */}
-                {/*  }} */}
-                {/*  source={{ */}
-                {/*    html: `<Text>${myNoticeDetail?.content || ''}</Text>`, */}
-                {/*  }} */}
-                {/* /> */}
-                {/* <WebView originWhitelist={['*']} source={{ html: '<p>Here I am</p>' }} /> */}
-                {/* </CustomText> */}
 
-                <HTMLView value={`${myNoticeDetail?.content || ''}`} />
+                {/* <HTMLView value={`${myNoticeDetail?.content || ''}`} /> */}
+                <HTML
+                  containerStyle={{
+                    paddingHorizontal: 24,
+                    paddingBottom: 24,
+                  }}
+                  contentWidth={width}
+                  source={{
+                    html: `${myNoticeDetail?.content || ''}`,
+                  }}
+                />
               </View>
 
               {myNoticeDetail?.NoticePhoto?.length > 0 && (
