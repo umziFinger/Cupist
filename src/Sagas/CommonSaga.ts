@@ -123,6 +123,11 @@ export function* fetchInitialHandler() {
 
   // 대회신청 결제 플래그값 초기화
   yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
+
+  // 내주변 상단 기존 알코볼 필터 선택되어있던 유저들을 위한 초기화 (20220831 koi)
+  yield put(
+    PlaceActions.fetchPlaceReducer({ type: 'myAroundSort', data: { index: 0, key: 'distance', value: '거리순' } }),
+  );
 }
 
 export function* fetchErrorHandler(data: any) {
