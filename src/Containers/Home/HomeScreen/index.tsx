@@ -115,12 +115,12 @@ const HomeScreen = ({ route }: HomeProps) => {
     let areaCode;
 
     if (areaFilterIdx > 1) {
-      areaCode = areaList[areaFilterIdx - 2]?.code;
-      console.log('지역명 : ', areaList[areaFilterIdx - 2]?.area);
+      areaCode = areaList[areaFilterIdx - 3]?.code;
+      console.log('지역명 : ', areaList[areaFilterIdx - 3]?.area);
     }
 
     // 홈 바로 예약 호출
-    console.log('@@@@@@@@@@@@@@@ calendar 재설정시 홈화면 갱신 @@@@@@@@@@@@@@');
+    console.log('@@@@@@@@@@@@@@@ calendar 재설정시 홈화면 갱신 @@@@@@@@@@@@@@ : ', areaCode);
     dispatch(
       HomeActions.fetchHomeDirectReservationList({
         ...params,

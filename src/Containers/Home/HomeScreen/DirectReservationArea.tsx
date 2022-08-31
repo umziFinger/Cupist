@@ -15,10 +15,8 @@ import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
 import HomeActions from '@/Stores/Home/Actions';
 import CommonActions from '@/Stores/Common/Actions';
 import { navigate } from '@/Services/NavigationService';
-import Config from '@/Config';
 import PlaceActions from '@/Stores/Place/Actions';
 import { PlaceState } from '@/Stores/Place/InitialState';
-import { JsonForm } from '@/Components/Function';
 
 interface PropTypes {
   list: Array<any>;
@@ -36,8 +34,6 @@ const DirectReservationArea = (props: PropTypes) => {
   const date = calendarDate ? moment(calendarDate).format('YYYY/MM/DD') : moment().format('YYYY/MM/DD');
   const getDirectReservationList = (idx: number) => {
     const areaCode = areaFilter()[idx].key;
-    // const startTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].startTime : null;
-    // const endTime = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].endTime : null;
     const type = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].key : 'all';
 
     let params = {};
@@ -89,7 +85,7 @@ const DirectReservationArea = (props: PropTypes) => {
 
     // 홈 필터에 알바몬 추가, 알바몬 눌렀을떄
     if (value === 2) {
-      dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
+      /* dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
       const params = {
         // areaCode: Config.APP_MODE === 'dev' ? location.areaCode || '1019' : location.areaCode,
         date,
@@ -99,7 +95,17 @@ const DirectReservationArea = (props: PropTypes) => {
         perPage: 10,
         page: 1,
       };
-      dispatch(PlaceActions.fetchPlaceSearchList(params));
+      dispatch(PlaceActions.fetchPlaceSearchList(params)); */
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertDialog',
+          data: {
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogTitle: '대회 준비중입니다.\n조금만 기다려 주세요!',
+          },
+        }),
+      );
       return;
     }
     dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: value }));
@@ -129,7 +135,7 @@ const DirectReservationArea = (props: PropTypes) => {
     {
       index: 2,
       key: 'albamon',
-      value: '알.코.볼',
+      value: '대회',
       color: Color.Grayyellow1000,
       backgroundColor: 'transparent',
     },

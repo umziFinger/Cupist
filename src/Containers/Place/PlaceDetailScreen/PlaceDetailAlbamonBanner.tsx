@@ -11,14 +11,14 @@ import AlbamonActions from '@/Stores/Albamon/Actions';
 import { CommonState } from '@/Stores/Common/InitialState';
 
 const PlaceDetailAlbamonBanner = () => {
+  const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const { userInfo, userIdx } = useSelector((state: AuthState) => state.auth);
   const { placeDetail } = useSelector((state: PlaceState) => state.place);
   const { competitionInfo } = useSelector((state: CommonState) => state.common);
-  const dispatch = useDispatch();
   const place = placeDetail?.place;
+
   const onPressBanner = () => {
-    console.log('@@@@@@@@@@@@@@@@@ USERINFO : ', userInfo);
     if (!userIdx) {
       navigate('AlbamonDetailScreen');
       return;

@@ -21,7 +21,7 @@ const AlbamonBanner = () => {
       >
         <FastImage
           style={{ width: '100%', height: '100%', borderRadius: 5 }}
-          source={require('@/Assets/Images/Albamon/v31.png')}
+          source={require('@/Assets/Images/Albamon/youtube_link_v1.png')}
           resizeMode={FastImage.resizeMode.cover}
         />
       </CustomButton>

@@ -171,11 +171,9 @@ const MyAroundScreen = () => {
         <AnimatedFlatList
           data={activeFilter ? myAroundList : []}
           renderItem={({ item }: any) => (
-            <>
-              <View style={{ paddingHorizontal: 20 }}>
-                <PlaceLargeCard item={item} type={'myAround'} />
-              </View>
-            </>
+            <View style={{ paddingHorizontal: 20 }}>
+              <PlaceLargeCard item={item} type={'myAround'} />
+            </View>
           )}
           initialNumToRender={3}
           maxToRenderPerBatch={6}
@@ -186,14 +184,6 @@ const MyAroundScreen = () => {
           onEndReachedThreshold={0.8}
           refreshing={false}
           onRefresh={() => onRefresh()}
-          // onScroll={(e) => {
-          //   // console.log(e.nativeEvent);
-          //   if (e.nativeEvent.contentOffset.y > 60 && myAroundList?.length > 2) {
-          //     setIsScroll(true);
-          //   } else {
-          //     setIsScroll(false);
-          //   }
-          // }}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
             listener: (e) => handleScroll(e),
             useNativeDriver: true,

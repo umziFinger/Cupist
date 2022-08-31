@@ -12,6 +12,7 @@ import CustomButton from '@/Components/CustomButton';
 import { PlaceState } from '@/Stores/Place/InitialState';
 import PlaceActions from '@/Stores/Place/Actions';
 import MyAroundCalendarSlider from '@/Components/Calendar/MyAroundCalendarSlider';
+import CommonActions from '@/Stores/Common/Actions';
 
 const SORT_TAG = [
   {
@@ -32,7 +33,7 @@ const SORT_TAG = [
   {
     index: 3,
     key: 'albamon',
-    value: '알코볼',
+    value: '대회 준비중',
   },
 ];
 
@@ -50,7 +51,21 @@ const MyAroundHeader = (props: HeaderProps) => {
   };
 
   const onSelectSort = (item: any) => {
-    dispatch(PlaceActions.fetchPlaceReducer({ type: 'myAroundSort', data: item }));
+    if (item?.key !== 'albamon') {
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'myAroundSort', data: item }));
+    } else {
+      dispatch(PlaceActions.fetchPlaceReducer({ type: 'myAroundSort', data: myAroundSort }));
+      dispatch(
+        CommonActions.fetchCommonReducer({
+          type: 'alertDialog',
+          data: {
+            alertDialog: true,
+            alertDialogType: 'confirm',
+            alertDialogTitle: '대회 준비중입니다.\n조금만 기다려 주세요!',
+          },
+        }),
+      );
+    }
   };
 
   return (
@@ -203,12 +218,7 @@ const MyAroundHeader = (props: HeaderProps) => {
                     />
                   </View>
 
-                  <View
-                    style={{
-                      marginLeft: 4,
-                      alignItems: 'center',
-                    }}
-                  >
+                  <View style={{ marginLeft: 4, alignItems: 'center' }}>
                     <CustomText
                       style={{
                         fontSize: 14,

@@ -28,10 +28,8 @@ const CalendarSlider = () => {
   const competitionEndDate = competitionsRegistInfo?.competitions?.qualifiersEndDate;
 
   useEffect(() => {
-    // dispatch(AlbamonActions.fetchCompetitionsRegistInfo({ isMoveScreen: false, placeIdx: -1, placeDetailName: '' }));
     return (
       dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'albamonDate', data: '' })),
-      // dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() })),
       setHeaderDate(moment(calendarDate).format('MM월 YYYY'))
     );
   }, []);
@@ -71,7 +69,6 @@ const CalendarSlider = () => {
   }, [placeDetailSelectedTab, competitionStartDate, competitionEndDate]);
 
   useEffect(() => {
-    console.log('=-=-==-=-==-=-=-=-=-', albamonDate);
     if (placeDetailSelectedTab.key === 'default') {
       setHeaderDate(moment(calendarDate).format('MM월 YYYY'));
     } else {
@@ -81,12 +78,10 @@ const CalendarSlider = () => {
 
   // 선택 가능 날짜 범위
   const datesWhitelist = (date: any) => {
-    // console.log(`${date.format('YYYYMMDD')}: ${date.format('YYYYMMDD') >= moment().format('YYYYMMDD')}`);
     return date.format('YYYYMMDD') >= moment().format('YYYYMMDD');
   };
 
   const onPressDate = (date: any) => {
-    // console.log('onPressDate : ', calendarDate);
     setHeaderDate(date.format('MM월 YYYY'));
     if (placeDetailSelectedTab.key === 'default') {
       dispatch(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(date).toString() }));
@@ -96,7 +91,6 @@ const CalendarSlider = () => {
   };
 
   const onPressHeader = () => {
-    console.log('onPressHeader');
     dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenCalendarRBS', data: true }));
   };
 
@@ -108,7 +102,6 @@ const CalendarSlider = () => {
     const current = moment(value?.date);
     const { selected, onDateSelected } = value;
 
-    // onBlackItemCounter(current);
     // 요일
     const day = current.format('dd');
     // 일
@@ -118,9 +111,6 @@ const CalendarSlider = () => {
     if (day === '토') fontColor = Color.Calendar_Blue;
     if (day === '일') fontColor = Color.Calendar_Red;
 
-    // if (current.format('YYYYMMDD') < moment().format('YYYYMMDD')) {
-    //   return null;
-    // }
     return (
       <CustomButton
         onPress={() => {
@@ -170,7 +160,6 @@ const CalendarSlider = () => {
             if (moment(date).format('YYYYMMDD') < moment().format('YYYYMMDD')) {
               console.log('스크롤 시작', moment(date));
               calendarRef?.current.updateWeekView(date);
-              console.log(date);
             }
           }}
           onWeekScrollEnd={(date) => {

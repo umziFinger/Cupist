@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, FlatList, Platform, View } from 'react-native';
+import { Animated, FlatList, Linking, Platform, useWindowDimensions, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -31,6 +31,7 @@ import { PLACE_DETAIL_TAB_DATA } from '@/Containers/Place/PlaceDetailScreen/data
 import { AlbamonState } from '@/Stores/Albamon/InitialState';
 import UnsupportAlbamon from '@/Containers/Place/PlaceDetailScreen/UnsupportAlbamon';
 import NonArticleAlbamon from '@/Containers/Place/PlaceDetailScreen/NonArticleAlbamon';
+import FastImage from 'react-native-fast-image';
 
 interface PropTypes {
   route: RouteProp<MainStackParamList, 'PlaceDetailScreen'>;
@@ -164,6 +165,29 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
     dispatch(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
   };
 
+  const { width } = useWindowDimensions();
+  const TempYoutubeLinkBanner = () => {
+    return (
+      <View style={{ flex: 1, marginTop: 17, alignItems: 'center' }}>
+        <CustomButton
+          style={{ height: ((width - 40) / 336) * 186, width: width - 40 }}
+          onPress={() => {
+            Linking.openURL('vnd.youtube://channel/UCDB9dSAZh5jDE2adRfHbrrw').catch((e) => {
+              console.log(e);
+              Linking.openURL('https://www.youtube.com/channel/UCDB9dSAZh5jDE2adRfHbrrw');
+            });
+          }}
+        >
+          <FastImage
+            style={{ width: '100%', height: '100%', borderRadius: 5 }}
+            source={require('@/Assets/Images/Albamon/youtube_link_v1.png')}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </CustomButton>
+      </View>
+    );
+  };
+
   const renderItem = (item: number) => {
     switch (item) {
       case 0: {
@@ -177,7 +201,9 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         return (
           <View style={{ flex: 1, marginTop: 20, paddingHorizontal: 20 }}>
             <TitleArea item={place} />
-            <PlaceDetailAlbamonBanner />
+            {/* 20220826 알바몬 대회 종료로 대회 신청 베너 제거 후 유튭 링크로 대체 */}
+            {/* <PlaceDetailAlbamonBanner /> */}
+            <TempYoutubeLinkBanner />
           </View>
         );
       }
@@ -185,7 +211,8 @@ const PlaceDetailScreen = ({ route }: PropTypes) => {
         return (
           <View style={{ flex: 1, marginTop: 28 }}>
             <View style={{ height: 8, backgroundColor: Color.Gray200 }} />
-            <TabMenu type={'albamon'} data={PLACE_DETAIL_TAB_DATA} />
+            {/* <TabMenu type={'albamon'} data={PLACE_DETAIL_TAB_DATA} /> */}
+            <TabMenu type={'preparing'} data={PLACE_DETAIL_TAB_DATA} />
             {(placeDetailSelectedTab.key === 'default' || (place?.albamonYn === 'Y' && isCompetitionProgress)) && (
               <View style={{ marginTop: 30, paddingLeft: 20 }}>
                 <CalendarSlider />
