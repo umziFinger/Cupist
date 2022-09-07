@@ -22,6 +22,71 @@ import {
 
 // common
 import {
+  fetchMyCouponList,
+  fetchMyReviewList,
+  fetchMyPushYN,
+  fetchMySmsSend,
+  fetchMyPlacePatch,
+  fetchMyProfileImagePatch,
+  fetchMyProfilePatch,
+  fetchMyNoticeList,
+  fetchMyNoticeDetailInfo,
+  fetchMyEventList,
+  fetchMyEventDetailInfo,
+  fetchMyQnaList,
+  fetchMyQnaWrite,
+  fetchMyQnaDetailInfo,
+  fetchMyNotificationPushYN,
+  fetchMyMarketingPushYN,
+  fetchMyEventPushYN,
+  fetchMyWithdraw,
+  fetchMyReservationList,
+  fetchMyReservationDetailInfo,
+  fetchMyReservationCancelDetailInfo,
+  fetchMyReviewWrite,
+  fetchMyReviewModify,
+  fetchMyReviewDelete,
+  fetchMyPasswordModify,
+  fetchMyCouponAdd,
+  fetchMyProfileRingme,
+  fetchMyReservationCheckDetail,
+  fetchMyRefundBank,
+  fetchMyCompetitionsList,
+  fetchMyReservationReceipt,
+} from '@/Sagas/MySaga';
+import {
+  fetchPlaceAroundList,
+  fetchPlaceDetail,
+  fetchPlaceRecentList,
+  fetchPlaceReviewList,
+  fetchPlaceSearchList,
+  fetchPlaceTicketList,
+  fetchPlaceList,
+  fetchPlaceEventHotList,
+  fetchPlaceDibsList,
+  fetchPlaceEventHotDetail,
+} from '@/Sagas/PlaceSaga';
+import {
+  fetchReservation,
+  fetchReservationCardList,
+  fetchReservationInfo,
+  fetchReservationCancel,
+  fetchReservationSimplePayment,
+  fetchReservationCard,
+  fetchReservationDeleteCard,
+  fetchReservationPaymentSign,
+  fetchReservationPaymentVerify,
+  fetchReservationCertification,
+} from '@/Sagas/ReservationSaga';
+import {
+  fetchCompetitionsClubSearch,
+  fetchCompetitionsPaymentVerify,
+  fetchCompetitionsPlaceSearch,
+  fetchCompetitionsRegist,
+  fetchCompetitionsRegistInfo,
+  fetchCompetitionsVerify,
+} from '@/Sagas/AlbamonSaga';
+import {
   fetchInitialHandler,
   fetchErrorHandler,
   fetchSkeletonNavigate,
@@ -63,74 +128,8 @@ import {
 } from './NotificationSaga';
 
 // my
-import {
-  fetchMyCouponList,
-  fetchMyReviewList,
-  fetchMyPushYN,
-  fetchMySmsSend,
-  fetchMyPlacePatch,
-  fetchMyProfileImagePatch,
-  fetchMyProfilePatch,
-  fetchMyNoticeList,
-  fetchMyNoticeDetailInfo,
-  fetchMyEventList,
-  fetchMyEventDetailInfo,
-  fetchMyQnaList,
-  fetchMyQnaWrite,
-  fetchMyQnaDetailInfo,
-  fetchMyNotificationPushYN,
-  fetchMyMarketingPushYN,
-  fetchMyEventPushYN,
-  fetchMyWithdraw,
-  fetchMyReservationList,
-  fetchMyReservationDetailInfo,
-  fetchMyReservationCancelDetailInfo,
-  fetchMyReviewWrite,
-  fetchMyReviewModify,
-  fetchMyReviewDelete,
-  fetchMyPasswordModify,
-  fetchMyCouponAdd,
-  fetchMyProfileRingme,
-  fetchMyReservationCheckDetail,
-  fetchMyRefundBank,
-  fetchMyCompetitionsList,
-} from '@/Sagas/MySaga';
-
-import {
-  fetchPlaceAroundList,
-  fetchPlaceDetail,
-  fetchPlaceRecentList,
-  fetchPlaceReviewList,
-  fetchPlaceSearchList,
-  fetchPlaceTicketList,
-  fetchPlaceList,
-  fetchPlaceEventHotList,
-  fetchPlaceDibsList,
-  fetchPlaceEventHotDetail,
-} from '@/Sagas/PlaceSaga';
-
-import {
-  fetchReservation,
-  fetchReservationCardList,
-  fetchReservationInfo,
-  fetchReservationCancel,
-  fetchReservationSimplePayment,
-  fetchReservationCard,
-  fetchReservationDeleteCard,
-  fetchReservationPaymentSign,
-  fetchReservationPaymentVerify,
-  fetchReservationCertification,
-} from '@/Sagas/ReservationSaga';
 
 // albamon
-import {
-  fetchCompetitionsClubSearch,
-  fetchCompetitionsPaymentVerify,
-  fetchCompetitionsPlaceSearch,
-  fetchCompetitionsRegist,
-  fetchCompetitionsRegistInfo,
-  fetchCompetitionsVerify,
-} from '@/Sagas/AlbamonSaga';
 
 export default function* root() {
   yield all([
@@ -208,6 +207,7 @@ export default function* root() {
     takeLatest(MyTypes.FETCH_MY_RESERVATION_CHECK_DETAIL, fetchMyReservationCheckDetail),
     takeLatest(MyTypes.FETCH_MY_REFUND_BANK, fetchMyRefundBank),
     takeLatest(MyTypes.FETCH_MY_COMPETITIONS_LIST, fetchMyCompetitionsList),
+    takeLatest(MyTypes.FETCH_MY_RESERVATION_RECEIPT, fetchMyReservationReceipt),
 
     // place
     takeLatest(PlaceTypes.FETCH_PLACE_AROUND_LIST, fetchPlaceAroundList),

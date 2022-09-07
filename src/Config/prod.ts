@@ -94,6 +94,7 @@ const prod = {
 
   NOTIFICATION_COUNT_URL: 'my/notification/count',
   MY_COMPETITIONS_URL: 'my/competitions',
+  MY_RESERVATION_RECEIPT: 'my/reservation',
   // search
   SEARCH_AREA_URL: 'search/area',
   SEARCH_URL: 'search',

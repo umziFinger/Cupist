@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, FlatList, View } from 'react-native';
+import { Dimensions, FlatList, Linking, Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import RNExitApp from 'react-native-exit-app';
 import CommonActions from '@/Stores/Common/Actions';
@@ -24,7 +24,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
   const dispatch = useDispatch();
   const { item } = props;
   const { dataType, title, text } = item;
-  const { versionInfo, heightInfo } = useSelector((state: CommonState) => state.common);
+  const { versionInfo, heightInfo, alertDialogParams } = useSelector((state: CommonState) => state.common);
 
   const onConfirm = () => {
     switch (dataType) {
@@ -60,6 +60,11 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         navigateGoBack();
         break;
       }
+      case 'CameraPermissionCheck': {
+        ((Platform.OS === 'android' && alertDialogParams?.permissionError === 'blocked') || Platform.OS === 'ios') &&
+          Linking.openSettings();
+        break;
+      }
       default:
         dispatch(
           CommonActions.fetchCommonReducer({
@@ -88,7 +93,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         renderItem={() => {
           return (
             <>
-              {title && (
+              {title !== '' && (
                 <View
                   style={{
                     minHeight: 131,
@@ -115,7 +120,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                   </View>
                 </View>
               )}
-              {text ? (
+              {text !== '' ? (
                 <View
                   style={{
                     minHeight: 131,

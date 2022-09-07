@@ -128,6 +128,9 @@ export function* fetchInitialHandler() {
   yield put(
     PlaceActions.fetchPlaceReducer({ type: 'myAroundSort', data: { index: 0, key: 'distance', value: '거리순' } }),
   );
+
+  // 영수증 Dialog 초기화
+  yield put(MyActions.fetchMyReducer({ type: 'isOpenReceipt', data: false }));
 }
 
 export function* fetchErrorHandler(data: any) {
