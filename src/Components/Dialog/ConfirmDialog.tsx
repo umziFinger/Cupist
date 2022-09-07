@@ -93,7 +93,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         renderItem={() => {
           return (
             <>
-              {title !== '' && (
+              {!!title && (
                 <View
                   style={{
                     minHeight: 131,
@@ -120,7 +120,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                   </View>
                 </View>
               )}
-              {text !== '' ? (
+              {text ? (
                 <View
                   style={{
                     minHeight: 131,
