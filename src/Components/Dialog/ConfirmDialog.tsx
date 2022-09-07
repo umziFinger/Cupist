@@ -24,7 +24,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
   const dispatch = useDispatch();
   const { item } = props;
   const { dataType, title, text } = item;
-  const { versionInfo, heightInfo } = useSelector((state: CommonState) => state.common);
+  const { versionInfo, heightInfo, alertDialogParams } = useSelector((state: CommonState) => state.common);
 
   const onConfirm = () => {
     switch (dataType) {
@@ -61,7 +61,8 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         break;
       }
       case 'CameraPermissionCheck': {
-        Platform.OS === 'ios' && Linking.openSettings();
+        ((Platform.OS === 'android' && alertDialogParams?.permissionError === 'blocked') || Platform.OS === 'ios') &&
+          Linking.openSettings();
         break;
       }
       default:

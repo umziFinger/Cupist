@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -20,9 +20,10 @@ const Receipt = () => {
   const dispatch = useDispatch();
   const viewShot = useRef<any>();
   const { receiptData } = useSelector((state: MyState) => state.my);
-  console.log(JsonForm(receiptData));
+  // console.log(JsonForm(receiptData));
 
   const isCancel = receiptData?.stateText === '취소완료';
+  const [permissionError, setPermissionError] = useState('');
 
   const onPressClose = () => {
     dispatch(MyActions.fetchMyReducer({ type: 'isOpenReceipt', data: false }));
@@ -42,6 +43,7 @@ const Receipt = () => {
     if (cameraCheckResult !== 'granted' || !storageCheckResult) {
       const cameraRequestResult = await CameraStatusRequest();
       console.log('권한 요청 : ', cameraRequestResult);
+      setPermissionError(cameraRequestResult);
       if (cameraRequestResult === 'granted') {
         if (Platform.OS === 'android') {
           if (storageCheckResult) {
@@ -77,6 +79,22 @@ const Receipt = () => {
         })
         .catch((e) => {
           console.log('e : ', e);
+          if (e.message === 'Access to photo library was denied') {
+            dispatch(
+              CommonActions.fetchCommonReducer({
+                type: 'alertDialog',
+                data: {
+                  alertDialog: true,
+                  alertDialogType: 'confirm',
+                  alertDialogDataType: 'CameraPermissionCheck',
+                  alertDialogTitle: '',
+                  alertDialogMessage: '권한을 확인해주세요.',
+                  alertDialogParams: { permissionError },
+                },
+              }),
+            );
+            return;
+          }
           dispatch(
             CommonActions.fetchCommonReducer({
               type: 'alertToast',
@@ -98,6 +116,7 @@ const Receipt = () => {
             alertDialogDataType: 'CameraPermissionCheck',
             alertDialogTitle: '',
             alertDialogMessage: '권한을 확인해주세요.',
+            alertDialogParams: { permissionError },
           },
         }),
       );
