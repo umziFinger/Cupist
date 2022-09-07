@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { Color } from '@/Assets/Color';
+import { useDispatch, useSelector } from 'react-redux';
+import { Color, Opacity } from '@/Assets/Color';
 
 import Header from '@/Components/Header';
 
@@ -12,10 +12,23 @@ import CustomText from '@/Components/CustomText';
 import { CommonState } from '@/Stores/Common/InitialState';
 import PaymentMethod from '@/Containers/My/ReservationDetailScreen/PaymentMethod';
 import { MyState } from '@/Stores/My/InitialState';
+import CustomButton from '@/Components/CustomButton';
+import MyActions from '@/Stores/My/Actions';
+import Receipt from '@/Containers/My/ReservationDetailScreen/Receipt';
+import { fetchMyReservationReceipt } from '@/Sagas/MySaga';
 
 const ReservationDetailScreen = () => {
+  const dispatch = useDispatch();
   const { heightInfo } = useSelector((state: CommonState) => state.common);
-  const { reservationDetail } = useSelector((state: MyState) => state.my);
+  const { reservationDetail, isOpenReceipt = false } = useSelector((state: MyState) => state.my);
+
+  useEffect(() => {
+    // dispatch(MyActions.fetchMyReservationReceipt({idx: }));
+
+    return () => {
+      dispatch(MyActions.fetchMyReducer({ type: 'isOpenReceipt', data: false }));
+    };
+  }, []);
 
   const renderItem = (index: number) => {
     switch (index) {
@@ -73,6 +86,7 @@ const ReservationDetailScreen = () => {
         return null;
     }
   };
+
   return (
     <View style={{ flex: 1 }}>
       <Header type={'back'} />
@@ -86,6 +100,7 @@ const ReservationDetailScreen = () => {
           showsVerticalScrollIndicator={false}
         />
       </View>
+      {isOpenReceipt && <Receipt />}
     </View>
   );
 };

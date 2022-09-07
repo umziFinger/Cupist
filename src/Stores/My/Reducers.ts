@@ -272,6 +272,16 @@ export const fetchMyReducer = (state = INITIAL_STATE, actions: any) => {
         draft.isCheckedReservationDetail = data;
         break;
       }
+      case 'isOpenReceipt': {
+        console.log('call reduer isOpenReceipt : ', data);
+        draft.isOpenReceipt = data;
+        break;
+      }
+      case 'receiptData': {
+        console.log('call reduer receiptData : ', data);
+        draft.receiptData = data;
+        break;
+      }
 
       default:
         return draft;

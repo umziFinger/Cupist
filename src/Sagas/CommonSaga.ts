@@ -123,6 +123,9 @@ export function* fetchInitialHandler() {
 
   // 대회신청 결제 플래그값 초기화
   yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
+
+  // 영수증 Dialog 초기화
+  yield put(MyActions.fetchMyReducer({ type: 'isOpenReceipt', data: false }));
 }
 
 export function* fetchErrorHandler(data: any) {

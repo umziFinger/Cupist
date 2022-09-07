@@ -72,6 +72,8 @@ export const INITIAL_STATE: MyState['my'] = {
   isCheckedReservationDetail: false,
   bankList: [],
   competitionList: null,
+  isOpenReceipt: false,
+  receiptData: null,
 };
 export interface MyState {
   my: {
@@ -128,6 +130,8 @@ export interface MyState {
     isCheckedReservationDetail: boolean | false;
     bankList: any;
     competitionList: any;
+    isOpenReceipt: boolean;
+    receiptData: any;
   };
 }
 export interface CouponItemType {

@@ -611,6 +611,7 @@ export function* fetchMyReservationDetailInfo(data: any): any {
           data: response.data.payment,
         }),
       );
+      yield put(MyActions.fetchMyReservationReceipt({ idx: data.params.reservationIdx }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     } else {
       yield put(CommonActions.fetchErrorHandler(response));
@@ -1043,5 +1044,27 @@ export function* fetchMyCompetitionsList(data: any): any {
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     console.log('occurred Error...fetchMyCompetitionsList : ', e);
+  }
+}
+export function* fetchMyReservationReceipt(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    const payload = {
+      ...data,
+      url: `${Config.MY_RESERVATION_RECEIPT}/${data.params.idx}/receipt`,
+    };
+
+    const response = yield call(Axios.GET, payload);
+
+    if (response.result === true && response.code === null) {
+      console.log('@@@@@@@@@@@@ MY_RESERVATION_RECEIPT call success :', response.data);
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+      yield put(MyActions.fetchMyReducer({ type: 'receiptData', data: response.data }));
+    } else {
+      yield put(CommonActions.fetchErrorHandler(response));
+    }
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    console.log('occurred Error...fetchMyReservationReceipt : ', e);
   }
 }
