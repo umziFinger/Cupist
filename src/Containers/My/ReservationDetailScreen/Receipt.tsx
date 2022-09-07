@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -23,6 +23,7 @@ const Receipt = () => {
   console.log(JsonForm(receiptData));
 
   const isCancel = receiptData?.stateText === '취소완료';
+
   const onPressClose = () => {
     dispatch(MyActions.fetchMyReducer({ type: 'isOpenReceipt', data: false }));
   };
@@ -94,9 +95,9 @@ const Receipt = () => {
           data: {
             alertDialog: true,
             alertDialogType: 'confirm',
-            alertDialogDataType: 'cameraAndStorage',
+            alertDialogDataType: 'CameraPermissionCheck',
             alertDialogTitle: '',
-            alertDialogMessage: `권한을 확인해주세요.`,
+            alertDialogMessage: '권한을 확인해주세요.',
           },
         }),
       );
