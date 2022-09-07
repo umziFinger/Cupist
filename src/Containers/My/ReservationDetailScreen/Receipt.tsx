@@ -20,7 +20,7 @@ const Receipt = () => {
   const dispatch = useDispatch();
   const viewShot = useRef<any>();
   const { receiptData } = useSelector((state: MyState) => state.my);
-  // console.log(JsonForm(receiptData));
+  console.log(JsonForm(receiptData));
 
   const isCancel = receiptData?.stateText === '취소완료';
   const [permissionError, setPermissionError] = useState('');
@@ -307,12 +307,23 @@ const Receipt = () => {
                   : receiptData?.paymentType}
               </CustomText>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-              <CustomText style={{ flex: 1, fontSize: 13, letterSpacing: -0.2, color: Color.Gray600 }}>
-                결제일시
-              </CustomText>
-              <CustomText style={{ fontSize: 13 }}>{receiptData?.paymentDate?.substring(2, 16)}</CustomText>
-            </View>
+            {isCancel ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+                <CustomText style={{ flex: 1, fontSize: 13, letterSpacing: -0.2, color: Color.Gray600 }}>
+                  취소일시
+                </CustomText>
+                <CustomText style={{ fontSize: 13 }}>
+                  {receiptData?.cancelHistory[0]?.cancelled_at?.substring(2, 16)}
+                </CustomText>
+              </View>
+            ) : (
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+                <CustomText style={{ flex: 1, fontSize: 13, letterSpacing: -0.2, color: Color.Gray600 }}>
+                  결제일시
+                </CustomText>
+                <CustomText style={{ fontSize: 13 }}>{receiptData?.paymentDate?.substring(2, 16)}</CustomText>
+              </View>
+            )}
           </View>
         </ViewShot>
         <View style={{ flexDirection: 'row' }}>
