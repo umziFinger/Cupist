@@ -123,11 +123,13 @@ const HomeScreen = ({ route }: HomeProps) => {
           data={[0]}
           renderItem={({ item, index }) => (
             <View>
+              {/* ================== 맞춤추천 목록 ================== */}
               {introductionCustomList?.length > 0 && (
                 <FlatList
                   data={introductionCustomList || []}
                   renderItem={({ item: item1, index: index1 }) => (
                     <>
+                      {/* ================== 이미지 영역 ================== */}
                       <View
                         style={{
                           width: width - 8,
@@ -142,6 +144,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                           resizeMode={FastImage.resizeMode.cover}
                         />
                       </View>
+                      {/* ================== 카드 데이터 영역 ================== */}
                       <LinearGradient
                         start={{ x: 0, y: 0.6 }}
                         end={{ x: 0, y: 0.85 }}
@@ -157,17 +160,6 @@ const HomeScreen = ({ route }: HomeProps) => {
                         }}
                       >
                         <View style={{ position: 'absolute', bottom: 0, width: width - 8, padding: 12 }}>
-                          <View
-                            style={{
-                              width: 90,
-                              backgroundColor: `${Color.White}${Opacity._25}`,
-                              paddingHorizontal: 10,
-                              paddingVertical: 4,
-                              borderRadius: 4,
-                            }}
-                          >
-                            <CustomText style={{ fontSize: 14, color: 'white' }}>오늘의 추천</CustomText>
-                          </View>
                           <View style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center' }}>
                             <CustomText style={{ fontSize: 24, fontWeight: '600', color: 'white' }}>
                               {item1?.name}, {item1?.age}
@@ -200,6 +192,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                               </View>
                             )}
                           </View>
+                          {/* ================== 카드 하단 버튼 영역 ================== */}
                           <View style={{ flexDirection: 'row', marginTop: 12 }}>
                             <CustomButton
                               onPress={() => onPressDeleteIntroductionCustom(item)}
@@ -220,6 +213,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                               </View>
                             </CustomButton>
                             <CustomButton
+                              onPress={() => onPressDeleteIntroductionCustom(item)}
                               style={{
                                 flex: 1,
                                 marginLeft: 6,
@@ -245,6 +239,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                   showsVerticalScrollIndicator={false}
                 />
               )}
+              {/* ================== 오늘의 추천 목록 ================== */}
               <FlatList
                 data={introductionList || []}
                 renderItem={({ item: item2, index: index2 }) => (
@@ -339,6 +334,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                             </View>
                           </CustomButton>
                           <CustomButton
+                            onPress={() => onPressDeleteIntroduction(item)}
                             style={{
                               flex: 1,
                               marginLeft: 6,
@@ -361,7 +357,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                 windowSize={7}
                 showsVerticalScrollIndicator={false}
               />
-              {/* 맞춤 추천 */}
+              {/* ================== 맞춤추천 ================== */}
               <View
                 style={{
                   paddingHorizontal: 16,
@@ -518,6 +514,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                   <CustomText style={{ fontSize: 14, fontWeight: '600' }}>24개 항목 모두 보기</CustomText>
                 </CustomButton>
               </View>
+              {/* ================== 추가추천 목록 ================== */}
               <FlatList
                 data={introductionAdditionalList || []}
                 renderItem={({ item: item3, index: index3 }) => (
@@ -554,17 +551,6 @@ const HomeScreen = ({ route }: HomeProps) => {
                       }}
                     >
                       <View style={{ position: 'absolute', bottom: 0, width: width - 8, padding: 12 }}>
-                        <View
-                          style={{
-                            width: 90,
-                            backgroundColor: `${Color.White}${Opacity._25}`,
-                            paddingHorizontal: 10,
-                            paddingVertical: 4,
-                            borderRadius: 4,
-                          }}
-                        >
-                          <CustomText style={{ fontSize: 14, color: 'white' }}>오늘의 추천</CustomText>
-                        </View>
                         <View style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center' }}>
                           <CustomText style={{ fontSize: 24, fontWeight: '600', color: 'white' }}>
                             {item3?.name}, {item3?.age}
@@ -615,6 +601,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                             </View>
                           </CustomButton>
                           <CustomButton
+                            onPress={() => onPressDeleteIntroductionAdditional(item)}
                             style={{
                               flex: 1,
                               marginLeft: 6,

@@ -27,6 +27,12 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     dispatch(HomeActions.fetchProfile());
+
+    return () => {
+      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSelectHeightDialog', data: false }));
+      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSelectBodyTypeDialog', data: false }));
+      dispatch(CommonActions.fetchCommonReducer({ type: 'isOpenSelectEducateDialog', data: false }));
+    };
   }, []);
 
   useEffect(() => {
@@ -62,6 +68,7 @@ const ProfileScreen = () => {
         renderItem={({ item, index }) => (
           <View>
             <View>
+              {/* ================== 이미지 목록 영역 ================== */}
               <FlatList
                 data={[0, 1, 2, 3, 4, 5]}
                 renderItem={({ item: item1, index: index1 }) => (
@@ -112,13 +119,14 @@ const ProfileScreen = () => {
                 </CustomButton>
               </View>
             </View>
+            {/* ================== 닉네임, 성별, 생일, 위치 영역 ================== */}
             <View
               style={{ paddingHorizontal: 16, paddingVertical: 8, borderBottomWidth: 1, borderColor: Color.Gray300 }}
             >
               <View style={{ flexDirection: 'row', height: 44, alignItems: 'center' }}>
                 <CustomText style={{ flex: 0.35, fontSize: 16 }}>닉네임</CustomText>
                 <View style={{ flex: 0.65, flexDirection: 'row', alignItems: 'center' }}>
-                  <CustomText style={{ fontSize: 16, color: Color.GlamBlue }}>라로앙</CustomText>
+                  <CustomText style={{ fontSize: 16, color: Color.GlamBlue }}>{profile?.name || ''}</CustomText>
                   <View
                     style={{
                       width: 14,
@@ -137,14 +145,13 @@ const ProfileScreen = () => {
               <View style={{ flexDirection: 'row', height: 44, alignItems: 'center' }}>
                 <CustomText style={{ flex: 0.35, fontSize: 16 }}>성별</CustomText>
                 <CustomButton style={{ flex: 0.65, flexDirection: 'row', alignItems: 'center' }}>
-                  <CustomText style={{ fontSize: 16, color: Color.GlamBlue }}>
-                    {profile?.gender === 'F' ? '여성' : '남성'}
-                  </CustomText>
+                  <CustomText style={{ fontSize: 16 }}>{profile?.gender === 'F' ? '여성' : '남성'}</CustomText>
                 </CustomButton>
               </View>
               <DataBlueInput title={'생일'} data={profile?.birthday} />
               <DataBlueInput title={'위치'} data={profile?.location} />
             </View>
+            {/* ================== 소개 영역 ================== */}
             <View
               style={{ paddingVertical: 8, paddingHorizontal: 16, borderBottomWidth: 1, borderColor: Color.Gray300 }}
             >
@@ -165,6 +172,7 @@ const ProfileScreen = () => {
                 </CustomText>
               </View>
             </View>
+            {/* ================== 변경가능 항목 영역 ================== */}
             <View
               style={{ paddingVertical: 8, paddingHorizontal: 16, borderBottomWidth: 1, borderColor: Color.Gray300 }}
             >
@@ -235,9 +243,10 @@ const ProfileScreen = () => {
         showsVerticalScrollIndicator={false}
         ListFooterComponent={<View style={{ height: 20 }} />}
       />
+      {/* ================== 모달 영역 ================== */}
       {isOpenSelectHeightDialog && <SelectDialog title={'키'} data={heightData()} height={412} />}
       {isOpenSelectBodyTypeDialog && <SelectDialog title={'체형'} data={meta?.body_types} height={412} />}
-      {isOpenSelectEducateDialog && <SelectDialog title={'학력'} data={meta?.educations} height={412} />}
+      {isOpenSelectEducateDialog && <SelectDialog title={'학력'} data={meta?.educations} height={324} />}
     </View>
   );
 };
