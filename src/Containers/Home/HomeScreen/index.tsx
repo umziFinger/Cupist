@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { FlatList, useWindowDimensions, View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, useWindowDimensions, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { Color, Opacity } from '@/Assets/Color';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
@@ -11,11 +11,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import HomeActions from '@/Stores/Home/Actions';
 import { HomeState } from '@/Stores/Home/InitialState';
-import {
-  fetchIntroductionAdditionalList,
-  fetchIntroductionAdditionalMoreList,
-  fetchIntroductionCustomList,
-} from '@/Sagas/HomeSaga';
+import { navigate } from '@/Services/NavigationService';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
@@ -26,7 +22,7 @@ const HomeScreen = ({ route }: HomeProps) => {
   const { width } = useWindowDimensions();
   const { introductionList, introductionAdditionalList, introductionAdditionalPage, introductionCustomList } =
     useSelector((state: HomeState) => state.home);
-  const isIntroduce = true;
+  const [currentTab, setCurrentTab] = useState(0);
 
   useEffect(() => {
     dispatch(HomeActions.fetchIntroductionList());
@@ -42,13 +38,17 @@ const HomeScreen = ({ route }: HomeProps) => {
     dispatch(HomeActions.fetchIntroductionAdditionalList());
   };
 
-  const onPressDeleteIntroduction = (item) => {
-    const index = introductionList?.findIndex((v) => v.id === item?.id);
+  const onPressDeleteIntroduction = (item: any) => {
+    const index = introductionList?.findIndex((v: any) => v.id === item?.id);
     dispatch(HomeActions.fetchHomeReducer({ type: 'deleteIntroductionList', data: index }));
   };
+  const onPressDeleteIntroductionCustom = (item: any) => {
+    const index = introductionCustomList?.findIndex((v: any) => v.id === item?.id);
+    dispatch(HomeActions.fetchHomeReducer({ type: 'deleteIntroductionCustomList', data: index }));
+  };
 
-  const onPressDeleteIntroductionAdditional = (item) => {
-    const index = introductionAdditionalList?.findIndex((v) => v.id === item?.id);
+  const onPressDeleteIntroductionAdditional = (item: any) => {
+    const index = introductionAdditionalList?.findIndex((v: any) => v.id === item?.id);
     dispatch(HomeActions.fetchHomeReducer({ type: 'deleteIntroductionAdditionalList', data: index }));
   };
 
@@ -69,7 +69,10 @@ const HomeScreen = ({ route }: HomeProps) => {
         }}
       >
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-          <CustomButton style={{ height: 44, borderBottomWidth: 2, borderColor: 'black', justifyContent: 'center' }}>
+          <CustomButton
+            onPress={() => setCurrentTab(0)}
+            style={{ height: 44, borderBottomWidth: currentTab === 0 ? 2 : 0, justifyContent: 'center' }}
+          >
             <View style={{ height: 26, width: 63 }}>
               <FastImage
                 style={{ width: '100%', height: '100%' }}
@@ -78,14 +81,34 @@ const HomeScreen = ({ route }: HomeProps) => {
               />
             </View>
           </CustomButton>
-          <CustomButton style={{ marginLeft: 20, height: 44, justifyContent: 'center' }}>
-            <CustomText style={{ fontSize: 20, fontWeight: '600', color: Color.Gray2 }}>근처</CustomText>
+          <CustomButton
+            onPress={() => setCurrentTab(1)}
+            style={{
+              marginLeft: 20,
+              height: 44,
+              borderBottomWidth: currentTab === 1 ? 2 : 0,
+              justifyContent: 'center',
+            }}
+          >
+            <CustomText style={{ fontSize: 20, fontWeight: '600', color: currentTab === 1 ? 'black' : Color.Gray2 }}>
+              근처
+            </CustomText>
           </CustomButton>
-          <CustomButton style={{ marginLeft: 20, height: 44, justifyContent: 'center' }}>
-            <CustomText style={{ fontSize: 20, fontWeight: '600', color: Color.Gray2 }}>라이브</CustomText>
+          <CustomButton
+            onPress={() => setCurrentTab(2)}
+            style={{
+              marginLeft: 20,
+              height: 44,
+              borderBottomWidth: currentTab === 2 ? 2 : 0,
+              justifyContent: 'center',
+            }}
+          >
+            <CustomText style={{ fontSize: 20, fontWeight: '600', color: currentTab === 2 ? 'black' : Color.Gray2 }}>
+              라이브
+            </CustomText>
           </CustomButton>
         </View>
-        <CustomButton>
+        <CustomButton onPress={() => navigate('ProfileScreen')}>
           <View style={{ height: 28, width: 28 }}>
             <FastImage
               style={{ width: '100%', height: '100%' }}
@@ -103,7 +126,7 @@ const HomeScreen = ({ route }: HomeProps) => {
               {introductionCustomList?.length > 0 && (
                 <FlatList
                   data={introductionCustomList || []}
-                  renderItem={({ item, index }) => (
+                  renderItem={({ item: item1, index: index1 }) => (
                     <>
                       <View
                         style={{
@@ -115,7 +138,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                       >
                         <FastImage
                           style={{ width: '100%', height: '100%', borderRadius: 6 }}
-                          source={{ uri: `https://test.dev.cupist.de${item?.pictures[0]}` || '' }}
+                          source={{ uri: `https://test.dev.cupist.de${item1?.pictures[0]}` || '' }}
                           resizeMode={FastImage.resizeMode.cover}
                         />
                       </View>
@@ -147,7 +170,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                           </View>
                           <View style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center' }}>
                             <CustomText style={{ fontSize: 24, fontWeight: '600', color: 'white' }}>
-                              {item?.name}, {item?.age}
+                              {item1?.name}, {item1?.age}
                             </CustomText>
                             <CustomButton style={{ height: 16, width: 17, marginLeft: 3 }}>
                               <FastImage
@@ -158,28 +181,28 @@ const HomeScreen = ({ route }: HomeProps) => {
                             </CustomButton>
                           </View>
                           <View style={{ marginTop: 8 }}>
-                            {item?.introduction ? (
+                            {item1?.introduction ? (
                               <View>
                                 <CustomText style={{ fontSize: 16, color: 'white' }} numberOfLines={2}>
-                                  {item?.introduction}
+                                  {item1?.introduction}
                                 </CustomText>
                               </View>
                             ) : (
                               <View>
                                 <CustomText style={{ fontSize: 16, color: 'white' }}>
-                                  {`${item?.job} \u2022 ${item?.distance / 1000}km`}
+                                  {`${item1?.job} \u2022 ${item1?.distance / 1000}km`}
                                 </CustomText>
                                 <CustomText
                                   style={{ fontSize: 16, color: `${Color.White}${Opacity._60}`, marginTop: 6 }}
                                 >
-                                  {item?.height}cm
+                                  {item1?.height}cm
                                 </CustomText>
                               </View>
                             )}
                           </View>
                           <View style={{ flexDirection: 'row', marginTop: 12 }}>
                             <CustomButton
-                              onPress={() => onPressDeleteIntroduction(item)}
+                              onPress={() => onPressDeleteIntroductionCustom(item)}
                               style={{
                                 padding: 10,
                                 backgroundColor: Color.Gray4,
@@ -215,7 +238,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                       </LinearGradient>
                     </>
                   )}
-                  keyExtractor={(item, index) => index.toString()}
+                  keyExtractor={(item1, index1) => index1.toString()}
                   initialNumToRender={2}
                   maxToRenderPerBatch={1}
                   windowSize={7}
@@ -224,7 +247,7 @@ const HomeScreen = ({ route }: HomeProps) => {
               )}
               <FlatList
                 data={introductionList || []}
-                renderItem={({ item, index }) => (
+                renderItem={({ item: item2, index: index2 }) => (
                   <>
                     <View
                       style={{
@@ -236,7 +259,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                     >
                       <FastImage
                         style={{ width: '100%', height: '100%', borderRadius: 6 }}
-                        source={{ uri: `https://test.dev.cupist.de${item?.pictures[0]}` || '' }}
+                        source={{ uri: `https://test.dev.cupist.de${item2?.pictures[0]}` || '' }}
                         resizeMode={FastImage.resizeMode.cover}
                       />
                     </View>
@@ -268,7 +291,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                         </View>
                         <View style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center' }}>
                           <CustomText style={{ fontSize: 24, fontWeight: '600', color: 'white' }}>
-                            {item?.name}, {item?.age}
+                            {item2?.name}, {item2?.age}
                           </CustomText>
                           <CustomButton style={{ height: 16, width: 17, marginLeft: 3 }}>
                             <FastImage
@@ -279,19 +302,19 @@ const HomeScreen = ({ route }: HomeProps) => {
                           </CustomButton>
                         </View>
                         <View style={{ marginTop: 8 }}>
-                          {item?.introduction ? (
+                          {item2?.introduction ? (
                             <View>
                               <CustomText style={{ fontSize: 16, color: 'white' }} numberOfLines={2}>
-                                {item?.introduction}
+                                {item2?.introduction}
                               </CustomText>
                             </View>
                           ) : (
                             <View>
                               <CustomText style={{ fontSize: 16, color: 'white' }}>
-                                {`${item?.job} \u2022 ${item?.distance / 1000}km`}
+                                {`${item2?.job} \u2022 ${item2?.distance / 1000}km`}
                               </CustomText>
                               <CustomText style={{ fontSize: 16, color: `${Color.White}${Opacity._60}`, marginTop: 6 }}>
-                                {item?.height}cm
+                                {item2?.height}cm
                               </CustomText>
                             </View>
                           )}
@@ -332,7 +355,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                     </LinearGradient>
                   </>
                 )}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item2, index2) => index2.toString()}
                 initialNumToRender={2}
                 maxToRenderPerBatch={1}
                 windowSize={7}
@@ -497,7 +520,7 @@ const HomeScreen = ({ route }: HomeProps) => {
               </View>
               <FlatList
                 data={introductionAdditionalList || []}
-                renderItem={({ item, index }) => (
+                renderItem={({ item: item3, index: index3 }) => (
                   <>
                     <View
                       style={{
@@ -511,7 +534,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                     >
                       <FastImage
                         style={{ width: '100%', height: '100%', borderRadius: 6 }}
-                        source={{ uri: `https://test.dev.cupist.de${item?.pictures[0]}` || '' }}
+                        source={{ uri: `https://test.dev.cupist.de${item3?.pictures[0]}` || '' }}
                         resizeMode={FastImage.resizeMode.cover}
                       />
                     </View>
@@ -544,7 +567,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                         </View>
                         <View style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center' }}>
                           <CustomText style={{ fontSize: 24, fontWeight: '600', color: 'white' }}>
-                            {item?.name}, {item?.age}
+                            {item3?.name}, {item3?.age}
                           </CustomText>
                           <CustomButton style={{ height: 16, width: 17, marginLeft: 3 }}>
                             <FastImage
@@ -555,19 +578,19 @@ const HomeScreen = ({ route }: HomeProps) => {
                           </CustomButton>
                         </View>
                         <View style={{ marginTop: 8 }}>
-                          {item?.introduction ? (
+                          {item3?.introduction ? (
                             <View>
                               <CustomText style={{ fontSize: 16, color: 'white' }} numberOfLines={2}>
-                                {item?.introduction}
+                                {item3?.introduction}
                               </CustomText>
                             </View>
                           ) : (
                             <View>
                               <CustomText style={{ fontSize: 16, color: 'white' }}>
-                                {`${item?.job} \u2022 ${item?.distance / 1000}km`}
+                                {`${item3?.job} \u2022 ${item3?.distance / 1000}km`}
                               </CustomText>
                               <CustomText style={{ fontSize: 16, color: `${Color.White}${Opacity._60}`, marginTop: 6 }}>
-                                {item?.height}cm
+                                {item3?.height}cm
                               </CustomText>
                             </View>
                           )}
@@ -608,7 +631,7 @@ const HomeScreen = ({ route }: HomeProps) => {
                     </LinearGradient>
                   </>
                 )}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item3, index3) => index3.toString()}
                 initialNumToRender={2}
                 maxToRenderPerBatch={1}
                 windowSize={7}

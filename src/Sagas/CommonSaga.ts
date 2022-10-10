@@ -1,14 +1,7 @@
-import { call, put } from 'redux-saga/effects';
-import moment from 'moment';
+import { put } from 'redux-saga/effects';
 import CommonActions from '@/Stores/Common/Actions';
-import AuthActions from '@/Stores/Auth/Actions';
-import { Axios } from '@/Services/Axios';
-import { navigate, navigateGoBack, navigateReplace } from '@/Services/NavigationService';
+import { navigate, navigateReplace } from '@/Services/NavigationService';
 import HomeActions from '@/Stores/Home/Actions';
-import PlaceActions from '@/Stores/Place/Actions';
-import MyActions from '@/Stores/My/Actions';
-import Config from '@/Config';
-import AlbamonActions from '@/Stores/Albamon/Actions';
 
 export type dibsType = 'dibs' | 'unDibs';
 
@@ -56,20 +49,6 @@ export function* fetchInitialHandler() {
     }),
   );
 
-  yield put(
-    CommonActions.fetchCommonReducer({
-      type: 'codePushStatus',
-      data: 'init',
-    }),
-  );
-
-  // 회원 가입 form 초기화
-  yield put(
-    AuthActions.fetchAuthReducer({
-      type: 'joinInfoInit',
-    }),
-  );
-
   // 홈 로드 완료 초기화
   yield put(
     HomeActions.fetchHomeReducer({
@@ -78,59 +57,9 @@ export function* fetchInitialHandler() {
     }),
   );
 
-  // 홈 캘린더 날짜 초기화
-  yield put(HomeActions.fetchHomeReducer({ type: 'calendarDate', data: moment(new Date()).toString() }));
-
-  // 알바몬 탭 초기화
-  yield put(AlbamonActions.fetchAlbamonReducer({ type: 'placeDetailSelectedTabInit' }));
-
-  // 선결제 특가 날짜 필터 초기화
-  // yield put(
-  //   HomeActions.fetchHomeReducer({
-  //     type: 'prepaymentDate',
-  //     data: moment().add('days', 1).format('YYYY-MM-D').toString(),
-  //   }),
-  // );
-
-  // 홈 바로예약 필터 초기화
-  yield put(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: 1 }));
-  yield put(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: 0 }));
-
   // RBSheet 초기화
   yield put(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
   yield put(CommonActions.fetchCommonReducer({ type: 'currentRBS', data: null }));
-
-  // More screen render Item 초기화
-  yield put(MyActions.fetchMyReducer({ type: 'moreScreenRenderItem' }));
-
-  // attachFile 초기화
-  yield put(CommonActions.fetchCommonReducer({ type: 'attachFileInit' }));
-
-  // 선택한 티켓 정보 초기화
-  yield put(PlaceActions.fetchPlaceReducer({ type: 'selectedTicket', data: null }));
-
-  // 선결제 특가 예약 가능일 목록 조회
-  // yield put(HomeActions.fetchHomeCheckEarly());
-
-  // 마이스크린 탭 초기화
-  yield put(MyActions.fetchMyReducer({ type: 'myTabInit' }));
-
-  // 마이볼리 > 진행중 예약 목록 예약 취소 시 데이터(예약상세) 정합성 위하여 check로직에 사용되는 Flag
-  yield put(MyActions.fetchMyReducer({ type: 'isCheckedReservationDetail', data: false }));
-
-  // 대회 정보 초기화
-  yield put(CommonActions.fetchCommonReducer({ type: 'competitionInfo', data: null }));
-
-  // 대회신청 결제 플래그값 초기화
-  yield put(AlbamonActions.fetchAlbamonReducer({ type: 'isAlbamonPayment', data: false }));
-
-  // 내주변 상단 기존 알코볼 필터 선택되어있던 유저들을 위한 초기화 (20220831 koi)
-  yield put(
-    PlaceActions.fetchPlaceReducer({ type: 'myAroundSort', data: { index: 0, key: 'distance', value: '거리순' } }),
-  );
-
-  // 영수증 Dialog 초기화
-  yield put(MyActions.fetchMyReducer({ type: 'isOpenReceipt', data: false }));
 }
 
 export function* fetchErrorHandler(data: any) {
@@ -182,7 +111,7 @@ export function* fetchErrorHandler(data: any) {
         }),
       );
     } else if (data.params.data.message === 'Unauthorized') {
-      navigate('SimpleLoginScreen');
+      // navigate('SimpleLoginScreen');
       yield put(
         CommonActions.fetchCommonReducer({
           type: 'alertToast',
@@ -193,20 +122,6 @@ export function* fetchErrorHandler(data: any) {
           },
         }),
       );
-    } else if (data.params.data.message === '존재하지 않은 결제입니다.') {
-      yield put(
-        CommonActions.fetchCommonReducer({
-          type: 'alertToast',
-          data: {
-            alertToast: true,
-            alertToastPosition: 'bottom',
-            alertToastMessage: data.params.data.message,
-          },
-        }),
-      );
-      yield put(MyActions.fetchMyReducer({ type: 'reservationListPageInit' }));
-      yield put(MyActions.fetchMyReducer({ type: 'reservationSelectedTab', data: { title: '취소', key: 'cancel' } }));
-      navigate('MyScreen');
     } else if (data.params.data.message === '은행 영업시간이 아닙니다.') {
       yield put(
         CommonActions.fetchCommonReducer({
@@ -278,136 +193,5 @@ export function* fetchSkeletonNavigateReplace(data: any): any {
     navigateReplace(routeName, data.params.state);
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
-  }
-}
-
-function* handlerPlaceDibs(type: dibsType, placeIdx: any) {
-  try {
-    yield put(PlaceActions.fetchPlaceReducer({ type: 'placeMyAroundDibsHandler', data: { placeIdx, type } }));
-    yield put(PlaceActions.fetchPlaceReducer({ type: 'recentPlaceDibsHandler', data: { placeIdx, type } }));
-    yield put(PlaceActions.fetchPlaceReducer({ type: 'dibListDibsHandler', data: { placeIdx, type } }));
-    yield put(PlaceActions.fetchPlaceReducer({ type: 'placeListDibsHandler', data: { placeIdx, type } }));
-    yield put(PlaceActions.fetchPlaceReducer({ type: 'hotPlaceListDibsHandler', data: { placeIdx, type } }));
-    yield put(PlaceActions.fetchPlaceReducer({ type: 'placeDetailDibsHandler', data: { placeIdx, type } }));
-
-    yield put(HomeActions.fetchHomeReducer({ type: 'directReservationDibsHandler', data: { placeIdx, type } }));
-    yield put(HomeActions.fetchHomeReducer({ type: 'quickPriceDibsHandler', data: { placeIdx, type } }));
-    yield put(HomeActions.fetchHomeReducer({ type: 'hotPlaceDibsHandler', data: { placeIdx, type } }));
-  } catch (e) {
-    console.log('occurred Error...handlerPlaceDibs : ', e);
-  }
-  return false;
-}
-
-export function* fetchCommonPlaceDibsHandler(data: any): any {
-  try {
-    const { placeIdx, type }: placeDibsDataType = data.params;
-    yield handlerPlaceDibs(type, placeIdx);
-    const payload = {
-      ...data,
-      url: `${Config.PLACE_URL}/${placeIdx}/dibs`,
-    };
-
-    const response = type === 'dibs' ? yield call(Axios.POST, payload) : yield call(Axios.DELETE, payload);
-
-    if (response.result === true && response.code === null) {
-      yield handlerPlaceDibs(type, placeIdx);
-    } else if (response.data.message === '이미 찜 되어있는 볼링장입니다.') {
-      console.log('이미 찜 되어있는 볼링장입니다.');
-      yield handlerPlaceDibs(type, placeIdx);
-    } else if (response.data.message === '찜이 존재하지 않습니다.') {
-      console.log('찜이 존재하지 않습니다.');
-      yield handlerPlaceDibs(type, placeIdx);
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-      console.log('볼링장 찜하기 실패 !!!: ', response);
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchCommonPlaceDibsHandler : ', e);
-  }
-}
-
-export function* fetchCommonReport(data: any): any {
-  try {
-    let url;
-    const { reportType, mainIdx, subIdx, reportCode } = data.params;
-    // console.log(reportCode);
-    switch (reportType) {
-      case 'placeReview': {
-        url = `place/${mainIdx}/review/${subIdx}/report`;
-        break;
-      }
-
-      default:
-        url = '';
-    }
-
-    const payload = {
-      params: {
-        reportCode,
-      },
-      url,
-    };
-
-    const response = yield call(Axios.POST, payload);
-
-    if (response.result === true && response.code === null) {
-      yield put(
-        CommonActions.fetchCommonReducer({
-          type: 'alertDialog',
-          data: {
-            alertDialog: true,
-            alertDialogType: 'confirm',
-            alertDialogMessage: '신고가 접수되었습니다.\n신고 접수건은 확인 후 24시간 이내에 처리될 예정입니다.',
-          },
-        }),
-      );
-
-      switch (reportType) {
-        case 'placeReview': {
-          yield put(PlaceActions.fetchPlaceReducer({ type: 'removeReview', data: subIdx }));
-          navigateGoBack();
-          break;
-        }
-
-        default:
-          yield put(PlaceActions.fetchPlaceReducer({ type: 'removeReview', data: subIdx }));
-          navigateGoBack();
-      }
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchCommonReport : ', e);
-  }
-  return false;
-}
-
-export function* fetchCommonCode(data: any): any {
-  try {
-    const parentCode = data.params.parentCode;
-    const code = data.params.code;
-    console.log('parentCode : ', parentCode);
-    console.log('code : ', code);
-    const url = parentCode ? `${Config.COMMON_URL}/${parentCode}/${data.params.code}` : `${Config.COMMON_URL}/${code}`;
-    const payload = {
-      url,
-    };
-    const response = yield call(Axios.GET, payload);
-    if (response.result === true && response.code === null) {
-      if (code === 'ringme') {
-        yield put(MyActions.fetchMyReducer({ type: 'ringmeList', data: response.data }));
-      }
-      if (code === 'vBankCode') {
-        yield put(MyActions.fetchMyReducer({ type: 'bankList', data: response.data }));
-      }
-      if (code === 'alkorbol') {
-        yield put(CommonActions.fetchCommonReducer({ type: 'competitionInfo', data: response.data.commonCode }));
-      }
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchCommonCode : ', e);
   }
 }

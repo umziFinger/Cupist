@@ -1,14 +1,5 @@
 import React from 'react';
 import BackHeader from '@/Components/Header/BackHeader';
-import HomeHeader from '@/Components/Header/HomeHeader';
-import CloseHeader from './CloseHeader';
-
-import MyAroundHeader from '@/Components/Header/MyAroundHeader';
-import PlaceDetailHeader from './PlaceDetailHeader';
-
-import PlaceReviewHeader from '@/Components/Header/PlaceReviewHeader';
-import PlaceListHeader from '@/Components/Header/PlaceListHeader';
-import InviteFriendHeader from '@/Components/Header/InviteFirendHeader';
 
 export interface HeaderProps {
   type?: string;
@@ -30,24 +21,6 @@ const Header = (props: HeaderProps) => {
   switch (type) {
     case 'back':
       return <BackHeader type={type} text={text} />;
-    case 'home':
-      return <HomeHeader isShow={isShow} />;
-    case 'close':
-      return <CloseHeader text={text} />;
-
-    case 'myAround':
-      return <MyAroundHeader text={text} isScroll={isScroll} activeFilter={activeFilter} />;
-
-    case 'placeDetail':
-      return <PlaceDetailHeader isShow={isShow} />;
-
-    case 'placeReview':
-      return <PlaceReviewHeader />;
-
-    case 'placeList':
-      return <PlaceListHeader text={text} isShow={isShow} />;
-    case 'inviteFriend':
-      return <InviteFriendHeader text={text} />;
     default:
       return null;
   }

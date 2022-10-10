@@ -6,6 +6,7 @@ const { Types, Creators } = createActions({
   fetchIntroductionAdditionalList: ['params'],
   fetchIntroductionAdditionalMoreList: ['params'],
   fetchIntroductionCustomList: ['params'],
+  fetchProfile: ['params'],
 });
 
 export const HomeTypes = Types;

@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
 // eslint-disable-next-line react-native/split-platform-components
-import { BackHandler, Platform, ToastAndroid, View } from 'react-native';
+import { BackHandler, Platform, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { getBottomSpace, isIphoneX } from 'react-native-iphone-x-helper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import RNBootSplash from 'react-native-bootsplash';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import CustomButton from '@/Components/CustomButton';
-import { navigate, navigateAndSimpleReset, navigateReplace } from '@/Services/NavigationService';
-import { DATA_MENUS } from '@/Navigators/CustomTabBar/data';
-import CustomText from '@/Components/CustomText';
-import { AuthState } from '@/Stores/Auth/InitialState';
+import { navigate } from '@/Services/NavigationService';
 import { Color } from '@/Assets/Color';
 import CommonActions from '@/Stores/Common/Actions';
 
 const TabBar = (props: BottomTabBarProps) => {
   const { state } = props;
   const dispatch = useDispatch();
-  const { userIdx } = useSelector((authState: AuthState) => authState.auth);
   const [appExit, setAppExit] = useState(false);
 
   useEffect(() => {
@@ -114,10 +110,20 @@ const TabBar = (props: BottomTabBarProps) => {
   };
 
   const onPressMenu = (value: 'HomeScreen' | 'MyScreen' | 'MyAroundScreen' | 'DibsScreen' | 'MoreScreen') => {
-    const authGuardScreen = ['MoreScreen', 'MyScreen', 'DibsScreen'];
-    if (authGuardScreen.includes(value) && !userIdx) {
-      // navigate('SimpleLoginScreen');
-    }
+    dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'alertToast',
+        data: {
+          alertToast: true,
+          alertToastPosition: 'top',
+          alertToastMessage: value,
+        },
+      }),
+    );
+    // const authGuardScreen = ['MoreScreen', 'MyScreen', 'DibsScreen'];
+    // if (authGuardScreen.includes(value) && !userIdx) {
+    //   // navigate('SimpleLoginScreen');
+    // }
     // navigate(value);
   };
 

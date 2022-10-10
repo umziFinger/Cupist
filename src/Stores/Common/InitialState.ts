@@ -56,6 +56,10 @@ export const INITIAL_STATE = {
   calendarMonthPosition: 0,
   competitionInfo: null,
   registCardAfterScreen: '',
+
+  isOpenSelectHeightDialog: false,
+  isOpenSelectBodyTypeDialog: false,
+  isOpenSelectEducateDialog: false,
 };
 
 export interface CommonState {
@@ -110,6 +114,10 @@ export interface CommonState {
     calendarMonthPosition: number | 0;
     competitionInfo: any;
     registCardAfterScreen: string;
+
+    isOpenSelectHeightDialog: boolean;
+    isOpenSelectBodyTypeDialog: boolean;
+    isOpenSelectEducateDialog: boolean;
   };
 }
 

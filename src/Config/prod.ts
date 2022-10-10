@@ -7,7 +7,7 @@ const prod = {
   CS_COMPANY: '892-88-01731',
   CS_SELL_REPORT: '2021-경기광명-0188',
   CS_NUMBER: '070-4680-3267',
-  CS_EMAIL: 'help@bolimi.kr',
+  CS_EMAIL: 'help@cupist.kr',
 
   // iamport User Code
   USER_CODE: 'imp00301699',
@@ -34,13 +34,13 @@ const prod = {
 
   // market url
   MARKET_URL_IOS: 'itms-apps://itunes.apple.com/kr/app/apple-store/id1596274166',
-  MARKET_URL_ANDROID: 'market://details?id=kr.bolimi',
+  MARKET_URL_ANDROID: 'market://details?id=kr.cupist',
 
   // naver key
   NAVER_KEY: 'oRxO0Jqlo_XYVxcKk_1A',
   NAVER_SECRET: 'SOYTVQcWCq',
   NAVER_APP_NAME: '볼리미',
-  NAVER_APP_URL_SCHEME: 'kr.bolimi', // only for iOS
+  NAVER_APP_URL_SCHEME: 'kr.cupist', // only for iOS
 
   // 예약유의사항
   NORMAL_CAUTION_INFO: `시간제 볼링은 1시간 단위로 예약하여 인원, 게임 수 상관없이 무제한으로 즐길 수 있는 상품입니다.\n예약시간을 잘 지켜서 동일시간에 참여하는 볼러들에게 에티켓을 지켜주세요!`,

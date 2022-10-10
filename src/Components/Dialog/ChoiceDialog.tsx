@@ -1,16 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CommonActions from '@/Stores/Common/Actions';
-import AuthActions from '@/Stores/Auth/Actions';
 import CustomButton from '@/Components/CustomButton';
 import CustomText from '@/Components/CustomText';
 import { Color } from '@/Assets/Color';
-import { CommonState } from '@/Stores/Common/InitialState';
-import { onAppUpdate } from '@/Components/Function';
-import MyActions from '@/Stores/My/Actions';
-import { MyState } from '@/Stores/My/InitialState';
-import { fetchMyReviewDelete } from '@/Sagas/MySaga';
 
 interface ChoiceDialogProps {
   item: {
@@ -26,20 +20,9 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
   const { dataType, text } = item;
 
   const dispatch = useDispatch();
-  const { versionInfo, alertDialogParams } = useSelector((state: CommonState) => state.common);
-  const { reservationDetail } = useSelector((state: MyState) => state.my);
 
   const onCancel = () => {
     switch (dataType) {
-      case 'closeRBS': {
-        dispatch(CommonActions.fetchCommonReducer({ type: 'openCurrentRBS' }));
-        // dispatch(AuthActions.fetchAuthReducer({ type: 'smsInfoInit' }));
-        break;
-      }
-      case 'nickNameRBS': {
-        dispatch(CommonActions.fetchCommonReducer({ type: 'openCurrentRBS' }));
-        break;
-      }
       default:
         dispatch(CommonActions.fetchCommonReducer({ type: 'alertDialogInit' }));
         break;
@@ -50,52 +33,6 @@ const ChoiceDialog = (props: ChoiceDialogProps) => {
 
   const onConfirm = async () => {
     switch (dataType) {
-      case 'startTask': {
-        break;
-      }
-      case 'closeRBS': {
-        dispatch(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
-        dispatch(AuthActions.fetchAuthReducer({ type: 'currentRBS', data: null }));
-        dispatch(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
-        break;
-      }
-      case 'nickNameRBS': {
-        dispatch(CommonActions.fetchCommonReducer({ type: 'closeAllRBS' }));
-        dispatch(AuthActions.fetchAuthReducer({ type: 'currentRBS', data: null }));
-        dispatch(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
-        dispatch(AuthActions.fetchAutoNickName());
-        break;
-      }
-
-      case 'goToStore': {
-        onAppUpdate(versionInfo.currentVersion);
-        break;
-      }
-
-      case 'cancelJoin': {
-        dispatch(AuthActions.fetchAuthReducer({ type: 'joinInfoInit' }));
-        // navigateReplace('SimpleLoginScreen');
-        break;
-      }
-      case 'reservationCancel': {
-        console.log('alertDialogParams', alertDialogParams);
-        const params = {
-          paymentIdx: alertDialogParams?.reservationIdx,
-        };
-        dispatch(MyActions.fetchMyReservationCancelDetailInfo(params));
-        // navigateReplace('SimpleLoginScreen');
-        break;
-      }
-      case 'myReviewRemove': {
-        const params = {
-          reviewIdx: alertDialogParams?.reviewIdx,
-          screenType: alertDialogParams?.type,
-          placeIdx: alertDialogParams?.placeIdx,
-        };
-        dispatch(MyActions.fetchMyReviewDelete(params));
-        break;
-      }
-
       default:
         dispatch(
           CommonActions.fetchCommonReducer({

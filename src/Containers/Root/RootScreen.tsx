@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { LogBox } from 'react-native';
+import { LogBox, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CommonActions from '@/Stores/Common/Actions';
@@ -7,12 +7,9 @@ import { CommonState } from '@/Stores/Common/InitialState';
 import RootNavigator from '@/Navigators/RootNavigator';
 import Dialog from '@/Components/Dialog';
 import Toast from '@/Components/Toast';
-import Loading from '@/Components/Loading';
+import { getBottomSpace, getStatusBarHeight, isIphoneX } from 'react-native-iphone-x-helper';
 
 // import { FirebaseTokenUpdate } from '@/Components/Firebase/messaging';
-import RootFcm from '@/Containers/Root/RootFcm';
-import RootDynamicLink from './RootDynamicLink';
-import RootCheckAppVersion from './RootCheckAppVersion';
 
 LogBox.ignoreLogs([
   'interpolate() was renamed to interpolateNode()',
@@ -44,16 +41,49 @@ const RootScreen = () => {
     // dispatch(CommonActions.fetchCommonReducer({ type: 'permissionYN', data: 'N' }));
     AsyncStorage.getItem('splashStatus').then((r) => console.log('rootscreen splashStatus', r));
     dispatch(CommonActions.fetchInitialHandler());
-
+    saveBottomHeight();
     return () => {
       dispatch(CommonActions.fetchInitialHandler());
     };
   }, []);
 
+  const saveBottomHeight = () => {
+    const statusHeight = getStatusBarHeight(true);
+    const headerMenuHeight = 68;
+    let bottomBarHeight, tabBarBottomHeight;
+
+    if (Platform.OS === 'android') {
+      bottomBarHeight = 0;
+      tabBarBottomHeight = 70;
+    } else if (isIphoneX()) {
+      bottomBarHeight = getBottomSpace();
+      tabBarBottomHeight = 90;
+    } else {
+      bottomBarHeight = 0;
+      tabBarBottomHeight = 70;
+    }
+
+    const mainBottomHeight = statusHeight + bottomBarHeight + headerMenuHeight + tabBarBottomHeight;
+    const subBottomHeight = statusHeight + bottomBarHeight + headerMenuHeight;
+
+    const info = {
+      mainBottomHeight,
+      subBottomHeight,
+      fixBottomHeight: bottomBarHeight,
+      tabBarBottomHeight,
+      statusHeight,
+    };
+    dispatch(
+      CommonActions.fetchCommonReducer({
+        type: 'heightInfo',
+        data: { info },
+      }),
+    );
+  };
+
   return (
     <>
       <RootNavigator />
-      {isLoading && <Loading />}
       {/** 공통 얼러트 컴포넌트 * */}
       {alertDialog && (
         <Dialog
@@ -67,10 +97,10 @@ const RootScreen = () => {
       )}
       {alertToast && <Toast position={alertToastPosition} message={alertToastMessage} />}
 
-      <RootFcm />
+      {/* <RootFcm /> */}
       {/** 앱버전체크(realDB) 리스너 컴포넌트 * */}
-      <RootCheckAppVersion />
-      <RootDynamicLink />
+      {/* <RootCheckAppVersion /> */}
+      {/* <RootDynamicLink /> */}
     </>
   );
 };

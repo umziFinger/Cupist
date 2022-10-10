@@ -103,3 +103,34 @@ export function* fetchIntroductionCustomList(data: any): any {
     console.log('occurred Error...fetchIntroductionAdditionalList : ', e);
   }
 }
+
+export function* fetchProfile(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
+    const payload = {
+      ...data,
+      url: `${Config.PROFILE}`,
+    };
+    const response = yield call(Axios.GET, payload);
+
+    console.log('====fetchProfile===', JsonForm(response));
+    yield put(
+      HomeActions.fetchHomeReducer({
+        type: 'profile',
+        data: response.data,
+      }),
+    );
+    yield put(
+      HomeActions.fetchHomeReducer({
+        type: 'meta',
+        data: response.meta,
+      }),
+    );
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
+    console.log('occurred Error...fetchProfile : ', e);
+  }
+}

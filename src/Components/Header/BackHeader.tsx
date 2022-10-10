@@ -28,10 +28,10 @@ const BackHeader = (props: HeaderProps) => {
       }}
     >
       <CustomButton onPress={() => navigateGoBack()} hitSlop={20}>
-        <View style={{ width: 24, height: 24 }}>
+        <View style={{ width: 28, height: 28 }}>
           <FastImage
             style={{ width: '100%', height: '100%' }}
-            source={require('@/Assets/Images/Arrow/icBack.png')}
+            source={require('@/Assets/Images/Cupist/ProfileEdit/back.png')}
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>
@@ -44,9 +44,7 @@ const BackHeader = (props: HeaderProps) => {
       >
         <CustomText
           style={{
-            fontSize: 15,
-            fontWeight: '500',
-            letterSpacing: -0.2,
+            fontSize: 17,
             color: Color.Black1000,
           }}
         >

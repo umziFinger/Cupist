@@ -254,6 +254,19 @@ export const fetchCommonReducer = (state = INITIAL_STATE, actions: any) => {
         break;
       }
 
+      case 'isOpenSelectHeightDialog': {
+        draft.isOpenSelectHeightDialog = data;
+        break;
+      }
+      case 'isOpenSelectBodyTypeDialog': {
+        draft.isOpenSelectBodyTypeDialog = data;
+        break;
+      }
+      case 'isOpenSelectEducateDialog': {
+        draft.isOpenSelectEducateDialog = data;
+        break;
+      }
+
       default:
         return draft;
     }

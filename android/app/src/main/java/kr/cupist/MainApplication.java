@@ -1,4 +1,4 @@
-package kr.bolimi;
+package kr.cupist;
 
 import android.app.Application;
 import android.content.Context;
