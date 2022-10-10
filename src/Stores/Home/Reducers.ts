@@ -7,6 +7,44 @@ export const fetchHomeReducer = (state = INITIAL_STATE, actions: any) => {
   const { type, data } = actions.params;
   return produce(state, (draft) => {
     switch (type) {
+      case 'introductionList': {
+        draft.introductionList = data;
+        break;
+      }
+      case 'introductionAdditionalPage': {
+        draft.introductionAdditionalPage = data;
+        break;
+      }
+      case 'introductionCustomList': {
+        draft.introductionCustomList = data;
+        break;
+      }
+
+      case 'introductionAdditionalList': {
+        if (data?.page === 2) {
+          draft.introductionAdditionalList = data.data;
+          break;
+        } else {
+          draft.introductionAdditionalList =
+            data?.data?.length > 0
+              ? draft.introductionAdditionalList.concat(data.data)
+              : draft.introductionAdditionalList;
+        }
+        break;
+      }
+      case 'deleteIntroductionList': {
+        const temp = draft.introductionList;
+        temp.splice(data, 1);
+        draft.introductionList = temp;
+        break;
+      }
+      case 'deleteIntroductionAdditionalList': {
+        const temp = draft.introductionAdditionalList;
+        temp.splice(data, 1);
+        draft.introductionAdditionalList = temp;
+        break;
+      }
+
       case 'loginCheckYN': {
         draft.loginCheckYN = data.loginCheckYN;
         break;

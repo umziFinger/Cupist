@@ -71,29 +71,29 @@ const TabBar = (props: BottomTabBarProps) => {
     switch (type) {
       case 'HomeScreen':
         return state.index === 0
-          ? require('@/Assets/Images/BottomTabBar/icBtHomeOn.png')
-          : require('@/Assets/Images/BottomTabBar/icBtHomeOff.png');
-      case 'MyScreen':
+          ? require('@/Assets/Images/Cupist/Nav/home.png')
+          : require('@/Assets/Images/Cupist/Nav/home.png');
+      case 'LiveScreen':
         return state.index === 1
-          ? require('@/Assets/Images/BottomTabBar/icBtMyOn.png')
-          : require('@/Assets/Images/BottomTabBar/icBtMyOff.png');
-      case 'MyAroundScreen':
+          ? require('@/Assets/Images/Cupist/Nav/live.png')
+          : require('@/Assets/Images/Cupist/Nav/live.png');
+      case 'StationScreen':
         return state.index === 2
-          ? require('@/Assets/Images/BottomTabBar/icBtLocaOn.png')
-          : require('@/Assets/Images/BottomTabBar/icBtLocaOff.png');
-      case 'DibsScreen':
+          ? require('@/Assets/Images/Cupist/Nav/station.png')
+          : require('@/Assets/Images/Cupist/Nav/station.png');
+      case 'ConnectionScreen':
         return state.index === 3
-          ? require('@/Assets/Images/BottomTabBar/icBtHeartOn.png')
-          : require('@/Assets/Images/BottomTabBar/icBtHeartOff.png');
+          ? require('@/Assets/Images/Cupist/Nav/connection.png')
+          : require('@/Assets/Images/Cupist/Nav/connection.png');
       case 'MoreScreen':
         return state.index === 4
-          ? require('@/Assets/Images/BottomTabBar/icPlusOn.png')
-          : require('@/Assets/Images/BottomTabBar/icPlusOff.png');
+          ? require('@/Assets/Images/Cupist/Nav/more.png')
+          : require('@/Assets/Images/Cupist/Nav/more.png');
 
       default:
         return state.index === 0
-          ? require('@/Assets/Images/BottomTabBar/icBtHomeOff.png')
-          : require('@/Assets/Images/BottomTabBar/icBtHomeOn.png');
+          ? require('@/Assets/Images/Cupist/Nav/home.png')
+          : require('@/Assets/Images/Cupist/Nav/home.png');
     }
   };
   const renderTextColor = <T extends React.ReactNode>(type: T) => {
@@ -116,10 +116,9 @@ const TabBar = (props: BottomTabBarProps) => {
   const onPressMenu = (value: 'HomeScreen' | 'MyScreen' | 'MyAroundScreen' | 'DibsScreen' | 'MoreScreen') => {
     const authGuardScreen = ['MoreScreen', 'MyScreen', 'DibsScreen'];
     if (authGuardScreen.includes(value) && !userIdx) {
-      navigate('SimpleLoginScreen');
-      return;
+      // navigate('SimpleLoginScreen');
     }
-    navigate(value);
+    // navigate(value);
   };
 
   return (
@@ -154,12 +153,12 @@ const TabBar = (props: BottomTabBarProps) => {
               flexGrow: 1,
               justifyContent: 'center',
               backgroundColor: Color.White,
-              paddingVertical: 6,
+              paddingVertical: 16,
             }}
             onPress={() => onPressMenu(route.name)}
           >
             <View key={route.name} style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <View style={{ width: 24, height: 24 }}>
+              <View style={{ width: 28, height: 28 }}>
                 <FastImage
                   source={renderIcon(route.name)}
                   style={{
@@ -168,11 +167,6 @@ const TabBar = (props: BottomTabBarProps) => {
                   }}
                   resizeMode={FastImage.resizeMode.cover}
                 />
-              </View>
-              <View style={{ marginTop: 2 }}>
-                <CustomText style={{ fontSize: 10, letterSpacing: -0.1, color: renderTextColor(route.name) }}>
-                  {DATA_MENUS[index].text}
-                </CustomText>
               </View>
             </View>
           </CustomButton>

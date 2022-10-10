@@ -3,103 +3,103 @@ import CommonActions from '@/Stores/Common/Actions';
 import HomeActions from '@/Stores/Home/Actions';
 import Config from '@/Config';
 import { Axios } from '@/Services/Axios';
+import { JsonForm } from '@/Components/Function';
 
-export function* fetchHomeList(data: any): any {
+export function* fetchIntroductionList(data: any): any {
   try {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
     // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
     const payload = {
       ...data,
-      url: Config.HOME_URL,
+      url: Config.INTRODUCTION,
     };
     const response = yield call(Axios.GET, payload);
-    if (response.result === true && response.code === null) {
-      // console.log('=======', response.data);
-      yield put(HomeActions.fetchHomeReducer({ type: 'homeList', data: response.data }));
+
+    console.log('====fetchIntroductionList===', JsonForm(response));
+    yield put(HomeActions.fetchHomeReducer({ type: 'introductionList', data: response.data }));
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
+    console.log('occurred Error...fetchIntroductionList : ', e);
+  }
+}
+
+export function* fetchIntroductionAdditionalList(data: any): any {
+  try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
+    const payload = {
+      ...data,
+      url: Config.INTRODUCTION_ADDITIONAL,
+    };
+    const response = yield call(Axios.GET, payload);
+
+    console.log('====fetchIntroductionAdditionalList===', JsonForm(response));
+    yield put(
+      HomeActions.fetchHomeReducer({
+        type: 'introductionAdditionalList',
+        data: { data: response.data, page: response.meta?.next?.id },
+      }),
+    );
+    yield put(HomeActions.fetchHomeReducer({ type: 'introductionAdditionalPage', data: response.meta?.next?.id }));
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+  } catch (e) {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
+    console.log('occurred Error...fetchIntroductionAdditionalList : ', e);
+  }
+}
+
+export function* fetchIntroductionAdditionalMoreList(data: any): any {
+  try {
+    if (data.params.page) {
+      yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+      // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
+      const payload = {
+        ...data,
+        url: `${Config.INTRODUCTION_ADDITIONAL}/${data.params.page}`,
+      };
+      const response = yield call(Axios.GET, payload);
+
+      console.log('====fetchIntroductionAdditionalList===', JsonForm(response));
+      yield put(
+        HomeActions.fetchHomeReducer({
+          type: 'introductionAdditionalList',
+          data: { data: response.data, page: response.meta?.next?.id },
+        }),
+      );
+      yield put(HomeActions.fetchHomeReducer({ type: 'introductionAdditionalPage', data: response.meta?.next?.id }));
       yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
-      // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
-    } else {
-      console.log('fetchHomeList : ', response);
-      yield put(CommonActions.fetchErrorHandler(response));
     }
   } catch (e) {
     yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
     // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
-    console.log('occurred Error...fetchHomeList : ', e);
+    console.log('occurred Error...fetchIntroductionAdditionalList : ', e);
   }
 }
 
-export function* fetchHomeDirectReservationList(data: any): any {
+export function* fetchIntroductionCustomList(data: any): any {
   try {
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: true }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
     const payload = {
       ...data,
-      url: Config.HOME_PLACE_URL,
+      url: `${Config.INTRODUCTION_CUSTOM}`,
     };
-    const response = yield call(Axios.GET, payload);
-    if (response.result === true && response.code === null) {
-      yield put(HomeActions.fetchHomeReducer({ type: 'directReservationList', data: response.data }));
-      yield put(HomeActions.fetchHomePossibleDate({ ...data.params }));
-    } else {
-      console.log('fetchHomeDirectReservationList : ', response);
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchHomeDirectReservationList : ', e);
-  }
-}
+    const response = yield call(Axios.POST, payload);
 
-export function* fetchHomeFreeBowlingPlaceList(data: any): any {
-  try {
-    const payload = {
-      ...data,
-      url: Config.HOME_FREE_URL,
-    };
-    const response = yield call(Axios.GET, payload);
-    if (response.result === true && response.code === null) {
-      yield put(HomeActions.fetchHomeReducer({ type: 'prepaymentPriceList', data: response.data }));
-    } else {
-      console.log('fetchHomeFreeBowlingPlaceList : ', response);
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
+    console.log('====fetchIntroductionCustomList===', JsonForm(response));
+    yield put(
+      HomeActions.fetchHomeReducer({
+        type: 'introductionCustomList',
+        data: response.data,
+      }),
+    );
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
   } catch (e) {
-    console.log('occurred Error...fetchHomeFreeBowlingPlaceList : ', e);
-  }
-}
-
-export function* fetchHomePossibleDate(data: any): any {
-  try {
-    yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: true }));
-
-    const payload = {
-      ...data,
-      url: Config.HOME_CHECK_URL,
-    };
-    const response = yield call(Axios.GET, payload);
-    if (response.result === true && response.code === null) {
-      yield put(HomeActions.fetchHomeReducer({ type: 'possibleDirectDate', data: response.data }));
-      yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
-    } else {
-      console.log('fetchHomePossibleDate : ', response);
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchHomePossibleDate : ', e);
-  }
-}
-
-export function* fetchHomeCheckEarly(data: any): any {
-  try {
-    const payload = {
-      ...data,
-      url: Config.HOME_CHECK_FREE_URL,
-    };
-    const response = yield call(Axios.GET, payload);
-    if (response.result === true && response.code === null) {
-      yield put(HomeActions.fetchHomeReducer({ type: 'prepaymentDateList', data: response.data }));
-    } else {
-      yield put(CommonActions.fetchErrorHandler(response));
-    }
-  } catch (e) {
-    console.log('occurred Error...fetchHomeCheckEarly : ', e);
+    yield put(CommonActions.fetchCommonReducer({ type: 'isLoading', data: false }));
+    // yield put(CommonActions.fetchCommonReducer({ type: 'isSkeleton', data: false }));
+    console.log('occurred Error...fetchIntroductionAdditionalList : ', e);
   }
 }

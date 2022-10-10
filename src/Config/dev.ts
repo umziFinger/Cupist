@@ -21,7 +21,7 @@ const dev = {
   TMAP_MARKET_URL_ANDROID: 'market://details?id=com.skt.tmap.ku',
 
   // API_URL: 'http://192.168.0.22:5003/',
-  API_URL: 'https://api.bolimi.kr/',
+  API_URL: 'https://test.dev.cupist.de/',
   // API_URL: 'http://192.168.0.13:5005/', // duople_oil
 
   // dynamicLink URL
@@ -48,7 +48,9 @@ const dev = {
   COMMON_URL: 'common',
 
   // home
-  HOME_URL: 'home',
+  INTRODUCTION: 'introduction',
+  INTRODUCTION_ADDITIONAL: 'introduction/additional',
+  INTRODUCTION_CUSTOM: 'introduction/custom',
   HOME_PLACE_URL: 'home/place',
   HOME_FREE_URL: 'home/free',
   HOME_CHECK_URL: 'home/check',

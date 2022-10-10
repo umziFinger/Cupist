@@ -1,269 +1,632 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, FlatList, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { FlatList, useWindowDimensions, View, Text } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import moment from 'moment';
-import Header from '@/Components/Header';
-import { CommonState } from '@/Stores/Common/InitialState';
-import { Color } from '@/Assets/Color';
-import { HomeState } from '@/Stores/Home/InitialState';
+import { Color, Opacity } from '@/Assets/Color';
 import { MainStackParamList } from '@/Navigators/MainNavigator';
-import { AuthState } from '@/Stores/Auth/InitialState';
 import 'moment/locale/ko';
-import CalendarSlider from '@/Components/Calendar/CalendarSlider';
+import FastImage from 'react-native-fast-image';
+import CustomText from '@/Components/CustomText';
+import CustomButton from '@/Components/CustomButton';
+import LinearGradient from 'react-native-linear-gradient';
+import { useDispatch, useSelector } from 'react-redux';
 import HomeActions from '@/Stores/Home/Actions';
-import AuthActions from '@/Stores/Auth/Actions';
-import SearchActions from '@/Stores/Search/Actions';
-import CommonActions from '@/Stores/Common/Actions';
-import LocationMyPosition from '@/Components/Permission/Location/LocationMyPosition';
-import HelloArea from '@/Containers/Home/HomeScreen/HelloArea';
-import FreeBowlingArea from '@/Containers/Home/HomeScreen/FreeBowlingArea';
-import PartTimeBowlingArea from '@/Containers/Home/HomeScreen/PartTimeBowlingArea';
-import EventHotArea from '@/Containers/Home/HomeScreen/EventHotArea';
-import BannerArea from '@/Containers/Home/HomeScreen/BannerArea';
-import { DATA_TIME_FILTER } from '@/Containers/Home/HomeScreen/data';
-import { JsonForm, scrollHomeHandler } from '@/Components/Function';
-import { SearchState } from '@/Stores/Search/InitialState';
-import CopyRightArea from '@/Containers/Home/HomeScreen/CopyRightArea';
-import { LocationCheck } from '@/Components/Permission/Location';
-import AlbamonBanner from '@/Containers/Home/HomeScreen/AlbamonBanner';
-import AlbamonActions from '@/Stores/Albamon/Actions';
-import { navigate } from '@/Services/NavigationService';
-import DirectReservationArea from './DirectReservationArea';
+import { HomeState } from '@/Stores/Home/InitialState';
+import {
+  fetchIntroductionAdditionalList,
+  fetchIntroductionAdditionalMoreList,
+  fetchIntroductionCustomList,
+} from '@/Sagas/HomeSaga';
 
 interface HomeProps {
   route: RouteProp<MainStackParamList, 'HomeScreen'>;
 }
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
 const HomeScreen = ({ route }: HomeProps) => {
   const dispatch = useDispatch();
-  const scrollY = useRef(new Animated.Value(0)).current;
-  const { homeTabRefreshYN, myLatitude, myLongitude } = useSelector((state: CommonState) => state.common);
-  const { homeList, calendarDate, timeFilterIdx, areaFilterIdx, prepaymentDate } = useSelector(
-    (state: HomeState) => state.home,
-  );
-  const { areaList } = useSelector((state: SearchState) => state.search);
-  const { userIdx } = useSelector((state: AuthState) => state.auth);
-  const [isShow, setIsShow] = useState<boolean>(false);
+  const { width } = useWindowDimensions();
+  const { introductionList, introductionAdditionalList, introductionAdditionalPage, introductionCustomList } =
+    useSelector((state: HomeState) => state.home);
+  const isIntroduce = true;
 
   useEffect(() => {
-    if (userIdx) {
-      dispatch(AuthActions.fetchUserInfo({ idx: userIdx }));
-    }
+    dispatch(HomeActions.fetchIntroductionList());
+    dispatch(HomeActions.fetchIntroductionAdditionalList());
   }, []);
 
-  useEffect(() => {
-    console.log('============홈 초기화');
-    // navigate('RegistScreen', { placeIdx: -1, placeDetailName: '' });
-    // 첫 홈 화면 현재 위치값 갱신
-    // 홈 리스트 조회
-    // positionUpdate().then();
-
-    // 바로예약 지역 필터 조회
-    dispatch(SearchActions.fetchSearchAreaList());
-
-    // dispatch(HomeActions.fetchHomeReducer({ type: 'areaFilterIdx', data: 1 }));
-    // dispatch(HomeActions.fetchHomeReducer({ type: 'timeFilterIdx', data: DATA_TIME_FILTER[0].idx }));
-  }, [userIdx]);
-
-  useEffect(() => {
-    if (route?.params?.expired) {
-      console.log('navigate token expired!!!', route);
-      AsyncStorage.setItem('userIdx', '');
-      dispatch(AuthActions.fetchAuthReducer({ type: 'logout' }));
-    }
-  }, [route]);
-
-  useEffect(() => {
-    if (homeTabRefreshYN === 'N') {
-      onRefresh();
-    }
-  }, [homeTabRefreshYN]);
-
-  // 홈화면 진입시 캘린더 초기화
-  useEffect(() => {
-    dispatch(AlbamonActions.fetchAlbamonReducer({ type: 'placeDetailSelectedTabInit' }));
-  }, []);
-
-  // 캘린더 날짜 선택 시 홈 갱신
-  useEffect(() => {
-    console.log('캘린더 날짜 변경 : ', calendarDate);
-    positionUpdate().then();
-  }, [calendarDate]);
-
-  const positionUpdate = async () => {
-    const LocationCheckResult = await LocationCheck();
-    if (LocationCheckResult) {
-      console.log('위치 권한 인증');
-      const myPosition = await LocationMyPosition();
-      dispatch(CommonActions.fetchCommonReducer({ type: 'myPosition', data: myPosition }));
-    }
-
-    const params = {
-      date: moment(calendarDate).format('YYYY/MM/DD'),
-      lat: parseFloat(myLatitude?.toString()) || 37.56561,
-      lng: parseFloat(myLongitude?.toString()) || 126.97804,
-    };
-
-    // 홈 리스트 호출
-    dispatch(HomeActions.fetchHomeList(params));
-
-    const type = timeFilterIdx !== 0 ? DATA_TIME_FILTER[timeFilterIdx].key : 'all';
-    let areaCode;
-
-    if (areaFilterIdx > 1) {
-      areaCode = areaList[areaFilterIdx - 3]?.code;
-      console.log('지역명 : ', areaList[areaFilterIdx - 3]?.area);
-    }
-
-    // 홈 바로 예약 호출
-    console.log('@@@@@@@@@@@@@@@ calendar 재설정시 홈화면 갱신 @@@@@@@@@@@@@@ : ', areaCode);
-    dispatch(
-      HomeActions.fetchHomeDirectReservationList({
-        ...params,
-        // startTime,
-        // endTime,
-        areaCode,
-        type,
-      }),
-    );
-
-    // 홈 자유 볼링 호출
-    // 2022.07.11 미사용하는것으로 확인되어 주석처리
-    // dispatch(
-    //   HomeActions.fetchHomeFreeBowlingPlaceList({
-    //     date: calendarDate,
-    //     lat: parseFloat(myLatitude?.toString()) || 37.56561,
-    //     lng: parseFloat(myLongitude?.toString()) || 126.97804,
-    //   }),
-    // );
+  const onMore = () => {
+    dispatch(HomeActions.fetchIntroductionAdditionalMoreList({ page: introductionAdditionalPage }));
   };
 
   const onRefresh = () => {
-    positionUpdate().then();
-
-    // 선결제 필터 선택시 데이터가 없는경우 선결제 특가 영역 자체가 사라지며, 날짜 필터를 선택할 수 없는 경우 발생하여 추가
-    dispatch(
-      HomeActions.fetchHomeReducer({
-        type: 'prepaymentDate',
-        data: moment().add('days', 1).format('YYYY-MM-D').toString(),
-      }),
-    );
-
-    dispatch(CommonActions.fetchCommonReducer({ type: 'homeTabRefreshYN', data: 'Y' }));
+    dispatch(HomeActions.fetchIntroductionList());
+    dispatch(HomeActions.fetchIntroductionAdditionalList());
   };
 
-  const handleScroll = (event: any) => {
-    const result = scrollHomeHandler(event, 433, 2003);
-    setIsShow(result.isShow);
+  const onPressDeleteIntroduction = (item) => {
+    const index = introductionList?.findIndex((v) => v.id === item?.id);
+    dispatch(HomeActions.fetchHomeReducer({ type: 'deleteIntroductionList', data: index }));
   };
 
-  const renderItem = (item: any) => {
-    switch (item) {
-      case 0: {
-        return (
-          <>
-            <View style={{ flex: 1, marginTop: 40, paddingLeft: 20 }}>
-              <HelloArea />
-            </View>
-            <AlbamonBanner />
-          </>
-        );
-      }
-      case 1: {
-        return (
-          <View style={{ flex: 1, paddingLeft: 20, marginTop: 30 }}>
-            <CalendarSlider />
-          </View>
-        );
-      }
-      case 2: {
-        return (
-          // 바로예약
-          <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <DirectReservationArea list={homeList['place'] || []} />
-          </View>
-        );
-      }
+  const onPressDeleteIntroductionAdditional = (item) => {
+    const index = introductionAdditionalList?.findIndex((v) => v.id === item?.id);
+    dispatch(HomeActions.fetchHomeReducer({ type: 'deleteIntroductionAdditionalList', data: index }));
+  };
 
-      case 3: {
-        return (
-          // 배너
-          homeList['banner']?.length > 0 && (
-            <View style={{ flex: 1 }}>
-              <BannerArea list={homeList['banner'] || []} />
-            </View>
-          )
-        );
-      }
-
-      case 4: {
-        return (
-          // 시간제 볼링
-          homeList['normal']?.length > 0 && (
-            <View style={{ flex: 1 }}>
-              <PartTimeBowlingArea list={homeList['normal'] || []} />
-            </View>
-          )
-        );
-      }
-
-      case 5: {
-        return (
-          // 자유 볼링 (없으면 영역 숨김)
-          homeList['free']?.length > 0 && (
-            <View style={{ flex: 1 }}>
-              <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-              <FreeBowlingArea list={homeList['free'] || []} />
-            </View>
-          )
-        );
-      }
-      case 6: {
-        return (
-          // 이벤트 HOT
-          <View style={{ flex: 1 }}>
-            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-            <EventHotArea list={homeList['event'] || []} />
-            <View style={{ marginTop: 40, borderTopWidth: 10, borderColor: Color.Gray200 }} />
-          </View>
-        );
-      }
-      case 7: {
-        return (
-          <View style={{ flex: 1, marginTop: 50, paddingHorizontal: 20, paddingBottom: 20 }}>
-            <CopyRightArea />
-          </View>
-        );
-      }
-      default:
-        return null;
-    }
+  const onPressCustom = () => {
+    dispatch(HomeActions.fetchIntroductionCustomList());
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <Header type="home" isShow={isShow} />
-      <AnimatedFlatList
-        data={[0, 1, 2, 3, 4, 5, 6, 7]}
-        renderItem={({ item }): any => renderItem(item)}
-        keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={8}
-        maxToRenderPerBatch={11}
-        windowSize={7}
-        showsVerticalScrollIndicator={false}
-        refreshing={false}
-        onRefresh={() => onRefresh()}
-        // ListFooterComponent={<CopyRightView />}
-        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-          listener: (event) => handleScroll(event),
-          useNativeDriver: true,
-        })}
-      />
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginLeft: 8,
+          paddingLeft: 8,
+          paddingRight: 12,
+          paddingVertical: 12,
+        }}
+      >
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          <CustomButton style={{ height: 44, borderBottomWidth: 2, borderColor: 'black', justifyContent: 'center' }}>
+            <View style={{ height: 26, width: 63 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@/Assets/Images/Cupist/Main/logo.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
+          </CustomButton>
+          <CustomButton style={{ marginLeft: 20, height: 44, justifyContent: 'center' }}>
+            <CustomText style={{ fontSize: 20, fontWeight: '600', color: Color.Gray2 }}>근처</CustomText>
+          </CustomButton>
+          <CustomButton style={{ marginLeft: 20, height: 44, justifyContent: 'center' }}>
+            <CustomText style={{ fontSize: 20, fontWeight: '600', color: Color.Gray2 }}>라이브</CustomText>
+          </CustomButton>
+        </View>
+        <CustomButton>
+          <View style={{ height: 28, width: 28 }}>
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={require('@/Assets/Images/Cupist/Main/setting.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </View>
+        </CustomButton>
+      </View>
+      <View style={{ flex: 1, paddingHorizontal: 4 }}>
+        <FlatList
+          data={[0]}
+          renderItem={({ item, index }) => (
+            <View>
+              {introductionCustomList?.length > 0 && (
+                <FlatList
+                  data={introductionCustomList || []}
+                  renderItem={({ item, index }) => (
+                    <>
+                      <View
+                        style={{
+                          width: width - 8,
+                          height: (width - 8) * 1.4,
+                          borderRadius: 6,
+                          marginBottom: 12,
+                        }}
+                      >
+                        <FastImage
+                          style={{ width: '100%', height: '100%', borderRadius: 6 }}
+                          source={{ uri: `https://test.dev.cupist.de${item?.pictures[0]}` || '' }}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </View>
+                      <LinearGradient
+                        start={{ x: 0, y: 0.6 }}
+                        end={{ x: 0, y: 0.85 }}
+                        colors={['transparent', '#333333']}
+                        style={{
+                          backgroundColor: 'transparent',
+                          // paddingVertical: 12,
+                          paddingHorizontal: 13,
+                          position: 'absolute',
+                          width: width - 8,
+                          borderRadius: 6,
+                          height: (width - 8) * 1.4,
+                        }}
+                      >
+                        <View style={{ position: 'absolute', bottom: 0, width: width - 8, padding: 12 }}>
+                          <View
+                            style={{
+                              width: 90,
+                              backgroundColor: `${Color.White}${Opacity._25}`,
+                              paddingHorizontal: 10,
+                              paddingVertical: 4,
+                              borderRadius: 4,
+                            }}
+                          >
+                            <CustomText style={{ fontSize: 14, color: 'white' }}>오늘의 추천</CustomText>
+                          </View>
+                          <View style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center' }}>
+                            <CustomText style={{ fontSize: 24, fontWeight: '600', color: 'white' }}>
+                              {item?.name}, {item?.age}
+                            </CustomText>
+                            <CustomButton style={{ height: 16, width: 17, marginLeft: 3 }}>
+                              <FastImage
+                                style={{ width: '100%', height: '100%' }}
+                                source={require('@/Assets/Images/Cupist/Main/info.png')}
+                                resizeMode={FastImage.resizeMode.cover}
+                              />
+                            </CustomButton>
+                          </View>
+                          <View style={{ marginTop: 8 }}>
+                            {item?.introduction ? (
+                              <View>
+                                <CustomText style={{ fontSize: 16, color: 'white' }} numberOfLines={2}>
+                                  {item?.introduction}
+                                </CustomText>
+                              </View>
+                            ) : (
+                              <View>
+                                <CustomText style={{ fontSize: 16, color: 'white' }}>
+                                  {`${item?.job} \u2022 ${item?.distance / 1000}km`}
+                                </CustomText>
+                                <CustomText
+                                  style={{ fontSize: 16, color: `${Color.White}${Opacity._60}`, marginTop: 6 }}
+                                >
+                                  {item?.height}cm
+                                </CustomText>
+                              </View>
+                            )}
+                          </View>
+                          <View style={{ flexDirection: 'row', marginTop: 12 }}>
+                            <CustomButton
+                              onPress={() => onPressDeleteIntroduction(item)}
+                              style={{
+                                padding: 10,
+                                backgroundColor: Color.Gray4,
+                                width: 44,
+                                height: 44,
+                                borderRadius: 4,
+                              }}
+                            >
+                              <View style={{ height: 24, width: 24 }}>
+                                <FastImage
+                                  style={{ width: '100%', height: '100%' }}
+                                  source={require('@/Assets/Images/Cupist/Main/delete.png')}
+                                  resizeMode={FastImage.resizeMode.cover}
+                                />
+                              </View>
+                            </CustomButton>
+                            <CustomButton
+                              style={{
+                                flex: 1,
+                                marginLeft: 6,
+                                backgroundColor: Color.GlamBlue,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderRadius: 4,
+                              }}
+                            >
+                              <CustomText style={{ fontSize: 14, color: 'white', fontWeight: '600' }}>
+                                좋아요
+                              </CustomText>
+                            </CustomButton>
+                          </View>
+                        </View>
+                      </LinearGradient>
+                    </>
+                  )}
+                  keyExtractor={(item, index) => index.toString()}
+                  initialNumToRender={2}
+                  maxToRenderPerBatch={1}
+                  windowSize={7}
+                  showsVerticalScrollIndicator={false}
+                />
+              )}
+              <FlatList
+                data={introductionList || []}
+                renderItem={({ item, index }) => (
+                  <>
+                    <View
+                      style={{
+                        width: width - 8,
+                        height: (width - 8) * 1.4,
+                        borderRadius: 6,
+                        marginBottom: 12,
+                      }}
+                    >
+                      <FastImage
+                        style={{ width: '100%', height: '100%', borderRadius: 6 }}
+                        source={{ uri: `https://test.dev.cupist.de${item?.pictures[0]}` || '' }}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
+                    <LinearGradient
+                      start={{ x: 0, y: 0.6 }}
+                      end={{ x: 0, y: 0.85 }}
+                      colors={['transparent', '#333333']}
+                      style={{
+                        backgroundColor: 'transparent',
+                        // paddingVertical: 12,
+                        paddingHorizontal: 13,
+                        position: 'absolute',
+                        width: width - 8,
+                        borderRadius: 6,
+                        height: (width - 8) * 1.4,
+                      }}
+                    >
+                      <View style={{ position: 'absolute', bottom: 0, width: width - 8, padding: 12 }}>
+                        <View
+                          style={{
+                            width: 90,
+                            backgroundColor: `${Color.White}${Opacity._25}`,
+                            paddingHorizontal: 10,
+                            paddingVertical: 4,
+                            borderRadius: 4,
+                          }}
+                        >
+                          <CustomText style={{ fontSize: 14, color: 'white' }}>오늘의 추천</CustomText>
+                        </View>
+                        <View style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center' }}>
+                          <CustomText style={{ fontSize: 24, fontWeight: '600', color: 'white' }}>
+                            {item?.name}, {item?.age}
+                          </CustomText>
+                          <CustomButton style={{ height: 16, width: 17, marginLeft: 3 }}>
+                            <FastImage
+                              style={{ width: '100%', height: '100%' }}
+                              source={require('@/Assets/Images/Cupist/Main/info.png')}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                          </CustomButton>
+                        </View>
+                        <View style={{ marginTop: 8 }}>
+                          {item?.introduction ? (
+                            <View>
+                              <CustomText style={{ fontSize: 16, color: 'white' }} numberOfLines={2}>
+                                {item?.introduction}
+                              </CustomText>
+                            </View>
+                          ) : (
+                            <View>
+                              <CustomText style={{ fontSize: 16, color: 'white' }}>
+                                {`${item?.job} \u2022 ${item?.distance / 1000}km`}
+                              </CustomText>
+                              <CustomText style={{ fontSize: 16, color: `${Color.White}${Opacity._60}`, marginTop: 6 }}>
+                                {item?.height}cm
+                              </CustomText>
+                            </View>
+                          )}
+                        </View>
+                        <View style={{ flexDirection: 'row', marginTop: 12 }}>
+                          <CustomButton
+                            onPress={() => onPressDeleteIntroduction(item)}
+                            style={{
+                              padding: 10,
+                              backgroundColor: Color.Gray4,
+                              width: 44,
+                              height: 44,
+                              borderRadius: 4,
+                            }}
+                          >
+                            <View style={{ height: 24, width: 24 }}>
+                              <FastImage
+                                style={{ width: '100%', height: '100%' }}
+                                source={require('@/Assets/Images/Cupist/Main/delete.png')}
+                                resizeMode={FastImage.resizeMode.cover}
+                              />
+                            </View>
+                          </CustomButton>
+                          <CustomButton
+                            style={{
+                              flex: 1,
+                              marginLeft: 6,
+                              backgroundColor: Color.GlamBlue,
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              borderRadius: 4,
+                            }}
+                          >
+                            <CustomText style={{ fontSize: 14, color: 'white', fontWeight: '600' }}>좋아요</CustomText>
+                          </CustomButton>
+                        </View>
+                      </View>
+                    </LinearGradient>
+                  </>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+                initialNumToRender={2}
+                maxToRenderPerBatch={1}
+                windowSize={7}
+                showsVerticalScrollIndicator={false}
+              />
+              {/* 맞춤 추천 */}
+              <View
+                style={{
+                  paddingHorizontal: 16,
+                  paddingBottom: 16,
+                  borderWidth: 1,
+                  borderColor: Color.Gray1,
+                  borderRadius: 10,
+                }}
+              >
+                <CustomText style={{ marginTop: 24 }}>맞춤 추천</CustomText>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                    <View style={{ height: 40, width: 40 }}>
+                      <FastImage
+                        style={{ width: '100%', height: '100%' }}
+                        source={require('@/Assets/Images/Cupist/Recommendations/today.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 12 }}>
+                      <CustomText>글램 추천</CustomText>
+                      <View style={{ height: 13, width: 30, marginLeft: 4 }}>
+                        <FastImage
+                          style={{ width: '100%', height: '100%' }}
+                          source={require('@/Assets/Images/Cupist/Recommendations/hot.png')}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                  <CustomButton
+                    onPress={() => onPressCustom()}
+                    style={{
+                      width: 76,
+                      height: 32,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: Color.GlamBlue,
+                      borderRadius: 4,
+                    }}
+                  >
+                    <CustomText style={{ fontSize: 14, color: 'white' }}>선택</CustomText>
+                  </CustomButton>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                    <View style={{ height: 40, width: 40 }}>
+                      <FastImage
+                        style={{ width: '100%', height: '100%' }}
+                        source={require('@/Assets/Images/Cupist/Recommendations/dia.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 12 }}>
+                      <CustomText>최상위 매력</CustomText>
+                      <View style={{ height: 13, width: 30, marginLeft: 4 }}>
+                        <FastImage
+                          style={{ width: '100%', height: '100%' }}
+                          source={require('@/Assets/Images/Cupist/Recommendations/hot.png')}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                  <CustomButton
+                    style={{
+                      width: 76,
+                      height: 32,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: Color.GlamBlue,
+                      borderRadius: 4,
+                    }}
+                  >
+                    <CustomText style={{ fontSize: 14, color: 'white' }}>선택</CustomText>
+                  </CustomButton>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                    <View style={{ height: 40, width: 40 }}>
+                      <FastImage
+                        style={{ width: '100%', height: '100%' }}
+                        source={require('@/Assets/Images/Cupist/Recommendations/glamour.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 12 }}>
+                      <CustomText>볼륨감 있는 체형</CustomText>
+                      <View style={{ height: 13, width: 30, marginLeft: 4 }}>
+                        <FastImage
+                          style={{ width: '100%', height: '100%' }}
+                          source={require('@/Assets/Images/Cupist/Recommendations/hot.png')}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                  <CustomButton
+                    style={{
+                      width: 76,
+                      height: 32,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: Color.GlamBlue,
+                      borderRadius: 4,
+                    }}
+                  >
+                    <CustomText style={{ fontSize: 14, color: 'white' }}>선택</CustomText>
+                  </CustomButton>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                    <View style={{ height: 40, width: 40 }}>
+                      <FastImage
+                        style={{ width: '100%', height: '100%' }}
+                        source={require('@/Assets/Images/Cupist/Recommendations/withpet.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 12 }}>
+                      <CustomText>반려 동물을 키우는</CustomText>
+                      {/* <View style={{ height: 13, width: 30, marginLeft: 4 }}> */}
+                      {/*  <FastImage */}
+                      {/*    style={{ width: '100%', height: '100%' }} */}
+                      {/*    source={require('@/Assets/Images/Cupist/Recommendations/hot.png')} */}
+                      {/*    resizeMode={FastImage.resizeMode.cover} */}
+                      {/*  /> */}
+                      {/* </View> */}
+                    </View>
+                  </View>
+                  <CustomButton
+                    style={{
+                      width: 76,
+                      height: 32,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: Color.GlamBlue,
+                      borderRadius: 4,
+                    }}
+                  >
+                    <CustomText style={{ fontSize: 14, color: 'white' }}>선택</CustomText>
+                  </CustomButton>
+                </View>
+                <CustomButton
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: 44,
+                    backgroundColor: Color.Gray1,
+                    marginTop: 16,
+                    borderRadius: 4,
+                  }}
+                >
+                  <CustomText style={{ fontSize: 14, fontWeight: '600' }}>24개 항목 모두 보기</CustomText>
+                </CustomButton>
+              </View>
+              <FlatList
+                data={introductionAdditionalList || []}
+                renderItem={({ item, index }) => (
+                  <>
+                    <View
+                      style={{
+                        width: width - 8,
+                        height: (width - 8) * 1.4,
+                        backgroundColor: 'red',
+                        borderRadius: 6,
+                        marginTop: 12,
+                        marginBottom: 12,
+                      }}
+                    >
+                      <FastImage
+                        style={{ width: '100%', height: '100%', borderRadius: 6 }}
+                        source={{ uri: `https://test.dev.cupist.de${item?.pictures[0]}` || '' }}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </View>
+                    <LinearGradient
+                      start={{ x: 0, y: 0.6 }}
+                      end={{ x: 0, y: 0.85 }}
+                      colors={['transparent', Color.DarkGray1]}
+                      style={{
+                        backgroundColor: 'transparent',
+                        // paddingVertical: 12,
+                        paddingHorizontal: 13,
+                        position: 'absolute',
+                        width: width - 8,
+                        borderRadius: 6,
+                        height: (width - 8) * 1.4,
+                        bottom: 12,
+                      }}
+                    >
+                      <View style={{ position: 'absolute', bottom: 0, width: width - 8, padding: 12 }}>
+                        <View
+                          style={{
+                            width: 90,
+                            backgroundColor: `${Color.White}${Opacity._25}`,
+                            paddingHorizontal: 10,
+                            paddingVertical: 4,
+                            borderRadius: 4,
+                          }}
+                        >
+                          <CustomText style={{ fontSize: 14, color: 'white' }}>오늘의 추천</CustomText>
+                        </View>
+                        <View style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center' }}>
+                          <CustomText style={{ fontSize: 24, fontWeight: '600', color: 'white' }}>
+                            {item?.name}, {item?.age}
+                          </CustomText>
+                          <CustomButton style={{ height: 16, width: 17, marginLeft: 3 }}>
+                            <FastImage
+                              style={{ width: '100%', height: '100%' }}
+                              source={require('@/Assets/Images/Cupist/Main/info.png')}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                          </CustomButton>
+                        </View>
+                        <View style={{ marginTop: 8 }}>
+                          {item?.introduction ? (
+                            <View>
+                              <CustomText style={{ fontSize: 16, color: 'white' }} numberOfLines={2}>
+                                {item?.introduction}
+                              </CustomText>
+                            </View>
+                          ) : (
+                            <View>
+                              <CustomText style={{ fontSize: 16, color: 'white' }}>
+                                {`${item?.job} \u2022 ${item?.distance / 1000}km`}
+                              </CustomText>
+                              <CustomText style={{ fontSize: 16, color: `${Color.White}${Opacity._60}`, marginTop: 6 }}>
+                                {item?.height}cm
+                              </CustomText>
+                            </View>
+                          )}
+                        </View>
+                        <View style={{ flexDirection: 'row', marginTop: 12 }}>
+                          <CustomButton
+                            onPress={() => onPressDeleteIntroductionAdditional(item)}
+                            style={{
+                              padding: 10,
+                              backgroundColor: Color.Gray4,
+                              width: 44,
+                              height: 44,
+                              borderRadius: 4,
+                            }}
+                          >
+                            <View style={{ height: 24, width: 24 }}>
+                              <FastImage
+                                style={{ width: '100%', height: '100%' }}
+                                source={require('@/Assets/Images/Cupist/Main/delete.png')}
+                                resizeMode={FastImage.resizeMode.cover}
+                              />
+                            </View>
+                          </CustomButton>
+                          <CustomButton
+                            style={{
+                              flex: 1,
+                              marginLeft: 6,
+                              backgroundColor: Color.GlamBlue,
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              borderRadius: 4,
+                            }}
+                          >
+                            <CustomText style={{ fontSize: 14, color: 'white', fontWeight: '600' }}>좋아요</CustomText>
+                          </CustomButton>
+                        </View>
+                      </View>
+                    </LinearGradient>
+                  </>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+                initialNumToRender={2}
+                maxToRenderPerBatch={1}
+                windowSize={7}
+                showsVerticalScrollIndicator={false}
+              />
+            </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          initialNumToRender={2}
+          maxToRenderPerBatch={1}
+          windowSize={7}
+          showsVerticalScrollIndicator={false}
+          onEndReached={() => onMore()}
+          onEndReachedThreshold={0.8}
+          refreshing={false}
+          onRefresh={() => onRefresh()}
+        />
+      </View>
     </View>
   );
 };

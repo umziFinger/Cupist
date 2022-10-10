@@ -4,11 +4,11 @@ import { StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
 import { navigationRef } from '@/Services/NavigationService';
+import AuthActions from '@/Stores/Auth/Actions';
 import CodePushContainer from './CodePushContainer';
 import StartupContainer from './StartupContainer';
 import MainNavigator from './MainNavigator';
 import PermissionNavigator from './PermissionNavigator';
-import AuthActions from '@/Stores/Auth/Actions';
 
 const Stack = createStackNavigator();
 
@@ -34,15 +34,8 @@ const RootNavigator = () => {
     >
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Startup" component={StartupContainer} />
-        <Stack.Screen name="CodePush" component={CodePushContainer} />
-        <Stack.Screen
-          name="Permission"
-          component={PermissionNavigator}
-          options={{
-            animationEnabled: false,
-          }}
-        />
+        {/* <Stack.Screen name="Startup" component={StartupContainer} /> */}
+        {/* <Stack.Screen name="CodePush" component={CodePushContainer} /> */}
         <Stack.Screen
           name="Main"
           component={MainNavigator}

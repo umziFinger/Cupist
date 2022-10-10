@@ -16,6 +16,11 @@ export const INITIAL_STATE: HomeState['home'] = {
   selectedDirectIdx: -1,
   selectedDirectName: '',
   prepaymentDateList: [],
+
+  introductionList: null,
+  introductionAdditionalList: null,
+  introductionCustomList: null,
+  introductionAdditionalPage: 1,
 };
 
 export interface HomeState {
@@ -31,6 +36,11 @@ export interface HomeState {
     selectedDirectIdx: number | -1;
     selectedDirectName: string | '';
     prepaymentDateList: Array<any>;
+
+    introductionList: any;
+    introductionAdditionalList: any;
+    introductionCustomList: any;
+    introductionAdditionalPage: number;
   };
 }
 

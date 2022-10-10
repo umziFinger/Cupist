@@ -1,7 +1,7 @@
 export const Color = {
   Black1000: '#151515',
   Black900: '#1c1c1c',
-  White: '#fff',
+  White: '#ffffff',
   Gray100: '#fafafa',
   Gray200: '#f7f7f7',
   Gray300: '#ececec',
@@ -26,6 +26,12 @@ export const Color = {
   paleLavender: '#f3eaff',
   bluePurple: '#7107ff',
   pinkishOrange: '#ff6343',
+
+  Gray1: '#E0E0E0',
+  Gray2: '#CCCCCC',
+  Gray4: '#7F7F7F',
+  DarkGray1: '#595959',
+  GlamBlue: '#4B9CFF',
 };
 
 export const Opacity = {
