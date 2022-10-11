@@ -21,7 +21,7 @@ const BackHeader = (props: HeaderProps) => {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        height: Platform.OS === 'android' ? 44 : 44 + statusHeight,
+        height: Platform.OS === 'android' ? 55 : 55 + statusHeight,
         paddingTop: Platform.OS === 'android' ? 0 : statusHeight,
         paddingHorizontal: 16,
         backgroundColor: bgColor,

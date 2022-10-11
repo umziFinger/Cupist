@@ -119,7 +119,7 @@ const SelectDialog = (props: SelectDialogProps) => {
         // scrollEnabled={false}
         contentContainerStyle={{
           marginTop: heightInfo.statusHeight + height / 3,
-          width: width - 48 - 48,
+          width: width - 80,
         }}
       />
     </View>

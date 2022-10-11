@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "812978165702",
     "firebase_url": "https://bolimi-default-rtdb.firebaseio.com",
-    "project_id": "bolimi",
+    "project_id": "cupist",
     "storage_bucket": "bolimi.appspot.com"
   },
   "client": [
@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:812978165702:android:9226d9f82046921f78c4c7",
         "android_client_info": {
-          "package_name": "kr.bolimi"
+          "package_name": "kr.cupist"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "812978165702-0n5n42u8acgcbl4hf8va2p87s3vchlfi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "kr.bolimi",
+            "package_name": "kr.cupist",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
@@ -26,7 +26,7 @@
           "client_id": "812978165702-9pgd2vmr0duloed6q6ff04ssco5cd6cd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "kr.bolimi",
+            "package_name": "kr.cupist",
             "certificate_hash": "36353547356bf6449bd012349abd95d0750642f4"
           }
         },
@@ -34,7 +34,7 @@
           "client_id": "812978165702-b0bprihbvqravah5071opo3robhj15q1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "kr.bolimi",
+            "package_name": "kr.cupist",
             "certificate_hash": "dee089c8738037ff3474c3980d9745116e902c23"
           }
         },
@@ -59,7 +59,7 @@
               "client_id": "812978165702-mrb1lk2u6kunpif8fditkudscs3v648j.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "kr.bolimi"
+                "bundle_id": "kr.cupist"
               }
             }
           ]
