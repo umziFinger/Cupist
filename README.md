@@ -13,7 +13,8 @@
         - 사전과제에서는 하나의 헤더밖에 없지만 많은 종류의 헤더를 손쉽게 사용할수 있도록 구현
     - Color
         - 자주 사용하는 컬러를 따로 모아두어 편리성을 높임
-          <img width="172" alt="스크린샷 2022-10-10 오후 10 44 16" src="https://user-images.githubusercontent.com/89247938/194880429-78caf234-ad62-4bfc-9488-3c8fc8d10fb8.png">
+          
+     <img width="172" alt="스크린샷 2022-10-10 오후 10 44 16" src="https://user-images.githubusercontent.com/89247938/194880429-78caf234-ad62-4bfc-9488-3c8fc8d10fb8.png">
 
 
 - 홈화면(HomeScreen)
@@ -37,7 +38,8 @@
 - 선택 다이얼로그 모듈화 (SelectDialog)
     - 세개의 다이얼로그가 형태가 비슷해서 상단 문구와, 목록데이터, 높이값을 받아서 처리하는 모듈로 정리
 - Profile의 타입을 지정해 데이터 매핑 등에 용이하도록 사용
-  <img width="320" alt="스크린샷 2022-10-10 오후 11 22 17" src="https://user-images.githubusercontent.com/89247938/194888236-06cdcee7-9ab3-4d74-b2f2-bf592b24e34d.png">
+  
+<img width="320" alt="스크린샷 2022-10-10 오후 11 22 17" src="https://user-images.githubusercontent.com/89247938/194888236-06cdcee7-9ab3-4d74-b2f2-bf592b24e34d.png">
 
 - 기타 화면 디자인적인 부분은 디자인 가이드라인에 따라 제작하였습니다.
 
